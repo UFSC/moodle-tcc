@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/mjbellantoni/formtastic-bootstrap.git
+  revision: ed07f34c9d2bef474436e6a31c1070e9c57293cf
+  specs:
+    formtastic-bootstrap (2.0.1pre)
+      formtastic (~> 2.2)
+      formtastic-bootstrap
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -29,7 +37,23 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
+    better_errors (0.7.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    bootstrap-datepicker-rails (1.0.0.1)
+      railties (>= 3.0)
+    bourne (1.1.2)
+      mocha (= 0.10.5)
     builder (3.0.4)
+    capistrano (2.14.2)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano-db-tasks (0.2)
+    chunky_png (1.2.7)
+    coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -37,9 +61,22 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass_twitter_bootstrap (2.2.2.2)
+      compass
+    daemons (1.1.9)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fabrication (2.6.2)
+    formtastic (2.2.1)
+      actionpack (>= 3.0)
+    fssm (0.2.10)
+    highline (1.6.15)
     hike (1.2.1)
     i18n (0.6.4)
     journey (1.0.4)
@@ -51,8 +88,20 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.1)
     mime-types (1.21)
+    mocha (0.10.5)
+      metaclass (~> 0.0.1)
     multi_json (1.7.2)
+    mysql2 (0.3.11)
+    net-scp (1.1.0)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.6.6)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
+    newrelic_rpm (3.6.0.78)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -84,12 +133,18 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    shoulda-matchers (1.4.2)
+      activesupport (>= 3.0.0)
+      bourne (~> 1.1.2)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.7)
+    thin (1.5.0)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thor (0.17.0)
     tilt (1.3.6)
     treetop (1.4.12)
@@ -104,9 +159,20 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors
+  bootstrap-datepicker-rails
+  capistrano
+  capistrano-db-tasks
   coffee-rails (~> 3.2.1)
+  compass_twitter_bootstrap
+  fabrication
+  formtastic (~> 2.2)
+  formtastic-bootstrap!
   jquery-rails
+  mysql2
+  newrelic_rpm
   rails (= 3.2.12)
   sass-rails (~> 3.2.3)
-  sqlite3
+  shoulda-matchers
+  thin
   uglifier (>= 1.0.3)
