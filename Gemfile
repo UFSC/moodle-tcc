@@ -11,6 +11,9 @@ gem 'bootstrap-datepicker-rails'
 # Javascript
 gem 'jquery-rails'
 
+# LTI for moodle integration
+gem 'ims-lti'
+
 # Formtastic (Formulários)
 gem 'formtastic', '~> 2.2'
 gem 'formtastic-bootstrap', :github => 'mjbellantoni/formtastic-bootstrap'

@@ -13,4 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+.idea/*
 config/database.yml
+config/newrelic.yml
+public/assets
