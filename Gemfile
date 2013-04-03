@@ -4,6 +4,8 @@ gem 'rails', '3.2.12'
 
 gem 'mysql2'
 
+gem 'oauth'
+
 # Compass + Twitter Bootstrap
 gem 'compass_twitter_bootstrap'
 gem 'bootstrap-datepicker-rails'
