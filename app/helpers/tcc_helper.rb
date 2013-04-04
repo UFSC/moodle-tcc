@@ -1,0 +1,2 @@
+module TccHelper
+end
