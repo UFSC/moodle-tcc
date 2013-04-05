@@ -26,6 +26,10 @@ class TccController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     if @tcc.save
 

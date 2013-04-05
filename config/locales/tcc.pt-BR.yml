@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    attributes:
+      tcc:
+        leader: "Orientador"
+        name: "Nome"
+        title: "Título"
+        summary: "Sumário"
+        presentation: "Apresentação"
+        final_considerations: "Considerações finais"

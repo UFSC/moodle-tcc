@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20130401201417) do
     t.text     "final_considerations"
     t.string   "name"
     t.string   "leader"
+    t.float    "grade"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end

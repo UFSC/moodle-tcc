@@ -7,6 +7,7 @@ Fabricator(:tcc, class_name: :tcc) do
   final_considerations 'considerações finais'
   name "João Fulano"
   leader "João Orientador"
+  grade 0.9
   hubs(count: 3)
   bibliography
 end

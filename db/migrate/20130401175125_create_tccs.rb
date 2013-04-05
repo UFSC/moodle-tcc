@@ -8,6 +8,7 @@ class CreateTccs < ActiveRecord::Migration
       t.text :final_considerations
       t.string :name
       t.string :leader
+      t.float :grade
 
       t.timestamps
     end

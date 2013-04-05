@@ -1,12 +1,11 @@
 <%= semantic_form_for @tcc do |f| %>
     <%= f.inputs do %>
-        <%= f.input :moodle_user %>
-        <%= f.input :title %>
-        <%= f.input :summary %>
-        <%= f.input :presentation %>
-        <%= f.input :final_considerations %>
         <%= f.input :name %>
         <%= f.input :leader %>
+        <%= f.input :title %>
+        <%= f.input :summary,  input_html: { rows: "4" } %>
+        <%= f.input :presentation,  input_html: { rows: "4" }  %>
+        <%= f.input :final_considerations,  input_html: { rows: "4" }  %>
     <% end %>
 
     <%= f.actions do %>

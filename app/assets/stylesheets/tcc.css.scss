@@ -1,3 +1,8 @@
 // Place all the styles related to the tcc controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "compass_twitter_bootstrap";
+
+.formtastic textarea {
+  width: 400px;
+}
