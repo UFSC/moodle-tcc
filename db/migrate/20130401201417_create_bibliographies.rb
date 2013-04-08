@@ -2,7 +2,7 @@ class CreateBibliographies < ActiveRecord::Migration
   def change
     create_table :bibliographies do |t|
       t.text :content
-      t.references :tcc
+      t.references :tccs
 
       t.timestamps
     end

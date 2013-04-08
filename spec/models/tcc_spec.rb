@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Tcc do
-  let(:tcc) { Fabricate(:tcc) }
+  let(:tccs) { Fabricate(:tccs) }
 
   it { should respond_to( :final_considerations, :leader, :moodle_user,
                           :name, :presentation, :summary, :title, :grade ) }

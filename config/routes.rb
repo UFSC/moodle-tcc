@@ -1,6 +1,6 @@
 SistemaTcc::Application.routes.draw do
 
-  root :to => 'tcc#show'
+  root :to => 'tccs#show'
   resources :tccs
 
 end

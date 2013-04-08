@@ -1,4 +1,4 @@
-class TccController < ApplicationController
+class TccsController < ApplicationController
   if defined? ActionDispatch
     require 'oauth/request_proxy/rack_request'
     require 'action_dispatch/testing/test_process'
@@ -31,7 +31,10 @@ class TccController < ApplicationController
   end
 
   def create
+    @tcc = Tcc.new(params[:tcc])
     if @tcc.save
+
+    else
 
     end
   end

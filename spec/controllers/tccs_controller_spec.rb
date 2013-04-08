@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe TccController do
+describe TccsController do
 
 end
