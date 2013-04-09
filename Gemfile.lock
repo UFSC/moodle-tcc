@@ -171,6 +171,7 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     uuid (2.3.7)
       macaddr (~> 1.0)
+    will_paginate (3.0.4)
 
 PLATFORMS
   ruby
@@ -196,3 +197,4 @@ DEPENDENCIES
   shoulda-matchers
   thin
   uglifier (>= 1.0.3)
+  will_paginate (~> 3.0.0)

@@ -23,6 +23,9 @@ gem 'formtastic-bootstrap'#, :github => 'mjbellantoni/formtastic-bootstrap'
 # ckeditor
 #gem 'ckeditor'
 
+# Pagination
+gem 'will_paginate', '~> 3.0.0'
+
 group :production do
   gem 'newrelic_rpm'
 end
