@@ -3,7 +3,7 @@ class CreateHubs < ActiveRecord::Migration
     create_table :hubs do |t|
       t.text :reflection
       t.integer :category
-      t.references :tccs
+      t.references :tcc
 
       t.timestamps
     end
