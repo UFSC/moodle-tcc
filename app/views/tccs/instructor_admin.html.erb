@@ -1,4 +1,20 @@
 <h3>Lista de Tccs</h3><br>
-<% @tccs.each do |tcc| %>
-   <%= tcc.moodle_user %><br>
-<% end %>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome do estudante</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @tccs.each do |tcc| %>
+           <tr>
+               <td><%= tcc.name %></td>
+               <td>falta..</td>
+               <td>Abrir  Avaliar</td>
+           </tr>
+        <% end %>
+    </tbody>
+</table>

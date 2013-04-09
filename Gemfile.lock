@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/mjbellantoni/formtastic-bootstrap.git
-  revision: ed07f34c9d2bef474436e6a31c1070e9c57293cf
-  specs:
-    formtastic-bootstrap (2.0.1pre)
-      formtastic (~> 2.2)
-      formtastic-bootstrap
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -76,6 +68,9 @@ GEM
     fabrication (2.6.2)
     formtastic (2.2.1)
       actionpack (>= 3.0)
+    formtastic-bootstrap (2.0.0)
+      formtastic (~> 2.2)
+      formtastic-bootstrap
     fssm (0.2.10)
     highline (1.6.15)
     hike (1.2.1)
@@ -189,7 +184,7 @@ DEPENDENCIES
   compass_twitter_bootstrap
   fabrication
   formtastic (~> 2.2)
-  formtastic-bootstrap!
+  formtastic-bootstrap
   ims-lti
   jquery-rails
   mysql2

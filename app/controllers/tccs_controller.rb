@@ -9,12 +9,12 @@ class TccsController < ApplicationController
 
   def show
     if authorize?
-      @role =  @tp.to_params["roles"].split(",").first
-      if @role == 'Instructor'
+      role =  @tp.to_params["roles"].split(",").first
+      if role == 'Instructor'
         @tccs = Tcc.all
         render 'instructor_admin'
       else
-        if @tcc = Tcc.find_by_moodle_user(@tp.username)
+        if @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           render 'edit'
         else
           @tcc = Tcc.new
@@ -26,9 +26,6 @@ class TccsController < ApplicationController
     end
   end
 
-  def edit
-
-  end
 
   def create
     @tcc = Tcc.new(params[:tcc])
@@ -41,7 +38,12 @@ class TccsController < ApplicationController
   end
 
   def update
-
+    @tcc = Tcc.find(params[:id])
+    if @tcc.update_attributes(params[:tcc])
+      render 'show'
+    else
+      render 'edit'
+    end
   end
 
   private

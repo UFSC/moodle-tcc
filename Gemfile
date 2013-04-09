@@ -17,8 +17,11 @@ gem 'ims-lti'
 
 # Formtastic (Formulários)
 gem 'formtastic', '~> 2.2'
-gem 'formtastic-bootstrap', :github => 'mjbellantoni/formtastic-bootstrap'
+gem 'formtastic-bootstrap'#, :github => 'mjbellantoni/formtastic-bootstrap'
 # Pegando do github, por causa desse PR: https://github.com/mjbellantoni/formtastic-bootstrap/pull/46
+
+# ckeditor
+#gem 'ckeditor'
 
 group :production do
   gem 'newrelic_rpm'
