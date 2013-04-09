@@ -17,7 +17,7 @@ class TccsController < ApplicationController
         if @tcc = Tcc.find_by_moodle_user(@tp.username)
           render 'edit'
         else
-          @tcc = Tcc.new(:moodle_user => @tp.username)
+          @tcc = Tcc.new
           render 'new'
         end
       end
@@ -32,10 +32,11 @@ class TccsController < ApplicationController
 
   def create
     @tcc = Tcc.new(params[:tcc])
+    @tcc.moodle_user = session['launch_params']['context_id']
     if @tcc.save
-
+      render 'show'
     else
-
+      render 'new'
     end
   end
 
@@ -52,6 +53,7 @@ class TccsController < ApplicationController
   def authorize?
     if params['oauth_consumer_key'] == $consumer_key
       @tp = IMS::LTI::ToolProvider.new($consumer_key, $consumer_secret, params)
+      session['launch_params'] = @tp.to_params
       unless @tp.valid_request?(request)
         false
       else

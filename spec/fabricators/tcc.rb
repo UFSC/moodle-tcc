@@ -1,5 +1,5 @@
 #encoding: utf-8
-Fabricator(:tccs, class_name: :tccs) do
+Fabricator(:tcc, class_name: :tcc) do
   moodle_user 123
   title "um tccs qualquer"
   summary "resumo......"
