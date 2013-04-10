@@ -9,10 +9,12 @@ class TccsController < ApplicationController
 
   def show
     if authorize?
-      role =  @tp.to_params["roles"].split(",").first
-      if role == 'Instructor'
-        @tccs = Tcc.all
-        render 'instructor_admin'
+      role =  @tp.to_params["roles"].split(",").first.downcase
+      if role == 'instructor'
+        #@tccs = Tcc.all
+        #@tccs = Tcc.paginate(:page => params[:page])
+        #@tccs = Tcc.paginate(:page => params[:page], :per_page => 1)
+        redirect_to '/instructor_admin'
       else
         if @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           render 'edit'

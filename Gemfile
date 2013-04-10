@@ -21,10 +21,10 @@ gem 'formtastic-bootstrap'#, :github => 'mjbellantoni/formtastic-bootstrap'
 # Pegando do github, por causa desse PR: https://github.com/mjbellantoni/formtastic-bootstrap/pull/46
 
 # ckeditor
-#gem 'ckeditor'
+gem 'ckeditor'
 
 # Pagination
-gem 'will_paginate', '~> 3.0.0'
+gem 'will_paginate'
 
 group :production do
   gem 'newrelic_rpm'
