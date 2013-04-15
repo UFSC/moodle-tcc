@@ -1,0 +1,26 @@
+<%= tabs_tag :open_tabs => { :class => 'nav nav-tabs' } do |tab| %>
+    <%= tab.data 'Dados', '#', :class => 'active', id: 'data_tab' %>
+    <%= tab.abstract 'Resumo', '#', id: 'abstract_tab' %>
+    <%= tab.presentation 'Apresentação', '#', id: 'presentation_tab' %>
+    <%= tab.hub1 'Eixo 1', '#', id: 'hub1_tab' %>
+    <%= tab.hub2 'Eixo 2', '#', id: 'hub2_tab' %>
+    <%= tab.hub3 'Eixo 3', '#', id: 'hub3_tab' %>
+    <%= tab.final_consideration 'Considerações finais', '#', id: 'final_consideration_tab' %>
+    <%= tab.bibliographies 'Referências', '#', id: 'bibliographies_tab' %>
+<% end %>
+
+<script>
+  $(function() {
+     $('li').click(function() {
+         var id_new_tab = $(this).attr("id");
+         var id_old_tab = $("li.active").attr("id");
+
+         $("#"+id_old_tab+"_content").hide();
+         $("#"+id_new_tab+"_content").show();
+         $("li.active").removeClass("active");
+         $(this).addClass("active");
+
+
+     });
+  });
+</script>

@@ -1,14 +1,24 @@
-<%= semantic_form_for @tcc do |f| %>
-    <%= f.inputs do %>
-        <%= f.input :name %>
-        <%= f.input :leader %>
-        <%= f.input :title %>
-        <%= f.input :summary,  input_html: { rows: "4" } %>
-        <%= f.input :presentation,  input_html: { rows: "4" }  %>
-        <%= f.input :final_considerations,  input_html: { rows: "4" }  %>
-    <% end %>
-
-    <%= f.actions do %>
-        <%= f.action :submit, :as => :input %>
-    <% end %>
-<% end %>
+<div id="data_tab_content">
+  <%= render :partial => 'tccs/forms/data' %>
+</div>
+<div id="abstract_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/abstract' %>
+</div>
+<div id="presentation_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/presentation' %>
+</div>
+<div id="hub1_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/hub1' %>
+</div>
+<div id="hub2_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/hub2' %>
+</div>
+<div id="hub3_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/hub3' %>
+</div>
+<div id="final_consideration_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/final_consideration' %>
+</div>
+<div id="bibliographies_tab_content" style = "display:none">
+  <%= render :partial => 'tccs/forms/bibliographies' %>
+</div>
