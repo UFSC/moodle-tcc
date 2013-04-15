@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20130401201417) do
 
   create_table "hubs", :force => true do |t|
     t.text     "reflection"
+    t.text     "commentary"
     t.integer  "category"
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
@@ -44,14 +45,22 @@ ActiveRecord::Schema.define(:version => 20130401201417) do
   create_table "tccs", :force => true do |t|
     t.string   "moodle_user"
     t.string   "title"
-    t.text     "summary"
+    t.text     "abstract"
+    t.string   "abstract_key_words"
+    t.text     "abstract_commentary"
+    t.text     "english_abstract"
+    t.string   "english_abstract_key_words"
+    t.text     "english_abstract_commentary"
     t.text     "presentation"
+    t.text     "presentation_commentary"
     t.text     "final_considerations"
+    t.text     "final_considerations_commentary"
     t.string   "name"
     t.string   "leader"
     t.float    "grade"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.integer  "year_defense"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
 end

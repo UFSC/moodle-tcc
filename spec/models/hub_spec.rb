@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe Hub do
-  it { should respond_to(:category, :reflection) }
+  it { should respond_to(:category, :reflection, :commentary) }
 end

@@ -2,6 +2,7 @@ class CreateHubs < ActiveRecord::Migration
   def change
     create_table :hubs do |t|
       t.text :reflection
+      t.text :commentary
       t.integer :category
       t.references :tcc
 

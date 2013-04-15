@@ -3,8 +3,9 @@ require 'spec_helper'
 describe Tcc do
   let(:tcc) { Fabricate(:tcc) }
 
-  it { should respond_to( :final_considerations, :leader, :moodle_user,
-                          :name, :presentation, :summary, :title, :grade ) }
+  it { should respond_to( :final_considerations, :final_considerations_commentary, :leader, :moodle_user, :name,:presentation,:title,
+                          :grade, :year_defense, :abstract, :abstract_key_words, :abstract_commentary,
+                          :english_abstract, :english_abstract_key_words, :english_abstract_commentary, :presentation_commentary ) }
 
   it { should validate_uniqueness_of :moodle_user }
 
