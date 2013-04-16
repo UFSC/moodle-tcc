@@ -11,13 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401201417) do
+ActiveRecord::Schema.define(:version => 20130416160556) do
+
+  create_table "abstracts", :force => true do |t|
+    t.text     "content_pt"
+    t.text     "content_en"
+    t.string   "key_words_pt"
+    t.string   "key_words_en"
+    t.text     "commentary"
+    t.integer  "tcc_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "abstracts", ["tcc_id"], :name => "index_abstracts_on_tcc_id"
 
   create_table "bibliographies", :force => true do |t|
     t.text     "content"
+    t.string   "direct_quote"
+    t.string   "indirect_quote"
     t.integer  "tcc_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   add_index "bibliographies", ["tcc_id"], :name => "index_bibliographies_on_tcc_id"
@@ -31,6 +46,16 @@ ActiveRecord::Schema.define(:version => 20130401201417) do
 
   add_index "diaries", ["hub_id"], :name => "index_diaries_on_hub_id"
 
+  create_table "final_considerations", :force => true do |t|
+    t.text     "content"
+    t.text     "commentary"
+    t.integer  "tcc_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "final_considerations", ["tcc_id"], :name => "index_final_considerations_on_tcc_id"
+
   create_table "hubs", :force => true do |t|
     t.text     "reflection"
     t.text     "commentary"
@@ -42,25 +67,25 @@ ActiveRecord::Schema.define(:version => 20130401201417) do
 
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"
 
+  create_table "presentations", :force => true do |t|
+    t.text     "content"
+    t.text     "commentary"
+    t.integer  "tcc_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "presentations", ["tcc_id"], :name => "index_presentations_on_tcc_id"
+
   create_table "tccs", :force => true do |t|
     t.string   "moodle_user"
     t.string   "title"
-    t.text     "abstract"
-    t.string   "abstract_key_words"
-    t.text     "abstract_commentary"
-    t.text     "english_abstract"
-    t.string   "english_abstract_key_words"
-    t.text     "english_abstract_commentary"
-    t.text     "presentation"
-    t.text     "presentation_commentary"
-    t.text     "final_considerations"
-    t.text     "final_considerations_commentary"
     t.string   "name"
     t.string   "leader"
     t.float    "grade"
-    t.integer  "year_defense"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.date     "defense_date"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end

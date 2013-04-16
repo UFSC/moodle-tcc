@@ -1,7 +1,5 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :final_considerations, :final_considerations_commentary, :leader, :moodle_user, :name, :presentation, :title, :year_defense,
-                  :abstract, :abstract_key_words, :abstract_commentary, :presentation_commentary,
-                  :english_abstract, :english_abstract_key_words, :english_abstract_commentary
+  attr_accessible :leader, :moodle_user, :name, :title, :defense_date
 
 
   validates_uniqueness_of :moodle_user
@@ -9,4 +7,7 @@ class Tcc < ActiveRecord::Base
 
   has_many :hubs
   has_one :bibliography
+  has_one :presentation
+  has_one :abstract
+  has_one :final_considerations
 end
