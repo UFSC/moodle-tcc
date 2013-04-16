@@ -32,6 +32,8 @@ GEM
     better_errors (0.8.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    bootstrap-datepicker-rails (1.0.0.1)
+      railties (>= 3.0)
     builder (3.0.4)
     capistrano (2.14.2)
       highline
@@ -177,6 +179,7 @@ PLATFORMS
 
 DEPENDENCIES
   better_errors
+  bootstrap-datepicker-rails
   capistrano
   capistrano-db-tasks
   ckeditor

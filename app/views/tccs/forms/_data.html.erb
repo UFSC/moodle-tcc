@@ -2,7 +2,9 @@
   <%= f.inputs do %>
       <%= f.input :name %>
       <%= f.input :title %>
-      <%= f.input :year_defense %>
+      <%= f.input :defense_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
+                  :input_html => {:'data-behaviour' => 'datepicker',
+                                  value: ((I18n.l @tcc.defense_date) unless @tcc.defense_date.nil?)} %>
       <%= f.input :leader %>
   <% end %>
 </div>

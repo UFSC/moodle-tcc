@@ -11,6 +11,7 @@ gem 'tabs_on_rails'
 
 # Compass + Twitter Bootstrap
 gem 'compass_twitter_bootstrap'
+gem 'bootstrap-datepicker-rails'
 
 # Javascript
 gem 'jquery-rails'
