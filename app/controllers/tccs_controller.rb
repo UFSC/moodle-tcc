@@ -11,7 +11,7 @@ class TccsController < ApplicationController
     if authorize?
       role =  @tp.to_params["roles"].split(",").first.downcase
       if role == 'instructor'
-        redirect_to '/instructor_admin'
+        redirect_to '/instructor_admin_tccs'
       else
         unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           @tcc = Tcc.new

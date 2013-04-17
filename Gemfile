@@ -42,6 +42,10 @@ end
 group :test do
   gem 'fabrication'
   gem 'shoulda-matchers'
+
+  # Request tests
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end
 
 group :development, :test do
