@@ -7,5 +7,10 @@ describe "InstructorAdminTccs" do
       get instructor_admin_tccs_path
       response.status.should be(200)
     end
+
+    it "viewing tccs list" do
+      visit instructor_admin_tccs_path
+      assert page.has_content?('Lista de TCCs')
+    end
   end
 end

@@ -7,8 +7,9 @@ class TccsController < ApplicationController
     require 'action_controller/test_process'
   end
 
+  before_filter :authorize, :only => :index
+
   def index
-    if authorize?
       role =  @tp.to_params["roles"].split(",").first.downcase
       if role == 'instructor'
         redirect_to '/instructor_admin_tccs'
@@ -18,15 +19,12 @@ class TccsController < ApplicationController
         end
         render 'index'
       end
-    else
-      render file: 'public/500.html'
-    end
   end
 
 
   def create
     @tcc = Tcc.new(params[:tcc])
-    @tcc.moodle_user = session['launch_params']['context_id']
+    @tcc.moodle_user = 'fabio'
     if @tcc.save
       render 'index'
     else
@@ -49,17 +47,16 @@ class TccsController < ApplicationController
   $consumer_key = "consumer_key"
   $consumer_secret = "consumer_secret"
 
-  def authorize?
+  def authorize
     if params['oauth_consumer_key'] == $consumer_key
       @tp = IMS::LTI::ToolProvider.new($consumer_key, $consumer_secret, params)
       if @tp.valid_request?(request)
         session['launch_params'] = @tp.to_params
-        true
       else
-        false
+        render file: 'public/500.html'
       end
     else
-      false
+      render file: 'public/500.html'
     end
   end
 end
