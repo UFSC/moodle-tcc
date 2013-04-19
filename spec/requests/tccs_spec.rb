@@ -9,13 +9,14 @@ describe "Tccs" do
       response.status.should be(200)
     end
 
-    it "instructor admin not work without moodle" do
-      visit tccs_path
-      page.should have_content("wrong")
+    it "should work with moodle" do
+      page.driver.post tccs_path
+      page.should have_content("Dados")
     end
 
-    it "instructor admin work with moodle" do
-      pending
+    it "should not work without moodle" do
+      visit tccs_path
+      page.should have_content("wrong")
     end
   end
 end

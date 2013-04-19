@@ -8,9 +8,15 @@ describe "InstructorAdminTccs" do
       response.status.should be(200)
     end
 
-    it "viewing tccs list" do
+    it "should work with moodle" do
+      page.set_rack_session(:launch_params => 'test')  #to pass before_filter
       visit instructor_admin_tccs_path
-      assert page.has_content?('Lista de TCCs')
+      page.should have_content('Lista de TCCs')
+    end
+
+    it "should not work without moodle" do
+      visit instructor_admin_tccs_path
+      page.should have_content("wrong")
     end
   end
 end

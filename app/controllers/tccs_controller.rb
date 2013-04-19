@@ -12,7 +12,7 @@ class TccsController < ApplicationController
   def index
       role =  @tp.to_params["roles"].split(",").first.downcase
       if role == 'instructor'
-        redirect_to '/instructor_admin_tccs'
+        redirect_to instructor_admin_tccs_path
       else
         unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           @tcc = Tcc.new
@@ -20,7 +20,6 @@ class TccsController < ApplicationController
         render 'index'
       end
   end
-
 
   def create
     @tcc = Tcc.new(params[:tcc])
@@ -41,7 +40,7 @@ class TccsController < ApplicationController
     end
   end
 
-  private
+  protected
 
   # the consumer keys/secrets
   $consumer_key = "consumer_key"
