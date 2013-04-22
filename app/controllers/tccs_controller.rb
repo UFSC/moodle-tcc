@@ -17,13 +17,14 @@ class TccsController < ApplicationController
         unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           @tcc = Tcc.new
         end
+        @tcc.build_abstract
         render 'index'
       end
   end
 
   def create
     @tcc = Tcc.new(params[:tcc])
-    @tcc.moodle_user = 'fabio'
+    @tcc.moodle_user = session['launch_params']['context_id']
     if @tcc.save
       render 'index'
     else

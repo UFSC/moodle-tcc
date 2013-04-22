@@ -21,6 +21,7 @@ RSpec.configure do |config|
 
   # Capybara Domain Specific language
   config.include Capybara::DSL
+  Capybara.javascript_driver = :webkit
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

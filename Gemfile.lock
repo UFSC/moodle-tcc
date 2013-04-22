@@ -48,6 +48,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (0.14.2)
+      capybara (~> 2.0, >= 2.0.2)
+      json
     chunky_png (1.2.8)
     ckeditor (4.0.4)
       mime-types
@@ -200,6 +203,7 @@ DEPENDENCIES
   capistrano
   capistrano-db-tasks
   capybara
+  capybara-webkit
   ckeditor
   coffee-rails (~> 3.2.1)
   compass-rails

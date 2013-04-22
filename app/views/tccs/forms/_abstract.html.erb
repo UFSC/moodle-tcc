@@ -1,3 +1,10 @@
 <div id="abstract_tab_content" style = "display:none">
-  abstract_tab_content
+  <%= f.fields_for :abstract do |a| %>
+      <%= f.inputs do %>
+          <%= a.input :content_pt %>
+          <%= a.input :key_words_pt %>
+          <%= a.input :content_en %>
+          <%= a.input :key_words_en %>
+      <% end %>
+  <% end %>
 </div>

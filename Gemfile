@@ -47,6 +47,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'rack_session_access'
+  gem 'capybara-webkit'
+
 end
 
 group :development, :test do
