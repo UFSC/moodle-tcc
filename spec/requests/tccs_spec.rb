@@ -21,12 +21,13 @@ describe "Tccs" do
 
     describe "edit" do
       before :each do
-        moodle_oauth
+        #moodle_oauth
       end
 
       it "tcc data" do
-        click_link "Dados"
-        page.should have_selector("#data_tab_content")
+        pending
+        #click_link "Dados"
+        #page.should have_selector("#data_tab_content")
       end
 
       it "tcc abstract" do

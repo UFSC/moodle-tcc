@@ -6,3 +6,9 @@ pt-BR:
         name: "Nome"
         title: "Título"
         defense_date: "Data da defesa"
+      abstract:
+        content_pt: "Resumo"
+        content_en: "Abstract"
+        key_words_pt: "Palavras chaves"
+        key_words_en: "Key words"
+

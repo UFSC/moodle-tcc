@@ -1,3 +1,5 @@
-<div id="presentation_tab_content" style = "display:none">
-  presentation_tab_content
+<div id="presentation_tab_content" style = "display:none; margin-left: 0px" class = "span12">
+  <%= f.fields_for :presentation do |p| %>
+      <%= p.cktext_area :content %><br>
+  <% end %>
 </div>

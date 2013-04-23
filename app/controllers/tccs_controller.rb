@@ -17,7 +17,11 @@ class TccsController < ApplicationController
         unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           @tcc = Tcc.new
         end
-        @tcc.build_abstract
+        @tcc.build_abstract if @tcc.abstract.nil?
+        @tcc.build_hubs if @tcc.hubs.nil?
+        @tcc.build_bibliography if @tcc.bibliography.nil?
+        @tcc.build_presentation if @tcc.presentation.nil?
+        @tcc.build_final_considerations if @tcc.final_considerations.nil?
         render 'index'
       end
   end
@@ -28,7 +32,7 @@ class TccsController < ApplicationController
     if @tcc.save
       render 'index'
     else
-      render 'new'
+      render 'index'
     end
   end
 

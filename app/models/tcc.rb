@@ -1,6 +1,6 @@
 class Tcc < ActiveRecord::Base
   attr_accessible :leader, :moodle_user, :name, :title, :defense_date, :hubs_attributes,
-                  :bibliography_attributes, :presentation_attributes, :abstract_attributes, :final_considerations
+                  :bibliography_attributes, :presentation_attributes, :abstract_attributes, :final_considerations_attributes
 
 
   validates_uniqueness_of :moodle_user
