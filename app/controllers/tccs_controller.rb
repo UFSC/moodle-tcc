@@ -17,12 +17,19 @@ class TccsController < ApplicationController
         unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
           @tcc = Tcc.new
         end
+
         @tcc.build_abstract if @tcc.abstract.nil?
-        @tcc.build_hubs if @tcc.hubs.nil?
+
+        while @tcc.hubs.size < 3 do
+          hub = @tcc.hubs.build
+          hub.update_attributes(:category => @tcc.hubs.size)
+        end
+
+        get_hubs_diaries
+
         @tcc.build_bibliography if @tcc.bibliography.nil?
         @tcc.build_presentation if @tcc.presentation.nil?
         @tcc.build_final_considerations if @tcc.final_considerations.nil?
-        render 'index'
       end
   end
 
@@ -32,6 +39,7 @@ class TccsController < ApplicationController
     if @tcc.save
       render 'index'
     else
+      #Todo: renderizar erro
       render 'index'
     end
   end
@@ -41,11 +49,36 @@ class TccsController < ApplicationController
     if @tcc.update_attributes(params[:tcc])
       render 'index'
     else
+      #Todo: renderizar erro
       render 'edit'
     end
   end
 
-  protected
+  private
+
+  def get_hubs_diaries
+    @tcc.hubs.each do |hub|
+      case hub.category
+        when 1
+          2.times do |i|
+            diary = hub.diaries.build
+            diary.content = "sem web service"
+          end
+        when 2
+          3.times do
+            diary = hub.diaries.build
+            diary.content = "sem web service"
+          end
+        when 3
+          3.times do
+            diary = hub.diaries.build
+            diary.content = "sem web service"
+          end
+      end
+
+     end
+  end
+
 
   # the consumer keys/secrets
   $consumer_key = "consumer_key"
