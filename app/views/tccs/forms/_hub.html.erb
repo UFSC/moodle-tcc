@@ -1,18 +1,24 @@
-<div id="hub<%=h category %>_tab_content" style = "display:none">
-  <div class="accordion" id="accordion2">
+<div id="hub<%=h category %>_tab_content" style = "display:none; margin-left: 0px" class = "span12">
     <%= h.semantic_fields_for :diaries do |d| %>
-        <div class="accordion-group">
+        <div class="accordion-group <%=h category %>">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-              Titulo do Diário
+            <a id="<%=h d.object_id %>" class="accordion-toggle">
+              <%= d.object.title %>
             </a>
           </div>
-          <div id="collapseOne" class="accordion-body collapse out">
-            <div class="accordion-inner">
-              <%= d.text_area :content %>
+          <div id="<%=h d.object_id %>_collapse" class="collapse out">
+            <div class="accordion-inner" style="height: 100px;">
+              <%= d.object.content %>
+            </div>
+            <div style="text-align:center; padding-bottom: 0px">
+              <a id="<%=h d.object_id %>" class="accordion-toggle-icon accordion-toggle" href="#"><i class="icon-chevron-down"></i></a>
             </div>
           </div>
         </div>
     <% end %>
-  </div>
+    <div>
+        <h3>Reflexões</h3>
+        <%= h.cktext_area :reflection %>
+    </div>
 </div>
+

@@ -63,16 +63,19 @@ class TccsController < ApplicationController
           2.times do |i|
             diary = hub.diaries.build
             diary.content = "sem web service"
+            diary.title = "Titulo do diario"
           end
         when 2
           3.times do
             diary = hub.diaries.build
             diary.content = "sem web service"
+            diary.title = "Titulo do diario"
           end
         when 3
           3.times do
             diary = hub.diaries.build
             diary.content = "sem web service"
+            diary.title = "Titulo do diario"
           end
       end
 
