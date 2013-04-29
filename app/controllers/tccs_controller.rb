@@ -50,7 +50,7 @@ class TccsController < ApplicationController
       render 'index'
     else
       #Todo: renderizar erro
-      render 'edit'
+      render 'index'
     end
   end
 
