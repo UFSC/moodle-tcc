@@ -6,6 +6,9 @@ gem 'mysql2'
 
 gem 'oauth'
 
+# Moodle Web Service
+gem 'rest-client'
+
 # Tabs
 gem 'tabs_on_rails'
 

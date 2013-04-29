@@ -7,6 +7,11 @@ class TccsController < ApplicationController
     require 'action_controller/test_process'
   end
 
+  require 'rest_client'
+
+  #token = "c901357eacaf7f6861c762d7872a045f"
+  #client = RestClient.get 'http://localhost/moodle/webservice/xmlrpc/server.php?wstoken='+token
+
   before_filter :authorize, :only => :index
 
   def index
@@ -37,9 +42,9 @@ class TccsController < ApplicationController
     @tcc = Tcc.new(params[:tcc])
     @tcc.moodle_user = session['launch_params']['context_id']
     if @tcc.save
+      flash[:success] = t(:successfully_saved)
       render 'index'
     else
-      #Todo: renderizar erro
       render 'index'
     end
   end
@@ -47,9 +52,9 @@ class TccsController < ApplicationController
   def update
     @tcc = Tcc.find(params[:id])
     if @tcc.update_attributes(params[:tcc])
+      flash[:success] = t(:successfully_saved)
       render 'index'
     else
-      #Todo: renderizar erro
       render 'index'
     end
   end
@@ -78,8 +83,8 @@ class TccsController < ApplicationController
             diary.title = "Titulo do diario"
           end
       end
-
-     end
+    end
+    @tcc.save
   end
 
 
