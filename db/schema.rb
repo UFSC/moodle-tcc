@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20130416160556) do
 
   create_table "diaries", :force => true do |t|
     t.text     "content"
+    t.integer  "pos"
     t.string   "title"
     t.integer  "hub_id"
     t.datetime "created_at", :null => false

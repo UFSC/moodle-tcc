@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe Diary do
-  it { should respond_to(:content, :title) }
+  it { should respond_to(:content, :title, :pos) }
 end

@@ -9,6 +9,9 @@ gem 'oauth'
 # Moodle Web Service
 gem 'rest-client'
 
+# XML Parser
+gem 'nori'
+
 # Tabs
 gem 'tabs_on_rails'
 

@@ -7,11 +7,6 @@ class TccsController < ApplicationController
     require 'action_controller/test_process'
   end
 
-  require 'rest_client'
-
-  #token = "c901357eacaf7f6861c762d7872a045f"
-  #client = RestClient.get 'http://localhost/moodle/webservice/xmlrpc/server.php?wstoken='+token
-
   before_filter :authorize, :only => :index
 
   def index
@@ -30,7 +25,7 @@ class TccsController < ApplicationController
           hub.update_attributes(:category => @tcc.hubs.size)
         end
 
-        get_hubs_diaries
+        get_hubs_diaries # search on moodle webserver
 
         @tcc.build_bibliography if @tcc.bibliography.nil?
         @tcc.build_presentation if @tcc.presentation.nil?
@@ -66,25 +61,27 @@ class TccsController < ApplicationController
       case hub.category
         when 1
           2.times do |i|
-            diary = hub.diaries.build
-            diary.content = "sem web service"
-            diary.title = "Titulo do diario"
+            set_diary(hub, i, 28, "Titulo do diario")
           end
         when 2
-          3.times do
-            diary = hub.diaries.build
-            diary.content = "sem web service"
-            diary.title = "Titulo do diario"
+          3.times do |i|
+            set_diary(hub, i, 28, "Titulo do diario")
           end
         when 3
-          3.times do
-            diary = hub.diaries.build
-            diary.content = "sem web service"
-            diary.title = "Titulo do diario"
+          3.times do |i|
+            set_diary(hub, i, 28, "Titulo do diario")
           end
       end
     end
     @tcc.save
+  end
+
+  def set_diary(hub, i, content_id, title)
+    unless diary = hub.diaries.find_by_pos(i)
+      diary = hub.diaries.build
+    end
+    diary.content = get_online_text(content_id)
+    diary.title = title
   end
 
 
@@ -103,5 +100,25 @@ class TccsController < ApplicationController
     else
       render file: 'public/500.html'
     end
+  end
+
+  def get_online_text(assignid)
+    token = "a50253670439cc22ab223d1af67e305b"
+
+    client = RestClient.post('http://localhost/moodle/webservice/rest/server.php',
+                             :wsfunction => "local_wstcc_get_user_online_text_submission",
+                             :userid => 3856,
+                             :assignid => assignid,
+                             :wstoken => token){ |response, request, result, &block|
+      case response.code
+        when 200
+          parser = Nori.new
+          parser.parse(response)["RESPONSE"]["SINGLE"]["KEY"].first["VALUE"]
+        when 423
+          raise SomeCustomExceptionIfYouWant
+        else
+          response.return!(request, result, &block)
+      end
+    }
   end
 end
