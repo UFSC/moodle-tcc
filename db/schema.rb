@@ -15,9 +15,7 @@ ActiveRecord::Schema.define(:version => 20130416160556) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
-    t.text     "content_en"
     t.string   "key_words_pt"
-    t.string   "key_words_en"
     t.text     "commentary"
     t.integer  "tcc_id"
     t.datetime "created_at",   :null => false

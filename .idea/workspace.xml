@@ -1,56 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/app/views/tccs/_form.html.erb" line="0" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" name="Default" comment="Renomeação de tcc nas migrates">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130416155712_create_presentations.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130416160239_create_abstracts.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130416160556_create_final_considerations.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/abstract.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/models/abstract_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/final_considerations.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/models/final_considerations_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/requests/instructor_admin_tccs_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/presentation.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/models/presentation_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/requests/tccs_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+    <list default="true" id="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" name="Default" comment="before_filter e mais testes">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20130416160239_create_abstracts.rb" afterPath="$PROJECT_DIR$/db/migrate/20130416160239_create_abstracts.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/tccs/forms/_abstract.html.erb" afterPath="$PROJECT_DIR$/app/views/tccs/forms/_abstract.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/abstract.rb" afterPath="$PROJECT_DIR$/app/models/abstract.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/fabricators/abstract.rb" afterPath="$PROJECT_DIR$/spec/fabricators/abstract.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/abstract_spec.rb" afterPath="$PROJECT_DIR$/spec/models/abstract_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/tccs_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/tccs_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sistema-tcc.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366222501472" ignored="false" />
+    <file path="/Dummy.txt" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367522823656" ignored="false" />
     <file path="/database.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1364411926201" ignored="false" />
-    <file path="/Gemfile" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366220401677" ignored="false" />
+    <file path="/Gemfile" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367350305562" ignored="false" />
     <file path="/temp.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1365460748855" ignored="false" />
-    <file path="/tccs_controller.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366222198544" ignored="false" />
-    <file path="/routes.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366222184888" ignored="false" />
-    <file path="/tcc.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366134037548" ignored="false" />
+    <file path="/tccs_controller.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367521148076" ignored="false" />
+    <file path="/routes.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366407457241" ignored="false" />
+    <file path="/tcc.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367258483584" ignored="false" />
     <file path="/show.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1365535184538" ignored="false" />
     <file path="/20130401175125_create_tccs.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366134462661" ignored="false" />
     <file path="/tcc_spec.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366046021257" ignored="false" />
     <file path="/instructor_admin.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1365616135605" ignored="false" />
     <file path="/application.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1365538229465" ignored="false" />
     <file path="/development.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1365617986088" ignored="false" />
-    <file path="/instructor_admin_controller.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366143141345" ignored="false" />
-    <file path="/a.dummy" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366042909308" ignored="false" />
+    <file path="/instructor_admin_controller.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366413442737" ignored="false" />
+    <file path="/a.dummy" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366229519299" ignored="false" />
     <file path="/index.html" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366042828488" ignored="false" />
     <file path="/20130401192254_create_hubs.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366046431688" ignored="false" />
-    <file path="/hub.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366046480339" ignored="false" />
+    <file path="/hub.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366919096785" ignored="false" />
     <file path="/hub_spec.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366046505760" ignored="false" />
-    <file path="/_form.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065964458" ignored="false" />
+    <file path="/_form.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367006458518" ignored="false" />
     <file path="/new.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366051034488" ignored="false" />
-    <file path="/_tabs_header.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366063477675" ignored="false" />
-    <file path="/index.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366060447612" ignored="false" />
+    <file path="/_tabs_header.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366908215188" ignored="false" />
+    <file path="/index.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366317651282" ignored="false" />
     <file path="/_data.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366144036618" ignored="false" />
-    <file path="/_abstract.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065466649" ignored="false" />
-    <file path="/_presentation.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065503628" ignored="false" />
-    <file path="/_hub1.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065533858" ignored="false" />
-    <file path="/_hub2.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065564024" ignored="false" />
+    <file path="/_abstract.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366749510579" ignored="false" />
+    <file path="/_presentation.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367008949888" ignored="false" />
+    <file path="/_hub1.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366923984510" ignored="false" />
+    <file path="/_hub2.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366916772142" ignored="false" />
     <file path="/_hub3.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065591799" ignored="false" />
-    <file path="/_final_consideration.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065619516" ignored="false" />
+    <file path="/_final_consideration.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367008904884" ignored="false" />
     <file path="/_bibliographies.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366065643179" ignored="false" />
     <file path="/presentation.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366130339569" ignored="false" />
     <file path="/abstract.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366130463379" ignored="false" />
@@ -61,8 +56,26 @@
     <file path="/20130401201417_create_bibliographies.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366141192036" ignored="false" />
     <file path="/bibliography.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366141289626" ignored="false" />
     <file path="/bibliography_spec.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366141064086" ignored="false" />
-    <file path="/tcc.pt-BR.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366143581523" ignored="false" />
+    <file path="/tcc.pt-BR.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367007327671" ignored="false" />
     <file path="/tccs.js" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366144945679" ignored="false" />
+    <file path="/instructor_admin_tccs_spec.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366404527927" ignored="false" />
+    <file path="/tccs_spec.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366750762854" ignored="false" />
+    <file path="/spec_helper.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366316054111" ignored="false" />
+    <file path="/utilities.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366667798913" ignored="false" />
+    <file path="/README_FOR_APP" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366664412373" ignored="false" />
+    <file path="/README.rdoc" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366664628230" ignored="false" />
+    <file path="/config.js" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1366741020626" ignored="false" />
+    <file path="/_hub.html.erb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367009052961" ignored="false" />
+    <file path="/accordion_init.js" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367005984005" ignored="false" />
+    <file path="/20130401200720_create_diaries.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367353478630" ignored="false" />
+    <file path="/diary.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367353616950" ignored="false" />
+    <file path="/application.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367258218933" ignored="false" />
+    <file path="/formtastic.pt-BR.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367259788310" ignored="false" />
+    <file path="/pt-BR.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367261749388" ignored="false" />
+    <file path="/custom.pt-BR.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367261849624" ignored="false" />
+    <file path="/diary_spec.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367353557157" ignored="false" />
+    <file path="/tcc_config.yml" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367520811614" ignored="false" />
+    <file path="/load_tcc_config.rb" changelist="2f2f353f-aa5d-44ed-b917-bd3b5ba289ea" time="1367518085249" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,10 +92,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_data.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/tccs/forms/_data.html.erb">
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/tccs/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="4" selection-start="406" selection-end="406" vertical-scroll-proportion="-6.25">
+            <state line="0" column="36" selection-start="36" selection-end="36" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -91,43 +104,48 @@
       <file leaf-file-name="tccs_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/tccs_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="30" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="71" column="11" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#1195#1217#0" expanded="true" />
+                <element signature="e#1398#1420#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gemfile" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
+      <file leaf-file-name="_abstract.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/tccs/forms/_abstract.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="34" selection-start="944" selection-end="946" vertical-scroll-proportion="0.7828283">
-              <folding />
+            <state line="7" column="28" selection-start="299" selection-end="299" vertical-scroll-proportion="-4.375">
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tccs_spec.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="tccs_spec.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/requests/tccs_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="74" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0">
+            <state line="19" column="12" selection-start="512" selection-end="512" vertical-scroll-proportion="0.48305085">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <file leaf-file-name="20130416160239_create_abstracts.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/migrate/20130416160239_create_abstracts.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="32" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0">
+            <state line="3" column="24" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="instructor_admin_tccs_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/requests/instructor_admin_tccs_spec.rb">
+      <file leaf-file-name="tcc_config.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/tcc_config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="19" column="48" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -151,22 +169,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/models/bibliography.rb" />
-        <option value="$PROJECT_DIR$/spec/fabricators/bibliography.rb" />
-        <option value="$PROJECT_DIR$/spec/models/bibliography_spec.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/instructor_admin_controller.rb" />
-        <option value="$PROJECT_DIR$/config/locales/tcc.pt-BR.yml" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/application.css" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/tccs.js.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/tccs.js" />
-        <option value="$PROJECT_DIR$/app/views/tccs/_tabs_header.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+        <option value="$PROJECT_DIR$/config/locales/pt-BR.yml" />
+        <option value="$PROJECT_DIR$/config/locales/custom.pt-BR.yml" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/views/tccs/forms/_data.html.erb" />
-        <option value="$PROJECT_DIR$/spec/requests/tccs_spec.rb" />
-        <option value="$PROJECT_DIR$/spec/requests/instructor_admins_spec.rb" />
-        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20130401200720_create_diaries.rb" />
+        <option value="$PROJECT_DIR$/spec/fabricators/diary.rb" />
+        <option value="$PROJECT_DIR$/spec/models/diary_spec.rb" />
+        <option value="$PROJECT_DIR$/app/models/diary.rb" />
+        <option value="$PROJECT_DIR$/config/initializers/load_tcc_config.rb" />
+        <option value="$PROJECT_DIR$/config/tcc_config.yml" />
         <option value="$PROJECT_DIR$/app/controllers/tccs_controller.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20130416160239_create_abstracts.rb" />
+        <option value="$PROJECT_DIR$/spec/fabricators/abstract.rb" />
+        <option value="$PROJECT_DIR$/spec/models/abstract_spec.rb" />
+        <option value="$PROJECT_DIR$/app/models/abstract.rb" />
+        <option value="$PROJECT_DIR$/app/views/tccs/forms/_abstract.html.erb" />
       </list>
     </option>
   </component>
@@ -209,8 +227,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="RailsProjectView" />
       <pane id="Scope" />
+      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -239,39 +257,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spec" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spec" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="requests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -286,64 +276,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sistema-tcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -363,9 +295,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/instructor_admin" />
       <recent name="$PROJECT_DIR$/config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/javascripts/ckeditor" />
       <recent name="$PROJECT_DIR$/app/views/tccs/forms" />
     </key>
   </component>
@@ -558,7 +492,9 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <RunnerSettings RunnerId="RubyDebugRunner" />
       <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyDebugRunner" />
       <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
     </configuration>
@@ -696,30 +632,78 @@
       <created>1366145121381</created>
       <updated>1366145121381</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Início dos request specs e gems que serão utilizadas">
+      <created>1366222603124</created>
+      <updated>1366222603124</updated>
+    </task>
+    <task id="LOCAL-00014" summary="before_filter e mais testes">
+      <created>1366327467285</created>
+      <updated>1366327467285</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Tests das requests de professor e aluno ( ainda falta melhoraments de segurança )">
+      <created>1366411862015</created>
+      <updated>1366411862015</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Tela de resumo (básica) e alguma sugestões de testes de request (ainda não funcionando)">
+      <created>1366674001333</created>
+      <updated>1366674001333</updated>
+    </task>
+    <task id="LOCAL-00017" summary="ckeditor  funcionando nos forms necessários">
+      <created>1366751394826</created>
+      <updated>1366751394826</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Forms e alguma refatorações">
+      <created>1366924154053</created>
+      <updated>1366924154053</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Forms dos eixos">
+      <created>1367008051720</created>
+      <updated>1367008051720</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Alguns títulos que faltavam nas views">
+      <created>1367009752630</created>
+      <updated>1367009752630</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Traduções do formtastic">
+      <created>1367259902071</created>
+      <updated>1367259902071</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Client rest funcionando">
+      <created>1367276947185</created>
+      <updated>1367276947185</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Web service buscando do moodle">
+      <created>1367356742308</created>
+      <updated>1367356742308</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Arquivo de config para o yml">
+      <created>1367522830699</created>
+      <updated>1367522830699</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1215" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964602" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24978541" sideWeight="0.71570796" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28497854" sideWeight="0.71570796" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23690987" sideWeight="0.7112832" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32961375" sideWeight="0.67146015" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28429204" sideWeight="0.99828327" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28871682" sideWeight="0.99828327" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964602" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24978541" sideWeight="0.7112832" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24978541" sideWeight="0.71460176" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -761,7 +745,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Datepicker e reorganização dos javascripts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arquivo de config para o yml" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -786,101 +770,134 @@
     <MESSAGE value="Modificações e adequações nos models" />
     <MESSAGE value="Mudança do nome da action em instructor_admin" />
     <MESSAGE value="Datepicker e reorganização dos javascripts" />
+    <MESSAGE value="Início dos request specs e gems que serão utilizadas" />
+    <MESSAGE value="before_filter e mais testes" />
+    <MESSAGE value="Tests das requests de professor e aluno ( ainda falta melhoraments de segurança )" />
+    <MESSAGE value="Tela de resumo (básica) e alguma sugestões de testes de request (ainda não funcionando)" />
+    <MESSAGE value="ckeditor  funcionando nos forms necessários" />
+    <MESSAGE value="Forms e alguma refatorações" />
+    <MESSAGE value="Forms dos eixos" />
+    <MESSAGE value="Alguns títulos que faltavam nas views" />
+    <MESSAGE value="Traduções do formtastic" />
+    <MESSAGE value="Client rest funcionando" />
+    <MESSAGE value="Web service buscando do moodle" />
+    <MESSAGE value="Arquivo de config para o yml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../saext/app/views/people/_form.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/models/diary.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="216" selection-end="457" vertical-scroll-proportion="0.10771993" />
+        <state line="2" column="43" selection-start="91" selection-end="91" vertical-scroll-proportion="0.048859935" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/locales/tcc.pt-BR.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="38" selection-start="162" selection-end="162" vertical-scroll-proportion="0.17676768" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/application.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="32" selection-start="607" selection-end="607" vertical-scroll-proportion="0.32828283" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="32" selection-start="673" selection-end="673" vertical-scroll-proportion="0.37878788" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../saext/app/assets/javascripts/person.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="31" selection-start="774" selection-end="774" vertical-scroll-proportion="0.6060606" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/tccs/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/tccs/_tabs_header.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="9" selection-start="595" selection-end="595" vertical-scroll-proportion="0.23684211" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/tccs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="11" selection-start="184" selection-end="184" vertical-scroll-proportion="0.19417475" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/fabricators/abstract.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="24" selection-start="157" selection-end="157" vertical-scroll-proportion="0.097087376" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/tccs/forms/_data.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="4" selection-start="406" selection-end="406" vertical-scroll-proportion="-6.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/instructor_admin_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="11" selection-start="67" selection-end="67" vertical-scroll-proportion="0.025252525">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/tccs_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="30" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/requests/tccs_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="74" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="32" selection-start="150" selection-end="150" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/requests/instructor_admin_tccs_spec.rb">
+    <entry file="file://$PROJECT_DIR$/config/initializers/formtastic.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/inflections.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/secret_token.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/load_tcc_config.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="76" selection-start="76" selection-end="76" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="2" selection-start="128" selection-end="138" vertical-scroll-proportion="0.2198697">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="34" selection-start="944" selection-end="946" vertical-scroll-proportion="0.7828283">
+        <state line="12" column="9" selection-start="143" selection-end="143" vertical-scroll-proportion="0.24429968">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/tcc_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="48" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/fabricators/abstract.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="29" selection-start="80" selection-end="80" vertical-scroll-proportion="0.025423728">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/models/abstract_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="29" selection-start="73" selection-end="73" vertical-scroll-proportion="0.076271184">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/abstract.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="29" selection-start="83" selection-end="83" vertical-scroll-proportion="0.050847456">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20130416160239_create_abstracts.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="24" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/tccs/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="36" selection-start="36" selection-end="36" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/tccs_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="11" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#1195#1217#0" expanded="true" />
+            <element signature="e#1398#1420#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/tccs/forms/_abstract.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="28" selection-start="299" selection-end="299" vertical-scroll-proportion="-4.375">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/requests/tccs_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="12" selection-start="512" selection-end="512" vertical-scroll-proportion="0.48305085">
           <folding />
         </state>
       </provider>

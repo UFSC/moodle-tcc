@@ -69,7 +69,7 @@ class TccsController < ApplicationController
                       TCC_CONFIG["title_hub_#{hub.category}_diary_#{i+1}"])
           end
         when 3
-          3.times do |i|
+          4.times do |i|
             set_diary(hub, i, TCC_CONFIG["id_hub_#{hub.category}_diary_#{i+1}"],
                       TCC_CONFIG["title_hub_#{hub.category}_diary_#{i+1}"])
           end
