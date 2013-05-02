@@ -3,7 +3,7 @@ common: &common
   number_of_hubs: 3
 
   title_hub_1_diary_1: Saúde e sociedade
-  id_hub_1_diary_1: 28
+  id_hub_1_diary_1: 1264
   title_hub_1_diary_2: Epidemiologia
   id_hub_1_diary_2: 28
 

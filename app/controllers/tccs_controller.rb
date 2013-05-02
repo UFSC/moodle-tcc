@@ -83,7 +83,8 @@ class TccsController < ApplicationController
       diary = hub.diaries.build
     end
     user_id = 3856
-    diary.content = get_online_text(user_id, content_id)
+    online_text =  get_online_text(user_id, content_id)
+    diary.content = online_text unless online_text.nil?
     diary.title = title
   end
 
@@ -91,15 +92,15 @@ class TccsController < ApplicationController
     RestClient.post(TCC_CONFIG["server"],
       :wsfunction => "local_wstcc_get_user_online_text_submission",
       :userid => user_id, :assignid => assign_id,
-      :wstoken => TCC_CONFIG["token"]) { |response, request, result, &block|
-        case response.code
-          when 200
-            parser = Nori.new
-            parser.parse(response)["RESPONSE"]["SINGLE"]["KEY"].first["VALUE"]
-          when 423
-            raise SomeCustomExceptionIfYouWant
-          else
-            response.return!(request, result, &block)
+      :wstoken => TCC_CONFIG["token"] ) { |response|
+        if response.code == 200
+          parser = Nori.new
+          unless parser.parse(response)["RESPONSE"].nil?
+            online_text = parser.parse(response)["RESPONSE"]["SINGLE"]["KEY"].first["VALUE"]
+            if online_text["@null"].nil?
+                online_text
+            end
+          end
         end
       }
   end

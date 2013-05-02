@@ -1,2 +1,4 @@
   pt-BR:
     successfully_saved: "Mudanças salvas com sucesso"
+    online_text_error: "<p style='color:red'>Erro ao buscar</p>"
+    online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"
