@@ -11,6 +11,7 @@ class Tcc < ActiveRecord::Base
   has_one :presentation
   has_one :abstract
   has_one :final_considerations
+  has_many :references
 
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations
 end
