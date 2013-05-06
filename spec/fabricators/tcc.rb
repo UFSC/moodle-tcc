@@ -8,7 +8,6 @@ Fabricator(:tcc, class_name: :tcc) do
   grade 0.9
   defense_date Date.new
   hubs(count: 3)
-  bibliography
   presentation
   abstract
   final_considerations
