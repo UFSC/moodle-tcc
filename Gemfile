@@ -12,6 +12,9 @@ gem 'rest-client'
 # XML Parser
 gem 'nori'
 
+# State machine
+gem 'aasm'
+
 # Tabs
 gem 'tabs_on_rails'
 

@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20130416160556) do
     t.text     "reflection"
     t.text     "commentary"
     t.integer  "category"
+    t.string   "state"
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

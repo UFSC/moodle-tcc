@@ -4,6 +4,7 @@ class CreateHubs < ActiveRecord::Migration
       t.text :reflection
       t.text :commentary
       t.integer :category
+      t.string :state
       t.references :tcc
 
       t.timestamps
