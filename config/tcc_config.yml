@@ -1,27 +1,42 @@
 common: &common
   # setting the course
-  number_of_hubs: 3
-
-  title_hub_1_diary_1: Saúde e sociedade
-  id_hub_1_diary_1: 1264
-  title_hub_1_diary_2: Epidemiologia
-  id_hub_1_diary_2: 28
-
-  title_hub_2_diary_1: Gestão e Avaliação na Atenção Básica
-  id_hub_2_diary_1: 28
-  title_hub_2_diary_2: Planejamento na Atenção Básica
-  id_hub_2_diary_2: 28
-  title_hub_2_diary_3: Processo de Trabalho na Atenção Básica
-  id_hub_2_diary_3: 28
-
-  title_hub_3_diary_1: Atenção Integral na Saúde da Criança/ Apoio Matricial
-  id_hub_3_diary_1: 28
-  title_hub_3_diary_2: Atenção Integral na Saúde da Mulher/Clínica Ampliada
-  id_hub_3_diary_2: 28
-  title_hub_3_diary_3: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
-  id_hub_3_diary_3: 28
-  title_hub_3_diary_4: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
-  id_hub_3_diary_4: 28
+  hubs:
+    -
+      num:  1
+      diaries:
+        -
+          title: Saúde e sociedade
+          id: 1264
+        -
+          title: Epidemiologia
+          id: 28
+    -
+      num: 2
+      diaries:
+        -
+          title: Gestão e Avaliação na Atenção Básica
+          id: 28
+        -
+          title: Planejamento na Atenção Básica
+          id: 28
+        -
+          title: Processo de Trabalho na Atenção Básica
+          id: 28
+    -
+      num: 3
+      diaries:
+        -
+          title: Atenção Integral na Saúde da Criança/ Apoio Matricial
+          id: 28
+        -
+          title: Atenção Integral na Saúde da Mulher/Clínica Ampliada
+          id: 28
+        -
+          title: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
+          id: 28
+        -
+          title: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
+          id: 28
 
 development:
   <<: *common

@@ -19,7 +19,7 @@ class TccsController < ApplicationController
       end
 
       @tcc.build_abstract if @tcc.abstract.nil?
-      while @tcc.hubs.size < TCC_CONFIG["number_of_hubs"] do
+      while @tcc.hubs.size < TCC_CONFIG["hubs"].size do
         hub = @tcc.hubs.build
         hub.update_attributes(:category => @tcc.hubs.size)
       end
@@ -57,22 +57,9 @@ class TccsController < ApplicationController
 
   def get_hubs_diaries
     @tcc.hubs.each do |hub|
-      case hub.category
-        when 1
-          2.times do |i|
-            set_diary(hub, i, TCC_CONFIG["id_hub_#{hub.category}_diary_#{i+1}"],
-                      TCC_CONFIG["title_hub_#{hub.category}_diary_#{i+1}"])
-          end
-        when 2
-          3.times do |i|
-            set_diary(hub, i, TCC_CONFIG["id_hub_#{hub.category}_diary_#{i+1}"],
-                      TCC_CONFIG["title_hub_#{hub.category}_diary_#{i+1}"])
-          end
-        when 3
-          4.times do |i|
-            set_diary(hub, i, TCC_CONFIG["id_hub_#{hub.category}_diary_#{i+1}"],
-                      TCC_CONFIG["title_hub_#{hub.category}_diary_#{i+1}"])
-          end
+      diaries = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
+      diaries.size.times do |i|
+        set_diary(hub, i, diaries[i]["id"], diaries[i]["title"])
       end
     end
     @tcc.save
