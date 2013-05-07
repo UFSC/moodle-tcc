@@ -1,35 +1,22 @@
 class TccsController < ApplicationController
-  if defined? ActionDispatch
-    require 'oauth/request_proxy/rack_request'
-    require 'action_dispatch/testing/test_process'
-  else
-    require 'oauth/request_proxy/action_controller_request'
-    require 'action_controller/test_process'
-  end
-
   before_filter :authorize, :only => :index
 
   def index
-    role =  @tp.to_params["roles"].split(",").first.downcase
-    if role == 'instructor'
-      redirect_to instructor_admin_tccs_path
-    else
-      unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
-        @tcc = Tcc.new
-      end
-
-      @tcc.build_abstract if @tcc.abstract.nil?
-
-      while @tcc.hubs.size < TCC_CONFIG["hubs"].size do
-        @tcc.hubs.build(:category => @tcc.hubs.size+1)
-      end
-
-      get_hubs_diaries # search on moodle webserver
-
-      @tcc.build_bibliography if @tcc.bibliography.nil?
-      @tcc.build_presentation if @tcc.presentation.nil?
-      @tcc.build_final_considerations if @tcc.final_considerations.nil?
+    unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
+      @tcc = Tcc.new
     end
+
+    @tcc.build_abstract if @tcc.abstract.nil?
+
+    while @tcc.hubs.size < TCC_CONFIG["hubs"].size do
+      @tcc.hubs.build(:category => @tcc.hubs.size+1)
+    end
+
+    get_hubs_diaries # search on moodle webserver
+
+    @tcc.build_bibliography if @tcc.bibliography.nil?
+    @tcc.build_presentation if @tcc.presentation.nil?
+    @tcc.build_final_considerations if @tcc.final_considerations.nil?
   end
 
   def create
@@ -69,38 +56,38 @@ class TccsController < ApplicationController
       diary = hub.diaries.build
     end
     user_id = 3856
-    online_text =  get_online_text(user_id, content_id)
+    online_text = get_online_text(user_id, content_id)
     diary.content = online_text unless online_text.nil?
     diary.title = title
   end
 
   def get_online_text(user_id, assign_id)
     RestClient.post(TCC_CONFIG["server"],
-      :wsfunction => "local_wstcc_get_user_online_text_submission",
-      :userid => user_id, :assignid => assign_id,
-      :wstoken => TCC_CONFIG["token"] ) { |response|
-        if response.code == 200
-          parser = Nori.new
-          unless parser.parse(response)["RESPONSE"].nil?
-            online_text = parser.parse(response)["RESPONSE"]["SINGLE"]["KEY"].first["VALUE"]
-            if online_text["@null"].nil?
-                online_text
-            end
+                    :wsfunction => "local_wstcc_get_user_online_text_submission",
+                    :userid => user_id, :assignid => assign_id,
+                    :wstoken => TCC_CONFIG["token"]) { |response|
+      if response.code == 200
+        parser = Nori.new
+        unless parser.parse(response)["RESPONSE"].nil?
+          online_text = parser.parse(response)["RESPONSE"]["SINGLE"]["KEY"].first["VALUE"]
+          if online_text["@null"].nil?
+            online_text
           end
         end
-      }
+      end
+    }
   end
 
   def authorize
-    if params['oauth_consumer_key'] == TCC_CONFIG["consumer_key"]
-      @tp = IMS::LTI::ToolProvider.new( TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], params )
-      if @tp.valid_request?(request)
-        session['launch_params'] = @tp.to_params
-      else
-        render file: 'public/500.html'
-      end
+    lti_params = session['lti_launch_params']
+
+    if lti_params.nil?
+      logger.error 'Access Denied: LTI not initialized'
+      redirect_to root_url
     else
-      render file: 'public/500.html'
+      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
+
+      logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
   end
 end
