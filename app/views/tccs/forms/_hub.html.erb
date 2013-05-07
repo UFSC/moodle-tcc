@@ -1,5 +1,6 @@
 <div id="hub<%=h category %>_tab_content" style = "display:none; margin-left: 0px" class = "span12">
     <h3>Eixo <%= category %></h3>
+    <%= h.input :category, :as => :hidden %>
     <%= h.semantic_fields_for :diaries do |d| %>
         <div class="accordion-group <%=h category %>">
           <div class="accordion-heading">
@@ -10,6 +11,8 @@
           <div id="<%=h d.object_id %>_collapse" class="collapse out">
             <div class="accordion-inner" style="height: 100px; overflow:scroll;">
               <%= d.object.content.html_safe unless d.object.content.nil? %>
+              <%= d.input :content, :as => :hidden %>
+              <%= d.input :title, :as => :hidden %>
             </div>
             <div style="text-align:center; padding-bottom: 0px">
               <a id="<%=h d.object_id %>" class="accordion-toggle-icon accordion-toggle" href="#"><i class="icon-chevron-down"></i></a>

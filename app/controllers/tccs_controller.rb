@@ -19,9 +19,9 @@ class TccsController < ApplicationController
       end
 
       @tcc.build_abstract if @tcc.abstract.nil?
+
       while @tcc.hubs.size < TCC_CONFIG["hubs"].size do
-        hub = @tcc.hubs.build
-        hub.update_attributes(:category => @tcc.hubs.size)
+        @tcc.hubs.build(:category => @tcc.hubs.size+1)
       end
 
       get_hubs_diaries # search on moodle webserver
@@ -62,7 +62,6 @@ class TccsController < ApplicationController
         set_diary(hub, i, diaries[i]["id"], diaries[i]["title"])
       end
     end
-    @tcc.save
   end
 
   def set_diary(hub, i, content_id, title)

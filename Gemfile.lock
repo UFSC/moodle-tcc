@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/laserlemon/vestal_versions
+  revision: c7aa512666b22e1a47b4fb36bb1679cb847a532e
+  specs:
+    vestal_versions (1.2.3)
+      activerecord (~> 3.0)
+      activesupport (~> 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -232,4 +240,5 @@ DEPENDENCIES
   tabs_on_rails
   thin
   uglifier (>= 1.0.3)
+  vestal_versions!
   will_paginate

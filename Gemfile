@@ -18,6 +18,9 @@ gem 'aasm'
 # Tabs
 gem 'tabs_on_rails'
 
+#Model versioning
+gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
+
 # Compass + Twitter Bootstrap
 gem 'compass_twitter_bootstrap'
 gem 'bootstrap-datepicker-rails'
