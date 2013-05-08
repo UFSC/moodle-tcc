@@ -3,6 +3,7 @@ class CreateReferences < ActiveRecord::Migration
     create_table :references do |t|
       t.references :tcc
       t.references :element
+      t.string :element_type
 
       t.timestamps
     end

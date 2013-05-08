@@ -14,7 +14,7 @@ class Tcc < ActiveRecord::Base
   has_one :abstract
   has_one :final_considerations
 
-  has_many :references
+  has_many :references,  :dependent => :destroy
   has_many :general_refs, :through => :references, :source => :element, :source_type => 'GeneralRef'
 
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations

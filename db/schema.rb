@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416160556) do
+ActiveRecord::Schema.define(:version => 20130506190310) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -56,6 +56,12 @@ ActiveRecord::Schema.define(:version => 20130416160556) do
 
   add_index "final_considerations", ["tcc_id"], :name => "index_final_considerations_on_tcc_id"
 
+  create_table "general_refs", :force => true do |t|
+    t.string "direct_citation"
+    t.string "indirect_citation"
+    t.string "reference_text"
+  end
+
   create_table "hubs", :force => true do |t|
     t.text     "reflection"
     t.text     "commentary"
@@ -76,6 +82,17 @@ ActiveRecord::Schema.define(:version => 20130416160556) do
   end
 
   add_index "presentations", ["tcc_id"], :name => "index_presentations_on_tcc_id"
+
+  create_table "references", :force => true do |t|
+    t.integer  "tcc_id"
+    t.integer  "element_id"
+    t.string   "element_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "references", ["element_id"], :name => "index_references_on_element_id"
+  add_index "references", ["tcc_id"], :name => "index_references_on_tcc_id"
 
   create_table "tccs", :force => true do |t|
     t.string   "moodle_user"

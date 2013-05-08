@@ -1,0 +1,25 @@
+<h3>Referências</h3>
+<div>
+  <% if @references.count > 0 %>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Citação direta</th>
+          <th>Citação indireta</th>
+          <th>Textodsdsdadasd</th>
+        </tr>
+        </thead>
+        <% @references.each do | element | %>
+            <% if !element.nil? %>
+                <tr>
+                  <td><%= element.direct_citation %></td>
+                  <td><%= element.indirect_citation  %></td>
+                  <td><%= element.reference_text  %></td>
+                </tr>
+            <% end %>
+        <% end %>
+      </table>
+  <% else %>
+      <p>Não há referências cadastradas.</p>
+  <% end %>
+</div>

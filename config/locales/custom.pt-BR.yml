@@ -1,4 +1,7 @@
   pt-BR:
     successfully_saved: "Mudanças salvas com sucesso"
+    successfully_deleted: "Removido com sucesso"
+    unsuccessfully_saved: "Mudanças não foram salvas"
+    unsuccessfully_deleted: "Não pode ser removido"
     online_text_error: "<p style='color:red'>Erro ao buscar</p>"
     online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"

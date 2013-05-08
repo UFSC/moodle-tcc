@@ -13,4 +13,11 @@ pt-BR:
         key_words_en: "Key words"
       hub:
         reflection: "Reflexões"
+      general_ref:
+        direct_citation: 'Citação Direta'
+        indirect_citation: 'Citação Indireta'
+        reference_text: 'Texto da referência'
 
+
+    models:
+      general_ref: 'Referência Geral'
