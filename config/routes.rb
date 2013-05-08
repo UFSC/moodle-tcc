@@ -1,7 +1,8 @@
 SistemaTcc::Application.routes.draw do
 
-  root :to => 'tccs#index'
+  root to: 'lti#establish_connection'
   resources :tccs
-  match "instructor_admin_tccs" => "instructor_admin#index"
 
+  match 'lti' => 'lti#establish_connection'
+  match 'instructor_admin_tccs' => 'instructor_admin#index'
 end

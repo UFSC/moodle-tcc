@@ -6,3 +6,12 @@ def moodle_oauth
   page.driver.post tccs_path
   Capybara.use_default_driver
 end
+
+def moodle_lti_params(roles = nil)
+  tc = IMS::LTI::ToolConsumer.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'])
+  tc.launch_url = 'http://moodle.local/mod/lti/service.php'
+  tc.resource_link_id = 1
+  tc.roles = roles unless roles.nil?
+
+  return tc.generate_launch_data
+end

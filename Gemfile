@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '~>3.2.12'
 
 gem 'mysql2'
 
@@ -56,7 +56,6 @@ group :test do
   gem 'shoulda-matchers'
 
   # Request tests
-  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'rack_session_access'
   gem 'capybara-webkit'
