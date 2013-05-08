@@ -49,11 +49,13 @@ end
 group :development do
   gem 'thin'
   gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
   gem 'fabrication'
   gem 'shoulda-matchers'
+  gem 'faker'
 
   # Request tests
   gem 'capybara'
