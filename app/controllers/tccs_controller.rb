@@ -21,7 +21,7 @@ class TccsController < ApplicationController
 
   def create
     @tcc = Tcc.new(params[:tcc])
-    @tcc.moodle_user = session['launch_params']['context_id']
+    @tcc.moodle_user = session['lti_launch_params']['context_id']
     if @tcc.save
       flash[:success] = t(:successfully_saved)
       render 'index'

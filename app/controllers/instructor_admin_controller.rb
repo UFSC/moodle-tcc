@@ -8,7 +8,7 @@ class InstructorAdminController < ApplicationController
   private
 
   def authorize
-    if session['launch_params'].nil?
+    if session['lti_launch_params'].nil?
       render file: 'public/500.html'
     end
   end
