@@ -2,7 +2,7 @@ class TccsController < ApplicationController
   before_filter :authorize, :only => :index
 
   def index
-    unless @tcc = Tcc.find_by_moodle_user(@tp.context_id)
+    unless @tcc = Tcc.find_by_moodle_user(@user_id)
       @tcc = Tcc.new
     end
 
@@ -21,7 +21,7 @@ class TccsController < ApplicationController
 
   def create
     @tcc = Tcc.new(params[:tcc])
-    @tcc.moodle_user = session['lti_launch_params']['context_id']
+    @tcc.moodle_user = session['lti_launch_params']['user_id']
     if @tcc.save
       flash[:success] = t(:successfully_saved)
       render 'index'
@@ -43,6 +43,7 @@ class TccsController < ApplicationController
   private
 
   def get_hubs_diaries
+    cont = 0
     @tcc.hubs.each do |hub|
       diaries = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
       diaries.size.times do |i|
@@ -59,6 +60,7 @@ class TccsController < ApplicationController
     online_text = get_online_text(user_id, content_id)
     diary.content = online_text unless online_text.nil?
     diary.title = title
+    diary.pos = i
   end
 
   def get_online_text(user_id, assign_id)
@@ -86,6 +88,11 @@ class TccsController < ApplicationController
       redirect_to access_denied_path
     else
       @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
+      if @tp.instructor?
+         @user_id = params["moodle_user"]
+      else
+         @user_id = @tp.user_id
+      end
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end

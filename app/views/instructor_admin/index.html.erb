@@ -13,7 +13,7 @@
       <tr>
         <td><%= tcc.name %></td>
         <td>falta..</td>
-        <td>Avaliar</td>
+        <td><%= link_to "Avaliar", tccs_path(:moodle_user => tcc.moodle_user), :target => "_blank" %></td>
       </tr>
   <% end %>
   </tbody>
