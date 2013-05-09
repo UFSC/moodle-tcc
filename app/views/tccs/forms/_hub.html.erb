@@ -9,7 +9,7 @@
             </a>
           </div>
           <div id="<%=h d.object_id %>_collapse" class="collapse out">
-            <div class="accordion-inner" style="height: 100px; overflow:scroll;">
+            <div class="accordion-inner" style="height: 100px; overflow-y:scroll;">
               <%= d.object.content.html_safe unless d.object.content.nil? %>
               <%= d.input :content, :as => :hidden %>
               <%= d.input :title, :as => :hidden %>
