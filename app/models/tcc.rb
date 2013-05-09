@@ -1,5 +1,5 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :leader, :moodle_user, :name, :title, :defense_date, :hubs_attributes,
+  attr_accessible :leader, :moodle_user, :name, :title, :state, :defense_date, :hubs_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes, :final_considerations_attributes
 
 
@@ -18,5 +18,17 @@ class Tcc < ActiveRecord::Base
   has_many :general_refs, :through => :references, :source => :element, :source_type => 'GeneralRef'
 
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations
+
+  include AASM
+  aasm_column :state
+
+  aasm do
+    state :tutor_evaluating, :initial => true
+    state :teacher_evaluating
+
+    event :tutor_evaluate_ok do
+      transitions :from => :tutor_evaluating, :to => :teacher_evaluating
+    end
+  end
 
 end

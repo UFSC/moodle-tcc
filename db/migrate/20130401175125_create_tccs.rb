@@ -7,6 +7,7 @@ class CreateTccs < ActiveRecord::Migration
       t.string :leader
       t.float :grade
       t.date :defense_date
+      t.string :state
 
       t.timestamps
     end

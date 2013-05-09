@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20130507162656) do
     t.string   "leader"
     t.float    "grade"
     t.date     "defense_date"
+    t.string   "state"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
