@@ -83,7 +83,7 @@ class TccsController < ApplicationController
 
     if lti_params.nil?
       logger.error 'Access Denied: LTI not initialized'
-      redirect_to root_url
+      redirect_to access_denied_path
     else
       @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
 

@@ -10,6 +10,9 @@ class LtiController < ApplicationController
       elsif @tp.instructor?
         logger.debug 'LTI user identified as a instructor'
         redirect_to instructor_admin_tccs_path
+      else
+        logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
+        redirect_to access_denied_path
       end
     end
 
@@ -68,8 +71,10 @@ class LtiController < ApplicationController
   # TODO: Verificar implicação de definir o TTL em 1h
   def verify_oauth_ttl!
 
-    if Time.now.utc.to_i - @tp.request_oauth_timestamp.to_i > 60*60
-      return show_error "Your request is too old."
+    if Time.now.utc.to_i - @tp.oauth_timestamp.to_i > 60*60
+      logger.error 'OAuth request failed TTL'
+
+      return show_error 'Your request is too old.'
     end
 
     return true

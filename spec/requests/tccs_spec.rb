@@ -3,22 +3,18 @@ require 'spec_helper'
 
 describe "Tccs" do
   describe "GET /tccs" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
+    it 'should not work without LTI connection' do
       get tccs_path
+      response.status.should be(302)
+      response.should redirect_to access_denied_path
+    end
+
+    it 'should work with LTI connection' do
+
+      get(tccs_path, parameters=nil, session=fake_lti_session)
       response.status.should be(200)
     end
 
-    it "should work with moodle" do
-      #moodle_oauth
-      #page.should have_content("Dados")
-      pending
-    end
-
-    it "should not work without moodle" do
-      visit tccs_path
-      page.should have_content("wrong")
-    end
 
     describe "edit" do
       before :each do

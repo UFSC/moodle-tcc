@@ -12,14 +12,14 @@ describe "Lti" do
       pending('Teste não está validando OAuth por algum motivo. Verificar depois')
 
       post root_path, moodle_lti_params
-      response.status.should be(303)
+      response.status.should be(302)
     end
 
     it 'should redirect a student to tccs_path' do
       pending('Teste não está validando OAuth por algum motivo. Verificar depois')
 
       post root_path, moodle_lti_params(%(student))
-      response.status.should be(303)
+      response.status.should be(302)
       response.should redirect_to(tccs_path)
     end
 
@@ -27,7 +27,7 @@ describe "Lti" do
       pending('Teste não está validando OAuth por algum motivo. Verificar depois')
 
       post root_path, moodle_lti_params(%(instructor))
-      response.status.should be(303)
+      response.status.should be(302)
       response.should redirect_to(instructor_admin_tccs_path)
     end
   end
