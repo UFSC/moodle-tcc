@@ -13,10 +13,10 @@ function accordion(element) {
     var height = $("#"+collapse_id).find(".accordion-inner").height();
     if (height < 400) {
         $("#"+collapse_id).find(".accordion-inner").css("height", "400px");
+        $("#"+collapse_id).collapse('show');
     } else {
         $("#"+collapse_id).find(".accordion-inner").css("height", "100px");
     }
-    $("#"+collapse_id).collapse('show');
 }
 
 function changeIcon(element) {
