@@ -1,0 +1,3 @@
+[submodule "app/assets/javascripts/ckeditor/plugin/citacao"]
+	path = app/assets/javascripts/ckeditor/plugin/citacao
+	url = git@gitlab.setic.ufsc.br:tcc-unasus/ckeditor-citacao.git
