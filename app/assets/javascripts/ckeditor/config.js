@@ -8,5 +8,8 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
         { name: 'styles' },
         { name: 'colors' },
-        { name: 'tools' } ]
+        { name: 'tools' },
+    ]
+    config.extraPlugins = 'citacao'
+    config.allowedContent = true
 };
