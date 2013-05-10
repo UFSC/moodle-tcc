@@ -19,6 +19,10 @@ class LtiController < ApplicationController
     return false
   end
 
+  def access_denied
+
+  end
+
   private
 
   # Inicializa o Tool Provider e faz todas as checagens necessárias para garantir permissões

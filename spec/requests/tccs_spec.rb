@@ -10,9 +10,11 @@ describe "Tccs" do
     end
 
     it 'should work with LTI connection' do
+      page.set_rack_session(fake_lti_session)
+      visit tccs_path
 
-      get(tccs_path, parameters=nil, session=fake_lti_session)
-      response.status.should be(200)
+      page.current_path.should_not == access_denied_path
+      page.should have_content('Apresentação')
     end
 
 

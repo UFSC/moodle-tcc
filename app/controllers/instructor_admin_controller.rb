@@ -8,8 +8,17 @@ class InstructorAdminController < ApplicationController
   private
 
   def authorize
-    if session['lti_launch_params'].nil?
-      render file: 'public/500.html'
+    lti_params = session['lti_launch_params']
+
+    if lti_params.nil?
+      logger.error 'Access Denied: LTI not initialized'
+
+      redirect_to access_denied_path
+    else
+      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
+      @user_id = @tp.user_id
+
+      logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
   end
 end
