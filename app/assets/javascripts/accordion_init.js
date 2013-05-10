@@ -1,5 +1,4 @@
 $(function() {
-    $(".collapse").collapse('show');
     $(".collapse").css("height", "100px");
 
     $(".accordion-toggle").click(function() {
@@ -15,7 +14,6 @@ function accordion(element) {
 
     if (height < 400) {
         $("#"+collapse_id).css("height", "400px");
-        $("#"+collapse_id).collapse('show');
     } else {
         $("#"+collapse_id).css("height", "100px");
     }
