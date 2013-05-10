@@ -2,7 +2,6 @@ common: &common
   # setting the course
   hubs:
     -
-      num:  1
       diaries:
         -
           title: Saúde e sociedade
@@ -11,7 +10,6 @@ common: &common
           title: Epidemiologia
           id: 28
     -
-      num: 2
       diaries:
         -
           title: Gestão e Avaliação na Atenção Básica
@@ -23,7 +21,6 @@ common: &common
           title: Processo de Trabalho na Atenção Básica
           id: 28
     -
-      num: 3
       diaries:
         -
           title: Atenção Integral na Saúde da Criança/ Apoio Matricial

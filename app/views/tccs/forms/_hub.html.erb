@@ -8,16 +8,16 @@
               <%= d.object.title %>
             </a>
           </div>
-          <div id="<%=h d.object_id %>_collapse" class="collapse out">
-            <div class="accordion-inner" style="height: 100px; overflow-y:scroll;">
+          <div id="<%=h d.object_id %>_collapse" class="collapse">
+            <div class="accordion-inner">
               <%= d.object.content.html_safe unless d.object.content.nil? %>
               <%= d.input :content, :as => :hidden %>
               <%= d.input :title, :as => :hidden %>
               <%= d.input :pos, :as => :hidden %>
             </div>
-            <div style="text-align:center; padding-bottom: 0px">
-              <a id="<%=h d.object_id %>" class="accordion-toggle-icon accordion-toggle" href="#"><i class="icon-chevron-down"></i></a>
-            </div>
+          </div>
+          <div style="text-align:center; padding-bottom: 0px">
+            <a id="<%=h d.object_id %>" class="accordion-toggle-icon accordion-toggle" href="#"><i class="icon-chevron-down"></i></a>
           </div>
         </div>
     <% end %>

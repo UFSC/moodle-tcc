@@ -8,11 +8,5 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
         { name: 'styles' },
         { name: 'colors' },
-        { name: 'tools' },
-        {
-            extraPlugins : 'placeholder',
-            toolbar : [ [ 'Source', 'Bold' ], ['CreatePlaceholder'] ]
-        }
-    ]
-    config.extraPlugins = 'placeholder'
+        { name: 'tools' } ]
 };
