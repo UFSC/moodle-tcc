@@ -9,10 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'styles' },
         { name: 'colors' },
         { name: 'tools' },
-        {
-            extraPlugins : 'placeholder',
-            toolbar : [ [ 'Source', 'Bold' ], ['CreatePlaceholder'] ]
-        }
     ]
-    config.extraPlugins = 'placeholder'
+    config.extraPlugins = 'citacao'
+    config.allowedContent = true
 };
