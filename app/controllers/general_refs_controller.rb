@@ -41,6 +41,18 @@ class GeneralRefsController < ApplicationController
       flash[:success] = t(:successfully_deleted)
       redirect_to '/bibliographies'
     end
+  end
+
+  def show
+    @general_ref = Tcc.first.references.where(:id => params[:id], :element_type => 'GeneralRef').first
+
+    if @general_ref.nil?
+      flash[:error] = t(:could_not_find)
+      nil
+    else
+      @general_ref = @general_ref.element
+    end
+
 
   end
 end
