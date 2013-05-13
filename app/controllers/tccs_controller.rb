@@ -24,20 +24,16 @@ class TccsController < ApplicationController
     @tcc.moodle_user = session['lti_launch_params']['user_id']
     if @tcc.save
       flash[:success] = t(:successfully_saved)
-      render 'index'
-    else
-      render 'index'
     end
+    render 'index'
   end
 
   def update
     @tcc = Tcc.find(params[:id])
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
-      render 'index'
-    else
-      render 'index'
     end
+    render 'index'
   end
 
   private
@@ -56,8 +52,7 @@ class TccsController < ApplicationController
     unless diary = hub.diaries.find_by_pos(i)
       diary = hub.diaries.build
     end
-    user_id = 3856
-    online_text = get_online_text(user_id, content_id)
+    online_text = get_online_text(@user_id, content_id)
     diary.content = online_text unless online_text.nil?
     diary.title = title
     diary.pos = i

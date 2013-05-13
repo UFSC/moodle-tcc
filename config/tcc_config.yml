@@ -8,32 +8,32 @@ common: &common
           id: 1264
         -
           title: Epidemiologia
-          id: 28
+          id: 1092
     -
       diaries:
         -
           title: Gestão e Avaliação na Atenção Básica
-          id: 28
+          id: 1133
         -
           title: Planejamento na Atenção Básica
-          id: 28
+          id: 1151
         -
           title: Processo de Trabalho na Atenção Básica
-          id: 28
+          id: 1163
     -
       diaries:
         -
           title: Atenção Integral na Saúde da Criança/ Apoio Matricial
-          id: 28
+          id: 0
         -
           title: Atenção Integral na Saúde da Mulher/Clínica Ampliada
-          id: 28
+          id: 0
         -
           title: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
-          id: 28
+          id: 0
         -
           title: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
-          id: 28
+          id: 0
 
 development:
   <<: *common
