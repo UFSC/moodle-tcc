@@ -8,6 +8,7 @@ set :scm, :git
 
 set :default_environment, {'LANG' => 'pt_BR.UTF-8'}
 set :deploy_to, '/home/gabriel/tcc.unasus.ufsc.br'
+set :git_enable_submodules, true
 
 set :ssh_options, { :forward_agent => true, :port => '2200' }
 
