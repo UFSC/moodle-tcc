@@ -1,4 +1,6 @@
-<div id="hub<%=h category %>_tab_content" style = "display:none; margin-left: 0px" class = "span12">
+
+<%= semantic_form_for @tcc do |f| %>
+  <%= f.fields_for @hubs[category-1] do |h| %>
     <h3>Eixo <%= category %></h3>
     <%= h.input :category, :as => :hidden %>
     <%= h.semantic_fields_for :diaries do |d| %>
@@ -25,5 +27,9 @@
         <h3>Reflexões</h3>
         <%= h.cktext_area :reflection %>
     </div>
-</div>
+  <% end %>
+  <%= f.actions do %>
+      <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
+  <% end %>
+<% end %>
 

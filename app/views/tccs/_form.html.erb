@@ -1,16 +1,3 @@
-<%= semantic_form_for @tcc do |f| %>
-  <%= render :partial => 'tccs/forms/data', locals: { f: f } %>
-  <%= render :partial => 'tccs/forms/abstract', locals: { f: f } %>
-  <%= render :partial => 'tccs/forms/presentation', locals: { f: f } %>
-
-  <%= f.fields_for :hubs do |h| %>
-    <%= render :partial => "tccs/forms/hub", locals: { h: h, category: h.object.category } %>
-  <% end %>
-
-  <%= render :partial => 'tccs/forms/final_consideration', locals: { f: f } %>
-  <%= render :partial => 'tccs/forms/bibliographies', locals: { f: f } %>
-
-  <%= f.actions do %>
-    <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
-  <% end %>
-<% end %>
+<div style = "margin-left: 0px" class = "form-horizontal span12">
+    <%= render :partial => "tccs/forms/#{@tab}", locals: { category: @category } %>
+</div>

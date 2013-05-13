@@ -2,6 +2,13 @@ class TccsController < ApplicationController
   before_filter :authorize, :only => :index
 
   def index
+    @tab = params[:tab]
+    if @tab.blank?
+      @tab = "data"
+    elsif @tab == "hub"
+      @category = params[:category].to_i
+    end
+
     unless @tcc = Tcc.find_by_moodle_user(@user_id)
       @tcc = Tcc.new
     end
@@ -11,6 +18,12 @@ class TccsController < ApplicationController
     while @tcc.hubs.size < TCC_CONFIG["hubs"].size do
       @tcc.hubs.build(:category => @tcc.hubs.size+1)
     end
+    i = 0
+    @hubs = Array.new
+    @tcc.hubs.each{ |h|
+      @hubs[i] = h
+      i = i+1
+    }
 
     get_hubs_diaries # search on moodle webserver
 

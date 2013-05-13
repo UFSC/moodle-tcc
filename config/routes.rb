@@ -10,7 +10,12 @@ SistemaTcc::Application.routes.draw do
   match "ajax/build" => "ajax#build"
 
   # Resources
-  resources :tccs
+  #resources :tccs
+
+  match "tccs/:tab" => 'tccs#index', as: 'tccs_tabs'
+  match "tccs/:tab/:category" => 'tccs#index', as: 'tccs_hubs_tabs'
+  resources :tccs, :path => 'tccs'
+
   resources :bibliographies
   resources :general_refs
 

@@ -1,7 +1,11 @@
-<div id="abstract_tab_content" style = "display:none; margin-left: 0px" class = "form-horizontal span12">
-  <%= f.fields_for :abstract do |a| %>
-      <h3>Resumo</h3>
-      <%= a.cktext_area :content_pt %><br>
-      <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
-  <% end %>
-</div>
+<%= semantic_form_for @tcc do |f| %>
+    <%= f.fields_for :abstract do |a| %>
+        <h3>Resumo</h3>
+        <%= a.cktext_area :content_pt %><br>
+        <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
+    <% end %>
+    <%= f.actions do %>
+        <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
+    <% end %>
+<% end %>
+
