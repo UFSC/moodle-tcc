@@ -2,12 +2,7 @@ class TccsController < ApplicationController
   before_filter :authorize, :only => :index
 
   def index
-    @tab = params[:tab]
-    if @tab.blank?
-      @tab = "data"
-    elsif @tab == "hub"
-      @category = params[:category].to_i
-    end
+    set_tab_view
 
     unless @tcc = Tcc.find_by_moodle_user(@user_id)
       @tcc = Tcc.new
@@ -103,6 +98,19 @@ class TccsController < ApplicationController
       end
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
+    end
+  end
+
+  def set_tab_view
+    @tab = params[:tab]
+    if @tab.blank?
+      @tab = "data"
+      set_tab @tab.to_sym
+    elsif @tab == "hub"
+      @category = params[:category].to_i
+      set_tab (@tab+params[:category]).to_sym
+    else
+      set_tab @tab.to_sym
     end
   end
 end
