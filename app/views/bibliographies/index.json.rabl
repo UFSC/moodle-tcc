@@ -1,4 +1,10 @@
-collection @references
+node :urls do
+  {:general_ref => 'general_ref/new'}
+end
 
-extends 'layouts/links'
-extends 'general_refs/show'
+
+child :references do
+  child @general_refs do
+    extends 'general_refs/index'
+  end
+end

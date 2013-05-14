@@ -44,13 +44,13 @@ class GeneralRefsController < ApplicationController
   end
 
   def show
-    @general_ref = Tcc.first.references.where(:id => params[:id], :element_type => 'GeneralRef').first
+    @general_ref = Tcc.first.general_refs.find(params[:id])
 
     if @general_ref.nil?
       flash[:error] = t(:could_not_find)
       nil
     else
-      @general_ref = @general_ref.element
+      @general_ref
     end
 
 
