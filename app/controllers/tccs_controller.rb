@@ -1,12 +1,9 @@
 class TccsController < ApplicationController
-  before_filter :authorize, :only => :index
+  before_filter :authorize, :only => [:show, :update]
+  before_filter :get_tcc, :only => :show
 
-  def index
+  def show
     set_tab_view
-
-    unless @tcc = Tcc.find_by_moodle_user(@user_id)
-      @tcc = Tcc.new
-    end
 
     @tcc.build_abstract if @tcc.abstract.nil?
 
@@ -27,27 +24,18 @@ class TccsController < ApplicationController
     @tcc.build_final_considerations if @tcc.final_considerations.nil?
   end
 
-  def create
-    @tcc = Tcc.new(params[:tcc])
-    @tcc.moodle_user = session['lti_launch_params']['user_id']
-    if @tcc.save
-      flash[:success] = t(:successfully_saved)
-    end
-    render 'index'
-  end
-
   def update
-    @tcc = Tcc.find(params[:id])
+    @tcc = Tcc.find_by_moodle_user(@user_id)
+    puts params[:tcc]
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
     end
-    render 'index'
+    redirect_to tcc_path
   end
 
   private
 
   def get_hubs_diaries
-    cont = 0
     @tcc.hubs.each do |hub|
       diaries = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
       diaries.size.times do |i|
@@ -101,16 +89,21 @@ class TccsController < ApplicationController
     end
   end
 
+  def get_tcc
+    unless @tcc = Tcc.find_by_moodle_user(@user_id)
+      @tcc = Tcc.create( :moodle_user => @user_id )
+    end
+  end
+
   def set_tab_view
-    @tab = params[:tab]
-    if @tab.blank?
-      @tab = "data"
-      set_tab @tab.to_sym
-    elsif @tab == "hub"
+    if params[:tab].blank?
+      set_tab "data".to_sym
+    elsif params[:tab] == "hub"
+      @hub = true
       @category = params[:category].to_i
-      set_tab (@tab+params[:category]).to_sym
+      set_tab (params[:tab]+params[:category]).to_sym
     else
-      set_tab @tab.to_sym
+      set_tab params[:tab].to_sym
     end
   end
 end

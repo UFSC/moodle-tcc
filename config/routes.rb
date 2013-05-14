@@ -12,9 +12,9 @@ SistemaTcc::Application.routes.draw do
   # Resources
   #resources :tccs
 
-  match "tccs/:tab" => 'tccs#index', as: 'tccs_tabs'
-  match "tccs/:tab/:category" => 'tccs#index', as: 'tccs_hubs_tabs'
-  resources :tccs, :path => 'tccs'
+  match "tcc/:tab" => 'tccs#show', as: 'tccs_tabs'
+  match "tcc/:tab/:category" => 'tccs#show', as: 'tccs_hubs_tabs'
+  resource :tcc
 
   resources :bibliographies
   resources :general_refs

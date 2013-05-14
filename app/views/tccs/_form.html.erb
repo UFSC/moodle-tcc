@@ -1,3 +1,7 @@
 <div style = "margin-left: 0px" class = "form-horizontal span12">
-    <%= render :partial => "tccs/forms/#{@tab}", locals: { category: @category } %>
+  <% if @hub %>
+    <%= render :partial => "tccs/forms/hub", locals: { category: @category } %>
+  <% else %>
+    <%= render :partial => "tccs/forms/#{current_tab}" %>
+  <% end %>
 </div>
