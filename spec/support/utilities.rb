@@ -12,6 +12,7 @@ def moodle_lti_params(roles = 'student')
   tc.launch_url = 'http://moodle.local/mod/lti/service.php'
   tc.resource_link_id = 1
   tc.roles = roles
+  tc.user_id = 123
 
   return tc.generate_launch_data
 end
