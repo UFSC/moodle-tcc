@@ -1,6 +1,14 @@
 class GeneralRefsController < ApplicationController
+
+  before_filter :authorize
+
   def new
     @general_ref = GeneralRef.new
+  end
+
+  def index
+    @tcc = Tcc.find_by_moodle_user(@user_id)
+    @general_refs = @tcc.general_refs
   end
 
   def create
@@ -44,7 +52,8 @@ class GeneralRefsController < ApplicationController
   end
 
   def show
-    @general_ref = Tcc.first.general_refs.find(params[:id])
+    @tcc = Tcc.find_by_moodle_user(@user_id)
+    @general_ref = @tcc.general_refs.find(params[:id])
 
     if @general_ref.nil?
       flash[:error] = t(:could_not_find)
@@ -52,7 +61,23 @@ class GeneralRefsController < ApplicationController
     else
       @general_ref
     end
+  end
 
+  def authorize
+    lti_params = session['lti_launch_params']
 
+    if lti_params.nil?
+      logger.error 'Access Denied: LTI not initialized'
+      redirect_to access_denied_path
+    else
+      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
+      if @tp.instructor?
+        @user_id = params["moodle_user"]
+      else
+        @user_id = @tp.user_id
+      end
+
+      logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
+    end
   end
 end
