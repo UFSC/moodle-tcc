@@ -42,6 +42,9 @@ gem 'ckeditor'
 # Pagination
 gem 'will_paginate'
 
+# RABL
+gem 'rabl'
+
 group :production do
   gem 'newrelic_rpm'
 end

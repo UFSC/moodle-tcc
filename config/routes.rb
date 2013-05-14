@@ -6,9 +6,6 @@ SistemaTcc::Application.routes.draw do
 
   match 'instructor_admin_tccs' => 'instructor_admin#index'
 
-  # Ajax
-  match "ajax/build" => "ajax#build"
-
   # Resources
   resources :tccs
   resources :bibliographies
