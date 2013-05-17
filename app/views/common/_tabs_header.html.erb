@@ -1,0 +1,10 @@
+<%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
+    <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
+    <%= tab.abstract 'Resumo', show_abstract_path %>
+    <%= tab.presentation 'Apresentação', show_presentation_path %>
+    <% TCC_CONFIG["hubs"].size.times do |i| %>
+        <%= eval("tab.hub#{i+1} 'Eixo #{(i+1).to_s}', show_hubs_path(category: (i+1))") %>
+    <% end %>
+    <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>
+    <%= tab.bibliographies 'Referências', show_tcc_path %>
+<% end %>

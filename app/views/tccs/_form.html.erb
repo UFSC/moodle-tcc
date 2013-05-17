@@ -1,7 +1,13 @@
-<div style = "margin-left: 0px" class = "form-horizontal span12">
-  <% if @hub %>
-    <%= render :partial => "tccs/forms/hub", locals: { category: @category } %>
-  <% else %>
-    <%= render :partial => "tccs/forms/#{current_tab}" %>
-  <% end %>
-</div>
+<%= semantic_form_for @tcc, url: save_tcc_path do |f| %>
+    <%= f.inputs do %>
+        <%= f.input :name %>
+        <%= f.input :title %>
+        <%= f.input :defense_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
+                    :input_html => {:'data-behaviour' => 'datepicker',
+                                    value: ((I18n.l @tcc.defense_date) unless @tcc.defense_date.nil?)} %>
+        <%= f.input :leader %>
+    <% end %>
+    <%= f.actions do %>
+        <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
+    <% end %>
+<% end %>

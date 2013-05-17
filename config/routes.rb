@@ -9,13 +9,23 @@ SistemaTcc::Application.routes.draw do
   # Ajax
   match "ajax/build" => "ajax#build"
 
+  #TCC routes
+  get "tcc" => 'tccs#show', as: 'show_tcc'
+  put "tcc" => 'tccs#save', as: 'save_tcc'
+
+  get "abstract" => "abstracts#show", as: 'show_abstract'
+  match "abstract" => "abstracts#save", as: 'save_abstract', :via => [:post, :put]
+
+  get "presentation" => "presentations#show", as: 'show_presentation'
+  match "presentation" => "presentations#save", as: 'save_presentation', :via => [:post, :put]
+
+  get "final_considerations" => "final_considerations#show", as: 'show_final_considerations'
+  match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
+
+  get "hubs/:category" => "hubs#show", as: 'show_hubs'
+  match "hubs/:category" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
+
   # Resources
-  #resources :tccs
-
-  match "tcc/:tab" => 'tccs#show', as: 'tccs_tabs'
-  match "tcc/:tab/:category" => 'tccs#show', as: 'tccs_hubs_tabs'
-  resource :tcc
-
   resources :bibliographies
   resources :general_refs
 
