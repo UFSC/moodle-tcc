@@ -6,8 +6,8 @@ describe FinalConsiderations do
   it { respond_to :commentary, :content }
 
   it 'should versioning' do
-    old_version = final_considerations.version
+    old_version = final_considerations.versions.size
     final_considerations.update_attribute(:content, 'new content')
-    final_considerations.version.should == ( old_version + 1 )
+    final_considerations.versions.size.should == ( old_version + 1 )
   end
 end

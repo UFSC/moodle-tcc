@@ -6,8 +6,8 @@ describe Abstract do
   it { respond_to :commentary, :content_pt, :key_words_pt }
 
   it 'should versioning' do
-    old_version = abstract.version
+    old_version = abstract.versions.size
     abstract.update_attribute(:content_pt, 'new content')
-    abstract.version.should == ( old_version + 1 )
+    abstract.versions.size.should == ( old_version + 1 )
   end
 end
