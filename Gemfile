@@ -19,7 +19,7 @@ gem 'aasm'
 gem 'tabs_on_rails'
 
 #Model versioning
-gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
+gem 'paper_trail'
 
 # Compass + Twitter Bootstrap
 gem 'compass_twitter_bootstrap'
