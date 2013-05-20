@@ -10,10 +10,8 @@ describe BookRef do
 
   it { should validate_presence_of(:first_author) }
   it { should validate_presence_of(:edition_number) }
-  it { should validate_presence_of(:et_all) }
   it { should validate_presence_of(:local) }
   it { should validate_presence_of(:year) }
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:publisher) }
-
 end
