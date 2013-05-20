@@ -1,7 +1,7 @@
 module LtiTccFilters
   def self.included(base)
-    base.before_filter :authorize, :only => [:show, :save]
-    base.before_filter :get_tcc, :only => :show
+    base.before_filter :authorize
+    base.before_filter :get_tcc
   end
 
   def authorize
