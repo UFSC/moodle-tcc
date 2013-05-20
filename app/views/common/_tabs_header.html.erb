@@ -6,5 +6,5 @@
         <%= eval("tab.hub#{i+1} 'Eixo #{(i+1).to_s}', show_hubs_path(category: (i+1))") %>
     <% end %>
     <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>
-    <%= tab.bibliographies 'Referências', show_tcc_path %>
+    <%= tab.bibliographies 'Referências', bibliographies_path %>
 <% end %>

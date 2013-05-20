@@ -1,38 +1,36 @@
 class BookRefsController < ApplicationController
+  inherit_resources
 
-  before_filter :authorize
-
-
-  def new
-    @book_ref = BookRef.new
-  end
+  before_filter :authorize, :load_tcc
 
   def index
-    @tcc = Tcc.find_by_moodle_user(@user_id)
     @book_refs = @tcc.book_refs
-  end
-
-  def show
-  end
-
-  def update
-  end
-
-  def edit
-    @book_ref = BookRef.find(params[:id])
   end
 
   def create
     @book_ref = BookRef.new(params[:book_ref])
-    @book_ref.save
-    tcc = Tcc.find_by_moodle_user(@user_id)
-    tcc.references.create(:element => @book_ref)
-    if tcc.save
-      flash[:success] = t(:successfully_saved)
+
+    if @book_ref.valid?
+      @tcc.transaction do
+        @book_ref.save!
+        @tcc.references.create!(:element => @book_ref)
+        flash[:success] = t(:successfully_saved)
+        redirect_to bibliographies_path
+      end
     else
-      flash[:error] = t(:unsuccessfully_saved)
+      flash[:error] = t(:please_fix_invalid_data)
+      render :new
     end
-    redirect_to '/bibliographies'
+  end
+
+  def update
+    update! do |success, failure|
+      failure.html do
+        flash[:error] = t(:please_fix_invalid_data)
+        render :edit
+      end
+      success.html { redirect_to bibliographies_path, flash: {:success => t(:successfully_saved)} }
+    end
   end
 
   def destroy
@@ -42,8 +40,10 @@ class BookRefsController < ApplicationController
     else
       flash[:success] = t(:successfully_deleted)
     end
-    redirect_to '/bibliographies'
+    redirect_to bibliographies_path
   end
+
+  private
 
   def authorize
     lti_params = session['lti_launch_params']
@@ -61,5 +61,10 @@ class BookRefsController < ApplicationController
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
+  end
+
+  def load_tcc
+    set_tab :bibliographies
+    @tcc = Tcc.find_by_moodle_user(@user_id)
   end
 end

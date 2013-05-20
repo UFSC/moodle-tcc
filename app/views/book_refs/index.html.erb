@@ -1,45 +1,41 @@
-<div class=''>
-  <h5>Referências de Livro</h5>
+<div class="">
+  <h5>Referências de Livros</h5>
   <% if @book_refs.count > 0 %>
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>Título</th>
-          <th>Subtítulo</th>
-          <th>Ano</th>
-          <th>Editora</th>
-          <th>Autor</th>
-          <th>Autor 2</th>
-          <th>Autor 3</th>
-          <th>Edição</th>
-          <th>Local (Cidade)</th>
-          <th>Volumes ou Páginas</th>
-          <th>Ação</th>
-        </tr>
-        </thead>
-        <% @book_refs.each do | element | %>
-            <% if !element.nil? %>
-                <tr>
-                  <td><%= element.title %></td>
-                  <td><%= element.subtitle  %></td>
-                  <td><%= element.year  %></td>
-                  <td><%= element.publisher  %></td>
-                  <td><%= element.first_author  %></td>
-                  <td><%= element.second_author  %></td>
-                  <td><%= element.third_author  %></td>
-                  <td><%= element.edition_number  %></td>
-                  <td><%= element.local  %></td>
-                  <td><%= [element.num_quantity, element.type_quantity].join(' ')  %></td>
-                  <td>
-                    <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
-                    <%= link_to 'Remover', book_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
-                  </td>
-                </tr>
-            <% end %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Título</th>
+        <th>Subtítulo</th>
+        <th>Edição</th>
+        <th>Ano</th>
+        <th>Editora</th>
+        <th>Volumes ou Páginas</th>
+        <th>Local (Cidade)</th>
+        <th>Ação</th>
+      </tr>
+      </thead>
+      <% @book_refs.each do |element| %>
+        <% if !element.nil? %>
+          <tr>
+            <td><%= element.first_author %></td>
+            <td><%= element.title %></td>
+            <td><%= element.subtitle %></td>
+            <td><%= element.edition_number %></td>
+            <td><%= element.year %></td>
+            <td><%= element.publisher %></td>
+            <td><%= [element.num_quantity, element.type_quantity].join(' ') %></td>
+            <td><%= element.local %></td>
+            <td>
+              <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
+              <%= link_to 'Remover', book_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>
         <% end %>
-      </table>
+      <% end %>
+    </table>
   <% else %>
-      <p>Não há referências cadastradas.</p>
+    <p>Não há referências cadastradas.</p>
   <% end %>
   <%= link_to 'Criar', new_book_ref_path, :class => 'btn btn-small' %>
 </div>

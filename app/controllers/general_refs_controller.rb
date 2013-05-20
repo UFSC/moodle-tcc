@@ -1,57 +1,49 @@
 class GeneralRefsController < ApplicationController
+  inherit_resources
 
-  before_filter :authorize
-
-  def new
-    @general_ref = GeneralRef.new
-  end
+  before_filter :authorize, :load_tcc
 
   def index
-    @tcc = Tcc.find_by_moodle_user(@user_id)
     @general_refs = @tcc.general_refs
   end
 
   def create
     @general_ref = GeneralRef.new(params[:general_ref])
-    @general_ref.save
-    tcc = Tcc.first
-    tcc.references.create(:element => @general_ref)
-    if tcc.save
-      flash[:success] = t(:successfully_saved)
-    else
-      flash[:error] = t(:unsuccessfully_saved)
-    end
-    redirect_to '/bibliographies'
-  end
 
-  def edit
-    @general_ref = GeneralRef.find(params[:id])
+    if @general_ref.valid?
+      @tcc.transaction do
+        @general_ref.save!
+        @tcc.references.create!(:element => @general_ref)
+        flash[:success] = t(:successfully_saved)
+        redirect_to bibliographies_path
+      end
+    else
+      flash[:error] = t(:please_fix_invalid_data)
+      render :new
+    end
   end
 
   def update
-    @general_ref = GeneralRef.find(params[:id])
-    if @general_ref.update_attributes(params[:general_ref])
-      flash[:success] = t(:successfully_saved)
-      redirect_to '/bibliographies'
-    else
-      redirect_to '/bibliographies'
+    update! do |success, failure|
+      failure.html do
+        flash[:error] = t(:please_fix_invalid_data)
+        render :edit
+      end
+      success.html { redirect_to bibliographies_path, flash: {:success => t(:successfully_saved)} }
     end
-
   end
 
   def destroy
     @general_ref = GeneralRef.find(params[:id])
     if @general_ref.destroy
       flash[:success] = t(:successfully_deleted)
-      redirect_to '/bibliographies'
     else
       flash[:success] = t(:successfully_deleted)
-      redirect_to '/bibliographies'
     end
+    redirect_to bibliographies_path
   end
 
   def show
-    @tcc = Tcc.find_by_moodle_user(@user_id)
     @general_ref = @tcc.general_refs.find(params[:id])
 
     if @general_ref.nil?
@@ -62,7 +54,11 @@ class GeneralRefsController < ApplicationController
     end
   end
 
+  private
+
   def authorize
+    set_tab :bibliographies
+
     lti_params = session['lti_launch_params']
 
     if lti_params.nil?
@@ -78,5 +74,10 @@ class GeneralRefsController < ApplicationController
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
+  end
+
+  def load_tcc
+    set_tab :bibliographies
+    @tcc = Tcc.find_by_moodle_user(@user_id)
   end
 end

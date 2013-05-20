@@ -18,7 +18,10 @@ gem 'aasm'
 # Tabs
 gem 'tabs_on_rails'
 
-#Model versioning
+# Inherited Resources
+gem 'inherited_resources'
+
+# Model versioning
 gem 'paper_trail'
 
 # Compass + Twitter Bootstrap
