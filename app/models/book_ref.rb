@@ -1,6 +1,6 @@
 class BookRef < ActiveRecord::Base
 
-  validates_presence_of :first_author, :edition_number, :et_all, :local, :year, :title, :publisher
+  validates_presence_of :first_author, :edition_number, :local, :year, :title, :publisher
 
   attr_accessible :first_author, :edition_number, :et_all, :local, :num_quantity, :publisher, :second_author, :subtitle, :third_author, :title, :type_quantity, :year
 

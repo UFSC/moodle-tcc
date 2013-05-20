@@ -6,6 +6,7 @@ class BibliographiesController < ApplicationController
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @references = @tcc.references.collect { |r| r.element }
     @general_refs = @tcc.general_refs
+    @book_refs = @tcc.book_refs
   end
 
   def authorize

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517193213) do
+ActiveRecord::Schema.define(:version => 20130507162656) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -34,6 +34,21 @@ ActiveRecord::Schema.define(:version => 20130517193213) do
   end
 
   add_index "bibliographies", ["tcc_id"], :name => "index_bibliographies_on_tcc_id"
+
+  create_table "book_refs", :force => true do |t|
+    t.string  "first_author"
+    t.string  "second_author"
+    t.string  "third_author"
+    t.boolean "et_all"
+    t.string  "title"
+    t.string  "subtitle"
+    t.integer "edition_number"
+    t.string  "local"
+    t.string  "publisher"
+    t.integer "year"
+    t.string  "type_quantity"
+    t.integer "num_quantity"
+  end
 
   create_table "diaries", :force => true do |t|
     t.text     "content"

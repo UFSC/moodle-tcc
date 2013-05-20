@@ -16,13 +16,12 @@ class GeneralRefsController < ApplicationController
     @general_ref.save
     tcc = Tcc.first
     tcc.references.create(:element => @general_ref)
-    if tcc.save!
+    if tcc.save
       flash[:success] = t(:successfully_saved)
-      redirect_to '/bibliographies'
     else
       flash[:error] = t(:unsuccessfully_saved)
-      redirect_to '/bibliographies'
     end
+    redirect_to '/bibliographies'
   end
 
   def edit

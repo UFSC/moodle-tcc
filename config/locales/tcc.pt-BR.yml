@@ -17,7 +17,19 @@ pt-BR:
         direct_citation: 'Citação Direta'
         indirect_citation: 'Citação Indireta'
         reference_text: 'Texto da referência'
-
-
+      book_ref:
+        edition_number: 'Número da edição'
+        et_all: 'Mais de 3 autores'
+        first_author: 'Autor'
+        second_author: 'Segundo Autor'
+        third_author: 'Terceiro Autor'
+        local: 'Local (Cidade)'
+        publisher: 'Editora'
+        title: 'Título'
+        subtitle: 'Subtítulo'
+        year: 'Ano (aaaa)'
+        num_quantity: ''
+        type_quantity: 'Volumes ou páginas'
     models:
       general_ref: 'Referência Geral'
+      book_ref: 'Referência de Livros'
