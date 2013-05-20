@@ -1,0 +1,5 @@
+pt-BR:
+  states:
+    draft: 'Rascunho'
+  actions:
+    draft: 'Visualizar'

@@ -1,0 +1,15 @@
+<% unless @old_hub.nil? %>
+        <div class="span5">
+          <%= semantic_form_for save_hubs_path(:category => @old_hub.category)  do |h| %>
+              <%= @old_hub.reflection %>
+              <%= h.input :commentary  %>
+          <% end %>
+        </div>
+<% end %>
+<div class="span5">
+  <%= semantic_form_for save_hubs_path(:category => @hub.category)  do |h| %>
+      <%= @hub.reflection %>
+      <%= h.input :commentary  %>
+      <%= h.action :submit, :as => :input, :label => 'Enviar comentário' %>
+  <% end %>
+</div>
