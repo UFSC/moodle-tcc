@@ -24,7 +24,9 @@
               <td>falta..</td>
               <% TCC_CONFIG["hubs"].size.times do |i| %>
                   <td><%= get_state(tcc, (i+1)) %></td>
-                  <td><%= get_action(tcc, (i+1)) %></td>
+                  <td>
+                    <%= link_to get_action(tcc, (i+1)), show_hubs_path(:category => (i+1), :moodle_user => tcc.moodle_user) %>
+                  </td>
               <% end %>
           </tr>
       <% end %>

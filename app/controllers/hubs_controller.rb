@@ -5,7 +5,11 @@ class HubsController < ApplicationController
     set_tab ("hub"+params[:category]).to_sym
 
     @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-    get_hubs_diaries # search on moodle webserver
+    @version = @hub.versions.last
+    @old_hub = @hub.previous_version if @hub.versions.size > 1
+    if @tp.student?
+      get_hubs_diaries # search on moodle webserver
+    end
   end
 
   def save

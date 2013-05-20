@@ -1,3 +1,6 @@
-<%=  render 'common/tabs_header' %>
-
-<%= render partial: 'form' %>
+<% if @tp.student? %>
+    <%=  render 'common/tabs_header' %>
+    <%= render partial: 'form' %>
+<% else %>
+    <%= render partial: 'admin' %>
+<% end %>
