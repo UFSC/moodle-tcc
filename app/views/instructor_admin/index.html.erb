@@ -2,20 +2,25 @@
 
 <table class="table">
   <thead>
-  <tr>
-    <th>Nome do estudante</th>
-    <th>Nota</th>
-    <th>Ações</th>
-  </tr>
+        <th>ID ( provisório )</th>
+        <th>Nota</th>
+        <% TCC_CONFIG["hubs"].size.times do |i| %>
+            <th>
+              Eixo <%= i+1 %>
+            </th>
+        <% end %>
+
   </thead>
   <tbody>
-  <% @tccs.each do |tcc| %>
-      <tr>
-        <td><%= tcc.name %></td>
-        <td>falta..</td>
-        <td><%= link_to "Avaliar", tccs_path(:moodle_user => tcc.moodle_user), :target => "_blank" %></td>
-      </tr>
-  <% end %>
+      <% @tccs.each do |tcc| %>
+          <tr>
+            <td><%= tcc.moodle_user %></td>
+            <td>falta..</td>
+            <% TCC_CONFIG["hubs"].size.times do |i| %>
+                <td>Eixo <%= i+1 %></td>
+            <% end %>
+          </tr>
+      <% end %>
   </tbody>
 </table>
 

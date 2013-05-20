@@ -6,8 +6,8 @@ describe Presentation do
   it { respond_to :commentary, :content }
 
   it 'should versioning' do
-    old_version = presentation.version
+    old_version = presentation.versions.size
     presentation.update_attribute(:content, 'new content')
-    presentation.version.should == ( old_version + 1 )
+    presentation.versions.size.should == ( old_version + 1 )
   end
 end

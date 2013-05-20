@@ -1,8 +1,8 @@
-<div id="hub<%=h category %>_tab_content" style = "display:none; margin-left: 0px" class = "span12">
-    <h3>Eixo <%= category %></h3>
+<%= semantic_form_for @hub, url: save_hubs_path(:category => @hub.category) do |h| %>
+    <h3>Eixo <%= @hub.category %></h3>
     <%= h.input :category, :as => :hidden %>
     <%= h.semantic_fields_for :diaries do |d| %>
-        <div class="accordion-group <%=h category %>">
+        <div class="accordion-group <%=h @hub.category %>">
           <div class="accordion-heading">
             <a id="<%=h d.object_id %>" class="accordion-toggle">
               <%= d.object.title %>
@@ -22,8 +22,10 @@
         </div>
     <% end %>
     <div>
-        <h3>Reflexões</h3>
-        <%= h.cktext_area :reflection %>
+      <h3>Reflexões</h3>
+      <%= h.cktext_area :reflection %>
     </div>
-</div>
-
+    <%= h.actions do %>
+        <%= h.action :submit, :as => :input, :label => 'Salvar alterações' %>
+    <% end %>
+<% end %>

@@ -2,16 +2,16 @@
 require 'spec_helper'
 
 describe "Tccs" do
-  describe "GET /tccs" do
+  describe "GET /tcc" do
     it 'should not work without LTI connection' do
-      get tccs_path
+      get show_tcc_path
       response.status.should be(302)
       response.should redirect_to access_denied_path
     end
 
     it 'should work with LTI connection' do
       page.set_rack_session(fake_lti_session)
-      visit tccs_path
+      visit show_tcc_path
 
       page.current_path.should_not == access_denied_path
       page.should have_content('Apresentação')

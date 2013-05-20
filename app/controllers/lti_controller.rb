@@ -6,7 +6,7 @@ class LtiController < ApplicationController
     if authorize_lti!
       if @tp.student?
         logger.debug 'LTI user identified as a student'
-        redirect_to tccs_path
+        redirect_to show_tcc_path
       elsif @tp.instructor?
         logger.debug 'LTI user identified as a instructor'
         redirect_to instructor_admin_tccs_path

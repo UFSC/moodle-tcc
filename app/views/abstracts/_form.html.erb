@@ -1,0 +1,9 @@
+
+    <%= semantic_form_for @abstract, url: save_abstract_path do |a| %>
+        <h3>Resumo</h3>
+        <%= a.cktext_area :content_pt %><br>
+        <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
+        <%= a.actions do %>
+            <%= a.action :submit, :as => :input, :label => 'Salvar alterações' %>
+        <% end %>
+    <% end %>

@@ -5,6 +5,8 @@ class Hub < ActiveRecord::Base
 
   accepts_nested_attributes_for :diaries
 
+  has_paper_trail
+
   include AASM
   aasm_column :state
 

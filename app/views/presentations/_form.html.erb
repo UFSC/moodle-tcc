@@ -1,0 +1,7 @@
+<h3>Apresentação</h3>
+<%= semantic_form_for @presentation, url: save_presentation_path do |p| %>
+    <%= p.cktext_area :content %><br>
+    <%= p.actions do %>
+        <%= p.action :submit, :as => :input, :label => 'Salvar alterações' %>
+    <% end %>
+<% end %>

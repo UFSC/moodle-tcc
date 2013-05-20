@@ -1,16 +1,13 @@
-<%= semantic_form_for @tcc do |f| %>
-  <%= render :partial => 'tccs/forms/data', locals: { f: f } %>
-  <%= render :partial => 'tccs/forms/abstract', locals: { f: f } %>
-  <%= render :partial => 'tccs/forms/presentation', locals: { f: f } %>
-
-  <%= f.fields_for :hubs do |h| %>
-    <%= render :partial => "tccs/forms/hub", locals: { h: h, category: h.object.category } %>
-  <% end %>
-
-  <%= render :partial => 'tccs/forms/final_consideration', locals: { f: f } %>
-  <%= render :partial => 'tccs/forms/bibliographies', locals: { f: f } %>
-
-  <%= f.actions do %>
-    <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
-  <% end %>
+<%= semantic_form_for @tcc, url: save_tcc_path do |f| %>
+    <%= f.inputs do %>
+        <%= f.input :name %>
+        <%= f.input :title %>
+        <%= f.input :defense_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
+                    :input_html => {:'data-behaviour' => 'datepicker',
+                                    value: ((I18n.l @tcc.defense_date) unless @tcc.defense_date.nil?)} %>
+        <%= f.input :leader %>
+    <% end %>
+    <%= f.actions do %>
+        <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
+    <% end %>
 <% end %>
