@@ -15,7 +15,7 @@
                 <tr>
                   <td><%= element.direct_citation %></td>
                   <td><%= element.indirect_citation  %></td>
-                  <td><%= element.reference_text  %></td>
+                  <td><%= sanitize(element.reference_text, :tags => [])  %></td>
                   <td>
                     <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
                     <%= link_to 'Remover', general_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>

@@ -6,7 +6,13 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
         { name: 'styles' },
         { name: 'tools' },
+    ];
+
+    config.extraPlugins = 'citacao';
+    config.allowedContent = true;
+
+    config.toolbar_mini = [
+        ['Bold', 'Italic', 'Underline', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
+        ['Maximize']
     ]
-    config.extraPlugins = 'citacao'
-    config.allowedContent = true
 };
