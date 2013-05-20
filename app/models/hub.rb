@@ -13,7 +13,7 @@ class Hub < ActiveRecord::Base
 
   validates_inclusion_of :grade, in: 0..1, allow_nil: true
 
-  has_paper_trail
+  has_paper_trail :ignore => [:grade, :state]
 
   include AASM
   aasm_column :state
@@ -29,15 +29,15 @@ class Hub < ActiveRecord::Base
     end
 
     event :send_back_to_student do
-      transitions :from => :sent_to_tutor_for_revision, :to => :draft#, :guard => :valued?
+      transitions :from => [:sent_to_tutor_for_revision, :sent_to_tutor_for_evaluation], :to => :draft#, :guard =>
     end
 
     event :send_to_tutor_for_evaluation do
-      transitions :from => :draft, :to => :sent_to_tutor_for_evaluation#, :guard => :ready_for_review?
+      transitions :from => :draft, :to => :sent_to_tutor_for_evaluation, :guard => :reflection_not_blank?
     end
 
     event :evaluation_fails_and_send_back_to_student_for do
-      transitions :from => :sent_to_tutor_for_evaluation, :to => :draft#, :guard => :valued?
+      transitions :from => :sent_to_tutor_for_evaluation, :to => :draft#, :guard =>
     end
 
     event :tutor_evaluate_ok do
@@ -51,14 +51,6 @@ class Hub < ActiveRecord::Base
     else
       true
     end
-  end
-
-  def valued?
-    #Todo: Ver condicao
-  end
-
-  def ready_for_review?
-    #Todo: Ver condicao
   end
 
 end
