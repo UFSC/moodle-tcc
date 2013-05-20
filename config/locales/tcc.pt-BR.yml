@@ -1,4 +1,16 @@
 pt-BR:
+  states:
+    draft: 'Rascunho'
+    sent_to_tutor_for_revision: 'Comentando'
+    sent_to_tutor_for_evaluation: 'Avaliando'
+    tutor_evaluation_ok: 'Avaliado'
+  actions:
+    draft: 'Visualizar'
+    sent_to_tutor_for_revision: 'Comentar'
+    sent_to_tutor_for_evaluation: 'Avaliar'
+    tutor_evaluation_ok: 'Avaliado'
+
+
   activerecord:
     attributes:
       tcc:

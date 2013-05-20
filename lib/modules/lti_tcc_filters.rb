@@ -6,7 +6,6 @@ module LtiTccFilters
 
   def authorize
     lti_params = session['lti_launch_params']
-
     if lti_params.nil?
       logger.error 'Access Denied: LTI not initialized'
       redirect_to access_denied_path

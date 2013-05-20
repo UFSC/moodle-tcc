@@ -5,6 +5,7 @@ class CreateHubs < ActiveRecord::Migration
       t.text :commentary
       t.integer :category
       t.string :state
+      t.float :grade
       t.references :tcc
 
       t.timestamps

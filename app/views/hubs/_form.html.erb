@@ -1,4 +1,4 @@
-<%= semantic_form_for @hub, url: save_hubs_path(:category => @hub.category) do |h| %>
+<%= semantic_form_for @hub, url: save_hubs_path(:category => @hub.category, :action_state => "draft") do |h| %>
     <h3>Eixo <%= @hub.category %></h3>
     <%= h.input :category, :as => :hidden %>
     <%= h.semantic_fields_for :diaries do |d| %>
@@ -26,6 +26,8 @@
       <%= h.cktext_area :reflection %>
     </div>
     <%= h.actions do %>
-        <%= h.action :submit, :as => :input, :label => 'Salvar alterações' %>
+        <%= h.input :new_state, :as => :radio, :collection => {'Salvar como rascunho' => :draft, 'Enviar para revisao' => :revision, 'Enviar para avaliação' => :evaluation} %>
+
+        <%= h.action :submit, :as => :input, :label => 'Salvar' %>
     <% end %>
 <% end %>

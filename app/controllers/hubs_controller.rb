@@ -5,20 +5,49 @@ class HubsController < ApplicationController
     set_tab ("hub"+params[:category]).to_sym
 
     @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-    @version = @hub.versions.last
+
     @old_hub = @hub.previous_version if @hub.versions.size > 1
+    unless @old_hub.nil?
+      @old_comment = Comment.where(:version_id => @old_hub.version.id)
+    end
+
     if @tp.student?
       get_hubs_diaries # search on moodle webserver
+    else
+      @comment = @hub.comments.find_or_initialize_by_version_id(:version_id => @hub.versions.last.id)
     end
   end
 
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
-    @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
-    if @hub.update_attributes(params[:hub])
-      flash[:success] = t(:successfully_saved)
+    if params[:hub]
+      @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
+      if @hub.valid?
+        case params[:hub][:new_state]
+          when "draft"
+            #does nothing
+          when "revision"
+            if @hub.may_send_to_tutor_for_revision?
+               @hub.send_to_tutor_for_revision
+            end
+          when "evaluation"
+            if @hub.may_send_to_tutor_for_evaluation?
+               @hub.send_to_tutor_for_evaluation
+            end
+        end
+        if @hub.update_attributes(params[:hub])
+          flash[:success] = t(:successfully_saved)
+        end
+      end
+      redirect_to show_hubs_path
+    elsif params[:comment]
+      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+      @comment = @hub.comments.build
+      if @comment.update_attributes(params[:comment])
+        flash[:success] = t(:successfully_saved)
+      end
+      redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
     end
-    redirect_to show_hubs_path
   end
 
   private
