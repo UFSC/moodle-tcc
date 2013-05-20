@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>SistemaTcc</title>
-      <%= stylesheet_link_tag    "application", :media => "all" %>
-      <%= javascript_include_tag "application" %>
-      <%= csrf_meta_tags %>
-    </head>
-    <body>
-        <div class="span16">
-          <%= render 'layouts/flash_messages' %>
-          <%= yield %>
-
-        </div>
-    </body>
+<head>
+  <title>SistemaTcc</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <%= render 'layouts/flash_messages' %>
+      <%= yield %>
+    </div>
+  </div>
+</div>
+</body>
 </html>
