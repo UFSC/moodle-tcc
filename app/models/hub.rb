@@ -1,9 +1,17 @@
 class Hub < ActiveRecord::Base
   belongs_to :tcc
-  attr_accessible :category, :reflection, :commentary, :diaries_attributes
   has_many :diaries
+  has_many :comments, :as => :commentable
 
-  accepts_nested_attributes_for :diaries
+  # Virtual attributes
+  attr_accessor :new_state
+
+  # Mass-Assignment
+  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :comments_attributes, :new_state
+
+  accepts_nested_attributes_for :diaries, :comments
+
+  validates_inclusion_of :grade, in: 0..1, allow_nil: true
 
   has_paper_trail
 
@@ -12,20 +20,24 @@ class Hub < ActiveRecord::Base
 
   aasm do
     state :draft, :initial => true
-    state :sent_to_tutor
+    state :sent_to_tutor_for_revision
     state :sent_to_tutor_for_evaluation
     state :tutor_evaluation_ok
 
-    event :send_to_tutor do
-      transitions :from => :draft, :to => :sent_to_tutor, :guard => :reflection_not_blank?
+    event :send_to_tutor_for_revision do
+      transitions :from => :draft, :to => :sent_to_tutor_for_revision, :guard => :reflection_not_blank?
     end
 
     event :send_back_to_student do
-      transitions :from => :sent_to_tutor, :to => :draft#, :guard => :valued?
+      transitions :from => :sent_to_tutor_for_revision, :to => :draft#, :guard => :valued?
     end
 
     event :send_to_tutor_for_evaluation do
       transitions :from => :draft, :to => :sent_to_tutor_for_evaluation#, :guard => :ready_for_review?
+    end
+
+    event :evaluation_fails_and_send_back_to_student_for do
+      transitions :from => :sent_to_tutor_for_evaluation, :to => :draft#, :guard => :valued?
     end
 
     event :tutor_evaluate_ok do

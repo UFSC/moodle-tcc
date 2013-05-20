@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517203859) do
+ActiveRecord::Schema.define(:version => 20130520131300) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(:version => 20130517203859) do
     t.integer "num_quantity"
   end
 
+  create_table "comments", :force => true do |t|
+    t.text     "content"
+    t.integer  "version_id"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
   create_table "diaries", :force => true do |t|
     t.text     "content"
     t.integer  "pos"
@@ -82,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20130517203859) do
     t.text     "commentary"
     t.integer  "category"
     t.string   "state"
+    t.float    "grade"
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

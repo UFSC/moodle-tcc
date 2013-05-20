@@ -2,23 +2,32 @@
 
 <table class="table">
   <thead>
-        <th>ID ( provisório )</th>
-        <th>Nota</th>
-        <% TCC_CONFIG["hubs"].size.times do |i| %>
-            <th>
-              Eixo <%= i+1 %>
-            </th>
-        <% end %>
-
+      <tr>
+          <th colspan="2"></th>
+          <% TCC_CONFIG["hubs"].size.times do |i| %>
+              <th colspan="2">Eixo <%= i+1 %></th>
+          <% end %>
+      </tr>
+      <tr>
+          <th>ID ( provisório )</th>
+          <th>Nota</th>
+          <% TCC_CONFIG["hubs"].size.times do |i| %>
+              <th>Estado</th>
+              <th>Ação</th>
+          <% end %>
+      </tr>
   </thead>
   <tbody>
       <% @tccs.each do |tcc| %>
           <tr>
-            <td><%= tcc.moodle_user %></td>
-            <td>falta..</td>
-            <% TCC_CONFIG["hubs"].size.times do |i| %>
-                <td>Eixo <%= i+1 %></td>
-            <% end %>
+              <td><%= tcc.moodle_user %></td>
+              <td>falta..</td>
+              <% TCC_CONFIG["hubs"].size.times do |i| %>
+                  <td><%= get_state(tcc, (i+1)) %></td>
+                  <td>
+                    <%= link_to get_action(tcc, (i+1)), show_hubs_path(:category => (i+1), :moodle_user => tcc.moodle_user) %>
+                  </td>
+              <% end %>
           </tr>
       <% end %>
   </tbody>

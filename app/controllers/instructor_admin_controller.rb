@@ -2,7 +2,7 @@ class InstructorAdminController < ApplicationController
   before_filter :authorize, :only => :index
 
   def index
-    @tccs = Tcc.paginate(:page => params[:page], :per_page => 1)
+    @tccs = Tcc.paginate(:page => params[:page], :per_page => 20)
   end
 
   private
