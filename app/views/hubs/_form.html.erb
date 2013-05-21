@@ -23,11 +23,10 @@
     <% end %>
     <div>
       <h3>Reflexões</h3>
-      <%= h.cktext_area :reflection %>
+          <%= h.cktext_area :reflection %>
     </div>
     <%= h.actions do %>
         <%= h.input :new_state, :as => :radio, :collection => {'Salvar como rascunho' => :draft, 'Enviar para revisao' => :revision, 'Enviar para avaliação' => :evaluation} %>
-
         <%= h.action :submit, :as => :input, :label => 'Salvar' %>
     <% end %>
 <% end %>
