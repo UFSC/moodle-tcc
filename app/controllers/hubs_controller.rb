@@ -94,11 +94,11 @@ class HubsController < ApplicationController
     diary.pos = i
   end
 
-  def get_online_text(user_id, assign_id)
-    logger.debug "[WS Moodle] Acessando Web Service: user_id=#{user_id}, assign_id=#{assign_id}"
+  def get_online_text(user_id, coursemodule_id)
+    logger.debug "[WS Moodle] Acessando Web Service: user_id=#{user_id}, coursemodule_id=#{coursemodule_id}"
     RestClient.post(TCC_CONFIG["server"],
                     :wsfunction => "local_wstcc_get_user_online_text_submission",
-                    :userid => user_id, :assignid => assign_id,
+                    :userid => user_id, :coursemoduleid => coursemodule_id,
                     :wstoken => TCC_CONFIG["token"]) do |response|
 
       logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
