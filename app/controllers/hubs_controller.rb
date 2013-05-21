@@ -119,7 +119,7 @@ class HubsController < ApplicationController
         error_message = doc.xpath('/EXCEPTION/MESSAGE').text
         debug_info = doc.xpath('/EXCEPTION/DEBUGINFO').text
 
-        logger.error "Falha ao acessar o webservice do Moodle: #{debug_info} (ERROR_CODE: #{error_code})"
+        logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
         return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
       end
 
