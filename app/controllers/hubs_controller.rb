@@ -124,7 +124,7 @@ class HubsController < ApplicationController
       end
 
       # Recupera o conteúdo do texto online
-      online_text = doc.xpath('/RESPONSE/SINGLE/KEY/VALUE').text
+      online_text = doc.xpath('/RESPONSE/SINGLE/KEY[@name="onlinetext"]/VALUE').text
 
       if online_text.blank?
         return '[ não existe nada postado para esta atividade ainda ]'
