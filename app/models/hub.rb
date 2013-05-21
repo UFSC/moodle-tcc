@@ -4,10 +4,10 @@ class Hub < ActiveRecord::Base
   has_many :comments, :as => :commentable
 
   # Virtual attributes
-  attr_accessor :new_state
+  attr_accessor :new_state, :comment
 
   # Mass-Assignment
-  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :comments_attributes, :new_state
+  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :comments_attributes, :new_state, :comment
 
   accepts_nested_attributes_for :diaries, :comments
 

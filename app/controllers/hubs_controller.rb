@@ -10,16 +10,21 @@ class HubsController < ApplicationController
     end
 
     unless @hub.nil?
+      last_version = @hub.versions.last
+      unless last_version.nil?
+        unless last_version.comment.nil?
+          @hub.comment = last_version.comment
+        end
+      end
       @old_hub = @hub.previous_version if @hub.versions.size > 1
       unless @old_hub.nil?
-        @old_comment = Comment.where(:version_id => @old_hub.version.id)
+         @old_version =  @hub.versions[-2]
       end
 
       if @tp.student?
         get_hubs_diaries # search on moodle webserver
       else
         #@comment = @hub.comments.find_or_initialize_by_version_id(:version_id => @hub.versions.last.id)
-        @comment = @hub.comments.build
       end
     else
       render :text =>  t(:hub_undefined)
@@ -28,9 +33,11 @@ class HubsController < ApplicationController
 
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
-    if params[:hub]
+    unless params[:hub][:comment]
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
+      @hub.attributes = params[:hub]
       if @hub.valid?
+
         case params[:hub][:new_state]
           when "draft"
             #does nothing
@@ -43,17 +50,20 @@ class HubsController < ApplicationController
                @hub.send_to_tutor_for_evaluation
             end
         end
-        if @hub.update_attributes(params[:hub])
-          flash[:success] = t(:successfully_saved)
-        end
-      end
-      redirect_to show_hubs_path
-    elsif params[:comment]
-      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      @comment = @hub.comments.build
-      @comment.version_id = @hub.versions.last.id
 
-      unless params[:comment][:hub_grade].blank?
+        @hub.save
+        flash[:success] = t(:successfully_saved)
+        redirect_to show_hubs_path
+      else
+        render :show
+      end
+    else
+      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+      version = @hub.versions.last
+      version.comment = params[:hub][:comment]
+      version.save
+
+      unless params[:hub][:grade].blank?
         if @hub.may_tutor_evaluate_ok?
           @hub.tutor_evaluate_ok
         end
@@ -62,9 +72,6 @@ class HubsController < ApplicationController
       end
 
       if @hub.save
-        if @comment.update_attributes(params[:comment])
-          flash[:success] = t(:successfully_saved)
-        end
         redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
       end
     end

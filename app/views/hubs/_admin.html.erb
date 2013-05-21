@@ -1,30 +1,53 @@
-<!--old-->
-<% unless @old_hub.nil? %>
-        <div class="span5">
-              <h3>Versão anterior da reflexão</h3>
-              <%= @old_hub.reflection.html_safe %>
-              <%= @old_hub.comments.inspect %>
-              <% if @old_comment.size > 0 %>
-                <%= @old_comment.first.content.html_safe %>
-              <% else %>
-                <h5 style="color: blue">Sem comentário para esta versão</h5>
-              <% end %>
+<div style="margin-top: 10px">
+<h3>Eixo <%= @hub.category %></h3>
+<%= semantic_form_for @hub, url: save_hubs_path(:category => @hub.category, :moodle_user => @tcc.moodle_user)  do |h| %>
+    <!--diaries-->
+    <%= h.semantic_fields_for :diaries do |d| %>
+        <div class="accordion-group <%=h @hub.category %>">
+          <div class="accordion-heading">
+            <a id="<%=h d.object_id %>" class="accordion-toggle">
+              <%= d.object.title %>
+            </a>
+          </div>
+          <div id="<%=h d.object_id %>_collapse" class="collapse out">
+            <div class="accordion-inner">
+              <%= d.object.content.html_safe unless d.object.content.nil? %>
+            </div>
+          </div>
+          <div style="text-align:center; padding-bottom: 0px">
+            <a id="<%=h d.object_id %>" class="accordion-toggle-icon accordion-toggle" href="#"><i class="icon-chevron-down"></i></a>
+          </div>
         </div>
-<% end %>
+    <% end %>
 
-<!--new-->
-<div class="span5">
-  <%= semantic_form_for @comment, url: save_hubs_path(:category => @hub.category, :moodle_user => @tcc.moodle_user)  do |c| %>
-      <h3>Versão atual da reflexão</h3>
-      <%= @hub.reflection.html_safe %>
-      <% if @hub.state == "sent_to_tutor_for_evaluation" %>
-          <%= c.input :hub_grade, :as => :number, :label => "Nota(de 0 à 1)" %>
-      <% end %>
-      <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
-        <%= c.input :content, :label => 'Comentário', :input_html => { :readonly => true } %>
-      <% else %>
-        <%= c.input :content, :label => 'Comentário' %>
-        <%= c.action :submit, :as => :input, :label => 'Enviar comentário' %>
-      <% end %>
-  <% end %>
+    <!--old-->
+    <% unless @old_hub.nil? %>
+            <div class="span5">
+                  <h3>Versão anterior da reflexão</h3>
+                  <%= @old_hub.reflection.html_safe %>
+                  <% if !@old_version.nil? && !@old_version.comment.nil? %>
+                    <h5>Comentário</h5>
+                    <%= @old_version.comment.html_safe %>
+                  <% else %>
+                    <h5 style="color: blue">Sem comentário para esta versão</h5>
+                  <% end %>
+            </div>
+    <% end %>
+
+    <!--new-->
+    <div class="span5">
+
+          <h3>Versão atual da reflexão</h3>
+          <%= @hub.reflection.html_safe %>
+          <% if @hub.state == "sent_to_tutor_for_evaluation" %>
+              <%= h.input :grade, :as => :number, :label => "Nota(de 0 à 1)" %>
+          <% end %>
+          <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
+            <%= h.input :comment, :as => :text, :label => 'Comentário', :input_html => { :readonly => true } %>
+          <% else %>
+            <%= h.input :comment, :as => :text, :label => 'Comentário' %>
+            <%= h.action :submit, :as => :input, :label => 'Enviar comentário' %>
+          <% end %>
+    </div>
+<% end %>
 </div>
