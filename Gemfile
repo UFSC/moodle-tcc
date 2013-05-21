@@ -10,7 +10,7 @@ gem 'oauth'
 gem 'rest-client'
 
 # XML Parser
-gem 'nori'
+gem 'nokogiri'
 
 # State machine
 gem 'aasm'

@@ -124,7 +124,6 @@ GEM
       net-ssh (>= 2.6.5)
     newrelic_rpm (3.6.0.83)
     nokogiri (1.5.9)
-    nori (2.2.0)
     oauth (0.4.7)
     orm_adapter (0.4.0)
     paper_trail (2.7.1)
@@ -234,7 +233,7 @@ DEPENDENCIES
   jquery-rails
   mysql2
   newrelic_rpm
-  nori
+  nokogiri
   oauth
   paper_trail
   rabl
