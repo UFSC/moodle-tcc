@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20130520230813) do
     t.text     "commentary"
     t.integer  "category"
     t.string   "state"
+    t.float    "grade"
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

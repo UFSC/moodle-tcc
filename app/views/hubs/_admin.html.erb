@@ -40,7 +40,7 @@
           <h3>Versão atual da reflexão</h3>
           <%= @hub.reflection.html_safe %>
           <% if @hub.state == "sent_to_tutor_for_evaluation" %>
-              <%= h.input :grade, :as => :number, :label => "Nota(de 0 à 1)" %>
+              <%= h.input :grade, :as => :number, :label => "Nota (de 0 à 10)" %>
           <% end %>
           <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
             <%= h.input :comment, :as => :text, :label => 'Comentário', :input_html => { :readonly => true } %>

@@ -18,16 +18,14 @@ class HubsController < ApplicationController
       end
       @old_hub = @hub.previous_version if @hub.versions.size > 1
       unless @old_hub.nil?
-         @old_version =  @hub.versions[-2]
+        @old_version = @hub.versions[-2]
       end
 
       if @tp.student?
         get_hubs_diaries # search on moodle webserver
-      else
-        #@comment = @hub.comments.find_or_initialize_by_version_id(:version_id => @hub.versions.last.id)
       end
     else
-      render :text =>  t(:hub_undefined)
+      render :text => t(:hub_undefined)
     end
   end
 
@@ -43,11 +41,11 @@ class HubsController < ApplicationController
             #does nothing
           when "revision"
             if @hub.may_send_to_tutor_for_revision?
-               @hub.send_to_tutor_for_revision
+              @hub.send_to_tutor_for_revision
             end
           when "evaluation"
             if @hub.may_send_to_tutor_for_evaluation?
-               @hub.send_to_tutor_for_evaluation
+              @hub.send_to_tutor_for_evaluation
             end
         end
 
@@ -64,11 +62,8 @@ class HubsController < ApplicationController
       version.save
 
       unless params[:hub][:grade].blank?
-        if @hub.may_tutor_evaluate_ok?
-          @hub.tutor_evaluate_ok
-        end
-      else @hub.may_send_back_to_student?
-        @hub.send_back_to_student
+        @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
+        @hub.send_back_to_student if @hub.may_send_back_to_student?
       end
 
       if @hub.save

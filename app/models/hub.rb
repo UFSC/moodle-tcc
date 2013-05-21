@@ -1,17 +1,16 @@
 class Hub < ActiveRecord::Base
   belongs_to :tcc
   has_many :diaries
-  has_many :comments, :as => :commentable
 
   # Virtual attributes
   attr_accessor :new_state, :comment
 
   # Mass-Assignment
-  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :comments_attributes, :new_state, :comment
+  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :new_state, :comment
 
-  accepts_nested_attributes_for :diaries, :comments
+  accepts_nested_attributes_for :diaries
 
-  validates_inclusion_of :grade, in: 0..1, allow_nil: true
+  validates_inclusion_of :grade, in: 0..10, allow_nil: true
 
   has_paper_trail :ignore => [:grade, :state]
 
