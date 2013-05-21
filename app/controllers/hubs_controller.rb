@@ -94,19 +94,40 @@ class HubsController < ApplicationController
   end
 
   def get_online_text(user_id, assign_id)
+    logger.debug "[WS Moodle] Acessando Web Service: user_id=#{user_id}, assign_id=#{assign_id}"
     RestClient.post(TCC_CONFIG["server"],
                     :wsfunction => "local_wstcc_get_user_online_text_submission",
                     :userid => user_id, :assignid => assign_id,
-                    :wstoken => TCC_CONFIG["token"]) { |response|
-      if response.code == 200
-        parser = Nori.new
-        unless parser.parse(response)["RESPONSE"].nil?
-          online_text = parser.parse(response)["RESPONSE"]["SINGLE"]["KEY"].first["VALUE"]
-          if online_text["@null"].nil?
-            online_text
-          end
-        end
+                    :wstoken => TCC_CONFIG["token"]) do |response|
+
+      logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
+
+      if response.code != 200
+        return "Falha ao acessar o Moodle: (HTTP_ERROR: #{response.code})"
       end
-    }
+
+      # Utiliza Nokogiri como parser XML
+      doc = Nokogiri.parse(response)
+
+      # Verifica se ocorreu algum problema com o acesso
+      if !doc.xpath('/EXCEPTION').blank?
+
+
+        error_code = doc.xpath('/EXCEPTION/ERRORCODE').text
+        error_message = doc.xpath('/EXCEPTION/MESSAGE').text
+
+        return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
+      end
+
+      # Recupera o conteúdo do texto online
+      online_text = doc.xpath('/RESPONSE/SINGLE/KEY/VALUE').text
+
+      if online_text.blank?
+        return '[ não existe nada postado para esta atividade ainda ]'
+      else
+        return online_text
+      end
+
+    end
   end
 end
