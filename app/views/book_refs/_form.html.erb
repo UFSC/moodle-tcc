@@ -2,21 +2,21 @@
   <div id="data_tab_content">
     <%= ref.inputs do %>
       <div class="span4">
-        <%= ref.input :et_all %>
         <%= ref.input :first_author %>
         <%= ref.input :second_author %>
         <%= ref.input :third_author %>
+        <%= ref.input :et_all, :label => false %>
       </div>
       <div class="span4">
         <%= ref.input :edition_number %>
         <%= ref.input :local %>
         <%= ref.input :type_quantity, :as => :radio, :collection => {'Número de Páginas' => 'p', 'Número de Volumes' => 'ed'} %>
-        <%= ref.input :num_quantity %>
+        <%= ref.input :num_quantity, :input_html => { :disabled => true } %>
       </div>
       <div class="span3">
         <%= ref.input :title %>
         <%= ref.input :subtitle %>
-        <%= ref.input :year %>
+        <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year}%>
         <%= ref.input :publisher %>
       </div>
     <% end %>
