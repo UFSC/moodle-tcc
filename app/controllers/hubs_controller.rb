@@ -6,6 +6,7 @@ class HubsController < ApplicationController
     set_tab ("hub"+params[:category]).to_sym
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+      @hub.state = "draft" if @hub.state.nil?
     else
       @hub = @tcc.hubs.where(:category => params[:category]).first
     end
@@ -62,10 +63,8 @@ class HubsController < ApplicationController
       version.comment = params[:hub][:comment]
       version.save
 
-      unless params[:hub][:grade].blank?
-        @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
-        @hub.send_back_to_student if @hub.may_send_back_to_student?
-      end
+      @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
+      @hub.send_back_to_student if @hub.may_send_back_to_student?
 
       if @hub.save
         redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)

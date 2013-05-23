@@ -8,12 +8,12 @@
         <%= h.cktext_area :reflection %>
         <%= h.actions do %>
             <%= h.input :new_state, :as => :radio, label: false,
-                        :collection => { 'Salvar como rascunho' => :draft,
-                                         'Enviar para revisao' => :revision,
-                                         'Enviar para avaliação' => :evaluation} %>
+                        :collection => {'Salvar como rascunho' => :draft,
+                                        'Enviar para revisao' => :revision,
+                                        'Enviar para avaliação' => :evaluation} %>
             <%= h.action :submit, :as => :input, :label => 'Salvar' %>
         <% end %>
     <% else %>
-        <%= h.input :reflection, as: :ckeditor, label: false, input_html: { ckeditor: {readOnly: true} } %>
+        <%= h.input :reflection, as: :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
     <% end %>
 <% end %>
