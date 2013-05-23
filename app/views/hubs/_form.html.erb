@@ -5,6 +5,9 @@
     <h3>Reflexões do eixo <%= @hub.category %>: <span style="color: blue"><%= t('states.'+@hub.state) %></span></h3>
 
     <% if @hub.state == "draft" %>
+        <% unless @hub.comment.blank? %>
+            <%= h.input :comment, :as => :text, :label => 'Comentário do avaliador', :input_html => {readonly: true, rows: "4"} %>
+        <% end %>
         <%= h.cktext_area :reflection %>
         <%= h.actions do %>
             <%= h.input :new_state, :as => :radio, label: false,
