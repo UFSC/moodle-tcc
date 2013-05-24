@@ -24,7 +24,7 @@ class HubsController < ApplicationController
       end
 
       if @tp.student?
-        get_hubs_diaries # search on moodle webserver
+        get_hub_diaries( @hub ) # search on moodle webserver
       end
     else
       render :text => t(:hub_undefined)
@@ -74,12 +74,10 @@ class HubsController < ApplicationController
 
   private
 
-  def get_hubs_diaries
-    @tcc.hubs.each do |hub|
-      diaries_conf = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
-      diaries_conf.size.times do |i|
-        set_diary(hub, i, diaries_conf[i]["id"], diaries_conf[i]["title"])
-      end
+  def get_hub_diaries(hub)
+    diaries_conf = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
+    diaries_conf.size.times do |i|
+      set_diary(hub, i, diaries_conf[i]["id"], diaries_conf[i]["title"])
     end
   end
 
