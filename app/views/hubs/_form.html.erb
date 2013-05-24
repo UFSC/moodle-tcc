@@ -19,7 +19,7 @@
                                           'Enviar para revisao' => :revision,
                                           'Enviar para avaliação' => :evaluation} %>
               <%= h.action :submit, :as => :input, :label => 'Salvar' %>
-          <% end %>           t
+          <% end %>
       <% else %>
           <%= h.input :reflection, as: :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
       <% end %>
