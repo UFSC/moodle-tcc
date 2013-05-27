@@ -4,6 +4,7 @@
     successfully_deleted: "Removido com sucesso"
     unsuccessfully_saved: "Mudanças não foram salvas"
     unsuccessfully_deleted: "Não pode ser removido"
+    please_fix_invalid_data: "Por favor corrija os erros no formulário abaixo"
     online_text_error: "<p style='color:red'>Erro ao buscar</p>"
     online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"
     hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
