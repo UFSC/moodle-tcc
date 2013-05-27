@@ -19,12 +19,12 @@ class HubsController < ApplicationController
         end
       end
       @old_hub = @hub.previous_version if @hub.versions.size > 1
-      puts @old_hub.inspect
       unless @old_hub.nil?
         @old_version = @hub.versions[-2]
       end
 
       if @tp.student?
+        @last_commented_version = @hub.last_commented_version
         get_hub_diaries( @hub ) # search on moodle webserver
       end
     else

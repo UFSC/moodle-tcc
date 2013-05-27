@@ -1,32 +1,52 @@
-<%= semantic_form_for @hub, url: save_hubs_path(:category => @hub.category, :action_state => "draft") do |h| %>
+<%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category, action_state: "draft") do |h| %>
     <h3>Eixo <%= @hub.category %></h3>
     <%= h.input :category, :as => :hidden %>
-    <%= render :partial => "diaries", :locals => {h: h, accordion_type: "user_view"} %>
+    <%= render partial: "diaries", locals: {h: h, accordion_type: "user_view"} %>
 
-    <div class="rounded-border">
-      <h3>Reflexões do eixo <%= @hub.category %> - <span style="color: blue"><%= t('states.'+@hub.state) %></span></h3>
-
-      <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
-          <% unless @hub.comment.blank? %>
-              <div class="rounded-border">
-                <span><i class="icon-comment"></i> Comentário do avaliador</span>
-                <div style="color: blue;">
-                  <%= @hub.comment.html_safe %>
-                </div>
-              </div>
+    <div class="span12">
+        <div class="rounded-border row">
+          <h3>
+            Reflexões do eixo <%= @hub.category %> -
+            <span style="color: blue"> <%= t('states.'+@hub.state) %></span>
+            <% if @hub.state == "draft" %>
+                <a class="btn" id="compareHubsButtom" onclick="compareHubs()">Comparar versões</a>
+            <% end %>
+          </h3>
+          <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
+              <% unless @last_commented_version.nil? %>
+                  <% unless @last_commented_version.comment.blank? %>
+                      <div class="rounded-border">
+                        <span><i class="icon-comment"></i> Comentário do avaliador</span>
+                        <div style="color: blue;">
+                          <%= @last_commented_version.comment.html_safe %>
+                        </div>
+                      </div>
+                  <% end %>
+              <% end %>
           <% end %>
-      <% end %>
-      <% if @hub.state == "draft" %>
-          <div id="new_hub">
-              <%= h.cktext_area :reflection %>
-              <%= h.input :new_state, :as => :radio, label: false, inpuut_html: { style: "display:inline;" },
-                              :collection => {'Salvar como rascunho' => :draft,
-                                              'Enviar para revisao' => :revision,
-                                              'Enviar para avaliação' => :evaluation} %>
-              <%= h.action :submit, :as => :input, :label => 'Salvar' %>
-          </div>
-      <% else %>
-          <%= h.input :reflection, as: :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
-      <% end %>
+          <% if @hub.state == "draft" %>
+              <div class="row">
+                  <div id="old_hub" class="span6" style="display: none">
+                      <div class="rounded-border">
+                         <h4>Última versão avaliada</h4>
+
+                      </div>
+                  </div>
+                  <div id="new_hub" class="span12">
+                      <div class="rounded-border">
+                          <%= h.cktext_area :reflection %>
+                          <%= h.input :new_state, :as => :radio, label: false, input_html: { style: "display:inline;" },
+                                          collection: {'Salvar como rascunho' => :draft,
+                                                          'Enviar para revisao' => :revision,
+                                                          'Enviar para avaliação' => :evaluation} %>
+                          <%= h.action :submit, :as => :input, label: 'Salvar', button_html: { class: "btn btn-primary" } %>
+                      </div>
+                  </div>
+              </div>
+          <% else %>
+              <%= h.input :reflection, :as => :ckeditor, label: false, input_html: { ckeditor: {readOnly: true} } %>
+          <% end %>
+        </div>
     </div>
 <% end %>
+

@@ -12,7 +12,7 @@ class Hub < ActiveRecord::Base
 
   validates_inclusion_of :grade, in: 0..10, allow_nil: true
 
-  has_paper_trail :ignore => [:grade, :state]
+  has_paper_trail ignore: [:grade, :state]
 
   include AASM
   aasm_column :state
@@ -50,6 +50,14 @@ class Hub < ActiveRecord::Base
     else
       true
     end
+  end
+
+  def last_commented_version
+    self.versions.where("versions.comment IS NOT NULL").last
+  end
+
+  def last_hub_with_comment
+
   end
 
 end
