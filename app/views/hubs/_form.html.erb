@@ -2,24 +2,29 @@
     <h3>Eixo <%= @hub.category %></h3>
     <%= h.input :category, :as => :hidden %>
     <%= render :partial => "diaries", :locals => {h: h, accordion_type: "user_view"} %>
-    <div class="rounded-border">
-      <h3>Reflexões do eixo <%= @hub.category %></h3>
-      <h4>Estado: <span style="color: blue"><%= t('states.'+@hub.state) %></span></h4>
 
-      <% if @hub.state == "draft" %>
+    <div class="rounded-border">
+      <h3>Reflexões do eixo <%= @hub.category %> - <span style="color: blue"><%= t('states.'+@hub.state) %></span></h3>
+
+      <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
           <% unless @hub.comment.blank? %>
               <div class="rounded-border">
-                <%= h.input :comment, :as => :text, :label => 'Comentário do avaliador', :input_html => {readonly: true, rows: "4"} %>
+                <span><i class="icon-comment"></i> Comentário do avaliador</span>
+                <div style="color: blue;">
+                  <%= @hub.comment.html_safe %>
+                </div>
               </div>
           <% end %>
-          <%= h.cktext_area :reflection %>
-          <%= h.actions do %>
-              <%= h.input :new_state, :as => :radio, label: false,
-                          :collection => {'Salvar como rascunho' => :draft,
-                                          'Enviar para revisao' => :revision,
-                                          'Enviar para avaliação' => :evaluation} %>
+      <% end %>
+      <% if @hub.state == "draft" %>
+          <div id="new_hub">
+              <%= h.cktext_area :reflection %>
+              <%= h.input :new_state, :as => :radio, label: false, inpuut_html: { style: "display:inline;" },
+                              :collection => {'Salvar como rascunho' => :draft,
+                                              'Enviar para revisao' => :revision,
+                                              'Enviar para avaliação' => :evaluation} %>
               <%= h.action :submit, :as => :input, :label => 'Salvar' %>
-          <% end %>
+          </div>
       <% else %>
           <%= h.input :reflection, as: :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
       <% end %>

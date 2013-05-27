@@ -19,6 +19,7 @@ class HubsController < ApplicationController
         end
       end
       @old_hub = @hub.previous_version if @hub.versions.size > 1
+      puts @old_hub.inspect
       unless @old_hub.nil?
         @old_version = @hub.versions[-2]
       end
