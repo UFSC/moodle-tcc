@@ -1,0 +1,29 @@
+<%= semantic_form_for @book_cap_ref do |ref| %>
+    <div id="data_tab_content">
+      <%= ref.inputs do %>
+          <div class="span4">
+            <%= ref.input :type_participation, :as => :radio, :collection => %w(Autor Organizador Compilador Editor) %>
+            <%= ref.input :book_author %>
+            <%= ref.input :cap_author %>
+          </div>
+          <div class="span4">
+            <%= ref.input :book_title %>
+            <%= ref.input :book_subtitle %>
+            <%= ref.input :cap_title %>
+            <%= ref.input :cap_subtitle %>
+          </div>
+          <div class="span3">
+            <%= ref.input :local %>
+            <%= ref.input :publisher %>
+            <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
+            <div style='width:110px; float:left;'>
+              <%= ref.input :inicial_page, :input_html => {:min => 0, :style => 'width:90px;'} %>
+            </div>
+            <div style='width:110px; float:left;'>
+              <%= ref.input :end_page, :input_html => {:min => 0, :style => 'width:90px;'} %>
+            </div>
+          </div>
+      <% end %>
+      <%= ref.actions :submit %>
+    </div>
+<% end %>
