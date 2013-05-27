@@ -1,0 +1,35 @@
+<h5>Referências de Artigos</h5>
+<% if @article_refs.count > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Título do Artigo</th>
+        <th>Nome do Periódico</th>
+        <th>Data da Publicação</th>
+        <th>Local (Cidade)</th>
+        <th>Ação</th>
+      </tr>
+      </thead>
+      <% @article_refs.each do |element| %>
+          <% if !element.nil? %>
+              <tr>
+                <td><%= element.first_author %></td>
+                <td><%= element.article_title %></td>
+                <td><%= element.journal_name %></td>
+                <td><%= element.publication_date %></td>
+                <td><%= element.local %></td>
+                <td>
+                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
+                  <%= link_to 'Remover', article_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+<% else %>
+    <p>Não há referências cadastradas.</p>
+<% end %>
+<%= link_to 'Criar', new_article_ref_path, :class => 'btn btn-small' %>
+
+
