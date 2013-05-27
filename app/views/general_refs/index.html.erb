@@ -1,33 +1,32 @@
-<div class="">
-  <h5>Referências Gerais</h5>
-  <% if @general_refs.count > 0 %>
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>Citação direta</th>
-          <th>Citação indireta</th>
-          <th>Texto</th>
-          <th>Ação</th>
-        </tr>
-        </thead>
-        <% @general_refs.each do | element | %>
-            <% if !element.nil? %>
-                <tr>
-                  <td><%= element.direct_citation %></td>
-                  <td><%= element.indirect_citation  %></td>
-                  <td><%= sanitize(element.reference_text, :tags => [])  %></td>
-                  <td>
-                    <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
-                    <%= link_to 'Remover', general_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
-                  </td>
-                </tr>
-            <% end %>
-        <% end %>
-      </table>
-  <% else %>
-      <p>Não há referências cadastradas.</p>
-  <% end %>
+<h5>Referências Gerais</h5>
+<% if @general_refs.count > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Citação direta</th>
+        <th>Citação indireta</th>
+        <th>Texto</th>
+        <th>Ação</th>
+      </tr>
+      </thead>
+      <% @general_refs.each do |element| %>
+          <% if !element.nil? %>
+              <tr>
+                <td><%= element.direct_citation %></td>
+                <td><%= element.indirect_citation %></td>
+                <td><%= sanitize(element.reference_text, :tags => []) %></td>
+                <td>
+                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
+                  <%= link_to 'Remover', general_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+<% else %>
+    <p>Não há referências cadastradas.</p>
+<% end %>
 
-  <%= link_to 'Criar', new_general_ref_path, :class => 'btn btn-small' %>
-</div>
+<%= link_to 'Criar', new_general_ref_path, :class => 'btn btn-small' %>
+
 

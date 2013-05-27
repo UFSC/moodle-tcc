@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520230813) do
+ActiveRecord::Schema.define(:version => 20130527203817) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -24,16 +24,36 @@ ActiveRecord::Schema.define(:version => 20130520230813) do
 
   add_index "abstracts", ["tcc_id"], :name => "index_abstracts_on_tcc_id"
 
-  create_table "bibliographies", :force => true do |t|
-    t.text     "content"
-    t.string   "direct_quote"
-    t.string   "indirect_quote"
-    t.integer  "tcc_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+  create_table "article_refs", :force => true do |t|
+    t.string  "first_author"
+    t.string  "second_author"
+    t.string  "third_author"
+    t.boolean "et_all"
+    t.string  "article_title"
+    t.string  "article_subtitle"
+    t.string  "journal_name"
+    t.string  "local"
+    t.integer "volume_number"
+    t.integer "number_or_fascicle"
+    t.date    "publication_date"
+    t.integer "initial_page"
+    t.integer "end_page"
   end
 
-  add_index "bibliographies", ["tcc_id"], :name => "index_bibliographies_on_tcc_id"
+  create_table "book_cap_refs", :force => true do |t|
+    t.string  "cap_title"
+    t.string  "cap_subtitle"
+    t.string  "book_title"
+    t.string  "book_subtitle"
+    t.string  "cap_author"
+    t.string  "book_author"
+    t.string  "type_participation"
+    t.string  "local"
+    t.string  "publisher"
+    t.integer "year"
+    t.integer "inicial_page"
+    t.integer "end_page"
+  end
 
   create_table "book_refs", :force => true do |t|
     t.string  "first_author"
@@ -89,6 +109,24 @@ ActiveRecord::Schema.define(:version => 20130520230813) do
   end
 
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"
+
+  create_table "internet_refs", :force => true do |t|
+    t.string "author"
+    t.string "title"
+    t.string "subtitle"
+    t.string "url"
+    t.date   "access_date"
+  end
+
+  create_table "legislative_refs", :force => true do |t|
+    t.string  "jurisdiction_or_header"
+    t.string  "title"
+    t.string  "edition"
+    t.string  "local"
+    t.string  "publisher"
+    t.integer "year"
+    t.integer "total_pages"
+  end
 
   create_table "presentations", :force => true do |t|
     t.text     "content"

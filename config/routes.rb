@@ -29,5 +29,9 @@ SistemaTcc::Application.routes.draw do
   resources :bibliographies
   resources :general_refs
   resources :book_refs
+  resources :book_cap_refs
+  resources :article_refs
+  resources :internet_refs
+  resources :legislative_refs
 
 end

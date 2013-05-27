@@ -1,7 +1,20 @@
 <%= render 'common/tabs_header' %>
+<div class='span12'>
+  <h3>Referências Bibliográficas</h3>
 
-<h3>Referências Bibliográficas</h3>
+  <ul id='tabs' class='nav nav-pills'>
+    <li id='1' class='active bibliographie-tab'><a href='#'>Gerais</a></li>
+    <li id='2' class='bibliographie-tab'><a href='#'>Livros</a></li>
+    <li id='3' class='bibliographie-tab'><a href='#'>Capítulos de Livros</a></li>
+    <li id='4' class='bibliographie-tab'><a href='#'>Artigos</a></li>
+    <li id='5' class='bibliographie-tab'><a href='#'>Internet</a></li>
+    <li id='6' class='bibliographie-tab'><a href='#'>Legislativo</a></li>
+  </ul>
 
-<%= render :template => 'general_refs/index' %>
-<hr>
-<%= render :template => 'book_refs/index' %>
+  <div id='content-1'><%= render :template => 'general_refs/index' %></div>
+  <div id='content-2' class='hidden'><%= render :template => 'book_refs/index' %></div>
+  <div id='content-3' class='hidden'><%= render :template => 'book_cap_refs/index' %></div>
+  <div id='content-4' class='hidden'><%= render :template => 'article_refs/index' %></div>
+  <div id='content-5' class='hidden'><%= render :template => 'internet_refs/index' %></div>
+  <div id='content-6' class='hidden'><%= render :template => 'legislative_refs/index' %></div>
+</div>

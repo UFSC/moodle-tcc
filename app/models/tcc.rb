@@ -17,6 +17,10 @@ class Tcc < ActiveRecord::Base
   has_many :references,  :dependent => :destroy
   has_many :general_refs, :through => :references, :source => :element, :source_type => 'GeneralRef'
   has_many :book_refs, :through => :references, :source => :element, :source_type => 'BookRef'
+  has_many :book_cap_refs, :through => :references, :source => :element, :source_type => 'BookCapRef'
+  has_many :article_refs, :through => :references, :source => :element, :source_type => 'ArticleRef'
+  has_many :internet_refs, :through => :references, :source => :element, :source_type => 'InternetRef'
+  has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
 
 
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations
