@@ -7,6 +7,6 @@ class ArticleRef < ActiveRecord::Base
 
   validates_presence_of :first_author, :article_title, :journal_name, :local, :publication_date, :initial_page, :end_page
 
-  validates :volume_number, :numericality => { :only_integer => true, :greater_than => 0 }, :allow_blank => true
-  validates :number_or_fascicle, :numericality => { :only_integer => true, :greater_than => 0 }, :allow_blank => true
+  validates :volume_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
+  validates :number_or_fascicle, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
 end

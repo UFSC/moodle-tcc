@@ -11,5 +11,5 @@ Fabricator(:article_ref) do
   number_or_fascicle 1
   publication_date   '2013-05-24'
   initial_page       1
-  end_page           1
+  end_page           20
 end

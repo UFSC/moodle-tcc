@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20130527203817) do
     t.string  "local"
     t.string  "publisher"
     t.integer "year"
-    t.integer "inicial_page"
+    t.integer "initial_page"
     t.integer "end_page"
   end
 

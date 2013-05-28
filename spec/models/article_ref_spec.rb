@@ -39,14 +39,14 @@ describe ArticleRef do
   end
 
   describe '#initial_page' do
-    it { should validate_numericality_of(:number_or_fascicle).only_integer }
-    it { should_not allow_value(-1).for(:number_or_fascicle) }
-    it { should_not allow_value(-5).for(:number_or_fascicle) }
-    it { should_not allow_value(0).for(:number_or_fascicle) }
-    it { should allow_value(1).for(:number_or_fascicle) }
-    it { should allow_value(5).for(:number_or_fascicle) }
+    it { should validate_numericality_of(:initial_page).only_integer }
+    it { should_not allow_value(-1).for(:initial_page) }
+    it { should_not allow_value(-5).for(:initial_page) }
+    it { should_not allow_value(0).for(:initial_page) }
+    it { should allow_value(1).for(:initial_page) }
+    it { should allow_value(5).for(:initial_page) }
 
-    it 'should have be lower then #end_page' do
+    it 'should have to be lower then #end_page' do
       article_ref = Fabricate.build(:article_ref)
       article_ref.initial_page = 5
       article_ref.end_page = 2
@@ -60,11 +60,11 @@ describe ArticleRef do
   end
 
   describe '#end_page' do
-    it { should validate_numericality_of(:number_or_fascicle).only_integer }
-    it { should_not allow_value(-1).for(:number_or_fascicle) }
-    it { should_not allow_value(-5).for(:number_or_fascicle) }
-    it { should_not allow_value(0).for(:number_or_fascicle) }
-    it { should allow_value(1).for(:number_or_fascicle) }
-    it { should allow_value(5).for(:number_or_fascicle) }
+    it { should validate_numericality_of(:end_page).only_integer }
+    it { should_not allow_value(-1).for(:end_page) }
+    it { should_not allow_value(-5).for(:end_page) }
+    it { should_not allow_value(0).for(:end_page) }
+    it { should allow_value(1).for(:end_page) }
+    it { should allow_value(5).for(:end_page) }
   end
 end

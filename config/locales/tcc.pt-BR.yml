@@ -50,7 +50,7 @@ pt-BR:
         cap_subtitle: 'Subtítulo do Capítulo'
         cap_title: 'Título do Capítulo'
         end_page: 'Página Final'
-        inicial_page: 'Página Inicial'
+        initial_page: 'Página Inicial'
         local: 'Local (Cidade)'
         year: 'Ano (aaaa)'
         publisher: 'Editora'

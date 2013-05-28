@@ -11,7 +11,7 @@ class CreateBookCapRefs < ActiveRecord::Migration
       t.string :local
       t.string :publisher
       t.integer :year
-      t.integer :inicial_page
+      t.integer :initial_page
       t.integer :end_page
     end
   end
