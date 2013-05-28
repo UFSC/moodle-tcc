@@ -26,8 +26,12 @@
               <div class="row">
                   <div id="old_hub" class="span6" style="display: none">
                       <div class="rounded-border">
-                         <h4>Última versão avaliada</h4>
-                         <%= @last_hub_commented.reflection.html_safe %>
+                         <% unless @last_hub_commented.nil? %>
+                             <h4>Última versão avaliada</h4>
+                             <%= @last_hub_commented.reflection.html_safe %>
+                         <% else %>
+                            <p style='color:red'>Este eixo ainda não foi avaliado</p>
+                         <% end %>
                       </div>
                   </div>
                   <div id="new_hub" class="span12">

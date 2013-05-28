@@ -7,13 +7,16 @@ class HubsController < ApplicationController
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
       @hub.state = "draft" if @hub.state.nil?
-
-      @last_hub_commented = @hub.versions(:conditions => ['state != ?', "draft"]).last.reify
     else
       @hub = @tcc.hubs.where(:category => params[:category]).first
     end
 
     unless @hub.nil?
+      last_comment_version = @hub.versions.where('state != ?', "draft").last
+      unless last_comment_version.nil?
+        @last_hub_commented = last_comment_version.reify
+      end
+
       last_version = @hub.versions.last
       unless last_version.nil?
         unless last_version.comment.nil?
