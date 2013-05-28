@@ -39,7 +39,7 @@
                           <%= h.cktext_area :reflection %>
                           <%= h.input :new_state, :as => :radio, label: false, input_html: { style: "display:inline;" },
                                           collection: {'Salvar como rascunho' => :draft,
-                                                          'Enviar para revisao' => :revision,
+                                                          'Enviar para revisão' => :revision,
                                                           'Enviar para avaliação' => :evaluation} %>
                           <%= h.action :submit, :as => :input, label: 'Salvar', button_html: { class: "btn btn-primary" } %>
                       </div>

@@ -59,9 +59,11 @@ class HubsController < ApplicationController
       end
     else
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-
-      @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
-      @hub.send_back_to_student if @hub.may_send_back_to_student?
+      if params[:valued]
+        @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
+      else
+        @hub.send_back_to_student if @hub.may_send_back_to_student?
+      end
 
       if @hub.update_attributes(params[:hub])
         redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
