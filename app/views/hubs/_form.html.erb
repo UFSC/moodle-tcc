@@ -8,20 +8,18 @@
           <h3>
             Reflexões do eixo <%= @hub.category %> -
             <span style="color: blue"> <%= t('states.'+@hub.state) %></span>
-            <% if @hub.state == "draft" %>
+            <% if @hub.state == "draft" && !@hub.commentary.blank? %>
                 <a class="btn" id="compareHubsButtom" onclick="compareHubs()">Comparar versões</a>
             <% end %>
           </h3>
           <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
-              <% unless @last_commented_version.nil? %>
-                  <% unless @last_commented_version.comment.blank? %>
-                      <div class="rounded-border">
-                        <span><i class="icon-comment"></i> Comentário do avaliador</span>
-                        <div style="color: blue;">
-                          <%= @last_commented_version.comment.html_safe %>
-                        </div>
-                      </div>
-                  <% end %>
+              <% unless @hub.commentary.blank? %>
+                  <div class="rounded-border">
+                    <span><i class="icon-comment"></i> Comentário do avaliador</span>
+                    <div style="color: blue;">
+                      <%= @hub.commentary.html_safe %>
+                    </div>
+                  </div>
               <% end %>
           <% end %>
           <% if @hub.state == "draft" %>
@@ -29,7 +27,7 @@
                   <div id="old_hub" class="span6" style="display: none">
                       <div class="rounded-border">
                          <h4>Última versão avaliada</h4>
-
+                         <%= @last_hub_commented.reflection.html_safe %>
                       </div>
                   </div>
                   <div id="new_hub" class="span12">

@@ -7,6 +7,8 @@ class HubsController < ApplicationController
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
       @hub.state = "draft" if @hub.state.nil?
+
+      @last_hub_commented = @hub.versions(:conditions => ['state != ?', "draft"]).last.reify
     else
       @hub = @tcc.hubs.where(:category => params[:category]).first
     end
@@ -22,11 +24,7 @@ class HubsController < ApplicationController
       unless @old_hub.nil?
         @old_version = @hub.versions[-2]
       end
-
-      if @tp.student?
-        @last_commented_version = @hub.last_commented_version
-        get_hub_diaries( @hub ) # search on moodle webserver
-      end
+      get_hub_diaries( @hub ) # search on moodle webserver
     else
       render :text => t(:hub_undefined)
     end
@@ -34,11 +32,10 @@ class HubsController < ApplicationController
 
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
-    unless params[:hub][:comment]
+    unless params[:hub][:commentary]
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
       @hub.attributes = params[:hub]
       if @hub.valid?
-
         case params[:hub][:new_state]
           when "draft"
             #does nothing
@@ -51,7 +48,6 @@ class HubsController < ApplicationController
               @hub.send_to_tutor_for_evaluation
             end
         end
-
         @hub.save
         flash[:success] = t(:successfully_saved)
         redirect_to show_hubs_path
@@ -60,14 +56,11 @@ class HubsController < ApplicationController
       end
     else
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      version = @hub.versions.last
-      version.comment = params[:hub][:comment]
-      version.save
 
       @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
       @hub.send_back_to_student if @hub.may_send_back_to_student?
 
-      if @hub.save
+      if @hub.update_attributes(params[:hub])
         redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
       end
     end

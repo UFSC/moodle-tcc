@@ -3,16 +3,16 @@ class Hub < ActiveRecord::Base
   has_many :diaries
 
   # Virtual attributes
-  attr_accessor :new_state, :comment
+  attr_accessor :new_state
 
   # Mass-Assignment
-  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :new_state, :comment
+  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :new_state
 
   accepts_nested_attributes_for :diaries
 
   validates_inclusion_of :grade, in: 0..10, allow_nil: true
 
-  has_paper_trail ignore: [:grade, :state]
+  has_paper_trail meta: { state: :state }
 
   include AASM
   aasm_column :state
@@ -50,14 +50,6 @@ class Hub < ActiveRecord::Base
     else
       true
     end
-  end
-
-  def last_commented_version
-    self.versions.where("versions.comment IS NOT NULL").last
-  end
-
-  def last_hub_with_comment
-
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520230813) do
+ActiveRecord::Schema.define(:version => 20130528184906) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20130520230813) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "comment"
+    t.string   "state"
   end
 
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
