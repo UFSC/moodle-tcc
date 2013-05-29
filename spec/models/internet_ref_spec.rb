@@ -17,6 +17,7 @@ describe InternetRef do
       it { should validate_presence_of(:url) }
       it { should_not allow_value('abcd').for(:url) }
       it { should_not allow_value('domain.com').for(:url) }
+      it { should_not allow_value('http://').for(:url) }
       it { should allow_value('http://domain.com').for(:url) }
       it { should allow_value('http://domain.com/').for(:url) }
       it { should allow_value('http://domain.com/path').for(:url) }

@@ -9,4 +9,15 @@ class ArticleRef < ActiveRecord::Base
 
   validates :volume_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
   validates :number_or_fascicle, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
+  validates :initial_page, :numericality => {:only_integer => true, :greater_than => 0}
+  validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
+  validate :initial_page_less_than_end_page
+
+  private
+
+  def initial_page_less_than_end_page
+    if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
+      errors.add(:initial_page, "Can't be less than end page")
+    end
+  end
 end

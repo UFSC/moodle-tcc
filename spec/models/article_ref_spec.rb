@@ -46,7 +46,7 @@ describe ArticleRef do
     it { should allow_value(1).for(:initial_page) }
     it { should allow_value(5).for(:initial_page) }
 
-    it 'should have to be lower then #end_page' do
+    it 'should be lower than #end_page' do
       article_ref = Fabricate.build(:article_ref)
       article_ref.initial_page = 5
       article_ref.end_page = 2
