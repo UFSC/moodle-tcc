@@ -1,21 +1,28 @@
 $(function() {
-    $(".collapse").css("height", "100px");
+    if($(".collapse").hasClass("admin_view")) {
+        var minHeight = 0
+    } else {
+        var minHeight = 100
+    }
+    var maxHeight = 400
+
+    $(".collapse").css("height", minHeight+"px");
 
     $(".accordion-toggle").click(function() {
-        accordion(this);
+        accordion(this, minHeight, maxHeight);
         changeIcon(this);
     });
 });
 
 
-function accordion(element) {
+function accordion(element, minHeight, maxHeight) {
     var collapse_id = $(element).attr("id")+"_collapse";
     var height = $("#"+collapse_id).height();
 
-    if (height < 400) {
-        $("#"+collapse_id).css("height", "400px");
+    if (height < maxHeight) {
+        $("#"+collapse_id).css("height", maxHeight+"px");
     } else {
-        $("#"+collapse_id).css("height", "100px");
+        $("#"+collapse_id).css("height", minHeight+"px");
     }
 }
 

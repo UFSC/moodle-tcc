@@ -6,11 +6,17 @@ class HubsController < ApplicationController
     set_tab ("hub"+params[:category]).to_sym
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+      @hub.state = "draft" if @hub.state.nil?
     else
       @hub = @tcc.hubs.where(:category => params[:category]).first
     end
 
     unless @hub.nil?
+      last_comment_version = @hub.versions.where('state != ?', "draft").last
+      unless last_comment_version.nil?
+        @last_hub_commented = last_comment_version.reify
+      end
+
       last_version = @hub.versions.last
       unless last_version.nil?
         unless last_version.comment.nil?
@@ -21,10 +27,7 @@ class HubsController < ApplicationController
       unless @old_hub.nil?
         @old_version = @hub.versions[-2]
       end
-
-      if @tp.student?
-        get_hubs_diaries # search on moodle webserver
-      end
+      get_hub_diaries( @hub ) # search on moodle webserver
     else
       render :text => t(:hub_undefined)
     end
@@ -32,11 +35,10 @@ class HubsController < ApplicationController
 
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
-    unless params[:hub][:comment]
+    unless params[:hub][:commentary]
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
       @hub.attributes = params[:hub]
       if @hub.valid?
-
         case params[:hub][:new_state]
           when "draft"
             #does nothing
@@ -49,7 +51,6 @@ class HubsController < ApplicationController
               @hub.send_to_tutor_for_evaluation
             end
         end
-
         @hub.save
         flash[:success] = t(:successfully_saved)
         redirect_to show_hubs_path
@@ -58,16 +59,13 @@ class HubsController < ApplicationController
       end
     else
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      version = @hub.versions.last
-      version.comment = params[:hub][:comment]
-      version.save
-
-      unless params[:hub][:grade].blank?
+      if params[:valued]
         @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
+      else
         @hub.send_back_to_student if @hub.may_send_back_to_student?
       end
 
-      if @hub.save
+      if @hub.update_attributes(params[:hub])
         redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
       end
     end
@@ -75,12 +73,10 @@ class HubsController < ApplicationController
 
   private
 
-  def get_hubs_diaries
-    @tcc.hubs.each do |hub|
-      diaries_conf = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
-      diaries_conf.size.times do |i|
-        set_diary(hub, i, diaries_conf[i]["id"], diaries_conf[i]["title"])
-      end
+  def get_hub_diaries(hub)
+    diaries_conf = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
+    diaries_conf.size.times do |i|
+      set_diary(hub, i, diaries_conf[i]["id"], diaries_conf[i]["title"])
     end
   end
 

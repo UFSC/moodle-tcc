@@ -1,32 +1,54 @@
-<%= semantic_form_for @hub, url: save_hubs_path(:category => @hub.category, :action_state => "draft") do |h| %>
+<%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category, action_state: "draft") do |h| %>
     <h3>Eixo <%= @hub.category %></h3>
     <%= h.input :category, :as => :hidden %>
-    <%= h.semantic_fields_for :diaries do |d| %>
-        <div class="accordion-group <%=h @hub.category %>">
-          <div class="accordion-heading">
-            <a id="<%=h d.object_id %>" class="accordion-toggle">
-              <%= d.object.title %>
-            </a>
-          </div>
-          <div id="<%=h d.object_id %>_collapse" class="collapse out">
-            <div class="accordion-inner">
-              <%= d.object.content.html_safe unless d.object.content.nil? %>
-              <%= d.input :content, :as => :hidden %>
-              <%= d.input :title, :as => :hidden %>
-              <%= d.input :pos, :as => :hidden %>
-            </div>
-          </div>
-          <div style="text-align:center; padding-bottom: 0px">
-            <a id="<%=h d.object_id %>" class="accordion-toggle-icon accordion-toggle" href="#"><i class="icon-chevron-down"></i></a>
-          </div>
+    <%= render partial: "diaries", locals: {h: h, accordion_type: "user_view"} %>
+
+    <div class="span12">
+        <div class="rounded-border row">
+          <h3>
+            Reflexões do eixo <%= @hub.category %> -
+            <span style="color: blue"> <%= t('states.'+@hub.state) %></span>
+            <% if @hub.state == "draft" && !@hub.commentary.blank? %>
+                <a class="btn" id="compareHubsButtom" onclick="compareHubs()">Comparar versões</a>
+            <% end %>
+          </h3>
+          <% if @hub.state == "draft" || @hub.state == "tutor_evaluation_ok" %>
+              <% unless @hub.commentary.blank? %>
+                  <div class="rounded-border">
+                    <span><i class="icon-comment"></i> Comentário do avaliador</span>
+                    <div style="color: blue;">
+                      <%= @hub.commentary.html_safe %>
+                    </div>
+                  </div>
+              <% end %>
+          <% end %>
+          <% if @hub.state == "draft" %>
+              <div class="row">
+                  <div id="old_hub" class="span6" style="display: none">
+                      <div class="rounded-border">
+                         <% unless @last_hub_commented.nil? %>
+                             <h4>Última versão avaliada</h4>
+                             <%= @last_hub_commented.reflection.html_safe %>
+                         <% else %>
+                            <p style='color:red'>Este eixo ainda não foi avaliado</p>
+                         <% end %>
+                      </div>
+                  </div>
+                  <div id="new_hub" class="span12">
+                      <div class="rounded-border">
+                          <%= h.cktext_area :reflection %>
+                          <%= h.input :new_state, :as => :radio, label: false, input_html: { style: "display:inline;" },
+                                          collection: {'Salvar como rascunho' => :draft,
+                                                          'Enviar para revisão' => :revision,
+                                                          'Enviar para avaliação' => :evaluation} %>
+                          <%= h.action :submit, :as => :input, label: 'Salvar', button_html: { class: "btn btn-primary" } %>
+                      </div>
+                  </div>
+              </div>
+          <% else %>
+              <%= h.input :reflection, :as => :ckeditor, label: false, input_html: { ckeditor: {readOnly: true} } %>
+          <% end %>
         </div>
-    <% end %>
-    <div>
-      <h3>Reflexões</h3>
-          <%= h.cktext_area :reflection %>
     </div>
-    <%= h.actions do %>
-        <%= h.input :new_state, :as => :radio, :collection => {'Salvar como rascunho' => :draft, 'Enviar para revisao' => :revision, 'Enviar para avaliação' => :evaluation} %>
-        <%= h.action :submit, :as => :input, :label => 'Salvar' %>
-    <% end %>
 <% end %>
+
