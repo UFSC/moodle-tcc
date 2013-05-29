@@ -17,9 +17,10 @@ describe BookRef do
     # Pending
     xit { should have_one(:tcc).through(:references) }
 
+    it { should validate_numericality_of(:year).only_integer }
     it { should ensure_inclusion_of(:year).in_range(0..(Date.today.year)) }
-    it { should validate_numericality_of(:year) }
-    it { should ensure_inclusion_of(:type_quantity).in_array(%w(p ed)) }
+    it { should ensure_inclusion_of(:type_quantity).in_array(BookRef::QUANTITY_TYPES) }
+
     it { should validate_presence_of(:first_author) }
     it { should validate_presence_of(:edition_number) }
     it { should validate_presence_of(:local) }
@@ -28,5 +29,13 @@ describe BookRef do
     it { should validate_presence_of(:publisher) }
   end
 
+  describe '#edition_number' do
+    it { should validate_numericality_of(:edition_number).only_integer }
+    it { should_not allow_value(-1).for(:edition_number) }
+    it { should_not allow_value(-5).for(:edition_number) }
+    it { should_not allow_value(0).for(:edition_number) }
+    it { should allow_value(1).for(:edition_number) }
+    it { should allow_value(5).for(:edition_number) }
+  end
 
 end

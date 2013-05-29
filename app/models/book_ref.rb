@@ -1,8 +1,10 @@
 class BookRef < ActiveRecord::Base
 
+  QUANTITY_TYPES = %w(p ed)
+
   validates_presence_of :first_author, :edition_number, :local, :year, :title, :publisher
   validates_presence_of :num_quantity, :if => :type_quantity
-  validates :type_quantity, :inclusion => { :in => %w(p ed) }, :allow_blank => true
+  validates :type_quantity, :inclusion => { :in => QUANTITY_TYPES }, :allow_blank => true
   validates :year, :numericality => { :only_integer => true }
   validates :year, :inclusion => { :in => lambda{ |book| 0..Date.today.year } }
 
