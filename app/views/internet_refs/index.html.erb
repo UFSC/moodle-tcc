@@ -1,0 +1,35 @@
+<h5>Referências da Internet</h5>
+<% if @internet_refs.count > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Título</th>
+        <th>Subtítulo</th>
+        <th>URL</th>
+        <th>Data da Acesso</th>
+        <th>Ação</th>
+      </tr>
+      </thead>
+      <% @internet_refs.each do |element| %>
+          <% if !element.nil? %>
+              <tr>
+                <td><%= element.author %></td>
+                <td><%= element.title %></td>
+                <td><%= element.subtitle %></td>
+                <td><%= link_to element.url %></td>
+                <td><%= element.access_date %></td>
+                <td>
+                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
+                  <%= link_to 'Remover', internet_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+<% else %>
+    <p>Não há referências cadastradas.</p>
+<% end %>
+<%= link_to 'Criar', new_internet_ref_path, :class => 'btn btn-small' %>
+
+

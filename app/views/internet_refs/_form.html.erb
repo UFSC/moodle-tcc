@@ -1,0 +1,18 @@
+<%= semantic_form_for @internet_ref do |ref| %>
+    <div id="data_tab_content">
+      <%= ref.inputs do %>
+          <div class="span3">
+            <%= ref.input :author %>
+            <%= ref.input :title %>
+            <%= ref.input :subtitle %>
+          </div>
+          <div class="span3">
+            <%= ref.input :url %>
+            <%= ref.input :access_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
+                          :input_html => {:'data-behaviour' => 'datepicker',
+                                          value: ((I18n.l @internet_ref.access_date) unless @internet_ref.access_date.nil?)} %>
+          </div>
+      <% end %>
+      <%= ref.actions :submit %>
+    </div>
+<% end %>

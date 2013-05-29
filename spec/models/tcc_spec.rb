@@ -7,6 +7,11 @@ describe Tcc do
 
   it { should have_many(:references)}
   it { should have_many(:general_refs).through(:references)}
+  it { should have_many(:book_refs).through(:references)}
+  it { should have_many(:book_cap_refs).through(:references)}
+  it { should have_many(:article_refs).through(:references)}
+  it { should have_many(:internet_refs).through(:references)}
+  it { should have_many(:legislative_refs).through(:references)}
 
   it { should validate_uniqueness_of :moodle_user }
 

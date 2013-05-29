@@ -1,0 +1,35 @@
+<h5>Referências do Legislativo</h5>
+<% if @legislative_refs.count > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Jurisdição ou Cabeçalho</th>
+        <th>Título</th>
+        <th>Edição</th>
+        <th>Editora</th>
+        <th>Total de páginas</th>
+        <th>Ação</th>
+      </tr>
+      </thead>
+      <% @legislative_refs.each do |element| %>
+          <% if !element.nil? %>
+              <tr>
+                <td><%= element.jurisdiction_or_header %></td>
+                <td><%= element.title %></td>
+                <td><%= element.edition %></td>
+                <td><%= element.publisher %></td>
+                <td><%= element.total_pages %></td>
+                <td>
+                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
+                  <%= link_to 'Remover', legislative_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+<% else %>
+    <p>Não há referências cadastradas.</p>
+<% end %>
+<%= link_to 'Criar', new_legislative_ref_path, :class => 'btn btn-small' %>
+
+
