@@ -1,4 +1,3 @@
-<h3>Eixo <%= @hub.category %></h3>
 <%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category, moodle_user: @tcc.moodle_user) do |h| %>
     <!--diaries-->
     <%= render partial: "diaries", locals: {h: h, accordion_type: "admin_view"} %>
@@ -24,10 +23,10 @@
                         <%= @hub.commentary.html_safe %>
                       </div>
                   <% else %>
-                      <h5 style="color: blue">Sem comentário para esta versão</h5>
+                      <h5 class="text-info">Sem comentário para esta versão</h5>
                   <% end %>
               <% else %>
-                  <h5 style="color: blue">Ainda não há versão anterior</h5>
+                  <h5 class="text-info">Ainda não há versão anterior</h5>
               <% end %>
             </div>
           </div>
@@ -39,13 +38,13 @@
                 <h4>Versão atual da reflexão</h4>
                 <%= @hub.reflection.html_safe %>
               </div>
-              <% if @hub.sent_to_tutor_for_evaluation? %>
-                  <%= h.input :grade, :as => :number, label: "Nota (de 0 à 10)" %>
-              <% end %>
               <% if @hub.draft? || @hub.tutor_evaluation_ok? %>
-                  <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {readonly: true, rows: "4", style: "width:365px;"} %>
+                  <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {readonly: true, rows: "4"} %>
               <% else %>
-                  <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", style: "width:365px;", value: ""} %>
+                  <% if @hub.sent_to_tutor_for_evaluation? %>
+                      <%= h.input :grade, :as => :number, label: "Nota (de 0 à 10)" %>
+                  <% end %>
+                  <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
                   <%= submit_tag 'Enviar para rascunho', name: "draft" %>
                   <% if @hub.sent_to_tutor_for_evaluation? %>
                       <%= submit_tag 'Avaliado', name: "valued" %>

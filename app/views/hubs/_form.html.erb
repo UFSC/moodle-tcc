@@ -1,5 +1,4 @@
-<%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category, action_state: "draft") do |h| %>
-    <h3>Eixo <%= @hub.category %></h3>
+<%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category) do |h| %>
     <%= h.input :category, :as => :hidden %>
     <%= render partial: "diaries", locals: {h: h, accordion_type: "user_view"} %>
 
@@ -7,21 +6,19 @@
       <div class="rounded-border row">
         <h3>
           Reflexões do eixo <%= @hub.category %> -
-          <span style="color: blue"> <%= t('states.'+@hub.state) %></span>
+          <span class="text-info"> <%= t('states.'+@hub.state) %></span>
           <% if @hub.draft? && !@hub.commentary.blank? %>
               <a class="btn" id="compareHubsButtom" onclick="compareHubs()">Comparar versões</a>
           <% end %>
         </h3>
-        <% if @hub.draft? || @hub.tutor_evaluation_ok? %>
-            <% unless @hub.commentary.blank? %>
-                <div class="rounded-border">
-                  <span><i class="icon-comment"></i> Comentário do avaliador</span>
+        <% if ((@hub.draft? || @hub.tutor_evaluation_ok?) && !@hub.commentary.blank?) %>
+            <div class="rounded-border">
+              <span><i class="icon-comment"></i> Comentário do avaliador</span>
 
-                  <div style="color: blue;">
-                    <%= @hub.commentary.html_safe %>
-                  </div>
-                </div>
-            <% end %>
+              <div class="text-info">
+                <%= @hub.commentary.html_safe %>
+              </div>
+            </div>
         <% end %>
         <% if @hub.draft? %>
             <div class="row">
@@ -31,7 +28,7 @@
                       <h4>Última versão avaliada</h4>
                       <%= @last_hub_commented.reflection.html_safe %>
                   <% else %>
-                      <p style='color:red'>Este eixo ainda não foi avaliado</p>
+                      <p class="text-error">Este eixo ainda não foi avaliado</p>
                   <% end %>
                 </div>
               </div>
