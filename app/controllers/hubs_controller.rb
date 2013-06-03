@@ -6,7 +6,6 @@ class HubsController < ApplicationController
     set_tab ("hub"+params[:category]).to_sym
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      @hub.state = "draft" if @hub.state.nil?
     else
       @hub = @tcc.hubs.where(:category => params[:category]).first
     end
@@ -27,7 +26,7 @@ class HubsController < ApplicationController
       unless @old_hub.nil?
         @old_version = @hub.versions[-2]
       end
-      get_hub_diaries( @hub ) # search on moodle webserver
+      get_hub_diaries(@hub) # search on moodle webserver
     else
       render :text => t(:hub_undefined)
     end
@@ -40,8 +39,6 @@ class HubsController < ApplicationController
       @hub.attributes = params[:hub]
       if @hub.valid?
         case params[:hub][:new_state]
-          when "draft"
-            #does nothing
           when "revision"
             if @hub.may_send_to_tutor_for_revision?
               @hub.send_to_tutor_for_revision

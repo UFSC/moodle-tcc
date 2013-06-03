@@ -12,7 +12,9 @@ class Hub < ActiveRecord::Base
 
   validates_inclusion_of :grade, in: 0..10, allow_nil: true
 
-  has_paper_trail meta: { state: :state }
+  after_initialize :set_state
+
+  has_paper_trail meta: {state: :state}
 
   include AASM
   aasm_column :state
@@ -28,7 +30,7 @@ class Hub < ActiveRecord::Base
     end
 
     event :send_back_to_student do
-      transitions :from => [:sent_to_tutor_for_revision, :sent_to_tutor_for_evaluation], :to => :draft#, :guard =>
+      transitions :from => [:sent_to_tutor_for_revision, :sent_to_tutor_for_evaluation], :to => :draft #, :guard =>
     end
 
     event :send_to_tutor_for_evaluation do
@@ -36,11 +38,11 @@ class Hub < ActiveRecord::Base
     end
 
     event :evaluation_fails_and_send_back_to_student_for do
-      transitions :from => :sent_to_tutor_for_evaluation, :to => :draft#, :guard =>
+      transitions :from => :sent_to_tutor_for_evaluation, :to => :draft #, :guard =>
     end
 
     event :tutor_evaluate_ok do
-      transitions :from => :sent_to_tutor_for_evaluation, :to => :tutor_evaluation_ok#, :guard =>
+      transitions :from => :sent_to_tutor_for_evaluation, :to => :tutor_evaluation_ok #, :guard =>
     end
   end
 
@@ -49,6 +51,12 @@ class Hub < ActiveRecord::Base
       false
     else
       true
+    end
+  end
+
+  def set_state
+    if self.state.nil?
+      self.aasm_write_state_without_persistence(self.aasm_current_state)
     end
   end
 
