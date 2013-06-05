@@ -14,5 +14,29 @@ describe 'InstructorAdminTccs' do
       visit instructor_admin_tccs_path
       page.current_path.should == access_denied_path
     end
+
+    it 'should visit tutor page' do
+      page.set_rack_session(fake_lti_session('instructor','portifolio'))
+      visit instructor_admin_tccs_path
+
+      page.current_path.should_not == access_denied_path
+      page.should have_content('Tela de Tutor')
+    end
+
+    it 'should visit leader page' do
+      page.set_rack_session(fake_lti_session('instructor','tcc'))
+      visit instructor_admin_tccs_path
+
+      page.current_path.should_not == access_denied_path
+      page.should have_content('Tela de Orientador')
+    end
+
+    it 'should show param error' do
+      page.set_rack_session(fake_lti_session('instructor','error param'))
+      visit instructor_admin_tccs_path
+
+      page.current_path.should_not == access_denied_path
+      page.should have_css('.text-error')
+    end
   end
 end
