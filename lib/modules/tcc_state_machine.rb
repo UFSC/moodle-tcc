@@ -1,5 +1,10 @@
 module TccStateMachine
   def self.included(base)
+
+    # Virtual attribute
+    base.send :attr_accessor, :new_state
+    base.attr_accessible :new_state
+
     base.send :include, AASM
     base.aasm_column :state
     base.after_initialize :set_state

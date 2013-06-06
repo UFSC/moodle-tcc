@@ -2,6 +2,7 @@
 <%= semantic_form_for @presentation, url: save_presentation_path do |p| %>
     <%= p.cktext_area :content %><br>
     <%= p.actions do %>
+        <%= render partial: 'common/state_options', locals: {f:p} %>
         <%= p.action :submit, :as => :input, :label => 'Salvar alterações' %>
     <% end %>
 <% end %>

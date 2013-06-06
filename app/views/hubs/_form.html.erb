@@ -35,10 +35,7 @@
               <div id="new_hub" class="span12">
                 <div class="rounded-border">
                   <%= h.cktext_area :reflection %>
-                  <%= h.input :new_state, :as => :radio, label: false, input_html: {style: "display:inline;"},
-                              collection: {'Salvar como rascunho' => :draft,
-                                           'Enviar para revisão' => :revision,
-                                           'Enviar para avaliação' => :evaluation} %>
+                  <%= render partial: 'common/state_options', locals: {f:h} %>
                   <%= h.action :submit, :as => :input, label: 'Salvar', button_html: {class: "btn btn-primary"} %>
                 </div>
               </div>

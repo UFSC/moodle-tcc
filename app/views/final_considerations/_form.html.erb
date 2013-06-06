@@ -2,6 +2,7 @@
 <%= semantic_form_for @final_considerations, url: save_final_considerations_path do |fc| %>
     <%= fc.cktext_area :content %>
     <%= fc.actions do %>
+        <%= render partial: 'common/state_options', locals: {f:fc} %>
         <%= fc.action :submit, :as => :input, :label => 'Salvar alterações' %>
     <% end %>
 <% end %>

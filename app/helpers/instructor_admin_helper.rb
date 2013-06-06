@@ -1,6 +1,10 @@
 module InstructorAdminHelper
   def get_state(object)
-    t('actions.'+object.state)
+    t('states.'+object.state)
+  end
+
+  def get_action(object)
+
   end
 
   def get_hub_state(tcc, category)

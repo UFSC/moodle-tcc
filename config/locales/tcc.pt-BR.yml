@@ -1,6 +1,5 @@
 pt-BR:
   states:
-    blank: 'Vazio'
     draft: 'Rascunho'
     sent_to_tutor_for_revision: 'Comentando'
     sent_to_tutor_for_evaluation: 'Avaliando'

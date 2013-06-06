@@ -4,6 +4,7 @@
         <%= a.cktext_area :content_pt %><br>
         <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
         <%= a.actions do %>
+            <%= render partial: 'common/state_options', locals: {f:a} %>
             <%= a.action :submit, :as => :input, :label => 'Salvar alterações' %>
         <% end %>
     <% end %>
