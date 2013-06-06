@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528184906) do
+ActiveRecord::Schema.define(:version => 20130606171941) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20130528184906) do
     t.integer  "tcc_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "state"
   end
 
   add_index "abstracts", ["tcc_id"], :name => "index_abstracts_on_tcc_id"
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20130528184906) do
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "state"
   end
 
   add_index "final_considerations", ["tcc_id"], :name => "index_final_considerations_on_tcc_id"
@@ -134,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20130528184906) do
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "state"
   end
 
   add_index "presentations", ["tcc_id"], :name => "index_presentations_on_tcc_id"

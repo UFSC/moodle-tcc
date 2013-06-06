@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FinalConsiderations do
   let!(:final_considerations) { Fabricate(:final_considerations) }
 
-  it { respond_to :commentary, :content }
+  it { respond_to :commentary, :content, :state }
 
   it 'should versioning' do
     old_version = final_considerations.versions.size

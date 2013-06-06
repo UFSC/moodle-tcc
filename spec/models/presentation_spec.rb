@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Presentation do
   let!(:presentation) { Fabricate(:presentation) }
 
-  it { respond_to :commentary, :content }
+  it { respond_to :commentary, :content, :state }
 
   it 'should versioning' do
     old_version = presentation.versions.size
