@@ -1,9 +1,7 @@
-<%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category, moodle_user: @tcc.moodle_user) do |h| %>
-    <!--diaries-->
-    <%= render partial: "diaries", locals: {h: h, accordion_type: "admin_view"} %>
-
+<%= semantic_form_for @abstract, url: save_abstract_path(moodle_user: @tcc.moodle_user) do |a| %>
     <div class="span12">
       <div class="rounded-border row">
+        <h3>Resumo</h3>
         <span>
           <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
         </span>
@@ -12,15 +10,19 @@
           <!--old-->
           <div id="old_tcc_object" class="span6" style="display: none">
             <div class="rounded-border">
-              <% unless @last_hub_commented.nil? %>
+              <% unless @last_abstract_commented.nil? %>
                   <div class="rounded-border">
-                    <h4>Versão anterior da reflexão</h4>
-                    <%= @last_hub_commented.reflection.html_safe %>
+                    <h4>Versão anterior</h4>
+                    <%= @last_abstract_commented.content_pt.html_safe %>
                   </div>
-                  <% unless @hub.commentary.blank? %>
+                  <div class="rounded-border">
+                    <h4>Palavras-chave</h4>
+                    <%= @last_abstract_commented.key_words_pt.html_safe %>
+                  </div>
+                  <% unless @abstract.commentary.blank? %>
                       <div class="rounded-border">
-                        <h5><i class="icon-comment"></i> Comentário da reflexão anterior</h5>
-                        <%= @hub.commentary.html_safe %>
+                        <h5><i class="icon-comment"></i> Comentário do resumo anterior</h5>
+                        <%= @abstract.commentary.html_safe %>
                       </div>
                   <% else %>
                       <h5 class="text-info">Sem comentário para esta versão</h5>
@@ -35,16 +37,17 @@
           <div id="new_tcc_object" class="span12">
             <div class="rounded-border">
               <div class="rounded-border">
-                <h4>Versão atual da reflexão</h4>
-                <%= @hub.reflection.html_safe %>
+                <h4>Versão atual</h4>
+                <%= @abstract.content_pt.html_safe %>
               </div>
-              <% unless @hub.draft? || @hub.tutor_evaluation_ok? %>
-                  <% if @hub.sent_to_tutor_for_evaluation? %>
-                      <%= h.input :grade, :as => :number, label: "Nota (de 0 à 10)" %>
-                  <% end %>
-                  <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
+              <div class="rounded-border">
+                <h4>Palavras-chave</h4>
+                <%= @abstract.key_words_pt.html_safe %>
+              </div>
+              <% unless @abstract.draft? || @abstract.leader_evaluation_ok? %>
+                  <%= a.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
                   <%= submit_tag 'Enviar para rascunho', name: "draft" %>
-                  <% if @hub.sent_to_tutor_for_evaluation? %>
+                  <% if @abstract.sent_to_leader_for_evaluation? %>
                       <%= submit_tag 'Avaliado', name: "valued" %>
                   <% end %>
               <% end %>
@@ -54,4 +57,3 @@
       </div>
     </div>
 <% end %>
-

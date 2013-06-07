@@ -2,17 +2,17 @@
 
 <table class="table table-bordered">
   <thead>
-      <tr>
-        <th>ID</th>
-        <th>nota</th>
-        <th>Estudante</th>
-        <th>Resuno</th>
-        <th>Apresentação</th>
-        <th>Considerações finais</th>
-        <% TCC_CONFIG["hubs"].size.times do |i| %>
-            <th>Eixo <%= i+1 %></th>
-        <% end %>
-      </tr>
+  <tr class="blue-header-table">
+    <th>ID</th>
+    <th>nota</th>
+    <th>Estudante</th>
+    <th>Resumo</th>
+    <th>Apresentação</th>
+    <th>Considerações finais</th>
+    <% TCC_CONFIG["hubs"].size.times do |i| %>
+        <th>Eixo <%= i+1 %></th>
+    <% end %>
+  </tr>
   </thead>
   <tbody>
   <% @tccs.each do |tcc| %>
@@ -22,14 +22,18 @@
         <td><%= tcc.name %></td>
         <td>
           <% unless tcc.abstract.nil? %>
-            <%= get_state(tcc.abstract) %>:
+              <%= get_state(tcc.abstract) %>:
+              <%= link_to get_action(tcc.abstract), save_abstract_path(moodle_user: tcc.moodle_user),
+                          target: "_blank", class: "label label-success" %>
           <% else %>
-            <%= t('states.blank') %>
+              <%= t('states.blank') %>
           <% end %>
         </td>
         <td>
           <% unless tcc.presentation.nil? %>
               <%= get_state(tcc.presentation) %>:
+              <%= link_to get_action(tcc.presentation), save_presentation_path(moodle_user: tcc.moodle_user),
+                          target: "_blank", class: "label label-success" %>
           <% else %>
               <%= t('states.blank') %>
           <% end %>
@@ -37,6 +41,8 @@
         <td>
           <% unless tcc.final_considerations.nil? %>
               <%= get_state(tcc.final_considerations) %>:
+              <%= link_to get_action(tcc.final_considerations), save_final_considerations_path(moodle_user: tcc.moodle_user),
+                          target: "_blank", class: "label label-success" %>
           <% else %>
               <%= t('states.blank') %>
           <% end %>
@@ -45,7 +51,7 @@
             <td>
               <%= get_hub_state(tcc, (i+1)) %>:
               <%= link_to get_hub_action(tcc, (i+1)), show_hubs_path(category: (i+1),
-                          moodle_user: tcc.moodle_user), target: "_blank", class: "label label-success" %>
+                                                                     moodle_user: tcc.moodle_user), target: "_blank", class: "label label-success" %>
             </td>
         <% end %>
       </tr>

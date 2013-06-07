@@ -4,7 +4,7 @@ module InstructorAdminHelper
   end
 
   def get_action(object)
-
+    t('actions.'+object.state)
   end
 
   def get_hub_state(tcc, category)

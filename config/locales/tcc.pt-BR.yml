@@ -1,15 +1,21 @@
 pt-BR:
   states:
+    blank: 'vazio'
     draft: 'Rascunho'
     sent_to_tutor_for_revision: 'Comentando'
     sent_to_tutor_for_evaluation: 'Avaliando'
     tutor_evaluation_ok: 'Avaliado'
+    sent_to_leader_for_revision: 'Comentando'
+    sent_to_leader_for_evaluation: 'Avaliando'
+    leader_evaluation_ok: 'Avaliado'
   actions:
     draft: 'Visualizar'
     sent_to_tutor_for_revision: 'Comentar'
     sent_to_tutor_for_evaluation: 'Avaliar'
     tutor_evaluation_ok: 'Avaliado'
-
+    sent_to_leader_for_revision: 'Comentar'
+    sent_to_leader_for_evaluation: 'Avaliar'
+    leader_evaluation_ok: 'Avaliado'
 
   activerecord:
     attributes:

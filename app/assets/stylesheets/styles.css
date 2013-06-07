@@ -10,3 +10,7 @@
     margin-bottom: 10px;
     padding: 9px;
 }
+
+.table thead tr.blue-header-table th {
+    background-color: aliceblue;
+}
