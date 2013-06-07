@@ -10,6 +10,13 @@ class AbstractsController < ApplicationController
     unless last_comment_version.nil?
       @last_abstract_commented = last_comment_version.reify
     end
+
+    last_version = @abstract.versions.last
+    unless last_version.nil?
+      unless last_version.comment.nil?
+        @abstract.comment = last_version.comment
+      end
+    end
   end
 
   def save

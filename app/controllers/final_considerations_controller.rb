@@ -10,6 +10,13 @@ class FinalConsiderationsController < ApplicationController
     unless last_comment_version.nil?
       @last_final_considerations_commented = last_comment_version.reify
     end
+
+    last_version = @final_considerations.versions.last
+    unless last_version.nil?
+      unless last_version.comment.nil?
+        @final_considerations.comment = last_version.comment
+      end
+    end
   end
 
   def save

@@ -8,7 +8,7 @@
           Reflexões do eixo <%= @hub.category %> -
           <span class="text-info"> <%= t('states.'+@hub.state) %></span>
           <% if @hub.draft? && !@hub.commentary.blank? %>
-              <a class="btn" id="compareHubsButtom" onclick="compareHubs()">Comparar versões</a>
+              <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
         </h3>
         <% if ((@hub.draft? || @hub.tutor_evaluation_ok?) && !@hub.commentary.blank?) %>
@@ -22,7 +22,7 @@
         <% end %>
         <% if @hub.draft? %>
             <div class="row">
-              <div id="old_hub" class="span6" style="display: none">
+              <div id="old_tcc_object" class="span6" style="display: none">
                 <div class="rounded-border">
                   <% unless @last_hub_commented.nil? %>
                       <h4>Última versão avaliada</h4>
@@ -32,7 +32,7 @@
                   <% end %>
                 </div>
               </div>
-              <div id="new_hub" class="span12">
+              <div id="new_tcc_object" class="span12">
                 <div class="rounded-border">
                   <%= h.cktext_area :reflection %>
                   <%= render partial: 'common/state_options', locals: {f:h} %>

@@ -1,10 +1,49 @@
+<%= semantic_form_for @abstract, url: save_abstract_path do |a| %>
+  <div class="span12">
+    <div class="rounded-border row">
+        <h3>
+          Resumo - <span class="text-info"> <%= t('states.'+@abstract.state) %></span>
+          <% if @abstract.draft? && !@abstract.commentary.blank? %>
+              <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
+          <% end %>
+        </h3>
+        <% if ((@abstract.draft? || @abstract.leader_evaluation_ok?) && !@abstract.commentary.blank?) %>
+          <div class="rounded-border">
+            <span><i class="icon-comment"></i> Comentário do avaliador</span>
 
-    <%= semantic_form_for @abstract, url: save_abstract_path do |a| %>
-        <h3>Resumo</h3>
-        <%= a.cktext_area :content_pt %><br>
-        <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
-        <%= a.actions do %>
-            <%= render partial: 'common/state_options', locals: {f:a} %>
-            <%= a.action :submit, :as => :input, :label => 'Salvar alterações' %>
+            <div class="text-info">
+              <%= @abstract.commentary.html_safe %>
+            </div>
+          </div>
         <% end %>
-    <% end %>
+
+      <% if @abstract.draft? %>
+          <div class="row">
+            <div id="old_tcc_object" class="span6" style="display: none">
+              <div class="rounded-border">
+                <% unless @last_abstract_commented.nil? %>
+                    <h4>Última versão avaliada</h4>
+                    <%= @last_abstract_commented.reflection.html_safe %>
+                <% else %>
+                    <p class="text-error">Este eixo ainda não foi avaliado</p>
+                <% end %>
+              </div>
+            </div>
+            <div id="new_tcc_object" class="span12">
+              <div class="rounded-border">
+                <%= a.cktext_area :content_pt %><br>
+                <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
+                <%= a.actions do %>
+                    <%= render partial: 'common/state_options', locals: {f:a} %>
+                    <%= a.action :submit, :as => :input, :label => 'Salvar alterações' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+      <% else %>
+          <%= a.input :key_words_pt, :input_html => { class: "span9", readOnly: true } %>
+          <%= a.input :content_pt, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
