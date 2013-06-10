@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130606171941) do
+ActiveRecord::Schema.define(:version => 20130610222034) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20130606171941) do
     t.integer  "tcc_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tcc_state"
   end
 
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"

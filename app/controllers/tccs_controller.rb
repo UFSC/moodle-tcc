@@ -2,7 +2,6 @@ class TccsController < ApplicationController
   include LtiTccFilters
 
   def show
-    puts "gggggggggggggggggggggggggg"
     set_tab :data
   end
 

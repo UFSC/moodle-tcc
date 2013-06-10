@@ -1,4 +1,10 @@
 module TccStateMachine
+
+  @state_name
+  def self.state_name(t)
+    @state_name = t
+  end
+
   def self.included(base)
 
     # Virtual attribute
@@ -6,7 +12,7 @@ module TccStateMachine
     base.attr_accessible :new_state
 
     base.send :include, AASM
-    base.aasm_column :state
+    base.aasm_column @state_name
     base.after_initialize :set_state
 
     base.aasm do

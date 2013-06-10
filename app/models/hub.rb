@@ -16,48 +16,51 @@ class Hub < ActiveRecord::Base
 
   has_paper_trail meta: {state: :state}
 
-  include AASM
-  aasm_column :state
+  TccStateMachine.state_name :state
+  include TccStateMachine
 
-  aasm do
-    state :draft, :initial => true
-    state :sent_to_tutor_for_revision
-    state :sent_to_tutor_for_evaluation
-    state :tutor_evaluation_ok
-
-    event :send_to_tutor_for_revision do
-      transitions :from => :draft, :to => :sent_to_tutor_for_revision, :guard => :reflection_not_blank?
-    end
-
-    event :send_back_to_student do
-      transitions :from => [:sent_to_tutor_for_revision, :sent_to_tutor_for_evaluation], :to => :draft #, :guard =>
-    end
-
-    event :send_to_tutor_for_evaluation do
-      transitions :from => :draft, :to => :sent_to_tutor_for_evaluation, :guard => :reflection_not_blank?
-    end
-
-    event :evaluation_fails_and_send_back_to_student_for do
-      transitions :from => :sent_to_tutor_for_evaluation, :to => :draft #, :guard =>
-    end
-
-    event :tutor_evaluate_ok do
-      transitions :from => :sent_to_tutor_for_evaluation, :to => :tutor_evaluation_ok #, :guard =>
-    end
-  end
-
-  def reflection_not_blank?
-    if self.reflection.blank?
-      false
-    else
-      true
-    end
-  end
-
-  def set_state
-    if self.state.nil?
-      self.aasm_write_state_without_persistence(self.aasm_current_state)
-    end
-  end
+  #include AASM
+  #aasm_column :state
+  #
+  #aasm do
+  #  state :draft, :initial => true
+  #  state :sent_to_tutor_for_revision
+  #  state :sent_to_tutor_for_evaluation
+  #  state :tutor_evaluation_ok
+  #
+  #  event :send_to_tutor_for_revision do
+  #    transitions :from => :draft, :to => :sent_to_tutor_for_revision, :guard => :reflection_not_blank?
+  #  end
+  #
+  #  event :send_back_to_student do
+  #    transitions :from => [:sent_to_tutor_for_revision, :sent_to_tutor_for_evaluation], :to => :draft #, :guard =>
+  #  end
+  #
+  #  event :send_to_tutor_for_evaluation do
+  #    transitions :from => :draft, :to => :sent_to_tutor_for_evaluation, :guard => :reflection_not_blank?
+  #  end
+  #
+  #  event :evaluation_fails_and_send_back_to_student_for do
+  #    transitions :from => :sent_to_tutor_for_evaluation, :to => :draft #, :guard =>
+  #  end
+  #
+  #  event :tutor_evaluate_ok do
+  #    transitions :from => :sent_to_tutor_for_evaluation, :to => :tutor_evaluation_ok #, :guard =>
+  #  end
+  #end
+  #
+  #def reflection_not_blank?
+  #  if self.reflection.blank?
+  #    false
+  #  else
+  #    true
+  #  end
+  #end
+  #
+  #def set_state
+  #  if self.state.nil?
+  #    self.aasm_write_state_without_persistence(self.aasm_current_state)
+  #  end
+  #end
 
 end
