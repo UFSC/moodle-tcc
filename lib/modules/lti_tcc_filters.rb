@@ -23,7 +23,18 @@ module LtiTccFilters
 
   def get_tcc
     unless @tcc = Tcc.find_by_moodle_user(@user_id)
-      @tcc = Tcc.create( :moodle_user => @user_id )
+      if @tp.student?
+        @tcc = Tcc.create( moodle_user: @user_id, name: @tp.lis_person_name_full )
+      end
+    else
+      if @tp.student?
+        if @tcc.name.blank?
+          @tcc.name = @tp.lis_person_name_full
+          if @tcc.valid?
+            @tcc.save!
+          end
+        end
+      end
     end
   end
 end
