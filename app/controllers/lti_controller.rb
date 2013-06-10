@@ -6,7 +6,11 @@ class LtiController < ApplicationController
     if authorize_lti!
       if @tp.student?
         logger.debug 'LTI user identified as a student'
-        redirect_to show_tcc_path
+        if @tp.custom_params["type"] == 'tcc'
+          redirect_to show_tcc_path
+        else
+          redirect_to show_hubs_path(category: '1')
+        end
       elsif @tp.instructor?
         logger.debug 'LTI user identified as a instructor'
         redirect_to instructor_admin_tccs_path

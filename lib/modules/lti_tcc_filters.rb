@@ -16,6 +16,7 @@ module LtiTccFilters
       else
         @user_id = @tp.user_id
       end
+      @type = @tp.custom_params["type"]
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
