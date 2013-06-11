@@ -17,28 +17,28 @@ module TccStateMachine
 
     base.aasm do
       state :draft, :initial => true
-      state :sent_to_leader_for_revision
-      state :sent_to_leader_for_evaluation
-      state :leader_evaluation_ok
+      state :sent_to_admin_for_revision
+      state :sent_to_admin_for_evaluation
+      state :admin_evaluation_ok
 
-      event :send_to_leader_for_revision do
-        transitions :from => :draft, :to => :sent_to_leader_for_revision
+      event :send_to_admin_for_revision do
+        transitions :from => :draft, :to => :sent_to_admin_for_revision
       end
 
       event :send_back_to_student do
-        transitions :from => [:sent_to_leader_for_revision, :sent_to_leader_for_evaluation], :to => :draft
+        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation], :to => :draft
       end
 
-      event :send_to_leader_for_evaluation do
-        transitions :from => :draft, :to => :sent_to_leader_for_evaluation
+      event :send_to_admin_for_evaluation do
+        transitions :from => :draft, :to => :sent_to_admin_for_evaluation
       end
 
       event :evaluation_fails_and_send_back_to_student_for do
-        transitions :from => :sent_to_leader_for_evaluation, :to => :draft
+        transitions :from => :sent_to_admin_for_evaluation, :to => :draft
       end
 
-      event :leader_evaluate_ok do
-        transitions :from => :sent_to_leader_for_evaluation, :to => :leader_evaluation_ok
+      event :admin_evaluate_ok do
+        transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok
       end
     end
   end

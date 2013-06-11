@@ -27,12 +27,12 @@ class AbstractsController < ApplicationController
       if @abstract.valid?
         case params[:abstract][:new_state]
           when "revision"
-            if @abstract.may_send_to_leader_for_revision?
-              @abstract.send_to_leader_for_revision
+            if @abstract.may_send_to_admin_for_revision?
+              @abstract.send_to_admin_for_revision
             end
           when "evaluation"
-            if @abstract.may_send_to_leader_for_evaluation?
-              @abstract.send_to_leader_for_evaluation
+            if @abstract.may_send_to_admin_for_evaluation?
+              @abstract.send_to_admin_for_evaluation
             end
         end
         @abstract.save
@@ -43,7 +43,7 @@ class AbstractsController < ApplicationController
       end
     else
       if params[:valued]
-        @abstract.leader_evaluate_ok if @abstract.may_leader_evaluate_ok?
+        @abstract.admin_evaluate_ok if @abstract.may_admin_evaluate_ok?
       else
         @abstract.send_back_to_student if @abstract.may_send_back_to_student?
       end

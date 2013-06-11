@@ -24,28 +24,28 @@ class Hub < ActiveRecord::Base
   #
   #aasm do
   #  state :draft, :initial => true
-  #  state :sent_to_tutor_for_revision
-  #  state :sent_to_tutor_for_evaluation
-  #  state :tutor_evaluation_ok
+  #  state :sent_to_admin_for_revision
+  #  state :sent_to_admin_for_evaluation
+  #  state :admin_evaluation_ok
   #
-  #  event :send_to_tutor_for_revision do
-  #    transitions :from => :draft, :to => :sent_to_tutor_for_revision, :guard => :reflection_not_blank?
+  #  event :send_to_admin_for_revision do
+  #    transitions :from => :draft, :to => :sent_to_admin_for_revision, :guard => :reflection_not_blank?
   #  end
   #
   #  event :send_back_to_student do
-  #    transitions :from => [:sent_to_tutor_for_revision, :sent_to_tutor_for_evaluation], :to => :draft #, :guard =>
+  #    transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation], :to => :draft #, :guard =>
   #  end
   #
-  #  event :send_to_tutor_for_evaluation do
-  #    transitions :from => :draft, :to => :sent_to_tutor_for_evaluation, :guard => :reflection_not_blank?
+  #  event :send_to_admin_for_evaluation do
+  #    transitions :from => :draft, :to => :sent_to_admin_for_evaluation, :guard => :reflection_not_blank?
   #  end
   #
   #  event :evaluation_fails_and_send_back_to_student_for do
-  #    transitions :from => :sent_to_tutor_for_evaluation, :to => :draft #, :guard =>
+  #    transitions :from => :sent_to_admin_for_evaluation, :to => :draft #, :guard =>
   #  end
   #
-  #  event :tutor_evaluate_ok do
-  #    transitions :from => :sent_to_tutor_for_evaluation, :to => :tutor_evaluation_ok #, :guard =>
+  #  event :admin_evaluate_ok do
+  #    transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok #, :guard =>
   #  end
   #end
   #

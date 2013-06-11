@@ -27,12 +27,12 @@ class FinalConsiderationsController < ApplicationController
       if @final_considerations.valid?
         case params[:final_considerations][:new_state]
           when "revision"
-            if @final_considerations.may_send_to_leader_for_revision?
-              @final_considerations.send_to_leader_for_revision
+            if @final_considerations.may_send_to_admin_for_revision?
+              @final_considerations.send_to_admin_for_revision
             end
           when "evaluation"
-            if @final_considerations.may_send_to_leader_for_evaluation?
-              @final_considerations.send_to_leader_for_evaluation
+            if @final_considerations.may_send_to_admin_for_evaluation?
+              @final_considerations.send_to_admin_for_evaluation
             end
         end
         @final_considerations.save
@@ -43,7 +43,7 @@ class FinalConsiderationsController < ApplicationController
       end
     else
       if params[:valued]
-        @final_considerations.leader_evaluate_ok if @final_considerations.may_leader_evaluate_ok?
+        @final_considerations.admin_evaluate_ok if @final_considerations.may_admin_evaluate_ok?
       else
         @final_considerations.send_back_to_student if @final_considerations.may_send_back_to_student?
       end

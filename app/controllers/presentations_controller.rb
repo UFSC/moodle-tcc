@@ -20,12 +20,12 @@ class PresentationsController < ApplicationController
       if @presentation.valid?
         case params[:presentation][:new_state]
           when "revision"
-            if @presentation.may_send_to_leader_for_revision?
-              @presentation.send_to_leader_for_revision
+            if @presentation.may_send_to_admin_for_revision?
+              @presentation.send_to_admin_for_revision
             end
           when "evaluation"
-            if @presentation.may_send_to_leader_for_evaluation?
-              @presentation.send_to_leader_for_evaluation
+            if @presentation.may_send_to_admin_for_evaluation?
+              @presentation.send_to_admin_for_evaluation
             end
         end
         @presentation.save
@@ -36,7 +36,7 @@ class PresentationsController < ApplicationController
       end
     else
       if params[:valued]
-        @presentation.leader_evaluate_ok if @presentation.may_leader_evaluate_ok?
+        @presentation.admin_evaluate_ok if @presentation.may_admin_evaluate_ok?
       else
         @presentation.send_back_to_student if @presentation.may_send_back_to_student?
       end

@@ -41,12 +41,12 @@ class HubsController < ApplicationController
       if @hub.valid?
         case params[:hub][:new_state]
           when "revision"
-            if @hub.may_send_to_tutor_for_revision?
-              @hub.send_to_tutor_for_revision
+            if @hub.may_send_to_admin_for_revision?
+              @hub.send_to_admin_for_revision
             end
           when "evaluation"
-            if @hub.may_send_to_tutor_for_evaluation?
-              @hub.send_to_tutor_for_evaluation
+            if @hub.may_send_to_admin_for_evaluation?
+              @hub.send_to_admin_for_evaluation
             end
         end
         @hub.save
@@ -58,7 +58,7 @@ class HubsController < ApplicationController
     else
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
       if params[:valued]
-        @hub.tutor_evaluate_ok if @hub.may_tutor_evaluate_ok?
+        @hub.admin_evaluate_ok if @hub.may_admin_evaluate_ok?
       else
         @hub.send_back_to_student if @hub.may_send_back_to_student?
       end

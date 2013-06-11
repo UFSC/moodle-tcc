@@ -15,7 +15,7 @@ describe 'InstructorAdminTccs' do
       page.current_path.should == access_denied_path
     end
 
-    it 'should visit tutor page' do
+    it 'should visit admin page' do
       page.set_rack_session(fake_lti_session('instructor','portifolio'))
       visit instructor_admin_tccs_path
 

@@ -7,7 +7,7 @@
               <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
         </h3>
-        <% if ((@final_considerations.draft? || @final_considerations.leader_evaluation_ok?) && !@final_considerations.commentary.blank?) %>
+        <% if ((@final_considerations.draft? || @final_considerations.admin_evaluation_ok?) && !@final_considerations.commentary.blank?) %>
             <div class="rounded-border">
               <span><i class="icon-comment"></i> Comentário do avaliador</span>
 

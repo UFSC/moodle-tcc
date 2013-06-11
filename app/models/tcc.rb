@@ -29,11 +29,11 @@ class Tcc < ActiveRecord::Base
   aasm_column :state
 
   aasm do
-    state :tutor_evaluating, :initial => true
+    state :admin_evaluating, :initial => true
     state :teacher_evaluating
 
-    event :tutor_evaluate_ok do
-      transitions :from => :tutor_evaluating, :to => :teacher_evaluating
+    event :admin_evaluate_ok do
+      transitions :from => :admin_evaluating, :to => :teacher_evaluating
     end
   end
 

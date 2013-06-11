@@ -38,13 +38,13 @@
                 <h4>Versão atual da reflexão</h4>
                 <%= @hub.reflection.html_safe %>
               </div>
-              <% unless @hub.draft? || @hub.tutor_evaluation_ok? %>
-                  <% if @hub.sent_to_tutor_for_evaluation? %>
+              <% unless @hub.draft? || @hub.admin_evaluation_ok? %>
+                  <% if @hub.sent_to_admin_for_evaluation? %>
                       <%= h.input :grade, :as => :number, label: "Nota (de 0 à 10)" %>
                   <% end %>
                   <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
                   <%= submit_tag 'Enviar para rascunho', name: "draft" %>
-                  <% if @hub.sent_to_tutor_for_evaluation? %>
+                  <% if @hub.sent_to_admin_for_evaluation? %>
                       <%= submit_tag 'Avaliado', name: "valued" %>
                   <% end %>
               <% end %>

@@ -8,6 +8,7 @@ module InstructorAdminHelper
   end
 
   def get_hub_state(tcc, category)
+    puts 'states.'+hub_state(tcc, category)
     t('states.'+hub_state(tcc, category))
   end
 

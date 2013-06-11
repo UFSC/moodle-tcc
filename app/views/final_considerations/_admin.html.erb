@@ -36,10 +36,10 @@
                 <h4>Versão atual</h4>
                 <%= @final_considerations.content.html_safe %>
               </div>
-              <% unless @final_considerations.draft? || @final_considerations.leader_evaluation_ok? %>
+              <% unless @final_considerations.draft? || @final_considerations.admin_evaluation_ok? %>
                   <%= a.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
                   <%= submit_tag 'Enviar para rascunho', name: "draft" %>
-                  <% if @final_considerations.sent_to_leader_for_evaluation? %>
+                  <% if @final_considerations.sent_to_admin_for_evaluation? %>
                       <%= submit_tag 'Avaliado', name: "valued" %>
                   <% end %>
               <% end %>
