@@ -4,6 +4,11 @@ class InstructorAdminController < ApplicationController
   def index
     @tccs = Tcc.paginate(:page => params[:page], :per_page => 20)
     @type = @tp.custom_params["type"]
+    #if @type == 'tcc'
+    #  TccStateMachine.state_name = :state
+    #else
+    #  TccStateMachine.state_name = :portfolio_state
+    #end
   end
 
   private

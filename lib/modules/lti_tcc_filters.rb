@@ -18,6 +18,12 @@ module LtiTccFilters
       end
       @type = @tp.custom_params["type"]
 
+      #if @type == 'tcc'
+      #  TccStateMachine.state_name = :state
+      #else
+      #  TccStateMachine.state_name = :portfolio_state
+      #end
+
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
   end

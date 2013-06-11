@@ -1,8 +1,12 @@
 module TccStateMachine
 
   @state_name
-  def self.state_name(t)
+  def self.state_name=(t)
     @state_name = t
+  end
+
+  def self.state_name
+    @state_name
   end
 
   def self.included(base)
@@ -12,6 +16,9 @@ module TccStateMachine
     base.attr_accessible :new_state
 
     base.send :include, AASM
+    if @state_name.nil?
+      @state_name = :state
+    end
     base.aasm_column @state_name
     base.after_initialize :set_state
 
@@ -44,7 +51,7 @@ module TccStateMachine
   end
 
   def set_state
-    if self.state.nil?
+    if eval("self."+TccStateMachine.state_name.to_s).nil?
       self.aasm_write_state_without_persistence(self.aasm_current_state)
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130610222034) do
+ActiveRecord::Schema.define(:version => 20130611215455) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -40,17 +40,6 @@ ActiveRecord::Schema.define(:version => 20130610222034) do
     t.integer "initial_page"
     t.integer "end_page"
   end
-
-  create_table "bibliographies", :force => true do |t|
-    t.text     "content"
-    t.string   "direct_quote"
-    t.string   "indirect_quote"
-    t.integer  "tcc_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "bibliographies", ["tcc_id"], :name => "index_bibliographies_on_tcc_id"
 
   create_table "book_cap_refs", :force => true do |t|
     t.string  "cap_title"
@@ -117,9 +106,9 @@ ActiveRecord::Schema.define(:version => 20130610222034) do
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "tcc_state"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "portfolio_state"
   end
 
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"

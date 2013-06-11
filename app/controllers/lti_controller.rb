@@ -18,6 +18,14 @@ class LtiController < ApplicationController
         logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
         redirect_to access_denied_path
       end
+
+      @type = @tp.custom_params["type"]
+
+      if @type == 'tcc'
+        TccStateMachine.state_name = :state
+      else
+        TccStateMachine.state_name = :portfolio_state
+      end
     end
 
     return false

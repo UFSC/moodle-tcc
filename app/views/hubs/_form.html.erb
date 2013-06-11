@@ -6,7 +6,7 @@
       <div class="rounded-border row">
         <h3>
           Reflexões do eixo <%= @hub.category %> -
-          <span class="text-info"> <%= t('states.'+@hub.state) %></span>
+          <span class="text-info"> <%= t('states.'+@hub.aasm_current_state.to_s) %></span>
           <% if @hub.draft? && !@hub.commentary.blank? %>
               <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
