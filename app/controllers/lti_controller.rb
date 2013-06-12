@@ -4,9 +4,10 @@ class LtiController < ApplicationController
   # De acordo com o papel informado pelo LTI Consumer, redireciona o usuário
   def establish_connection
     if authorize_lti!
+      @type = @tp.custom_params["type"]
       if @tp.student?
         logger.debug 'LTI user identified as a student'
-        if @tp.custom_params["type"] == 'tcc'
+        if @type == 'tcc'
           redirect_to show_tcc_path
         else
           redirect_to show_hubs_path(category: '1')
@@ -18,8 +19,6 @@ class LtiController < ApplicationController
         logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
         redirect_to access_denied_path
       end
-
-      @type = @tp.custom_params["type"]
 
       if @type == 'tcc'
         TccStateMachine.state_name = :state

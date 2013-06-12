@@ -16,7 +16,7 @@ describe 'InstructorAdminTccs' do
     end
 
     it 'should visit admin page' do
-      page.set_rack_session(fake_lti_session('instructor','portifolio'))
+      page.set_rack_session(fake_lti_session('instructor','portfolio'))
       visit instructor_admin_tccs_path
 
       page.current_path.should_not == access_denied_path

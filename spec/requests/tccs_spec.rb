@@ -10,7 +10,7 @@ describe "Tccs" do
     end
 
     it 'should work with LTI connection' do
-      page.set_rack_session(fake_lti_session)
+      page.set_rack_session(fake_lti_session('student','tcc'))
       visit show_tcc_path
 
       page.current_path.should_not == access_denied_path

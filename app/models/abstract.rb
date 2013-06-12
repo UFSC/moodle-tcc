@@ -4,6 +4,5 @@ class Abstract < ActiveRecord::Base
 
   has_paper_trail meta: {state: :state}
 
-  #TccStateMachine.state_name = :state
   include TccStateMachine
 end

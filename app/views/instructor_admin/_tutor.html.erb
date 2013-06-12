@@ -3,7 +3,6 @@
 <table class="table table-bordered">
   <thead>
   <tr class="blue-header-table">
-    <th>ID ( provisório )</th>
     <th>Estudante</th>
     <% TCC_CONFIG["hubs"].size.times do |i| %>
         <th>Eixo <%= i+1 %></th>
@@ -13,7 +12,6 @@
   <tbody>
   <% @tccs.each do |tcc| %>
       <tr>
-        <td><%= tcc.moodle_user %></td>
         <td><%= tcc.name %></td>
         <% TCC_CONFIG["hubs"].size.times do |i| %>
             <td>

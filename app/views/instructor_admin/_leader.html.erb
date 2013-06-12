@@ -3,9 +3,8 @@
 <table class="table table-bordered">
   <thead>
   <tr class="blue-header-table">
-    <th>ID</th>
-    <th>nota</th>
     <th>Estudante</th>
+    <th>Nota</th>
     <th>Resumo</th>
     <th>Apresentação</th>
     <th>Considerações finais</th>
@@ -17,9 +16,8 @@
   <tbody>
   <% @tccs.each do |tcc| %>
       <tr>
-        <td><%= tcc.moodle_user %></td>
-        <td>Falta..</td>
         <td><%= tcc.name %></td>
+        <td>Falta..</td>
         <td>
           <% unless tcc.abstract.nil? %>
               <%= get_state(tcc.abstract) %>:

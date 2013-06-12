@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Presentation do
+  before(:each) do
+    TccStateMachine.state_name = :state
+  end
   let!(:presentation) { Fabricate(:presentation) }
 
   it { respond_to :commentary, :content, :state }

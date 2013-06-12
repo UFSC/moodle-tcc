@@ -3,12 +3,6 @@ class InstructorAdminController < ApplicationController
 
   def index
     @tccs = Tcc.paginate(:page => params[:page], :per_page => 20)
-    @type = @tp.custom_params["type"]
-    #if @type == 'tcc'
-    #  TccStateMachine.state_name = :state
-    #else
-    #  TccStateMachine.state_name = :portfolio_state
-    #end
   end
 
   private
@@ -23,6 +17,7 @@ class InstructorAdminController < ApplicationController
     else
       @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
       @user_id = @tp.user_id
+      @type = @tp.custom_params["type"]
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end

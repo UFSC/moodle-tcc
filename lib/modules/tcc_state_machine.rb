@@ -1,6 +1,7 @@
 module TccStateMachine
 
-  @state_name
+  @state_name = :state
+
   def self.state_name=(t)
     @state_name = t
   end
