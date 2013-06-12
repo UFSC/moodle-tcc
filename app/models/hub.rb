@@ -10,8 +10,6 @@ class Hub < ActiveRecord::Base
 
   validates_inclusion_of :grade, in: 0..10, allow_nil: true
 
-  after_initialize :set_state
-
   has_paper_trail
 
   #TccStateMachine.state_name = :state

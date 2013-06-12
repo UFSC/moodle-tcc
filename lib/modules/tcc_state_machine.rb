@@ -48,7 +48,7 @@ module TccStateMachine
 
   def set_state
     self.class.aasm_column TccStateMachine.state_name
-    self.has_paper_trail meta: {state: TccStateMachine.state_name}
+    self.class.has_paper_trail meta: {state: TccStateMachine.state_name}
     if eval("self."+TccStateMachine.state_name.to_s).blank?
       self.aasm_write_state_without_persistence(self.class.aasm_initial_state)
     end
