@@ -12,7 +12,7 @@ class Hub < ActiveRecord::Base
 
   after_initialize :set_state
 
-  has_paper_trail meta: {state: :state}
+  has_paper_trail
 
   #TccStateMachine.state_name = :state
   include TccStateMachine

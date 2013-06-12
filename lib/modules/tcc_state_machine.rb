@@ -16,10 +16,6 @@ module TccStateMachine
     base.attr_accessible :new_state
 
     base.send :include, AASM
-    if @state_name.nil?
-      @state_name = :state
-    end
-    base.aasm_column @state_name
     base.after_initialize :set_state
 
     base.aasm do
@@ -51,8 +47,10 @@ module TccStateMachine
   end
 
   def set_state
-    if eval("self."+TccStateMachine.state_name.to_s).nil?
-      self.aasm_write_state_without_persistence(self.aasm_current_state)
+    self.class.aasm_column TccStateMachine.state_name
+    self.has_paper_trail meta: {state: TccStateMachine.state_name}
+    if eval("self."+TccStateMachine.state_name.to_s).blank?
+      self.aasm_write_state_without_persistence(self.class.aasm_initial_state)
     end
   end
 end
