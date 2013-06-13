@@ -43,9 +43,9 @@
                       <%= h.input :grade, :as => :number, label: "Nota (de 0 à 10)" %>
                   <% end %>
                   <%= h.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
-                  <%= submit_tag 'Enviar para rascunho', name: "draft" %>
+                  <%= submit_tag 'Enviar para rascunho', name: "draft", class: "btn" %>
                   <% if @hub.sent_to_admin_for_evaluation? %>
-                      <%= submit_tag 'Avaliado', name: "valued" %>
+                      <%= submit_tag 'Avaliado', name: "valued", class: "btn" %>
                   <% end %>
               <% end %>
             </div>

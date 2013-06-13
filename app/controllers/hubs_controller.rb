@@ -1,5 +1,6 @@
 # encoding: utf-8
 class HubsController < ApplicationController
+
   include LtiTccFilters
 
   def show
@@ -13,20 +14,14 @@ class HubsController < ApplicationController
 
     unless @hub.nil?
       last_comment_version = @hub.versions.where('state != ?', "draft").last
-      unless last_comment_version.nil?
-        @last_hub_commented = last_comment_version.reify
-      end
+
+      @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
 
       last_version = @hub.versions.last
       unless last_version.nil?
-        unless last_version.comment.nil?
-          @hub.comment = last_version.comment
-        end
+        @hub.comment = last_version.comment unless last_version.comment.nil?
       end
-      @old_hub = @hub.previous_version if @hub.versions.size > 1
-      unless @old_hub.nil?
-        @old_version = @hub.versions[-2]
-      end
+
       get_hub_diaries(@hub) # search on moodle webserver
     else
       render :text => t(:hub_undefined)
@@ -41,13 +36,9 @@ class HubsController < ApplicationController
       if @hub.valid?
         case params[:hub][:new_state]
           when "revision"
-            if @hub.may_send_to_admin_for_revision?
-              @hub.send_to_admin_for_revision
-            end
+            @hub.send_to_admin_for_revision if @hub.may_send_to_admin_for_revision?
           when "evaluation"
-            if @hub.may_send_to_admin_for_evaluation?
-              @hub.send_to_admin_for_evaluation
-            end
+            @hub.send_to_admin_for_evaluation if @hub.may_send_to_admin_for_evaluation?
         end
         @hub.save
         flash[:success] = t(:successfully_saved)

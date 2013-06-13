@@ -44,13 +44,7 @@
                 <h4>Palavras-chave</h4>
                 <%= @abstract.key_words_pt.html_safe %>
               </div>
-              <% unless @abstract.draft? || @abstract.admin_evaluation_ok? %>
-                  <%= a.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
-                  <%= submit_tag 'Enviar para rascunho', name: "draft" %>
-                  <% if @abstract.sent_to_admin_for_evaluation? %>
-                      <%= submit_tag 'Avaliado', name: "valued" %>
-                  <% end %>
-              <% end %>
+              <%= render partial: 'common/tcc_child_actions', locals: { object: @abstract, f: a } %>
             </div>
           </div>
         </div>

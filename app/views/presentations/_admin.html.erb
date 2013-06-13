@@ -1,4 +1,4 @@
-<%= semantic_form_for @presentation, url: save_presentation_path(moodle_user: @tcc.moodle_user) do |a| %>
+<%= semantic_form_for @presentation, url: save_presentation_path(moodle_user: @tcc.moodle_user) do |p| %>
     <div class="span12">
       <div class="rounded-border row">
         <h3>Resumo</h3>
@@ -36,13 +36,7 @@
                 <h4>Versão atual</h4>
                 <%= @presentation.content.html_safe %>
               </div>
-              <% unless @presentation.draft? || @presentation.admin_evaluation_ok? %>
-                  <%= a.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: "4", value: ""} %>
-                  <%= submit_tag 'Enviar para rascunho', name: "draft" %>
-                  <% if @presentation.sent_to_admin_for_evaluation? %>
-                      <%= submit_tag 'Avaliado', name: "valued" %>
-                  <% end %>
-              <% end %>
+              <%= render partial: 'common/tcc_child_actions', locals: { object: @presentation, f: p } %>
             </div>
           </div>
         </div>
