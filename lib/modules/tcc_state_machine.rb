@@ -37,10 +37,6 @@ module TccStateMachine
         transitions :from => :draft, :to => :sent_to_admin_for_evaluation
       end
 
-      event :evaluation_fails_and_send_back_to_student_for do
-        transitions :from => :sent_to_admin_for_evaluation, :to => :draft
-      end
-
       event :admin_evaluate_ok do
         transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok
       end
