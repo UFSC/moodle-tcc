@@ -1,39 +1,78 @@
 common: &common
   # setting the course
+#  hubs:
+#    -
+#      diaries:
+#        -
+#          title: Saúde e sociedade
+#          id: 1264
+#        -
+#          title: Epidemiologia
+#          id: 1092
+#    -
+#      diaries:
+#        -
+#          title: Gestão e Avaliação na Atenção Básica
+#          id: 1133
+#        -
+#          title: Planejamento na Atenção Básica
+#          id: 1151
+#        -
+#          title: Processo de Trabalho na Atenção Básica
+#          id: 1163
+#    -
+#      diaries:
+#        -
+#          title: Atenção Integral na Saúde da Criança/ Apoio Matricial
+#          id: 0
+#        -
+#          title: Atenção Integral na Saúde da Mulher/Clínica Ampliada
+#          id: 0
+#        -
+#          title: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
+#          id: 0
+#        -
+#          title: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
+#          id: 0
+
+# Turma B
+
   hubs:
     -
       diaries:
         -
           title: Saúde e sociedade
-          id: 1264
+          id: 149
         -
           title: Epidemiologia
-          id: 1092
+          id: 150
     -
       diaries:
         -
           title: Gestão e Avaliação na Atenção Básica
-          id: 1133
+          id: 151
         -
           title: Planejamento na Atenção Básica
-          id: 1151
+          id: 152
         -
           title: Processo de Trabalho na Atenção Básica
-          id: 1163
+          id: 153
     -
       diaries:
         -
           title: Atenção Integral na Saúde da Criança/ Apoio Matricial
-          id: 0
+          id: 154
         -
           title: Atenção Integral na Saúde da Mulher/Clínica Ampliada
-          id: 0
+          id: 155
         -
           title: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
-          id: 0
+          id: 144
         -
           title: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
-          id: 0
+          id: 145
+
+
 
 development:
   <<: *common
