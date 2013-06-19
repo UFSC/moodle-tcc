@@ -13,3 +13,7 @@
  *= require bootstrap-datepicker
  *= require_tree .
  */
+
+li.input {
+  list-style: none;
+}
