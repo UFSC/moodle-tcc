@@ -8,3 +8,4 @@
     online_text_error: "<p style='color:red'>Erro ao buscar</p>"
     online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"
     hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
+    empty_diaries: "[ ainda não existe nada postado para esta atividade ]"
