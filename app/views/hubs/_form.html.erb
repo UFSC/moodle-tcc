@@ -41,7 +41,7 @@
               </div>
             </div>
         <% else %>
-            <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
+            <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true, toolbar: 'readonly'}} %>
         <% end %>
       </div>
     </div>

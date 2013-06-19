@@ -16,5 +16,9 @@ CKEDITOR.editorConfig = function( config ) {
         ['Maximize']
     ];
 
+    config.toolbar_readonly = [
+        ['Find', 'Maximize']
+    ];
+
     config.language = 'pt-br';
 };

@@ -2,8 +2,8 @@ pt-BR:
   states:
     blank: 'vazio'
     draft: 'Rascunho'
-    sent_to_admin_for_revision: 'Comentando'
-    sent_to_admin_for_evaluation: 'Avaliando'
+    sent_to_admin_for_revision: 'Enviado para revisão'
+    sent_to_admin_for_evaluation: 'Enviado para avaliação'
     admin_evaluation_ok: 'Avaliado'
   actions:
     draft: 'Visualizar'
