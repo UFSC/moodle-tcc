@@ -14,5 +14,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.toolbar_mini = [
         ['Bold', 'Italic', 'Underline', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
         ['Maximize']
-    ]
+    ];
+
+    config.language = 'pt-br';
 };
