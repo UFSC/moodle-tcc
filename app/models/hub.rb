@@ -14,4 +14,13 @@ class Hub < ActiveRecord::Base
 
   include TccStateMachine
 
+  # Verifica se possui todos os diário associados a este eixo com algum tipo de conteúdo
+  def filled_diaries?
+    diaries.each do |d|
+      return false if d.content.blank?
+    end
+
+    true
+  end
+
 end

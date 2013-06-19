@@ -8,7 +8,7 @@
       </div>
       <div id="<%=h d.object_id %>_collapse" class="collapse out <%=j accordion_type %>">
         <div class="accordion-inner">
-          <%= d.object.content.html_safe unless d.object.content.nil? %>
+          <%= diary_content(d.object.content) %>
         </div>
       </div>
       <div style="text-align:center; padding-bottom: 0px">
