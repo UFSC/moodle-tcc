@@ -5,11 +5,13 @@ class HubsController < ApplicationController
 
   def show
     set_tab ("hub"+params[:category]).to_sym
+
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
       @hub.new_state = @hub.aasm_current_state
     else
-      @hub = @tcc.hubs.where(:category => params[:category]).first
+      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+      @hub.new_state = @hub.aasm_current_state
     end
 
     unless @hub.nil?

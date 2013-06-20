@@ -36,7 +36,7 @@
             <div class="rounded-border">
               <div class="rounded-border">
                 <h4>Versão atual da reflexão</h4>
-                <%= @hub.reflection.html_safe %>
+                <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
               </div>
 
               <% if @hub.sent_to_admin_for_evaluation? %>
