@@ -41,8 +41,6 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
-  after 'deploy:update', 'newrelic:notice_deployment'
-
   after 'deploy:finalize_update', 'deploy:linka_dependencias'
   task :linka_dependencias, :roles => :app, :desc => 'Faz os links simbólicos com arquivos de configuração' do
     run "ln -s #{File.join(deploy_to, 'shared', 'database.yml')} #{File.join(current_release, 'config', 'database.yml')}"
