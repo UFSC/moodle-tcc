@@ -20,3 +20,12 @@ test:
 production:
   <<: *common
   database: sistema_tcc_production
+
+middleware:
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+  username: root
+  password: root
+  host: localhost
+  database: middleware

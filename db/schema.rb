@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611215455) do
+ActiveRecord::Schema.define(:version => 20130622135216) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(:version => 20130611215455) do
     t.string   "state"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "tutor_group"
   end
 
   create_table "versions", :force => true do |t|

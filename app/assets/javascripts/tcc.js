@@ -9,3 +9,9 @@ function hideOldTccObject() {
     $("#old_tcc_object").hide();
     $("#compareTccObjectButtom").html("Comparar versões").attr("onclick", "compareTccObject()");
 }
+
+$(function(){
+    $("#refresh-list").click(function() {
+        location.reload();
+    });
+});
