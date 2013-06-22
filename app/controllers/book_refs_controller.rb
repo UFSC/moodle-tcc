@@ -16,7 +16,7 @@ class BookRefsController < ApplicationController
         @book_ref.save!
         @tcc.references.create!(:element => @book_ref)
         flash[:success] = t(:successfully_saved)
-        redirect_to bibliographies_path
+        redirect_to bibliographies_path(:anchor => 'book')
       end
     else
       flash[:error] = t(:please_fix_invalid_data)
@@ -33,7 +33,7 @@ class BookRefsController < ApplicationController
         flash[:error] = t(:please_fix_invalid_data)
         render :edit
       end
-      success.html { redirect_to bibliographies_path, flash: {:success => t(:successfully_saved)} }
+      success.html { redirect_to bibliographies_path(:anchor => 'book'), flash: {:success => t(:successfully_saved)} }
     end
   end
 

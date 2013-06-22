@@ -16,7 +16,7 @@ class InternetRefsController < ApplicationController
         @internet_ref.save!
         @tcc.references.create!(:element => @internet_ref)
         flash[:success] = t(:successfully_saved)
-        redirect_to bibliographies_path
+        redirect_to bibliographies_path(:anchor => 'internet')
       end
     else
       flash[:error] = t(:please_fix_invalid_data)
@@ -30,7 +30,7 @@ class InternetRefsController < ApplicationController
         flash[:error] = t(:please_fix_invalid_data)
         render :edit
       end
-      success.html { redirect_to bibliographies_path, flash: {:success => t(:successfully_saved)} }
+      success.html { redirect_to bibliographies_path(:anchor => 'internet'), flash: {:success => t(:successfully_saved)} }
     end
   end
 
