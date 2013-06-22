@@ -15,7 +15,14 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $("#et_all").click(function () {
-        $("#book_ref_second_author").removeAttr("disabled");
-        $("#book_ref_third_author").removeAttr("disabled");
+        var checked = $('#et_all').prop('checked');
+        if (checked) {
+            $("#book_ref_second_author").attr('disabled', 'dislabled');
+            $("#book_ref_third_author").attr('disabled', 'dislabled');
+        }
+        else {
+            $("#book_ref_second_author").removeAttr("disabled");
+            $("#book_ref_third_author").removeAttr("disabled");
+        }
     });
 });
