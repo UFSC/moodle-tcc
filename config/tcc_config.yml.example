@@ -77,7 +77,8 @@ common: &common
 development:
   <<: *common
   server: http://localhost/moodle/webservice/rest/server.php
-  token: a50253670439cc22ab223d1af67e305b
+  token: 59864ec673b9eadc141ec43d3e634065
+  get_user_name_token: 59864ec673b9eadc141ec43d3e634065
 
   consumer_key: consumer_key
   consumer_secret: consumer_secret
@@ -85,7 +86,8 @@ development:
 test:
   <<: *common
   server: http://localhost/moodle/webservice/rest/server.php
-  token: a50253670439cc22ab223d1af67e305b
+  token: 59864ec673b9eadc141ec43d3e634065
+  get_user_name_token: 59864ec673b9eadc141ec43d3e634065
 
   consumer_key: consumer_key
   consumer_secret: consumer_secret

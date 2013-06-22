@@ -26,7 +26,7 @@ module LtiTccFilters
   def get_tcc
     unless @tcc = Tcc.find_by_moodle_user(@user_id)
       if @tp.student?
-        user_name = 201014471
+        user_name = MoodleUser.get_name(@user_id)
         group = TutorGroup.get_tutor_group(user_name)
         @tcc = Tcc.create( moodle_user: @user_id, name: @tp.lis_person_name_full, tutor_group: group )
       end

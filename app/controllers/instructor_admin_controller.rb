@@ -2,7 +2,7 @@ class InstructorAdminController < ApplicationController
   before_filter :authorize, :only => :index
 
   def index
-    user_name = 201014471
+    user_name = MoodleUser.get_name(@user_id)
     group = TutorGroup.get_tutor_group(user_name)
     @group_name = TutorGroup.get_tutor_group_name(group)
     @tccs = Tcc.where(tutor_group: group).paginate(:page => params[:page], :per_page => 30)
