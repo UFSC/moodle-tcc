@@ -16,3 +16,11 @@
 //= require bootstrap-datepicker
 //= require ckeditor/init
 //= require_tree .
+//= require twitter/bootstrap/rails/confirm
+$.fn.twitter_bootstrap_confirmbox.defaults = {
+    fade: true,
+    title: null, // if title equals null window.top.location.origin is used
+    cancel: "Não",
+    proceed: "Sim",
+    proceed_class: "btn proceed btn-primary"
+};

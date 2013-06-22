@@ -1,3 +1,4 @@
+# encoding: utf-8
 module ApplicationHelper
   class MenuTabBuilder < TabsOnRails::Tabs::Builder
     def open_tabs(options = {})
@@ -14,5 +15,9 @@ module ApplicationHelper
         @context.link_to(name, options)
       end
     end
+  end
+
+  def required_fields
+    "<p style='color:red'>*Atributos Obrigatórios</p>".html_safe
   end
 end

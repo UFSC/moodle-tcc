@@ -25,6 +25,9 @@ class BookRefsController < ApplicationController
   end
 
   def update
+    @book_ref = BookRef.find(params[:id])
+    @book_ref.attributes = params[:book_ref]
+    @book_ref.num_quantity = '' if @book_ref.type_quantity.empty?
     update! do |success, failure|
       failure.html do
         flash[:error] = t(:please_fix_invalid_data)

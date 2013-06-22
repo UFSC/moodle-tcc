@@ -17,7 +17,7 @@
                 <td><%= sanitize(element.reference_text, :tags => []) %></td>
                 <td>
                   <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
-                  <%= link_to 'Remover', general_ref_path(element), :confirm => 'Are you sure?', :method => :delete %>
+                  <%= link_to 'Remover', general_ref_path(element), :confirm =>  t(:label_confirm_message), :method => :delete %>
                 </td>
               </tr>
           <% end %>

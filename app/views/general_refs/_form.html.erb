@@ -4,6 +4,7 @@
       <%= ref.input :direct_citation %>
       <%= ref.input :indirect_citation %>
       <%= ref.input :reference_text, :as => :ckeditor, input_html: { ckeditor: {toolbar: 'mini'} } %>
+        <%= required_fields  %>
       <%= ref.actions :submit %>
     <% end %>
   </div>
