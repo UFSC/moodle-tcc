@@ -8,10 +8,19 @@ class BookRef < ActiveRecord::Base
                   :third_author, :title, :type_quantity, :year
 
   validates_presence_of :first_author, :edition_number, :local, :year, :title, :publisher
-  validates_presence_of :num_quantity, :if => :type_quantity
-  validates :type_quantity, :inclusion => { :in => QUANTITY_TYPES }, :allow_blank => true
-  validates :year, :numericality => { :only_integer => true }
-  validates :year, :inclusion => { :in => lambda{ |book| 0..Date.today.year } }
-  validates :edition_number, :numericality => { :only_integer => true, :greater_than => 0 }
+  validates :type_quantity, :inclusion => {:in => QUANTITY_TYPES}, :allow_blank => true
+  validates :year, :numericality => {:only_integer => true}
+  validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
+  validates :edition_number, :numericality => {:only_integer => true, :greater_than => 0}
 
+  def direct_citation
+    authors = first_author.split(' ').last.upcase
+    authors = authors + ';' + ' '+second_author.split(' ').last.upcase if second_author
+    authors = authors + ';' + ' '+third_author.split(' ').last.upcase if third_author
+    "(#{authors}, #{year})"
+  end
+
+  def indirect_citation
+    "#{first_author} (#{year})"
+  end
 end

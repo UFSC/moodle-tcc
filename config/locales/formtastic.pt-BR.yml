@@ -5,3 +5,4 @@
         update: "Salvar mudanças"
         reset: "Resetar formulário"
         cancel: "Cancelar e voltar"
+      required: 'Atributo obrigatório'

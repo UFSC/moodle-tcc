@@ -201,6 +201,7 @@ GEM
     turbo-sprockets-rails3 (0.3.6)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
+    twitter-bootstrap-rails-confirm (1.0.1)
     tzinfo (0.3.37)
     uglifier (2.0.1)
       execjs (>= 0.3.0)
@@ -249,5 +250,6 @@ DEPENDENCIES
   tabs_on_rails
   thin
   turbo-sprockets-rails3
+  twitter-bootstrap-rails-confirm
   uglifier (>= 1.0.3)
   will_paginate

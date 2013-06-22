@@ -28,6 +28,9 @@ gem 'paper_trail'
 gem 'compass_twitter_bootstrap'
 gem 'bootstrap-datepicker-rails'
 
+# Confirm dialog with twitter boostrap layout
+gem 'twitter-bootstrap-rails-confirm'
+
 # Javascript
 gem 'jquery-rails'
 

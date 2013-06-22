@@ -13,6 +13,7 @@
                                           value: ((I18n.l @internet_ref.access_date) unless @internet_ref.access_date.nil?)} %>
           </div>
       <% end %>
+      <%= required_fields  %>
       <%= ref.actions :submit %>
     </div>
 <% end %>
