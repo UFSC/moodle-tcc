@@ -1,9 +1,19 @@
 module TutorGroup
   def self.get_tutor_group(mat)
-    Middleware::PessoasGruposTutoria.find_by_matricula(mat).grupo
+    p =  Middleware::PessoasGruposTutoria.find_by_matricula(mat)
+    if p.nil?
+      nil
+    else
+      p.grupo
+    end
   end
 
   def self.get_tutor_group_name(g)
-    Middleware::GrupoTutoria.find_by_id(g).nome
+    gr = Middleware::GrupoTutoria.find_by_id(g)
+    if g.nil?
+      'Todos'
+    else
+      gr.nome
+    end
   end
 end

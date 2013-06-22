@@ -1,9 +1,9 @@
 <h3>Lista de TCCs</h3><br>
 
-<% if @type == "portfolio" %>
-    <%= render partial: "tutor" %>
-<% elsif @type == "tcc" %>
-    <%= render partial: "leader" %>
+<% if @type == 'portfolio' %>
+    <%= render partial: 'tutor' %>
+<% elsif @type == 'tcc' %>
+    <%= render partial: 'leader' %>
 <% else %>
     <p class="text-error">Parâmetro inválido</p>
 <% end %>

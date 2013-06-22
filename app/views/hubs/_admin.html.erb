@@ -1,6 +1,8 @@
 <%= semantic_form_for @hub, url: save_hubs_path(category: @hub.category, moodle_user: @tcc.moodle_user) do |h| %>
+  <%= h.input :category, :as => :hidden %>
+
     <!--diaries-->
-    <%= render partial: "diaries", locals: {h: h, accordion_type: "admin_view"} %>
+    <%= render partial: 'diaries', locals: {h: h, accordion_type: 'admin_view'} %>
 
     <div class="span12">
       <div class="rounded-border row">
@@ -12,6 +14,7 @@
           <!--old-->
           <div id="old_tcc_object" class="span6" style="display: none">
             <div class="rounded-border">
+
               <% unless @last_hub_commented.nil? %>
                   <div class="rounded-border">
                     <h4>Versão anterior da reflexão</h4>
@@ -28,12 +31,14 @@
               <% else %>
                   <h5 class="text-info">Ainda não há versão anterior</h5>
               <% end %>
+
             </div>
           </div>
 
           <!--new-->
           <div id="new_tcc_object" class="span12">
             <div class="rounded-border">
+
               <div class="rounded-border">
                 <h4>Versão atual da reflexão</h4>
                 <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>

@@ -6,40 +6,38 @@ class HubsController < ApplicationController
   def show
     set_tab ('hub'+params[:category]).to_sym
 
-    if @tp.student?
-      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-    else
-      @hub = @tcc.hubs.where(:category => params[:category]).first
+    # Verifica se o hub é um hab válido
+    category = params[:category].to_i
+    if TCC_CONFIG['hubs'][category].nil?
+      return render :text => t(:hub_undefined)
     end
 
-    unless @hub.nil?
-      last_comment_version = @hub.versions.where('state != ?', "draft").last
+    @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
 
-      @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
+    last_comment_version = @hub.versions.where('state != ?', 'draft').last
 
-      last_version = @hub.versions.last
-      unless last_version.nil?
-        @hub.comment = last_version.comment unless last_version.comment.nil?
-      end
+    @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
 
-      get_hub_diaries(@hub) # search on moodle webserver
-    else
-      render :text => t(:hub_undefined)
+    last_version = @hub.versions.last
+    unless last_version.nil?
+      @hub.comment = last_version.comment unless last_version.comment.nil?
     end
+
+    get_hub_diaries(@hub) # search on moodle webserver
+
   end
 
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     new_state = params[:hub][:new_state]
 
+    @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
+    @hub.attributes = params[:hub]
 
-    unless params[:hub][:commentary]
-      #
-      # ALUNO
-      #
-
-      @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
-      @hub.attributes = params[:hub]
+    #
+    # Estudante
+    #
+    if @tp.student?
 
       if @hub.valid?
         case new_state
@@ -51,15 +49,12 @@ class HubsController < ApplicationController
 
         @hub.save
         flash[:success] = t(:successfully_saved)
-        redirect_to show_hubs_path
+        return redirect_to show_hubs_path
       end
     else
       #
       # TUTOR
       #
-
-      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      @hub.attributes = params[:hub]
 
       # Ação do botão
       old_state = @hub.state
@@ -71,7 +66,8 @@ class HubsController < ApplicationController
       end
 
       if @hub.valid? && @hub.save
-          redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
+        return redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
+
       else
         @hub.state = old_state
       end

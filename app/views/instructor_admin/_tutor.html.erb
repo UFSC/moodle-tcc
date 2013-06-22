@@ -4,7 +4,7 @@
   <thead>
   <tr class="blue-header-table">
     <th>Estudante</th>
-    <% TCC_CONFIG["hubs"].size.times do |i| %>
+    <% TCC_CONFIG['hubs'].size.times do |i| %>
         <th>Eixo <%= i+1 %></th>
     <% end %>
   </tr>
@@ -13,11 +13,11 @@
   <% @tccs.each do |tcc| %>
       <tr>
         <td><%= tcc.name %></td>
-        <% TCC_CONFIG["hubs"].size.times do |i| %>
+        <% TCC_CONFIG['hubs'].size.times do |i| %>
             <td>
               <%= get_hub_state(tcc, (i+1)) %>:
               <%= link_to get_hub_action(tcc, (i+1)), show_hubs_path(category: (i+1),
-                          moodle_user: tcc.moodle_user), target: "_blank", class: "label label-success" %>
+                          moodle_user: tcc.moodle_user), target: '_blank', class: 'label label-success' %>
             </td>
         <% end %>
       </tr>

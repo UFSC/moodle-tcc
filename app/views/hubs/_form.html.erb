@@ -17,6 +17,7 @@
             <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
         </h3>
+
         <% if ((@hub.draft? || @hub.admin_evaluation_ok?) && !@hub.commentary.blank?) %>
           <div class="rounded-border">
             <span><i class="icon-comment"></i> Comentário do avaliador</span>
@@ -26,29 +27,33 @@
             </div>
           </div>
         <% end %>
+
         <% if @hub.draft? %>
           <div class="row">
             <div id="old_tcc_object" class="span6" style="display: none">
               <div class="rounded-border">
+
                 <% unless @last_hub_commented.nil? %>
                   <h4>Última versão avaliada</h4>
                   <%= @last_hub_commented.reflection.html_safe %>
                 <% else %>
                   <p class="text-error">Este eixo ainda não foi avaliado</p>
                 <% end %>
+
               </div>
             </div>
             <div id="new_tcc_object" class="span12">
               <div class="rounded-border">
                 <%= h.cktext_area :reflection %>
                 <%= render partial: 'common/state_options', locals: {f: h} %>
-                <%= h.action :submit, :as => :input, label: 'Salvar', button_html: {class: "btn btn-primary"} %>
+                <%= h.action :submit, :as => :input, label: 'Salvar', button_html: {class: 'btn btn-primary'} %>
               </div>
             </div>
           </div>
         <% else %>
           <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true, toolbar: 'readonly'}} %>
         <% end %>
+
       </div>
     </div>
 
