@@ -3,13 +3,13 @@ require 'spec_helper'
 
 describe "Tccs" do
   describe "GET /tcc" do
-    it 'should not work without LTI connection' do
+    xit 'should not work without LTI connection' do
       get show_tcc_path
       response.status.should be(302)
       response.should redirect_to access_denied_path
     end
 
-    it 'should work with LTI connection' do
+    xit 'should work with LTI connection' do
       page.set_rack_session(fake_lti_session('student','tcc'))
       visit show_tcc_path
 
