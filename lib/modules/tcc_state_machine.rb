@@ -1,23 +1,14 @@
 module TccStateMachine
 
-  @state_name = :state
-
-  def self.state_name=(t)
-    @state_name = t
-  end
-
-  def self.state_name
-    @state_name
-  end
-
   def self.included(base)
+
+    base.send :include, AASM
+    base.aasm_column :state
+    base.has_paper_trail meta: {state: :state}
 
     # Virtual attribute
     base.send :attr_accessor, :new_state
     base.attr_accessible :new_state
-
-    base.send :include, AASM
-    base.after_initialize :set_state
 
     base.aasm do
       state :draft, :initial => true
@@ -43,11 +34,4 @@ module TccStateMachine
     end
   end
 
-  def set_state
-    self.class.aasm_column TccStateMachine.state_name
-    self.class.has_paper_trail meta: {state: TccStateMachine.state_name}
-    if eval("self."+TccStateMachine.state_name.to_s).blank?
-      self.aasm_write_state_without_persistence(self.class.aasm_initial_state)
-    end
-  end
 end

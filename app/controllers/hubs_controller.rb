@@ -4,14 +4,12 @@ class HubsController < ApplicationController
   include LtiTccFilters
 
   def show
-    set_tab ("hub"+params[:category]).to_sym
+    set_tab ('hub'+params[:category]).to_sym
 
     if @tp.student?
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      @hub.new_state = @hub.aasm_current_state
     else
-      @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
-      @hub.new_state = @hub.aasm_current_state
+      @hub = @tcc.hubs.where(:category => params[:category]).first
     end
 
     unless @hub.nil?
@@ -32,34 +30,54 @@ class HubsController < ApplicationController
 
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
+    new_state = params[:hub][:new_state]
+
+
     unless params[:hub][:commentary]
+      #
+      # ALUNO
+      #
+
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
       @hub.attributes = params[:hub]
+
       if @hub.valid?
-        case params[:hub][:new_state]
-          when "revision"
+        case new_state
+          when 'revision'
             @hub.send_to_admin_for_revision if @hub.may_send_to_admin_for_revision?
-          when "evaluation"
+          when 'evaluation'
             @hub.send_to_admin_for_evaluation if @hub.may_send_to_admin_for_evaluation?
         end
+
         @hub.save
         flash[:success] = t(:successfully_saved)
         redirect_to show_hubs_path
-      else
-        render :show
       end
     else
+      #
+      # TUTOR
+      #
+
       @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+      @hub.attributes = params[:hub]
+
+      # Ação do botão
+      old_state = @hub.state
+
       if params[:valued]
         @hub.admin_evaluate_ok if @hub.may_admin_evaluate_ok?
       else
         @hub.send_back_to_student if @hub.may_send_back_to_student?
       end
 
-      if @hub.update_attributes(params[:hub])
-        redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
+      if @hub.valid? && @hub.save
+          redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
+      else
+        @hub.state = old_state
       end
     end
+
+    render :show
   end
 
   private
