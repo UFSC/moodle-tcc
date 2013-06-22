@@ -37,4 +37,13 @@ class Tcc < ActiveRecord::Base
     end
   end
 
+  def get_all_hubs
+    hb = []
+    TCC_CONFIG['hubs'].each_with_index do |k,v|
+      hb << hubs.find_or_initialize_by_category(v+1)
+    end
+
+    hb
+  end
+
 end

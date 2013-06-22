@@ -13,10 +13,10 @@
   <% @tccs.each do |tcc| %>
       <tr>
         <td><%= tcc.name %></td>
-        <% TCC_CONFIG['hubs'].size.times do |i| %>
+        <% tcc.get_all_hubs.each do |hub| %>
             <td>
-              <%= get_hub_state(tcc, (i+1)) %>:
-              <%= link_to get_hub_action(tcc, (i+1)), show_hubs_path(category: (i+1),
+              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
+              <%= link_to get_action(hub), show_hubs_path(category: (hub.category),
                           moodle_user: tcc.moodle_user), target: '_blank', class: 'label label-success' %>
             </td>
         <% end %>
