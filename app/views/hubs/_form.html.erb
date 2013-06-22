@@ -8,7 +8,11 @@
       <div class="rounded-border row">
         <h3>
           Reflexões do eixo <%= @hub.category %> -
-          <span class="text-info"> <%= t('states.'+@hub.aasm_current_state.to_s) %></span>
+          <% if @hub.admin_evaluation_ok? %>
+            <span class="text-info"> <%= t('states.'+@hub.aasm_current_state.to_s) %> / Nota: <%= @hub.grade %></span>
+          <% else %>
+            <span class="text-info"> <%= t('states.'+@hub.aasm_current_state.to_s) %></span>
+          <% end %>
           <% if @hub.draft? && !@hub.commentary.blank? %>
             <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
