@@ -1,0 +1,1 @@
+set :deploy_to, '/home/gabriel/tcc.labsoft.ufsc.br'

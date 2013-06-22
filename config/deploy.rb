@@ -1,16 +1,20 @@
 # -*- encoding : utf-8 -*-
 require 'bundler/capistrano'
-require 'new_relic/recipes'
+
+# Capistrano Multistage
+set :stages, %w(production staging)
+set :default_stage, 'staging'
+require 'capistrano/ext/multistage'
+
 
 set :application, 'tcc.unasus.ufsc.br'
 set :repository,  'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
 set :scm, :git
 
 set :default_environment, {'LANG' => 'pt_BR.UTF-8'}
-set :deploy_to, '/home/gabriel/tcc.unasus.ufsc.br'
 set :git_enable_submodules, true
 
-set :ssh_options, { :forward_agent => true, :port => '2200' }
+set :ssh_options, {forward_agent: true, port: '2200'}
 
 set :user, 'gabriel'
 set :use_sudo, false
@@ -21,7 +25,6 @@ role :app, 'tcc.unasus.ufsc.br'                          # This may be the same 
 role :db,  'tcc.unasus.ufsc.br', :primary => true        # This is where Rails migrations will run
 
 depend :remote, :file, "#{File.join(deploy_to, 'shared', 'database.yml')}"
-depend :remote, :file, "#{File.join(deploy_to, 'shared', 'newrelic.yml')}"
 
 namespace :deploy do
   task :setup_db, :roles => :db, :desc => 'Configura base de dados inicial.' do
