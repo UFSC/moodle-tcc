@@ -21,11 +21,6 @@ class LtiController < ApplicationController
         redirect_to access_denied_path
       end
 
-      if @type == 'tcc'
-        TccStateMachine.state_name = :state
-      else
-        TccStateMachine.state_name = :portfolio_state
-      end
     end
 
     return false

@@ -8,11 +8,10 @@ class Hub < ActiveRecord::Base
 
   accepts_nested_attributes_for :diaries
 
-  validates_inclusion_of :grade, in: 0..10, allow_nil: true
+  include TccStateMachine
+  validates :grade, :inclusion => { in: 0..10 }, if: :admin_evaluation_ok?
 
   has_paper_trail
-
-  include TccStateMachine
 
   # Verifica se possui todos os diário associados a este eixo com algum tipo de conteúdo
   def filled_diaries?
