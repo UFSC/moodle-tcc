@@ -13,7 +13,7 @@
             <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
           </span>
 
-          <% if @hub.draft? && !@hub.commentary.blank? %>
+          <% if @hub.draft? && !@hub.comparable_versions.empty? %>
             <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
         </h3>
@@ -51,7 +51,9 @@
             </div>
           </div>
         <% else %>
+
           <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true, toolbar: 'readonly'}} %>
+
         <% end %>
 
       </div>

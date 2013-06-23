@@ -1,10 +1,11 @@
 module TccStateMachine
+  unloadable
 
   def self.included(base)
 
     base.send :include, AASM
     base.aasm_column :state
-    base.has_paper_trail meta: {state: :state}
+    base.has_paper_trail meta: {:state => :state, :comment => :commentary}
 
     # Virtual attribute
     base.send :attr_accessor, :new_state

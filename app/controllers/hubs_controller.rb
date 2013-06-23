@@ -18,11 +18,6 @@ class HubsController < ApplicationController
 
     @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
 
-    last_version = @hub.versions.last
-    unless last_version.nil?
-      @hub.comment = last_version.comment unless last_version.comment.nil?
-    end
-
     get_hub_diaries(@hub) # search on moodle webserver
 
   end

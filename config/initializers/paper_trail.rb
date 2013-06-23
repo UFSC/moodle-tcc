@@ -1,3 +1,5 @@
 class Version < ActiveRecord::Base
-  attr_accessible :state
+  unloadable
+
+  attr_accessible :state, :comment
 end

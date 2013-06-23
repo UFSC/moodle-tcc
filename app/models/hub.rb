@@ -21,4 +21,8 @@ class Hub < ActiveRecord::Base
     true
   end
 
+  def comparable_versions
+    versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
+  end
+
 end
