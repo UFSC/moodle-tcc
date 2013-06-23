@@ -2,10 +2,10 @@
     <div id="data_tab_content">
       <%= ref.inputs do %>
           <div class="span4">
+            <%= ref.input :et_all, :label => false %>
             <%= ref.input :first_author %>
             <%= ref.input :second_author %>
             <%= ref.input :third_author %>
-            <%= ref.input :et_all, :label => false %>
           </div>
           <div class="span4">
             <%= ref.input :article_title %>

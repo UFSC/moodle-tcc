@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     $("#et_all").click(function() {
         var checked = $('#et_all').prop('checked');
-        change_authors_state(checked);
+        change_book_authors_state(checked);
     });
 
     // Refazer estados dos campos
@@ -23,11 +23,11 @@ $(document).ready(function() {
     }
 
     var et_all_checked = $("#et_all").prop('checked');
-    change_authors_state(et_all_checked);
+    change_book_authors_state(et_all_checked);
 
 });
 
-function change_authors_state (checked){
+function change_book_authors_state (checked){
     if (checked) {
         $("#book_ref_second_author").attr('disabled', 'dislabled');
         $("#book_ref_third_author").attr('disabled', 'dislabled');
