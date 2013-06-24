@@ -22,7 +22,6 @@ describe BookRef do
     it { should ensure_inclusion_of(:type_quantity).in_array(BookRef::QUANTITY_TYPES) }
 
     it { should validate_presence_of(:first_author) }
-    it { should validate_presence_of(:edition_number) }
     it { should validate_presence_of(:local) }
     it { should validate_presence_of(:year) }
     it { should validate_presence_of(:title) }
