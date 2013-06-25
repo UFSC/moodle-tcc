@@ -1,9 +1,7 @@
 class Tcc < ActiveRecord::Base
   attr_accessible :leader, :moodle_user, :name, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
-                  :bibliography_attributes, :presentation_attributes, :abstract_attributes, :final_considerations_attributes
-
-
-
+                  :bibliography_attributes, :presentation_attributes, :abstract_attributes,
+                  :final_considerations_attributes
 
   validates_uniqueness_of :moodle_user
   validates_inclusion_of :grade, in: 0..1, allow_nil: true
@@ -14,7 +12,7 @@ class Tcc < ActiveRecord::Base
   has_one :abstract
   has_one :final_considerations
 
-  has_many :references,  :dependent => :destroy
+  has_many :references, :dependent => :destroy
   has_many :general_refs, :through => :references, :source => :element, :source_type => 'GeneralRef'
   has_many :book_refs, :through => :references, :source => :element, :source_type => 'BookRef'
   has_many :book_cap_refs, :through => :references, :source => :element, :source_type => 'BookCapRef'
@@ -38,12 +36,11 @@ class Tcc < ActiveRecord::Base
   end
 
   def get_all_hubs
-    hb = []
-    TCC_CONFIG['hubs'].each_with_index do |k,v|
-      hb << hubs.find_or_initialize_by_category(v+1)
-    end
+    TCC_CONFIG['hubs'].each_with_index.map { |item, index| hubs.find_or_initialize_by_category(index+1) }
+  end
 
-    hb
+  def self.hub_names
+    TCC_CONFIG['hubs'].each_with_index.map { |item, index| "Eixo #{index+1}" }
   end
 
 end

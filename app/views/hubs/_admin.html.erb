@@ -29,7 +29,7 @@
               </div>
               <% unless @hub.commentary.blank? %>
                 <div class="rounded-border">
-                  <h5><i class="icon-comment"></i> Comentário da reflexão anterior</h5>
+                  <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
                   <%= @hub.commentary.html_safe %>
                 </div>
               <% else %>

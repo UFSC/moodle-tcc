@@ -1,11 +1,15 @@
-<h3>Lista de TCCs</h3><br>
-
 <% if @type == 'portfolio' %>
-    <%= render partial: 'tutor' %>
+
+  <h3>Lista de Portfólios</h3><br />
+  <%= render partial: 'tutor' %>
+
 <% elsif @type == 'tcc' %>
-    <%= render partial: 'leader' %>
+
+  <h3>Lista de TCCs</h3><br />
+  <%= render partial: 'leader' %>
+
 <% else %>
-    <p class="text-error">Parâmetro inválido</p>
+  <p class="text-error">Parâmetro inválido</p>
 <% end %>
 
 <%= will_paginate @tccs %>

@@ -6,6 +6,7 @@ class InstructorAdminController < ApplicationController
     group = TutorGroup.get_tutor_group(user_name)
     @group_name = TutorGroup.get_tutor_group_name(group)
     @tccs = Tcc.where(tutor_group: group).paginate(:page => params[:page], :per_page => 30)
+    @hubs = Tcc.hub_names
   end
 
   private

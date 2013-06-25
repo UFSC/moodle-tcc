@@ -9,7 +9,7 @@
         </h3>
         <% if ((@abstract.draft? || @abstract.admin_evaluation_ok?) && !@abstract.commentary.blank?) %>
           <div class="rounded-border">
-            <span><i class="icon-comment"></i> Comentário do avaliador</span>
+            <span><%= display_icon('icon-comment') %> Comentário do avaliador</span>
 
             <div class="text-info">
               <%= @abstract.commentary.html_safe %>

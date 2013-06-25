@@ -21,7 +21,7 @@
                   </div>
                   <% unless @abstract.commentary.blank? %>
                       <div class="rounded-border">
-                        <h5><i class="icon-comment"></i> Comentário do resumo anterior</h5>
+                        <h5><%= display_icon('icon-comment') %> Comentário do resumo anterior</h5>
                         <%= @abstract.commentary.html_safe %>
                       </div>
                   <% else %>

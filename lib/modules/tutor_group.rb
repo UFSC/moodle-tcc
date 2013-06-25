@@ -11,7 +11,7 @@ module TutorGroup
   def self.get_tutor_group_name(g)
     gr = Middleware::GrupoTutoria.find_by_id(g)
     if g.nil?
-      'Todos'
+      'todos os grupos'
     else
       gr.nome
     end
