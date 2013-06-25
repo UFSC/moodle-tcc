@@ -17,7 +17,7 @@
   <% @tccs.each do |tcc| %>
     <tr>
       <td><%= tcc.name %></td>
-      <% tcc.get_all_hubs.each do |hub| %>
+      <% tcc.fetch_all_hubs.each do |hub| %>
         <td>
           <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
           <%= link_to get_action(hub),

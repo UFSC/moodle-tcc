@@ -35,7 +35,7 @@ class Tcc < ActiveRecord::Base
     end
   end
 
-  def get_all_hubs
+  def fetch_all_hubs
     TCC_CONFIG['hubs'].each_with_index.map { |item, index| hubs.find_or_initialize_by_category(index+1) }
   end
 
