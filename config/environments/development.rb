@@ -34,4 +34,7 @@ SistemaTcc::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Rubymine binding for BetterErrors
+  BetterErrors.editor='x-mine://open?file=%{file}&line=%{line}' if defined? BetterErrors
 end
