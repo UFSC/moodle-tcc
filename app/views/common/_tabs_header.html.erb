@@ -4,8 +4,8 @@
         <%= tab.abstract 'Resumo', show_abstract_path %>
         <%= tab.presentation 'Apresentação', show_presentation_path %>
     <% end %>
-    <% TCC_CONFIG["hubs"].size.times do |i| %>
-        <%= eval("tab.hub#{i+1} 'Eixo #{(i+1).to_s}', show_hubs_path(category: (i+1))") %>
+    <% Tcc.hub_names.each_with_index.map do |hub_name, index| %>
+        <%= eval("tab.hub#{index+1} hub_name, show_hubs_path(category: (index+1))") %>
     <% end %>
     <% if @type == 'tcc' %>
         <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>

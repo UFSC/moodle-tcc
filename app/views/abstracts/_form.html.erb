@@ -2,7 +2,7 @@
   <div class="span12">
     <div class="rounded-border row">
         <h3>
-          Resumo - <span class="text-info"> <%= t('states.'+@abstract.state) %></span>
+          Resumo - <span class="text-info"> <%= t('states.'+@abstract.aasm_current_state.to_s) %></span>
           <% if @abstract.draft? && !@abstract.commentary.blank? %>
               <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
           <% end %>
@@ -34,7 +34,7 @@
             <div id="new_tcc_object" class="span12">
               <div class="rounded-border">
                 <%= a.cktext_area :content_pt %><br>
-                <%= a.input :key_words_pt, :input_html => { class: "span9" } %>
+                <%= a.input :key_words_pt, :input_html => { class: 'span9' } %>
                 <%= a.actions do %>
                     <%= render partial: 'common/state_options', locals: {f:a} %>
                     <%= a.action :submit, :as => :input, :label => 'Salvar alterações' %>
@@ -43,7 +43,7 @@
             </div>
           </div>
       <% else %>
-          <%= a.input :key_words_pt, :input_html => { class: "span9", readOnly: true } %>
+          <%= a.input :key_words_pt, :input_html => { class: 'span9', readOnly: true } %>
           <%= a.input :content_pt, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
       <% end %>
     </div>

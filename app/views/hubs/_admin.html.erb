@@ -52,10 +52,10 @@
             </div>
 
             <% if @hub.sent_to_admin_for_evaluation? %>
-              <%= h.input :grade, :as => :number, label: "Nota (de 0 à 10)" %>
+              <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 10)' %>
             <% end %>
 
-            <%= render partial: 'common/tcc_child_actions', locals: {object: @hub, f: h} %>
+            <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>
           </div>
         </div>
       </div>
