@@ -1,6 +1,8 @@
 <% if @tp.student? %>
     <%=  render 'common/tabs_header' %>
-    <%= render partial: 'form' %>
+    <%= render partial: 'common/tcc_child_form',
+               locals: { object: @presentation, object_label: 'Apresentação',
+                         action_url: save_presentation_path, last_object_commented: @last_presentation_commented } %>
 <% else %>
     <%= render partial: 'admin' %>
 <% end %>
