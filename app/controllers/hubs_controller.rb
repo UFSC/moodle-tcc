@@ -74,9 +74,9 @@ class HubsController < ApplicationController
   private
 
   def get_hub_diaries(hub)
-    diaries_conf = TCC_CONFIG["hubs"][hub.category-1]["diaries"]
+    diaries_conf = TCC_CONFIG['hubs'][hub.category-1]['diaries']
     diaries_conf.size.times do |i|
-      set_diary(hub, i, diaries_conf[i]["id"], diaries_conf[i]["title"])
+      set_diary(hub, i, diaries_conf[i]['id'], diaries_conf[i]['title'])
     end
   end
 

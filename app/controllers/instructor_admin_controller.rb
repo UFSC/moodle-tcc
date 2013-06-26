@@ -19,9 +19,9 @@ class InstructorAdminController < ApplicationController
 
       redirect_to access_denied_path
     else
-      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
+      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], lti_params)
       @user_id = @tp.user_id
-      @type = @tp.custom_params["type"]
+      @type = @tp.custom_params['type']
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
