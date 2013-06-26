@@ -5,7 +5,7 @@ class LtiController < ApplicationController
   def establish_connection
     if authorize_lti!
       puts @tp.inspect
-      @type = @tp.custom_params["type"]
+      @type = @tp.custom_params['type']
       if @tp.student?
         logger.debug 'LTI user identified as a student'
         if @type == 'tcc'

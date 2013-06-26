@@ -4,9 +4,9 @@ class PresentationsController < ApplicationController
   def show
     set_tab :presentation
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
-    @presentation.new_state = "draft"
+    @presentation.new_state = 'draft'
 
-    last_comment_version = @presentation.versions.where('state != ?', "draft").last
+    last_comment_version = @presentation.versions.where('state != ?', 'draft').last
     unless last_comment_version.nil?
       @last_presentation_commented = last_comment_version.reify
     end
@@ -19,11 +19,11 @@ class PresentationsController < ApplicationController
       @presentation.attributes = params[:presentation]
       if @presentation.valid?
         case params[:presentation][:new_state]
-          when "revision"
+          when 'revision'
             if @presentation.may_send_to_admin_for_revision?
               @presentation.send_to_admin_for_revision
             end
-          when "evaluation"
+          when 'evaluation'
             if @presentation.may_send_to_admin_for_evaluation?
               @presentation.send_to_admin_for_evaluation
             end

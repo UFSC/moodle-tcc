@@ -4,9 +4,9 @@ class AbstractsController < ApplicationController
   def show
     set_tab :abstract
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
-    @abstract.new_state = "draft"
+    @abstract.new_state = 'draft'
 
-    last_comment_version = @abstract.versions.where('state != ?', "draft").last
+    last_comment_version = @abstract.versions.where('state != ?', 'draft').last
     unless last_comment_version.nil?
       @last_abstract_commented = last_comment_version.reify
     end
@@ -19,11 +19,11 @@ class AbstractsController < ApplicationController
       @abstract.attributes = params[:abstract]
       if @abstract.valid?
         case params[:abstract][:new_state]
-          when "revision"
+          when 'revision'
             if @abstract.may_send_to_admin_for_revision?
               @abstract.send_to_admin_for_revision
             end
-          when "evaluation"
+          when 'evaluation'
             if @abstract.may_send_to_admin_for_evaluation?
               @abstract.send_to_admin_for_evaluation
             end

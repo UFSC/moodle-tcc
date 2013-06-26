@@ -4,9 +4,9 @@ class FinalConsiderationsController < ApplicationController
   def show
     set_tab :final_considerations
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
-    @final_considerations.new_state = "draft"
+    @final_considerations.new_state = 'draft'
 
-    last_comment_version = @final_considerations.versions.where('state != ?', "draft").last
+    last_comment_version = @final_considerations.versions.where('state != ?', 'draft').last
     unless last_comment_version.nil?
       @last_final_considerations_commented = last_comment_version.reify
     end
@@ -19,11 +19,11 @@ class FinalConsiderationsController < ApplicationController
       @final_considerations.attributes = params[:final_considerations]
       if @final_considerations.valid?
         case params[:final_considerations][:new_state]
-          when "revision"
+          when 'revision'
             if @final_considerations.may_send_to_admin_for_revision?
               @final_considerations.send_to_admin_for_revision
             end
-          when "evaluation"
+          when 'evaluation'
             if @final_considerations.may_send_to_admin_for_evaluation?
               @final_considerations.send_to_admin_for_evaluation
             end
