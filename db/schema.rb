@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627203503) do
+ActiveRecord::Schema.define(:version => 20130627212411) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -109,6 +109,17 @@ ActiveRecord::Schema.define(:version => 20130627203503) do
     t.string "indirect_citation"
     t.string "reference_text"
   end
+
+  create_table "hub_definitions", :force => true do |t|
+    t.integer  "tcc_definition_id"
+    t.integer  "external_id"
+    t.string   "title"
+    t.integer  "order"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
 
   create_table "hubs", :force => true do |t|
     t.text     "reflection"
