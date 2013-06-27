@@ -2,7 +2,11 @@
     <%=  render 'common/tabs_header' %>
     <%= render partial: 'common/tcc_child_form',
                locals: { object: @final_considerations, object_label: 'Considerações finais',
-                         action_url: save_final_considerations_path, last_object_commented: @last_final_considerations_commented } %>
+                         action_url: save_final_considerations_path,
+                         last_object_commented: @last_final_considerations_commented } %>
 <% else %>
-    <%= render partial: 'admin' %>
+    <%= render partial: 'common/tcc_child_admin',
+               locals: { object: @final_considerations, object_label: 'Considerações finais',
+                         action_url: save_final_considerations_path(moodle_user: @tcc.moodle_user),
+                         last_object_commented: @last_final_considerations_commented } %>
 <% end %>

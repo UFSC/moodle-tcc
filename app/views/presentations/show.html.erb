@@ -2,7 +2,11 @@
     <%=  render 'common/tabs_header' %>
     <%= render partial: 'common/tcc_child_form',
                locals: { object: @presentation, object_label: 'Apresentação',
-                         action_url: save_presentation_path, last_object_commented: @last_presentation_commented } %>
+                         action_url: save_presentation_path,
+                         last_object_commented: @last_presentation_commented } %>
 <% else %>
-    <%= render partial: 'admin' %>
+    <%= render partial: 'common/tcc_child_admin',
+               locals: { object: @presentation, object_label: 'Apresentação',
+                         action_url: save_presentation_path(moodle_user: @tcc.moodle_user),
+                         last_object_commented: @last_presentation_commented } %>
 <% end %>
