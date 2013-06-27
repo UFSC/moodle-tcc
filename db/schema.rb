@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622135216) do
+ActiveRecord::Schema.define(:version => 20130627203503) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(:version => 20130622135216) do
   end
 
   add_index "diaries", ["hub_id"], :name => "index_diaries_on_hub_id"
+
+  create_table "diary_definitions", :force => true do |t|
+    t.integer  "hub_definition_id"
+    t.integer  "external_id"
+    t.string   "title"
+    t.integer  "order"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "diary_definitions", ["hub_definition_id"], :name => "index_diary_definitions_on_hub_definition_id"
 
   create_table "final_considerations", :force => true do |t|
     t.text     "content"
