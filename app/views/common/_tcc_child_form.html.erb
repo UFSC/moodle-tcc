@@ -23,7 +23,13 @@
                 <div class="rounded-border">
                   <% unless last_object_commented.nil? %>
                       <h4>Última versão avaliada</h4>
-                      <%= last_object_commented.content.html_safe %>
+                      <% if object.class != Abstract %>
+                        <%= last_object_commented.content.html_safe %>
+                      <% else %>
+                        <%= last_object_commented.content_pt.html_safe %>
+                        <h4>Palavras chave</h4>
+                        <%= last_object_commented.key_words_pt.html_safe %>
+                      <% end %>
                   <% else %>
                       <p class="text-error">Este eixo ainda não foi avaliado</p>
                   <% end %>
@@ -31,7 +37,12 @@
               </div>
               <div id="new_tcc_object" class="span12">
                 <div class="rounded-border">
-                  <%= f.cktext_area :content %><br>
+                  <% if object.class != Abstract %>
+                    <%= f.cktext_area :content %><br>
+                  <% else %>
+                    <%= f.cktext_area :content_pt %><br>
+                    <%= f.input :key_words_pt, :input_html => { class: 'span9' } %>
+                  <% end %>
                   <%= f.actions do %>
                       <%= render partial: 'common/state_options', locals: {f:f} %>
                       <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
@@ -40,7 +51,12 @@
               </div>
             </div>
         <% else %>
-            <%= f.input :content, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
+            <% if object.class != Abstract %>
+                <%= f.input :content, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
+            <% else %>
+                <%= f.input :key_words_pt, :input_html => { class: 'span9', readOnly: true } %>
+                <%= f.input :content_pt, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
+            <% end %>
         <% end %>
       </div>
     </div>

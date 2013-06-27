@@ -1,0 +1,67 @@
+<%= semantic_form_for object, url: action_url do |p| %>
+    <div class="span12">
+      <div class="rounded-border row">
+        <h3><%= object_label %></h3>
+        <span>
+          <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
+        </span>
+
+        <div class="row">
+          <!--old-->
+          <div id="old_tcc_object" class="span6" style="display: none">
+            <div class="rounded-border">
+              <% unless last_object_commented.nil? %>
+                  <% if object.class != Abstract %>
+                      <div class="rounded-border">
+                        <h4>Versão anterior</h4>
+                        <%= last_object_commented.content.html_safe %>
+                      </div>
+                  <% else %>
+                      <div class="rounded-border">
+                        <h4>Versão anterior</h4>
+                        <%= last_object_commented.content_pt.html_safe %>
+                      </div>
+                      <div class="rounded-border">
+                        <h4>Palavras-chave</h4>
+                        <%= last_object_commented.key_words_pt.html_safe %>
+                      </div>
+                  <% end %>
+                  <% unless object.commentary.blank? %>
+                      <div class="rounded-border">
+                        <h5><i class="icon-comment"></i> Comentário do <%= object_label %> anterior</h5>
+                        <%= object.commentary.html_safe %>
+                      </div>
+                  <% else %>
+                      <h5 class="text-info">Sem comentário para esta versão</h5>
+                  <% end %>
+              <% else %>
+                  <h5 class="text-info">Ainda não há versão anterior</h5>
+              <% end %>
+            </div>
+          </div>
+
+          <!--new-->
+          <div id="new_tcc_object" class="span12">
+            <div class="rounded-border">
+              <% if object.class != Abstract %>
+                  <div class="rounded-border">
+                    <h4>Versão atual</h4>
+                    <%= object.content.html_safe %>
+                  </div>
+              <% else %>
+                  <div class="rounded-border">
+                    <h4>Versão atual</h4>
+                    <%= object.content_pt.html_safe %>
+                  </div>
+                  <div class="rounded-border">
+                    <h4>Palavras-chave</h4>
+                    <%= object.key_words_pt.html_safe %>
+                  </div>
+              <% end %>
+              <%= render partial: 'common/tcc_child_actions_admin', locals: {object: object, f: p} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
