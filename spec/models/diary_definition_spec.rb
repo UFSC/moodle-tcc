@@ -7,4 +7,9 @@ describe DiaryDefinition do
     it { should validate_presence_of :external_id }
     it { should belong_to :hub_definition }
   end
+
+  it 'should create a valid model' do
+    diary = Fabricate.build(:diary_definition)
+    diary.should be_valid
+  end
 end
