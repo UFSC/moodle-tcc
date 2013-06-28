@@ -16,7 +16,6 @@ module LtiTccFilters
       else
         @user_id = @tp.user_id
       end
-
       @type = @tp.custom_params["type"]
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
@@ -28,7 +27,9 @@ module LtiTccFilters
       if @tp.student?
         user_name = MoodleUser.get_name(@user_id)
         group = TutorGroup.get_tutor_group(user_name)
-        @tcc = Tcc.create( moodle_user: @user_id, name: @tp.lis_person_name_full, tutor_group: group )
+        tcc_definition = TccDefinition.find(@tp.custom_params["tcc_definition"])
+        @tcc = Tcc.create( moodle_user: @user_id, name: @tp.lis_person_name_full,
+                           tutor_group: group, tcc_definition: tcc_definition )
       end
     else
       if @tp.student?

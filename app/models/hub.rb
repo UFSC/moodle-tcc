@@ -1,12 +1,13 @@
 class Hub < ActiveRecord::Base
 
   belongs_to :tcc
+  belongs_to :hub_definition
   has_many :diaries
 
   include TccStateMachine
 
   # Mass-Assignment
-  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes
+  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
   accepts_nested_attributes_for :diaries
 

@@ -6,16 +6,10 @@ module Moodle
 
   class MoodleHub
     def fetch_hub_diaries(hub, user_id)
-      diaries_conf = TCC_CONFIG['hubs'][hub.category-1]['diaries']
-      diaries_conf.size.times do |i|
-        unless diary = hub.diaries.find_by_pos(i)
-          diary = hub.diaries.build
-        end
-        online_text =  fetch_online_text(user_id, diaries_conf[i]['id'])
+      hub.diaries.each{|diary|
+        online_text =  fetch_online_text(user_id, diary.diary_definition.external_id)
         diary.content = online_text unless online_text.nil?
-        diary.title = diaries_conf[i]['title']
-        diary.pos = i
-      end
+      }
     end
 
     def fetch_online_text(user_id, coursemodule_id)

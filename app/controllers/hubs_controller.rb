@@ -6,13 +6,7 @@ class HubsController < ApplicationController
   def show
     set_tab ('hub'+params[:category]).to_sym
 
-    # Verifica se o hub é um hab válido
-    category = params[:category].to_i
-    unless category.between?(1, TCC_CONFIG['hubs'].count)
-      return render :text => t(:hub_undefined), :status => 500
-    end
-
-    @hub = @tcc.hubs.find_or_initialize_by_category(params[:category])
+    @hub = @tcc.hubs.find_by_category(params[:category])
 
     last_comment_version = @hub.versions.where('state != ?', 'draft').last
 

@@ -1,6 +1,8 @@
 class Diary < ActiveRecord::Base
   belongs_to :hub
-  attr_accessible :content, :pos, :title
+  belongs_to :diary_definition
+
+  attr_accessible :content, :pos, :title, :diary_definition, :hub
 
    # Virtual attribute
   attr_accessor :title

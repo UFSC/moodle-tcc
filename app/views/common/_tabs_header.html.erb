@@ -4,8 +4,8 @@
         <%= tab.abstract 'Resumo', show_abstract_path %>
         <%= tab.presentation 'Apresentação', show_presentation_path %>
     <% end %>
-    <% Tcc.hub_names.each_with_index.map do |hub_name, index| %>
-        <%= eval("tab.hub#{index+1} hub_name, show_hubs_path(category: (index+1))") %>
+    <% @tcc.hub_definitions.each do |hub_definition| %>
+        <%= eval("tab.hub#{hub_definition.order} hub_definition.title, show_hubs_path(category: (hub_definition.order))") %>
     <% end %>
     <% if @type == 'tcc' %>
         <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>

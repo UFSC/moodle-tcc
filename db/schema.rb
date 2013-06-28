@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628183810) do
+ActiveRecord::Schema.define(:version => 20130628202806) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -75,8 +75,9 @@ ActiveRecord::Schema.define(:version => 20130628183810) do
     t.text     "content"
     t.integer  "pos"
     t.integer  "hub_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "diary_definition_id"
   end
 
   add_index "diaries", ["hub_id"], :name => "index_diaries_on_hub_id"
@@ -126,9 +127,10 @@ ActiveRecord::Schema.define(:version => 20130628183810) do
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.string   "portfolio_state"
+    t.integer  "hub_definition_id"
   end
 
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"
@@ -187,9 +189,10 @@ ActiveRecord::Schema.define(:version => 20130628183810) do
     t.float    "grade"
     t.date     "defense_date"
     t.string   "state"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "tutor_group"
+    t.integer  "tcc_definition_id"
   end
 
   create_table "versions", :force => true do |t|
