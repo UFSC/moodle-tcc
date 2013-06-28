@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622135216) do
+ActiveRecord::Schema.define(:version => 20130627213633) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(:version => 20130622135216) do
 
   add_index "diaries", ["hub_id"], :name => "index_diaries_on_hub_id"
 
+  create_table "diary_definitions", :force => true do |t|
+    t.integer  "hub_definition_id"
+    t.integer  "external_id"
+    t.string   "title"
+    t.integer  "order"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "diary_definitions", ["hub_definition_id"], :name => "index_diary_definitions_on_hub_definition_id"
+
   create_table "final_considerations", :force => true do |t|
     t.text     "content"
     t.text     "commentary"
@@ -98,6 +109,17 @@ ActiveRecord::Schema.define(:version => 20130622135216) do
     t.string "indirect_citation"
     t.string "reference_text"
   end
+
+  create_table "hub_definitions", :force => true do |t|
+    t.integer  "tcc_definition_id"
+    t.integer  "external_id"
+    t.string   "title"
+    t.integer  "order"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
 
   create_table "hubs", :force => true do |t|
     t.text     "reflection"
@@ -152,6 +174,12 @@ ActiveRecord::Schema.define(:version => 20130622135216) do
 
   add_index "references", ["element_id"], :name => "index_references_on_element_id"
   add_index "references", ["tcc_id"], :name => "index_references_on_tcc_id"
+
+  create_table "tcc_definitions", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "tccs", :force => true do |t|
     t.string   "moodle_user"
