@@ -51,6 +51,9 @@ gem 'will_paginate'
 # RABL
 gem 'rabl'
 
+# Progress
+gem 'progress'
+
 group :production do
   gem 'newrelic_rpm'
 end
