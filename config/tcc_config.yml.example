@@ -1,90 +1,11 @@
-common: &common
-  # setting the course
-#  hubs:
-#    -
-#      diaries:
-#        -
-#          title: Saúde e sociedade
-#          id: 1264
-#        -
-#          title: Epidemiologia
-#          id: 1092
-#    -
-#      diaries:
-#        -
-#          title: Gestão e Avaliação na Atenção Básica
-#          id: 1133
-#        -
-#          title: Planejamento na Atenção Básica
-#          id: 1151
-#        -
-#          title: Processo de Trabalho na Atenção Básica
-#          id: 1163
-#    -
-#      diaries:
-#        -
-#          title: Atenção Integral na Saúde da Criança/ Apoio Matricial
-#          id: 0
-#        -
-#          title: Atenção Integral na Saúde da Mulher/Clínica Ampliada
-#          id: 0
-#        -
-#          title: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
-#          id: 0
-#        -
-#          title: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
-#          id: 0
-
-# Turma B
-
-  hubs:
-    -
-      diaries:
-        -
-          title: Saúde e sociedade
-          id: 149
-        -
-          title: Epidemiologia
-          id: 150
-    -
-      diaries:
-        -
-          title: Gestão e Avaliação na Atenção Básica
-          id: 151
-        -
-          title: Planejamento na Atenção Básica
-          id: 152
-        -
-          title: Processo de Trabalho na Atenção Básica
-          id: 153
-    -
-      diaries:
-        -
-          title: Atenção Integral na Saúde da Criança/ Apoio Matricial
-          id: 154
-        -
-          title: Atenção Integral na Saúde da Mulher/Clínica Ampliada
-          id: 155
-        -
-          title: Atenção Integral na Saúde do Adulto/Projeto Terapêutico Singular
-          id: 144
-        -
-          title: Atenção Integral Saúde do Idoso/Projeto de Saúde no Território
-          id: 145
-
-
-
 development:
-  <<: *common
   server: http://localhost/moodle/webservice/rest/server.php
   token: 59864ec673b9eadc141ec43d3e634065
-  get_user_name_token: 59864ec673b9eadc141ec43d3e634065
 
   consumer_key: consumer_key
   consumer_secret: consumer_secret
 
 test:
-  <<: *common
   server: http://localhost/moodle/webservice/rest/server.php
   token: 59864ec673b9eadc141ec43d3e634065
   get_user_name_token: 59864ec673b9eadc141ec43d3e634065
@@ -93,7 +14,6 @@ test:
   consumer_secret: consumer_secret
 
 production:
-  <<: *common
 #  server:
 #  token:
 
