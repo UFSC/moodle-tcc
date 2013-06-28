@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627213633) do
+ActiveRecord::Schema.define(:version => 20130628183810) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20130627213633) do
   create_table "diaries", :force => true do |t|
     t.text     "content"
     t.integer  "pos"
-    t.string   "title"
     t.integer  "hub_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -112,7 +111,6 @@ ActiveRecord::Schema.define(:version => 20130627213633) do
 
   create_table "hub_definitions", :force => true do |t|
     t.integer  "tcc_definition_id"
-    t.integer  "external_id"
     t.string   "title"
     t.integer  "order"
     t.datetime "created_at",        :null => false

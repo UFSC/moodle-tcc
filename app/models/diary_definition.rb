@@ -3,5 +3,5 @@ class DiaryDefinition < ActiveRecord::Base
 
   validates_presence_of :external_id, :hub_definition, :order, :title
 
-  attr_accessible :external_id, :hub_definition_id, :order, :title
+  attr_accessible :external_id, :hub_definition, :order, :title
 end
