@@ -4,7 +4,6 @@ class LtiController < ApplicationController
   # De acordo com o papel informado pelo LTI Consumer, redireciona o usuário
   def establish_connection
     if authorize_lti!
-      puts @tp.inspect
       @type = @tp.custom_params['type']
       if @tp.student?
         logger.debug 'LTI user identified as a student'
