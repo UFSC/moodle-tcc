@@ -57,10 +57,6 @@ class Tcc < ActiveRecord::Base
   def create_hubs
     self.tcc_definition.hub_definitions.each do |hub_definition|
       hub = Hub.create(tcc: self, hub_definition: hub_definition, category: hub_definition.order)
-
-      hub_definition.diary_definitions.each do |diary_definition|
-        hub.diaries.create(hub: hub, diary_definition: diary_definition, pos: diary_definition.order)
-      end
     end
   end
 

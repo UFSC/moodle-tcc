@@ -60,6 +60,7 @@ describe Tcc do
   describe '#tcc_definitions=' do
     let(:tcc_definition) { Fabricate.build(:tcc_definition) }
     let(:hub_definition) { Fabricate.build(:hub_definition_without_tcc) }
+    let(:diary_definition) { Fabricate.build(:diary_definition_without_hub) }
 
     it 'should accept a tcc definition and store references' do
       tcc.tcc_definition = tcc_definition
@@ -70,11 +71,22 @@ describe Tcc do
     it 'should create hubs defined on tcc definition' do
       tcc = Fabricate.build(:tcc_without_hubs)
       tcc_definition.hub_definitions << hub_definition
+
       tcc_definition.hub_definitions.size.should == 1
 
       tcc.hubs.size.should == 0
       tcc.tcc_definition = tcc_definition
       tcc.hubs.size.should == 1
+    end
+
+    it 'should create diaries defined on hub definition' do
+      tcc = Fabricate.build(:tcc_without_hubs)
+      hub_definition.diary_definitions << diary_definition
+      tcc_definition.hub_definitions << hub_definition
+
+      tcc.hubs.size.should == 0
+      tcc.tcc_definition = tcc_definition
+      tcc.hubs.first.diaries.size.should == 1
     end
   end
 

@@ -13,6 +13,14 @@ class Hub < ActiveRecord::Base
 
   validates :grade, :inclusion => { in: 0..10 }, if: :admin_evaluation_ok?
 
+  def comparable_versions
+    versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
+  end
+
+  def fetch_diaries(user_id)
+    Moodle.fetch_hub_diaries(self, user_id)
+  end
+
   # Verifica se possui todos os diário associados a este eixo com algum tipo de conteúdo
   def filled_diaries?
     diaries.each do |d|
@@ -22,12 +30,17 @@ class Hub < ActiveRecord::Base
     true
   end
 
-  def fetch_diaries(user_id)
-    Moodle.fetch_hub_diaries(self, user_id)
+  def hub_definition=(value)
+    super(value)
+    build_diaries
   end
 
-  def comparable_versions
-    versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
+  private
+
+  def build_diaries
+    hub_definition.diary_definitions.each do |diary_definition|
+      self.diaries.build(hub: self, diary_definition: diary_definition, pos: diary_definition.order)
+    end
   end
 
 end
