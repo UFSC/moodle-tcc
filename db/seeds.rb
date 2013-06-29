@@ -1,44 +1,87 @@
 # encoding: utf-8
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+
+# Helper para realizar a criação e popular TccDefinitions, HubDefinitions, DiaryDefinitions
+def create_tcc_definitions(title, hub_diaries)
+
+  # Numero de operações para criação de Hubs + Diários + 1 (Tcc)
+  num_operations = hub_diaries.flatten.flatten.count+1
+
+  Progress.start("TCC Definition: #{title}", num_operations) do
+     tcc_def = TccDefinition.create(title: title)
+     Progress.step
+
+    hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
+       hub = HubDefinition.create(order: hub_index, title: hub_name, tcc_definition: tcc_def)
+       Progress.step
+
+      diaries.each_with_index do |diary, diary_index|
+        Progress.step do
+          diary_id = diary.first[0]
+          diary_name = diary.first[1]
+
+          next if diary_id.nil?
+
+          DiaryDefinition.create(external_id: diary_id, hub_definition: hub, order: diary_index, title: diary_name)
+        end
+      end
+    end
+
+  end
+end
+
 #
-# Examples:
+# TccDefinition para Turma A
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Seed da Turma A
-tcc_def = TccDefinition.create(title: 'Turma A')
+# Turma A - ESF
+definition = {
+    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
+    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3' => [{1940 => 'Atenção Integral à Saúde da Criança'}, {2055 => 'Atenção Integral à Saúde da Mulher'}, {2078 => 'Atenção Integral à Saúde do Adulto'}, {2124 => 'Atenção Integral à Saúde do Idoso'}]
+}
+create_tcc_definitions('Turma A - ESF', definition)
 
-hub_def1 = HubDefinition.create(order: 1, title: 'Eixo 1', tcc_definition: tcc_def)
-  DiaryDefinition.create(external_id: 1264, hub_definition: hub_def1, order: 1, title: 'Saúde e sociedade')
-  DiaryDefinition.create(external_id: 1092, hub_definition: hub_def1, order: 2, title: 'Epidemiologia')
+# Turma A - NASF
+definition = {
+    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
+    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3' => [{2258 => 'Apoio Matricial'}, {1994 => 'Clínica Ampliada'}, {2014 => 'Projeto Terapêutico Singular'}, {2023 => 'Projeto de Saúde no Território'}]
+}
+create_tcc_definitions('Turma A - NASF', definition)
 
-hub_def2 = HubDefinition.create(order: 2, title: 'Eixo 2', tcc_definition: tcc_def)
-  DiaryDefinition.create(external_id: 1133, hub_definition: hub_def2, order: 1, title: 'Gestão e Avaliação na Atenção Básica')
-  DiaryDefinition.create(external_id: 1151, hub_definition: hub_def2, order: 2, title: 'Planejamento na Atenção Básica')
-  DiaryDefinition.create(external_id: 1163, hub_definition: hub_def2, order: 3, title: 'Processo de Trabalho na Atenção Básica')
 
-hub_def3 = HubDefinition.create(order: 3, title: 'Eixo 3', tcc_definition: tcc_def)
-  DiaryDefinition.create(external_id: 1940, hub_definition: hub_def3, order: 1, title: 'Atenção Integral na Saúde da Criança/ Apoio Matricial')
-  DiaryDefinition.create(external_id: 2055, hub_definition: hub_def3, order: 2, title: 'Atenção Integral na Saúde da Mulher/Clínica Ampliada')
-  DiaryDefinition.create(external_id: 2078, hub_definition: hub_def3, order: 3, title: 'Saúde do Adulto/Projeto Terapêutico Singular')
-  DiaryDefinition.create(external_id: 2124, hub_definition: hub_def3, order: 4, title: 'Saúde do Idoso/Projeto de Saúde no Território')
+#
+# TccDefinition para Turma B
+#
 
-# Seed da Turma B
-tcc_def = TccDefinition.create(title: 'Turma B')
+# Turma B - ESF - Enfermagem
+definition = {
+    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2328 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
+}
+create_tcc_definitions('Turma B - ESF - Enfermagem', definition)
 
-hub_def1 = HubDefinition.create(order: 1, title: 'Eixo 1', tcc_definition: tcc_def)
-DiaryDefinition.create(external_id: 149, hub_definition: hub_def1, order: 1, title: 'Saúde e sociedade')
-DiaryDefinition.create(external_id: 150, hub_definition: hub_def1, order: 2, title: 'Epidemiologia')
+# Turma B - ESF - Medicina
+definition = {
+    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2396 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
+}
+create_tcc_definitions('Turma B - ESF - Medicina', definition)
 
-hub_def2 = HubDefinition.create(order: 2, title: 'Eixo 2', tcc_definition: tcc_def)
-DiaryDefinition.create(external_id: 151, hub_definition: hub_def2, order: 1, title: 'Gestão e Avaliação na Atenção Básica')
-DiaryDefinition.create(external_id: 152, hub_definition: hub_def2, order: 2, title: 'Planejamento na Atenção Básica')
-DiaryDefinition.create(external_id: 153, hub_definition: hub_def2, order: 3, title: 'Processo de Trabalho na Atenção Básica')
+# Turma B - ESF - Odontologia
+definition = {
+    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2404 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
+}
+create_tcc_definitions('Turma B - ESF - Odontologia', definition)
 
-hub_def3 = HubDefinition.create(order: 3, title: 'Eixo 3', tcc_definition: tcc_def)
-DiaryDefinition.create(external_id: 154, hub_definition: hub_def3, order: 1, title: 'Atenção Integral na Saúde da Criança/ Apoio Matricial')
-DiaryDefinition.create(external_id: 155, hub_definition: hub_def3, order: 2, title: 'Atenção Integral na Saúde da Mulher/Clínica Ampliada')
-DiaryDefinition.create(external_id: 144, hub_definition: hub_def3, order: 3, title: 'Saúde do Adulto/Projeto Terapêutico Singular')
-DiaryDefinition.create(external_id: 145, hub_definition: hub_def3, order: 4, title: 'Saúde do Idoso/Projeto de Saúde no Território')
+# Turma B - NASF
+definition = {
+    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3' => [{2322 => 'Apoio Matricial'}, {nil => 'Clínica Ampliada'}, {nil => 'Projeto Terapêutico Singular'}, {nil => 'Projeto de Saúde no Território'}]
+}
+create_tcc_definitions('Turma B - NASF', definition)
