@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Tcc do
-  let(:tcc) { Fabricate(:tcc) }
+  let(:tcc) { Fabricate.build(:tcc) }
 
   it { should respond_to(:leader, :moodle_user, :name, :title, :grade, :defense_date) }
 
@@ -29,24 +29,52 @@ describe Tcc do
 
   describe 'referencias' do
     before(:each) do
+      @tcc = Fabricate(:tcc)
       @ref = Fabricate(:general_ref)
     end
 
+    after(:each) do
+      @tcc.destroy
+      @ref.destroy
+    end
+
     it 'should return references' do
-      tcc.references.create(:element => @ref)
-      tcc.references.count.should equal(1)
+      @tcc.references.create(:element => @ref)
+      @tcc.references.count.should equal(1)
     end
 
     it 'should create valid element' do
-      tcc.references.create(:element => @ref)
-      tcc.references.first.hash.should equal(@ref.hash)
+      @tcc.references.create(:element => @ref)
+      @tcc.references.count.should == 1
+      @tcc.references.first.element.hash.should == @ref.hash
 
       novo = Fabricate(:general_ref)
 
-      tcc.references.create(:element => novo)
-      tcc.references.count.should equal(2)
-      tcc.references.last.hash.should_not equal(@ref.hash)
-      tcc.references.last.hash.should equal(novo.hash)
+      @tcc.references.create(:element => novo)
+      @tcc.references.count.should == 2
+      @tcc.references.last.element.hash.should_not == @ref.hash
+      @tcc.references.last.element.hash.should == novo.hash
+    end
+  end
+
+  describe '#tcc_definitions=' do
+    let(:tcc_definition) { Fabricate.build(:tcc_definition) }
+    let(:hub_definition) { Fabricate.build(:hub_definition_without_tcc) }
+
+    it 'should accept a tcc definition and store references' do
+      tcc.tcc_definition = tcc_definition
+      tcc.tcc_definition.should_not be_nil
+      tcc.tcc_definition.should == tcc_definition
+    end
+
+    it 'should create hubs defined on tcc definition' do
+      tcc = Fabricate.build(:tcc_without_hubs)
+      tcc_definition.hub_definitions << hub_definition
+      tcc_definition.hub_definitions.size.should == 1
+
+      tcc.hubs.size.should == 0
+      tcc.tcc_definition = tcc_definition
+      tcc.hubs.size.should == 1
     end
   end
 
