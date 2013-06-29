@@ -44,12 +44,16 @@ class Tcc < ActiveRecord::Base
 
   def fetch_all_hubs
     #TCC_CONFIG['hubs'].each_with_index.map { |item, index| hubs.find_or_initialize_by_category(index+1) }
-    self.hubs(:order => 'category')
+    self.hubs.order(:category)
   end
 
   def hub_definitions
-    #TCC_CONFIG['hubs'].each_with_index.map { |item, index| "Eixo #{index+1}" }
-    self.tcc_definition.hub_definitions(:order => 'order')
+    self.tcc_definition.hub_definitions.order(:order)
+  end
+
+  def self.hub_names
+    #TODO: Lógica temporária para contemplar recurso existente
+    TccDefinition.first.hub_definitions.each.map {|h| h.title }
   end
 
   private
