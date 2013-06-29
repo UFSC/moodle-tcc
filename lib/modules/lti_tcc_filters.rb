@@ -6,11 +6,13 @@ module LtiTccFilters
 
   def authorize
     lti_params = session['lti_launch_params']
+
     if lti_params.nil?
       logger.error 'Access Denied: LTI not initialized'
       redirect_to access_denied_path
+
     else
-      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG["consumer_key"], TCC_CONFIG["consumer_secret"], lti_params)
+      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], lti_params)
       if @tp.instructor?
         @user_id = params["moodle_user"]
       else
@@ -23,22 +25,20 @@ module LtiTccFilters
   end
 
   def get_tcc
-    unless @tcc = Tcc.find_by_moodle_user(@user_id)
+    if @tcc = Tcc.find_by_moodle_user(@user_id)
+      if @tp.student? && @tcc.name.blank?
+        @tcc.name = @tp.lis_person_name_full
+        @tcc.save! if @tcc.valid?
+      end
+
+    else
       if @tp.student?
         user_name = MoodleUser.get_name(@user_id)
         group = TutorGroup.get_tutor_group(user_name)
-        tcc_definition = TccDefinition.find(@tp.custom_params["tcc_definition"])
-        @tcc = Tcc.create( moodle_user: @user_id, name: @tp.lis_person_name_full,
-                           tutor_group: group, tcc_definition: tcc_definition )
-      end
-    else
-      if @tp.student?
-        if @tcc.name.blank?
-          @tcc.name = @tp.lis_person_name_full
-          if @tcc.valid?
-            @tcc.save!
-          end
-        end
+        tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
+
+        @tcc = Tcc.create(moodle_user: @user_id, name: @tp.lis_person_name_full,
+                          tutor_group: group, tcc_definition: tcc_definition)
       end
     end
   end
