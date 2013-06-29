@@ -3,6 +3,7 @@ class RemoveTitleFromDiaries < ActiveRecord::Migration
     remove_column :diaries, :title
   end
 
-  def down
+  def self.down
+    add_column :diaries, :title, :string
   end
 end

@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
     t.integer  "diary_definition_id"
   end
 
+  add_index "diaries", ["diary_definition_id"], :name => "index_diaries_on_diary_definition_id"
   add_index "diaries", ["hub_id"], :name => "index_diaries_on_hub_id"
 
   create_table "diary_definitions", :force => true do |t|
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
     t.integer  "hub_definition_id"
   end
 
+  add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"
 
   create_table "internet_refs", :force => true do |t|
@@ -194,6 +196,8 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
   end
+
+  add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
 
   create_table "versions", :force => true do |t|
     t.string   "item_type",  :null => false
