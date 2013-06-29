@@ -4,6 +4,8 @@ namespace :tcc do
   desc 'TCC | Faz a migração dos dados do moodle para o Sistema de TCC'
   task :remote, [:hub_id, :hub_category] => [:environment] do |t, args|
 
+    Remote::OnlineText.establish_connection :moodle
+
     result = Remote::OnlineText.find_by_sql(["SELECT DISTINCT u.id as id, u.username as username, ot.onlinetext as text, ot.commenttext as comment, ot.assignment, ot.status, ot.timecreated, g.grade
         FROM assignsubmission_textversion AS ot
         JOIN assign_submission AS assub
