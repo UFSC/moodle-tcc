@@ -5,6 +5,6 @@ class GeneralRef < ActiveRecord::Base
   attr_accessible :direct_citation, :indirect_citation, :reference_text
 
   has_one :reference, :as => :element, :dependent => :destroy
-  has_one :tcc, :through => :references
+  has_one :tcc, :through => :reference
 
 end

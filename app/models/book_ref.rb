@@ -1,6 +1,6 @@
 class BookRef < ActiveRecord::Base
   has_one :reference, :as => :element, :dependent => :destroy
-  has_one :tcc, :through => :references
+  has_one :tcc, :through => :reference
 
   QUANTITY_TYPES = %w(p ed)
 

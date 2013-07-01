@@ -1,6 +1,6 @@
 class BookCapRef < ActiveRecord::Base
   has_one :reference, :as => :element, :dependent => :destroy
-  has_one :tcc, :through => :references
+  has_one :tcc, :through => :reference
 
   PARTICIPATION_TYPES = %w(Autor Organizador Compilador Editor)
 

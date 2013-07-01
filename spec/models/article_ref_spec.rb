@@ -9,7 +9,7 @@ describe ArticleRef do
     it { should have_one(:reference) }
 
     # Pending
-    xit { should have_one(:tcc).through(:references) }
+    it { should have_one(:tcc).through(:reference) }
 
     it { should validate_presence_of(:first_author) }
     it { should validate_presence_of(:article_title) }
