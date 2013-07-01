@@ -15,7 +15,7 @@ describe BookRef do
     it { should have_one(:reference) }
 
     # Pending
-    xit { should have_one(:tcc).through(:references) }
+    it { should have_one(:tcc).through(:reference) }
 
     it { should validate_numericality_of(:year).only_integer }
     it { should ensure_inclusion_of(:year).in_range(0..(Date.today.year)) }

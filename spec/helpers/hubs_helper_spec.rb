@@ -1,15 +1,17 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the HubHelper. For example:
-#
-# describe HubHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe HubsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#diary_content' do
+    it 'should return a error message when content is empty' do
+      helper.diary_content('').should include('não existe nada postado')
+    end
+
+    it 'should return the content when its not empty' do
+      helper.diary_content('alguma coisa').should == 'alguma coisa'
+    end
+
+    it 'should return a html_safe content' do
+      helper.diary_content('<strong>algumacoisa</strong>').html_safe?.should be_true
+    end
+  end
 end
