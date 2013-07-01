@@ -48,11 +48,12 @@ class Tcc < ActiveRecord::Base
   end
 
   def hub_definitions
-    self.tcc_definition.hub_definitions.order(:order)
+    self.tcc_definition.hub_definitions.order('`order` ASC')
   end
 
   def self.hub_names
-    #TODO: Lógica temporária para contemplar recurso existente
+    # Lógica temporária para contemplar recurso existente
+    # TODO: Encontrar uma relação entre o tipo de tcc_definition passado no LTI e filtrar somente itens daquele tipo.
     TccDefinition.first.hub_definitions.each.map {|h| h.title }
   end
 
