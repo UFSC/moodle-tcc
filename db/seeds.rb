@@ -11,7 +11,7 @@ def create_tcc_definitions(title, hub_diaries)
      Progress.step
 
     hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
-       hub = HubDefinition.create(order: hub_index, title: hub_name, tcc_definition: tcc_def)
+       hub = HubDefinition.create(order: hub_index+1, title: hub_name, tcc_definition: tcc_def)
        Progress.step
 
       diaries.each_with_index do |diary, diary_index|
@@ -21,7 +21,7 @@ def create_tcc_definitions(title, hub_diaries)
 
           next if diary_id.nil?
 
-          DiaryDefinition.create(external_id: diary_id, hub_definition: hub, order: diary_index, title: diary_name)
+          DiaryDefinition.create(external_id: diary_id, hub_definition: hub, order: diary_index+1, title: diary_name)
         end
       end
     end
