@@ -3,7 +3,7 @@
     <div class="accordion-group <%=h @hub.category %>">
       <div class="accordion-heading">
         <a id="<%=h d.object_id %>" class="accordion-toggle">
-          <%= d.object.title %>
+          <%= d.object.diary_definition.title %>
         </a>
       </div>
       <div id="<%=h d.object_id %>_collapse" class="collapse out <%=j accordion_type %>">
