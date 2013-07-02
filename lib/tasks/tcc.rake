@@ -38,7 +38,6 @@ namespace :tcc do
       hub.commentary = val.comment
       hub.grade = val.grade
 
-
       #
       # Determinando o estado que o hub deve ficar
       #
