@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'bundler/capistrano'
+require 'capistrano-db-tasks'
 
 # Capistrano Multistage
 set :stages, %w(production staging)
