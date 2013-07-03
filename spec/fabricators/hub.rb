@@ -1,8 +1,8 @@
 #encoding: utf-8
 Fabricator(:hub, class_name: :hub) do
-  category 1
-  reflection "uma relfexão"
+  position 1
+  reflection { Faker::Lorem.paragraph(20) }
   diaries(count: 2)
   grade 8
-  commentary "blablabla"
+  commentary { Faker::Lorem.paragraph(10) }
 end

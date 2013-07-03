@@ -3,15 +3,17 @@ class Hub < ActiveRecord::Base
   belongs_to :tcc
   belongs_to :hub_definition
   has_many :diaries
+  accepts_nested_attributes_for :diaries
 
   include TccStateMachine
 
   # Mass-Assignment
-  attr_accessible :category, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
-
-  accepts_nested_attributes_for :diaries
+  attr_accessible :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
   validates :grade, :inclusion => { in: 0..10 }, if: :admin_evaluation_ok?
+
+  # TODO: renomear campo category no banco e remover esse workaround
+  alias_attribute :category, :position
 
   def comparable_versions
     versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
@@ -39,7 +41,7 @@ class Hub < ActiveRecord::Base
 
   def build_diaries
     hub_definition.diary_definitions.each do |diary_definition|
-      self.diaries.build(hub: self, diary_definition: diary_definition, pos: diary_definition.order)
+      self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
     end
   end
 

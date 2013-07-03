@@ -39,7 +39,7 @@ class Tcc < ActiveRecord::Base
 
   def tcc_definition=(value)
     super(value)
-    create_hubs
+    create_or_update_hubs
   end
 
   def fetch_all_hubs
@@ -48,7 +48,7 @@ class Tcc < ActiveRecord::Base
   end
 
   def hub_definitions
-    self.tcc_definition.hub_definitions.order('`order` ASC')
+    self.tcc_definition.hub_definitions.order(:position)
   end
 
   def self.hub_names
@@ -59,9 +59,20 @@ class Tcc < ActiveRecord::Base
 
   private
 
-  def create_hubs
+  def create_or_update_hubs
     self.tcc_definition.hub_definitions.each do |hub_definition|
-      hub = Hub.create(tcc: self, hub_definition: hub_definition, category: hub_definition.order)
+
+      # não usando find_or_initialize_by_category propositalmente
+      if self.hubs.empty?
+        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
+      else
+        hub = self.hubs.bsearch{|h| h.position == hub_definition.order}
+        if hub.nil?
+          self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
+        else
+          hub.hub_definition = hub_definition
+        end
+      end
     end
   end
 

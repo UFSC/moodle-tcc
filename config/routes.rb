@@ -22,8 +22,8 @@ SistemaTcc::Application.routes.draw do
   get "final_considerations" => "final_considerations#show", as: 'show_final_considerations'
   match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
 
-  get "hubs/:category" => "hubs#show", as: 'show_hubs'
-  match "hubs/:category" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
+  get "hubs/:position" => "hubs#show", as: 'show_hubs'
+  match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
 
   # Resources
   resources :bibliographies

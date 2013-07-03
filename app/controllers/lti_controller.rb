@@ -10,7 +10,7 @@ class LtiController < ApplicationController
         if @type == 'tcc'
           redirect_to show_tcc_path
         else
-          redirect_to show_hubs_path(category: '1')
+          redirect_to show_hubs_path(position: '1')
         end
       elsif @tp.instructor?
         logger.debug 'LTI user identified as a instructor'
