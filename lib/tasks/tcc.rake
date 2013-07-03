@@ -72,7 +72,7 @@ namespace :tcc do
   def get_tcc(user_id, tcc_definition_id)
     tcc = Tcc.find_by_moodle_user(user_id)
 
-    unless tcc.nil?
+    if tcc.nil?
       tcc = Tcc.create(:moodle_user => user_id)
       tcc.tcc_definition = TccDefinition.find(tcc_definition_id)
       tcc.save!
