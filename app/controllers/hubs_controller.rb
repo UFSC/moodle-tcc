@@ -4,9 +4,9 @@ class HubsController < ApplicationController
   include LtiTccFilters
 
   def show
-    set_tab ('hub'+params[:category]).to_sym
+    set_tab ('hub'+params[:position]).to_sym
 
-    @hub = @tcc.hubs.find_by_category(params[:category])
+    @hub = @tcc.hubs.find_by_position(params[:position])
 
     last_comment_version = @hub.versions.where('state != ?', 'draft').last
 
@@ -20,7 +20,7 @@ class HubsController < ApplicationController
     @tcc = Tcc.find_by_moodle_user(@user_id)
     new_state = params[:hub][:new_state]
 
-    @hub = @tcc.hubs.find_or_initialize_by_category(params[:hub][:category])
+    @hub = @tcc.hubs.find_by_position(params[:hub][:position])
     @hub.attributes = params[:hub]
 
     #
@@ -55,7 +55,7 @@ class HubsController < ApplicationController
       end
 
       if @hub.valid? && @hub.save
-        return redirect_to show_hubs_path(:category => @hub.category, :moodle_user => @user_id)
+        return redirect_to show_hubs_path(:position => @hub.position, :moodle_user => @user_id)
 
       else
         @hub.state = old_state

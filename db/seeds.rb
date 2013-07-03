@@ -7,12 +7,12 @@ def create_tcc_definitions(title, hub_diaries)
   num_operations = hub_diaries.flatten.flatten.count+1
 
   Progress.start("TCC Definition: #{title}", num_operations) do
-     tcc_def = TccDefinition.create(title: title)
-     Progress.step
+    tcc_def = TccDefinition.create(title: title)
+    Progress.step
 
     hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
-       hub = HubDefinition.create(order: hub_index+1, title: hub_name, tcc_definition: tcc_def)
-       Progress.step
+      hub = HubDefinition.create(order: hub_index+1, title: hub_name, tcc_definition: tcc_def)
+      Progress.step
 
       diaries.each_with_index do |diary, diary_index|
         Progress.step do
@@ -30,24 +30,45 @@ def create_tcc_definitions(title, hub_diaries)
 end
 
 #
+# TCC Definition TEMPORARIO - Turma A
+# TODO: Assim que houver a definição dos diarios do eixo 3 deve ser feito uma migração
+#
+definition = {
+    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
+    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}]
+}
+create_tcc_definitions('Turma A', definition)
+
+
+#
+# TCC Definition TEMPORARIO - Turma B
+# TODO: Assim que houver a definição dos diarios do eixo 3 deve ser feito uma migração
+#
+definition = {
+    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+}
+create_tcc_definitions('Turma B', definition)
+
+#
 # TccDefinition para Turma A
 #
 
 # Turma A - ESF
-definition = {
-    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
-    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
-    'Eixo 3' => [{1940 => 'Atenção Integral à Saúde da Criança'}, {2055 => 'Atenção Integral à Saúde da Mulher'}, {2078 => 'Atenção Integral à Saúde do Adulto'}, {2124 => 'Atenção Integral à Saúde do Idoso'}]
-}
-create_tcc_definitions('Turma A - ESF', definition)
-
-# Turma A - NASF
-definition = {
-    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
-    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
-    'Eixo 3' => [{2258 => 'Apoio Matricial'}, {1994 => 'Clínica Ampliada'}, {2014 => 'Projeto Terapêutico Singular'}, {2023 => 'Projeto de Saúde no Território'}]
-}
-create_tcc_definitions('Turma A - NASF', definition)
+#definition = {
+#    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
+#    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
+#    'Eixo 3' => [{1940 => 'Atenção Integral à Saúde da Criança'}, {2055 => 'Atenção Integral à Saúde da Mulher'}, {2078 => 'Atenção Integral à Saúde do Adulto'}, {2124 => 'Atenção Integral à Saúde do Idoso'}]
+#}
+#create_tcc_definitions('Turma A - ESF', definition)
+#
+## Turma A - NASF
+#definition = {
+#    'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
+#    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
+#    'Eixo 3' => [{2258 => 'Apoio Matricial'}, {1994 => 'Clínica Ampliada'}, {2014 => 'Projeto Terapêutico Singular'}, {2023 => 'Projeto de Saúde no Território'}]
+#}
+#create_tcc_definitions('Turma A - NASF', definition)
 
 
 #
@@ -55,33 +76,33 @@ create_tcc_definitions('Turma A - NASF', definition)
 #
 
 # Turma B - ESF - Enfermagem
-definition = {
-    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
-    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
-    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2328 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
-}
-create_tcc_definitions('Turma B - ESF - Enfermagem', definition)
-
-# Turma B - ESF - Medicina
-definition = {
-    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
-    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
-    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2396 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
-}
-create_tcc_definitions('Turma B - ESF - Medicina', definition)
-
-# Turma B - ESF - Odontologia
-definition = {
-    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
-    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
-    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2404 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
-}
-create_tcc_definitions('Turma B - ESF - Odontologia', definition)
-
-# Turma B - NASF
-definition = {
-    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
-    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
-    'Eixo 3' => [{2322 => 'Apoio Matricial'}, {nil => 'Clínica Ampliada'}, {nil => 'Projeto Terapêutico Singular'}, {nil => 'Projeto de Saúde no Território'}]
-}
-create_tcc_definitions('Turma B - NASF', definition)
+#definition = {
+#    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+#    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+#    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2328 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
+#}
+#create_tcc_definitions('Turma B - ESF - Enfermagem', definition)
+#
+## Turma B - ESF - Medicina
+#definition = {
+#    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+#    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+#    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2396 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
+#}
+#create_tcc_definitions('Turma B - ESF - Medicina', definition)
+#
+## Turma B - ESF - Odontologia
+#definition = {
+#    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+#    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+#    'Eixo 3' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2404 => 'Atenção Integral à Saúde da Mulher'}, {nil => 'Atenção Integral à Saúde do Adulto'}, {nil => 'Atenção Integral à Saúde do Idoso'}]
+#}
+#create_tcc_definitions('Turma B - ESF - Odontologia', definition)
+#
+## Turma B - NASF
+#definition = {
+#    'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
+#    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+#    'Eixo 3' => [{2322 => 'Apoio Matricial'}, {nil => 'Clínica Ampliada'}, {nil => 'Projeto Terapêutico Singular'}, {nil => 'Projeto de Saúde no Território'}]
+#}
+#create_tcc_definitions('Turma B - NASF', definition)

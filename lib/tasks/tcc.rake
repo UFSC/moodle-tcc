@@ -2,7 +2,7 @@
 namespace :tcc do
 
   desc 'TCC | Faz a migração dos dados do moodle para o Sistema de TCC'
-  task :remote, [:hub_id, :hub_category] => [:environment] do |t, args|
+  task :remote, [:hub_id, :hub_category, :tcc_definition_id] => [:environment] do |t, args|
 
     Remote::OnlineText.establish_connection :moodle
 
@@ -28,7 +28,8 @@ namespace :tcc do
         user_id = val.id
       end
 
-      tcc = get_tcc(user_id)
+      tcc = get_tcc(user_id, args[:tcc_definition_id])
+
       tcc.tutor_group = TutorGroup::get_tutor_group(val.username)
 
       hub = tcc.hubs.find_or_initialize_by_category(args[:hub_category])
@@ -36,7 +37,6 @@ namespace :tcc do
       hub.reflection = val.text
       hub.commentary = val.comment
       hub.grade = val.grade
-
 
       #
       # Determinando o estado que o hub deve ficar
@@ -68,9 +68,10 @@ namespace :tcc do
     end
   end
 
-  def get_tcc(user_id)
+  def get_tcc(user_id, tcc_definition_id)
     unless tcc = Tcc.find_by_moodle_user(user_id)
       tcc = Tcc.create(:moodle_user => user_id)
+      tcc.tcc_definition = TccDefinition.find(tcc_definition_id)
     end
     tcc
   end

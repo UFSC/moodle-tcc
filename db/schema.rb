@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628202806) do
+ActiveRecord::Schema.define(:version => 20130703174206) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content_pt"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
 
   create_table "diaries", :force => true do |t|
     t.text     "content"
-    t.integer  "pos"
+    t.integer  "position"
     t.integer  "hub_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
     t.integer  "hub_definition_id"
     t.integer  "external_id"
     t.string   "title"
-    t.integer  "order"
+    t.integer  "position"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
   create_table "hub_definitions", :force => true do |t|
     t.integer  "tcc_definition_id"
     t.string   "title"
-    t.integer  "order"
+    t.integer  "position"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20130628202806) do
   create_table "hubs", :force => true do |t|
     t.text     "reflection"
     t.text     "commentary"
-    t.integer  "category"
+    t.integer  "position"
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"

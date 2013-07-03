@@ -14,10 +14,10 @@ describe 'Lti' do
     end
 
     context 'when is a portfolio session' do
-      it 'should redirect a student to first hub category' do
+      it 'should redirect a student to first hub position' do
         post root_path, moodle_lti_params('student')
         response.status.should be(302)
-        response.should redirect_to(show_hubs_path(category: '1'))
+        response.should redirect_to(show_hubs_path(position: '1'))
       end
 
       it 'should redirect a instructor to instructor admin screen' do

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Tcc do
@@ -5,13 +6,13 @@ describe Tcc do
 
   it { should respond_to(:leader, :moodle_user, :name, :title, :grade, :defense_date) }
 
-  it { should have_many(:references)}
-  it { should have_many(:general_refs).through(:references)}
-  it { should have_many(:book_refs).through(:references)}
-  it { should have_many(:book_cap_refs).through(:references)}
-  it { should have_many(:article_refs).through(:references)}
-  it { should have_many(:internet_refs).through(:references)}
-  it { should have_many(:legislative_refs).through(:references)}
+  it { should have_many(:references) }
+  it { should have_many(:general_refs).through(:references) }
+  it { should have_many(:book_refs).through(:references) }
+  it { should have_many(:book_cap_refs).through(:references) }
+  it { should have_many(:article_refs).through(:references) }
+  it { should have_many(:internet_refs).through(:references) }
+  it { should have_many(:legislative_refs).through(:references) }
 
   it { should validate_uniqueness_of :moodle_user }
 
@@ -83,10 +84,41 @@ describe Tcc do
       tcc = Fabricate.build(:tcc_without_hubs)
       hub_definition.diary_definitions << diary_definition
       tcc_definition.hub_definitions << hub_definition
-
       tcc.hubs.size.should == 0
+
       tcc.tcc_definition = tcc_definition
       tcc.hubs.first.diaries.size.should == 1
+    end
+
+    it 'should update hubs if they already exists' do
+      tcc = Fabricate.build(:tcc)
+      tcc_definition.hub_definitions << hub_definition
+      tcc.hubs.size.should == 3
+
+      tcc.tcc_definition = tcc_definition
+      tcc.hubs.size.should == 3
+
+      # verificar se houve a atualização do campo
+      tcc.hubs.first.hub_definition.should be_nil
+      tcc.tcc_definition = tcc_definition
+      tcc.hubs.first.hub_definition.should_not be_nil
+    end
+
+    it 'should update diaries if they already exists' do
+      tcc = Fabricate.build(:tcc)
+      hub_definition.diary_definitions << diary_definition
+      tcc_definition.hub_definitions << hub_definition
+
+      # contagem em profundidade para garantir que não houve criação
+      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 6
+
+      tcc.tcc_definition = tcc_definition
+      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 6
+
+      # verificar se houve a atualização do campo
+      tcc.hubs.first.diaries.first.diary_definition.should be_nil
+      tcc.tcc_definition = tcc_definition
+      tcc.hubs.first.diaries.first.diary_definition.should_not be_nil
     end
   end
 
