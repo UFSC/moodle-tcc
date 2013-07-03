@@ -8,19 +8,19 @@ module InstructorAdminHelper
   end
 
   # @deprecated
-  def get_hub_state(tcc, category)
-    t('states.'+hub_state(tcc, category))
+  def get_hub_state(tcc, position)
+    t('states.'+hub_state(tcc, position))
   end
 
   # @deprecated
-  def get_hub_action(tcc, category)
-    t('actions.'+hub_state(tcc, category))
+  def get_hub_action(tcc, position)
+    t('actions.'+hub_state(tcc, position))
   end
 
   private
 
-  def hub_state(tcc, category)
-    if hub = tcc.hubs.where(category: category).first
+  def hub_state(tcc, position)
+    if hub = tcc.hubs.where(position: position).first
       hub.aasm_current_state.to_s
     else
       'draft'

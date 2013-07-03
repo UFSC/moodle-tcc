@@ -43,8 +43,7 @@ class Tcc < ActiveRecord::Base
   end
 
   def fetch_all_hubs
-    #TCC_CONFIG['hubs'].each_with_index.map { |item, index| hubs.find_or_initialize_by_category(index+1) }
-    self.hubs.order(:category)
+    self.hubs.order(:position)
   end
 
   def hub_definitions
