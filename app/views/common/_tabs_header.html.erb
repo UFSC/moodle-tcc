@@ -5,7 +5,7 @@
         <%= tab.presentation 'Apresentação', show_presentation_path %>
     <% end %>
     <% @tcc.hub_definitions.each do |hub_definition| %>
-        <%= eval("tab.hub#{hub_definition.order} hub_definition.title, show_hubs_path(category: (hub_definition.order))") %>
+      <%= tab.send("hub#{hub_definition.position}", hub_definition.title, show_hubs_path(position: (hub_definition.position))) %>
     <% end %>
     <% if @type == 'tcc' %>
         <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>
