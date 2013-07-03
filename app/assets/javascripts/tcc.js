@@ -10,8 +10,34 @@ function hideOldTccObject() {
     $("#compareTccObjectButtom").html("Comparar versões").attr("onclick", "compareTccObject()");
 }
 
+function warnLeavingUnsaved() {
+    changed = false;
+    $("input[type='text']").change(function(){
+        changed = true;
+    });
+    $('form').submit(function(){
+        window.onbeforeunload = null;
+        changed = false
+    });
+    window.onbeforeunload = function(e) {
+        for (instance in CKEDITOR.instances) {
+            var editor = CKEDITOR.instances[instance];
+            if(editor.checkDirty()) {
+                changed = true;
+            }
+        }
+        if(changed) {
+            return "Dados não salvos serão perdidos" ;
+        }
+    };
+}
+
 $(function(){
     $("#refresh-list").click(function() {
         location.reload();
     });
+
+    // Notifica o usuário que ele não salvou antes de sair
+    warnLeavingUnsaved();
+
 });
