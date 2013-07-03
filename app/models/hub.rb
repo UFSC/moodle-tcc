@@ -10,7 +10,7 @@ class Hub < ActiveRecord::Base
   # Mass-Assignment
   attr_accessible :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
-  validates :grade, :inclusion => { in: 0..10 }, if: :admin_evaluation_ok?
+  validates :grade, :inclusion => {in: 0..10}, if: :admin_evaluation_ok?
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
@@ -44,12 +44,8 @@ class Hub < ActiveRecord::Base
       if self.diaries.empty?
         self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
       else
-        diary = self.diaries.bsearch{|d| d.position == diary_definition.position}
-        if diary.nil?
-          self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
-        else
-          diary.diary_definition = diary_definition
-        end
+        diary = self.diaries.find_or_initialize_by_position diary_definition.position
+        diary.diary_definition = diary_definition
       end
 
     end
