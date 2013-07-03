@@ -41,7 +41,17 @@ class Hub < ActiveRecord::Base
 
   def build_diaries
     hub_definition.diary_definitions.each do |diary_definition|
-      self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
+      if self.diaries.empty?
+        self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
+      else
+        diary = self.diaries.bsearch{|d| d.position == diary_definition.position}
+        if diary.nil?
+          self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
+        else
+          diary.diary_definition = diary_definition
+        end
+      end
+
     end
   end
 

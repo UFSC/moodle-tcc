@@ -66,7 +66,7 @@ class Tcc < ActiveRecord::Base
       if self.hubs.empty?
         self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
       else
-        hub = self.hubs.bsearch{|h| h.position == hub_definition.order}
+        hub = self.hubs.bsearch{|h| h.position == hub_definition.position}
         if hub.nil?
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
         else
