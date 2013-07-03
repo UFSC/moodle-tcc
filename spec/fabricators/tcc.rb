@@ -7,7 +7,7 @@ Fabricator(:tcc) do
   leader { Faker::Name.name }
   grade 0.9
   defense_date Date.new
-  hubs(count: 3)
+  hubs(count: 3) { |attrs,i| Fabricate(:hub, position: i) }
   presentation
   abstract
   final_considerations

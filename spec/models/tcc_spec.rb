@@ -63,6 +63,10 @@ describe Tcc do
     let(:hub_definition) { Fabricate.build(:hub_definition_without_tcc) }
     let(:diary_definition) { Fabricate.build(:diary_definition_without_hub) }
 
+    after(:all) do
+      Tcc.destroy_all
+    end
+
     it 'should accept a tcc definition and store references' do
       tcc.tcc_definition = tcc_definition
       tcc.tcc_definition.should_not be_nil
@@ -91,33 +95,56 @@ describe Tcc do
     end
 
     it 'should update hubs if they already exists' do
-      tcc = Fabricate.build(:tcc)
+      # Cria Tcc e Hub Definitions necessário pro teste
+      hub_definition.position = 1
       tcc_definition.hub_definitions << hub_definition
+      tcc_definition.should be_valid
+      tcc_definition.save!
+
+      tcc = Fabricate.build(:tcc)
       tcc.hubs.size.should == 3
 
+      # garantir que não tem hub_definition
+      tcc.hubs.first.hub_definition.should be_nil
+
+      # Garante que está tudo válido e persiste no banco
+      tcc.tcc_definition.should be_nil
+      tcc.should be_valid
+      tcc.save!
+
+
+      # Atribui um tcc_definition ao tcc
       tcc.tcc_definition = tcc_definition
+      tcc.save!
+      tcc.reload
       tcc.hubs.size.should == 3
 
       # verificar se houve a atualização do campo
-      tcc.hubs.first.hub_definition.should be_nil
-      tcc.tcc_definition = tcc_definition
       tcc.hubs.first.hub_definition.should_not be_nil
     end
 
     it 'should update diaries if they already exists' do
-      tcc = Fabricate.build(:tcc)
+      hub_definition.position = 1
+      diary_definition.position = 1
       hub_definition.diary_definitions << diary_definition
       tcc_definition.hub_definitions << hub_definition
+      tcc_definition.should be_valid
+      tcc_definition.save!
+
+      tcc = Fabricate.build(:tcc)
+      tcc.should be_valid
+      tcc.hubs.first.diaries.first.diary_definition.should be_nil
+      tcc.save!
 
       # contagem em profundidade para garantir que não houve criação
       tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 6
 
       tcc.tcc_definition = tcc_definition
+      tcc.save!
+      tcc.reload
       tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 6
 
       # verificar se houve a atualização do campo
-      tcc.hubs.first.diaries.first.diary_definition.should be_nil
-      tcc.tcc_definition = tcc_definition
       tcc.hubs.first.diaries.first.diary_definition.should_not be_nil
     end
   end

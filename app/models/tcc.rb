@@ -6,13 +6,13 @@ class Tcc < ActiveRecord::Base
   validates_uniqueness_of :moodle_user
   validates_inclusion_of :grade, in: 0..1, allow_nil: true
 
-  has_many :hubs
+  has_many :hubs, :inverse_of => :tcc
   has_one :bibliography
   has_one :presentation
   has_one :abstract
   has_one :final_considerations
 
-  belongs_to :tcc_definition
+  belongs_to :tcc_definition, :inverse_of => :tccs
 
   has_many :references, :dependent => :destroy
   has_many :general_refs, :through => :references, :source => :element, :source_type => 'GeneralRef'
@@ -61,12 +61,12 @@ class Tcc < ActiveRecord::Base
   def create_or_update_hubs
     self.tcc_definition.hub_definitions.each do |hub_definition|
 
-      # não usando find_or_initialize_by_category propositalmente
       if self.hubs.empty?
         self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
       else
         hub = self.hubs.find_or_initialize_by_position hub_definition.position
         hub.hub_definition = hub_definition
+        hub.save!
       end
     end
   end

@@ -1,8 +1,8 @@
 class Hub < ActiveRecord::Base
 
-  belongs_to :tcc
-  belongs_to :hub_definition
-  has_many :diaries
+  belongs_to :tcc, :inverse_of => :hubs
+  belongs_to :hub_definition, :inverse_of => :hubs
+  has_many :diaries, :inverse_of => :hub
   accepts_nested_attributes_for :diaries
 
   include TccStateMachine
@@ -34,18 +34,19 @@ class Hub < ActiveRecord::Base
 
   def hub_definition=(value)
     super(value)
-    build_diaries
+    create_or_update_diaries
   end
 
   private
 
-  def build_diaries
+  def create_or_update_diaries
     hub_definition.diary_definitions.each do |diary_definition|
       if self.diaries.empty?
         self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
       else
         diary = self.diaries.find_or_initialize_by_position diary_definition.position
         diary.diary_definition = diary_definition
+        diary.save!
       end
 
     end

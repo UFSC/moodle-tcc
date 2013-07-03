@@ -1,5 +1,5 @@
 class DiaryDefinition < ActiveRecord::Base
-  belongs_to :hub_definition
+  belongs_to :hub_definition, :inverse_of => :diary_definitions
   has_many :diaries
 
   validates_presence_of :external_id, :hub_definition, :order, :title
