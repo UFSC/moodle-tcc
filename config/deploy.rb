@@ -45,6 +45,7 @@ namespace :deploy do
   after 'deploy:finalize_update', 'deploy:linka_dependencias'
   task :linka_dependencias, :roles => :app, :desc => 'Faz os links simbólicos com arquivos de configuração' do
     run "ln -s #{File.join(deploy_to, 'shared', 'database.yml')} #{File.join(current_release, 'config', 'database.yml')}"
+    run "ln -s #{File.join(deploy_to, 'shared', 'moodle.yml')} #{File.join(current_release, 'config', 'moodle.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'newrelic.yml')} #{File.join(current_release, 'config', 'newrelic.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'tcc_config.yml')} #{File.join(current_release, 'config', 'tcc_config.yml')}"
   end
