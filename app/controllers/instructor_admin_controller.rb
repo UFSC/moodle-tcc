@@ -6,7 +6,8 @@ class InstructorAdminController < ApplicationController
     group = TutorGroup.get_tutor_group(user_name)
     @group_name = TutorGroup.get_tutor_group_name(group)
     if @tp.admin?
-      @tccs = Tcc.paginate(:page => params[:page], :per_page => 30)
+      tcc_definition_id = @tp.custom_params['tcc_definition']
+      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).paginate(:page => params[:page], :per_page => 30)
     else
       @tccs = Tcc.where(tutor_group: group).paginate(:page => params[:page], :per_page => 30)
     end
