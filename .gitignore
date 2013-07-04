@@ -17,5 +17,8 @@
 config/tcc_config.yml
 config/database.yml
 config/newrelic.yml
+config/moodle.yml
 public/assets
 app/assets/javascripts/ckeditor/plugins/placeholder
+db/*.sql
+db/*.bz2
