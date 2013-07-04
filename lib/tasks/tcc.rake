@@ -66,7 +66,7 @@ namespace :tcc do
               new_state = :sent_to_admin_for_evaluation
             end
           else
-            new_state = states_to_modify[val.status]
+            new_state = states_to_modify[val.status_version]
           end
 
         when 'draft'
