@@ -93,7 +93,7 @@ namespace :tcc do
         hub.save!
         tcc.save!
       else
-        hub.errors
+        puts "FALHA: #{hub.errors.inspect}"
       end
 
     end

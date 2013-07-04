@@ -4,7 +4,7 @@ class Tcc < ActiveRecord::Base
                   :final_considerations_attributes, :tcc_definition
 
   validates_uniqueness_of :moodle_user
-  validates_inclusion_of :grade, in: 0..1, allow_nil: true
+  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
 
   has_many :hubs, :inverse_of => :tcc
   has_one :bibliography
