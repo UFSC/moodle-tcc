@@ -8,8 +8,10 @@ namespace :tcc do
     Remote::OnlineText.establish_connection moodle_config
 
     result = Remote::OnlineText.find_by_sql(["
- SELECT DISTINCT u.id as id, u.username as username, ot.onlinetext as text, otv.commenttext as comment, ot.assignment,
-                 assub.status, otv.status as status_version, assub.timecreated, otv.timecreated as timecreated_version, g.grade
+ SELECT DISTINCT u.id as id, u.username as username, u.firstname, u.lastname, ot.onlinetext as text,
+                 otv.commenttext as comment, ot.assignment, assub.status, otv.status as status_version,
+                 assub.timecreated, otv.timecreated as timecreated_version,
+                 g.grade
             FROM assign_submission AS assub
             JOIN assignsubmission_onlinetext AS ot
               ON (ot.submission = assub.id)
@@ -34,7 +36,7 @@ namespace :tcc do
       tcc = get_tcc(user_id, args[:tcc_definition_id])
 
       tcc.tutor_group = TutorGroup::get_tutor_group(val.username)
-      tcc.name = MoodleUser::get_name(user_id)
+      tcc.name = "#{val.firstname} #{val.lastname}"
 
       hub = tcc.hubs.find_or_initialize_by_position(args[:hub_position])
 
