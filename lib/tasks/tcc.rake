@@ -67,6 +67,10 @@ namespace :tcc do
             end
           else
             new_state = states_to_modify[val.status_version]
+
+            if val.status_version == 'evaluation' and !val.grade.nil? && val.grade != -1
+              new_state = :admin_evaluation_ok
+            end
           end
 
         when 'draft'
