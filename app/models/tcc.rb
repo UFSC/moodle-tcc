@@ -37,6 +37,9 @@ class Tcc < ActiveRecord::Base
     end
   end
 
+  default_scope order(:name)
+
+
   def tcc_definition=(value)
     super(value)
     create_or_update_hubs
