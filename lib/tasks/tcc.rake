@@ -7,20 +7,24 @@ namespace :tcc do
     moodle_config = YAML.load_file("#{Rails.root}/config/moodle.yml")['moodle']
     Remote::OnlineText.establish_connection moodle_config
 
-    result = Remote::OnlineText.find_by_sql(["SELECT DISTINCT u.id as id, u.username as username, ot.onlinetext as text, ot.commenttext as comment, ot.assignment, ot.status, ot.timecreated, g.grade
-        FROM assignsubmission_textversion AS ot
-        JOIN assign_submission AS assub
-          ON (ot.submission = assub.id)
-        JOIN user u
-          ON (assub.userid = u.id)
-        JOIN course_modules cm
-          ON (cm.instance = ot.assignment)
-        JOIN modules m
-          ON (m.id = cm.module AND m.name LIKE 'assign')
-        LEFT JOIN assign_grades g
-          ON (u.id = g.userid AND g.assignment = ot.assignment)
-        WHERE cm.id = ?
-        ORDER BY u.username, ot.assignment, ot.timecreated;", args[:coursemodule_id]])
+    result = Remote::OnlineText.find_by_sql(["
+ SELECT DISTINCT u.id as id, u.username as username, ot.onlinetext as text, otv.commenttext as comment, ot.assignment,
+                 assub.status, otv.status as status_version, assub.timecreated, otv.timecreated as timecreated_version, g.grade
+            FROM assign_submission AS assub
+            JOIN assignsubmission_onlinetext AS ot
+              ON (ot.submission = assub.id)
+       LEFT JOIN assignsubmission_textversion AS otv
+              ON (otv.submission = assub.id)
+            JOIN user u
+              ON (assub.userid = u.id)
+            JOIN course_modules cm
+              ON (cm.instance = assub.assignment)
+            JOIN modules m
+              ON (m.id = cm.module AND m.name LIKE 'assign')
+       LEFT JOIN assign_grades g
+              ON (u.id = g.userid AND g.assignment = assub.assignment)
+            WHERE cm.id = ?
+            ORDER BY u.username, ot.assignment, otv.timecreated", args[:coursemodule_id]])
     user_id = nil
 
     result.with_progress("Migrando #{result.count} tuplas do texto online #{args[:coursemodule_id]} do moodle para eixo #{args[:hub_position]}") do |val|
@@ -28,6 +32,9 @@ namespace :tcc do
       if user_id != val.id
         user_id = val.id
       end
+
+      created_at = (val.timecreated_version.nil?) ? val.timecreated : val.timecreated_version
+      status = (val.status_version.nil?) ? val.status : val.status_version
 
       tcc = get_tcc(user_id, args[:tcc_definition_id])
 
@@ -38,25 +45,50 @@ namespace :tcc do
       hub.reflection = val.text
       hub.commentary = val.comment
       hub.grade = val.grade
+      hub.created_at = created_at
+
+      # status_onlinetext: draft, submitted
+      # status_onlinetextversion: null, evaluation, revision
 
       #
       # Determinando o estado que o hub deve ficar
       #
-      states_to_modify = {nil => :draft, 'revision' => :sent_to_admin_for_revision, 'evaluation' => :sent_to_admin_for_evaluation}
 
-      if !val.grade.nil? && val.grade != -1
-        hub_current_state = :admin_evaluation_ok
-      else
-        hub_current_state = states_to_modify[val.status]
+      states_to_modify = {'revision' => :sent_to_admin_for_revision, 'evaluation' => :sent_to_admin_for_evaluation}
+
+      case val.status
+        when 'submitted'
+          if val.status_version.nil?
+
+            # Houve envio e tem nota, está finalizado!
+            if !val.grade.nil? && val.grade != -1
+              new_state = :admin_evaluation_ok
+            else
+              # Houve envio e não tem nota, aluno quer nota
+              new_state = :sent_to_admin_for_evaluation
+            end
+          else
+            new_state = states_to_modify[val.status]
+          end
+
+        when 'draft'
+          new_state = :draft
       end
 
-      case hub.aasm_current_state
+
+      #
+      # Transiciona estados
+      #
+
+      case new_state
         when :draft
-          to_draft(hub, hub_current_state)
+          to_draft(hub)
         when :sent_to_admin_for_revision
-          to_revision(hub, hub_current_state)
+          to_revision(hub)
         when :sent_to_admin_for_evaluation
-          to_evaluation(hub, hub_current_state)
+          to_evaluation(hub)
+        when :admin_evaluation_ok
+          to_evaluation_ok(hub)
       end
 
       if hub.valid?
@@ -81,38 +113,35 @@ namespace :tcc do
     tcc
   end
 
-  def to_draft(hub, current_state)
-    case current_state
-      when :sent_to_admin_for_revision
-        hub.send_to_admin_for_revision
-      when :sent_to_admin_for_evaluation
-        hub.send_to_admin_for_evaluation
-      when :admin_evaluation_ok
-        hub.send_to_admin_for_evaluation
-        hub.admin_evaluate_ok
+  def to_draft(hub)
+    case hub.aasm_current_state
+      when :draft
+        # ta certo
+      when :revision
+        send_back_to_student
+      when :evaluation
+        send_back_to_student
     end
   end
 
-  def to_revision(hub, current_state)
-    case current_state
+  def to_revision(hub)
+    case hub.aasm_current_state
       when :draft
-        hub.send_back_to_student
-      when :sent_to_admin_for_evaluation
-        hub.send_to_admin_for_evaluation
-      when :admin_evaluation_ok
-        hub.send_to_admin_for_evaluation
-        hub.admin_evaluate_ok
+        hub.send_to_admin_for_revision
     end
   end
 
-  def to_evaluation(hub, current_state)
-    case current_state
+  def to_evaluation(hub)
+    case hub.aasm_current_state
       when :draft
-        hub.send_back_to_student
-      when :sent_to_admin_for_revision
-        hub.send_back_to_student
-        hub.send_to_admin_for_revision
-      when :admin_evaluation_ok
+        hub.send_to_admin_for_evaluation
+    end
+  end
+
+  def to_evaluation_ok(hub)
+    case hub.aasm_current_state
+      when :draft
+        hub.send_to_admin_for_evaluation
         hub.admin_evaluate_ok
     end
   end
