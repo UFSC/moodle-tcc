@@ -25,20 +25,16 @@ namespace :tcc do
               ON (u.id = g.userid AND g.assignment = assub.assignment)
             WHERE cm.id = ?
             ORDER BY u.username, ot.assignment, otv.timecreated", args[:coursemodule_id]])
-    user_id = nil
 
     result.with_progress("Migrando #{result.count} tuplas do texto online #{args[:coursemodule_id]} do moodle para eixo #{args[:hub_position]}") do |val|
-      # Consulta ordenada por usuário
-      if user_id != val.id
-        user_id = val.id
-      end
+      user_id = val.id
 
       created_at = (val.timecreated_version.nil?) ? val.timecreated : val.timecreated_version
-      status = (val.status_version.nil?) ? val.status : val.status_version
 
       tcc = get_tcc(user_id, args[:tcc_definition_id])
 
       tcc.tutor_group = TutorGroup::get_tutor_group(val.username)
+      tcc.name = MoodleUser::get_name(user_id)
 
       hub = tcc.hubs.find_or_initialize_by_position(args[:hub_position])
 
