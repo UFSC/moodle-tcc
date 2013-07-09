@@ -1,6 +1,9 @@
 <h4>
   Tela de Tutor para <%= @group_name %>
-  <%= link_to display_icon('icon-refresh'), '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' %>
+  <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
+      <%= display_icon('icon-refresh') %>
+      Atualizar lista
+  <% end %>
 </h4>
 
 <table class="table table-bordered">
@@ -12,7 +15,6 @@
     <% end %>
   </tr>
   </thead>
-
   <tbody>
   <% @tccs.each do |tcc| %>
     <tr>
