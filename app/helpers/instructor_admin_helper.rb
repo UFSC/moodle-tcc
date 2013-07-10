@@ -7,16 +7,6 @@ module InstructorAdminHelper
     t('actions.'+object.aasm_current_state.to_s)
   end
 
-  # @deprecated
-  def get_hub_state(tcc, position)
-    t('states.'+hub_state(tcc, position))
-  end
-
-  # @deprecated
-  def get_hub_action(tcc, position)
-    t('actions.'+hub_state(tcc, position))
-  end
-
   private
 
   def hub_state(tcc, position)

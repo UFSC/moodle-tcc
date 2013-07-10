@@ -21,10 +21,14 @@
       <td><%= tcc.name %></td>
       <% tcc.fetch_all_hubs.each do |hub| %>
         <td>
-          <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
-          <%= link_to get_action(hub),
-                      show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
-                      target: '_blank', class: 'label label-success' %>
+          <% if hub.empty? %>
+              <span class="label">Nada feito ainda</span>
+          <% else %>
+              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
+              <%= link_to get_action(hub),
+                          show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                          target: '_blank', class: 'label label-success' %>
+          <% end %>
         </td>
       <% end %>
     </tr>

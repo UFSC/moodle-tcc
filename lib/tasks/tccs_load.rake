@@ -10,6 +10,9 @@ namespace :tcc do
     populate_tccs('20132', 1)
   end
 
+  #
+  # Salva o Tcc de todos os alunos da turma indicada
+  #
   def populate_tccs(turma, tcc_definition_id)
     tcc_definition = TccDefinition.find(tcc_definition_id)
     matriculas_turma = get_matriculas_turma(turma)
@@ -29,6 +32,9 @@ namespace :tcc do
     end
   end
 
+  #
+  # Busca as matrículas dos alunos da turma indicada
+  #
   def get_matriculas_turma(turma)
     puts 'Buscando matrículas dos alunos da turma: '+turma+' ...'
 
