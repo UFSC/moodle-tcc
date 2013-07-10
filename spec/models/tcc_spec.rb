@@ -17,13 +17,19 @@ describe Tcc do
   it { should validate_uniqueness_of :moodle_user }
 
   describe 'grade' do
-    it 'should be less than or equal to 1' do
+    it 'should be zero or higher' do
+      tcc.grade = 0
+      tcc.should be_valid
+
       tcc.grade = 0.8
       tcc.should be_valid
     end
 
-    it 'should not be higher than 1' do
-      tcc.grade = 2
+    it 'should not be higher than 100' do
+      tcc.grade = 101
+      tcc.should_not be_valid
+
+      tcc.grade = 100.1
       tcc.should_not be_valid
     end
   end
