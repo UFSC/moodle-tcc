@@ -7,4 +7,8 @@ class Diary < ActiveRecord::Base
   # TODO: renomear campo pos no banco e remover esse workaround
   alias_attribute :pos, :position
 
+  def empty?
+    self.content.blank?
+  end
+
 end

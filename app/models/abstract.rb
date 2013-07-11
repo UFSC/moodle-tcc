@@ -5,4 +5,8 @@ class Abstract < ActiveRecord::Base
   has_paper_trail meta: {state: :state}
 
   include TccStateMachine
+
+  def empty?
+    self.content_pt.blank? && self.key_words_pt.blank?
+  end
 end

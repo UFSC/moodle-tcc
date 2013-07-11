@@ -15,9 +15,9 @@ namespace :tcc do
   #
   def populate_tccs(turma, tcc_definition_id)
     tcc_definition = TccDefinition.find(tcc_definition_id)
-    matriculas_turma = get_matriculas_turma(turma)
+    matriculas = get_matriculas_turma(turma)
 
-    matriculas_turma.with_progress "Criando os TCCs" do |aluno|
+    matriculas.with_progress "Criando os TCCs" do |aluno|
 
       user = Remote::MoodleUser.find_by_username(aluno.matricula)
 
@@ -36,7 +36,7 @@ namespace :tcc do
   # Busca as matrículas dos alunos da turma indicada
   #
   def get_matriculas_turma(turma)
-    puts 'Buscando matrículas dos alunos da turma: '+turma+' ...'
+    puts 'Buscando matrículas dos alunos da turma: '+turma
 
     # Carrega o banco do moodel
     moodle_config = YAML.load_file("#{Rails.root}/config/moodle.yml")['moodle']
