@@ -22,7 +22,7 @@
       <% tcc.fetch_all_hubs.each do |hub| %>
         <td>
           <% if hub.empty? %>
-              <span class="label">Nada feito ainda</span>
+              <span class="label">Não editado</span>
           <% else %>
               <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
               <%= link_to get_action(hub),

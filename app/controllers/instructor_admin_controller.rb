@@ -5,7 +5,7 @@ class InstructorAdminController < ApplicationController
     user_name = MoodleUser.get_name(@user_id)
     group = TutorGroup.get_tutor_group(user_name)
     @group_name = TutorGroup.get_tutor_group_name(group)
-    if @tp.admin?
+    if current_user.admin?
       tcc_definition_id = @tp.custom_params['tcc_definition']
       @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).paginate(:page => params[:page], :per_page => 30)
     else

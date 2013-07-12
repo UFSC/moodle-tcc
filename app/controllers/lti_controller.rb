@@ -5,14 +5,14 @@ class LtiController < ApplicationController
   def establish_connection
     if authorize_lti!
       @type = @tp.custom_params['type']
-      if @tp.student?
+      if current_user.student?
         logger.debug 'LTI user identified as a student'
         if @type == 'tcc'
           redirect_to show_tcc_path
         else
           redirect_to show_hubs_path(position: '1')
         end
-      elsif @tp.instructor?
+      elsif current_user.instructor?
         logger.debug 'LTI user identified as a instructor'
         redirect_to instructor_admin_tccs_path
       else
