@@ -26,13 +26,13 @@ module LtiTccFilters
 
   def get_tcc
     if @tcc = Tcc.find_by_moodle_user(@user_id)
-      if @tp.student? && @tcc.name.blank?
+      if current_user.student? && @tcc.name.blank?
         @tcc.name = @tp.lis_person_name_full
         @tcc.save! if @tcc.valid?
       end
 
     else
-      if @tp.student?
+      if current_user.student?
         user_name = MoodleUser.get_name(@user_id)
         group = TutorGroup.get_tutor_group(user_name)
         tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])

@@ -5,6 +5,7 @@ class AbstractsController < ApplicationController
     set_tab :abstract
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
     @abstract.new_state = 'draft'
+    @current_user = current_user
 
     last_comment_version = @abstract.versions.where('state != ?', 'draft').last
     unless last_comment_version.nil?
