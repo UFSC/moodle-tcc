@@ -103,6 +103,69 @@ namespace :tcc do
     end
   end
 
+  desc 'TCC | Faz a migração das notas do moodle para o Sistema de TCC'
+  task :remote_grades, [:coursemodule_id, :hub_position] => [:environment] do |t, args|
+
+    moodle_config = YAML.load_file("#{Rails.root}/config/moodle.yml")['moodle']
+    Remote::OnlineText.establish_connection moodle_config
+
+    result = Remote::OnlineText.find_by_sql(["
+   SELECT DISTINCT u.id as id, u.username as username, u.firstname, u.lastname, ot.onlinetext as text,
+                   otv.commenttext as comment, ot.assignment, assub.status, otv.status as status_version,
+                   assub.timecreated, otv.timecreated as timecreated_version,
+                   g.grade
+              FROM assign_submission AS assub
+              JOIN assignsubmission_onlinetext AS ot
+                ON (ot.submission = assub.id)
+         LEFT JOIN assignsubmission_textversion AS otv
+                ON (otv.submission = assub.id)
+              JOIN user u
+                ON (assub.userid = u.id)
+              JOIN course_modules cm
+                ON (cm.instance = assub.assignment)
+              JOIN modules m
+                ON (m.id = cm.module AND m.name LIKE 'assign')
+         LEFT JOIN assign_grades g
+                ON (u.id = g.userid AND g.assignment = assub.assignment)
+              WHERE cm.id = ? AND g.grade != null AND g.grade != -1
+              ORDER BY u.username, ot.assignment, otv.timecreated", args[:coursemodule_id]])
+
+    result.with_progress("Migrando #{result.count} notas do texto online #{args[:coursemodule_id]} do moodle para eixo #{args[:hub_position]}") do |val|
+      user_id = val.id
+
+      created_at = (val.timecreated_version.nil?) ? val.timecreated : val.timecreated_version
+
+      tcc = Tcc.find_by_moodle_user(user_id)
+
+      if tcc.nil?
+        puts "Falha na migração. Tentou migrar um TCC Inexistente. UserID: #{user_id}"
+        exit(-1)
+      end
+
+      hub = tcc.hubs.find_by_position(args[:hub_position])
+
+      if hub.nil?
+        puts "Falha na migração. Tentou migrar um TCC sem o hub: #{args[:hub_position]} - userid: #{user_id }"
+        exit(-1)
+      end
+
+
+      # Definindo status final equivalente ao "submitted"
+
+      unless hub.grade.nil?
+        hub.grade = val.grade
+        to_evaluation_ok(hub)
+        if hub.valid?
+          hub.save!
+          tcc.save!
+        else
+          puts "FALHA: #{hub.errors.inspect}"
+        end
+      end
+
+    end
+  end
+
   def get_tcc(user_id, tcc_definition_id)
     tcc = Tcc.find_by_moodle_user(user_id)
 
@@ -144,6 +207,10 @@ namespace :tcc do
     case hub.aasm_current_state
       when :draft
         hub.send_to_admin_for_evaluation
+        hub.admin_evaluate_ok
+      when :send_to_admin_for_revision
+        hub.admin_evaluate_ok
+      when :sent_to_admin_for_evaluation
         hub.admin_evaluate_ok
     end
   end
