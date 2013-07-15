@@ -127,7 +127,7 @@ namespace :tcc do
                 ON (m.id = cm.module AND m.name LIKE 'assign')
          LEFT JOIN assign_grades g
                 ON (u.id = g.userid AND g.assignment = assub.assignment)
-              WHERE cm.id = ? AND g.grade != null AND g.grade != -1
+              WHERE cm.id = ? AND g.grade IS NOT NULL AND g.grade != -1
               ORDER BY u.username, ot.assignment, otv.timecreated", args[:coursemodule_id]])
 
     result.with_progress("Migrando #{result.count} notas do texto online #{args[:coursemodule_id]} do moodle para eixo #{args[:hub_position]}") do |val|
