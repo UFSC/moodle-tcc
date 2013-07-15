@@ -153,6 +153,7 @@ namespace :tcc do
       # Definindo status final equivalente ao "submitted"
 
       unless hub.grade.nil?
+        puts "Alterando hub: #{hub.id} -> grade: #{val.grade}"
         hub.grade = val.grade
         to_evaluation_ok(hub)
         if hub.valid?
