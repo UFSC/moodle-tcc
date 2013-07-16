@@ -20,13 +20,13 @@ describe "Tccs" do
 
     describe "edit" do
       before :each do
-        #moodle_oauth
+        page.set_rack_session(fake_lti_session('student', 'tcc'))
+        visit show_tcc_path
       end
 
       it "tcc data" do
-        pending
-        #click_link "Dados"
-        #page.should have_selector("#data_tab_content")
+        click_link "Dados"
+        page.should have_content('Dados')
       end
 
       it "tcc abstract" do

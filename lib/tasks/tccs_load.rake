@@ -38,10 +38,15 @@ namespace :tcc do
   def get_matriculas_turma(turma)
     puts 'Buscando matrículas dos alunos da turma: '+turma
 
-    # Carrega o banco do moodel
+    # Carrega a tabela 'user' do moodle
     moodle_config = YAML.load_file("#{Rails.root}/config/moodle.yml")['moodle']
     Remote::MoodleUser.establish_connection moodle_config
 
+    # Carrega a view 'View_UNASUS2_Alunos' do middleware
+    middleware = YAML.load_file("#{Rails.root}/config/database.yml")['middleware']
+    Middleware::Unasus2Alunos.establish_connection middleware
+
+    # Retorna as matriculas
     Middleware::Unasus2Alunos.find_all_by_periodo_ingresso(turma, select: 'matricula')
   end
 end

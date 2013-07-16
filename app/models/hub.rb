@@ -38,11 +38,7 @@ class Hub < ActiveRecord::Base
   end
 
   def empty?
-    if self.reflection.blank?
-      true
-    else
-      false
-    end
+    self.reflection.blank?
   end
 
   private
