@@ -6,38 +6,40 @@
 
     <div class="span12">
       <div class="rounded-border row">
-        <div class="">
-          <h3>
-            Reflexões do eixo <%= @hub.position %> -
-            <% if @tp.coordavea? %>
+        <h3>
+          Reflexões do eixo <%= @hub.position %> -
+          <% if @tp.coordavea? %>
             <span class="text-info">
-              <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, @hub.aasm_current_state)) %>
+              <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, t(@hub.aasm_current_state, scope: 'states'))) %>
               <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
               <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
             </span>
-            <% else %>
-                <% if @type == 'tcc' %>
-                    <% if @tp.coordcurso? %>
-                        <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, @hub.aasm_current_state)) %>
-                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                        <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
-                    <% else %>
+          <% else %>
+              <% if @type == 'tcc' %>
+                  <% if @tp.coordcurso? %>
+                      <%= select('post', 'state', options_for_select(t(Hub.aasm_states, scope: 'states'), t(@hub.aasm_current_state, scope: 'states'))) %>
+                      <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                      <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
+                  <% else %>
+                        <span class="text-info">
                         <%= t('states.'+@hub.aasm_current_state.to_s) %>
-                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                    <% end %>
-                <% else %>
-                    <% if @tp.tutoria? %>
-                        <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, @hub.aasm_current_state)) %>
-                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                        <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
-                    <% else %>
+                          <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                        </span>
+                  <% end %>
+              <% else %>
+                  <% if @tp.tutoria? %>
+                      <%= select('post', 'state', options_for_select(t(Hub.aasm_states, scope: 'states'), t(@hub.aasm_current_state, scope: 'states'))) %>
+                      <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                      <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
+                  <% else %>
+                        <span class="text-info">
                         <%= t('states.'+@hub.aasm_current_state.to_s) %>
-                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                    <% end %>
-                <% end %>
-            <% end %>
-          </h3>
-        </div>
+                          <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                        </span>
+                  <% end %>
+              <% end %>
+          <% end %>
+        </h3>
         <span>
           <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
         </span>

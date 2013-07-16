@@ -1,5 +1,5 @@
 class InstructorAdminController < ApplicationController
-  include LtiTccFilters
+  before_filter :authorize, :only => :index
 
   def index
     user_name = MoodleUser.get_name(@user_id)
