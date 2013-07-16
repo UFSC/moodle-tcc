@@ -1,65 +1,90 @@
 <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
-  <%= h.input :position, :as => :hidden %>
+    <%= h.input :position, :as => :hidden %>
 
-  <!--diaries-->
-  <%= render partial: 'diaries', locals: {h: h, accordion_type: 'admin_view'} %>
+    <!--diaries-->
+    <%= render partial: 'diaries', locals: {h: h, accordion_type: 'admin_view'} %>
 
-  <div class="span12">
-    <div class="rounded-border row">
-      <h3>
-        Reflexões do eixo <%= @hub.position %> -
-          <span class="text-info">
-            <%= t('states.'+@hub.aasm_current_state.to_s) %>
-            <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-          </span>
-      </h3>
+    <div class="span12">
+      <div class="rounded-border row">
+        <div class="">
+          <h3>
+            Reflexões do eixo <%= @hub.position %> -
+            <% if @tp.coordavea? %>
+            <span class="text-info">
+              <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, @hub.aasm_current_state)) %>
+              <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+              <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
+            </span>
+            <% else %>
+                <% if @type == 'tcc' %>
+                    <% if @tp.coordcurso? %>
+                        <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, @hub.aasm_current_state)) %>
+                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                        <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
+                    <% else %>
+                        <%= t('states.'+@hub.aasm_current_state.to_s) %>
+                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                    <% end %>
+                <% else %>
+                    <% if @tp.tutoria? %>
+                        <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, @hub.aasm_current_state)) %>
+                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                        <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
+                    <% else %>
+                        <%= t('states.'+@hub.aasm_current_state.to_s) %>
+                        <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                    <% end %>
+                <% end %>
+            <% end %>
+          </h3>
+        </div>
         <span>
           <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
         </span>
 
-      <div class="row">
-        <!--old-->
-        <div id="old_tcc_object" class="span6" style="display: none">
-          <div class="rounded-border">
-
-            <% unless @last_hub_commented.nil? %>
-              <div class="rounded-border">
-                <h4>Versão anterior da reflexão</h4>
-                <%= @last_hub_commented.reflection.html_safe %>
-              </div>
-              <% unless @hub.commentary.blank? %>
-                <div class="rounded-border">
-                  <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
-                  <%= @hub.commentary.html_safe %>
-                </div>
-              <% else %>
-                <h5 class="text-info">Sem comentário para esta versão</h5>
-              <% end %>
-            <% else %>
-              <h5 class="text-info">Ainda não há versão anterior</h5>
-            <% end %>
-
-          </div>
-        </div>
-
-        <!--new-->
-        <div id="new_tcc_object" class="span12">
-          <div class="rounded-border">
-
+        <div class="row">
+          <!--old-->
+          <div id="old_tcc_object" class="span6" style="display: none">
             <div class="rounded-border">
-              <h4>Versão atual da reflexão</h4>
-              <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
+
+              <% unless @last_hub_commented.reflection.nil? %>
+                  <div class="rounded-border">
+                    <h4>Versão anterior da reflexão</h4>
+                    <%= @last_hub_commented.reflection.html_safe %>
+                  </div>
+                  <% unless @hub.commentary.blank? %>
+                      <div class="rounded-border">
+                        <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
+                        <%= @hub.commentary.html_safe %>
+                      </div>
+                  <% else %>
+                      <h5 class="text-info">Sem comentário para esta versão</h5>
+                  <% end %>
+              <% else %>
+                  <h5 class="text-info">Ainda não há versão anterior</h5>
+              <% end %>
+
             </div>
+          </div>
 
-            <% if @hub.sent_to_admin_for_evaluation? %>
-              <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 100)' %>
-            <% end %>
+          <!--new-->
+          <div id="new_tcc_object" class="span12">
+            <div class="rounded-border">
 
-            <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>
+              <div class="rounded-border">
+                <h4>Versão atual da reflexão</h4>
+                <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
+              </div>
+
+              <% if @hub.sent_to_admin_for_evaluation? %>
+                  <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 100)' %>
+              <% end %>
+
+              <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 <% end %>
 
