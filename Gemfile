@@ -51,8 +51,9 @@ gem 'will_paginate'
 # RABL
 gem 'rabl'
 
-# Progress
+# Rake e console
 gem 'progress'
+gem 'terminal-table'
 
 group :production do
   gem 'newrelic_rpm'

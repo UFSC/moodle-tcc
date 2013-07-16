@@ -130,6 +130,10 @@ namespace :tcc do
               WHERE cm.id = ? AND g.grade IS NOT NULL AND g.grade != -1
               ORDER BY u.username, ot.assignment, otv.timecreated", args[:coursemodule_id]])
 
+
+    headings = ['Moodle User ID', 'Hub ID', 'Grade (Moodle)', 'Grade (TCC)', 'Status']
+    rows = []
+
     result.with_progress("Migrando #{result.count} notas do texto online #{args[:coursemodule_id]} do moodle para eixo #{args[:hub_position]}") do |val|
       user_id = val.id
 
@@ -152,19 +156,31 @@ namespace :tcc do
 
       # Definindo status final equivalente ao "submitted"
 
-      unless hub.grade.nil?
-        puts "Alterando hub: #{hub.id} -> grade: #{val.grade}"
+      operation = 'ignorar'
+      grade = hub.grade
+
+      if hub.grade.nil? || !hub.admin_evaluation_ok?
+
         hub.grade = val.grade
-        to_evaluation_ok(hub)
-        if hub.valid?
-          hub.save!
-          tcc.save!
-        else
-          puts "FALHA: #{hub.errors.inspect}"
+        Hub.transaction do
+          to_evaluation_ok(hub)
+
+          if hub.valid?
+            operation = 'alterado'
+            hub.save!
+          else
+            status = "FALHA: #{hub.errors.inspect}"
+          end
         end
       end
 
+      rows << [val.id, hub.id, val.grade, grade, operation]
+
     end
+
+    # Exibe resumo da operação
+    table = Terminal::Table.new :headings => headings, :rows => rows
+    puts table
   end
 
   def get_tcc(user_id, tcc_definition_id)
@@ -209,7 +225,9 @@ namespace :tcc do
       when :draft
         hub.send_to_admin_for_evaluation
         hub.admin_evaluate_ok
-      when :send_to_admin_for_revision
+      when :sent_to_admin_for_revision
+        hub.send_back_to_student
+        hub.send_to_admin_for_evaluation
         hub.admin_evaluate_ok
       when :sent_to_admin_for_evaluation
         hub.admin_evaluate_ok
