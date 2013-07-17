@@ -1,10 +1,16 @@
 pt-BR:
   states:
-    blank: 'vazio'
+    blank: 'Não editado'
     draft: 'Rascunho'
     sent_to_admin_for_revision: 'Enviado para revisão'
     sent_to_admin_for_evaluation: 'Enviado para avaliação'
     admin_evaluation_ok: 'Avaliado'
+  states_label:
+    blank: 'não editado'
+    draft: 'rascunho'
+    sent_to_admin_for_revision: 'requer revisão'
+    sent_to_admin_for_evaluation: 'requer avaliação'
+    admin_evaluation_ok: 'avaliado'
   actions:
     draft: 'Visualizar'
     sent_to_admin_for_revision: 'Comentar'
