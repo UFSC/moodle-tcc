@@ -1,48 +1,39 @@
-<%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
-    <%= h.input :position, :as => :hidden %>
+<!--diaries-->
+<%= render partial: 'diaries', locals: {hub: @hub, accordion_type: 'admin_view'} %>
 
-    <!--diaries-->
-    <%= render partial: 'diaries', locals: {h: h, accordion_type: 'admin_view'} %>
-
-    <div class="span12">
-      <div class="rounded-border row">
-        <h3>
-          Reflexões do eixo <%= @hub.position %> -
-          <% if @tp.coordavea? %>
-            <span class="text-info">
-              <%= select('post', 'state', options_for_select(Hub.aasm_states_for_select, t(@hub.aasm_current_state, scope: 'states'))) %>
-              <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-              <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
-            </span>
-          <% else %>
-              <% if @type == 'tcc' %>
-                  <% if @tp.coordcurso? %>
-                      <%= select('post', 'state', options_for_select(t(Hub.aasm_states, scope: 'states'), t(@hub.aasm_current_state, scope: 'states'))) %>
-                      <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                      <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
-                  <% else %>
-                        <span class="text-info">
-                        <%= t('states.'+@hub.aasm_current_state.to_s) %>
-                          <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                        </span>
-                  <% end %>
+<div class="span12">
+  <div class="rounded-border row">
+    <h3>
+      Reflexões do eixo <%= @hub.position %> -
+      <% if @tp.coordavea? %>
+          <%= render partial: 'states', locals: {hub: @hub} %>
+      <% else %>
+          <% if @type == 'tcc' %>
+              <% if @tp.coordcurso? %>
+                  <%= render partial: 'states', locals: {hub: @hub} %>
               <% else %>
-                  <% if @tp.tutoria? %>
-                      <%= select('post', 'state', options_for_select(t(Hub.aasm_states, scope: 'states'), t(@hub.aasm_current_state, scope: 'states'))) %>
-                      <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                      <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
-                  <% else %>
-                        <span class="text-info">
-                        <%= t('states.'+@hub.aasm_current_state.to_s) %>
-                          <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-                        </span>
-                  <% end %>
+                  <span class="text-info">
+                    <%= t('states.'+@hub.aasm_current_state.to_s) %>
+                    <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                  </span>
+              <% end %>
+          <% else %>
+              <% if @tp.tutoria? %>
+                  <%= render partial: 'states', locals: {hub: @hub} %>
+              <% else %>
+                  <span class="text-info">
+                    <%= t('states.'+@hub.aasm_current_state.to_s) %>
+                    <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                  </span>
               <% end %>
           <% end %>
-        </h3>
+      <% end %>
+    </h3>
         <span>
           <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
         </span>
+    <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
+        <%= h.input :position, :as => :hidden %>
 
         <div class="row">
           <!--old-->
@@ -86,7 +77,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-<% end %>
+        </div>
+        </div>
+    <% end %>
 

@@ -43,18 +43,7 @@ class HubsController < ApplicationController
       end
     else
 
-      # Alteração de Estado
-      if params[:commit] == 'Alterar estado'
 
-        if params[:post][:state] == 'admin_evaluation_ok' && @hub.grade.nil?
-          flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
-          return redirect_to instructor_admin_tccs_path
-        end
-        @hub.state = params[:post][:state].downcase.underscore
-        @hub.save!
-        flash[:success] = t(:successfully_saved)
-        return redirect_to instructor_admin_tccs_path
-      end
       #
       # TUTOR
       #
@@ -77,5 +66,16 @@ class HubsController < ApplicationController
     end
 
     render :show
+  end
+
+  def update_state
+    if params[:post][:state] == 'admin_evaluation_ok' && @hub.grade.nil?
+      flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
+      return redirect_to instructor_admin_tccs_path
+    end
+    @hub.state = params[:post][:state].downcase.underscore
+    @hub.save!
+    flash[:success] = t(:successfully_saved)
+    return redirect_to instructor_admin_tccs_path
   end
 end

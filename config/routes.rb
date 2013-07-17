@@ -24,6 +24,7 @@ SistemaTcc::Application.routes.draw do
 
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
   match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
+  match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]
 
   # Resources
   resources :bibliographies

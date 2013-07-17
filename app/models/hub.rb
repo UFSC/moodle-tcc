@@ -1,4 +1,5 @@
 class Hub < ActiveRecord::Base
+  extend Enumerize
 
   belongs_to :tcc, :inverse_of => :hubs
   belongs_to :hub_definition, :inverse_of => :hubs
