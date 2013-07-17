@@ -19,8 +19,6 @@ class LtiController < ApplicationController
         logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
         redirect_to access_denied_path
       end
-    else
-      redirect_to access_denied_path
     end
   end
 

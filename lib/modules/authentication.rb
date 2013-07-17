@@ -5,8 +5,7 @@ module Authentication
   end
 
   def current_user
-    authorize_lti!
-    @current_user ||= User.new(@tp)
+    @current_user ||= User.new(@tp) unless @tp.nil?
   end
 
   class User
@@ -42,46 +41,34 @@ module Authentication
     # Caso encontre algum problema, redireciona para uma página de erro
     # Ao final do processo, salva na sessão as variáveis de inicialização do LTI para posterior reuso
     def authorize_lti!
-      if @_authorize_lti.nil?
-        if initialize_tool_provider! && verify_oauth_signature! && verify_oauth_ttl!
-          session['lti_launch_params'] = @tp.to_params
-          @_authorize_lti = true
-        else
-          @_authorize_lti = false
-        end
+      if initialize_tool_provider! && verify_oauth_signature! && verify_oauth_ttl!
+        session['lti_launch_params'] = @tp.to_params
+        return true
       end
 
-      @_authorize_lti
+      return false
     end
 
     def initialize_tool_provider!
       # TODO: criar tabela para armazenar consumer_key => consumer_secret
 
-      lti_params = session['lti_launch_params']
+      key = params['oauth_consumer_key']
 
-      if lti_params.nil?
+      # Verifica se a chave foi informada e se é uma chave existente
+      if key.blank? || key != TCC_CONFIG['consumer_key']
+        logger.error 'Invalid OAuth consumer key informed'
 
-        key = params['oauth_consumer_key']
+        @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
 
-        # Verifica se a chave foi informada e se é uma chave existente
-        if key.blank? || key != TCC_CONFIG['consumer_key']
-          logger.error 'Invalid OAuth consumer key informed'
+        @tp.lti_msg = "Your consumer didn't use a recognized key."
+        @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
 
-          @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
-
-          @tp.lti_msg = "Your consumer didn't use a recognized key."
-          @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
-
-          return show_error "Consumer key wasn't recognized"
-        end
-
-        logger.debug 'LTI TP Initialized with valid key/secret'
-
-        @tp = IMS::LTI::ToolProvider.new(key, TCC_CONFIG['consumer_secret'], params)
-      else
-
-        @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], lti_params)
+        return show_error "Consumer key wasn't recognized"
       end
+
+      logger.debug 'LTI TP Initialized with valid key/secret'
+
+      @tp = IMS::LTI::ToolProvider.new(key, TCC_CONFIG['consumer_secret'], params)
 
       return true
     end
