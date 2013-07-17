@@ -1,0 +1,20 @@
+<%= semantic_form_for @hub, :url => update_state_hubs_path() do |h| %>
+
+
+    <% a = Hub.aasm_states
+       b = t(Hub.aasm_states, :scope => 'states')
+       result = Hash.new
+       a.zip(b).map {
+               |x, y| result.merge(x.to_s => y)
+       }
+       result
+
+       #result = {'draft'=>'Rascunho', 'tabaco' => 'coco'}
+    %>
+
+    <span class="text-info">
+      <%= select('post', 'state', options_for_select(result, @hub.aasm_current_state)) %>
+      <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+      <%= submit_tag('Alterar estado', :class => 'btn btn-small') %>
+    </span>
+<% end %>
