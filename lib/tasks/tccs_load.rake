@@ -2,12 +2,10 @@
 namespace :tcc do
   desc 'Cria todos os TCCs das turmas'
 
-  task :load_all => :environment do
-    #Turma A
-    populate_tccs('20131', 1)
-
-    #Turma B
-    populate_tccs('20132', 1)
+  task :load_all, [:turma, :tcc_definition_id] => :environment do |t, args|
+    #Turma A '20131', 1
+    #Turma B '20132', 2
+    populate_tccs(args[:turma], args[:tcc_definition_id])
   end
 
   #
