@@ -1,7 +1,7 @@
 # encoding: utf-8
 namespace :tcc do
-  desc 'Cria todos os TCCs das turmas'
 
+  desc 'Cria todos os TCCs das turmas'
   task :load_all, [:turma, :tcc_definition_id] => :environment do |t, args|
     #Turma A '20131', 1
     #Turma B '20132', 2
@@ -15,19 +15,29 @@ namespace :tcc do
     tcc_definition = TccDefinition.find(tcc_definition_id)
     matriculas = get_matriculas_turma(turma)
 
-    matriculas.with_progress "Criando os TCCs" do |aluno|
+    result = []
+    matriculas.with_progress 'Processando alunos para geração de TCCs' do |aluno|
 
       user = Remote::MoodleUser.find_by_username(aluno.matricula)
 
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
 
-        Tcc.create( moodle_user: user.id,
-                    name: user.firstname+' '+user.lastname,
-                    tutor_group: group,
-                    tcc_definition: tcc_definition )
+        tcc = Tcc.create(moodle_user: user.id,
+                   name: user.firstname+' '+user.lastname,
+                   tutor_group: group,
+                   tcc_definition: tcc_definition)
+
+        result << [aluno.matricula, tcc.id]
       end
     end
+
+    # Exibe resumo da operação
+    headings = ['Matrícula do usuário', 'Id do TCC']
+    table = Terminal::Table.new :headings => headings, :rows => result
+
+    puts table unless result.empty?
+    puts "Total de TCCs criados: #{result.count}/#{matriculas.count}"
   end
 
   #
