@@ -18,57 +18,53 @@ describe "Tccs" do
     end
 
 
-    describe "edit" do
+    describe 'edit' do
       before :each do
         page.set_rack_session(fake_lti_session('student', 'tcc'))
         visit show_tcc_path
       end
 
-      it "tcc data" do
-        click_link "Dados"
-        page.should have_content('Dados')
+      it 'tcc data' do
+        click_link 'Dados'
+        page.should have_content('Nome')
+        page.should have_content('Título')
+        page.should have_content('Data da defesa')
+        page.should have_content('Orientador')
+
       end
 
-      it "tcc abstract" do
-        pending
-        #click_link "Resumo"
-        #page.should have_selector("#abstract_tab_content")
+      it 'tcc abstract' do
+        click_link 'Resumo'
+        page.should have_content('Resumo')
       end
 
-      it "tcc presentation" do
-        pending
-        #click_link "Apresentação"
-        #page.should have_selector("#presentation_tab_content")
+      it 'tcc presentation' do
+        click_link 'Apresentação'
+        page.should have_content('Apresentação')      end
+
+      it 'tcc hub 1' do
+        click_link 'Eixo 1'
+        page.should have_content('Eixo 1')
       end
 
-      it "tcc hub 1" do
-        pending
-        #click_link "Eixo 1"
-        #page.should have_selector("#hub1_tab_content")
-      end
-
-      it "tcc hub 2" do
-        pending
-        #click_link "Eixo 2"
-        #page.should have_selector("#hub2_tab_content")
+      it 'tcc hub 2' do
+        click_link 'Eixo 2'
+        page.should have_content('Eixo 2')
       end
 
       it "tcc hub 3" do
-        pending
-        #click_link "Eixo 3"
-        #page.should have_selector("#hub3_tab_content")
+        click_link 'Eixo 3'
+        page.should have_content('Eixo 3')
       end
 
-      it "final consideration" do
-        pending
-        #click_link "Considerações finais"
-        #page.should have_selector("#final_consideration_tab_content")
+      it 'final consideration' do
+        click_link 'Considerações finais'
+        page.should have_content('Considerações finais')
       end
 
-      it "tcc bibliographies" do
-        pending
-        #click_link "Referências"
-        #page.should have_selector("#bibliographies_tab_content")
+      it 'tcc bibliographies' do
+        click_link 'Referências'
+        page.should have_content('Referências')
       end
     end
   end
