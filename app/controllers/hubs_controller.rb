@@ -4,6 +4,7 @@ class HubsController < ApplicationController
   include LtiTccFilters
 
   def show
+
     @current_user = current_user
     set_tab ('hub'+params[:position]).to_sym
 
@@ -12,6 +13,7 @@ class HubsController < ApplicationController
     last_comment_version = @hub.versions.where('state != ?', 'draft').last
 
     @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
+    @hub.new_state = @hub.aasm_current_state
 
     # Busca diários no moodle
     @hub.fetch_diaries(@user_id)
@@ -69,7 +71,11 @@ class HubsController < ApplicationController
   end
 
   def update_state
-    if params[:post][:state] == 'admin_evaluation_ok' && @hub.grade.nil?
+    @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
+
+    @hub = @tcc.hubs.find_by_position(params[:position])
+
+    if params[:hub][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
       flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
       return redirect_to instructor_admin_tccs_path
     end

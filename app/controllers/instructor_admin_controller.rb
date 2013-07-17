@@ -1,6 +1,4 @@
 class InstructorAdminController < ApplicationController
-  before_filter :authorize, :only => :index
-
   def index
     user_name = MoodleUser.get_name(@user_id)
     group = TutorGroup.get_tutor_group(user_name)

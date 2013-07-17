@@ -8,8 +8,11 @@ class Hub < ActiveRecord::Base
 
   include TccStateMachine
 
+  # Estados para combo
+  enumerize :new_state, in: Hub.aasm_states
+
   # Mass-Assignment
-  attr_accessible :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
+  attr_accessible :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :admin_evaluation_ok?
 
