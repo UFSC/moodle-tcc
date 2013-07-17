@@ -2,6 +2,7 @@ class PresentationsController < ApplicationController
   include LtiTccFilters
 
   def show
+    @current_user = current_user
     set_tab :presentation
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
     @presentation.new_state = 'draft'

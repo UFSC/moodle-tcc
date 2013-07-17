@@ -37,6 +37,10 @@ class Hub < ActiveRecord::Base
     create_or_update_diaries
   end
 
+  def empty?
+    self.reflection.blank?
+  end
+
   private
 
   def create_or_update_diaries

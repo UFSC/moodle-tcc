@@ -4,6 +4,7 @@ class HubsController < ApplicationController
   include LtiTccFilters
 
   def show
+    @current_user = current_user
     set_tab ('hub'+params[:position]).to_sym
 
     @hub = @tcc.hubs.find_by_position(params[:position])
@@ -26,7 +27,7 @@ class HubsController < ApplicationController
     #
     # Estudante
     #
-    if @tp.student?
+    if current_user.student?
 
       if @hub.valid?
         case new_state

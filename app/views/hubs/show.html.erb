@@ -1,4 +1,4 @@
-<% if @tp.student? %>
+<% if @current_user.student? %>
   <%= render 'common/tabs_header' %>
   <%= render partial: 'form' %>
 <% else %>

@@ -1,4 +1,4 @@
-<% if @tp.student? %>
+<% if @current_user.student? %>
     <%=  render 'common/tabs_header' %>
     <%= render partial: 'common/tcc_child_form',
                locals: { object: @presentation, object_label: 'Apresentação',

@@ -1,28 +1,36 @@
 <h4>
   Tela de Tutor para <%= @group_name %>
-  <%= link_to display_icon('icon-refresh'), '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' %>
 </h4>
 
-<table class="table table-bordered">
+<%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
+  <%= display_icon('icon-refresh') %> Atualizar lista
+<% end %>
+
+<table class="table table-bordered" id="hubs-table">
   <thead>
   <tr class="blue-header-table">
-    <th>Estudante</th>
+    <th rowspan="2">Estudante</th>
     <% @hubs.each do |hub_name| %>
-      <th><%= hub_name %></th>
+      <th colspan="2"><%= hub_name %></th>
+    <% end %>
+  </tr>
+  <tr class="blue-header-table">
+    <% @hubs.each do |hub_name| %>
+      <th class="status">Estado</th>
+      <th class="grades">Nota</th>
     <% end %>
   </tr>
   </thead>
-
   <tbody>
   <% @tccs.each do |tcc| %>
     <tr>
       <td><%= tcc.name %></td>
       <% tcc.fetch_all_hubs.each do |hub| %>
-        <td>
-          <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
-          <%= link_to get_action(hub),
-                      show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
-                      target: '_blank', class: 'label label-success' %>
+        <td class="status">
+          <%= get_status_label(hub, tcc.moodle_user) %>
+        </td>
+        <td class="grades">
+          <%= hub.grade if hub.admin_evaluation_ok? %>
         </td>
       <% end %>
     </tr>

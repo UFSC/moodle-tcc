@@ -5,4 +5,8 @@ class FinalConsiderations < ActiveRecord::Base
   has_paper_trail meta: {state: :state}
 
   include TccStateMachine
+
+  def empty?
+    self.content.blank?
+  end
 end

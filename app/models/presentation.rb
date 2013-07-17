@@ -6,4 +6,8 @@ class Presentation < ActiveRecord::Base
 
   include TccStateMachine
 
+  def empty?
+    self.content.blank?
+  end
+
 end
