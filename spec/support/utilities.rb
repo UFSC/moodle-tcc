@@ -2,6 +2,10 @@ require 'spec_helper'
 
 def moodle_lti_params(roles = 'student', type = 'portfolio')
   @tcc_definition ||= Fabricate(:tcc_definition)
+  @tcc ||= Fabricate(:tcc, tcc_definition: @tcc_definition)
+  3.times do |i|
+    hub_definition = Fabricate(:hub_definition, title: 'Eixo '+(i+1).to_s, position: i+1, tcc_definition: @tcc_definition)
+  end
 
   tc = IMS::LTI::ToolConsumer.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'])
   tc.launch_url = 'http://moodle.local/mod/lti/service.php'
