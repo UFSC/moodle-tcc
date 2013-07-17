@@ -29,12 +29,42 @@ module Authentication
       if admin?
         true
       else
-        role = self.lti_tp.roles.first
-        role == 'coordcurso' || role == 'coordavea' || role == 'tutoria'
+        self.lti_tp.roles.each do
+          if role == 'urn:moodle:role/coordcurso' || role == 'urn:moodle:role/coordavea' || role == 'urn:moodle:role/tutoria'
+            return true
+          end
+        end
+        false
       end
-
     end
-  end
+
+    def coordavea?
+      self.lti_tp.roles.each do |r|
+        if r == 'urn:moodle:role/coordavea'
+          return true
+        end
+      end
+      false
+    end
+
+    def coordcurso?
+      self.lti_tp.roles.each do |r|
+        if r == 'urn:moodle:role/coordcurso'
+          return true
+        end
+      end
+      false
+    end
+
+    def tutoria?
+      self.lti_tp.roles.each do |r|
+        if r == 'urn:moodle:role/tutoria'
+          return true
+        end
+      end
+      false
+    end
+  end # User class
 
   module LTI
     # Inicializa o Tool Provider e faz todas as checagens necessárias para garantir permissões

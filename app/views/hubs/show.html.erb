@@ -1,3 +1,4 @@
+<div class="span12">
 <% if @current_user.student? %>
   <%= render 'common/tabs_header' %>
   <%= render partial: 'form' %>
@@ -5,3 +6,4 @@
   <h3>Eixo <%= @hub.position %></h3>
   <%= render partial: 'admin' %>
 <% end %>
+</div>

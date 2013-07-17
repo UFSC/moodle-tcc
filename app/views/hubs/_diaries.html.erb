@@ -1,18 +1,20 @@
 <!--diaries-->
 <% hub.diaries.each do |d| %>
-    <div class="accordion-group <%=  @hub.category %>">
-      <div class="accordion-heading">
-        <a id="<%=  d.id %>" class="accordion-toggle">
-          <%= d.diary_definition.title %>
-        </a>
-      </div>
-      <div id="<%=  d.id %>_collapse" class="collapse out <%= j accordion_type %>">
-        <div class="accordion-inner">
-          <%= diary_content(d.content) %>
+    <div class="accordion-group <%= @hub.category %> row">
+      <div class="span12">
+        <div class="accordion-heading">
+          <a id="<%= d.id %>" class="accordion-toggle">
+            <%= d.diary_definition.title %>
+          </a>
         </div>
-      </div>
-      <div style="text-align:center; padding-bottom: 0px">
-        <a id="<%=  d.id %>" class="accordion-toggle-icon accordion-toggle" href="#"><%= display_icon('icon-chevron-down') %></a>
+        <div id="<%= d.id %>_collapse" class="collapse out <%= j accordion_type %>">
+          <div class="accordion-inner">
+            <%= diary_content(d.content) %>
+          </div>
+        </div>
+        <div style="text-align:center; padding-bottom: 0px">
+          <a id="<%= d.id %>" class="accordion-toggle-icon accordion-toggle" href="#"><%= display_icon('icon-chevron-down') %></a>
+        </div>
       </div>
     </div>
 <% end %>

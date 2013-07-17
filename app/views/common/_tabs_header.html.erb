@@ -1,3 +1,4 @@
+<div class="row">
 <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
     <% if @type == 'tcc' %>
         <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
@@ -12,3 +13,4 @@
     <% end %>
     <%= tab.bibliographies 'Referências', bibliographies_path %>
 <% end %>
+</div>

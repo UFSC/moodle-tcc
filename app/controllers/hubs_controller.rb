@@ -4,7 +4,6 @@ class HubsController < ApplicationController
   include LtiTccFilters
 
   def show
-
     @current_user = current_user
     set_tab ('hub'+params[:position]).to_sym
 
@@ -79,9 +78,59 @@ class HubsController < ApplicationController
       flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
       return redirect_to instructor_admin_tccs_path
     end
-    @hub.state = params[:post][:state].downcase.underscore
+
+    case params[:hub][:new_state]
+      when 'draft'
+        to_draft(@hub)
+      when 'sent_to_admin_for_revision'
+        to_revision(@hub)
+      when 'sent_to_admin_for_evaluation'
+        to_evaluation(@hub)
+      else
+        to_evaluation_ok(@hub)
+    end
+
     @hub.save!
     flash[:success] = t(:successfully_saved)
-    return redirect_to instructor_admin_tccs_path
+    redirect_to instructor_admin_tccs_path
+  end
+
+  private
+
+  def to_draft(hub)
+    case hub.aasm_current_state
+      when :draft
+        # ta certo
+      when :sent_to_admin_for_revision
+        hub.send_back_to_student
+      when :sent_to_admin_for_evaluation
+        hub.send_back_to_student
+    end
+  end
+
+  def to_revision(hub)
+    case hub.aasm_current_state
+      when :draft
+        hub.send_to_admin_for_revision
+    end
+  end
+
+  def to_evaluation(hub)
+    case hub.aasm_current_state
+      when :draft
+        hub.send_to_admin_for_evaluation
+    end
+  end
+
+  def to_evaluation_ok(hub)
+    case hub.aasm_current_state
+      when :draft
+        hub.send_to_admin_for_evaluation
+        hub.admin_evaluate_ok
+      when :send_to_admin_for_revision
+        hub.admin_evaluate_ok
+      when :sent_to_admin_for_evaluation
+        hub.admin_evaluate_ok
+    end
   end
 end

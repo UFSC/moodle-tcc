@@ -1,5 +1,7 @@
-<%= semantic_form_for @hub, :url => update_state_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
-    <%= h.input :new_state, :label => false, :as => :select, :collection => Hub.new_state.options %>
-    <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
-    <%= h.action :submit, :label => 'Alterar estado' %>
-<% end %>
+<div style="margin-top: 15px;">
+  <%= semantic_form_for @hub, :url => update_state_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
+      <div style="margin-left: 10px;" class="pull-left"><%= h.input :new_state, :label => false, :as => :select, :collection => Hub.new_state.options %></div>
+      <span style="margin-left: 10px;"><%= h.action :submit, :label => 'Alterar estado' %></span>
+  <% end %>
+  <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+</div>
