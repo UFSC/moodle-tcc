@@ -29,7 +29,9 @@ module Authentication
       if admin?
         true
       else
-        self.lti_tp.roles.include?('urn:moodle:role/coordavea') || self.lti_tp.roles.include?('urn:moodle:role/coordcurso') || self.lti_tp.roles.include?('urn:moodle:role/tutoria')
+        self.lti_tp.roles.include?('urn:moodle:role/coordavea') ||
+            self.lti_tp.roles.include?('urn:moodle:role/coordcurso') ||
+            self.lti_tp.roles.include?('urn:moodle:role/tutoria')
       end
     end
 
