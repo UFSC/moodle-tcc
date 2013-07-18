@@ -29,22 +29,22 @@ module Authentication
       if admin?
         true
       else
-        self.lti_tp.roles.include?('urn:moodle:role/coordavea') ||
-            self.lti_tp.roles.include?('urn:moodle:role/coordcurso') ||
-            self.lti_tp.roles.include?('urn:moodle:role/tutoria')
+        self.lti_tp.has_role?('urn:moodle:role/coordavea') ||
+            self.lti_tp.has_role?('urn:moodle:role/coordcurso') ||
+            self.lti_tp.has_role?('urn:moodle:role/tutoria')
       end
     end
 
     def coordavea?
-      self.lti_tp.roles.include?('urn:moodle:role/coordavea')
+      self.lti_tp.has_role?('urn:moodle:role/coordavea')
     end
 
     def coordcurso?
-      self.lti_tp.roles.include?('urn:moodle:role/coordcurso')
+      self.lti_tp.has_role?('urn:moodle:role/coordcurso')
     end
 
     def tutoria?
-      self.lti_tp.roles.include?('urn:moodle:role/tutoria')
+      self.lti_tp.has_role?('urn:moodle:role/tutoria')
     end
   end # User class
 
