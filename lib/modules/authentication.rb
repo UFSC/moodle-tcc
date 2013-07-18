@@ -12,6 +12,7 @@ module Authentication
     attr_accessor :lti_tp
     delegate :student?, :to => :lti_tp
     delegate :admin?, :to => :lti_tp
+    ARCHETYPES_ROLES = %('urn:moodle:role/coordavea' 'urn:moodle:role/coordcurso' 'urn:moodle:role/tutoria')
 
     def initialize(lti_tp)
       @lti_tp = lti_tp
@@ -29,40 +30,21 @@ module Authentication
       if admin?
         true
       else
-        self.lti_tp.roles.each do
-          if role == 'urn:moodle:role/coordcurso' || role == 'urn:moodle:role/coordavea' || role == 'urn:moodle:role/tutoria'
-            return true
-          end
-        end
-        false
+        self.lti_tp.roles.include?(ARCHETYPES_ROLES)
       end
     end
 
     def coordavea?
-      self.lti_tp.roles.each do |r|
-        if r == 'urn:moodle:role/coordavea'
-          return true
-        end
-      end
-      false
+      self.lti_tp.roles.include?('urn:moodle:role/coordavea')
     end
 
     def coordcurso?
-      self.lti_tp.roles.each do |r|
-        if r == 'urn:moodle:role/coordcurso'
-          return true
-        end
-      end
-      false
+      self.lti_tp.roles.include?('urn:moodle:role/coordcurso')
+
     end
 
     def tutoria?
-      self.lti_tp.roles.each do |r|
-        if r == 'urn:moodle:role/tutoria'
-          return true
-        end
-      end
-      false
+      self.lti_tp.roles.include?('urn:moodle:role/tutoria')
     end
   end # User class
 
