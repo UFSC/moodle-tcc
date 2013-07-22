@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.string  "local"
     t.integer "volume_number"
     t.integer "number_or_fascicle"
-    t.date    "publication_date"
+    t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
   end

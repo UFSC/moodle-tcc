@@ -16,9 +16,7 @@
           <div class="span3">
             <%= ref.input :volume_number %>
             <%= ref.input :number_or_fascicle %>
-            <%= ref.input :publication_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
-                          :input_html => {:'data-behaviour' => 'datepicker',
-                                          value: ((I18n.l @article_ref.publication_date) unless @article_ref.publication_date.nil?)} %>
+            <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
             <div style='width:110px; float:left;'>
               <%= ref.input :initial_page, :input_html => {:min => 0, :style => 'width:90px;'} %>
             </div>
