@@ -16,6 +16,11 @@ describe Authentication do
         user.instructor?.should be_true
       end
 
+      it 'should return true if tutor a distancia role is present' do
+        user = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+        user.instructor?.should be_true
+      end
+
       it 'should return false if none of the expected roles are present' do
         user = Authentication::User.new fake_lti_tp('invalidrole')
         user.instructor?.should be_false
@@ -50,41 +55,54 @@ describe Authentication do
       end
     end
 
-    describe '#coordavea?' do
+    describe '#coordenador_avea?' do
       it 'should return true if role is present' do
         user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordavea')
-        user.coordavea?.should be_true
+        user.coordenador_avea?.should be_true
       end
 
       it 'should return false if none of the expected roles are present' do
         user = Authentication::User.new fake_lti_tp('invalidrole')
-        user.coordavea?.should be_false
+        user.coordenador_avea?.should be_false
       end
     end
 
-    describe '#coordcurso?' do
+    describe '#coordenador_curso?' do
       it 'should return true if role is present' do
         user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso')
-        user.coordcurso?.should be_true
+        user.coordenador_curso?.should be_true
       end
 
       it 'should return false if none of the expected roles are present' do
         user = Authentication::User.new fake_lti_tp('invalidrole')
-        user.coordcurso?.should be_false
+        user.coordenador_curso?.should be_false
       end
     end
 
-    describe '#tutoria?' do
+    describe '#coordenador_tutoria?' do
       it 'should return true if role is present' do
         user = Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria')
-        user.tutoria?.should be_true
+        user.coordenador_tutoria?.should be_true
       end
 
       it 'should return false if none of the expected roles are present' do
         user = Authentication::User.new fake_lti_tp('invalidrole')
-        user.tutoria?.should be_false
+        user.coordenador_tutoria?.should be_false
       end
     end
+
+    describe '#tutor?' do
+      it 'should return true if role tutor a distancia is present' do
+        user = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+        user.tutor?.should be_true
+      end
+
+      it 'should return false if none of the expected roles are present' do
+        user = Authentication::User.new fake_lti_tp('invalidrole')
+        user.tutor?.should be_false
+      end
+    end
+
   end
 
 end
