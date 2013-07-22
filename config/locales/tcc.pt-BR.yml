@@ -1,5 +1,5 @@
 pt-BR:
-  states:
+  states: &estados
     blank: 'Não editado'
     draft: 'Rascunho'
     sent_to_admin_for_revision: 'Enviado para revisão'
@@ -16,7 +16,10 @@ pt-BR:
     sent_to_admin_for_revision: 'Comentar'
     sent_to_admin_for_evaluation: 'Avaliar'
     admin_evaluation_ok: 'Avaliado'
-
+  enumerize:
+    hub:
+      new_state:
+        <<: *estados
   activerecord:
     attributes:
       tcc:

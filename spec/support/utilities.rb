@@ -23,3 +23,7 @@ end
 def fake_lti_session(roles = 'student', type = 'portfolio')
   {'lti_launch_params' => moodle_lti_params(roles, type)}
 end
+
+def fake_lti_tp(roles = 'student', type = 'portfolio')
+  IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], moodle_lti_params(roles, type))
+end

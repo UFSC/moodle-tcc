@@ -15,6 +15,9 @@ class LtiController < ApplicationController
       elsif current_user.instructor?
         logger.debug 'LTI user identified as a instructor'
         redirect_to instructor_admin_tccs_path
+      elsif current_user.view_all?
+        logger.debug 'LTI user is part of a view_all role'
+        redirect_to instructor_admin_tccs_path
       else
         logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
         redirect_to access_denied_path

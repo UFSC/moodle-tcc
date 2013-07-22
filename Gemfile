@@ -55,6 +55,9 @@ gem 'rabl'
 gem 'progress'
 gem 'terminal-table'
 
+# Enumerize
+gem 'enumerize'
+
 group :production do
   gem 'newrelic_rpm'
 end
