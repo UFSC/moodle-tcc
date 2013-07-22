@@ -19,12 +19,12 @@ class ServiceController < ApplicationController
       objects << {
           user_id: tcc.moodle_user,
           hubs: tcc.hubs.map do |hub|
-           {
-               grade: hub.grade,
-               grade_date: (hub.updated_at if hub.admin_evaluation_ok?),
-               state: hub.state,
-               state_date: hub.updated_at
-           }
+            {
+                grade: hub.grade,
+                grade_date: (hub.updated_at if hub.admin_evaluation_ok?),
+                state: hub.state,
+                state_date: hub.updated_at
+            }
           end
       }
     end
