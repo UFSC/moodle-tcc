@@ -15,15 +15,15 @@
         <% else %>
             <div class="span12 inline">
               <h3 class="pull-left"> Reflexões do eixo <%= @hub.position %> - </h3>
-            <% if @current_user.coordavea? %>
+            <% if @current_user.coordenador_avea? %>
                 <%= render partial: 'states', locals: {hub: @hub} %>
             <% else %>
                 <% if @type == 'tcc' %>
-                    <% if @current_user.coordcurso? %>
+                    <% if @current_user.coordenador_curso? %>
                         <%= render partial: 'states', locals: {hub: @hub} %>
                     <% end %>
                 <% else %>
-                    <% if @current_user.tutoria? %>
+                    <% if @current_user.coordenador_tutoria? %>
                         <%= render partial: 'states', locals: {hub: @hub} %>
                     <% end %>
                 <% end %>
