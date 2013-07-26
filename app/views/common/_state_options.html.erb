@@ -1,4 +1,4 @@
 <%= f.input :new_state, :as => :radio, label: false, input_html: {style: 'display:inline;'},
-            collection: {'Salvar como rascunho' => :draft,
-                         'Enviar para revisão' => :revision,
-                         'Enviar para avaliação' => :evaluation} %>
+            collection: {'Salvar como rascunho' => 'draft',
+                         'Enviar para revisão' => 'sent_to_admin_for_revision',
+                         'Enviar para avaliação' => 'sent_to_admin_for_evaluation'} %>

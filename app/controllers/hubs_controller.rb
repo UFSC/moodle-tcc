@@ -21,7 +21,6 @@ class HubsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.find_by_moodle_user(@user_id)
     new_state = params[:hub][:new_state]
 
     @hub = @tcc.hubs.find_by_position(params[:hub][:position])
@@ -34,9 +33,9 @@ class HubsController < ApplicationController
 
       if @hub.valid?
         case new_state
-          when 'revision'
+          when 'sent_to_admin_for_revision'
             @hub.send_to_admin_for_revision if @hub.may_send_to_admin_for_revision?
-          when 'evaluation'
+          when 'sent_to_admin_for_evaluation'
             @hub.send_to_admin_for_evaluation if @hub.may_send_to_admin_for_evaluation?
         end
 
@@ -67,6 +66,16 @@ class HubsController < ApplicationController
         @hub.state = old_state
       end
     end
+
+    # falhou, precisamos re-exibir as informações
+    @current_user = current_user
+    set_tab ('hub'+params[:position]).to_sym
+
+    last_comment_version = @hub.versions.where('state != ?', 'draft').last
+    @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
+
+    # Busca diários no moodle
+    @hub.fetch_diaries(@user_id)
 
     render :show
   end
