@@ -1,4 +1,6 @@
 module LtiTccFilters
+  unloadable
+
   def self.included(base)
     base.before_filter :authorize
     base.before_filter :get_tcc
@@ -13,8 +15,8 @@ module LtiTccFilters
 
     else
       @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], lti_params)
-      if current_user.instructor? && params["moodle_user"]
-        @user_id = params["moodle_user"]
+      if (current_user.instructor? || current_user.view_all?) && params['moodle_user']
+        @user_id = params['moodle_user']
       else
         @user_id = @tp.user_id
       end

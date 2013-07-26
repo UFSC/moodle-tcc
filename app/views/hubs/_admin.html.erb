@@ -42,7 +42,7 @@
     <!--old-->
     <div id="old_tcc_object" class="span6" style="display: none">
       <div class="rounded-border">
-        <% unless @last_hub_commented.reflection.nil? %>
+        <% unless @last_hub_commented.nil? || @last_hub_commented.reflection.nil? %>
             <div class="rounded-border">
               <h4>Versão anterior da reflexão</h4>
               <%= @last_hub_commented.reflection.html_safe %>

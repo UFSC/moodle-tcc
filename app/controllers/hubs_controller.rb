@@ -72,8 +72,6 @@ class HubsController < ApplicationController
   end
 
   def update_state
-    @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
-
     @hub = @tcc.hubs.find_by_position(params[:position])
 
     if params[:hub][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
@@ -88,8 +86,12 @@ class HubsController < ApplicationController
         to_revision(@hub)
       when 'sent_to_admin_for_evaluation'
         to_evaluation(@hub)
-      else
+      when 'admin_evaluation_ok'
         to_evaluation_ok(@hub)
+      else
+        flash[:error] = 'Estado selecionado é invádlio'
+        return redirect_to instructor_admin_tccs_path
+
     end
 
     @hub.save!

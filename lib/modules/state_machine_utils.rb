@@ -1,11 +1,13 @@
 module StateMachineUtils
+  unloadable
+
   def to_draft(hub)
     case hub.aasm_current_state
-      when :draft
-        # ta certo
       when :sent_to_admin_for_revision
         hub.send_back_to_student
       when :sent_to_admin_for_evaluation
+        hub.send_back_to_student
+      when :admin_evaluation_ok
         hub.send_back_to_student
     end
   end
@@ -14,12 +16,24 @@ module StateMachineUtils
     case hub.aasm_current_state
       when :draft
         hub.send_to_admin_for_revision
+      when :sent_to_admin_for_evaluation
+        hub.send_back_to_student
+        hub.send_to_admin_for_revision
+      when :admin_evaluation_ok
+        hub.send_back_to_student
+        hub.send_to_admin_for_revision
     end
   end
 
   def to_evaluation(hub)
     case hub.aasm_current_state
       when :draft
+        hub.send_to_admin_for_evaluation
+      when :send_to_admin_for_revision
+        hub.send_back_to_student
+        hub.send_to_admin_for_evaluation
+      when :admin_evaluation_ok
+        hub.send_back_to_student
         hub.send_to_admin_for_evaluation
     end
   end

@@ -1,4 +1,5 @@
 module Authentication
+  unloadable
 
   def self.included(base)
     base.send(:include, Authentication::LTI)

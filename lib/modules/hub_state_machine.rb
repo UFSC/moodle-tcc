@@ -30,7 +30,7 @@ module HubStateMachine
       end
 
       event :send_back_to_student do
-        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation], :to => :draft
+        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation, :admin_evaluation_ok], :to => :draft
       end
 
       event :send_to_admin_for_evaluation do
