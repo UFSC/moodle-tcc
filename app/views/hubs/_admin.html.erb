@@ -65,7 +65,7 @@
       <div class="rounded-border">
         <div class="rounded-border">
           <h4>Versão atual da reflexão</h4>
-          <%= @hub.reflection.html_safe unless @last_hub_commented.nil? || @last_hub_commented.reflection.nil? %>
+          <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
         </div>
         <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
             <%= h.input :position, :as => :hidden %>
