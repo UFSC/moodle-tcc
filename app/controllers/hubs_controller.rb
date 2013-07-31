@@ -13,7 +13,13 @@ class HubsController < ApplicationController
 
     last_comment_version = @hub.versions.where('state != ?', 'draft').last
 
-    @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
+    begin
+      @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
+    rescue Psych::SyntaxError
+      # FIX-ME: Corrigir no banco o que está ocasionando este problema.
+      Rails.logger.error "WARNING: Falha ao tentar recuperar informações do papertrail. (user: #{@current_user.id}, hub: #{@hub.id})"
+    end
+
     @hub.new_state = @hub.aasm_current_state
 
     # Busca diários no moodle

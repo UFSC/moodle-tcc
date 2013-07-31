@@ -18,6 +18,10 @@ module Authentication
       @lti_tp = lti_tp
     end
 
+    def id
+      self.lti_tp.user_id
+    end
+
     def instructor?
       if self.lti_tp.instructor?
         true
