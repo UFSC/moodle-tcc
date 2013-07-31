@@ -50,7 +50,10 @@ class Hub < ActiveRecord::Base
       if self.admin_evaluation_ok?
         self.updated_at
       else
-        self.versions.where(state: 'admin_evaluation_ok').order(:created_at).last.reify.updated_at
+        last_version = self.versions.where(state: 'admin_evaluation_ok').order(:created_at).last
+        unless last_version.nil?
+          last_version.reify.updated_at
+        end
       end
     end
   end
