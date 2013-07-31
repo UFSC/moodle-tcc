@@ -1,5 +1,5 @@
-class Version < ActiveRecord::Base
-  unloadable
-
-  attr_accessible :state, :comment
+module PaperTrail
+  class Version < ActiveRecord::Base
+    attr_accessible :state, :comment
+  end
 end
