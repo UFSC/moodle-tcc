@@ -105,6 +105,6 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
 group :deploy do
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.15.5'
   gem 'capistrano-db-tasks', :require => false
 end
