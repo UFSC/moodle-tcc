@@ -21,4 +21,11 @@ class ArticleRef < ActiveRecord::Base
       errors.add(:initial_page, "Can't be less than end page")
     end
   end
+
+  def check_equality
+    article_refs = ArticleRef.where("(first_author = ? OR second_author = ? OR third_author = ?) AND
+                                    (first_author = ? OR second_author = ? OR third_author = ?) AND
+                                    (first_author = ? OR second_author = ? OR third_author = ?) AND
+                                    YEAR(publication_date) = ?", first_author, first_author, first_author, second_author, second_author, second_author, third_author, third_author, third_author, publication_date.year)
+  end
 end
