@@ -1,9 +1,16 @@
 class ChangeArticleRefsPublicationDate < ActiveRecord::Migration
   def up
-    change_table :article_refs do |t|
-      t.change :publication_date, :integer
-      t.rename :publication_date, :year
+    add_column :article_refs, :year, :integer
+
+    ArticleRef.reset_column_information
+
+    article_refs = ArticleRef.all
+    article_refs.each do |a|
+      a.year = a.publication_date.year
+      a.save
     end
+
+    remove_column :article_refs, :publication_date
   end
 
   def down
