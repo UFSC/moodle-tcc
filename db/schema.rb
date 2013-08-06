@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703174206) do
+ActiveRecord::Schema.define(:version => 20130805223246) do
 
   create_table "abstracts", :force => true do |t|
-    t.text     "content_pt"
+    t.text     "content_pt",   :limit => 16777215
     t.string   "key_words_pt"
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "state"
   end
 
@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(:version => 20130703174206) do
   end
 
   create_table "diaries", :force => true do |t|
-    t.text     "content"
+    t.text     "content",             :limit => 16777215
     t.integer  "position"
     t.integer  "hub_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "diary_definition_id"
   end
 
@@ -95,11 +95,11 @@ ActiveRecord::Schema.define(:version => 20130703174206) do
   add_index "diary_definitions", ["hub_definition_id"], :name => "index_diary_definitions_on_hub_definition_id"
 
   create_table "final_considerations", :force => true do |t|
-    t.text     "content"
+    t.text     "content",    :limit => 16777215
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "state"
   end
 
@@ -122,14 +122,14 @@ ActiveRecord::Schema.define(:version => 20130703174206) do
   add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
 
   create_table "hubs", :force => true do |t|
-    t.text     "reflection"
+    t.text     "reflection",        :limit => 16777215
     t.text     "commentary"
     t.integer  "position"
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
   end
@@ -156,11 +156,11 @@ ActiveRecord::Schema.define(:version => 20130703174206) do
   end
 
   create_table "presentations", :force => true do |t|
-    t.text     "content"
+    t.text     "content",    :limit => 16777215
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "state"
   end
 
@@ -200,11 +200,11 @@ ActiveRecord::Schema.define(:version => 20130703174206) do
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
 
   create_table "versions", :force => true do |t|
-    t.string   "item_type",  :null => false
-    t.integer  "item_id",    :null => false
-    t.string   "event",      :null => false
+    t.string   "item_type",                        :null => false
+    t.integer  "item_id",                          :null => false
+    t.string   "event",                            :null => false
     t.string   "whodunnit"
-    t.text     "object"
+    t.text     "object",     :limit => 2147483647
     t.datetime "created_at"
     t.text     "comment"
     t.string   "state"
