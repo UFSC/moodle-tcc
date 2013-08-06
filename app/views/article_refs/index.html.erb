@@ -17,7 +17,7 @@
                 <td><%= element.first_author %></td>
                 <td><%= element.article_title %></td>
                 <td><%= element.journal_name %></td>
-                <td><%= element.publication_date %></td>
+                <td><%= element.year %></td>
                 <td><%= element.local %></td>
                 <td>
                   <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id %>
