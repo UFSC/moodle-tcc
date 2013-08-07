@@ -21,8 +21,7 @@ module MoodleGrade
                     :grade => grade,
                     :wstoken => TCC_CONFIG['token']) do |response|
 
-      # Recupera o conteúdo do user_name (matrícula)
-      response#.xpath('/RESPONSE/SINGLE/KEY[@name="username"]/VALUE').text
+      response
 
     end
   end
