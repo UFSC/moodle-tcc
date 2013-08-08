@@ -1,4 +1,10 @@
 class BookCapRef < ActiveRecord::Base
+
+  include ModelsUtils
+
+  before_save :check_equality
+  before_update :check_equality
+
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
 
@@ -18,11 +24,24 @@ class BookCapRef < ActiveRecord::Base
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validate :initial_page_less_than_end_page
 
+  def direct_citation
+    "(#{cap_author.split(' ').last.upcase}; #{cap_author.split(' ').first.upcase}, #{year}, p. #{initial_page})"
+  end
+
+  def indirect_citation
+    "#{cap_author.split(' ').first.capitalize} (#{year})"
+  end
+
   private
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
       errors.add(:initial_page, "Can't be less than end page")
     end
+  end
+
+  def check_equality
+    book_cap_refs = BookCapRef.where("(book_author = ? ) AND (year = ?)", book_author, year)
+    update_subtype_field(self, book_cap_refs)
   end
 end
