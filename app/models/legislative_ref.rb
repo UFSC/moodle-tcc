@@ -28,7 +28,7 @@ class LegislativeRef < ActiveRecord::Base
   private
 
   def check_equality
-    legislative_refs = ArticleRef.where("(publisher = ? ) AND (year = ?)", publisher, year)
+    legislative_refs = LegislativeRef.where("(publisher = ? ) AND (year = ?)", publisher, year)
 
     update_subtype_field(self, legislative_refs)
   end

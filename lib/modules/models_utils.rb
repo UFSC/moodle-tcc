@@ -7,9 +7,7 @@ module ModelsUtils
         if o.subtype.nil?
           o.update_column :subtype, letter
         else
-          unless o.subtype == letter
-            letter = letter.succ
-          end
+          letter = letter.succ unless o.subtype == letter
         end
       end
 

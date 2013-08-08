@@ -5,7 +5,7 @@ describe ArticleRef do
     before(:all) { @article_ref = Fabricate(:article_ref) }
     after(:all) { @article_ref.destroy }
 
-    it { should respond_to(:article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name, :local, :number_or_fascicle, :publication_date, :second_author, :third_author, :volume_number) }
+    it { should respond_to(:article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name, :local, :number_or_fascicle, :year, :second_author, :third_author, :volume_number) }
     it { should have_one(:reference) }
 
     # Pending
@@ -15,7 +15,7 @@ describe ArticleRef do
     it { should validate_presence_of(:article_title) }
     it { should validate_presence_of(:journal_name) }
     it { should validate_presence_of(:local) }
-    it { should validate_presence_of(:publication_date) }
+    it { should validate_presence_of(:year) }
     it { should validate_presence_of(:initial_page) }
     it { should validate_presence_of(:end_page) }
   end
@@ -84,7 +84,7 @@ describe ArticleRef do
       end
 
       it 'should include year' do
-        article_ref.direct_citation.should include(article_ref.publication_date.year.to_s)
+        article_ref.direct_citation.should include(article_ref.year.to_s)
       end
 
       it 'should include (' do
@@ -108,7 +108,7 @@ describe ArticleRef do
       end
 
       it 'should include year' do
-        article_ref.indirect_citation.should include(article_ref.publication_date.year.to_s)
+        article_ref.indirect_citation.should include(article_ref.year.to_s)
       end
 
       it 'should include (' do

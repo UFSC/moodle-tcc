@@ -27,7 +27,7 @@ class InternetRef < ActiveRecord::Base
   private
 
   def check_equality
-    internet_refs = BookRef.where("(author = ? ) AND (YEAR(access_date) = ?)", author, access_date.year)
+    internet_refs = InternetRef.where("(author = ? ) AND (YEAR(access_date) = ?)", author, access_date.year)
 
     update_subtype_field(self, internet_refs)
   end
