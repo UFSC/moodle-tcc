@@ -124,30 +124,49 @@ describe ArticleRef do
 
   context 'same_author' do
     describe '#check_equality' do
+      after(:each) do
+        ArticleRef.destroy_all
+      end
+
       it 'subtype should be nil' do
-        article_ref1 = Fabricate(:article_ref)
-        article_ref1.first_author = 'Autor 1'
-        article_ref1.second_author = 'Autor 2'
-        article_ref1.third_author = 'Autor 3'
-        article_ref1.save
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+
+        article_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be nil after one update' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+        article_ref1.save!
 
         article_ref1.subtype.should be_nil
       end
 
       it 'subtype should be set correctly' do
-        article_ref1 = Fabricate(:article_ref)
-        article_ref1.first_author = 'Autor 1'
-        article_ref1.second_author = 'Autor 2'
-        article_ref1.third_author = 'Autor 3'
-        article_ref1.save
-        article_ref2 = Fabricate(:article_ref)
-        article_ref2.first_author = 'Autor 1'
-        article_ref2.second_author = 'Autor 2'
-        article_ref2.third_author = 'Autor 3'
-        article_ref2.save
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+
+        article_ref2 = Fabricate.build(:article_ref)
+        article_ref2.first_author = 'Autor A1'
+        article_ref2.second_author = 'Autor A2'
+        article_ref2.third_author = 'Autor A3'
+        article_ref2.save!
+
+        article_ref1.reload
 
         article_ref1.subtype.should == 'a'
         article_ref2.subtype.should == 'b'
+
       end
 
     end

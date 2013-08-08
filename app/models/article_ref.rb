@@ -5,7 +5,7 @@ class ArticleRef < ActiveRecord::Base
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
 
-  before_save :check_equality
+  before_create  :check_equality
   before_update :check_equality
 
   attr_accessible :article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name,
@@ -41,10 +41,22 @@ class ArticleRef < ActiveRecord::Base
   end
 
   def check_equality
-    article_refs = ArticleRef.where("(first_author = ? OR second_author = ? OR third_author = ?) AND
-                                    (first_author = ? OR second_author = ? OR third_author = ?) AND
-                                    (first_author = ? OR second_author = ? OR third_author = ?) AND
-                                    (year = ?)", first_author, second_author, third_author, first_author, second_author, third_author, first_author, second_author, third_author, year)
+    article_refs = ArticleRef.where("(
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?)
+                                    )
+                                    AND year = ?",
+                                    first_author, second_author, third_author,
+                                    first_author, third_author, second_author,
+                                    second_author, first_author, third_author,
+                                    second_author, third_author, first_author,
+                                    third_author, first_author, second_author,
+                                    third_author, second_author, first_author,
+                                    year)
 
     update_subtype_field(self, article_refs)
 
