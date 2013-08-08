@@ -9,14 +9,15 @@ class ArticleRef < ActiveRecord::Base
   before_update :check_equality
 
   attr_accessible :article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name,
-                  :local, :number_or_fascicle, :publication_date, :second_author, :third_author, :volume_number
+                  :local, :number_or_fascicle, :year, :second_author, :third_author, :volume_number
 
-  validates_presence_of :first_author, :article_title, :journal_name, :local, :publication_date, :initial_page, :end_page
+  validates_presence_of :first_author, :article_title, :journal_name, :local, :year, :initial_page, :end_page
 
   validates :volume_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
   validates :number_or_fascicle, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
   validates :initial_page, :numericality => {:only_integer => true, :greater_than => 0}
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
+  validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
 
 
@@ -24,11 +25,11 @@ class ArticleRef < ActiveRecord::Base
     authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
     authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if second_author
     authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if third_author
-    "(#{authors}, #{publication_date.year}, p. #{initial_page})"
+    "(#{authors}, #{year}, p. #{initial_page})"
   end
 
   def indirect_citation
-    "#{first_author.split(' ').first.capitalize} (#{publication_date.year})"
+    "#{first_author.split(' ').first.capitalize} (#{year})"
   end
 
   private
@@ -43,7 +44,7 @@ class ArticleRef < ActiveRecord::Base
     article_refs = ArticleRef.where("(first_author = ? OR second_author = ? OR third_author = ?) AND
                                     (first_author = ? OR second_author = ? OR third_author = ?) AND
                                     (first_author = ? OR second_author = ? OR third_author = ?) AND
-                                    (YEAR(publication_date) = ?)", first_author, second_author, third_author, first_author, second_author, third_author, first_author, second_author, third_author, publication_date.year)
+                                    (year = ?)", first_author, second_author, third_author, first_author, second_author, third_author, first_author, second_author, third_author, year)
 
     update_subtype_field(self, article_refs)
 
