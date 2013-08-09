@@ -128,6 +128,12 @@ describe ArticleRef do
         ArticleRef.destroy_all
       end
 
+      it 'should invoke callback' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.should_receive(:check_equality)
+        article_ref1.save!
+      end
+
       it 'subtype should be nil' do
         article_ref1 = Fabricate.build(:article_ref)
         article_ref1.first_author = 'Autor A1'
@@ -166,6 +172,34 @@ describe ArticleRef do
 
         article_ref1.subtype.should == 'a'
         article_ref2.subtype.should == 'b'
+
+      end
+
+      it 'should set subtype to nil if object is different' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+
+        article_ref2 = Fabricate.build(:article_ref)
+        article_ref2.first_author = 'Autor A1'
+        article_ref2.second_author = 'Autor A2'
+        article_ref2.third_author = 'Autor A3'
+        article_ref2.save!
+
+        article_ref1.reload
+
+        article_ref1.subtype.should == 'a'
+        article_ref2.subtype.should == 'b'
+
+        article_ref2
+        article_ref2.first_author = 'Autor A10'
+        article_ref2.save!
+        article_ref2.reload
+
+        article_ref1.subtype.should be_nil
+        article_ref2.subtype.should be_nil
 
       end
 

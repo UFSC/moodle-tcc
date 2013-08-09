@@ -37,4 +37,88 @@ describe BookRef do
     it { should allow_value(5).for(:edition_number) }
   end
 
+  context 'same_author' do
+    describe '#check_equality' do
+      after(:each) do
+        BookRef.destroy_all
+      end
+
+      it 'should invoke callback' do
+        book_ref1 = Fabricate.build(:book_ref)
+        book_ref1.should_receive(:check_equality)
+        book_ref1.save!
+      end
+
+      it 'subtype should be nil' do
+        book_ref1 = Fabricate.build(:book_ref)
+        book_ref1.first_author = 'Autor A1'
+        book_ref1.second_author = 'Autor A2'
+        book_ref1.third_author = 'Autor A3'
+        book_ref1.save!
+
+        book_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be nil after one update' do
+        book_ref1 = Fabricate.build(:book_ref)
+        book_ref1.first_author = 'Autor A1'
+        book_ref1.second_author = 'Autor A2'
+        book_ref1.third_author = 'Autor A3'
+        book_ref1.save!
+        book_ref1.save!
+
+        book_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be set correctly' do
+        book_ref1 = Fabricate.build(:book_ref)
+        book_ref1.first_author = 'Autor A1'
+        book_ref1.second_author = 'Autor A2'
+        book_ref1.third_author = 'Autor A3'
+        book_ref1.save!
+
+        book_ref2 = Fabricate.build(:book_ref)
+        book_ref2.first_author = 'Autor A1'
+        book_ref2.second_author = 'Autor A2'
+        book_ref2.third_author = 'Autor A3'
+        book_ref2.save!
+
+        book_ref1.reload
+
+        book_ref1.subtype.should == 'a'
+        book_ref2.subtype.should == 'b'
+
+      end
+
+      it 'should set subtype to nil if object is different' do
+        book_ref1 = Fabricate.build(:book_ref)
+        book_ref1.first_author = 'Autor A1'
+        book_ref1.second_author = 'Autor A2'
+        book_ref1.third_author = 'Autor A3'
+        book_ref1.save!
+
+        book_ref2 = Fabricate.build(:book_ref)
+        book_ref2.first_author = 'Autor A1'
+        book_ref2.second_author = 'Autor A2'
+        book_ref2.third_author = 'Autor A3'
+        book_ref2.save!
+
+        book_ref1.reload
+
+        book_ref1.subtype.should == 'a'
+        book_ref2.subtype.should == 'b'
+
+        book_ref2
+        book_ref2.first_author = 'Autor A10'
+        book_ref2.save!
+        book_ref2.reload
+
+        book_ref1.subtype.should be_nil
+        book_ref2.subtype.should be_nil
+
+      end
+
+    end
+  end
+
 end

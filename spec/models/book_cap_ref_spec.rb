@@ -58,4 +58,85 @@ describe BookCapRef do
     it { should allow_value(1).for(:end_page) }
     it { should allow_value(5).for(:end_page) }
   end
+
+
+  context 'same_author' do
+    describe '#check_equality' do
+      after(:each) do
+        BookCapRef.destroy_all
+      end
+
+      it 'should invoke callback' do
+        book_cap_ref1 = Fabricate.build(:book_cap_ref)
+        book_cap_ref1.should_receive(:check_equality)
+        book_cap_ref1.save!
+      end
+
+      it 'subtype should be nil' do
+        book_cap_ref1 = Fabricate.build(:book_cap_ref)
+        book_cap_ref1.book_author = 'Autor A1'
+
+        book_cap_ref1.save!
+
+        book_cap_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be nil after one update' do
+        book_cap_ref1 = Fabricate.build(:book_cap_ref)
+        book_cap_ref1.book_author = 'Autor A1'
+
+        book_cap_ref1.save!
+        book_cap_ref1.save!
+
+        book_cap_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be set correctly' do
+        book_cap_ref1 = Fabricate.build(:book_cap_ref)
+        book_cap_ref1.book_author = 'Autor A1'
+
+        book_cap_ref1.save!
+
+        book_cap_ref2 = Fabricate.build(:book_cap_ref)
+        book_cap_ref2.book_author = 'Autor A1'
+
+        book_cap_ref2.save!
+
+        book_cap_ref1.reload
+
+        book_cap_ref1.subtype.should == 'a'
+        book_cap_ref2.subtype.should == 'b'
+
+      end
+
+      it 'should set subtype to nil if object is different' do
+        book_cap_ref1 = Fabricate.build(:book_cap_ref)
+        book_cap_ref1.book_author = 'Autor A1'
+
+        book_cap_ref1.save!
+
+        book_cap_ref2 = Fabricate.build(:book_cap_ref)
+        book_cap_ref2.book_author = 'Autor A1'
+
+        book_cap_ref2.save!
+
+        book_cap_ref1.reload
+
+        book_cap_ref1.subtype.should == 'a'
+        book_cap_ref2.subtype.should == 'b'
+
+        book_cap_ref2
+        book_cap_ref2.book_author = 'Autor A10'
+        book_cap_ref2.save!
+        book_cap_ref2.reload
+
+        book_cap_ref1.subtype.should be_nil
+        book_cap_ref2.subtype.should be_nil
+
+      end
+
+    end
+  end
+
+
 end
