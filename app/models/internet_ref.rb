@@ -4,6 +4,8 @@ class InternetRef < ActiveRecord::Base
 
   before_save :check_equality
   before_update :check_equality
+  after_update :check_difference, :if => Proc.new { (self.author_changed?) }
+
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :references
@@ -30,6 +32,15 @@ class InternetRef < ActiveRecord::Base
     internet_refs = InternetRef.where("(author = ? ) AND (YEAR(access_date) = ?)", author, access_date.year)
 
     update_subtype_field(self, internet_refs)
+  end
+
+  def check_difference
+    internet_refs = InternetRef.where("(author = ? ) AND (YEAR(access_date) = ?)", author, access_date.year)
+
+    update_refs(internet_refs)
+    internet_refs = InternetRef.where("(author = ? ) AND (YEAR(access_date) = ?)", author_was, access_date.year)
+
+    update_refs(internet_refs)
   end
 
 end

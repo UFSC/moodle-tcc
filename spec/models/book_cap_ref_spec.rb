@@ -128,6 +128,7 @@ describe BookCapRef do
         book_cap_ref2
         book_cap_ref2.book_author = 'Autor A10'
         book_cap_ref2.save!
+        book_cap_ref1.reload
         book_cap_ref2.reload
 
         book_cap_ref1.subtype.should be_nil

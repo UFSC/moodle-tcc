@@ -16,4 +16,22 @@ module ModelsUtils
     end
   end
 
+  def update_refs(objects)
+    if objects.size == 1
+      objects.first.update_column :subtype, nil
+    elsif objects.size > 1
+      order_subtype_fields(objects)
+    end
+  end
+
+  private
+
+  def order_subtype_fields(objects)
+    letter = 'a'
+    objects.each do |o|
+      o.update_column :subtype, letter
+      letter = letter.succ
+    end
+  end
+
 end

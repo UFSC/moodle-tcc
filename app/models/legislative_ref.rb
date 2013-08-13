@@ -4,6 +4,8 @@ class LegislativeRef < ActiveRecord::Base
 
   before_save :check_equality
   before_update :check_equality
+  after_update :check_difference, :if => Proc.new { (self.publisher_changed?) }
+
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :references
@@ -31,6 +33,15 @@ class LegislativeRef < ActiveRecord::Base
     legislative_refs = LegislativeRef.where("(publisher = ? ) AND (year = ?)", publisher, year)
 
     update_subtype_field(self, legislative_refs)
+  end
+
+  def check_difference
+    legislative_refs = LegislativeRef.where("(publisher = ? ) AND (year = ?)", publisher, year)
+
+    update_refs(legislative_refs)
+    legislative_refs = LegislativeRef.where("(publisher = ? ) AND (year = ?)", publisher_was, year)
+
+    update_refs(legislative_refs)
   end
 
 end

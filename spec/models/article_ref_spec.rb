@@ -128,9 +128,17 @@ describe ArticleRef do
         ArticleRef.destroy_all
       end
 
-      it 'should invoke callback' do
+      it 'should invoke check_equality' do
         article_ref1 = Fabricate.build(:article_ref)
         article_ref1.should_receive(:check_equality)
+
+        article_ref1.save!
+      end
+      xit 'should invoke check_difference' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A10'
+        article_ref1.should_receive(:check_difference)
+
         article_ref1.save!
       end
 
@@ -197,6 +205,7 @@ describe ArticleRef do
         article_ref2.first_author = 'Autor A10'
         article_ref2.save!
         article_ref2.reload
+        article_ref1.reload
 
         article_ref1.subtype.should be_nil
         article_ref2.subtype.should be_nil

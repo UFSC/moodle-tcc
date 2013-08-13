@@ -111,6 +111,7 @@ describe BookRef do
         book_ref2
         book_ref2.first_author = 'Autor A10'
         book_ref2.save!
+        book_ref1.reload
         book_ref2.reload
 
         book_ref1.subtype.should be_nil

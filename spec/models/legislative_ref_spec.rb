@@ -106,6 +106,7 @@ describe LegislativeRef do
         legislative_ref2
         legislative_ref2.publisher = 'Autor A10'
         legislative_ref2.save!
+        legislative_ref1.reload
         legislative_ref2.reload
 
         legislative_ref1.subtype.should be_nil

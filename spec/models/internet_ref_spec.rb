@@ -99,6 +99,7 @@ describe InternetRef do
         internet_ref2
         internet_ref2.author = 'Autor A10'
         internet_ref2.save!
+        internet_ref1.reload
         internet_ref2.reload
 
         internet_ref1.subtype.should be_nil

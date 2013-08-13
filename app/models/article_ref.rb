@@ -5,8 +5,9 @@ class ArticleRef < ActiveRecord::Base
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
 
-  before_create  :check_equality
+  before_create :check_equality
   before_update :check_equality
+  after_update :check_difference, :if => Proc.new { (self.first_author_changed? || self.second_author_changed? || self.third_author_changed?) }
 
   attr_accessible :article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name,
                   :local, :number_or_fascicle, :year, :second_author, :third_author, :volume_number
@@ -33,6 +34,10 @@ class ArticleRef < ActiveRecord::Base
   end
 
   private
+
+  def check_changed
+    self.first_author.changed? || self.second_author.changed? || self.third_author.changed?
+  end
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
@@ -62,4 +67,45 @@ class ArticleRef < ActiveRecord::Base
 
   end
 
+  def check_difference
+    article_refs = ArticleRef.where("(
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?)
+                                    )
+                                    AND year = ?",
+                                    first_author, second_author, third_author,
+                                    first_author, third_author, second_author,
+                                    second_author, first_author, third_author,
+                                    second_author, third_author, first_author,
+                                    third_author, first_author, second_author,
+                                    third_author, second_author, first_author,
+                                    year)
+
+    update_refs(article_refs)
+
+    article_refs = ArticleRef.where("(
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
+                                    (first_author = ? AND second_author = ? AND third_author = ?)
+                                    )
+                                    AND year = ?",
+                                    first_author_was, second_author_was, third_author_was,
+                                    first_author_was, third_author_was, second_author_was,
+                                    second_author_was, first_author_was, third_author_was,
+                                    second_author_was, third_author_was, first_author_was,
+                                    third_author_was, first_author_was, second_author_was,
+                                    third_author_was, second_author_was, first_author_was,
+                                    year)
+
+    update_refs(article_refs)
+
+
+  end
 end
