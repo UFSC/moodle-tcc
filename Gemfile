@@ -85,6 +85,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'metric_fu', :require => false
 end
 
 # Gems used only for assets and not required
