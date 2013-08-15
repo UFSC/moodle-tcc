@@ -1,30 +1,24 @@
 class ServiceController < ApplicationController
+  before_filter :check_consumer_key
+
   def report
     respond_to do |format|
-      if params[:consumer_key] == TCC_CONFIG['consumer_key']
-        result = get_report_result
-        if params[:user_ids]
-          format.json  { render :json => result }
-        else
-          format.json  { render :json => { error_message: 'Invalid params (missing user_ids)' } }
-        end
+      result = get_report_result
+      if params[:user_ids]
+        format.json  { render :json => result }
       else
-        format.json  { render :json => { error_message: 'Invalid consumer key' } }
+        format.json  { render :json => { error_message: 'Invalid params (missing user_ids)' } }
       end
     end
   end
 
   def get_definition
     respond_to do |format|
-      if params[:consumer_key] == TCC_CONFIG['consumer_key']
-        result = get_tcc_definition_result
-        if params[:tcc_definition_id]
-          format.json  { render :json => result }
-        else
-          format.json  { render :json => { error_message: 'Invalid params (missing tcc_definition_id)' } }
-        end
+      result = get_tcc_definition_result
+      if params[:tcc_definition_id]
+        format.json  { render :json => result }
       else
-        format.json  { render :json => { error_message: 'Invalid consumer key' } }
+        format.json  { render :json => { error_message: 'Invalid params (missing tcc_definition_id)' } }
       end
     end
   end
@@ -69,5 +63,11 @@ class ServiceController < ApplicationController
         end
       }
     }
+  end
+
+  def check_consumer_key
+    if params[:consumer_key] != TCC_CONFIG['consumer_key']
+      render :json => { error_message: 'Invalid consumer key' }
+    end
   end
 end
