@@ -12,11 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-all
-//= require bootstrap-datepicker
+//= require bootstrap-alert
+//= require bootstrap-modal
+//= require bootstrap-tab
+//= require bootstrap-transition
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR
 //= require ckeditor/init
 //= require_tree .
 //= require twitter/bootstrap/rails/confirm
+
 $.fn.twitter_bootstrap_confirmbox.defaults = {
     fade: true,
     title: 'TCC UNA-SUS', // if title equals null window.top.location.origin is used

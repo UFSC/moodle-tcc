@@ -1,7 +1,7 @@
 $(function() {
     $("[data-behaviour~='datepicker']").datepicker({
         format: "dd/mm/yyyy",
-        language: 'pt',
+        language: 'pt-BR',
         autoclose: true
     });
 });

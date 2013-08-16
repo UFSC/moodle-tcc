@@ -24,15 +24,9 @@ gem 'inherited_resources'
 # Model versioning
 gem 'paper_trail'
 
-# Compass + Twitter Bootstrap
-gem 'compass_twitter_bootstrap'
+# Twitter Bootstrap
 gem 'bootstrap-datepicker-rails'
-
-# Confirm dialog with twitter boostrap layout
 gem 'twitter-bootstrap-rails-confirm'
-
-# Javascript
-gem 'jquery-rails'
 
 # LTI for moodle integration
 gem 'ims-lti'
@@ -93,7 +87,7 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
+  gem 'bootstrap-sass', '~> 2.3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
