@@ -12,6 +12,7 @@ def moodle_lti_params(roles = 'student', type = 'portfolio')
   tc.resource_link_id = 1
   tc.roles = roles
   tc.user_id = 123
+  tc.tool_consumer_instance_guid = 'localhost'
   tc.custom_params = {
       'type' => type,
       'tcc_definition' => @tcc_definition.id
