@@ -9,7 +9,7 @@ class InstructorAdminController < ApplicationController
     if current_user.view_all?
       # usuário com permissão de visualização de todos estudantes de um determinado template de tcc
       tcc_definition_id = @tp.custom_params['tcc_definition']
-      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).paginate(:page => params[:page], :per_page => 30)
+      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).where('tutor_group IS NOT NULL').paginate(:page => params[:page], :per_page => 30)
     else
       @tccs = Tcc.where(tutor_group: group).paginate(:page => params[:page], :per_page => 30)
     end
