@@ -11,7 +11,7 @@ SistemaTcc::Application.routes.draw do
 
   # Web Service
   match 'reportingservice' => 'service#report', :defaults => { :format => 'json' }
-  match 'tcc_definition_service' => 'service#get_definition', :defaults => { :format => 'json' }
+  match 'tcc_definition_service' => 'service#tcc_definition', :defaults => { :format => 'json' }
 
   #TCC routes
   get "tcc" => 'tccs#show', as: 'show_tcc'
