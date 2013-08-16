@@ -74,6 +74,7 @@ module Authentication
       # TODO: criar tabela para armazenar consumer_key => consumer_secret
 
       key = params['oauth_consumer_key']
+      instance_guid = params['tool_consumer_instance_guid']
 
       # Verifica se a chave foi informada e se é uma chave existente
       if key.blank? || key != TCC_CONFIG['consumer_key']
@@ -85,6 +86,19 @@ module Authentication
         @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
 
         return show_error "Consumer key wasn't recognized"
+      end
+
+      # Verifica se o host está autorizado a realizar a requisição
+      # A idéia aqui é principalmente evitar que erroneamente seja acessado pelo desenvolvimento
+      if TCC_CONFIG['instance_guid'] && instance_guid != TCC_CONFIG['instance_guid']
+        logger.error 'Unauthorized instance guid'
+
+        @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
+
+        @tp.lti_msg = 'You are not authorized to use this application. (Unauthorized instance guid)'
+        @tp.lti_errorlog = 'Unauthorized guid'
+
+        return show_error 'Unauthorized instance guid'
       end
 
       logger.debug 'LTI TP Initialized with valid key/secret'
