@@ -46,7 +46,7 @@ create_tcc_definitions('Turma A', definition)
 #
 definition = {
     'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
-    'Eixo 2' => [{1803 => 'Planejamento na Atenção Básica'}, {1786 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 2' => [{1786 => 'Planejamento na Atenção Básica'}, {1803 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
 }
 create_tcc_definitions('Turma B', definition)
 
