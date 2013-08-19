@@ -9,6 +9,7 @@ module MoodleGrade
                     :grademin => 0,
                     :grademax => 100,
                     :wstoken => TCC_CONFIG['token']) do |response|
+      MooddleWsClient.check_error(response)
       response
     end
   end
@@ -25,7 +26,17 @@ module MoodleGrade
                     :userid => userid,
                     :grade => grade.to_i,
                     :wstoken => TCC_CONFIG['token']) do |response|
+      MooddleWsClient.check_error(response)
       response
+    end
+  end
+
+  class MooddleWsClient
+    def self.check_error(response)
+      if response.code != 200
+        Rails.logger.error "Falha ao acessar o webservice do Moodle: HTTP_ERROR: #{response.code}"
+        return "Falha ao acessar o Moodle: (HTTP_ERROR: #{response.code})"
+      end
     end
   end
 end
