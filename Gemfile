@@ -74,6 +74,7 @@ group :test do
   gem 'capybara'
   gem 'rack_session_access'
   gem 'capybara-webkit'
+  gem 'json_spec'
 
 end
 

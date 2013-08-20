@@ -9,6 +9,10 @@ SistemaTcc::Application.routes.draw do
   # Ajax
   match "ajax/build" => "ajax#build"
 
+  # Web Service
+  match 'reportingservice' => 'service#report', :defaults => { :format => 'json' }
+  match 'tcc_definition_service' => 'service#tcc_definition', :defaults => { :format => 'json' }
+
   #TCC routes
   get "tcc" => 'tccs#show', as: 'show_tcc'
   put "tcc" => 'tccs#save', as: 'save_tcc'

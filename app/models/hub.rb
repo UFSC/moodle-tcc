@@ -45,6 +45,17 @@ class Hub < ActiveRecord::Base
     self.reflection.blank?
   end
 
+  def grade_date
+    if self.grade && self.admin_evaluation_ok?
+      self.updated_at
+    else
+      last_version = self.versions.where(state: 'admin_evaluation_ok').order(:created_at).last
+      unless last_version.nil?
+        last_version.reify.updated_at
+      end
+    end
+  end
+
   private
 
   def create_or_update_diaries
