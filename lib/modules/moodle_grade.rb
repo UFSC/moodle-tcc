@@ -6,8 +6,6 @@ module MoodleGrade
                     :wsfunction => 'local_wstcc_create_grade_item',
                     :courseid => courseid,
                     :itemname => itemname,
-                    :grademin => 0,
-                    :grademax => 100,
                     :wstoken => TCC_CONFIG['token']) do |response|
       MooddleWsClient.check_error(response)
       response
@@ -21,8 +19,6 @@ module MoodleGrade
                     :wsfunction => 'local_wstcc_set_grade',
                     :courseid => courseid,
                     :itemname => itemname,
-                    :grademin => 0,
-                    :grademax => 100,
                     :userid => userid,
                     :grade => grade.to_i,
                     :wstoken => TCC_CONFIG['token']) do |response|
