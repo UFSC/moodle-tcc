@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805223246) do
+ActiveRecord::Schema.define(:version => 20130826203107) do
 
   create_table "abstracts", :force => true do |t|
-    t.text     "content_pt",   :limit => 16777215
-    t.string   "key_words_pt"
+    t.text     "content",    :limit => 16777215
+    t.string   "key_words"
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "state"
   end
 
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
+    t.string  "subtype"
   end
 
   create_table "book_cap_refs", :force => true do |t|
@@ -54,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
+    t.string  "subtype"
   end
 
   create_table "book_refs", :force => true do |t|
@@ -69,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.integer "year"
     t.string  "type_quantity"
     t.integer "num_quantity"
+    t.string  "subtype"
   end
 
   create_table "diaries", :force => true do |t|
@@ -143,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.string "subtitle"
     t.string "url"
     t.date   "access_date"
+    t.string "subtype"
   end
 
   create_table "legislative_refs", :force => true do |t|
@@ -153,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.string  "publisher"
     t.integer "year"
     t.integer "total_pages"
+    t.string  "subtype"
   end
 
   create_table "presentations", :force => true do |t|
@@ -195,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20130805223246) do
     t.datetime "updated_at",        :null => false
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
+    t.integer  "orientador"
   end
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"

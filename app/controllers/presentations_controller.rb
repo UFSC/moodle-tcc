@@ -20,11 +20,11 @@ class PresentationsController < ApplicationController
       @presentation.attributes = params[:presentation]
       if @presentation.valid?
         case params[:presentation][:new_state]
-          when 'revision'
+          when 'sent_to_admin_for_revision'
             if @presentation.may_send_to_admin_for_revision?
               @presentation.send_to_admin_for_revision
             end
-          when 'evaluation'
+          when 'sent_to_admin_for_evaluation'
             if @presentation.may_send_to_admin_for_evaluation?
               @presentation.send_to_admin_for_evaluation
             end

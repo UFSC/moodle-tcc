@@ -1,7 +1,7 @@
 # encoding: utf-8
 namespace :tcc do
 
-  desc 'Cria todos os TCCs das turmas'
+  desc 'TCC | Cria todos os TCCs das turmas'
   task :load_all, [:turma, :tcc_definition_id] => :environment do |t, args|
     #Turma A '20131', 1
     #Turma B '20132', 2
@@ -22,10 +22,12 @@ namespace :tcc do
 
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
+        orientador = OrientadorGroup.get_orientador(aluno.matricula)
 
         tcc = Tcc.create(moodle_user: user.id,
                    name: user.firstname+' '+user.lastname,
                    tutor_group: group,
+                   orientador: orientador,
                    tcc_definition: tcc_definition)
 
         result << [aluno.matricula, tcc.id]

@@ -5,23 +5,8 @@ class LtiController < ApplicationController
   def establish_connection
     if authorize_lti!
       @type = @tp.custom_params['type']
-      if current_user.student?
-        logger.debug 'LTI user identified as a student'
-        if @type == 'tcc'
-          redirect_to show_tcc_path
-        else
-          redirect_to show_hubs_path(position: '1')
-        end
-      elsif current_user.instructor?
-        logger.debug 'LTI user identified as a instructor'
-        redirect_to instructor_admin_tccs_path
-      elsif current_user.view_all?
-        logger.debug 'LTI user is part of a view_all role'
-        redirect_to instructor_admin_tccs_path
-      else
-        logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
-        redirect_to access_denied_path
-      end
+
+      redirect_user_to_start_page
     end
   end
 

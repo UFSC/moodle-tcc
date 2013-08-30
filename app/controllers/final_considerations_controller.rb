@@ -20,11 +20,11 @@ class FinalConsiderationsController < ApplicationController
       @final_considerations.attributes = params[:final_considerations]
       if @final_considerations.valid?
         case params[:final_considerations][:new_state]
-          when 'revision'
+          when 'sent_to_admin_for_revision'
             if @final_considerations.may_send_to_admin_for_revision?
               @final_considerations.send_to_admin_for_revision
             end
-          when 'evaluation'
+          when 'sent_to_admin_for_evaluation'
             if @final_considerations.may_send_to_admin_for_evaluation?
               @final_considerations.send_to_admin_for_evaluation
             end

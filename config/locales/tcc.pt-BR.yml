@@ -24,6 +24,7 @@ pt-BR:
     attributes:
       tcc:
         leader: "Orientador"
+        grade: "Nota"
         name: "Nome"
         title: "Título"
         defense_date: "Data da defesa"

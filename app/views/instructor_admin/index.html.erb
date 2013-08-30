@@ -1,15 +1,66 @@
-<% if @type == 'portfolio' %>
+<h3>Lista de TCCs</h3><br />
+<h4>
+  <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
+      <%= display_icon('icon-refresh') %>
+      Atualizar lista
+  <% end %>
+</h4>
 
-  <h3>Lista de Portfólios</h3><br />
-  <%= render partial: 'tutor' %>
-
-<% elsif @type == 'tcc' %>
-
-  <h3>Lista de TCCs</h3><br />
-  <%= render partial: 'leader' %>
-
-<% else %>
-  <p class="text-error">Parâmetro inválido</p>
-<% end %>
-
+<table class="table table-bordered">
+  <thead>
+  <tr class="blue-header-table">
+    <th>Estudante</th>
+    <th>Nota</th>
+    <th>Resumo</th>
+    <th>Apresentação</th>
+    <th>Considerações finais</th>
+    <% @hubs.each do |hub_name| %>
+        <th><%= hub_name %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tccs.each do |tcc| %>
+      <tr>
+        <td><%= tcc.name %></td>
+        <td>Falta..</td>
+        <td>
+          <% unless tcc.abstract.nil? %>
+              <%= get_state(tcc.abstract) %>:
+              <%= link_to get_action(tcc.abstract), save_abstract_path(moodle_user: tcc.moodle_user),
+                          target: '_blank', class: 'label label-success' %>
+          <% else %>
+              <%= t('states.blank') %>
+          <% end %>
+        </td>
+        <td>
+          <% unless tcc.presentation.nil? %>
+              <%= get_state(tcc.presentation) %>:
+              <%= link_to get_action(tcc.presentation), save_presentation_path(moodle_user: tcc.moodle_user),
+                          target: '_blank', class: 'label label-success' %>
+          <% else %>
+              <%= t('states.blank') %>
+          <% end %>
+        </td>
+        <td>
+          <% unless tcc.final_considerations.nil? %>
+              <%= get_state(tcc.final_considerations) %>:
+              <%= link_to get_action(tcc.final_considerations), save_final_considerations_path(moodle_user: tcc.moodle_user),
+                          target: '_blank', class: 'label label-success' %>
+          <% else %>
+              <%= t('states.blank') %>
+          <% end %>
+        </td>
+        <% tcc.fetch_all_hubs.each do |hub| %>
+            <td>
+              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
+              <%= link_to get_action(hub),
+                          show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                          target: '_blank', class: 'label label-success' %>
+            </td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
 <%= will_paginate @tccs %>

@@ -19,11 +19,11 @@ class AbstractsController < ApplicationController
       @abstract.attributes = params[:abstract]
       if @abstract.valid?
         case params[:abstract][:new_state]
-          when 'revision'
+          when 'sent_to_admin_for_revision'
             if @abstract.may_send_to_admin_for_revision?
               @abstract.send_to_admin_for_revision
             end
-          when 'evaluation'
+          when 'sent_to_admin_for_evaluation'
             if @abstract.may_send_to_admin_for_evaluation?
               @abstract.send_to_admin_for_evaluation
             end

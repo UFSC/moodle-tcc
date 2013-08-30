@@ -90,8 +90,8 @@ class HubsController < ApplicationController
     @hub = @tcc.hubs.find_by_position(params[:position])
 
     if params[:hub][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
-      flash[:error] = 'Não é possível alterar para este estado sem ter atribuído uma nota.'
-      return redirect_to instructor_admin_tccs_path
+      flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
+      return redirect_user_to_start_page
     end
 
     case params[:hub][:new_state]
@@ -105,13 +105,13 @@ class HubsController < ApplicationController
         to_evaluation_ok(@hub)
       else
         flash[:error] = 'Estado selecionado é invádlio'
-        return redirect_to instructor_admin_tccs_path
+        return redirect_user_to_start_page
 
     end
 
     @hub.save!
     flash[:success] = t(:successfully_saved)
-    redirect_to instructor_admin_tccs_path
+    redirect_user_to_start_page
   end
 
 end

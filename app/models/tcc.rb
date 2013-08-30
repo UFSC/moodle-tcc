@@ -1,5 +1,5 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :leader, :moodle_user, :name, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
+  attr_accessible :leader, :grade, :orientador, :moodle_user, :name, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes,
                   :final_considerations_attributes, :tcc_definition
 
@@ -39,6 +39,19 @@ class Tcc < ActiveRecord::Base
 
   default_scope order(:name)
 
+  def is_ok?
+    p = !presentation.nil? ? presentation.admin_evaluation_ok? : false
+    a = !abstract.nil? ? abstract.admin_evaluation_ok? : false
+    f = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
+    p && a && f && is_hubs_ok?
+  end
+
+  def is_hubs_ok?
+    hubs.each do |hub|
+      return false if !hub.admin_evaluation_ok?
+    end
+    true
+  end
 
   def tcc_definition=(value)
     super(value)
@@ -56,7 +69,7 @@ class Tcc < ActiveRecord::Base
   def self.hub_names
     # Lógica temporária para contemplar recurso existente
     # TODO: Encontrar uma relação entre o tipo de tcc_definition passado no LTI e filtrar somente itens daquele tipo.
-    TccDefinition.first.hub_definitions.each.map {|h| h.title }
+    TccDefinition.first.hub_definitions.each.map { |h| h.title }
   end
 
   private

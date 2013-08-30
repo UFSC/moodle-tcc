@@ -41,3 +41,7 @@ $(function(){
     warnLeavingUnsaved();
 
 });
+$(function(){
+    $('.tooltipped').tooltip();
+});
+
