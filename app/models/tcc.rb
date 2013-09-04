@@ -83,6 +83,7 @@ class Tcc < ActiveRecord::Base
 
   def create_or_update_hubs
     self.tcc_definition.hub_definitions.each do |hub_definition|
+      # TODO: fazer verificação da ramificação do usuário
 
       if self.hubs.empty?
         self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')

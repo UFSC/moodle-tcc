@@ -21,7 +21,7 @@ def create_tcc_definitions(title, hub_diaries)
 
           next if diary_id.nil?
 
-          DiaryDefinition.create(external_id: diary_id, hub_definition: hub, order: diary_index+1, title: diary_name)
+          DiaryDefinition.create(external_id: diary_id, hub_definition: hub, order: diary_index+1, title: diary_name, shortname: diary['shortname'])
         end
       end
     end
@@ -30,25 +30,28 @@ def create_tcc_definitions(title, hub_diaries)
 end
 
 #
-# TCC Definition TEMPORARIO - Turma A
-# TODO: Assim que houver a definição dos diarios do eixo 3 deve ser feito uma migração
+# TCC Definition - Turma A
 #
 definition = {
     'Eixo 1' => [{1264 => 'Saúde e sociedade'}, {1092 => 'Epidemiologia'}],
-    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}]
+    'Eixo 2' => [{1151 => 'Planejamento na Atenção Básica'}, {1133 => 'Gestão e Avaliação na Atenção Básica'}, {1163 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3 - ESF' => [{1940 => 'Atenção Integral à Saúde da Criança'}, {2055 => 'Atenção Integral à Saúde da Mulher'}, {2078 => 'Atenção Integral à Saúde do Adulto'}, {2124 => 'Atenção Integral à Saúde do Idoso'}],
+    'Eixo 3 - NASF' => [{2258 => 'Apoio Matricial'}, {1994 => 'Clínica Ampliada'}, {2014 => 'Projeto Terapêutico Singular'}, {2023 => 'Projeto de Saúde no Território'}]
+
 }
 create_tcc_definitions('Turma A', definition)
 
-
 #
-# TCC Definition TEMPORARIO - Turma B
-# TODO: Assim que houver a definição dos diarios do eixo 3 deve ser feito uma migração
+# TCC Definition - Turma B
 #
 definition = {
     'Eixo 1' => [{1550 => 'Saúde e sociedade'}, {1569 => 'Epidemiologia'}],
     'Eixo 2' => [{1786 => 'Planejamento na Atenção Básica'}, {1803 => 'Gestão e Avaliação na Atenção Básica'}, {2431 => 'Processo de Trabalho na Atenção Básica'}],
+    'Eixo 3 - ESF' => [{2327 => 'Atenção Integral à Saúde da Criança'}, {2328 => 'Atenção Integral à Saúde da Mulher'}, {2637 => 'Atenção Integral à Saúde do Adulto'}, {2693 => 'Atenção Integral à Saúde do Idoso'}],
+    'Eixo 3 - NASF' => [{2322 => 'Apoio Matricial'}, {2599 => 'Clínica Ampliada'}, {2661 => 'Projeto Terapêutico Singular'}, {2568 => 'Projeto de Saúde no Território'}]
 }
 create_tcc_definitions('Turma B', definition)
+
 
 #
 # TccDefinition para Turma A
