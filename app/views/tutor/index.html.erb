@@ -22,20 +22,26 @@
     <% end %>
   </tr>
   </thead>
+
   <tbody>
   <% @tccs.each do |tcc| %>
       <tr>
         <td><%= tcc.name %></td>
-        <% tcc.fetch_all_hubs(@type).each do |hub| %>
-            <td class="status">
+        <% tcc.hub_definitions.each do |hub_definition| %>
+          <% hub = tcc.hubs.where(hub_definition_id: hub_definition.id, type: 'HubPortfolio').first %>
+          <td class="status">
+            <% unless hub.nil? %>
               <%= get_status_label(hub, tcc.moodle_user) %>
-            </td>
-            <td class="grades">
+            <% end %>
+          </td>
+          <td class="grades">
+            <% unless hub.nil? %>
               <%= hub.grade if hub.admin_evaluation_ok? %>
-            </td>
+            <% end %>
+          </td>
         <% end %>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 
 </table>

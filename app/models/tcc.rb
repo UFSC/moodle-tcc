@@ -83,19 +83,22 @@ class Tcc < ActiveRecord::Base
 
   def create_or_update_hubs
     self.tcc_definition.hub_definitions.each do |hub_definition|
-      # Todo: fazer verificação da ramificação do usuário
 
-      if self.hubs.empty?
-        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
-        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
-      else
-        hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by_position hub_definition.position
-        hub_tcc = self.hubs.hub_tcc.find_or_initialize_by_position hub_definition.position
-        hub_portfolio.hub_definition = hub_definition
-        hub_tcc.hub_definition = hub_definition
-        hub_portfolio.save!
-        hub_tcc.save!
+      # Verificação da ramificação do usuário para os eixo que tiverem ramificações
+      if hub_definition.diary_shortname.blank? || MiddlewareUser::check_enrol(self.moodle_user, hub_definition.diary_shortname)
+        if self.hubs.empty?
+          self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
+          self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
+        else
+          hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by_position hub_definition.position
+          hub_tcc = self.hubs.hub_tcc.find_or_initialize_by_position hub_definition.position
+          hub_portfolio.hub_definition = hub_definition
+          hub_tcc.hub_definition = hub_definition
+          hub_portfolio.save!
+          hub_tcc.save!
+        end
       end
+
     end
   end
 
