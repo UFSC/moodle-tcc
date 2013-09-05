@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DiaryDefinition do
-  it { respond_to :external_id, :order, :position, :title, :shortname }
+  it { respond_to :external_id, :order, :position, :title }
 
   context 'validations' do
     it { should validate_presence_of :title }

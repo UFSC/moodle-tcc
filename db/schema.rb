@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904173800) do
+ActiveRecord::Schema.define(:version => 20130905191451) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20130904173800) do
     t.integer  "position"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.string   "diary_shortname"
   end
 
   add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
@@ -132,7 +133,6 @@ ActiveRecord::Schema.define(:version => 20130904173800) do
     t.datetime "updated_at",                            :null => false
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
-    t.string   "type"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
@@ -196,7 +196,6 @@ ActiveRecord::Schema.define(:version => 20130904173800) do
     t.datetime "updated_at",        :null => false
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
-    t.integer  "orientador"
   end
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
