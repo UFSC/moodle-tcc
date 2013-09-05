@@ -6,13 +6,13 @@ class Hub < ActiveRecord::Base
   has_many :diaries, :inverse_of => :hub
   accepts_nested_attributes_for :diaries
 
-  include TccStateMachine
+  include HubStateMachine
 
   # Estados para combo
   enumerize :new_state, in: Hub.aasm_states
 
   # Mass-Assignment
-  attr_accessible :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
+  attr_accessible :type, :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :admin_evaluation_ok?
 

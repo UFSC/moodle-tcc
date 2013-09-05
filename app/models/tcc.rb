@@ -43,11 +43,11 @@ class Tcc < ActiveRecord::Base
     p = !presentation.nil? ? presentation.admin_evaluation_ok? : false
     a = !abstract.nil? ? abstract.admin_evaluation_ok? : false
     f = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
-    p && a && f && is_hubs_ok?
+    p && a && f && is_hubs_tcc_ok?
   end
 
-  def is_hubs_ok?
-    hubs.each do |hub|
+  def is_hubs_tcc_ok?
+    hubs.where(:type => 'HubTcc').each do |hub|
       return false if !hub.admin_evaluation_ok?
     end
     true
@@ -58,8 +58,12 @@ class Tcc < ActiveRecord::Base
     create_or_update_hubs
   end
 
-  def fetch_all_hubs
-    self.hubs.order(:position)
+  def fetch_all_hubs(type)
+    if type == 'portfolio'
+      self.hubs.where(:type => 'HubPortfolio').order(:position)
+    else
+      self.hubs.where(:type => 'HubTcc').order(:position)
+    end
   end
 
   def hub_definitions
@@ -78,11 +82,15 @@ class Tcc < ActiveRecord::Base
     self.tcc_definition.hub_definitions.each do |hub_definition|
 
       if self.hubs.empty?
-        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
+        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
+        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
       else
-        hub = self.hubs.find_or_initialize_by_position hub_definition.position
-        hub.hub_definition = hub_definition
-        hub.save!
+        hub_portfolio = self.hubs.where(:type => 'HubPortfolio').find_or_initialize_by_position hub_definition.position
+        hub_tcc = self.hubs.where(:type => 'HubTcc').find_or_initialize_by_position hub_definition.position
+        hub_portfolio.hub_definition = hub_definition
+        hub_tcc.hub_definition = hub_definition
+        hub_portfolio.save!
+        hub_tcc.save!
       end
     end
   end

@@ -1,0 +1,4 @@
+class HubPortfolio < Hub
+
+
+end

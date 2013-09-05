@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130826203107) do
+ActiveRecord::Schema.define(:version => 20130904173800) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20130826203107) do
     t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
-    t.string  "subtype"
   end
 
   create_table "book_cap_refs", :force => true do |t|
@@ -55,7 +54,6 @@ ActiveRecord::Schema.define(:version => 20130826203107) do
     t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
-    t.string  "subtype"
   end
 
   create_table "book_refs", :force => true do |t|
@@ -71,7 +69,6 @@ ActiveRecord::Schema.define(:version => 20130826203107) do
     t.integer "year"
     t.string  "type_quantity"
     t.integer "num_quantity"
-    t.string  "subtype"
   end
 
   create_table "diaries", :force => true do |t|
@@ -135,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20130826203107) do
     t.datetime "updated_at",                            :null => false
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
+    t.string   "type"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
@@ -146,7 +144,6 @@ ActiveRecord::Schema.define(:version => 20130826203107) do
     t.string "subtitle"
     t.string "url"
     t.date   "access_date"
-    t.string "subtype"
   end
 
   create_table "legislative_refs", :force => true do |t|
@@ -157,7 +154,6 @@ ActiveRecord::Schema.define(:version => 20130826203107) do
     t.string  "publisher"
     t.integer "year"
     t.integer "total_pages"
-    t.string  "subtype"
   end
 
   create_table "presentations", :force => true do |t|

@@ -5,6 +5,12 @@ pt-BR:
     sent_to_admin_for_revision: 'Enviado para revisão'
     sent_to_admin_for_evaluation: 'Enviado para avaliação'
     admin_evaluation_ok: 'Avaliado'
+    new: 'Novo'
+    terminated: 'Finalizado'
+    tcc_draft: 'Rascunho (TCC)'
+    sent_to_leader_for_revision: 'Enviado para revisão (TCC)'
+    sent_to_leader_for_evaluation: 'Enviado para avaliação (TCC)'
+    leader_evaluation_ok: 'Avaliado (TCC)'
   states_label:
     blank: 'não editado'
     draft: 'rascunho'
@@ -16,6 +22,10 @@ pt-BR:
     sent_to_admin_for_revision: 'Comentar'
     sent_to_admin_for_evaluation: 'Avaliar'
     admin_evaluation_ok: 'Avaliado'
+    tcc_draft: 'Visualizar'
+    sent_to_leader_for_revision: 'Comentar'
+    sent_to_leader_for_evaluation: 'Avaliar'
+    leader_evaluation_ok: 'Avaliado'
   enumerize:
     hub:
       new_state:

@@ -17,7 +17,7 @@
             </div>
         <% end %>
 
-        <% if object.draft? %>
+        <% if object.draft? || object.new? %>
             <div class="row">
               <div id="old_tcc_object" class="span6" style="display: none">
                 <div class="rounded-border">

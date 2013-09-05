@@ -87,7 +87,7 @@ describe Tcc do
 
       tcc.hubs.size.should == 0
       tcc.tcc_definition = tcc_definition
-      tcc.hubs.size.should == 1
+      tcc.hubs.size.should == 2
     end
 
     it 'should create diaries defined on hub definition' do
@@ -108,7 +108,7 @@ describe Tcc do
       tcc_definition.save!
 
       tcc = Fabricate.build(:tcc)
-      tcc.hubs.size.should == 3
+      tcc.hubs.size.should == 1
 
       # garantir que não tem hub_definition
       tcc.hubs.first.hub_definition.should be_nil
@@ -123,7 +123,7 @@ describe Tcc do
       tcc.tcc_definition = tcc_definition
       tcc.save!
       tcc.reload
-      tcc.hubs.size.should == 3
+      tcc.hubs.size.should == 2
 
       # verificar se houve a atualização do campo
       tcc.hubs.first.hub_definition.should_not be_nil
@@ -143,12 +143,12 @@ describe Tcc do
       tcc.save!
 
       # contagem em profundidade para garantir que não houve criação
-      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 6
+      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 2
 
       tcc.tcc_definition = tcc_definition
       tcc.save!
       tcc.reload
-      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 6
+      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 3
 
       # verificar se houve a atualização do campo
       tcc.hubs.first.diaries.first.diary_definition.should_not be_nil

@@ -59,25 +59,33 @@
 
         <td>
           <% unless tcc.abstract.nil? %>
-              <%= get_state(tcc.abstract) %>:
-              <%= link_to get_action(tcc.abstract), save_abstract_path(moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
+              <% if tcc.abstract.new? %>
+                  Novo
+              <% else %>
+                  <%= get_state(tcc.abstract) %>:
+                  <%= link_to get_action(tcc.abstract), save_abstract_path(moodle_user: tcc.moodle_user),
+                              target: '_blank', class: 'label label-success' %>
+              <% end %>
           <% else %>
               <%= t('states.blank') %>
           <% end %>
         </td>
         <td>
           <% unless tcc.presentation.nil? %>
-              <%= get_state(tcc.presentation) %>:
-              <%= link_to get_action(tcc.presentation), save_presentation_path(moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
+              <% if tcc.presentation.new? %>
+                  Novo
+              <% else %>
+                  <%= get_state(tcc.presentation) %>:
+                  <%= link_to get_action(tcc.presentation), save_presentation_path(moodle_user: tcc.moodle_user),
+                              target: '_blank', class: 'label label-success' %>
+              <% end %>
           <% else %>
               <%= t('states.blank') %>
           <% end %>
         </td>
-        <% tcc.fetch_all_hubs.each do |hub| %>
+        <% tcc.fetch_all_hubs(@type).each do |hub| %>
             <td>
-              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
+              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.leader_evaluation_ok? %>:
               <%= link_to get_action(hub),
                           show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
                           target: '_blank', class: 'label label-success' %>
@@ -85,9 +93,13 @@
         <% end %>
         <td>
           <% unless tcc.final_considerations.nil? %>
-              <%= get_state(tcc.final_considerations) %>:
-              <%= link_to get_action(tcc.final_considerations), save_final_considerations_path(moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
+              <% if tcc.final_considerations.new? %>
+                  Novo
+              <% else %>
+                  <%= get_state(tcc.final_considerations) %>:
+                  <%= link_to get_action(tcc.final_considerations), save_final_considerations_path(moodle_user: tcc.moodle_user),
+                              target: '_blank', class: 'label label-success' %>
+              <% end %>
           <% else %>
               <%= t('states.blank') %>
           <% end %>

@@ -31,6 +31,10 @@ SistemaTcc::Application.routes.draw do
   match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
 
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
+
+  get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
+
+
   match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
   match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]
 

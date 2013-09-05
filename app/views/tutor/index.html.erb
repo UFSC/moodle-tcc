@@ -1,4 +1,4 @@
-<h3>Lista de Portfólios</h3><br />
+<h3>Lista de Portfólios</h3><br/>
 <h4>
   Tela de Tutor para <%= @group_name %>
 </h4>
@@ -26,7 +26,7 @@
   <% @tccs.each do |tcc| %>
       <tr>
         <td><%= tcc.name %></td>
-        <% tcc.fetch_all_hubs.each do |hub| %>
+        <% tcc.fetch_all_hubs(@type).each do |hub| %>
             <td class="status">
               <%= get_status_label(hub, tcc.moodle_user) %>
             </td>

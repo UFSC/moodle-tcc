@@ -12,13 +12,18 @@ module TccStateMachine
     base.attr_accessible :new_state
 
     base.aasm do
-      state :draft, :initial => true
+      state :new, :initial => true
+      state :draft
       state :sent_to_admin_for_revision
       state :sent_to_admin_for_evaluation
       state :admin_evaluation_ok
 
+      event :send_to_draft do
+        transitions :from => :new, :to => :draft
+      end
+
       event :send_to_admin_for_revision do
-        transitions :from => :draft, :to => :sent_to_admin_for_revision
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_revision
       end
 
       event :send_back_to_student do
@@ -26,7 +31,7 @@ module TccStateMachine
       end
 
       event :send_to_admin_for_evaluation do
-        transitions :from => :draft, :to => :sent_to_admin_for_evaluation
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_evaluation
       end
 
       event :admin_evaluate_ok do
