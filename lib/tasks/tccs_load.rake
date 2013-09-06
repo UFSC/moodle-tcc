@@ -8,6 +8,20 @@ namespace :tcc do
     populate_tccs(args[:turma], args[:tcc_definition_id])
   end
 
+  desc 'TCC | Cria um HubTcc para cada HubPortfolio existente'
+  task :sync => :environment do
+    Tcc.all.each do |tcc|
+      # Check if HubTcc's are there, if not they must be created
+      if tcc.hubs.where(:type => 'HubTcc').count = 0
+        # Each HubPortfolio must have its HubTcc match
+        tcc.hubs.where(:type => 'HubPortfolio').each do |hub|
+          tcc.hubs.build(tcc: tcc, hub_definition: hub.hub_definition, position: hub.hub_definition.position, type: 'HubTcc')
+        end
+      end
+    end
+  end
+
+
   #
   # Salva o Tcc de todos os alunos da turma indicada
   #
@@ -17,18 +31,16 @@ namespace :tcc do
 
     result = []
     matriculas.with_progress 'Processando alunos para geração de TCCs' do |aluno|
-
       user = Remote::MoodleUser.find_by_username(aluno.matricula)
-
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
         orientador = OrientadorGroup.get_orientador(aluno.matricula)
 
         tcc = Tcc.create(moodle_user: user.id,
-                   name: user.firstname+' '+user.lastname,
-                   tutor_group: group,
-                   orientador: orientador,
-                   tcc_definition: tcc_definition)
+                         name: user.firstname+' '+user.lastname,
+                         tutor_group: group,
+                         orientador: orientador,
+                         tcc_definition: tcc_definition)
 
         result << [aluno.matricula, tcc.id]
       end
