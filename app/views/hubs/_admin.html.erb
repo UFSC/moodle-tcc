@@ -14,21 +14,24 @@
             </h3>
         <% else %>
             <div class="span12 inline">
-              <h3 class="pull-left"> Reflexões do eixo <%= @hub.position %> - </h3>
-            <% if @current_user.coordenador_avea? %>
-                <%= render partial: 'states', locals: {hub: @hub} %>
-            <% else %>
-                <% if @type == 'tcc' %>
-                    <% if @current_user.coordenador_curso? %>
+              <h3 class="pull-left"> Reflexões do eixo <%= @hub.position %>
+                <% if !@hub.nil? && !@hub.terminated? %>- </h3>
+
+                    <% if @current_user.coordenador_avea? || @current_user.admin? %>
                         <%= render partial: 'states', locals: {hub: @hub} %>
-                    <% end %>
-                <% else %>
-                    <% if @current_user.coordenador_tutoria? %>
-                        <%= render partial: 'states', locals: {hub: @hub} %>
+                    <% else %>
+                        <% if @type == 'tcc' %>
+                            <% if @current_user.coordenador_curso? %>
+                                <%= render partial: 'states', locals: {hub: @hub} %>
+                            <% end %>
+                        <% else %>
+                            <% if @current_user.coordenador_tutoria? %>
+                                <%= render partial: 'states', locals: {hub: @hub} %>
+                            <% end %>
+                        <% end %>
                     <% end %>
                 <% end %>
-            <% end %>
-            </div>
+                </div>
         <% end %>
 
       </div>
@@ -69,7 +72,7 @@
         </div>
         <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
             <%= h.input :position, :as => :hidden %>
-            <% if @hub.sent_to_admin_for_evaluation? %>
+            <% if @hub.sent_to_admin_for_evaluation? && @current_user.tutor? %>
                 <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 100)' %>
             <% end %>
             <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>

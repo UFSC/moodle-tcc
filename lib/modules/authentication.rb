@@ -9,6 +9,28 @@ module Authentication
     @current_user ||= User.new(@tp) unless @tp.nil?
   end
 
+  def redirect_user_to_start_page
+    if current_user.student? && @type == 'portfolio'
+      logger.debug 'LTI user identified as a student'
+      redirect_to show_hubs_path(position: '1')
+    elsif current_user.student? && @type == 'tcc'
+      logger.debug 'LTI user identified as a student'
+      redirect_to show_tcc_path
+    elsif current_user.tutor? && @type == 'portfolio'
+      logger.debug 'LTI user identified as a tutor'
+      redirect_to tutor_index_path
+    elsif current_user.orientador? && @type == 'tcc'
+      logger.debug 'LTI user identified as a leader'
+      redirect_to orientador_index_path
+    elsif current_user.view_all?
+      logger.debug 'LTI user is part of a view_all role'
+      redirect_to instructor_admin_tccs_path
+    else
+      logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
+      redirect_to access_denied_path
+    end
+  end
+
   class User
     attr_accessor :lti_tp
     delegate :student?, :to => :lti_tp
@@ -55,6 +77,14 @@ module Authentication
     def tutor?
       self.lti_tp.has_role?('urn:moodle:role/td')
     end
+
+    def orientador?
+      self.lti_tp.has_role?('urn:moodle:role/orientador')
+    end
+
+
+
+
   end # User class
 
   module LTI
@@ -69,6 +99,9 @@ module Authentication
 
       return false
     end
+
+
+
 
     def initialize_tool_provider!
       # TODO: criar tabela para armazenar consumer_key => consumer_secret

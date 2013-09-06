@@ -13,20 +13,19 @@ module HubStateMachine
 
     base.aasm do
       # Portifolio states
-      state :draft, :initial => true
+      state :new, :initial => true
+      state :draft
       state :sent_to_admin_for_revision
       state :sent_to_admin_for_evaluation
       state :admin_evaluation_ok
-
-      # TCC states
-      state :tcc_draft
-      state :sent_to_leader_for_revision
-      state :sent_to_leader_for_evaluation
-      state :leader_evaluation_ok
+      state :terminated
 
       # Portifolio events
+      event :send_to_draft do
+        transitions :from => :new, :to => :draft
+      end
       event :send_to_admin_for_revision do
-        transitions :from => :draft, :to => :sent_to_admin_for_revision
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_revision
       end
 
       event :send_back_to_student do
@@ -34,33 +33,17 @@ module HubStateMachine
       end
 
       event :send_to_admin_for_evaluation do
-        transitions :from => :draft, :to => :sent_to_admin_for_evaluation
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_evaluation
       end
 
       event :admin_evaluate_ok do
         transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok
       end
 
-      # TCC events
-      event :change_to_tcc do
-        transitions :from => :admin_evaluation_ok, :to => :tcc_draft
+      event :send_to_terminated do
+        transitions :from => :admin_evaluation_ok, :to => :terminated
       end
 
-      event :send_to_leader_for_revision do
-        transitions :from => :tcc_draft, :to => :sent_to_leader_for_revision
-      end
-
-      event :send_back_to_tcc_student do
-        transitions :from => [:sent_to_leader_for_revision, :sent_to_leader_for_evaluation], :to => :tcc_draft
-      end
-
-      event :send_to_leader_for_evaluation do
-        transitions :from => :tcc_draft, :to => :sent_to_leader_for_evaluation
-      end
-
-      event :leader_evaluate_ok do
-        transitions :from => :sent_to_leader_for_evaluation, :to => :leader_evaluation_ok
-      end
     end
   end
 

@@ -5,4 +5,5 @@ Fabricator(:hub, class_name: :hub) do
   diaries(count: 2)
   grade 8
   commentary { Faker::Lorem.paragraph(10) }
+  type 'HubPortfolio'
 end

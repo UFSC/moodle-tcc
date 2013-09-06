@@ -17,7 +17,7 @@
             </div>
         <% end %>
 
-        <% if object.draft? %>
+        <% if object.draft? || object.new? %>
             <div class="row">
               <div id="old_tcc_object" class="span6" style="display: none">
                 <div class="rounded-border">
@@ -26,9 +26,9 @@
                       <% if object.class != Abstract %>
                         <%= last_object_commented.content.html_safe %>
                       <% else %>
-                        <%= last_object_commented.content_pt.html_safe %>
+                        <%= last_object_commented.content.html_safe %>
                         <h4>Palavras chave</h4>
-                        <%= last_object_commented.key_words_pt.html_safe %>
+                        <%= last_object_commented.key_words.html_safe %>
                       <% end %>
                   <% else %>
                       <p class="text-error">Este eixo ainda não foi avaliado</p>
@@ -40,8 +40,8 @@
                   <% if object.class != Abstract %>
                     <%= f.cktext_area :content %><br>
                   <% else %>
-                    <%= f.cktext_area :content_pt %><br>
-                    <%= f.input :key_words_pt, :input_html => { class: 'span9' } %>
+                    <%= f.cktext_area :content %><br>
+                    <%= f.input :key_words, :input_html => { class: 'span9' } %>
                   <% end %>
                   <%= f.actions do %>
                       <%= render partial: 'common/state_options', locals: {f:f} %>
@@ -54,8 +54,8 @@
             <% if object.class != Abstract %>
                 <%= f.input :content, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
             <% else %>
-                <%= f.input :key_words_pt, :input_html => { class: 'span9', readOnly: true } %>
-                <%= f.input :content_pt, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
+                <%= f.input :key_words, :input_html => { class: 'span9', readOnly: true } %>
+                <%= f.input :content, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
             <% end %>
         <% end %>
       </div>

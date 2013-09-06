@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 describe 'Lti' do
+
   describe '/' do
     it 'should fail with a 403 if no params were informed' do
       get root_path
@@ -20,11 +21,25 @@ describe 'Lti' do
         response.should redirect_to(show_hubs_path(position: '1'))
       end
 
-      it 'should redirect a instructor to instructor admin screen' do
-        post root_path, moodle_lti_params('instructor')
+      it 'should redirect a tutor to tutor screen' do
+        post root_path, moodle_lti_params('urn:moodle:role/td')
+        response.status.should be(302)
+        response.should redirect_to(tutor_index_path)
+      end
+
+      it 'should redirect a leader to access denied' do
+        post root_path, moodle_lti_params('urn:moodle:role/orientador')
+        response.status.should be(302)
+        response.should redirect_to(access_denied_path)
+      end
+
+      it 'should redirect a admin to admin screen' do
+        post root_path, moodle_lti_params('urn:moodle:role/coordavea')
         response.status.should be(302)
         response.should redirect_to(instructor_admin_tccs_path)
       end
+
+
     end
 
     context 'when is a tcc session' do
@@ -34,11 +49,27 @@ describe 'Lti' do
         response.should redirect_to(show_tcc_path)
       end
 
-      it 'should redirect a instructor to instructor admin screen' do
-        post root_path, moodle_lti_params('instructor', 'tcc')
+      it 'should redirect a tutor to access denied screen' do
+        post root_path, moodle_lti_params('urn:moodle:role/td', 'tcc')
+        response.status.should be(302)
+        response.should redirect_to(access_denied_path)
+      end
+
+      it 'should redirect a leader to access denied' do
+        post root_path, moodle_lti_params('urn:moodle:role/orientador', 'tcc')
+        response.status.should be(302)
+        response.should redirect_to(orientador_index_path)
+      end
+
+      it 'should redirect a admin to admin screen' do
+        post root_path, moodle_lti_params('urn:moodle:role/coordavea', 'tcc')
         response.status.should be(302)
         response.should redirect_to(instructor_admin_tccs_path)
       end
+
+
+
+
     end
   end
 end

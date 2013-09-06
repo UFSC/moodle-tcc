@@ -1,5 +1,5 @@
 Fabricator(:abstract, :class_name => :abstract) do
   commentary 'comment blaval'
-  content_pt 'comment pt'
-  key_words_pt 'keys pt'
+  content 'comment pt'
+  key_words 'keys pt'
 end

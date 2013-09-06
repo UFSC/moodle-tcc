@@ -1,16 +1,24 @@
 <div class="row">
-<%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
-    <% if @type == 'tcc' %>
-        <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
-        <%= tab.abstract 'Resumo', show_abstract_path %>
-        <%= tab.presentation 'Apresentação', show_presentation_path %>
-    <% end %>
-    <% @tcc.hub_definitions.each do |hub_definition| %>
-      <%= tab.send("hub#{hub_definition.position}", hub_definition.title, show_hubs_path(position: (hub_definition.position))) %>
-    <% end %>
-    <% if @type == 'tcc' %>
-        <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>
-    <% end %>
-    <%= tab.bibliographies 'Referências', bibliographies_path %>
-<% end %>
+  <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
+      <% if @type == 'tcc' %>
+          <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
+          <%= tab.abstract 'Resumo', show_abstract_path %>
+          <%= tab.presentation 'Apresentação', show_presentation_path %>
+      <% end %>
+      <% if @type == 'portfolio' %>
+          <% @tcc.hub_definitions.each do |hub_definition| %>
+              <%= tab.send("hub#{hub_definition.position}", hub_definition.title, show_hubs_path(position: (hub_definition.position))) %>
+          <% end %>
+      <% else %>
+          <% @tcc.hub_definitions.each do |hub_definition| %>
+              <%= tab.send("hub#{hub_definition.position}", hub_definition.title, show_hubs_tcc_path(position: (hub_definition.position))) %>
+          <% end %>
+      <% end %>
+
+
+      <% if @type == 'tcc' %>
+          <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>
+      <% end %>
+      <%= tab.bibliographies 'Referências', bibliographies_path %>
+  <% end %>
 </div>

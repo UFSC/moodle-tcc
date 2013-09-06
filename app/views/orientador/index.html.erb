@@ -1,0 +1,111 @@
+<h3>Lista de TCCs</h3><br/>
+<h4>
+  Tela de Orientador
+  <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
+      <%= display_icon('icon-refresh') %>
+      Atualizar lista
+  <% end %>
+</h4>
+
+<table class="table table-bordered">
+  <thead>
+  <tr class="blue-header-table">
+    <th>Estudante</th>
+    <th>Nota</th>
+    <th>Resumo</th>
+    <th>Apresentação</th>
+    <% @hubs.each do |hub_name| %>
+        <th><%= hub_name %></th>
+    <% end %>
+    <th>Considerações finais</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tccs.each do |tcc| %>
+
+      <div id='<%= tcc.id %>' class="modal hide fade">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3>Avaliação</h3>
+          <h5><%= tcc.name %></h5>
+        </div>
+        <div class="modal-body">
+          <%= semantic_form_for tcc, url: evaluate_tcc_path(tcc) do |t| %>
+              <div style='width:150px; float:left;'> De a nota para o TCC:</div>
+              <p> <%= t.input :grade, :label => false, :input_html => {:style => 'width:90px; display:inline;'} %></p>
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                <%= submit_tag 'Avaliar', class: 'btn btn-success' %>
+          <% end %>
+          </div>
+          </div>
+      <tr>
+        <td><%= tcc.name %></td>
+        <% if tcc.grade.nil? %>
+            <% if tcc.is_ok? %>
+                <td>
+                  <a href="#<%= tcc.id %>" role="" class="label label-warning" data-toggle="modal">Avaliar</a>
+                </td>
+            <% else %>
+                <td>Aguardo</td>
+            <% end %>
+        <% else %>
+            <td>
+              <a href="#<%= tcc.id %>" class="label label-success tooltipped pull-right" title='Clique para alterar a nota' data-toggle="modal"><%= tcc.grade %></a>
+            </td>
+        <% end %>
+
+        <td>
+          <% unless tcc.abstract.nil? %>
+              <% if tcc.abstract.new? %>
+                  Novo
+              <% else %>
+                  <%= get_state(tcc.abstract) %>:
+                  <%= link_to get_action(tcc.abstract), save_abstract_path(moodle_user: tcc.moodle_user),
+                              target: '_blank', class: 'label label-success' %>
+              <% end %>
+          <% else %>
+              <%= t('states.blank') %>
+          <% end %>
+        </td>
+        <td>
+          <% unless tcc.presentation.nil? %>
+              <% if tcc.presentation.new? %>
+                  Novo
+              <% else %>
+                  <%= get_state(tcc.presentation) %>:
+                  <%= link_to get_action(tcc.presentation), save_presentation_path(moodle_user: tcc.moodle_user),
+                              target: '_blank', class: 'label label-success' %>
+              <% end %>
+          <% else %>
+              <%= t('states.blank') %>
+          <% end %>
+        </td>
+        <% tcc.fetch_all_hubs(@type).each do |hub| %>
+            <td>
+              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.leader_evaluation_ok? %>:
+              <%= link_to get_action(hub),
+                          show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                          target: '_blank', class: 'label label-success' %>
+            </td>
+        <% end %>
+        <td>
+          <% unless tcc.final_considerations.nil? %>
+              <% if tcc.final_considerations.new? %>
+                  Novo
+              <% else %>
+                  <%= get_state(tcc.final_considerations) %>:
+                  <%= link_to get_action(tcc.final_considerations), save_final_considerations_path(moodle_user: tcc.moodle_user),
+                              target: '_blank', class: 'label label-success' %>
+              <% end %>
+          <% else %>
+              <%= t('states.blank') %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= will_paginate @tccs %>

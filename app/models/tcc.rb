@@ -1,5 +1,5 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :leader, :moodle_user, :name, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
+  attr_accessible :leader, :grade, :orientador, :moodle_user, :name, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes,
                   :final_considerations_attributes, :tcc_definition
 
@@ -40,13 +40,33 @@ class Tcc < ActiveRecord::Base
   default_scope order(:name)
 
 
+  # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
+  def is_ok?
+    p = !presentation.nil? ? presentation.admin_evaluation_ok? : false
+    a = !abstract.nil? ? abstract.admin_evaluation_ok? : false
+    f = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
+    p && a && f && is_hubs_tcc_ok?
+  end
+
+  # Verifica se os hubs estão todos avaliados
+  def is_hubs_tcc_ok?
+    hubs.hub_tcc.each do |hub|
+      return false if !hub.admin_evaluation_ok?
+    end
+    true
+  end
+
   def tcc_definition=(value)
     super(value)
     create_or_update_hubs
   end
 
-  def fetch_all_hubs
-    self.hubs.order(:position)
+  def fetch_all_hubs(type)
+    if type == 'portfolio'
+      self.hubs.hub_portfolio.order(:position)
+    else
+      self.hubs.hub_tcc.order(:position)
+    end
   end
 
   def hub_definitions
@@ -56,7 +76,7 @@ class Tcc < ActiveRecord::Base
   def self.hub_names
     # Lógica temporária para contemplar recurso existente
     # TODO: Encontrar uma relação entre o tipo de tcc_definition passado no LTI e filtrar somente itens daquele tipo.
-    TccDefinition.first.hub_definitions.each.map {|h| h.title }
+    TccDefinition.first.hub_definitions.each.map { |h| h.title }
   end
 
   private
@@ -65,11 +85,15 @@ class Tcc < ActiveRecord::Base
     self.tcc_definition.hub_definitions.each do |hub_definition|
 
       if self.hubs.empty?
-        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position)
+        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
+        self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
       else
-        hub = self.hubs.find_or_initialize_by_position hub_definition.position
-        hub.hub_definition = hub_definition
-        hub.save!
+        hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by_position hub_definition.position
+        hub_tcc = self.hubs.hub_tcc.find_or_initialize_by_position hub_definition.position
+        hub_portfolio.hub_definition = hub_definition
+        hub_tcc.hub_definition = hub_definition
+        hub_portfolio.save!
+        hub_tcc.save!
       end
     end
   end

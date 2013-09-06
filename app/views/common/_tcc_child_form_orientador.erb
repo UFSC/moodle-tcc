@@ -40,12 +40,21 @@
             <div class="rounded-border">
               <div class="rounded-border">
                 <h4>Versão atual</h4>
-                <%= object.content.html_safe %>
+                <% if object.draft? %>
+                    <%= object.content.html_safe %>
+                <% else %>
+                    <%= p.cktext_area :content %>
+                <% end %>
+                <br>
               </div>
               <% if object.class == Abstract %>
                   <div class="rounded-border">
                     <h4>Palavras-chave</h4>
-                    <%= object.key_words.html_safe %>
+                    <% if object.draft? || object.admin_evaluation_ok? %>
+                        <%= object.key_words.html_safe %>
+                    <% else %>
+                        <%= p.input :key_words, :input_html => {class: 'span9'} %>
+                    <% end %>
                   </div>
               <% end %>
               <%= render partial: 'common/tcc_child_actions_admin', locals: {object: object, f: p} %>

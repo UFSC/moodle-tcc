@@ -15,7 +15,11 @@ SistemaTcc::Application.routes.draw do
 
   #TCC routes
   get "tcc" => 'tccs#show', as: 'show_tcc'
+
+  match '/tccs/:tcc_id/evaluate' => 'tccs#evaluate', :as => 'evaluate_tcc'
+
   put "tcc" => 'tccs#save', as: 'save_tcc'
+
 
   get "abstract" => "abstracts#show", as: 'show_abstract'
   match "abstract" => "abstracts#save", as: 'save_abstract', :via => [:post, :put]
@@ -27,6 +31,10 @@ SistemaTcc::Application.routes.draw do
   match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
 
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
+
+  get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
+
+
   match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
   match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]
 
@@ -38,5 +46,7 @@ SistemaTcc::Application.routes.draw do
   resources :article_refs
   resources :internet_refs
   resources :legislative_refs
+  resources :orientador
+  resources :tutor
 
 end

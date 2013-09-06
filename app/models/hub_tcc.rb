@@ -1,0 +1,3 @@
+class HubTcc < Hub
+
+end
