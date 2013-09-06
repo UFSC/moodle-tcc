@@ -11,7 +11,7 @@ def create_tcc_definitions(title, hub_diaries)
     Progress.step
 
     hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
-      hub = HubDefinition.create(order: hub_index+1, title: hub_name, tcc_definition: tcc_def, diary_shortname: diaries[0][:shortname])
+      hub = HubDefinition.create(order: hub_index+1, title: hub_name, tcc_definition: tcc_def, moodle_shortname: diaries[0][:shortname])
       Progress.step
 
       diaries.each_with_index do |diary, diary_index|

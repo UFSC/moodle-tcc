@@ -85,7 +85,7 @@ class Tcc < ActiveRecord::Base
     self.tcc_definition.hub_definitions.each do |hub_definition|
 
       # Verificação da ramificação do usuário para os eixo que tiverem ramificações
-      if hub_definition.diary_shortname.blank? || MiddlewareUser::check_enrol(self.moodle_user, hub_definition.diary_shortname)
+      if hub_definition.moodle_shortname.nil? || MiddlewareUser::check_enrol(self.moodle_user, hub_definition.moodle_shortname)
         if self.hubs.empty?
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
