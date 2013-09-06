@@ -85,19 +85,19 @@ describe Tcc do
 
       tcc_definition.hub_definitions.size.should == 1
 
-      tcc.hubs.size.should == 0
+      tcc.hubs.hub_portfolio.size.should == 0
       tcc.tcc_definition = tcc_definition
-      tcc.hubs.size.should == 2
+      tcc.hubs.hub_portfolio.size.should == 2
     end
 
     it 'should create diaries defined on hub definition' do
       tcc = Fabricate.build(:tcc_without_hubs)
       hub_definition.diary_definitions << diary_definition
       tcc_definition.hub_definitions << hub_definition
-      tcc.hubs.size.should == 0
+      tcc.hubs.hub_portfolio.size.should == 0
 
       tcc.tcc_definition = tcc_definition
-      tcc.hubs.first.diaries.size.should == 1
+      tcc.hubs.hub_portfolio.first.diaries.size.should == 1
     end
 
     it 'should update hubs if they already exists' do
@@ -108,10 +108,10 @@ describe Tcc do
       tcc_definition.save!
 
       tcc = Fabricate.build(:tcc)
-      tcc.hubs.size.should == 1
+      tcc.hubs.hub_portfolio.size.should == 3
 
       # garantir que não tem hub_definition
-      tcc.hubs.first.hub_definition.should be_nil
+      tcc.hubs.hub_portfolio.first.hub_definition.should be_nil
 
       # Garante que está tudo válido e persiste no banco
       tcc.tcc_definition.should be_nil
@@ -123,10 +123,10 @@ describe Tcc do
       tcc.tcc_definition = tcc_definition
       tcc.save!
       tcc.reload
-      tcc.hubs.size.should == 2
+      tcc.hubs.hub_portfolio.size.should == 3
 
       # verificar se houve a atualização do campo
-      tcc.hubs.first.hub_definition.should_not be_nil
+      tcc.hubs.hub_portfolio.first.hub_definition.should_not be_nil
     end
 
     it 'should update diaries if they already exists' do
@@ -139,19 +139,19 @@ describe Tcc do
 
       tcc = Fabricate.build(:tcc)
       tcc.should be_valid
-      tcc.hubs.first.diaries.first.diary_definition.should be_nil
+      tcc.hubs.hub_portfolio.first.diaries.first.diary_definition.should be_nil
       tcc.save!
 
       # contagem em profundidade para garantir que não houve criação
-      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 2
+      tcc.hubs.hub_portfolio.each.map { |h| h.diaries }.flatten.size.should == 6
 
       tcc.tcc_definition = tcc_definition
       tcc.save!
       tcc.reload
-      tcc.hubs.each.map { |h| h.diaries }.flatten.size.should == 3
+      tcc.hubs.hub_portfolio.each.map { |h| h.diaries }.flatten.size.should == 6
 
       # verificar se houve a atualização do campo
-      tcc.hubs.first.diaries.first.diary_definition.should_not be_nil
+      tcc.hubs.hub_portfolio.first.diaries.first.diary_definition.should_not be_nil
     end
   end
 

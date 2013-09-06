@@ -19,6 +19,11 @@ class Hub < ActiveRecord::Base
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
 
+
+  scope :hub_portfolio, where(:type => 'HubPortfolio')
+  scope :hub_tcc, where(:type => 'HubTcc')
+
+
   def comparable_versions
     versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
   end

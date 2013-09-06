@@ -39,6 +39,8 @@ class Tcc < ActiveRecord::Base
 
   default_scope order(:name)
 
+
+  # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
   def is_ok?
     p = !presentation.nil? ? presentation.admin_evaluation_ok? : false
     a = !abstract.nil? ? abstract.admin_evaluation_ok? : false
@@ -46,8 +48,9 @@ class Tcc < ActiveRecord::Base
     p && a && f && is_hubs_tcc_ok?
   end
 
+  # Verifica se os hubs estão todos avaliados
   def is_hubs_tcc_ok?
-    hubs.where(:type => 'HubTcc').each do |hub|
+    hubs.hub_tcc.each do |hub|
       return false if !hub.admin_evaluation_ok?
     end
     true
@@ -60,9 +63,9 @@ class Tcc < ActiveRecord::Base
 
   def fetch_all_hubs(type)
     if type == 'portfolio'
-      self.hubs.where(:type => 'HubPortfolio').order(:position)
+      self.hubs.hub_portfolio.order(:position)
     else
-      self.hubs.where(:type => 'HubTcc').order(:position)
+      self.hubs.hub_tcc.order(:position)
     end
   end
 
@@ -85,8 +88,8 @@ class Tcc < ActiveRecord::Base
         self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
         self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
       else
-        hub_portfolio = self.hubs.where(:type => 'HubPortfolio').find_or_initialize_by_position hub_definition.position
-        hub_tcc = self.hubs.where(:type => 'HubTcc').find_or_initialize_by_position hub_definition.position
+        hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by_position hub_definition.position
+        hub_tcc = self.hubs.hub_tcc.find_or_initialize_by_position hub_definition.position
         hub_portfolio.hub_definition = hub_definition
         hub_tcc.hub_definition = hub_definition
         hub_portfolio.save!

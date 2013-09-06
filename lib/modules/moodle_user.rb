@@ -9,6 +9,7 @@ module MoodleUser
        #logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
 
        if response.code != 200
+         logger.error "Falha ao acessar o webservice do Moodle: HTTP_ERROR: #{response.code}"
          return false
        end
 

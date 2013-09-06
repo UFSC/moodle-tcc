@@ -11,7 +11,7 @@ class HubsController < ApplicationController
     @current_user = current_user
     set_tab ('hub'+params[:position]).to_sym
 
-    @hub = @tcc.hubs.where(:type => 'HubPortfolio').find_by_position(params[:position])
+    @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
     last_comment_version = @hub.versions.where('state != ? AND state != ?', 'draft', 'new').last
 
@@ -32,8 +32,8 @@ class HubsController < ApplicationController
     @current_user = current_user
     set_tab ('hub'+params[:position]).to_sym
 
-    @hub = @tcc.hubs.where(:type => 'HubTcc').find_by_position(params[:position])
-    hub_portfolio = @tcc.hubs.where(:type => 'HubPortfolio').find_by_position(params[:position])
+    @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
+    hub_portfolio = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
     @hub.reflection = hub_portfolio.reflection if @hub.new?
 
@@ -58,12 +58,12 @@ class HubsController < ApplicationController
     if @type == 'portfolio'
       new_state = params[:hub_portfolio][:new_state]
 
-      @hub = @tcc.hubs.where(:type => 'HubPortfolio').find_by_position(params[:hub_portfolio][:position])
+      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:hub_portfolio][:position])
       @hub.attributes = params[:hub_portfolio]
     else
       new_state = params[:hub_tcc][:new_state]
 
-      @hub = @tcc.hubs.where(:type => 'HubTcc').find_by_position(params[:hub_tcc][:position])
+      @hub = @tcc.hubs.hub_tcc.find_by_position(params[:hub_tcc][:position])
       @hub.attributes = params[:hub_tcc]
     end
     #
@@ -83,7 +83,7 @@ class HubsController < ApplicationController
 
         @hub.save
 
-        hub = @tcc.hubs.where(:type => 'HubPortfolio').find_by_position(params[:position])
+        hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
         if @type == 'tcc' && !hub.terminated?
           hub.send_to_terminated if hub.may_send_to_terminated?
@@ -133,7 +133,7 @@ class HubsController < ApplicationController
   def update_state
     if @type == 'tcc'
 
-      @hub = @tcc.hubs.where(:type => 'HubTcc').find_by_position(params[:position])
+      @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
       case params[:hub_tcc][:new_state]
         when 'draft'
           to_draft(@hub)
@@ -150,7 +150,7 @@ class HubsController < ApplicationController
 
 
     else
-      @hub = @tcc.hubs.where(:type => 'HubPortfolio').find_by_position(params[:position])
+      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
       if params[:hub][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
         flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
@@ -179,7 +179,7 @@ class HubsController < ApplicationController
   private
 
   def check_visibility
-    @hub = @tcc.hubs.where(:type => 'HubPortfolio').find_by_position(params[:position])
+    @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
     unless @hub.nil?
       if !@hub.admin_evaluation_ok? && !@hub.terminated?
         flash[:error] = 'Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio'
