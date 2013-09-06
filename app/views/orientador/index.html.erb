@@ -83,14 +83,21 @@
               <%= t('states.blank') %>
           <% end %>
         </td>
-        <% tcc.fetch_all_hubs(@type).each do |hub| %>
-            <td>
-              <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.leader_evaluation_ok? %>:
-              <%= link_to get_action(hub),
-                          show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
-            </td>
+
+        <% tcc.hub_definitions.each do |hub_definition| %>
+          <% hub = tcc.hubs.where(hub_definition_id: hub_definition.id, type: 'HubTcc').first %>
+          <% unless hub.nil? %>
+              <td>
+                <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
+                <%= link_to get_action(hub),
+                            show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                            target: '_blank', class: 'label label-success' %>
+              </td>
+           <% else %>
+              <td class="empty-content" />
+           <% end %>
         <% end %>
+
         <td>
           <% unless tcc.final_considerations.nil? %>
               <% if tcc.final_considerations.new? %>
