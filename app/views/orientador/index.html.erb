@@ -85,7 +85,7 @@
         </td>
 
         <% tcc.hub_definitions.each do |hub_definition| %>
-          <% hub = tcc.hubs.where(hub_definition_id: hub_definition.id, type: 'HubTcc').first %>
+          <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
           <% unless hub.nil? %>
               <td>
                 <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:

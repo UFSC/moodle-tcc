@@ -7,6 +7,14 @@ class InstructorAdminController < ApplicationController
     tcc_definition_id = @tp.custom_params['tcc_definition']
     @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).paginate(:page => params[:page], :per_page => 30)
     @hubs = Tcc.hub_names
+
+    if @type == 'portfolio'
+      render 'portfolio'
+    else
+      render 'tcc'
+    end
+
+
   end
 
   private

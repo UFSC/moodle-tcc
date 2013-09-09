@@ -19,6 +19,7 @@ pt-BR:
     admin_evaluation_ok: 'avaliado'
   actions:
     draft: 'Visualizar'
+    new: 'Visualizar'
     sent_to_admin_for_revision: 'Comentar'
     sent_to_admin_for_evaluation: 'Avaliar'
     admin_evaluation_ok: 'Avaliado'
