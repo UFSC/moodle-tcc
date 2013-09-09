@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20130905191451) do
     t.datetime "updated_at",                            :null => false
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
+    t.string   "type"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
@@ -196,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20130905191451) do
     t.datetime "updated_at",        :null => false
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
+    t.integer  "orientador"
   end
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"

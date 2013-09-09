@@ -7,7 +7,7 @@
     <% end %>
     
     <% @tcc.hubs.each do |hub| %>
-      <% hub_url = (@type == 'portfolio') ? show_hubs_path(position: (hub.hub_definition.position)) : show_hubs_tcc_path(position: (hub_definition.position)) %> 
+      <% hub_url = (@type == 'portfolio') ? show_hubs_path(position: (hub.hub_definition.position)) : show_hubs_tcc_path(position: (hub.hub_definition.position)) %>
       <%= tab.send("hub#{hub.hub_definition.position}", hub.hub_definition.title, hub_url) %>
     <% end %>
     

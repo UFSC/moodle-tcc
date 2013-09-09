@@ -10,7 +10,7 @@ describe "Tccs" do
     end
 
     it 'should work with LTI connection' do
-      page.set_rack_session(fake_lti_session('student','tcc'))
+      page.set_rack_session(fake_lti_session('student', 'tcc'))
       visit show_tcc_path
 
       page.current_path.should_not == access_denied_path
@@ -40,7 +40,8 @@ describe "Tccs" do
 
       it 'tcc presentation' do
         click_link 'Apresentação'
-        page.should have_content('Apresentação')      end
+        page.should have_content('Apresentação')
+      end
 
       it 'tcc hub 1' do
         click_link 'Eixo 1'
