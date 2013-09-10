@@ -12,10 +12,13 @@ namespace :tcc do
   task :sync => :environment do
     Tcc.all.each do |tcc|
       # Check if HubTcc's are there, if not they must be created
-      if tcc.hubs.hub_tcc.count = 0
+      if tcc.hubs.hub_tcc.count == 0
         # Each HubPortfolio must have its HubTcc match
-        tcc.hubs.hub_portfolio.each do |hub|
-          tcc.hubs.build(tcc: tcc, hub_definition: hub.hub_definition, position: hub.hub_definition.position, type: 'HubTcc')
+        tcc.hubs.hub_portfolio.each do |hub_port|
+          hub_tcc = tcc.hubs.build(tcc: tcc, hub_definition: hub_port.hub_definition, position: hub_port.hub_definition.position, type: 'HubTcc')
+          # FIXME: STI não está preservando o type no momento do build, o workaround abaixo "resolve" temporariamente
+          hub_tcc.type = 'HubTcc'
+          hub_tcc.save
         end
       end
     end
@@ -66,9 +69,9 @@ namespace :tcc do
 
     # Carrega a view 'View_UNASUS2_Alunos' do middleware
     middleware = YAML.load_file("#{Rails.root}/config/database.yml")['middleware']
-    Middleware::Unasus2Alunos.establish_connection middleware
+    Middleware::Alunos.establish_connection middleware
 
     # Retorna as matriculas
-    Middleware::Unasus2Alunos.find_all_by_periodo_ingresso(turma, select: 'matricula')
+    Middleware::Alunos.find_all_by_periodo_ingresso(turma, select: 'matricula')
   end
 end

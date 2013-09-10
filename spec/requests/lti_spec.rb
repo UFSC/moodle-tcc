@@ -27,16 +27,16 @@ describe 'Lti' do
         response.should redirect_to(tutor_index_path)
       end
 
-      it 'should redirect a leader to access denied' do
+      it 'should redirect an orientador to access denied' do
         post root_path, moodle_lti_params('urn:moodle:role/orientador')
         response.status.should be(302)
         response.should redirect_to(access_denied_path)
       end
 
-      it 'should redirect a admin to admin screen' do
+      it 'should redirect a coordenador de avea to admin screen' do
         post root_path, moodle_lti_params('urn:moodle:role/coordavea')
         response.status.should be(302)
-        response.should redirect_to(instructor_admin_tccs_path)
+        response.should redirect_to(instructor_admin_path)
       end
 
 
@@ -55,20 +55,17 @@ describe 'Lti' do
         response.should redirect_to(access_denied_path)
       end
 
-      it 'should redirect a leader to access denied' do
+      it 'should redirect an orientador to access denied' do
         post root_path, moodle_lti_params('urn:moodle:role/orientador', 'tcc')
         response.status.should be(302)
         response.should redirect_to(orientador_index_path)
       end
 
-      it 'should redirect a admin to admin screen' do
+      it 'should redirect a coordenador de avea to admin screen' do
         post root_path, moodle_lti_params('urn:moodle:role/coordavea', 'tcc')
         response.status.should be(302)
-        response.should redirect_to(instructor_admin_tccs_path)
+        response.should redirect_to(instructor_admin_path)
       end
-
-
-
 
     end
   end

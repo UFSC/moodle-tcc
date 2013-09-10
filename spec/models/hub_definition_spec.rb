@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe HubDefinition do
+  it { should respond_to(:order, :position, :title, :tcc_definition, :moodle_shortname) }
+
   context 'validations' do
     it { should validate_presence_of :order }
     it { should validate_presence_of :tcc_definition }
