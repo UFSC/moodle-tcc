@@ -3,9 +3,8 @@ require 'spec_helper'
 
 describe 'Orientador' do
   describe 'GET /orientador' do
-    xit 'should work with moodle and tcc type' do
+    it 'should work with moodle and tcc type' do
       page.set_rack_session(fake_lti_session('urn:moodle:role/orientador', 'tcc'))
-
 
       visit orientador_index_path
 

@@ -4,7 +4,7 @@ SistemaTcc::Application.routes.draw do
   match 'lti' => 'lti#establish_connection'
   match 'access_denied' => 'lti#access_denied'
 
-  match 'instructor_admin_tccs' => 'instructor_admin#index'
+  match 'instructor_admin' => 'instructor_admin#index'
 
   # Ajax
   match "ajax/build" => "ajax#build"

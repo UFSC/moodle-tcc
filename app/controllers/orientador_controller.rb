@@ -12,7 +12,6 @@ class OrientadorController < ApplicationController
     orientador = OrientadorGroup.get_orientador(user_name)
 
     @tccs = Tcc.where(orientador: orientador).paginate(:page => params[:page], :per_page => 30) unless orientador.nil?
-
     @hubs = Tcc.hub_names
   end
 
