@@ -35,7 +35,8 @@ class HubsController < ApplicationController
     @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
     hub_portfolio = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
-    @hub.reflection = hub_portfolio.reflection if @hub.nil?
+    # TODO: escrever testes para essa condição, já que isso é crítico.
+    @hub.reflection = hub_portfolio.reflection if @hub.new?
 
     last_comment_version = @hub.versions.where('state != ? AND state != ?', 'draft', 'new').last
 
