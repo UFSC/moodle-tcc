@@ -1,3 +1,4 @@
+# encoding: utf-8
 class TccsController < ApplicationController
   include LtiTccFilters
   before_filter :check_permission, :only => :evaluate

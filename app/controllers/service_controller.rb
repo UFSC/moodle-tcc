@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ServiceController < ApplicationController
   before_filter :check_consumer_key
 

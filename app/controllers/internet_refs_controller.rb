@@ -1,3 +1,4 @@
+# encoding: utf-8
 class InternetRefsController < ApplicationController
   inherit_resources
   include LtiTccFilters

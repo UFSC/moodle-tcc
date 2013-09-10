@@ -1,3 +1,4 @@
+# encoding: utf-8
 class LegislativeRefsController < ApplicationController
   inherit_resources
   include LtiTccFilters

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class LtiController < ApplicationController
 
   # Responsável por realizar a troca de mensagens e validação do LTI como um Tool Provider

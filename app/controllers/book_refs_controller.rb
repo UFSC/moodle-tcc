@@ -1,3 +1,4 @@
+# encoding: utf-8
 class BookRefsController < ApplicationController
   inherit_resources
   include LtiTccFilters

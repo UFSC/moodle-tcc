@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ArticleRefsController < ApplicationController
   inherit_resources
   include LtiTccFilters
