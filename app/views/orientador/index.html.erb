@@ -87,25 +87,30 @@
             <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
             <% hub_portfolio = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
 
-
-            <% if hub_portfolio.admin_evaluation_ok? || hub_portfolio.terminated? %>
-                <% unless hub.nil? %>
-                    <td>
-                      <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
-                      <%= link_to get_action(hub),
-                                  show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
-                                  target: '_blank', class: 'label label-success' %>
-                    </td>
+            <% if !hub_portfolio.nil? %>
+                <% if hub_portfolio.admin_evaluation_ok? || hub_portfolio.terminated? %>
+                    <% unless hub.nil? %>
+                        <td>
+                          <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
+                          <%= link_to get_action(hub),
+                                      show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                                      target: '_blank', class: 'label label-success' %>
+                        </td>
+                    <% else %>
+                        <td class="empty-content"/>
+                    <% end %>
                 <% else %>
-                    <td class="empty-content"/>
+                    <% unless hub.nil? %>
+                        <td>Aguardando portfólio</td>
+                    <% else %>
+                        <td class="empty-content"/>
+                    <% end %>
                 <% end %>
             <% else %>
-                <% unless hub.nil? %>
-                    <td>Aguardando portfólio</td>
-                <% else %>
-                    <td class="empty-content"/>
-                <% end %>
+                <td class="empty-content"/>
             <% end %>
+
+
         <% end %>
         <td>
           <% unless tcc.final_considerations.nil? %>
