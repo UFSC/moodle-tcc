@@ -54,7 +54,7 @@
                         <td>
                           <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
                           <%= link_to get_action(hub),
-                                      show_hubs_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                                      show_hubs_tcc_path(position: (hub.position), moodle_user: tcc.moodle_user),
                                       target: '_blank', class: 'label label-success' %>
                         </td>
                     <% else %>
