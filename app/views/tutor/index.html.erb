@@ -36,7 +36,7 @@
             </td>
             <td class="grades">
               <% unless hub.nil? %>
-                  <%= hub.grade if hub.admin_evaluation_ok? %>
+                  <%= hub.grade if hub.show_grade? %>
               <% end %>
             </td>
         <% end %>

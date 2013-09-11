@@ -10,7 +10,7 @@
               Reflexões do <%= @hub.hub_definition.title %> -
                 <span class="text-info">
                     <%= t('states.'+@hub.aasm_current_state.to_s) %>
-                  <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                  <%= "/ Nota: #{@hub.grade}" if @hub.show_grade? %>
                 </span>
 
               <% if @hub.draft? && !@hub.comparable_versions.empty? %>

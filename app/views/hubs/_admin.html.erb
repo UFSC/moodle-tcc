@@ -9,29 +9,29 @@
             <h3 class="span12"> Reflexões do <%= @hub.hub_definition.title %> -
               <span class="text-info">
                 <%= t('states.'+@hub.aasm_current_state.to_s) %>
-                <%= "/ Nota: #{@hub.grade}" if @hub.admin_evaluation_ok? %>
+                <%= "/ Nota: #{@hub.grade}" if @hub.show_grade? %>
               </span>
             </h3>
         <% else %>
             <div class="span12 inline">
               <h3 class="pull-left"> Reflexões do <%= @hub.hub_definition.title %> - </h3>
-                <% if !@hub.nil? && !@hub.terminated? %>- </h3>
+              <% if !@hub.nil? && !@hub.terminated? %>- </h3>
 
-                    <% if @current_user.coordenador_avea? || @current_user.admin? %>
-                        <%= render partial: 'states', locals: {hub: @hub} %>
-                    <% else %>
-                        <% if @type == 'tcc' %>
-                            <% if @current_user.coordenador_curso? %>
-                                <%= render partial: 'states', locals: {hub: @hub} %>
-                            <% end %>
-                        <% else %>
-                            <% if @current_user.coordenador_tutoria? %>
-                                <%= render partial: 'states', locals: {hub: @hub} %>
-                            <% end %>
-                        <% end %>
-                    <% end %>
-                <% end %>
-                </div>
+                  <% if @current_user.coordenador_avea? || @current_user.admin? %>
+                      <%= render partial: 'states', locals: {hub: @hub} %>
+                  <% else %>
+                      <% if @type == 'tcc' %>
+                          <% if @current_user.coordenador_curso? %>
+                              <%= render partial: 'states', locals: {hub: @hub} %>
+                          <% end %>
+                      <% else %>
+                          <% if @current_user.coordenador_tutoria? %>
+                              <%= render partial: 'states', locals: {hub: @hub} %>
+                          <% end %>
+                      <% end %>
+                  <% end %>
+              <% end %>
+            </div>
         <% end %>
 
       </div>
