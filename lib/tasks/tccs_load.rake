@@ -10,7 +10,9 @@ namespace :tcc do
 
   desc 'TCC | Cria um HubTcc para cada HubPortfolio existente'
   task :sync => :environment do
-    Tcc.all.each do |tcc|
+
+    Tcc.all.with_progress 'Criando HubTcc a partir do HubPortfolio existente' do |tcc|
+
       # Check if HubTcc's are there, if not they must be created
       if tcc.hubs.hub_tcc.count == 0
         # Each HubPortfolio must have its HubTcc match
@@ -22,6 +24,16 @@ namespace :tcc do
         end
       end
     end
+
+  end
+
+  desc 'Roda a rotina de atualização do TCC Definition em cada TCC'
+  task :update_all => :environment do
+
+    Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
+      tcc.send(:create_or_update_hubs)
+    end
+
   end
 
 
