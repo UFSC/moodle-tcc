@@ -60,6 +60,10 @@ class Hub < ActiveRecord::Base
     end
   end
 
+  def show_grade?
+    self.admin_evaluation_ok? || self.terminated?
+  end
+
   private
 
   def create_or_update_diaries
