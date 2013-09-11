@@ -14,7 +14,8 @@ module InstructorAdminHelper
 
     text = t("states_label.#{state.to_s}")
     label_class = {draft: 'label-info', sent_to_admin_for_revision: 'label-warning',
-                   sent_to_admin_for_evaluation: 'label-important', admin_evaluation_ok: 'label-success'}
+                   sent_to_admin_for_evaluation: 'label-important', admin_evaluation_ok: 'label-success',
+                   terminated: 'label-success'}
 
     link_to(text, show_hubs_path(position: (hub.position), moodle_user: moodle_user), target: '_blank', class: "label #{label_class[state]}")
   end
