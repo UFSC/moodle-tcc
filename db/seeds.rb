@@ -1,17 +1,17 @@
 # encoding: utf-8
 
 # Helper para realizar a criação e popular TccDefinitions, HubDefinitions, DiaryDefinitions
-def create_tcc_definitions(title, hub_diaries)
+def create_or_update_tcc_definitions(title, hub_diaries)
 
   # Numero de operações para criação de Hubs + Diários + 1 (Tcc)
   num_operations = hub_diaries.flatten.flatten.count+1
 
   Progress.start("TCC Definition: #{title}", num_operations) do
-    tcc_def = TccDefinition.create(title: title)
+    tcc_def = TccDefinition.find_or_create_by_title(title: title)
     Progress.step
 
     hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
-      hub = HubDefinition.create(order: hub_index+1, title: hub_name, tcc_definition: tcc_def, moodle_shortname: diaries[0][:shortname])
+      hub_def = HubDefinition.find_or_create_by_position_and_tcc_definition_id(position: hub_index+1, title: hub_name, tcc_definition_id: tcc_def.id, moodle_shortname: diaries[0][:shortname])
       Progress.step
 
       diaries.each_with_index do |diary, diary_index|
@@ -21,7 +21,7 @@ def create_tcc_definitions(title, hub_diaries)
 
           next if diary_id.nil?
 
-          DiaryDefinition.create(external_id: diary_id, hub_definition: hub, order: diary_index+1, title: diary_name)
+          DiaryDefinition.find_or_create_by_position_and_hub_definition_id(external_id: diary_id, hub_definition_id: hub_def.id, position: diary_index+1, title: diary_name)
         end
       end
     end
@@ -49,7 +49,7 @@ definition = {
     ]
 
 }
-create_tcc_definitions('Turma A', definition)
+create_or_update_tcc_definitions('Turma A', definition)
 
 #
 # TCC Definition - Turma B
@@ -70,7 +70,7 @@ definition = {
         {2568 => 'Projeto de Saúde no Território'} # shortname: 'SPB110076-21000077ES (20132)'
     ]
 }
-create_tcc_definitions('Turma B', definition)
+create_or_update_tcc_definitions('Turma B', definition)
 
 
 #
