@@ -36,6 +36,16 @@ namespace :tcc do
 
   end
 
+  task :update_orientador => :environment do
+
+    Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
+      matricula = MoodleUser.get_name(tcc.moodle_user)
+      tcc.orientador = OrientadorGroup.get_orientador(matricula)
+      tcc.save!
+    end
+
+  end
+
 
   #
   # Salva o Tcc de todos os alunos da turma indicada
