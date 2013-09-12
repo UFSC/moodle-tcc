@@ -32,6 +32,17 @@ class ArticleRef < ActiveRecord::Base
   end
 
   def direct_citation
+    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
+
+    if !second_author.nil?
+      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if  !second_author.empty? || second_author != ''
+    end
+
+    if !third_author.nil?
+      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty? || third_author != ''
+    end
+
+    "(#{authors}, #{year}, p. #{initial_page})"
     return direct_et_al if et_all
 
     authors = "#{first_author.split(' ').last.upcase}"

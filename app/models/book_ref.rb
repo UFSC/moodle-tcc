@@ -41,6 +41,13 @@ class BookRef < ActiveRecord::Base
     if !third_author.nil?
       authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty? || third_author != ''
     end
+    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
+    if !second_author.nil?
+      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if !second_author.empty? || second_author != ''
+    end
+    if !third_author.nil?
+      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty? || third_author != ''
+    end
     "(#{authors}, #{year})"
   end
 
