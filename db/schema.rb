@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905191451) do
+ActiveRecord::Schema.define(:version => 20130913210759) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(:version => 20130905191451) do
     t.datetime "updated_at",        :null => false
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
-    t.integer  "orientador"
+    t.string   "orientador"
   end
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
