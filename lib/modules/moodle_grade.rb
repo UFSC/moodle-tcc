@@ -8,6 +8,8 @@ module MoodleGrade
                     :itemname => itemname,
                     :lti_id => lti_id,
                     :itemnumber => itemnumber,
+                    :grademin => 0,
+                    :grademax => 100,
                     :wstoken => TCC_CONFIG['token']) do |response|
       MooddleWsClient.check_error(response)
       response
