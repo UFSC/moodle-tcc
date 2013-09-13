@@ -4,12 +4,12 @@ class TutorController < ApplicationController
   before_filter :check_permission
 
   def index
-    user_name = MoodleUser.get_name(@user_id)
+    username = MoodleUser.find_username_by_user_id(@user_id)
 
     # Problema no webservice
-    render 'public/404.html' unless user_name
+    render 'public/404.html' unless username
 
-    group = TutorGroup.get_tutor_group(user_name)
+    group = TutorGroup.get_tutor_group(username)
     @group_name = TutorGroup.get_tutor_group_name(group)
 
     @tccs = Tcc.where(tutor_group: group).paginate(:page => params[:page], :per_page => 30) unless group.nil?

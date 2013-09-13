@@ -27,7 +27,7 @@ namespace :tcc do
 
   end
 
-  desc 'Roda a rotina de atualização do TCC Definition em cada TCC'
+  desc 'TCC | Realiza a atualização do TCC Definition em cada TCC'
   task :update_all => :environment do
 
     Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
@@ -36,12 +36,17 @@ namespace :tcc do
 
   end
 
+  desc 'TCC | Atualiza os orientadores responsáveis pelos TCCs com base no Middleware'
   task :update_orientador => :environment do
 
     Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
-      matricula = MoodleUser.get_name(tcc.moodle_user)
-      tcc.orientador = OrientadorGroup.get_orientador(matricula)
-      tcc.save!
+      matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
+      orientador = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
+
+      if orientador
+        tcc.orientador = orientador
+        tcc.save!
+      end
     end
 
   end
@@ -59,7 +64,7 @@ namespace :tcc do
       user = Remote::MoodleUser.find_by_username(aluno.matricula)
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
-        orientador = OrientadorGroup.get_orientador(aluno.matricula)
+        orientador = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
 
         tcc = Tcc.create(moodle_user: user.id,
                          name: user.firstname+' '+user.lastname,

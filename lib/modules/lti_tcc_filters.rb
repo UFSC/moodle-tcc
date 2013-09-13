@@ -35,8 +35,8 @@ module LtiTccFilters
 
     else
       if current_user.student?
-        user_name = MoodleUser.get_name(@user_id)
-        group = TutorGroup.get_tutor_group(user_name)
+        username = MoodleUser.find_username_by_user_id(@user_id)
+        group = TutorGroup.get_tutor_group(username)
         tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
 
         @tcc = Tcc.create(moodle_user: @user_id, name: @tp.lis_person_name_full,

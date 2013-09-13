@@ -1,11 +1,11 @@
+# encoding: utf-8
 module OrientadorGroup
-  def self.get_orientador(mat)
-    p =  Middleware::OrientadoresAlunos.find_by_matricula_aluno(mat)
-    if p.nil? || p.ativo == 0
-      nil
-    else
-      p.matricula_orientador
-    end
+
+  # Retorna o orientador associado a um aluno específico
+  # @param [String] matricula matrícula UFSC
+  def self.find_orientador_by_matricula_aluno(matricula)
+    result = Middleware::OrientadoresAlunos.select(:matricula_orientador).where(matricula_aluno: matricula, ativo: true).first
+    result.nil? ? nil : result.matricula_orientador
   end
 
 end

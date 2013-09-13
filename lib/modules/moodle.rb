@@ -1,4 +1,28 @@
 module Moodle
+
+  # Executa uma chamada remota a um webservice do Moodle
+  def self.remote_call(remote_method_name, params={}, &block)
+    Rails.logger.debug "[Moodle WS] Chamada remota: #{remote_method_name}, parametros: #{params}"
+
+    default = {:wstoken => TCC_CONFIG['token'], :wsfunction => remote_method_name}
+
+    post_params = default
+    post_params.merge!(params) unless params.empty?
+
+    RestClient.post(TCC_CONFIG['server'], post_params) do |response|
+      Rails.logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
+
+      if response.code != 200
+        Rails.logger.error "Falha ao acessar o webservice do Moodle: HTTP_ERROR: #{response.code}"
+
+        return false
+      end
+
+      block.call(response)
+    end
+  end
+
+
   def self.fetch_hub_diaries(hub, user_id)
     m = MoodleHub.new
     m.fetch_hub_diaries(hub, user_id)
@@ -6,25 +30,15 @@ module Moodle
 
   class MoodleHub
     def fetch_hub_diaries(hub, user_id)
-      hub.diaries.each{|diary|
-        online_text =  fetch_online_text(user_id, diary.diary_definition.external_id)
+      hub.diaries.each { |diary|
+        online_text = fetch_online_text(user_id, diary.diary_definition.external_id)
         diary.content = online_text unless online_text.nil?
       }
     end
 
     def fetch_online_text(user_id, coursemodule_id)
-      Rails.logger.debug "[WS Moodle] Acessando Web Service: user_id=#{user_id}, coursemodule_id=#{coursemodule_id}"
-      RestClient.post(TCC_CONFIG["server"],
-                      :wsfunction => "local_wstcc_get_user_online_text_submission",
-                      :userid => user_id, :coursemoduleid => coursemodule_id,
-                      :wstoken => TCC_CONFIG["token"]) do |response|
-
-        Rails.logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
-
-        if response.code != 200
-          Rails.logger.error "Falha ao acessar o webservice do Moodle: HTTP_ERROR: #{response.code}"
-          return "Falha ao acessar o Moodle: (HTTP_ERROR: #{response.code})"
-        end
+      Moodle.remote_call('local_wstcc_get_user_online_text_submission',
+                         :userid => user_id, :coursemoduleid => coursemodule_id) do |response|
 
         # Utiliza Nokogiri como parser XML
         doc = Nokogiri.parse(response)
