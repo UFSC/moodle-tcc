@@ -22,3 +22,5 @@ public/assets
 app/assets/javascripts/ckeditor/plugins/placeholder
 db/*.sql
 db/*.bz2
+.DS_Store
+/coverage
