@@ -58,10 +58,6 @@ class Hub < ActiveRecord::Base
     end
   end
 
-  def show_grade?
-    self.admin_evaluation_ok? || self.terminated?
-  end
-
   def self.new_states_collection
     Hub.new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
   end
