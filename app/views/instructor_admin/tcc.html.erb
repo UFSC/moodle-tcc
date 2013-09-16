@@ -1,87 +1,11 @@
 <h3>Lista de TCCs</h3><br/>
 <h4>
+  Tela de Visão Geral
   <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
-      <%= display_icon('icon-refresh') %>
-      Atualizar lista
+    <%= display_icon('icon-refresh') %>
+    Atualizar lista
   <% end %>
 </h4>
 
-<table class="table table-bordered">
-  <thead>
-  <tr class="blue-header-table">
-    <th>Estudante</th>
-    <th>Nota</th>
-    <th>Resumo</th>
-    <th>Apresentação</th>
-    <% @hubs.each do |hub_name| %>
-        <th><%= hub_name %></th>
-    <% end %>
-    <th>Considerações finais</th>
-
-  </tr>
-  </thead>
-  <tbody>
-  <% @tccs.each do |tcc| %>
-      <tr>
-        <td><%= tcc.name %></td>
-        <td>Falta..</td>
-        <td>
-          <% unless tcc.abstract.nil? %>
-              <%= get_state(tcc.abstract) %>:
-              <%= link_to get_action(tcc.abstract), save_abstract_path(moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
-          <% else %>
-              <%= t('states.blank') %>
-          <% end %>
-        </td>
-        <td>
-          <% unless tcc.presentation.nil? %>
-              <%= get_state(tcc.presentation) %>:
-              <%= link_to get_action(tcc.presentation), save_presentation_path(moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
-          <% else %>
-              <%= t('states.blank') %>
-          <% end %>
-        </td>
-        <% tcc.hub_definitions.each do |hub_definition| %>
-            <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
-            <% hub_portfolio = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
-
-
-            <% if !hub_portfolio.nil? %>
-                <% if hub_portfolio.admin_evaluation_ok? || hub_portfolio.terminated? %>
-                    <% unless hub.nil? %>
-                        <td>
-                          <%= get_state(hub) %> <%= "/ Nota: #{hub.grade} " if hub.admin_evaluation_ok? %>:
-                          <%= link_to get_action(hub),
-                                      show_hubs_tcc_path(position: (hub.position), moodle_user: tcc.moodle_user),
-                                      target: '_blank', class: 'label label-success' %>
-                        </td>
-                    <% else %>
-                        <td class="empty-content"/>
-                    <% end %>
-                <% else %>
-                    <% unless hub.nil? %>
-                        <td>Aguardando portfólio</td>
-                    <% else %>
-                        <td class="empty-content"/>
-                    <% end %>
-                <% end %>
-            <% else %>
-                <td class="empty-content"/>
-            <% end %>
-        <% end %>
-        <td>
-          <% unless tcc.final_considerations.nil? %>
-              <%= get_state(tcc.final_considerations) %>:
-              <%= link_to get_action(tcc.final_considerations), save_final_considerations_path(moodle_user: tcc.moodle_user),
-                          target: '_blank', class: 'label label-success' %>
-          <% else %>
-              <%= t('states.blank') %>
-          <% end %>
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+<%= render :partial => 'orientador/tcc_listing' %>
 <%= will_paginate @tccs %>

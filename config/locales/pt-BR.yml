@@ -43,8 +43,7 @@ pt-BR:
       abstract:
         content_pt: "Resumo"
         content_en: "Abstract"
-        key_words_pt: "Palavras chaves"
-        key_words_en: "Key words"
+        key_words: "Palavras chaves"
       hub:
         reflection: "Reflexões"
       general_ref:

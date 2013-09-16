@@ -3,7 +3,20 @@
 .formtastic textarea {
   width: 400px;
 }
+
 .collapse {
   height: 100px;
-  overflow-y:scroll;
+  overflow-y: scroll;
+}
+
+#tcc_grade_input {
+  label {
+    width: 150px;
+    float: left;
+  }
+
+  input {
+    width: 90px;
+    display: inline;
+  }
 }

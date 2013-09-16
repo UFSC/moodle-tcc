@@ -31,7 +31,7 @@
             <% hub = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
             <td class="status">
               <% unless hub.nil? %>
-                  <%= get_status_label(hub, tcc.moodle_user) %>
+                  <%= hub_status_label(hub, tcc.moodle_user) %>
               <% end %>
             </td>
             <td class="grades">

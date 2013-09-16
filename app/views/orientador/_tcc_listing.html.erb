@@ -1,0 +1,77 @@
+<table class="table table-bordered">
+  <thead>
+  <tr class="blue-header-table">
+    <th>Estudante</th>
+    <th>Nota</th>
+    <th>Resumo</th>
+    <th>Apresentação</th>
+    <% @hubs.each do |hub_name| %>
+      <th><%= hub_name %></th>
+    <% end %>
+    <th>Considerações finais</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tccs.each do |tcc| %>
+
+    <%= render :partial => 'grade_tcc', locals: {tcc: tcc} if @current_user.orientador? %>
+
+    <tr>
+      <td><%= tcc.name %></td>
+
+      <td>
+        <% if tcc.grade.nil? %>
+          <% if tcc.is_ok? && @current_user.orientador? %>
+            <a href="#<%= tcc.id %>" role="" class="label label-warning" data-toggle="modal">Avaliar</a>
+          <% else %>
+            <span class="label">aguardo</span>
+          <% end %>
+        <% else %>
+          <% if @current_user.orientador? %>
+            <a href="#<%= tcc.id %>" class="label label-success tooltipped pull-right" title='Clique para alterar a nota' data-toggle="modal"><%= tcc.grade %></a>
+          <% else %>
+            <span class="label label-success pull-right"><%= tcc.grade %></span>
+          <% end %>
+        <% end %>
+      </td>
+
+      <td>
+        <%= status_label(tcc.abstract, save_abstract_path(moodle_user: tcc.moodle_user)) %>
+      </td>
+      <td>
+        <%= status_label(tcc.presentation, save_presentation_path(moodle_user: tcc.moodle_user)) %>
+      </td>
+      <% tcc.hub_definitions.each do |hub_definition| %>
+        <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
+        <% hub_portfolio = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
+
+        <% if !hub_portfolio.nil? %>
+          <% if hub_portfolio.admin_evaluation_ok? || hub_portfolio.terminated? %>
+            <% unless hub.nil? %>
+              <td>
+                <%= get_state(hub) %>
+                <%= link_to get_action(hub),
+                            show_hubs_tcc_path(position: (hub.position), moodle_user: tcc.moodle_user),
+                            target: '_blank', class: 'label label-success' %>
+              </td>
+            <% else %>
+              <td class="empty-content"/>
+            <% end %>
+          <% else %>
+            <% unless hub.nil? %>
+              <td>Aguardando portfólio</td>
+            <% else %>
+              <td class="empty-content"/>
+            <% end %>
+          <% end %>
+        <% else %>
+          <td class="empty-content"/>
+        <% end %>
+      <% end %>
+      <td>
+        <%= status_label(tcc.final_considerations, save_final_considerations_path(moodle_user: tcc.moodle_user)) %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
