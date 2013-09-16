@@ -91,7 +91,13 @@ class HubsController < ApplicationController
           hub.save
         end
         flash[:success] = t(:successfully_saved)
-        return redirect_user_to_start_page
+
+        if @type == 'tcc'
+          return redirect_to show_hubs_tcc_path(position: @hub.position.to_s)
+        else
+          return redirect_to show_hubs_path(position: @hub.position.to_s)
+        end
+
       end
     else
 
@@ -111,8 +117,6 @@ class HubsController < ApplicationController
 
       if @hub.valid? && @hub.save
         return redirect_user_to_start_page
-
-
       else
         @hub.state = old_state
       end
