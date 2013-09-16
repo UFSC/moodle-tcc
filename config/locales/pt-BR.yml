@@ -1,207 +1,115 @@
 pt-BR:
-  date:
-    abbr_day_names:
-    - Dom
-    - Seg
-    - Ter
-    - Qua
-    - Qui
-    - Sex
-    - Sáb
-    abbr_month_names:
-    - 
-    - Jan
-    - Fev
-    - Mar
-    - Abr
-    - Mai
-    - Jun
-    - Jul
-    - Ago
-    - Set
-    - Out
-    - Nov
-    - Dez
-    day_names:
-    - Domingo
-    - Segunda
-    - Terça
-    - Quarta
-    - Quinta
-    - Sexta
-    - Sábado
-    formats:
-      default: ! '%d/%m/%Y'
-      long: ! '%d de %B de %Y'
-      short: ! '%d de %B'
-    month_names:
-    - 
-    - Janeiro
-    - Fevereiro
-    - Março
-    - Abril
-    - Maio
-    - Junho
-    - Julho
-    - Agosto
-    - Setembro
-    - Outubro
-    - Novembro
-    - Dezembro
-    order:
-    - :day
-    - :month
-    - :year
-  datetime:
-    distance_in_words:
-      about_x_hours:
-        one: aproximadamente 1 hora
-        other: aproximadamente %{count} horas
-      about_x_months:
-        one: aproximadamente 1 mês
-        other: aproximadamente %{count} meses
-      about_x_years:
-        one: aproximadamente 1 ano
-        other: aproximadamente %{count} anos
-      almost_x_years:
-        one: quase 1 ano
-        other: quase %{count} anos
-      half_a_minute: meio minuto
-      less_than_x_minutes:
-        one: menos de um minuto
-        other: menos de %{count} minutos
-      less_than_x_seconds:
-        one: menos de 1 segundo
-        other: menos de %{count} segundos
-      over_x_years:
-        one: mais de 1 ano
-        other: mais de %{count} anos
-      x_days:
-        one: 1 dia
-        other: ! '%{count} dias'
-      x_minutes:
-        one: 1 minuto
-        other: ! '%{count} minutos'
-      x_months:
-        one: 1 mês
-        other: ! '%{count} meses'
-      x_seconds:
-        one: 1 segundo
-        other: ! '%{count} segundos'
-    prompts:
-      day: Dia
-      hour: Hora
-      minute: Minuto
-      month: Mês
-      second: Segundo
-      year: Ano
-  errors: &errors
-    format: ! '%{attribute} %{message}'
-    messages:
-      accepted: deve ser aceito
-      blank: não pode ficar em branco
-      confirmation: não está de acordo com a confirmação
-      empty: não pode ficar vazio
-      equal_to: deve ser igual a %{count}
-      even: deve ser par
-      exclusion: não está disponível
-      greater_than: deve ser maior que %{count}
-      greater_than_or_equal_to: deve ser maior ou igual a %{count}
-      inclusion: não está incluído na lista
-      invalid: não é válido
-      less_than: deve ser menor que %{count}
-      less_than_or_equal_to: deve ser menor ou igual a %{count}
-      not_a_number: não é um número
-      not_an_integer: não é um número inteiro
-      odd: deve ser ímpar
-      record_invalid: ! 'A validação falhou: %{errors}'
-      taken: já está em uso
-      too_long: ! 'é muito longo (máximo: %{count} caracteres)'
-      too_short: ! 'é muito curto (mínimo: %{count} caracteres)'
-      wrong_length: não possui o tamanho esperado (%{count} caracteres)
-    template:
-      body: ! 'Por favor, verifique o(s) seguinte(s) campo(s):'
-      header:
-        one: ! 'Não foi possível gravar %{model}: 1 erro'
-        other: ! 'Não foi possível gravar %{model}: %{count} erros.'
-  helpers:
-    select:
-      prompt: Por favor selecione
-    submit:
-      create: Criar %{model}
-      submit: Salvar %{model}
-      update: Atualizar %{model}
-  number:
-    currency:
-      format:
-        delimiter: .
-        format: ! '%u %n'
-        precision: 2
-        separator: ! ','
-        significant: false
-        strip_insignificant_zeros: false
-        unit: R$
-    format:
-      delimiter: .
-      precision: 3
-      separator: ! ','
-      significant: false
-      strip_insignificant_zeros: false
-    human:
-      decimal_units:
-        format: ! '%n %u'
-        units:
-          billion:
-            one: bilhão
-            other: bilhões
-          million:
-            one: milhão
-            other: milhões
-          quadrillion:
-            one: quatrilhão
-            other: quatrilhões
-          thousand: mil
-          trillion:
-            one: trilhão
-            other: trilhões
-          unit: ''
-      format:
-        delimiter: .
-        precision: 2
-        significant: true
-        strip_insignificant_zeros: true
-      storage_units:
-        format: ! '%n %u'
-        units:
-          byte:
-            one: Byte
-            other: Bytes
-          gb: GB
-          kb: KB
-          mb: MB
-          tb: TB
-    percentage:
-      format:
-        delimiter: .
-    precision:
-      format:
-        delimiter: .
-  support:
-    array:
-      last_word_connector: ! ' e '
-      two_words_connector: ! ' e '
-      words_connector: ! ', '
-  time:
-    am: ''
-    formats:
-      default: ! '%a, %d de %B de %Y, %H:%M:%S %z'
-      long: ! '%d de %B de %Y, %H:%M'
-      short: ! '%d de %B, %H:%M'
-    pm: ''
-  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
-  activemodel:
-    errors:
-      <<: *errors
+  states: &estados
+    blank: 'Não editado'
+    draft: 'Rascunho'
+    sent_to_admin_for_revision: 'Enviado para revisão'
+    sent_to_admin_for_evaluation: 'Enviado para avaliação'
+    admin_evaluation_ok: 'Avaliado'
+    new: 'Novo'
+    terminated: 'Finalizado'
+    tcc_draft: 'Rascunho (TCC)'
+    sent_to_leader_for_revision: 'Enviado para revisão (TCC)'
+    sent_to_leader_for_evaluation: 'Enviado para avaliação (TCC)'
+    leader_evaluation_ok: 'Avaliado (TCC)'
+  states_label:
+    blank: 'não editado'
+    draft: 'rascunho'
+    terminated: 'avaliado'
+    sent_to_admin_for_revision: 'requer revisão'
+    sent_to_admin_for_evaluation: 'requer avaliação'
+    admin_evaluation_ok: 'avaliado'
+  actions:
+    draft: 'Visualizar'
+    new: 'Visualizar'
+    sent_to_admin_for_revision: 'Comentar'
+    sent_to_admin_for_evaluation: 'Avaliar'
+    admin_evaluation_ok: 'Avaliado'
+    tcc_draft: 'Visualizar'
+    sent_to_leader_for_revision: 'Comentar'
+    sent_to_leader_for_evaluation: 'Avaliar'
+    leader_evaluation_ok: 'Avaliado'
+  enumerize:
+    hub:
+      new_state:
+        <<: *estados
   activerecord:
-    errors:
-      <<: *errors
+    attributes:
+      tcc:
+        leader: "Orientador"
+        grade: "Nota"
+        name: "Nome"
+        title: "Título"
+        defense_date: "Data da defesa"
+      abstract:
+        content_pt: "Resumo"
+        content_en: "Abstract"
+        key_words_pt: "Palavras chaves"
+        key_words_en: "Key words"
+      hub:
+        reflection: "Reflexões"
+      general_ref:
+        direct_citation: 'Citação Direta'
+        indirect_citation: 'Citação Indireta'
+        reference_text: 'Texto da referência'
+      book_ref:
+        edition_number: 'Número da edição'
+        et_all: 'Mais de 3 autores'
+        first_author: 'Autor'
+        second_author: 'Segundo Autor'
+        third_author: 'Terceiro Autor'
+        local: 'Local (Cidade)'
+        publisher: 'Editora'
+        title: 'Título'
+        subtitle: 'Subtítulo'
+        year: 'Ano (aaaa)'
+        num_quantity: ''
+        type_quantity: 'Volumes ou páginas'
+      book_cap_ref:
+        book_author: 'Autor do Livro'
+        book_subtitle: 'Subtítulo do Livro'
+        book_title: 'Título do Livro'
+        cap_author: 'Autor do Capítulo'
+        cap_subtitle: 'Subtítulo do Capítulo'
+        cap_title: 'Título do Capítulo'
+        end_page: 'Página Final'
+        initial_page: 'Página Inicial'
+        local: 'Local (Cidade)'
+        year: 'Ano (aaaa)'
+        publisher: 'Editora'
+        type_participation: 'Tipo da Participação'
+      article_ref:
+        first_author: 'Autor'
+        second_author: 'Segundo Autor'
+        third_author: 'Terceiro Autor'
+        et_all: 'Mais de 3 autores'
+        article_subtitle: 'Subtítulo do Artigo'
+        article_title: 'Título do Artigo'
+        end_page: 'Página Final'
+        initial_page: 'Página Inicial'
+        local: 'Local (Cidade)'
+        year: 'Ano (aaaa)'
+        publication_date: 'Data da publicação'
+        volume_number: 'Número do Volume'
+        number_or_fascicle: 'Número ou Fascículo'
+        journal_name: 'Nome do Periódico'
+      internet_ref:
+        author: 'Autor'
+        title: 'Título'
+        subtitle: 'Subtítulo'
+        url: 'URL'
+        access_date: 'Data de Acesso'
+      legislative_ref:
+        jurisdiction_or_header: 'Jurisdição ou Cabeçalho'
+        title: 'Título'
+        edition: 'Edição'
+        local: 'Local (Cidade)'
+        publisher: 'Editora'
+        total_pages: 'Total de Páginas'
+        year: 'Ano'
+    models:
+      general_ref: 'Referência Geral'
+      book_ref: 'Referência de Livros'
+      book_cap_ref: 'Referência de Capítulo de Livro'
+      article_ref: 'Referência de Artigo'
+      internet_ref: 'Referência da Internet'
+      legislative_ref: 'Referência do Legislativo'
