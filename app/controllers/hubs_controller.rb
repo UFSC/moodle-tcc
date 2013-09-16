@@ -145,7 +145,7 @@ class HubsController < ApplicationController
         when 'admin_evaluation_ok'
           to_evaluation_ok(@hub)
         else
-          flash[:error] = 'Estado selecionado é invádlio'
+          flash[:error] = t(:invalid_state)
           return redirect_user_to_start_page
       end
 
@@ -154,7 +154,7 @@ class HubsController < ApplicationController
       @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
       if params[:hub_portfolio][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
-        flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
+        flash[:error] = t(:cannot_change_to_state_without_grade)
         return redirect_user_to_start_page
       end
       case params[:hub_portfolio][:new_state]
@@ -167,7 +167,7 @@ class HubsController < ApplicationController
         when 'admin_evaluation_ok'
           to_evaluation_ok(@hub)
         else
-          flash[:error] = 'Estado selecionado é invádlio'
+          flash[:error] = t(:invalid_state)
           return redirect_user_to_start_page
       end
     end
@@ -183,7 +183,7 @@ class HubsController < ApplicationController
     @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
     unless @hub.nil?
       if !@hub.admin_evaluation_ok? && !@hub.terminated?
-        flash[:error] = 'Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio'
+        flash[:error] = t(:cannot_access_hub_without_grading)
         return redirect_user_to_start_page
       end
     end

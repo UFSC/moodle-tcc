@@ -22,7 +22,7 @@ class InstructorAdminController < ApplicationController
 
   def check_permission
     unless current_user.view_all?
-      flash[:error] = 'Você não possui permissão para acessar esta página'
+      flash[:error] = t(:cannot_access_page_without_enough_permission)
       redirect_user_to_start_page
     end
   end

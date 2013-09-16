@@ -1,12 +1,16 @@
   pt-BR:
+    cannot_access_hub_without_grading: "Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio"
+    cannot_access_page_without_enough_permission: "Você não possui permissão para acessar esta página"
+    cannot_change_to_state_without_grade: "Não é possível alterar para este estado sem ter dado uma nota."
     could_not_find: "Não pôde ser encontrado"
+    empty_diaries: "[ ainda não existe nada postado para esta atividade ]"
+    hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
+    invalid_state: "Estado selecionado é invádlio"
+    label_confirm_message: 'Você tem certeza que deseja remover?'
+    online_text_error: "<p style='color:red'>Erro ao buscar</p>"
+    online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"
+    please_fix_invalid_data: "Por favor corrija os erros no formulário abaixo"
     successfully_saved: "Mudanças salvas com sucesso"
     successfully_deleted: "Removido com sucesso"
     unsuccessfully_saved: "Mudanças não foram salvas"
     unsuccessfully_deleted: "Não pode ser removido"
-    please_fix_invalid_data: "Por favor corrija os erros no formulário abaixo"
-    online_text_error: "<p style='color:red'>Erro ao buscar</p>"
-    online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"
-    hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
-    empty_diaries: "[ ainda não existe nada postado para esta atividade ]"
-    label_confirm_message: 'Você tem certeza que deseja remover?'
