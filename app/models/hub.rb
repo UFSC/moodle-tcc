@@ -14,8 +14,6 @@ class Hub < ActiveRecord::Base
   # Mass-Assignment
   attr_accessible :type, :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
-  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :admin_evaluation_ok?
-
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
 

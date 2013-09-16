@@ -103,7 +103,7 @@ class HubsController < ApplicationController
 
 
       #
-      # TUTOR
+      # TUTOR E ORIENTADOR
       #
 
       # Ação do botão
