@@ -64,6 +64,10 @@ class Hub < ActiveRecord::Base
     self.admin_evaluation_ok? || self.terminated?
   end
 
+  def self.new_states_collection
+    Hub.new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
+  end
+
   private
 
   def create_or_update_diaries
