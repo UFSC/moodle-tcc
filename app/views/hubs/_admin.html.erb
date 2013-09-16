@@ -6,32 +6,34 @@
     <div class="span12">
       <div class="row">
         <% unless @current_user.view_all? %>
-            <h3 class="span12"> Reflexões do <%= @hub.hub_definition.title %> -
+          <h3 class="span12"> Reflexões do <%= @hub.hub_definition.title %> -
               <span class="text-info">
                 <%= t('states.'+@hub.aasm_current_state.to_s) %>
                 <%= "/ Nota: #{@hub.grade}" if @hub.show_grade? %>
               </span>
-            </h3>
+          </h3>
         <% else %>
-            <div class="span12 inline">
-              <h3 class="pull-left"> Reflexões do <%= @hub.hub_definition.title %> - </h3>
-              <% if !@hub.nil? && !@hub.terminated? %>- </h3>
+          <div class="span12 inline">
+            <h3 class="pull-left">
+              Reflexões do <%= @hub.hub_definition.title %> -
+            </h3>
+            <% if !@hub.nil? && !@hub.terminated? %>
 
-                  <% if @current_user.coordenador_avea? || @current_user.admin? %>
-                      <%= render partial: 'states', locals: {hub: @hub} %>
-                  <% else %>
-                      <% if @type == 'tcc' %>
-                          <% if @current_user.coordenador_curso? %>
-                              <%= render partial: 'states', locals: {hub: @hub} %>
-                          <% end %>
-                      <% else %>
-                          <% if @current_user.coordenador_tutoria? %>
-                              <%= render partial: 'states', locals: {hub: @hub} %>
-                          <% end %>
-                      <% end %>
+              <% if @current_user.coordenador_avea? || @current_user.admin? %>
+                <%= render partial: 'states', locals: {hub: @hub} %>
+              <% else %>
+                <% if @type == 'tcc' %>
+                  <% if @current_user.coordenador_curso? %>
+                    <%= render partial: 'states', locals: {hub: @hub} %>
                   <% end %>
+                <% else %>
+                  <% if @current_user.coordenador_tutoria? %>
+                    <%= render partial: 'states', locals: {hub: @hub} %>
+                  <% end %>
+                <% end %>
               <% end %>
-            </div>
+            <% end %>
+          </div>
         <% end %>
 
       </div>
@@ -46,36 +48,41 @@
     <div id="old_tcc_object" class="span6" style="display: none">
       <div class="rounded-border">
         <% unless @last_hub_commented.nil? || @last_hub_commented.reflection.nil? %>
+          <div class="rounded-border">
+            <h4>Versão anterior da reflexão</h4>
+            <%= @last_hub_commented.reflection.html_safe %>
+          </div>
+          <% unless @hub.commentary.blank? %>
             <div class="rounded-border">
-              <h4>Versão anterior da reflexão</h4>
-              <%= @last_hub_commented.reflection.html_safe %>
+              <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
+              <%= @hub.commentary.html_safe %>
             </div>
-            <% unless @hub.commentary.blank? %>
-                <div class="rounded-border">
-                  <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
-                  <%= @hub.commentary.html_safe %>
-                </div>
-            <% else %>
-                <h5 class="text-info">Sem comentário para esta versão</h5>
-            <% end %>
+          <% else %>
+            <h5 class="text-info">Sem comentário para esta versão</h5>
+          <% end %>
         <% else %>
-            <h5 class="text-info">Ainda não há versão anterior</h5>
+          <h5 class="text-info">Ainda não há versão anterior</h5>
         <% end %>
       </div>
     </div>
     <!--new-->
     <div id="new_tcc_object" class="span12">
       <div class="rounded-border">
-        <div class="rounded-border">
-          <h4>Versão atual da reflexão</h4>
-          <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
-        </div>
         <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
-            <%= h.input :position, :as => :hidden %>
-            <% if @hub.sent_to_admin_for_evaluation? && @current_user.tutor? %>
-                <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 100)' %>
+          <div class="rounded-border">
+            <h4>Versão atual da reflexão</h4>
+            <% if (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?) && @current_user.orientador? %>
+              <%= h.cktext_area :reflection %>
+            <% else %>
+              <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
             <% end %>
-            <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>
+          </div>
+
+          <%= h.input :position, :as => :hidden %>
+          <% if @hub.sent_to_admin_for_evaluation? && @current_user.tutor? %>
+            <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 100)' %>
+          <% end %>
+          <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>
         <% end %>
       </div>
     </div>
