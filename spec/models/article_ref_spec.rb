@@ -16,7 +16,6 @@ describe ArticleRef do
     it { should validate_presence_of(:journal_name) }
     it { should validate_presence_of(:local) }
     it { should validate_presence_of(:year) }
-    it { should ensure_inclusion_of(:year).in_range(0..(Date.today.year)) }
     it { should validate_presence_of(:initial_page) }
     it { should validate_presence_of(:end_page) }
   end
@@ -68,4 +67,153 @@ describe ArticleRef do
     it { should allow_value(1).for(:end_page) }
     it { should allow_value(5).for(:end_page) }
   end
+
+  context 'citacoes' do
+    let(:article_ref) { Fabricate.build(:article_ref) }
+
+    describe '#direct_citation' do
+
+      it 'should include first_author' do
+        article_ref.direct_citation.should include("#{article_ref.first_author.split(' ').last.upcase}; #{article_ref.first_author.split(' ').first.upcase},")
+      end
+      it 'should include second_author' do
+        article_ref.direct_citation.should include("#{article_ref.second_author.split(' ').last.upcase}; #{article_ref.second_author.split(' ').first.upcase},")
+      end
+      it 'should include third_author' do
+        article_ref.direct_citation.should include("#{article_ref.third_author.split(' ').last.upcase}; #{article_ref.third_author.split(' ').first.upcase},")
+      end
+
+      it 'should include year' do
+        article_ref.direct_citation.should include(article_ref.year.to_s)
+      end
+
+      it 'should include (' do
+        article_ref.direct_citation.should include('(')
+      end
+
+      it 'should include )' do
+        article_ref.direct_citation.should include(')')
+      end
+
+      it 'should include initial_page' do
+        article_ref.direct_citation.should include("p. #{article_ref.initial_page}")
+      end
+
+    end
+
+    describe '#indirect_citation' do
+
+      it 'should include cap_author' do
+        article_ref.indirect_citation.should include("#{article_ref.first_author.split(' ').first.capitalize}")
+      end
+
+      it 'should include year' do
+        article_ref.indirect_citation.should include(article_ref.year.to_s)
+      end
+
+      it 'should include (' do
+        article_ref.indirect_citation.should include('(')
+      end
+
+      it 'should include )' do
+        article_ref.indirect_citation.should include(')')
+      end
+
+    end
+  end
+
+  context 'same_author' do
+    describe '#check_equality' do
+      after(:each) do
+        ArticleRef.destroy_all
+      end
+
+      it 'should invoke check_equality' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.should_receive(:check_equality)
+
+        article_ref1.save!
+      end
+      xit 'should invoke check_difference' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A10'
+        article_ref1.should_receive(:check_difference)
+
+        article_ref1.save!
+      end
+
+      it 'subtype should be nil' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+
+        article_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be nil after one update' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+        article_ref1.save!
+
+        article_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be set correctly' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+
+        article_ref2 = Fabricate.build(:article_ref)
+        article_ref2.first_author = 'Autor A1'
+        article_ref2.second_author = 'Autor A2'
+        article_ref2.third_author = 'Autor A3'
+        article_ref2.save!
+
+        article_ref1.reload
+
+        article_ref1.subtype.should == 'a'
+        article_ref2.subtype.should == 'b'
+
+      end
+
+      it 'should set subtype to nil if object is different' do
+        article_ref1 = Fabricate.build(:article_ref)
+        article_ref1.first_author = 'Autor A1'
+        article_ref1.second_author = 'Autor A2'
+        article_ref1.third_author = 'Autor A3'
+        article_ref1.save!
+
+        article_ref2 = Fabricate.build(:article_ref)
+        article_ref2.first_author = 'Autor A1'
+        article_ref2.second_author = 'Autor A2'
+        article_ref2.third_author = 'Autor A3'
+        article_ref2.save!
+
+        article_ref1.reload
+
+        article_ref1.subtype.should == 'a'
+        article_ref2.subtype.should == 'b'
+
+        article_ref2
+        article_ref2.first_author = 'Autor A10'
+        article_ref2.save!
+        article_ref2.reload
+        article_ref1.reload
+
+        article_ref1.subtype.should be_nil
+        article_ref2.subtype.should be_nil
+
+      end
+
+    end
+  end
+
+
 end

@@ -37,4 +37,86 @@ describe LegislativeRef do
     it { should validate_numericality_of(:year).only_integer }
     it { should ensure_inclusion_of(:year).in_range(0..(Date.today.year)) }
   end
+
+  context 'same_publisher' do
+    describe '#check_equality' do
+      after(:each) do
+        LegislativeRef.destroy_all
+      end
+
+      it 'should invoke callback' do
+        legislative_ref1 = Fabricate.build(:legislative_ref)
+        legislative_ref1.should_receive(:check_equality)
+        legislative_ref1.save!
+      end
+
+      it 'subtype should be nil' do
+        legislative_ref1 = Fabricate.build(:legislative_ref)
+        legislative_ref1.publisher = 'Autor A1'
+
+        legislative_ref1.save!
+
+        legislative_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be nil after one update' do
+        legislative_ref1 = Fabricate.build(:legislative_ref)
+        legislative_ref1.publisher = 'Autor A1'
+
+        legislative_ref1.save!
+        legislative_ref1.save!
+
+        legislative_ref1.subtype.should be_nil
+      end
+
+      it 'subtype should be set correctly' do
+        legislative_ref1 = Fabricate.build(:legislative_ref)
+        legislative_ref1.publisher = 'Autor A1'
+
+        legislative_ref1.save!
+
+        legislative_ref2 = Fabricate.build(:legislative_ref)
+        legislative_ref2.publisher = 'Autor A1'
+
+        legislative_ref2.save!
+
+        legislative_ref1.reload
+
+        legislative_ref1.subtype.should == 'a'
+        legislative_ref2.subtype.should == 'b'
+
+      end
+
+      it 'should set subtype to nil if object is different' do
+        legislative_ref1 = Fabricate.build(:legislative_ref)
+        legislative_ref1.publisher = 'Autor A1'
+
+        legislative_ref1.save!
+
+        legislative_ref2 = Fabricate.build(:legislative_ref)
+        legislative_ref2.publisher = 'Autor A1'
+
+        legislative_ref2.save!
+
+        legislative_ref1.reload
+
+        legislative_ref1.subtype.should == 'a'
+        legislative_ref2.subtype.should == 'b'
+
+        legislative_ref2
+        legislative_ref2.publisher = 'Autor A10'
+        legislative_ref2.save!
+        legislative_ref1.reload
+        legislative_ref2.reload
+
+        legislative_ref1.subtype.should be_nil
+        legislative_ref2.subtype.should be_nil
+
+      end
+
+    end
+  end
+
+
+
 end
