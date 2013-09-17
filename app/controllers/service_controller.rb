@@ -4,7 +4,7 @@ class ServiceController < ApplicationController
 
   def report
     if params[:user_ids]
-      @tccs = Tcc.find_all_by_moodle_user(params[:user_ids])
+      @tccs = Tcc.where(moodle_user: params[:user_ids])
       render 'service/report', status: :ok
     else
       render status: :bad_request, json: { error_message: 'Invalid params (missing user_ids)' }
