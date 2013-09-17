@@ -12,16 +12,29 @@ describe Hub do
   end
 
   describe 'reflection' do
-    it 'should allow empty reflection if hub is new' do
+    it 'should allow empty reflection if hub is new or draft' do
       hub.reflection = ''
+
       hub.new?.should be_true
+      hub.should be_valid
+
+      hub.state = 'draft'
       hub.should be_valid
     end
 
-    it 'should validate presence of reflection if hub is not new' do
+    it 'should validate presence of reflection if hub is not new or draft' do
       hub.reflection = ''
-      hub.state = 'draft'
-      hub.draft?.should be_true
+
+      hub.state = 'sent_to_admin_for_revision'
+      hub.should_not be_valid
+
+      hub.state = 'sent_to_admin_for_evaluation'
+      hub.should_not be_valid
+
+      hub.state = 'admin_evaluation_ok'
+      hub.should_not be_valid
+
+      hub.state = 'terminated'
       hub.should_not be_valid
     end
   end

@@ -14,7 +14,7 @@ class Hub < ActiveRecord::Base
   # Mass-Assignment
   attr_accessible :type, :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
-  validates :reflection, presence: true, unless: Proc.new { |hub| hub.new? }
+  validates :reflection, presence: true, unless: Proc.new { |hub| hub.new? or hub.draft? }
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
