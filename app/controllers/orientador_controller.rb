@@ -4,12 +4,14 @@ class OrientadorController < ApplicationController
   before_filter :check_permission
 
   def index
+    tcc_definition_id = @tp.custom_params['tcc_definition']
     username = MoodleUser.find_username_by_user_id(@user_id)
 
     # Problema no webservice
     render 'public/404.html' unless username
 
-    @tccs = Tcc.where(orientador: username).paginate(:page => params[:page], :per_page => 30)
+    @tccs = Tcc.where(tcc_definition_id: tcc_definition_id,
+                      orientador: username).paginate(:page => params[:page], :per_page => 30)
     @hubs = Tcc.hub_names
   end
 

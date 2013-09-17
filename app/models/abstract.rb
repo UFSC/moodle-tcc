@@ -2,6 +2,8 @@ class Abstract < ActiveRecord::Base
   belongs_to :tcc
   attr_accessible :commentary, :content, :key_words
 
+  validates :content, presence: true, unless: Proc.new { |abstract| abstract.new? }
+
   has_paper_trail meta: {state: :state}
 
   include TccStateMachine

@@ -11,6 +11,21 @@ describe Hub do
     hub.versions.size.should == ( old_version + 1 )
   end
 
+  describe 'reflection' do
+    it 'should allow empty reflection if hub is new' do
+      hub.reflection = ''
+      hub.new?.should be_true
+      hub.should be_valid
+    end
+
+    it 'should validate presence of reflection if hub is not new' do
+      hub.reflection = ''
+      hub.state = 'draft'
+      hub.draft?.should be_true
+      hub.should_not be_valid
+    end
+  end
+
   describe 'grade_date' do
     it 'should be nil without grade' do
       hub.grade = nil
