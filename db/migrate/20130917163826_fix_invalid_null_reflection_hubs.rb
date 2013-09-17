@@ -1,3 +1,4 @@
+# encoding: utf-8
 class FixInvalidNullReflectionHubs < ActiveRecord::Migration
   def change
     hubs = Hub.where("reflection = '' AND (state != 'draft' AND state != 'new')")
