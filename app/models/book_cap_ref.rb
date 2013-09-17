@@ -4,7 +4,7 @@ class BookCapRef < ActiveRecord::Base
 
   before_save :check_equality
   before_update :check_equality
-  after_update :check_difference, :if => Proc.new { (self.book_author_changed?) }
+  after_update :check_difference, if: Proc.new { (self.book_author_changed?) }
 
 
   has_one :reference, :as => :element, :dependent => :destroy
@@ -43,14 +43,14 @@ class BookCapRef < ActiveRecord::Base
   end
 
   def check_equality
-    book_cap_refs = BookCapRef.where("(book_author = ? ) AND (year = ?)", book_author, year)
+    book_cap_refs = BookCapRef.where('(book_author = ? ) AND (year = ?)', book_author, year)
     update_subtype_field(self, book_cap_refs)
   end
 
   def check_difference
-    book_cap_refs = BookCapRef.where("(book_author = ? ) AND (year = ?)", book_author, year)
+    book_cap_refs = BookCapRef.where('(book_author = ? ) AND (year = ?)', book_author, year)
     update_refs(book_cap_refs)
-    book_cap_refs = BookCapRef.where("(book_author = ? ) AND (year = ?)", book_author_was, year)
+    book_cap_refs = BookCapRef.where('(book_author = ? ) AND (year = ?)', book_author_was, year)
     update_refs(book_cap_refs)
 
   end

@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20130913210759) do
     t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
+    t.string  "subtype"
   end
 
   create_table "book_cap_refs", :force => true do |t|
@@ -54,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130913210759) do
     t.integer "year"
     t.integer "initial_page"
     t.integer "end_page"
+    t.string  "subtype"
   end
 
   create_table "book_refs", :force => true do |t|
@@ -69,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20130913210759) do
     t.integer "year"
     t.string  "type_quantity"
     t.integer "num_quantity"
+    t.string  "subtype"
   end
 
   create_table "diaries", :force => true do |t|
@@ -145,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20130913210759) do
     t.string "subtitle"
     t.string "url"
     t.date   "access_date"
+    t.string "subtype"
   end
 
   create_table "legislative_refs", :force => true do |t|
@@ -155,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20130913210759) do
     t.string  "publisher"
     t.integer "year"
     t.integer "total_pages"
+    t.string  "subtype"
   end
 
   create_table "presentations", :force => true do |t|
