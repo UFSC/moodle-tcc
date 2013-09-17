@@ -8,8 +8,6 @@ gem 'oauth'
 
 # Moodle Web Service
 gem 'rest-client'
-
-# XML Parser
 gem 'nokogiri'
 
 # State machine
@@ -48,6 +46,7 @@ gem 'rabl'
 # Rake e console
 gem 'progress'
 gem 'terminal-table'
+gem 'whenever', require: false
 
 # Enumerize
 gem 'enumerize'

@@ -7,6 +7,10 @@ set :stages, %w(production staging)
 set :default_stage, 'staging'
 require 'capistrano/ext/multistage'
 
+# Whenever (crontab)
+set :whenever_command, 'bundle exec whenever'
+set :whenever_identifier, defer { "#{application}_#{stage}" }
+require 'whenever/capistrano'
 
 set :application, 'tcc.unasus.ufsc.br'
 set :repository,  'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
