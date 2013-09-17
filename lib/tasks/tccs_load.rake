@@ -39,7 +39,7 @@ namespace :tcc do
   desc 'TCC | Atualiza os orientadores responsáveis pelos TCCs com base no Middleware'
   task :update_orientador => :environment do
 
-    Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
+    Tcc.all.with_progress 'Atualizando orientador responsável pelos TCCs' do |tcc|
       matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
       orientador = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
