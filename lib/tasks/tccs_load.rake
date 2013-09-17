@@ -28,7 +28,7 @@ namespace :tcc do
   end
 
   desc 'TCC | Realiza a atualização do TCC Definition em cada TCC'
-  task :update_all => :environment do
+  task :update_definitions => :environment do
 
     Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
       tcc.send(:create_or_update_hubs)
