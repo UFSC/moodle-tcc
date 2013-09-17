@@ -4,7 +4,7 @@
 </h4>
 
 <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
-    <%= display_icon('icon-refresh') %> Atualizar lista
+  <%= display_icon('icon-refresh') %> Atualizar lista
 <% end %>
 
 <table class="table table-bordered" id="hubs-table">
@@ -12,35 +12,38 @@
   <tr class="blue-header-table">
     <th rowspan="2">Estudante</th>
     <% @hubs.each do |hub_name| %>
-        <th colspan="2"><%= hub_name %></th>
+      <th colspan="2"><%= hub_name %></th>
     <% end %>
   </tr>
   <tr class="blue-header-table">
     <% @hubs.each do |hub_name| %>
-        <th class="status">Estado</th>
-        <th class="grades">Nota</th>
+      <th class="status">Estado</th>
+      <th class="grades">Nota</th>
     <% end %>
   </tr>
   </thead>
 
   <tbody>
   <% @tccs.each do |tcc| %>
-      <tr>
-        <td><%= tcc.name %></td>
-        <% tcc.hub_definitions.each do |hub_definition| %>
-            <% hub = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
-            <td class="status">
-              <% unless hub.nil? %>
-                  <%= hub_status_label(hub, tcc.moodle_user) %>
-              <% end %>
-            </td>
-            <td class="grades">
-              <% unless hub.nil? %>
-                  <%= hub.grade if hub.show_grade? %>
-              <% end %>
-            </td>
+    <tr>
+      <td><%= tcc.name %></td>
+      <% tcc.hub_definitions.each do |hub_definition| %>
+        <% hub = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
+
+        <% if hub.nil? %>
+          <td class="empty-content"/>
+          <td class="empty-content"/>
+        <% else %>
+          <td class="status">
+            <%= hub_status_label(hub, tcc.moodle_user) %>
+          </td>
+          <td class="grades">
+            <%= hub.grade if hub.show_grade? %>
+          </td>
         <% end %>
-      </tr>
+
+      <% end %>
+    </tr>
   <% end %>
   </tbody>
 
