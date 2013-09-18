@@ -14,9 +14,9 @@ namespace :tcc do
             attr = Conversor::get_attributes(c)
             new_text = Conversor::get_citacao(tcc, attr)
 
-            c[:content] = new_text
-            c.content = new_text
-            c[:title] = new_text
+            c[:content] = new_text unless new_text.empty?
+            c.content = new_text unless new_text.empty?
+            c[:title] = new_text unless new_text.empty?
           end
 
           texto = texto.to_xml.sub("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body>", '')
