@@ -7,7 +7,7 @@ class ServiceController < ApplicationController
       @tccs = Tcc.where(moodle_user: params[:user_ids])
       render 'service/report', status: :ok
     else
-      render status: :bad_request, json: { error_message: 'Invalid params (missing user_ids)' }
+      render status: :bad_request, json: {error_message: 'Invalid params (missing user_ids)'}
     end
   end
 
@@ -16,7 +16,7 @@ class ServiceController < ApplicationController
       @tcc_definition = TccDefinition.find(params[:tcc_definition_id])
       render 'service/tcc_definition', status: :ok
     else
-      render status: :bad_request, json: { error_message: 'Invalid params (missing tcc_definition_id)' }
+      render status: :bad_request, json: {error_message: 'Invalid params (missing tcc_definition_id)'}
     end
   end
 
@@ -24,7 +24,8 @@ class ServiceController < ApplicationController
 
   def check_consumer_key
     if params[:consumer_key] != TCC_CONFIG['consumer_key']
-      render status: :unauthorized, json: { error_message: 'Invalid consumer key' }
+      Rails.logger.debug "[WS Relatórios]: Falha na autenticação. #{params.inspect}"
+      render status: :unauthorized, json: {error_message: 'Invalid consumer key'}
     end
   end
 end
