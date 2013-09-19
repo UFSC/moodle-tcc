@@ -9,6 +9,10 @@ class GeneralRefsController < ApplicationController
     @general_refs = @tcc.general_refs
   end
 
+  def show
+    @general_ref = GeneralRef.find(params[:id])
+  end
+
   def create
     @general_ref = GeneralRef.new(params[:general_ref])
 
@@ -43,17 +47,6 @@ class GeneralRefsController < ApplicationController
       flash[:success] = t(:successfully_deleted)
     end
     redirect_to bibliographies_path
-  end
-
-  def show
-    @general_ref = @tcc.general_refs.find(params[:id])
-
-    if @general_ref.nil?
-      flash[:error] = t(:could_not_find)
-      nil
-    else
-      @general_ref
-    end
   end
 
   private

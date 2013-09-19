@@ -9,6 +9,10 @@ class LegislativeRefsController < ApplicationController
     @legislative_refs = @tcc.legislative_refs
   end
 
+  def show
+    @legislative_ref = LegislativeRef.find(params[:id])
+  end
+
   def create
     @legislative_ref = LegislativeRef.new(params[:legislative_ref])
 

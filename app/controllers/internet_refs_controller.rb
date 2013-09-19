@@ -9,6 +9,10 @@ class InternetRefsController < ApplicationController
     @internet_refs = @tcc.internet_refs
   end
 
+  def show
+    @internet_ref = InternetRef.find(params[:id])
+  end
+
   def create
     @internet_ref = InternetRef.new(params[:internet_ref])
 
