@@ -5,6 +5,7 @@ class TutorController < ApplicationController
 
   def index
     username = MoodleUser.find_username_by_user_id(@user_id)
+    tcc_definition_id = @tp.custom_params['tcc_definition']
 
     # Problema no webservice
     render 'public/404.html' unless username
