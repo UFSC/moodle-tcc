@@ -2,6 +2,7 @@
   <thead>
   <tr class="blue-header-table">
     <th>Estudante</th>
+    <th>Dados</th>
     <th>Nota</th>
     <th>Resumo</th>
     <th>Apresentação</th>
@@ -19,6 +20,10 @@
 
     <tr>
       <td><%= tcc.name %></td>
+
+      <td>
+        <%= link_to 'Dados', show_tcc_path(moodle_user: tcc.moodle_user), class: 'label label-success' %>
+      </td>
 
       <td>
         <% if tcc.grade.nil? %>

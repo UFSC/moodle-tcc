@@ -1,5 +1,5 @@
 <h3>Dados</h3>
-<%= semantic_form_for @tcc, url: save_tcc_path do |f| %>
+<%= semantic_form_for @tcc, url: save_tcc_path(:moodle_user => params[:moodle_user]) do |f| %>
     <%= f.inputs do %>
         <%= f.input :name %>
         <%= f.input :title %>
