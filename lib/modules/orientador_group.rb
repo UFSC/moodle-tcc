@@ -7,7 +7,9 @@ module OrientadorGroup
     result = Middleware::OrientadoresAlunos.select(:matricula_orientador).where(matricula_aluno: matricula, ativo: true).first
 
     if !result.nil?
-      result.usuarios_matriculas_cpfs.cpf
+      usuarios_matriculas = result.usuarios_matriculas_cpfs
+      if !usuarios_matriculas.nil?
+        usuarios_matriculas.cpf
     end
   end
 
