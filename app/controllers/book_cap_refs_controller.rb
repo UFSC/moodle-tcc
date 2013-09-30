@@ -17,7 +17,7 @@ class BookCapRefsController < ApplicationController
         @book_cap_ref.save!
         @tcc.references.create!(:element => @book_cap_ref)
         flash[:success] = t(:successfully_saved)
-        redirect_to bibliographies_path(:anchor => 'book_cap')
+        redirect_to bibliographies_path(:anchor => 'book_cap', :moodle_user => params[:moodle_user])
       end
     else
       flash[:error] = t(:please_fix_invalid_data)
@@ -31,7 +31,7 @@ class BookCapRefsController < ApplicationController
         flash[:error] = t(:please_fix_invalid_data)
         render :edit
       end
-      success.html { redirect_to bibliographies_path(:anchor => 'book_cap'), flash: {:success => t(:successfully_saved)} }
+      success.html { redirect_to bibliographies_path(:anchor => 'book_cap', :moodle_user => params[:moodle_user]), flash: {:success => t(:successfully_saved)} }
     end
   end
 
@@ -42,7 +42,7 @@ class BookCapRefsController < ApplicationController
     else
       flash[:success] = t(:successfully_deleted)
     end
-    redirect_to bibliographies_path
+    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
   end
 
   private

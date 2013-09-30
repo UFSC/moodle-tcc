@@ -1,5 +1,6 @@
 <%= semantic_form_for @book_ref do |ref| %>
     <div id="data_tab_content">
+      <input type="hidden" name="moodle_user" value="<%=j params[:moodle_user] %>" />
       <%= ref.inputs do %>
           <div class="span4">
             <%= ref.input :et_all, :label => false, :input_html => {:id => 'et_all'} %>

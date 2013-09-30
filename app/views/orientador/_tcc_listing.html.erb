@@ -9,6 +9,7 @@
       <th><%= hub_name %></th>
     <% end %>
     <th>Considerações finais</th>
+    <th>Referências</th>
   </tr>
   </thead>
   <tbody>
@@ -70,6 +71,9 @@
       <% end %>
       <td>
         <%= status_label(tcc.final_considerations, save_final_considerations_path(moodle_user: tcc.moodle_user)) %>
+      </td>
+      <td>
+        <%= link_to 'Editar', bibliographies_path(moodle_user: tcc.moodle_user), class: 'label label-success' %>
       </td>
     </tr>
   <% end %>
