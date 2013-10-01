@@ -13,6 +13,9 @@ module Authentication
     if current_user.student? && @type == 'portfolio'
       logger.debug 'LTI user identified as a student'
       redirect_to show_hubs_path(position: '1')
+    elsif current_user.view_all?
+      logger.debug 'LTI user is part of a view_all role'
+      redirect_to instructor_admin_path
     elsif current_user.student? && @type == 'tcc'
       logger.debug 'LTI user identified as a student'
       redirect_to show_tcc_path
@@ -22,9 +25,6 @@ module Authentication
     elsif current_user.orientador? && @type == 'tcc'
       logger.debug 'LTI user identified as a leader'
       redirect_to orientador_index_path
-    elsif current_user.view_all?
-      logger.debug 'LTI user is part of a view_all role'
-      redirect_to instructor_admin_path
     else
       logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
       redirect_to access_denied_path
