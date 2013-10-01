@@ -10,6 +10,8 @@ module OrientadorGroup
       usuarios_matriculas = result.usuarios_matriculas_cpfs
       if !usuarios_matriculas.nil?
         usuarios_matriculas.cpf
+      end
+
     end
   end
 
