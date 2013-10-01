@@ -14,7 +14,7 @@
   <tbody>
   <% @tccs.each do |tcc| %>
 
-    <%= render :partial => 'grade_tcc', locals: {tcc: tcc} if @current_user.orientador? %>
+    <%= render :partial => 'orientador/grade_tcc', locals: {tcc: tcc} if @current_user.orientador? %>
 
     <tr>
       <td><%= tcc.name %></td>
