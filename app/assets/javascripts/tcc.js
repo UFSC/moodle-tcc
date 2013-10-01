@@ -1,10 +1,12 @@
 function compareTccObject() {
+    $('#hub_portfolio_commentary').css('width', 425)
     $("#new_tcc_object").removeClass("span12").addClass("span6");
     $("#old_tcc_object").show();
     $("#compareTccObjectButtom").html("Ocultar comparação").attr("onclick", "hideOldTccObject()");
 }
 
 function hideOldTccObject() {
+    $('#hub_portfolio_commentary').css('width', 905)
     $("#new_tcc_object").removeClass("span6").addClass("span12");
     $("#old_tcc_object").hide();
     $("#compareTccObjectButtom").html("Comparar versões").attr("onclick", "compareTccObject()");

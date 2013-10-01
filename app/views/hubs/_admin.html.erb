@@ -72,8 +72,11 @@
           <div class="rounded-border">
             <h4>Versão atual da reflexão</h4>
             <% if (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?) && @current_user.orientador? %>
+              <%= h.input :reflection_title, :input_html => { class: 'span9' } %>
               <%= h.cktext_area :reflection %>
             <% else %>
+              <h4><%= @hub.reflection_title unless @hub.reflection_title.nil? %></h4>
+              <hr>
               <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
             <% end %>
           </div>

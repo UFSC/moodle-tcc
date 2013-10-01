@@ -46,6 +46,7 @@ pt-BR:
         key_words: "Palavras chaves"
       hub:
         reflection: "Reflexões"
+        reflection_title: 'Título'
       general_ref:
         direct_citation: 'Citação Direta'
         indirect_citation: 'Citação Indireta'
