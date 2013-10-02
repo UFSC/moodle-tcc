@@ -1,6 +1,9 @@
 module Moodle
 
   # Executa uma chamada remota a um webservice do Moodle
+  # @param [String] remote_method_name
+  # @param [Hash] params
+  # @param [Proc] block
   def self.remote_call(remote_method_name, params={}, &block)
     Rails.logger.debug "[Moodle WS] Chamada remota: #{remote_method_name}, parametros: #{params}"
 

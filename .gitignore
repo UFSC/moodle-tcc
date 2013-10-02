@@ -24,3 +24,5 @@ db/*.sql
 db/*.bz2
 .DS_Store
 /coverage
+/doc
+.yardoc
