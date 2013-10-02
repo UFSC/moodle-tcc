@@ -25,26 +25,33 @@ module HubStateMachine
         transitions :from => :new, :to => :draft
       end
       event :send_to_admin_for_revision do
-        transitions :from => [:draft, :new], :to => :sent_to_admin_for_revision
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_revision, :on_transition => Proc.new { |obj| obj.send_mail(obj.tcc.email_orientador, obj.state, self.name) }
       end
 
       event :send_back_to_student do
-        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation, :admin_evaluation_ok], :to => :draft
+        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation, :admin_evaluation_ok], :to => :draft, :on_transition => Proc.new { |obj| obj.send_mail(obj.tcc.email_estudante, obj.state, self.name) }
       end
 
       event :send_to_admin_for_evaluation do
-        transitions :from => [:draft, :new], :to => :sent_to_admin_for_evaluation
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_evaluation, :on_transition => Proc.new { |obj| obj.send_mail(obj.tcc.email_orientador, obj.state, self.name) }
       end
 
       event :admin_evaluate_ok do
-        transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok
+        transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok, :on_transition => Proc.new { |obj| obj.send_mail(obj.tcc.email_estudante, obj.state, self.name) }
       end
 
       event :send_to_terminated do
         transitions :from => :admin_evaluation_ok, :to => :terminated
       end
+    end
+
+    def send_mail(mail, old_state, new_state)
+      if self.type == 'HubTcc'
+        Mailer.state_altered(mail, old_state, new_state).deliver
+      end
 
     end
+
   end
 
 end

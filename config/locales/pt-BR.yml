@@ -4,6 +4,8 @@ pt-BR:
     draft: 'Rascunho'
     sent_to_admin_for_revision: 'Enviado para revisão'
     sent_to_admin_for_evaluation: 'Enviado para avaliação'
+    send_to_admin_for_revision: 'Enviado para revisão'
+    send_back_to_student: 'Rascunho'
     admin_evaluation_ok: 'Avaliado'
     new: 'Novo'
     terminated: 'Finalizado'

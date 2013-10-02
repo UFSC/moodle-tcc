@@ -5,9 +5,13 @@ Fabricator(:tcc) do
 
   name { Faker::Name.name }
   leader { Faker::Name.name }
+
+  email_orientador { 'orientador@email.com' }
+  email_estudante { 'estudante@email.com' }
+
   grade 0.9
   defense_date Date.new
-  hubs(count: 3) { |attrs,i| Fabricate(:hub, position: i) }
+  hubs(count: 3) { |attrs, i| Fabricate(:hub, position: i) }
   presentation
   abstract
   final_considerations
@@ -22,6 +26,9 @@ Fabricator(:tcc_without_hubs, class_name: :tcc) do
   leader { Faker::Name.name }
   grade 0.9
   defense_date Date.new
+
+  email_orientador { 'orientador@email.com' }
+  email_estudante { 'estudante@email.com' }
 
   presentation
   abstract
