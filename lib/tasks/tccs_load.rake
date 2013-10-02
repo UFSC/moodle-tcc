@@ -41,11 +41,11 @@ namespace :tcc do
 
     Tcc.all.with_progress 'Atualizando orientador responsável pelos TCCs' do |tcc|
       matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
-      orientador = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
+      orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
-      if orientador
-        tcc.orientador = orientador.cpf
-        tcc.email_orientador = orientador.email
+      if orientador_cpf
+        tcc.orientador = orientador_cpf
+        tcc.email_orientador = Middleware::Usuarios.where(:cpf => orientador_cpf).first.email
         tcc.save!
       end
     end
@@ -90,14 +90,15 @@ namespace :tcc do
       user = Remote::MoodleUser.find_by_username(aluno.matricula)
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
-        orientador = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
+        orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
+        orientador_email = Middleware::Usuarios.where(:cpf => orientador_cpf).first.email
 
         tcc = Tcc.create(moodle_user: user.id,
                          email_estudante: user.email,
                          name: user.firstname+' '+user.lastname,
                          tutor_group: group,
-                         orientador: orientador.cpf,
-                         email_orientador: orientador.email,
+                         orientador: orientador_cpf,
+                         email_orientador: orientador_email,
                          tcc_definition: tcc_definition)
 
         result << [aluno.matricula, tcc.id]
