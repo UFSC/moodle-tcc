@@ -1,13 +1,14 @@
 # encoding: utf-8
 
 # Helper para realizar a criação e popular TccDefinitions, HubDefinitions, DiaryDefinitions
-def create_or_update_tcc_definitions(title, hub_diaries)
+def create_or_update_tcc_definitions(title, hub_diaries, activity_url)
 
   # Numero de operações para criação de Hubs + Diários + 1 (Tcc)
   num_operations = hub_diaries.flatten.flatten.count+1
 
   Progress.start("TCC Definition: #{title}", num_operations) do
     tcc_def = TccDefinition.find_or_create_by_title(title: title)
+    tcc_def.activity_url = activity_url
     Progress.step
 
     hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
@@ -38,7 +39,7 @@ definition = {
     'Eixo 3 - ESF' => [
         {1940 => 'Atenção Integral à Saúde da Criança', shortname: 'SPB110069-21000077ES (20131)'},
         {2055 => 'Atenção Integral à Saúde da Mulher'}, # shortname: 'SPB110070-21000077ES (20131)'
-        {2637 => 'Atenção Integral à Saúde do Adulto'},  # shortname: 'SPB110071-21000077ES (20131)'
+        {2637 => 'Atenção Integral à Saúde do Adulto'}, # shortname: 'SPB110071-21000077ES (20131)'
         {2693 => 'Atenção Integral à Saúde do Idoso'} # shortname: 'SPB110072-21000077ES (20131)'
     ],
     'Eixo 3 - NASF' => [
@@ -49,7 +50,8 @@ definition = {
     ]
 
 }
-create_or_update_tcc_definitions('Turma A', definition)
+activity_url = 'https://unasus2.moodle.ufsc.br/'
+create_or_update_tcc_definitions('Turma A', definition, activity_url)
 
 #
 # TCC Definition - Turma B
@@ -70,7 +72,8 @@ definition = {
         {2568 => 'Projeto de Saúde no Território'} # shortname: 'SPB110076-21000077ES (20132)'
     ]
 }
-create_or_update_tcc_definitions('Turma B', definition)
+activity_url = 'https://unasus2.moodle.ufsc.br/'
+create_or_update_tcc_definitions('Turma B', definition, activity_url)
 
 
 #
