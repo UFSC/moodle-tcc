@@ -50,7 +50,7 @@ definition = {
     ]
 
 }
-activity_url = 'https://unasus2.moodle.ufsc.br/'
+activity_url = 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3321'
 create_or_update_tcc_definitions('Turma A', definition, activity_url)
 
 #
@@ -72,7 +72,7 @@ definition = {
         {2568 => 'Projeto de Saúde no Território'} # shortname: 'SPB110076-21000077ES (20132)'
     ]
 }
-activity_url = 'https://unasus2.moodle.ufsc.br/'
+activity_url = 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322'
 create_or_update_tcc_definitions('Turma B', definition, activity_url)
 
 
