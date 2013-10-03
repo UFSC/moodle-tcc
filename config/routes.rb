@@ -10,8 +10,8 @@ SistemaTcc::Application.routes.draw do
   match "ajax/build" => "ajax#build"
 
   # Web Service
-  match 'reportingservice' => 'service#report', :defaults => { :format => 'json' }
-  match 'tcc_definition_service' => 'service#tcc_definition', :defaults => { :format => 'json' }
+  match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}
+  match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}
 
   #TCC routes
   get "tcc" => 'tccs#show', as: 'show_tcc'
@@ -28,7 +28,7 @@ SistemaTcc::Application.routes.draw do
   match "presentation" => "presentations#save", as: 'save_presentation', :via => [:post, :put]
 
   get "final_considerations" => "final_considerations#show", as: 'show_final_considerations'
-  match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
+  put "final_considerations" => "final_considerations#save", as: 'save_final_considerations'
 
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
 
@@ -37,6 +37,10 @@ SistemaTcc::Application.routes.draw do
 
   match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
   match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]
+
+  match "presentations" => "presentations#update_state", as: 'update_state_presentations', :via => [:post, :put]
+  match "abstracts" => "abstracts#update_state", as: 'update_state_abstracts', :via => [:post, :put]
+  post "final_considerations" => "final_considerations#update_state", as: 'update_state_final_considerations'
 
   # Resources
   resources :bibliographies

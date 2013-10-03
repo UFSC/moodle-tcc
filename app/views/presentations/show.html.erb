@@ -13,5 +13,6 @@
     <%= render partial: 'common/tcc_child_admin',
                locals: { object: @presentation, object_label: 'Apresentação',
                          action_url: save_presentation_path(moodle_user: @tcc.moodle_user),
+                         update_state_url: update_state_presentations_path(@presentation),
                          last_object_commented: @last_presentation_commented } %>
 <% end %>
