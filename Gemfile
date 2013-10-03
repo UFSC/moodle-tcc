@@ -51,6 +51,9 @@ gem 'whenever', require: false
 # Enumerize
 gem 'enumerize'
 
+# Errbit (monitoração de falhas)
+gem 'airbrake'
+
 group :production do
   gem 'newrelic_rpm'
 end

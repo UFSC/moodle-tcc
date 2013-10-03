@@ -14,10 +14,6 @@
 /log/*.log
 /tmp
 .idea/
-config/tcc_config.yml
-config/database.yml
-config/newrelic.yml
-config/moodle.yml
 public/assets
 app/assets/javascripts/ckeditor/plugins/placeholder
 db/*.sql
@@ -26,3 +22,10 @@ db/*.bz2
 /coverage
 /doc
 .yardoc
+
+# Config files
+config/tcc_config.yml
+config/database.yml
+config/newrelic.yml
+config/moodle.yml
+config/errbit.yml

@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 require 'bundler/capistrano'
 require 'capistrano-db-tasks'
+require 'new_relic/recipes'
+require 'airbrake/capistrano'
 
 # Capistrano Multistage
 set :stages, %w(production staging)
@@ -52,5 +54,6 @@ namespace :deploy do
     run "ln -s #{File.join(deploy_to, 'shared', 'moodle.yml')} #{File.join(current_release, 'config', 'moodle.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'newrelic.yml')} #{File.join(current_release, 'config', 'newrelic.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'tcc_config.yml')} #{File.join(current_release, 'config', 'tcc_config.yml')}"
+    run "ln -s #{File.join(deploy_to, 'shared', 'errbit.yml')} #{File.join(current_release, 'config', 'errbit.yml')}"
   end
 end
