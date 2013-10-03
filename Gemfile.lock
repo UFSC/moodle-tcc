@@ -140,6 +140,7 @@ GEM
     paper_trail (2.7.2)
       activerecord (~> 3.0)
       railties (~> 3.0)
+    parallel (0.8.2)
     polyglot (0.3.3)
     progress (2.4.0)
     quiet_assets (1.0.2)
