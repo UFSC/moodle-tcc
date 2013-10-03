@@ -137,7 +137,7 @@ class HubsController < ApplicationController
 
   def update_state
 
-    if @type = 'tcc'
+    if @type == 'tcc'
       @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
       new_state = params[:hub_tcc][:new_state]
     else
