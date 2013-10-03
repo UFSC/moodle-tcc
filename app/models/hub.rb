@@ -54,7 +54,7 @@ class Hub < ActiveRecord::Base
 
   def post_moodle_grade
     if self.grade_changed? && self.tcc && self.hub_definition
-      MoodleGrade.set_grade(self.tcc.moodle_user, self.course_id, self.hub_definition.title, self.grade);
+      MoodleGrade.set_grade(self.tcc.moodle_user, self.tcc.tcc_definition.course_id, self.hub_definition.title, self.grade);
     end
   end
 
