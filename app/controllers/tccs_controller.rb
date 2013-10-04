@@ -35,6 +35,13 @@ class TccsController < ApplicationController
     redirect_to show_tcc_path(moodle_user: params[:moodle_user])
   end
 
+  def print_tcc
+    @current_user = current_user
+
+    @hubs = @tcc.hubs.hub_tcc
+    @final_considerations = @tcc.final_considerations
+  end
+
   private
   def check_permission
     unless current_user.orientador?

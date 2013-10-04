@@ -34,6 +34,7 @@ SistemaTcc::Application.routes.draw do
 
   get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
 
+  get "print_tcc/:position" => "tccs#print_tcc", as: 'print_tcc'
 
   match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
   match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]

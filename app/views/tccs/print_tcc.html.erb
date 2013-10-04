@@ -1,0 +1,65 @@
+<div class="span12">
+
+  <!--student info-->
+  <section class="student-info">
+    <h2>Usuário</h2>
+
+    <dl class="dl-horizontal">
+      <dt>Matrícula:</dt>
+      <dd><%= @tcc.moodle_user %></dd>
+
+      <dt>Nome:</dt>
+      <dd><%= @tcc.name %></dd>
+
+      <dt>Orientador:</dt>
+      <dd><%= @tcc.orientador %></dd>
+    </dl>
+  </section>
+
+  <% @hubs.each do |hub| %>
+      <section class="hub">
+
+        <div class="hub-header">
+          <h2><%= hub.hub_definition.title %></h2>
+        </div>
+
+        <!--diaries-->
+        <div class="diaries">
+          <% hub.diaries.each do |d| %>
+
+              <div class="">
+                <div class="heading">
+                  <h4><%= d.diary_definition.title %></h4>
+                </div>
+                <div class="diary">
+                  <%= diary_content(d.content) %>
+                </div>
+              </div>
+
+          <% end %>
+        </div>
+
+        <!--reflections-->
+        <div class="reflections">
+          <h3>Reflexões do <%= hub.hub_definition.title %></h3>
+
+          <h4>Reflexão - Título</h4>
+
+          <% hub_portfolio = @tcc.hubs.hub_portfolio.find_by_position(hub.position) %>
+          <%= hub_portfolio.reflection.html_safe unless hub_portfolio.reflection.nil? %>
+
+        </div>
+
+      </section>
+      <!--end section hub-->
+
+  <% end %>
+
+  <!--final considerations-->
+  <section class="final_considerations">
+    <h2>Considerações finais</h2>
+
+    <%= @final_considerations.content.html_safe unless @final_considerations.nil? %>
+  </section>
+
+</div>
