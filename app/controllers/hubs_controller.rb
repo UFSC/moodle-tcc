@@ -29,11 +29,17 @@ class HubsController < ApplicationController
   end
 
   def save
-    new_state = params[:hub][:new_state]
+    if @type == 'portfolio'
+      new_state = params[:hub_portfolio][:new_state]
 
-    @hub = @tcc.hubs.find_by_position(params[:hub][:position])
-    @hub.attributes = params[:hub]
+      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:hub_portfolio][:position])
+      @hub.attributes = params[:hub_portfolio]
+    else
+      new_state = params[:hub_tcc][:new_state]
 
+      @hub = @tcc.hubs.hub_tcc.find_by_position(params[:hub_tcc][:position])
+      @hub.attributes = params[:hub_tcc]
+    end
     #
     # Estudante
     #
@@ -45,17 +51,32 @@ class HubsController < ApplicationController
             @hub.send_to_admin_for_revision if @hub.may_send_to_admin_for_revision?
           when 'sent_to_admin_for_evaluation'
             @hub.send_to_admin_for_evaluation if @hub.may_send_to_admin_for_evaluation?
+          when 'draft'
+            @hub.send_to_draft if @hub.may_send_to_draft?
         end
 
         @hub.save
+
+        hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
+
+        if @type == 'tcc' && !hub.terminated?
+          hub.send_to_terminated if hub.may_send_to_terminated?
+          hub.save
+        end
         flash[:success] = t(:successfully_saved)
-        return redirect_to show_hubs_path
+
+        if @type == 'tcc'
+          return redirect_to show_hubs_tcc_path(position: @hub.position.to_s)
+        else
+          return redirect_to show_hubs_path(position: @hub.position.to_s)
+        end
+
       end
     else
 
 
       #
-      # TUTOR
+      # TUTOR E ORIENTADOR
       #
 
       # Ação do botão
@@ -71,8 +92,7 @@ class HubsController < ApplicationController
       end
 
       if @hub.valid? && @hub.save
-        return redirect_to show_hubs_path(:position => @hub.position, :moodle_user => @user_id)
-
+        return redirect_user_to_start_page
       else
         @hub.state = old_state
       end
@@ -92,31 +112,49 @@ class HubsController < ApplicationController
   end
 
   def update_state
-    @hub = @tcc.hubs.find_by_position(params[:position])
+    if @type == 'tcc'
 
-    if params[:hub][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
-      flash[:error] = 'Não é possível alterar para este estado sem ter dado uma nota.'
-      return redirect_to instructor_admin_tccs_path
-    end
+      @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
+      case params[:hub_tcc][:new_state]
+        when 'draft'
+          to_draft(@hub)
+        when 'sent_to_admin_for_revision'
+          to_revision(@hub)
+        when 'sent_to_admin_for_evaluation'
+          to_evaluation(@hub)
+        when 'admin_evaluation_ok'
+          to_evaluation_ok(@hub)
+        else
+          flash[:error] = t(:invalid_state)
+          return redirect_user_to_start_page
+      end
 
-    case params[:hub][:new_state]
-      when 'draft'
-        to_draft(@hub)
-      when 'sent_to_admin_for_revision'
-        to_revision(@hub)
-      when 'sent_to_admin_for_evaluation'
-        to_evaluation(@hub)
-      when 'admin_evaluation_ok'
-        to_evaluation_ok(@hub)
-      else
-        flash[:error] = 'Estado selecionado é invádlio'
-        return redirect_to instructor_admin_tccs_path
 
+    else
+      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
+
+      if params[:hub_portfolio][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
+        flash[:error] = t(:cannot_change_to_state_without_grade)
+        return redirect_user_to_start_page
+      end
+      case params[:hub_portfolio][:new_state]
+        when 'draft'
+          to_draft(@hub)
+        when 'sent_to_admin_for_revision'
+          to_revision(@hub)
+        when 'sent_to_admin_for_evaluation'
+          to_evaluation(@hub)
+        when 'admin_evaluation_ok'
+          to_evaluation_ok(@hub)
+        else
+          flash[:error] = t(:invalid_state)
+          return redirect_user_to_start_page
+      end
     end
 
     @hub.save!
     flash[:success] = t(:successfully_saved)
-    redirect_to instructor_admin_tccs_path
+    redirect_user_to_start_page
   end
 
   private
