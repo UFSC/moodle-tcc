@@ -14,7 +14,7 @@ module MoodleGrade
     end
   end
 
-  # Seta a nota do usuário especificado no item especificado por 'itemname'
+  # Seta nota do usuário especificado no item especificado por 'itemname'
   def self.set_grade(userid, courseid, itemname, grade)
     Moodle::remote_call('local_wstcc_set_grade',
         courseid: courseid,

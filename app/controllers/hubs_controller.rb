@@ -119,4 +119,16 @@ class HubsController < ApplicationController
     redirect_to instructor_admin_tccs_path
   end
 
+  private
+
+  def check_visibility
+    @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
+    unless @hub.nil?
+      if !@hub.admin_evaluation_ok? && !@hub.terminated?
+        flash[:error] = t(:cannot_access_hub_without_grading)
+        return redirect_user_to_start_page
+      end
+    end
+  end
+
 end
