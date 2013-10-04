@@ -19,7 +19,12 @@
     <%= render :partial => 'orientador/grade_tcc', locals: {tcc: tcc} if @current_user.orientador? %>
 
     <tr>
-      <td><%= tcc.name %></td>
+      <td>
+        <%= tcc.name %>
+        <%= link_to "print_tcc?moodle_user=#{tcc.moodle_user}", target: '_blank' do %>
+            <small>Imprimir TCC</small>
+        <% end %>
+      </td>
 
       <td>
         <% if tcc.grade.nil? %>
