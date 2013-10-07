@@ -36,3 +36,7 @@ body .modal {
     transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
     transparent 75%, transparent);
 }
+
+.underline-text {
+    text-decoration: underline;
+}

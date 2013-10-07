@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131001191304) do
+ActiveRecord::Schema.define(:version => 20131002214201) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20131001191304) do
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "course_id"
   end
 
   create_table "tccs", :force => true do |t|

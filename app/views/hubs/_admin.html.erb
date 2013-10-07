@@ -50,6 +50,7 @@
         <% unless @last_hub_commented.nil? || @last_hub_commented.reflection.nil? %>
           <div class="rounded-border">
             <h4>Versão anterior da reflexão</h4>
+            <h4 class="underline-text"><%= @last_hub_commented.reflection_title %></h5>
             <%= @last_hub_commented.reflection.html_safe %>
           </div>
           <% unless @hub.commentary.blank? %>
@@ -75,8 +76,7 @@
               <%= h.input :reflection_title, :input_html => { class: 'span9' } %>
               <%= h.cktext_area :reflection %>
             <% else %>
-              <h4><%= @hub.reflection_title unless @hub.reflection_title.nil? %></h4>
-              <hr>
+              <h4 class="underline-text"><%= @hub.reflection_title unless @hub.reflection_title.nil? %></h4>
               <%= @hub.reflection.html_safe unless @hub.reflection.nil? %>
             <% end %>
           </div>

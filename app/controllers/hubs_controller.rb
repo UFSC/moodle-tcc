@@ -163,7 +163,7 @@ class HubsController < ApplicationController
       end
       case params[:hub_portfolio][:new_state]
         when 'draft'
-          to_draft(@hub)
+           to_draft(@hub)
         when 'sent_to_admin_for_revision'
           to_revision(@hub)
         when 'sent_to_admin_for_evaluation'
