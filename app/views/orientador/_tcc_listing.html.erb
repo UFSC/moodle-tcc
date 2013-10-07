@@ -22,7 +22,7 @@
       <td><%= tcc.name %></td>
 
       <td>
-        <%= link_to 'Editar', show_tcc_path(moodle_user: tcc.moodle_user), class: 'label label-success' %>
+        <%= link_to 'Editar', show_tcc_path(moodle_user: tcc.moodle_user), class: 'label label-success', target: '_blank' %>
       </td>
 
       <td>
@@ -42,10 +42,10 @@
       </td>
 
       <td>
-        <%= status_label(tcc.abstract, save_abstract_path(moodle_user: tcc.moodle_user)) %>
+        <%= action_label(tcc.abstract, save_abstract_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <td>
-        <%= status_label(tcc.presentation, save_presentation_path(moodle_user: tcc.moodle_user)) %>
+        <%= action_label(tcc.presentation, save_presentation_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <% tcc.hub_definitions.each do |hub_definition| %>
         <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
@@ -55,10 +55,7 @@
           <% if hub_portfolio.admin_evaluation_ok? || hub_portfolio.terminated? %>
             <% unless hub.nil? %>
               <td>
-                <%= get_state(hub) %>
-                <%= link_to get_action(hub),
-                            show_hubs_tcc_path(position: (hub.position), moodle_user: tcc.moodle_user),
-                            target: '_blank', class: 'label label-success' %>
+                <%= action_label(hub, show_hubs_tcc_path(position: (hub.position), moodle_user: tcc.moodle_user)) %>
               </td>
             <% else %>
               <td class="empty-content"/>
@@ -75,10 +72,10 @@
         <% end %>
       <% end %>
       <td>
-        <%= status_label(tcc.final_considerations, save_final_considerations_path(moodle_user: tcc.moodle_user)) %>
+        <%= action_label(tcc.final_considerations, save_final_considerations_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <td>
-        <%= link_to 'Editar', bibliographies_path(moodle_user: tcc.moodle_user), class: 'label label-success' %>
+        <%= link_to 'Editar', bibliographies_path(moodle_user: tcc.moodle_user), class: 'label label-success', target: '_blank' %>
       </td>
     </tr>
   <% end %>

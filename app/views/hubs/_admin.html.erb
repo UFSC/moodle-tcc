@@ -32,6 +32,8 @@
                   <% end %>
                 <% end %>
               <% end %>
+            <% elsif @hub.terminated? %>
+              <h3>  Avaliado</h3>
             <% end %>
           </div>
         <% end %>
@@ -50,7 +52,7 @@
         <% unless @last_hub_commented.nil? || @last_hub_commented.reflection.nil? %>
           <div class="rounded-border">
             <h4>Versão anterior da reflexão</h4>
-            <h4 class="underline-text"><%= @last_hub_commented.reflection_title %></h5>
+            <h5 class="underline-text"><%= @last_hub_commented.reflection_title %></h5>
             <%= @last_hub_commented.reflection.html_safe %>
           </div>
           <% unless @hub.commentary.blank? %>
