@@ -29,3 +29,4 @@ config/database.yml
 config/newrelic.yml
 config/moodle.yml
 config/errbit.yml
+config/email.yml

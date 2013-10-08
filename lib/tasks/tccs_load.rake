@@ -45,7 +45,7 @@ namespace :tcc do
 
       if orientador_cpf
         tcc.orientador = orientador_cpf
-        tcc.email_orientador = Middleware::Usuarios.where(:cpf => orientador_cpf).first.email
+        tcc.email_orientador = Middleware::Usuario.where(:cpf => orientador_cpf).first.email
         tcc.save!
       end
     end
@@ -91,7 +91,7 @@ namespace :tcc do
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
         orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
-        orientador_email = Middleware::Usuarios.where(:cpf => orientador_cpf).first.email
+        orientador_email = Middleware::Usuario.where(:cpf => orientador_cpf).first.email
 
         tcc = Tcc.create(moodle_user: user.id,
                          email_estudante: user.email,
