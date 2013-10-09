@@ -41,12 +41,38 @@ namespace :tcc do
 
     Tcc.all.with_progress 'Atualizando orientador responsável pelos TCCs' do |tcc|
       matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
-      orientador = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
+      orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
-      if orientador
-        tcc.orientador = orientador
+      if orientador_cpf
+        tcc.orientador = orientador_cpf
+        tcc.email_orientador = Middleware::Usuario.where(:cpf => orientador_cpf).first.email
         tcc.save!
       end
+    end
+
+  end
+
+  desc 'TCC | Atualiza os emails de estudantes e orientadores'
+  task :update_email => :environment do
+    # Carrega a tabela user do Moodle
+    moodle_config = YAML.load_file("#{Rails.root}/config/moodle.yml")['moodle']
+
+    Remote::MoodleUser.establish_connection moodle_config
+
+    Tcc.all.with_progress 'Atualizando emails' do |tcc|
+
+      matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
+      orientador = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
+      user = Remote::MoodleUser.find_by_username(matricula)
+
+      if tcc.email_orientador.nil? || tcc.email_orientador.blank?
+        tcc.email_orientador = orientador.email if orientador
+      end
+      if tcc.email_estudante.nil? || tcc.email_estudante.blank?
+        tcc.email_estudante = user.email if user
+      end
+
+      tcc.save!
     end
 
   end
@@ -64,12 +90,15 @@ namespace :tcc do
       user = Remote::MoodleUser.find_by_username(aluno.matricula)
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
-        orientador = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
+        orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
+        orientador_email = Middleware::Usuario.where(:cpf => orientador_cpf).first.email
 
         tcc = Tcc.create(moodle_user: user.id,
+                         email_estudante: user.email,
                          name: user.firstname+' '+user.lastname,
                          tutor_group: group,
-                         orientador: orientador,
+                         orientador: orientador_cpf,
+                         email_orientador: orientador_email,
                          tcc_definition: tcc_definition)
 
         result << [aluno.matricula, tcc.id]
