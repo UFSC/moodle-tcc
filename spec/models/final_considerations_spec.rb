@@ -25,4 +25,25 @@ describe FinalConsiderations do
       final_considerations.should_not be_valid
     end
   end
+
+  context 'email notification' do
+    let(:tcc) { Fabricate.build(:tcc_with_definitions) }
+    let(:final_considerations) { Fabricate.build(:final_considerations) }
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      final_considerations.tcc = tcc
+      final_considerations.state = 'draft'
+      final_considerations.send_to_admin_for_revision
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+    end
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      final_considerations.tcc = tcc
+      final_considerations.state = 'sent_to_admin_for_revision'
+      final_considerations.send_back_to_student
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
+    end
+  end
 end
