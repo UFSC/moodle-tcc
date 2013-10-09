@@ -8,6 +8,8 @@ development:
   # Instance guid deve ser o domínio da instalação Moodle
   instance_guid: localhost
 
+  notification_email: notification@example.org
+
 test:
   server: http://localhost/moodle/webservice/rest/server.php
   token: 59864ec673b9eadc141ec43d3e634065
@@ -19,6 +21,7 @@ test:
   # Instance guid deve ser o domínio da instalação Moodle
   instance_guid: localhost
 
+  notification_email: notification@example.org
 production:
 #  server:
 #  token:
@@ -28,3 +31,5 @@ production:
 
 # Instance guid deve ser o domínio da instalação Moodle
 #  instance_guid:
+
+#  notification_email:
