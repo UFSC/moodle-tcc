@@ -161,35 +161,7 @@ describe Tcc do
 
   end
 
-  describe 'email notification' do
-    let(:tcc_definition) { Fabricate.build(:tcc_definition) }
 
-    it 'should send email to orientador when state changed from draft to revision' do
-      tcc = Fabricate.build(:tcc)
-      tcc.hubs.first.state = 'draft'
-      tcc.hubs.first.type = 'HubTcc'
-      tcc.tcc_definition = tcc_definition
-
-      tcc.hubs.first.save!
-      tcc.hubs.first.reload
-
-      tcc.hubs.first.send_to_admin_for_revision
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
-    end
-
-    it 'should send email to orientador when state changed from draft to revision' do
-      tcc = Fabricate.build(:tcc)
-      tcc.hubs.first.state = 'sent_to_admin_for_revision'
-      tcc.hubs.first.type = 'HubTcc'
-      tcc.tcc_definition = tcc_definition
-
-      tcc.hubs.first.save!
-      tcc.hubs.first.reload
-
-      tcc.hubs.first.send_back_to_student
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
-    end
-  end
 
 
 end

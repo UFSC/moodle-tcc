@@ -8,7 +8,7 @@ describe Hub do
   it 'should versioning' do
     old_version = hub.versions.size
     hub.update_attribute(:reflection, 'new content')
-    hub.versions.size.should == ( old_version + 1 )
+    hub.versions.size.should == (old_version + 1)
   end
 
   describe 'reflection' do
@@ -66,6 +66,31 @@ describe Hub do
       hub.state = 'draft'
       hub.save
       hub.grade_date.should_not == hub.updated_at
+    end
+  end
+
+  context 'email notification' do
+    let(:tcc) { Fabricate.build(:tcc_with_definitions) }
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      hub = Fabricate.build(:hub_tcc)
+      hub.state = 'draft'
+      hub.tcc = tcc
+
+      hub.send_to_admin_for_revision
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+    end
+
+    it 'should send email to orientador when state changed from draft to revision' do
+
+      hub = Fabricate.build(:hub_tcc)
+      hub.state = 'sent_to_admin_for_revision'
+      hub.tcc = tcc
+
+      hub.send_back_to_student
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
     end
   end
 end
