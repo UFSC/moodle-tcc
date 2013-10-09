@@ -45,7 +45,7 @@ namespace :tcc do
 
       if orientador_cpf
         tcc.orientador = orientador_cpf
-        tcc.email_orientador = Middleware::Usuario.where(:cpf => orientador_cpf).first.email
+        tcc.email_orientador = Middleware::Usuario.where(:username => orientador_cpf).first.email
         tcc.save!
       end
     end
@@ -59,20 +59,35 @@ namespace :tcc do
 
     Remote::MoodleUser.establish_connection moodle_config
 
+    failed = []
     Tcc.all.with_progress 'Atualizando emails' do |tcc|
 
       matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
-      orientador = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
-      user = Remote::MoodleUser.find_by_username(matricula)
+      orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
+      usuario_orientador = Middleware::Usuario.where(:username => orientador_cpf).first
 
-      if tcc.email_orientador.nil? || tcc.email_orientador.blank?
-        tcc.email_orientador = orientador.email if orientador
-      end
-      if tcc.email_estudante.nil? || tcc.email_estudante.blank?
-        tcc.email_estudante = user.email if user
+      if usuario_orientador.nil?
+        failed << [matricula, orientador_cpf]
+      else
+        orientador_email = usuario_orientador.email
+        user = Remote::MoodleUser.find_by_username(matricula)
+
+        if tcc.email_orientador.nil? || tcc.email_orientador.blank?
+          tcc.email_orientador = orientador_email if orientador_cpf
+        end
+        if tcc.email_estudante.nil? || tcc.email_estudante.blank?
+          tcc.email_estudante = user.email if user
+        end
+
+        tcc.save!
       end
 
-      tcc.save!
+    end
+
+    unless failed.empty?
+      puts
+      puts Terminal::Table.new headings: ['Matrícula Aluno', 'CPF Orientador'], rows: failed
+      puts "#{failed.count} registros falharam"
     end
 
   end
@@ -91,7 +106,7 @@ namespace :tcc do
       unless Tcc.find_by_moodle_user(user.id)
         group = TutorGroup.get_tutor_group(aluno.matricula)
         orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
-        orientador_email = Middleware::Usuario.where(:cpf => orientador_cpf).first.email
+        orientador_email = Middleware::Usuario.where(:username => orientador_cpf).first.email
 
         tcc = Tcc.create(moodle_user: user.id,
                          email_estudante: user.email,
