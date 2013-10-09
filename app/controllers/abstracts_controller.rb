@@ -1,6 +1,8 @@
 # encoding: utf-8
 class AbstractsController < ApplicationController
   include LtiTccFilters
+  include StateMachineUtils
+
 
   def show
     set_tab :abstract
@@ -11,6 +13,19 @@ class AbstractsController < ApplicationController
     last_comment_version = @abstract.versions.where('state != ?', 'draft').last
     unless last_comment_version.nil?
       @last_abstract_commented = last_comment_version.reify
+    end
+  end
+
+  def update_state
+    @abstract = Abstract.find(params[:format])
+
+    if change_state(params[:abstract][:new_state], @abstract)
+      @abstract.save!
+      flash[:success] = t(:successfully_saved)
+      redirect_user_to_start_page
+    else
+      flash[:error] = t(:invalid_state)
+      return redirect_user_to_start_page
     end
   end
 

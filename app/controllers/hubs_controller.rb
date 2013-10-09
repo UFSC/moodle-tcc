@@ -136,49 +136,27 @@ class HubsController < ApplicationController
   end
 
   def update_state
+
     if @type == 'tcc'
-
       @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
-      case params[:hub_tcc][:new_state]
-        when 'draft'
-          to_draft(@hub)
-        when 'sent_to_admin_for_revision'
-          to_revision(@hub)
-        when 'sent_to_admin_for_evaluation'
-          to_evaluation(@hub)
-        when 'admin_evaluation_ok'
-          to_evaluation_ok(@hub)
-        else
-          flash[:error] = t(:invalid_state)
-          return redirect_user_to_start_page
-      end
-
-
+      new_state = params[:hub_tcc][:new_state]
     else
-      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
-
       if params[:hub_portfolio][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
         flash[:error] = t(:cannot_change_to_state_without_grade)
         return redirect_user_to_start_page
       end
-      case params[:hub_portfolio][:new_state]
-        when 'draft'
-          to_draft(@hub)
-        when 'sent_to_admin_for_revision'
-          to_revision(@hub)
-        when 'sent_to_admin_for_evaluation'
-          to_evaluation(@hub)
-        when 'admin_evaluation_ok'
-          to_evaluation_ok(@hub)
-        else
-          flash[:error] = t(:invalid_state)
-          return redirect_user_to_start_page
-      end
+      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
+      new_state = params[:hub_portfolio][:new_state]
     end
 
-    @hub.save!
-    flash[:success] = t(:successfully_saved)
-    redirect_user_to_start_page
+    if change_state(new_state, @hub)
+      @hub.save!
+      flash[:success] = t(:successfully_saved)
+      redirect_user_to_start_page
+    else
+      flash[:error] = t(:invalid_state)
+      return redirect_user_to_start_page
+    end
   end
 
   private

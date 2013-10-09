@@ -1,6 +1,8 @@
 # encoding: utf-8
 class PresentationsController < ApplicationController
   include LtiTccFilters
+  include StateMachineUtils
+
 
   def show
     @current_user = current_user
@@ -11,6 +13,19 @@ class PresentationsController < ApplicationController
     last_comment_version = @presentation.versions.where('state != ?', 'draft').last
     unless last_comment_version.nil?
       @last_presentation_commented = last_comment_version.reify
+    end
+  end
+
+  def update_state
+    @presentation = Presentation.find(params[:format])
+
+    if change_state(params[:presentation][:new_state], @presentation)
+      @presentation.save!
+      flash[:success] = t(:successfully_saved)
+      redirect_user_to_start_page
+    else
+      flash[:error] = t(:invalid_state)
+      return redirect_user_to_start_page
     end
   end
 
