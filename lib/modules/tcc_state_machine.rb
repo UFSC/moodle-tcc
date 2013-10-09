@@ -23,19 +23,23 @@ module TccStateMachine
       end
 
       event :send_to_admin_for_revision do
-        transitions :from => [:draft, :new], :to => :sent_to_admin_for_revision, :on_transition => Proc.new { |obj| obj.send_mail_to_orientador }
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_revision,
+                    :on_transition => Proc.new { |obj| obj.send_mail_to_orientador }
       end
 
       event :send_back_to_student do
-        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation], :to => :draft, :on_transition => Proc.new { |obj| obj.send_mail_to_student }
+        transitions :from => [:sent_to_admin_for_revision, :sent_to_admin_for_evaluation], :to => :draft,
+                    :on_transition => Proc.new { |obj| obj.send_mail_to_student }
       end
 
       event :send_to_admin_for_evaluation do
-        transitions :from => [:draft, :new], :to => :sent_to_admin_for_evaluation, :on_transition => Proc.new { |obj| obj.send_mail_to_orientador }
+        transitions :from => [:draft, :new], :to => :sent_to_admin_for_evaluation,
+                    :on_transition => Proc.new { |obj| obj.send_mail_to_orientador }
       end
 
       event :admin_evaluate_ok do
-        transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok, :on_transition => Proc.new { |obj| obj.send_mail_to_student }
+        transitions :from => :sent_to_admin_for_evaluation, :to => :admin_evaluation_ok,
+                    :on_transition => Proc.new { |obj| obj.send_mail_to_student }
       end
     end
 
