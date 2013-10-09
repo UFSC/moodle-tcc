@@ -25,4 +25,25 @@ describe Presentation do
       presentation.should_not be_valid
     end
   end
+
+  context 'email notification' do
+    let(:tcc) { Fabricate.build(:tcc_with_definitions) }
+    let(:presentation) { Fabricate.build(:presentation) }
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      presentation.tcc = tcc
+      presentation.state = 'draft'
+      presentation.send_to_admin_for_revision
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+    end
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      presentation.tcc = tcc
+      presentation.state = 'sent_to_admin_for_revision'
+      presentation.send_back_to_student
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
+    end
+  end
 end

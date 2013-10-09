@@ -161,7 +161,4 @@ describe Tcc do
 
   end
 
-
-
-
 end
