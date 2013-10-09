@@ -25,4 +25,25 @@ describe Abstract do
       abstract.should_not be_valid
     end
   end
+
+  context 'email notification' do
+    let(:tcc) { Fabricate.build(:tcc_with_definitions) }
+    let(:abstract) { Fabricate.build(:abstract) }
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      abstract.tcc = tcc
+      abstract.state = 'draft'
+      abstract.send_to_admin_for_revision
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+    end
+
+    it 'should send email to orientador when state changed from draft to revision' do
+      abstract.tcc = tcc
+      abstract.state = 'sent_to_admin_for_revision'
+      abstract.send_back_to_student
+
+      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
+    end
+  end
 end
