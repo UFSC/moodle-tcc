@@ -55,5 +55,6 @@ namespace :deploy do
     run "ln -s #{File.join(deploy_to, 'shared', 'newrelic.yml')} #{File.join(current_release, 'config', 'newrelic.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'tcc_config.yml')} #{File.join(current_release, 'config', 'tcc_config.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'errbit.yml')} #{File.join(current_release, 'config', 'errbit.yml')}"
+    run "ln -s #{File.join(deploy_to, 'shared', 'email.yml')} #{File.join(current_release, 'config', 'email.yml')}"
   end
 end
