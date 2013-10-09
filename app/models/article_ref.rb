@@ -26,7 +26,7 @@ class ArticleRef < ActiveRecord::Base
     authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
     authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if second_author
     authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if third_author
-    "(#{authors}, #{year}, p. #{initial_page})"
+    "(#{authors}, #{year})"
   end
 
   def indirect_citation

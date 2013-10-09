@@ -95,10 +95,6 @@ describe ArticleRef do
         article_ref.direct_citation.should include(')')
       end
 
-      it 'should include initial_page' do
-        article_ref.direct_citation.should include("p. #{article_ref.initial_page}")
-      end
-
     end
 
     describe '#indirect_citation' do

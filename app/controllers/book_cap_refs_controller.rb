@@ -9,6 +9,10 @@ class BookCapRefsController < ApplicationController
     @book_cap_refs = @tcc.book_cap_refs
   end
 
+  def show
+    @book_cap_ref = BookCapRef.find(params[:id])
+  end
+
   def create
     @book_cap_ref = BookCapRef.new(params[:book_cap_ref])
 

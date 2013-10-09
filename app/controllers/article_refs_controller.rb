@@ -9,6 +9,10 @@ class ArticleRefsController < ApplicationController
     @article_refs = @tcc.article_refs
   end
 
+  def show
+    @article_ref = ArticleRef.find(params[:id])
+  end
+
   def create
     @article_ref = ArticleRef.new(params[:article_ref])
 

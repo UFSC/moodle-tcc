@@ -1,42 +1,42 @@
 node :general_refs do
   {
       :tab_name => 'Gerais',
-      :new_url => '/general_refs/new',
+      :url => 'general_refs',
       :collection => partial('general_refs/index', :object => @general_refs)
   }
 end
 node :book_refs do
   {
       :tab_name => 'Livros',
-      :new_url => '/book_refs/new',
+      :url => 'book_refs',
       :collection => partial('book_refs/index', :object => @book_refs)
   }
 end
 node :book_cap_refs do
   {
       :tab_name => 'Capítulos',
-      :new_url => '/book_cap_refs/new',
+      :url => 'book_cap_refs',
       :collection => partial('book_cap_refs/index', :object => @book_cap_refs)
   }
 end
 node :article_refs do
   {
       :tab_name => 'Artigos',
-      :new_url => '/article_refs/new',
+      :url => 'article_refs',
       :collection => partial('article_refs/index', :object => @article_refs)
   }
 end
 node :internet_refs do
   {
       :tab_name => 'Internet',
-      :new_url => '/internet_refs/new',
+      :url => 'internet_refs',
       :collection => partial('internet_refs/index', :object => @internet_refs)
   }
 end
 node :legislative_refs do
   {
       :tab_name => 'Legislativo',
-      :new_url => '/legislative_refs/new',
+      :url => 'legislative_refs',
       :collection => partial('internet_refs/index', :object => @legislative_refs)
   }
 end
