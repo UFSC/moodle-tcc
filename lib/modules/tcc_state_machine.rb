@@ -51,7 +51,7 @@ module TccStateMachine
       new_state = self.state
       activity_url = self.tcc.tcc_definition.activity_url
 
-      Mailer.state_altered(mail_to, old_state, new_state, activity_url).deliver
+      Mailer.state_altered(mail_to, old_state, new_state, activity_url).deliver unless mail_to.blank? || mail_to.nil?
     end
   end
 
