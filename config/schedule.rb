@@ -21,4 +21,5 @@
 
 every 1.hour do
   rake 'tcc:update_orientador'
+  rake 'tcc:update_email'
 end
