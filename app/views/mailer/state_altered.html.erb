@@ -1,3 +1,3 @@
-<p>Estado alterado de <%= t('states.'+@old.to_s) %> para <%= t('states.'+@new.to_s) %></p>
+<p>Estado alterado de <%= t("states.#{@old}") %> para <%= t("states.#{@new}") %></p>
 </br>
-<a href='<%= @url %>'>Link para tarefa do Moodle</a>
+<%= link_to 'Link para tarefa do Moodle', @url %>
