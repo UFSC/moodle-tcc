@@ -9,6 +9,10 @@ gem 'oauth'
 # Unicode Utils
 gem 'unicode_utils'
 
+# Latex tcc -> pdf
+gem 'rails-latex'
+gem 'htmlentities'
+
 # Moodle Web Service
 gem 'rest-client'
 gem 'nokogiri'

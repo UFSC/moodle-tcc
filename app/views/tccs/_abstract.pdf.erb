@@ -1,0 +1,9 @@
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+
+%% Content
+<%= lesc @abstract_content unless @abstract_content.nil? %>
+
+
+\textbf{Palavras-chaves}: <%= lesc abstract.key_words unless abstract.key_words.nil? %>
+\end{resumo}
