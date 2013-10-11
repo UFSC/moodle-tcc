@@ -1,0 +1,135 @@
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Trabalho Academico (tese de doutorado, dissertacao de
+% mestrado e trabalhos monograficos em geral) em conformidade com
+% ABNT NBR 14724:2011: Informacao e documentacao - Trabalhos academicos -
+% Apresentacao
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+% -- opções da classe memoir --
+12pt,				% tamanho da fonte
+openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+twoside,			% para impressão em verso e anverso. Oposto a oneside
+a4paper,			% tamanho do papel.
+english,			% idioma adicional para hifenização
+french,				% idioma adicional para hifenização
+spanish,			% idioma adicional para hifenização
+brazil,				% o último idioma é o principal do documento
+]{abntex2}
+
+% ---
+% Pacotes fundamentais
+% ---
+\usepackage{cmap}				% Mapear caracteres especiais no PDF
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+
+
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}    % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{TÍTULO DO TRABALHO EM CAIXA ALTA E CENTRALIZADO}
+\autor{Fulano de Tal (Nome do Aluno)}
+\local{Florianópolis}
+\data{2013}
+\orientador{Nome do orientador}
+\coorientador{Nome do coorientador}
+\instituicao{%
+    Universidade Federal de Santa Catarina
+    \par
+    CENTRO DE CIÊNCIAS DA SAÚDE
+    \par
+    DEPARTAMENTO DE SAÚDE PÚBLICA
+}
+\tipotrabalho{Tese (Doutorado)}
+
+% O preambulo deve conter o tipo do trabalho, o objetivo,
+% o nome da instituição e a área de concentração
+\preambulo{Modelo canônico de trabalho monográfico acadêmico em conformidade com
+as normas ABNT apresentado à comunidade de usuários \LaTeX.}
+
+\begin{document}
+
+
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% Capa
+\imprimircapa
+
+% Contra capa
+\imprimirfolhaderosto
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% ---
+% Inserir folha de aprovação
+% ---
+\begin{folhadeaprovacao}
+
+    \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    {\ABNTEXchapterfont\bfseries\Large\imprimirtitulo}
+    \vspace*{\fill}
+
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+    \imprimirpreambulo
+    \end{minipage}%
+    \vspace*{\fill}
+    \end{center}
+
+    Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
+
+    \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
+    \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
+
+    \begin{center}
+        \vspace*{0.5cm}
+        {\large\imprimirlocal}
+        \par
+        {\large\imprimirdata}
+        \vspace*{1cm}
+    \end{center}
+
+\end{folhadeaprovacao}
+
+%% Resumo do trabalho
+<%= render partial: 'abstract', locals: {abstract: @tcc.abstract} %>
+
+%% Apresentação do trabalho
+<%= render partial: 'presentation' %>
+
+%% Desenvolvimento (Hubs e suas reflexoes)
+<%= render partial: 'hubs' %>
+
+%% Considerações finais
+<%= render partial: 'finalconsiderations' %>
+
+
+
+\end{document}

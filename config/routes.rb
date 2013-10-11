@@ -20,6 +20,9 @@ SistemaTcc::Application.routes.draw do
   put "tcc" => 'tccs#save', as: 'save_tcc'
   get "/tccs/:moodle_user/preview" => "tccs#preview_tcc", as: 'preview_tcc'
   match '/tccs/:tcc_id/evaluate' => 'tccs#evaluate', :as => 'evaluate_tcc'
+  get "createpdf" => 'tccs#create_pdf', as: 'create_pdf'
+  get "showpdf.:format" => 'tccs#show_pdf', as: 'show_pdf'
+  get "parsehtml" => 'tccs#parse_html', as: 'parse_html'
 
   # Abstracts
   get "abstract" => "abstracts#show", as: 'show_abstract'

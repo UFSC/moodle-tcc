@@ -120,6 +120,7 @@ GEM
     highline (1.6.19)
     hike (1.2.3)
     hirb (0.7.1)
+    htmlentities (4.3.1)
     i18n (0.6.5)
     ims-lti (1.1.3)
       builder
@@ -222,6 +223,8 @@ GEM
       activesupport (= 3.2.14)
       bundler (~> 1.0)
       railties (= 3.2.14)
+    rails-latex (1.0.11)
+      rails (>= 3.0.0)
     rails_best_practices (1.14.3)
       activesupport
       awesome_print
@@ -345,6 +348,7 @@ DEPENDENCIES
   faker
   formtastic (~> 2.2)
   formtastic-bootstrap
+  htmlentities
   ims-lti
   inherited_resources
   jquery-rails
@@ -363,6 +367,7 @@ DEPENDENCIES
   rabl
   rack_session_access
   rails (~> 3.2.12)
+  rails-latex
   rest-client
   rspec-rails
   sass-rails (~> 3.2.3)

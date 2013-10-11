@@ -1,6 +1,10 @@
 # encoding: utf-8
 class TccsController < ApplicationController
+  include ActionView::Helpers::SanitizeHelper
+
   before_filter :check_permission, :only => :evaluate
+  skip_before_filter :authorize, :only => :show_pdf
+  skip_before_filter :get_tcc, :only => :show_pdf
 
   def show
     set_tab :data
@@ -32,6 +36,32 @@ class TccsController < ApplicationController
     end
 
     redirect_to show_tcc_path(moodle_user: params[:moodle_user])
+  end
+
+  def create_pdf
+    @output_dir = '/home/caca/latex'
+    @path = params[:path]
+
+    if !@path.nil?
+      command = "pdflatex -output-directory=#{@output_dir} -interaction=nonstopmode #{@path}"
+      @path = command
+      system(command)
+    end
+
+  end
+
+  def show_pdf
+    @tcc = Tcc.find(313)
+    coder = HTMLEntities.new
+    tmp = @tcc.abstract.content.gsub('&nbsp;', ' ').gsub('&acute;',%q('))
+    @abstract_content = coder.decode(tmp)
+    @hubs = @tcc.hubs.hub_tcc
+    @final_considerations = @tcc.final_considerations
+  end
+
+  def parse_html
+    require 'open-uri'
+    @doc = Nokogiri::HTML(open("http://www.threescompany.com/"))
   end
 
   def preview_tcc
