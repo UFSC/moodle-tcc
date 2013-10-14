@@ -62,6 +62,8 @@ module StateMachineUtils
         o.send_to_admin_for_evaluation
         o.admin_evaluate_ok
       when :send_to_admin_for_revision
+        o.send_back_to_student
+        o.send_to_admin_for_evaluation
         o.admin_evaluate_ok
       when :sent_to_admin_for_evaluation
         o.admin_evaluate_ok
