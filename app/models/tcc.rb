@@ -81,6 +81,13 @@ class Tcc < ActiveRecord::Base
     TccDefinition.first.hub_definitions.each.map { |h| h.title }
   end
 
+  # Método responsável por criar os models relacionados ao TCC
+  def create_dependencies!
+    self.build_abstract if self.abstract.nil?
+    self.build_final_considerations if self.final_considerations.nil?
+    self.build_presentation if self.presentation.nil?
+  end
+
   private
 
   def create_or_update_hubs

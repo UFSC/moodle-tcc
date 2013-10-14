@@ -161,4 +161,51 @@ describe Tcc do
 
   end
 
+  describe '#create_dependencies!' do
+    let (:tcc) { Fabricate.build(:tcc_without_dependencies) }
+
+    it 'should create presentations when invoked' do
+      tcc.create_dependencies!
+      tcc.presentation.should_not be_nil
+      tcc.presentation.should be_valid
+    end
+
+    it 'should not create another presentation when one is available' do
+      tcc.create_dependencies!
+      presentation = tcc.presentation
+
+      tcc.create_dependencies!
+      tcc.presentation.should equal(presentation)
+    end
+
+    it 'should create abstract when invoked' do
+      tcc.create_dependencies!
+      tcc.abstract.should_not be_nil
+      tcc.abstract.should be_valid
+    end
+
+    it 'should not create another abstract when one is available' do
+      tcc.create_dependencies!
+      abstract = tcc.abstract
+
+      tcc.create_dependencies!
+      tcc.abstract.should equal(abstract)
+    end
+
+    it 'should create final considerations when invoked' do
+      tcc.create_dependencies!
+      tcc.final_considerations.should_not be_nil
+      tcc.abstract.should be_valid
+    end
+
+    it 'should not create final considerations when one is available' do
+      tcc.create_dependencies!
+      final_considerations = tcc.final_considerations
+
+      tcc.create_dependencies!
+      tcc.final_considerations.should equal(final_considerations)
+    end
+
+  end
+
 end

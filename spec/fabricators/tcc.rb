@@ -20,6 +20,19 @@ Fabricator(:tcc_without_hubs, :class_name => :tcc) do
   final_considerations
 end
 
+Fabricator(:tcc_without_dependencies, :class_name => :tcc) do
+  moodle_user { Fabricate.sequence(:moodle_user) }
+  title { Faker::Lorem.sentence(3) }
+
+  name { Faker::Name.name }
+  leader { Faker::Name.name }
+
+  email_orientador { Faker::Internet.email }
+  email_estudante { Faker::Internet.email }
+
+  grade (0..100).to_a.sample
+  defense_date Date.new
+end
 
 Fabricator(:tcc_with_definitions, :class_name => :tcc, :from => :tcc_without_hubs) do
   tcc_definition
