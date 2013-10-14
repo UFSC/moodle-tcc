@@ -6,15 +6,8 @@ class Hub < ActiveRecord::Base
   has_many :diaries, :inverse_of => :hub
   accepts_nested_attributes_for :diaries
 
-  include HubStateMachine
-
-  # Estados para combo
-  enumerize :new_state, in: Hub.aasm_states
-
   # Mass-Assignment
   attr_accessible :type, :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
-
-  validates :reflection, presence: true, unless: Proc.new { |hub| hub.new? or hub.draft? }
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
@@ -61,7 +54,7 @@ class Hub < ActiveRecord::Base
   end
 
   def self.new_states_collection
-    Hub.new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
+    new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
   end
 
   private

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Hub do
   let!(:hub) { Fabricate(:hub) }
+  let(:hub_tcc) { Fabricate(:hub_tcc) }
 
   it { should respond_to(:category, :reflection, :grade, :commentary) }
 
@@ -69,11 +70,22 @@ describe Hub do
     end
   end
 
+  describe '#new_states_collection' do
+
+    it 'should return a valid collection for HubPortfolio' do
+      hub.class.new_states_collection.should_not be_empty
+    end
+
+    it 'should return a valid collection for HubTcc' do
+      hub_tcc.class.new_states_collection.should_not be_empty
+    end
+  end
+
   context 'email notification' do
     let(:tcc) { Fabricate.build(:tcc_with_definitions) }
+    let(:hub) { Fabricate.build(:hub_tcc) }
 
     it 'should send email to orientador when state changed from draft to revision' do
-      hub = Fabricate.build(:hub_tcc)
       hub.state = 'draft'
       hub.tcc = tcc
 
@@ -83,8 +95,6 @@ describe Hub do
     end
 
     it 'should send email to orientador when state changed from draft to revision' do
-
-      hub = Fabricate.build(:hub_tcc)
       hub.state = 'sent_to_admin_for_revision'
       hub.tcc = tcc
 
@@ -94,8 +104,6 @@ describe Hub do
     end
 
     it 'should change states even if email is blank' do
-
-      hub = Fabricate.build(:hub_tcc)
       hub.state = 'sent_to_admin_for_revision'
       hub.tcc = tcc
       tcc.email_estudante = ''
@@ -105,12 +113,9 @@ describe Hub do
       hub.send_back_to_student
       hub.save!
       hub.state.should == 'draft'
-
     end
 
     it 'should change states even if email is nil' do
-
-      hub = Fabricate.build(:hub_tcc)
       hub.state = 'sent_to_admin_for_revision'
       hub.tcc = tcc
       tcc.email_estudante = nil
@@ -120,7 +125,6 @@ describe Hub do
       hub.send_back_to_student
       hub.save!
       hub.state.should == 'draft'
-
     end
 
   end
