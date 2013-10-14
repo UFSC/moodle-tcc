@@ -7,8 +7,7 @@ class Mailer < ActionMailer::Base
     @new = new_state
     @url = url
 
-    mail(:to => email, :subject => '[UNA-SUS TCC] novas alterações no TCC')
+    mail(to: email, subject: '[UNA-SUS TCC] novas alterações no TCC', reply_to: email)
   end
-
 
 end

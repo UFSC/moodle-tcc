@@ -7,7 +7,7 @@ def create_or_update_tcc_definitions(title, hub_diaries, activity_url)
   num_operations = hub_diaries.flatten.flatten.count+1
 
   Progress.start("TCC Definition: #{title}", num_operations) do
-    tcc_def = TccDefinition.find_or_create_by_title(title: title)
+    tcc_def = TccDefinition.find_or_initialize_by_title(title: title)
     tcc_def.activity_url = activity_url
     tcc_def.save
     Progress.step
