@@ -31,9 +31,8 @@ pt-BR:
     sent_to_leader_for_evaluation: 'Avaliar'
     leader_evaluation_ok: 'Avaliado'
   enumerize:
-    hub:
-      new_state:
-        <<: *estados
+    new_state:
+      <<: *estados
   activerecord:
     attributes:
       tcc:
