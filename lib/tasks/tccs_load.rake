@@ -39,15 +39,23 @@ namespace :tcc do
   desc 'TCC | Atualiza os orientadores responsáveis pelos TCCs com base no Middleware'
   task :update_orientador => :environment do
 
+    failed = []
     Tcc.all.with_progress 'Atualizando orientador responsável pelos TCCs' do |tcc|
       matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
       orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
-      if orientador_cpf
-        tcc.orientador = orientador_cpf
-        tcc.email_orientador = Middleware::Usuario.where(:username => orientador_cpf).first.email
-        tcc.save!
+      unless orientador_cpf
+        failed << [matricula]
       end
+
+      tcc.orientador = orientador_cpf
+      tcc.save!
+    end
+
+    unless failed.empty?
+      puts
+      puts Terminal::Table.new headings: ['Matrícula Aluno'], rows: failed
+      puts "#{failed.count} alunos sem orientador"
     end
 
   end
@@ -75,6 +83,7 @@ namespace :tcc do
         if tcc.email_orientador.nil? || tcc.email_orientador.blank?
           tcc.email_orientador = orientador_email if orientador_cpf
         end
+
         if tcc.email_estudante.nil? || tcc.email_estudante.blank?
           tcc.email_estudante = user.email if user
         end
