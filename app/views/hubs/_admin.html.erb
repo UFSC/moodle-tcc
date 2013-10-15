@@ -50,7 +50,7 @@
   </div>
 
   <div class="row">
-
+    
     <!--old-->
     <div id="old_tcc_object" class="span6" style="display: none">
       <div class="rounded-border">
@@ -63,7 +63,7 @@
           <% unless @hub.commentary.blank? %>
             <div class="rounded-border">
               <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
-              <%= @hub.commentary.try(:html_safe) %>
+              <%= @last_hub_commented.commentary.try(:html_safe) %>
             </div>
           <% else %>
             <h5 class="text-info">Sem comentário para esta versão</h5>

@@ -44,8 +44,10 @@ namespace :tcc do
       matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
       orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
-      unless orientador_cpf
-        failed << [matricula]
+      if orientador_cpf
+        tcc.orientador = orientador_cpf
+        tcc.email_orientador = Middleware::Usuario.where(:username => orientador_cpf).first.email
+        tcc.save!
       end
 
       tcc.orientador = orientador_cpf

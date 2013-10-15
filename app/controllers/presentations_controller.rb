@@ -10,9 +10,15 @@ class PresentationsController < ApplicationController
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
     @presentation.new_state = @presentation.aasm_current_state
 
-    last_comment_version = @presentation.versions.where('state != ?', 'draft').last
-    unless last_comment_version.nil?
-      @last_presentation_commented = last_comment_version.reify
+    last_draft_version = @presentation.versions.where('state = ?', 'draft').last
+    unless last_draft_version.nil?
+      @last_presentation_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+    end
+
+    if current_user.student? && !@presentation.draft? && !@presentation.new? && !@last_presentation_commented.nil?
+      @presentation = @last_presentation_commented
+    elsif((current_user.student? && @presentation.draft?) || (!current_user.student? && @presentation.draft?))
+      @last_presentation_commented = @presentation.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
     end
   end
 
@@ -56,7 +62,7 @@ class PresentationsController < ApplicationController
     else
       if params[:valued]
         @presentation.admin_evaluate_ok if @presentation.may_admin_evaluate_ok?
-      else
+      elsif params[:draft]
         @presentation.send_back_to_student if @presentation.may_send_back_to_student?
       end
 

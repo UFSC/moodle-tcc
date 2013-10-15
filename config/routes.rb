@@ -28,7 +28,7 @@ SistemaTcc::Application.routes.draw do
   match "presentation" => "presentations#save", as: 'save_presentation', :via => [:post, :put]
 
   get "final_considerations" => "final_considerations#show", as: 'show_final_considerations'
-  put "final_considerations" => "final_considerations#save", as: 'save_final_considerations'
+  match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
 
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
 
@@ -40,7 +40,7 @@ SistemaTcc::Application.routes.draw do
 
   match "presentations" => "presentations#update_state", as: 'update_state_presentations', :via => [:post, :put]
   match "abstracts" => "abstracts#update_state", as: 'update_state_abstracts', :via => [:post, :put]
-  post "final_considerations" => "final_considerations#update_state", as: 'update_state_final_considerations'
+  match "final_considerations" => "final_considerations#update_state", as: 'update_state_final_considerations', :via => [:post, :put]
 
   # Resources
   resources :bibliographies
