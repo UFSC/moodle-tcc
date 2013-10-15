@@ -20,11 +20,11 @@ class LegislativeRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
 
   def direct_citation
-    "(#{publisher.split(' ').last.upcase}; #{publisher.split(' ').first.upcase}, #{year})"
+    "(#{jurisdiction_or_header.split(' ').last.upcase}, #{year})"
   end
 
   def indirect_citation
-    "#{publisher.split(' ').first.capitalize} (#{year})"
+    "#{jurisdiction_or_header.split(' ').last.capitalize} (#{year})"
   end
 
   private

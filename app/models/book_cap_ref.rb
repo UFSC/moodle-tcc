@@ -27,11 +27,11 @@ class BookCapRef < ActiveRecord::Base
   validate :initial_page_less_than_end_page
 
   def direct_citation
-    "(#{cap_author.split(' ').last.upcase}; #{cap_author.split(' ').first.upcase}, #{year}, p. #{initial_page})"
+    "(#{book_author.split(' ').last.upcase}, #{year})"
   end
 
   def indirect_citation
-    "#{cap_author.split(' ').first.capitalize} (#{year})"
+    "#{book_author.split(' ').last.capitalize} (#{year})"
   end
 
   private

@@ -22,15 +22,38 @@ class ArticleRef < ActiveRecord::Base
   validate :initial_page_less_than_end_page
 
 
+  def direct_et_al
+    "(#{first_author.split(' ').last.upcase} et al., #{year})"
+  end
+
+
+  def indirect_et_al
+    "#{first_author.split(' ').last.capitalize} et al. (#{year})"
+  end
+
   def direct_citation
-    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
-    authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if second_author
-    authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if third_author
+    return direct_et_al if et_all
+
+    authors = "#{first_author.split(' ').last.upcase}"
+    if !second_author.nil?
+      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty? || second_author != ''
+    end
+    if !third_author.nil?
+      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty? || third_author != ''
+    end
     "(#{authors}, #{year})"
   end
 
   def indirect_citation
-    "#{first_author.split(' ').first.capitalize} (#{year})"
+    return indirect_et_al if et_all
+    authors = "#{first_author.split(' ').last.capitalize}"
+    if !second_author.nil?
+      authors = "#{authors}, #{second_author.split(' ').last.capitalize}" if !second_author.empty? || second_author != ''
+    end
+    if !third_author.nil?
+      authors = "#{authors} e #{third_author.split(' ').last.capitalize}" if !third_author.empty? || third_author != ''
+    end
+    "#{authors} (#{year})"
   end
 
   private
