@@ -74,13 +74,13 @@ describe ArticleRef do
     describe '#direct_citation' do
 
       it 'should include first_author' do
-        article_ref.direct_citation.should include("#{article_ref.first_author.split(' ').last.upcase}; #{article_ref.first_author.split(' ').first.upcase},")
+        article_ref.direct_citation.should include("#{article_ref.first_author.split(' ').last.upcase};")
       end
       it 'should include second_author' do
-        article_ref.direct_citation.should include("#{article_ref.second_author.split(' ').last.upcase}; #{article_ref.second_author.split(' ').first.upcase},")
+        article_ref.direct_citation.should include("#{article_ref.second_author.split(' ').last.upcase};")
       end
       it 'should include third_author' do
-        article_ref.direct_citation.should include("#{article_ref.third_author.split(' ').last.upcase}; #{article_ref.third_author.split(' ').first.upcase},")
+        article_ref.direct_citation.should include("#{article_ref.third_author.split(' ').last.upcase},")
       end
 
       it 'should include year' do
@@ -100,7 +100,7 @@ describe ArticleRef do
     describe '#indirect_citation' do
 
       it 'should include cap_author' do
-        article_ref.indirect_citation.should include("#{article_ref.first_author.split(' ').first.capitalize}")
+        article_ref.indirect_citation.should include("#{article_ref.first_author.split(' ').last.capitalize}")
       end
 
       it 'should include year' do

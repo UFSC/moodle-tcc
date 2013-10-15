@@ -19,11 +19,11 @@ class InternetRef < ActiveRecord::Base
   validates_format_of :url, :with => VALID_URL_EXPRESSION
 
   def direct_citation
-    "(#{author.split(' ').last.upcase}; #{author.split(' ').first.upcase}, #{access_date.year})"
+    "(#{author.split(' ').last.upcase}, #{access_date.year})"
   end
 
   def indirect_citation
-    "#{author.split(' ').first.capitalize} (#{access_date.year})"
+    "#{author.split(' ').last.capitalize} (#{access_date.year})"
   end
 
   private
