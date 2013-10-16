@@ -117,13 +117,14 @@ namespace :tcc do
         orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(aluno.matricula)
         orientador_email = Middleware::Usuario.where(:username => orientador_cpf).first.email
 
-        tcc = Tcc.create(moodle_user: user.id,
-                         email_estudante: user.email,
-                         name: user.firstname+' '+user.lastname,
-                         tutor_group: group,
-                         orientador: orientador_cpf,
-                         email_orientador: orientador_email,
-                         tcc_definition: tcc_definition)
+        tcc = Tcc.new(moodle_user: user.id,
+                      name: user.firstname+' '+user.lastname,
+                      tutor_group: group,
+                      orientador: orientador_cpf,
+                      tcc_definition: tcc_definition)
+
+        tcc.email_estudante = user.email
+        tcc.email_orientador = orientador_email
 
         result << [aluno.matricula, tcc.id]
       end
