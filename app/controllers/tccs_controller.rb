@@ -1,6 +1,7 @@
 # encoding: utf-8
 class TccsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
+  include TccLatex
 
   before_filter :check_permission, :only => :evaluate
   skip_before_filter :authorize, :only => :show_pdf
@@ -57,11 +58,35 @@ class TccsController < ApplicationController
     @abstract_content = coder.decode(tmp)
     @hubs = @tcc.hubs.hub_tcc
     @final_considerations = @tcc.final_considerations
+
+    #test nokogiri
+    @doc = Nokogiri::HTML(@tcc.abstract.content)
   end
 
   def parse_html
-    require 'open-uri'
-    @doc = Nokogiri::HTML(open("http://www.threescompany.com/"))
+    #Config rails-latex
+    LatexToPdf.config[:arguments].delete('-halt-on-error')
+
+    #abstract
+    coder = HTMLEntities.new
+    tcc = Tcc.find(313)
+    content = coder.decode(tcc.abstract.content)
+    html = Nokogiri::HTML(content)
+
+    # Fazer um xhtml bem formado
+    doc = Nokogiri::XML(html.to_xhtml)
+
+    #aplicar xslt
+    xh2file = Rails.public_path + '/xh2latex.xsl'
+    xslt  = Nokogiri::XSLT(File.read(xh2file))
+    transform = xslt.apply_to(doc)
+
+    @tex = transform.gsub('\begin{document}','').gsub('end{document}','')
+    #@bibtext = TccLatex::references
+
+    bib = Rails.public_path + '/abntex2-modelo-references'
+    @bibtext = bib
+
   end
 
   def preview_tcc
