@@ -22,7 +22,7 @@
                   <span><%= display_icon('icon-comment') %> Comentário do avaliador</span>
 
                   <div class="text-info">
-                    <%= @hub.commentary.html_safe %>
+                    <%= @hub.commentary.try(:html_safe) %>
                   </div>
                 </div>
             <% end %>
@@ -33,8 +33,8 @@
 
                       <% unless @last_hub_commented.nil? %>
                           <h4>Última versão avaliada</h4>
-                          <h3><%= @last_hub_commented.reflection_title.html_safe %></h3>
-                          <%= @last_hub_commented.reflection.html_safe %>
+                          <h3><%= @last_hub_commented.reflection_title.try(:html_safe) %></h3>
+                          <%= @last_hub_commented.reflection.try(:html_safe) %>
                       <% else %>
                           <p class="text-error">Este eixo ainda não foi avaliado</p>
                       <% end %>
