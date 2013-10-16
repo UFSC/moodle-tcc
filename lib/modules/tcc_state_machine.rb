@@ -6,8 +6,11 @@ module TccStateMachine
 
   def self.included(base)
 
+    # AASM
     base.send :include, AASM
     base.aasm_column :state
+
+    # Papertrail
     base.has_paper_trail meta: {:state => :state, :comment => :commentary}
 
     # Virtual attribute
@@ -46,6 +49,23 @@ module TccStateMachine
       end
     end
 
+    # Enumerize
+    base.send :extend, Enumerize
+    base.enumerize :new_state, in: base.aasm_states
+
+    # Injetar metodos de instancia
+    base.send :include, InstanceMethods
+
+    # Retorna a coleção de possíveis novos estados excluíndo os que não são permitidos serem sobrescritos
+    # @return [Array] dados para serem exibidos em um combobox
+    def base.new_states_collection
+      new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
+    end
+  end
+
+  module InstanceMethods
+
+    # Dispara envio de mensagem de e-mail sobre troca de estado no TCC
     def send_state_changed_mail(mail_to, event)
       old_state = self.state
       new_state = event.name
