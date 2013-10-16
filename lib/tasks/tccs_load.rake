@@ -125,6 +125,7 @@ namespace :tcc do
 
         tcc.email_estudante = user.email
         tcc.email_orientador = orientador_email
+        tcc.save
 
         result << [aluno.matricula, tcc.id]
       end
