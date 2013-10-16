@@ -1,10 +1,14 @@
 function compareTccObject() {
+    $('#hub_portfolio_reflection_title').removeClass('span9').addClass('span5');
+    $('#hub_portfolio_commentary').css('width', 425)
     $("#new_tcc_object").removeClass("span12").addClass("span6");
     $("#old_tcc_object").show();
     $("#compareTccObjectButtom").html("Ocultar comparação").attr("onclick", "hideOldTccObject()");
 }
 
 function hideOldTccObject() {
+    $('#hub_portfolio_reflection_title').removeClass('span5').addClass('span9');
+    $('#hub_portfolio_commentary').css('width', 905)
     $("#new_tcc_object").removeClass("span6").addClass("span12");
     $("#old_tcc_object").hide();
     $("#compareTccObjectButtom").html("Comparar versões").attr("onclick", "compareTccObject()");

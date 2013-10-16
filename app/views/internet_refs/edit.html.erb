@@ -1,4 +1,6 @@
-<%= render 'common/tabs_header' %>
+<% if @current_user.student? %>
+    <%= render 'common/tabs_header' %>
+<% end %>
 
 <fieldset>
   <legend><%= @internet_ref.title %></legend>

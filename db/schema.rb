@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20131002140230) do
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
     t.string   "type"
+    t.string   "reflection_title"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"

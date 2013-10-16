@@ -1,4 +1,6 @@
-<%= render 'common/tabs_header' %>
+<% if @current_user.student? %>
+    <%= render 'common/tabs_header' %>
+<% end %>
 <div class='span12'>
   <h3>Referências Bibliográficas</h3>
 

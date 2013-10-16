@@ -21,11 +21,16 @@ class TccsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.find_by_moodle_user(@user_id)
+    if params[:moodle_user]
+      @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
+    else
+      @tcc = Tcc.find_by_moodle_user(@user_id)
+    end
+
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
     end
-    redirect_to show_tcc_path
+    redirect_to show_tcc_path(:moodle_user => params[:moodle_user])
   end
 
   private

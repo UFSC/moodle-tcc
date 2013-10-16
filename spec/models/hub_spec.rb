@@ -4,7 +4,7 @@ describe Hub do
   let!(:hub) { Fabricate(:hub) }
   let(:hub_tcc) { Fabricate(:hub_tcc) }
 
-  it { should respond_to(:category, :reflection, :grade, :commentary) }
+  it { should respond_to(:category, :reflection, :reflection_title, :grade, :commentary) }
 
   it 'should versioning' do
     old_version = hub.versions.size

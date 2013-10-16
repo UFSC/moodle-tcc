@@ -1,5 +1,6 @@
 <%= semantic_form_for @general_ref do |ref| %>
   <div id="data_tab_content">
+    <input type="hidden" name="moodle_user" value="<%=j params[:moodle_user] %>" />
     <%= ref.inputs do %>
       <%= ref.input :direct_citation %>
       <%= ref.input :indirect_citation %>

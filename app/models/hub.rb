@@ -7,7 +7,7 @@ class Hub < ActiveRecord::Base
   accepts_nested_attributes_for :diaries
 
   # Mass-Assignment
-  attr_accessible :type, :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
+  attr_accessible :type, :new_state, :category, :position, :reflection, :reflection_title, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position

@@ -21,7 +21,7 @@ class GeneralRefsController < ApplicationController
         @general_ref.save!
         @tcc.references.create!(:element => @general_ref)
         flash[:success] = t(:successfully_saved)
-        redirect_to bibliographies_path(:anchor => 'geral')
+        redirect_to bibliographies_path(:anchor => 'geral', :moodle_user => params[:moodle_user])
       end
     else
       flash[:error] = t(:please_fix_invalid_data)
@@ -35,7 +35,7 @@ class GeneralRefsController < ApplicationController
         flash[:error] = t(:please_fix_invalid_data)
         render :edit
       end
-      success.html { redirect_to bibliographies_path(:anchor => 'geral'), flash: {:success => t(:successfully_saved)} }
+      success.html { redirect_to bibliographies_path(:anchor => 'geral', :moodle_user => params[:moodle_user]), flash: {:success => t(:successfully_saved)} }
     end
   end
 
@@ -46,7 +46,7 @@ class GeneralRefsController < ApplicationController
     else
       flash[:success] = t(:successfully_deleted)
     end
-    redirect_to bibliographies_path
+    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
   end
 
   private

@@ -136,7 +136,6 @@ class HubsController < ApplicationController
   end
 
   def update_state
-
     if @type == 'tcc'
       @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
       new_state = params[:hub_tcc][:new_state]
@@ -151,12 +150,12 @@ class HubsController < ApplicationController
 
     if change_state(new_state, @hub)
       @hub.save!
-      flash[:success] = t(:successfully_saved)
-      redirect_user_to_start_page
+      flash[:success] = t(:successfully_saved)      
     else
-      flash[:error] = t(:invalid_state)
-      return redirect_user_to_start_page
+      flash[:error] = t(:invalid_state)      
     end
+    
+    redirect_user_to_start_page
   end
 
   private

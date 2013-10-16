@@ -1,16 +1,21 @@
-<div class="span12">
-  <div class="rounded-border row">
-    <h3 class="pull-left"><%= object_label %> -
-      <% if @current_user.coordenador_avea? || @current_user.admin? || @current_user.coordenador_curso? %>
-          </h3><%= render partial: 'common/states', locals: {object: object, update_state_url: update_state_url} %>
-      <% else %>
+<%= semantic_form_for object, url: action_url do |p| %>
+  <div class="span12">
+    <div class="rounded-border row">
+      <h3 class="pull-left">
+        <%= object_label %> -
+        <% if @current_user.coordenador_avea? || @current_user.admin? || @current_user.coordenador_curso? %>
+          <%= render partial: 'common/states', locals: {object: object, update_state_url: update_state_url} %>
+        <% else %>
         <span class="text-info">
-                <%= t('states.'+object.aasm_current_state.to_s) %>
-          </span></h3>
-      <% end %>
+          <%= t('states.'+object.aasm_current_state.to_s) %>
+        </span>
+        <% end %>
+      </h3>
+
+      <!-- compare button -->
       <div class="row">
         <div class="span12">
-          <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
+          <%= link_to 'Comparar versões', '#', class: 'btn', id: 'compareTccObjectButtom', onclick: 'compareTccObject()' %>
         </div>
       </div>
 
@@ -19,29 +24,30 @@
         <div id="old_tcc_object" class="span6" style="display: none">
           <div class="rounded-border">
             <% unless last_object_commented.nil? %>
+              <div class="rounded-border">
+                <h4>Versão anterior</h4>
+                <%= last_object_commented.content.try(:html_safe) %>
+              </div>
+              <% if object.class == Abstract %>
                 <div class="rounded-border">
-                  <h4>Versão anterior</h4>
-                  <%= last_object_commented.content.html_safe %>
+                  <h4>Palavras-chave</h4>
+                  <%= last_object_commented.key_words.try(:html_safe) %>
                 </div>
-                <% if object.class == Abstract %>
-                    <div class="rounded-border">
-                      <h4>Palavras-chave</h4>
-                      <%= last_object_commented.key_words.html_safe %>
-                    </div>
-                <% end %>
-                <% unless object.commentary.blank? %>
-                    <div class="rounded-border">
-                      <h5><i class="icon-comment"></i> Comentário do <%= object_label %> anterior</h5>
-                      <%= object.commentary.html_safe %>
-                    </div>
-                <% else %>
-                    <h5 class="text-info">Sem comentário para esta versão</h5>
-                <% end %>
+              <% end %>
+              <% unless object.commentary.blank? %>
+                <div class="rounded-border">
+                  <h5><i class="icon-comment"></i> Comentário do <%= object_label %> anterior</h5>
+                  <%= object.commentary.try(:html_safe) %>
+                </div>
+              <% else %>
+                <h5 class="text-info">Sem comentário para esta versão</h5>
+              <% end %>
             <% else %>
-                <h5 class="text-info">Ainda não há versão anterior</h5>
+              <h5 class="text-info">Ainda não há versão anterior</h5>
             <% end %>
           </div>
         </div>
+
 
         <!--new-->
         <div id="new_tcc_object" class="span12">
@@ -51,16 +57,17 @@
               <%= object.content.try(:html_safe) %>
             </div>
             <% if object.class == Abstract %>
-                <div class="rounded-border">
-                  <h4>Palavras-chave</h4>
-                  <%= object.key_words.try(:html_safe) %>
-                </div>
+              <div class="rounded-border">
+                <h4>Palavras-chave</h4>
+                <%= object.key_words.try(:html_safe) %>
+              </div>
             <% end %>
-            <%= semantic_form_for object, url: action_url do |p| %>
-                <%= render partial: 'common/tcc_child_actions_admin', locals: {object: object, f: p} %>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-            <% end %>
+
+            <%= render partial: 'common/tcc_child_actions_admin', locals: {object: object, f: p} %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

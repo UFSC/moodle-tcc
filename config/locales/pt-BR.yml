@@ -22,12 +22,12 @@ pt-BR:
     admin_evaluation_ok: 'avaliado'
   actions:
     draft: 'Visualizar'
-    new: 'Visualizar'
-    sent_to_admin_for_revision: 'Comentar'
+    new: 'Não editado'
+    sent_to_admin_for_revision: 'Revisar'
     sent_to_admin_for_evaluation: 'Avaliar'
     admin_evaluation_ok: 'Avaliado'
     tcc_draft: 'Visualizar'
-    sent_to_leader_for_revision: 'Comentar'
+    sent_to_leader_for_revision: 'Revisar'
     sent_to_leader_for_evaluation: 'Avaliar'
     leader_evaluation_ok: 'Avaliado'
   enumerize:
@@ -47,6 +47,7 @@ pt-BR:
         key_words: "Palavras chaves"
       hub:
         reflection: "Reflexões"
+        reflection_title: 'Título'
       general_ref:
         direct_citation: 'Citação Direta'
         indirect_citation: 'Citação Indireta'
