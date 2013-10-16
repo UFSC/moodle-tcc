@@ -18,6 +18,7 @@ module MoodleUser
         debug_info = doc.xpath('/EXCEPTION/DEBUGINFO').text
 
         #logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
+        # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
         return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
       end
 
