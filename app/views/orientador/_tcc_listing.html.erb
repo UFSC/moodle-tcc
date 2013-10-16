@@ -2,8 +2,8 @@
   <thead>
   <tr class="blue-header-table">
     <th>Estudante</th>
-    <th>Dados</th>
     <th>Nota</th>
+    <th>Dados</th>
     <th>Resumo</th>
     <th>Apresentação</th>
     <% @hubs.each do |hub_name| %>
@@ -22,10 +22,6 @@
       <td><%= tcc.name %></td>
 
       <td>
-        <%= link_to 'Editar', show_tcc_path(moodle_user: tcc.moodle_user), class: 'label label-success', target: '_blank' %>
-      </td>
-
-      <td>
         <% if tcc.grade.nil? %>
           <% if tcc.is_ok? && @current_user.orientador? %>
             <a href="#<%= tcc.id %>" role="" class="label label-warning" data-toggle="modal">Avaliar</a>
@@ -39,6 +35,10 @@
             <span class="label label-success pull-right"><%= tcc.grade %></span>
           <% end %>
         <% end %>
+      </td>
+
+      <td>
+        <%= link_to 'Editar', show_tcc_path(moodle_user: tcc.moodle_user), class: 'label label-success', target: '_blank' %>
       </td>
 
       <td>
