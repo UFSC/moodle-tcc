@@ -47,7 +47,7 @@ module StateMachineUtils
     case o.aasm_current_state
       when :draft
         o.send_to_admin_for_evaluation
-      when :send_to_admin_for_revision
+      when :sent_to_admin_for_revision
         o.send_back_to_student
         o.send_to_admin_for_evaluation
       when :admin_evaluation_ok
@@ -61,7 +61,7 @@ module StateMachineUtils
       when :draft
         o.send_to_admin_for_evaluation
         o.admin_evaluate_ok
-      when :send_to_admin_for_revision
+      when :sent_to_admin_for_revision
         o.send_back_to_student
         o.send_to_admin_for_evaluation
         o.admin_evaluate_ok
