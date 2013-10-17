@@ -10,11 +10,20 @@ desenvolvam o TCC em duas atividades: 'portfólio' e 'tcc'.
 Instalação
 ----------
 
-1. Criar arquivos yml baseados nos arquivos: database.yml.example, moodle.yml.example e tcc_config.yml.example
-2. sudo apt-get install qt4-qmake libqt4-dev # For capybara webkit driver
-2. bundle install
-3. rake db:migrate
+Criar arquivos yml baseados nos arquivos: 
+ 
+* database.yml.example
+* moodle.yml.example 
+* tcc_config.yml.example (Verifique o endereço da sua instalação do Moodle na variavel **server** e **instance\_guid**)
+* email.yml.example
 
+Instalar pacotes necessários e rodar comandos de instalação da aplicação Rails:
+
+    sudo apt-get install qt4-qmake libqt4-dev
+    bundle install
+    rake db:migrate
+
+Os pacotes do QT4 são necessários para a instalação do Capybara, que é utilizado para rodar os testes de interface
 
 Rodar testes
 ------------
