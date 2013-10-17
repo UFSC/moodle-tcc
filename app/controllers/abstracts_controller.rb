@@ -35,6 +35,7 @@ class AbstractsController < ApplicationController
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
     new_state = params[:abstract][:new_state]
 
+
     unless params[:abstract][:commentary]
       @abstract.attributes = params[:abstract]
       if @abstract.valid?
@@ -54,8 +55,10 @@ class AbstractsController < ApplicationController
         render :show
       end
     else
-      if params[:valued]
+      if params[:valued] != 'Aprovar'
         @abstract.admin_evaluate_ok if @abstract.may_admin_evaluate_ok?
+      elsif params[:valued] == 'Aprovar'
+        change_state('admin_evaluate_ok', @abstract)
       else
         @abstract.send_back_to_student if @abstract.may_send_back_to_student?
       end
