@@ -1,12 +1,11 @@
 <h3>Dados</h3>
 <%= semantic_form_for @tcc, url: save_tcc_path(:moodle_user => params[:moodle_user]) do |f| %>
     <%= f.inputs do %>
-        <%= f.input :name %>
-        <%= f.input :title %>
-        <%= f.input :defense_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
-                    :input_html => {:'data-behaviour' => 'datepicker',
-                                    value: ((I18n.l @tcc.defense_date) unless @tcc.defense_date.nil?)} %>
-        <%= f.input :leader %>
+        <%= f.input :title, :input_html => { :style => 'width:450px;'} %>
+        <%= f.input :name, :input_html => { :style => 'width:450px;', :readonly => true, :value => @tcc.name}  %>
+        <%= f.input :leader, :input_html => { :style => 'width:450px;', :readonly => true, :value => @orientador}  %>
+
+
     <% end %>
     <%= f.actions do %>
         <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
