@@ -39,14 +39,14 @@ describe Authentication do
         user.view_all?.should be_true
       end
 
-      it 'should return true for coordcurso, tutoria moodle\'s roles' do
+      it 'should return false for coordcurso, tutoria moodle\'s roles' do
         user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso')
-        user.view_all?.should be_true
+        user.view_all?.should be_false
       end
 
-      it 'should return true for tutoria moodle\'s roles' do
+      it 'should return false for tutoria moodle\'s roles' do
         user = Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria')
-        user.view_all?.should be_true
+        user.view_all?.should be_false
       end
 
       it 'should return false if none of the expected roles are present' do
