@@ -1,5 +1,4 @@
-<%=
-'\documentclass[
+\documentclass[
 % -- opções da classe memoir --
 12pt,				% tamanho da fonte
 openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
@@ -49,31 +48,83 @@ brazil,				% o último idioma é o principal do documento
 \renewcommand{\backref}{}
 % Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-	\ifcase #1 %
-		Nenhuma citação no texto.%
-	\or
-		Citado na página #2.%
-	\else
-		Citado #1 vezes nas páginas #2.%
-	\fi}%
-% ---'
+\ifcase #1 %
+Nenhuma citação no texto.%
+\or
+Citado na página #2.%
+\else
+Citado #1 vezes nas páginas #2.%
+\fi}%
+% ---
 
-%>
+\begin{document}
 
-<%= '\begin{document}' %>
-<%= @tex %>
-<%=
-'
-\citeonline{van86}
+\par Tomei conhecimento de questoes
+importantes em relação a ESF e Nasf;Dificuldades dos diferentes atores e possibilidades grandiosas de aprendizado e realizaçoes com toda a comunidade, Trabalhei sempre dentro de um isolamento,apenas com encaminhamentos, vi estas possibilidades de interaçao com alegria, conheci melhor a comunidade, com suas limitaçoes e varios poderes que muitas vezes nem sabem que tem. Saúde doença frequencia, incidencia,prevalencia e como a ESF pode acompanhar e interagir de perto todos os agravos. Diante disso planejar maneiras de cuidados tao amplos.
+
+\subsection{Minha tabelinha}
+
+\begin{center}\begin{tabular}{ccc}
+\hline
+Name& Address& Phone \\
+\hline
+John Doe&123 High St.&555-1212 \\
+\hline
+Jane Smith&456 Low St.&555-1234 \\
+\hline
+\end{tabular}
+\end{center}
+\section{Enumeracao}
+
+
+
+\par The following patterns are used to extract the
+title page material:
+
+\begin{itemize}
+\item
+\begin{itemize}
+\item title: caca\item abstract: ola\item author: Rafael
+\end{itemize}
+\item keywords: TCC\item terms:
+\end{itemize}
+\
+
+\begin{Considerações finais}
 
 \begin{citacao}
 As citações diretas, no texto, com mais de três linhas, devem ser
 destacadas com recuo de 4 cm da margem esquerda, com letra menor que a do texto
 utilizado e sem as aspas. No caso de documentos datilografados, deve-se
-observar apenas o recuo \cite[5.3]{NBR10520:2002}.
+observar apenas o recuo \cite[5.3]{NBR10520:2010}.
 \end{citacao}
 
-'
-%>
+
+Este documento deve ser utilizado como complemento dos manuais
+\cite{babel}
+
+\end{Considerações finais}
+
+\begin{agradecimentos}
+Os agradecimentos principais são direcionados à Gerald Weber, Miguel Frasson,
+Leslie H. Watter, Bruno Parente Lima, Flávio de Vasconcellos Corrêa, Otavio Real
+Salvador, Renato Machnievscz\footnote{Os nomes dos integrantes do primeiro
+projeto abn\TeX\ foram extraídos de
+\url{http://codigolivre.org.br/projects/abntex/}} e todos aqueles que
+contribuíram para que a produção de trabalhos acadêmicos conforme
+as normas ABNT com \LaTeX\ fosse possível.
+
+Agradecimentos especiais são direcionados ao Centro de Pesquisa em Arquitetura
+da Informação\footnote{\url{http://www.cpai.unb.br/}} da Universidade de
+Brasília (CPAI), ao grupo de usuários
+\emph{latex-br}\footnote{\url{http://groups.google.com/group/latex-br}} e aos
+novos voluntários do grupo
+\emph{\abnTeX}\footnote{\url{http://groups.google.com/group/abntex2} e
+\url{http://abntex2.googlecode.com/}}~que contribuíram e que ainda
+contribuirão para a evolução do \abnTeX.
+
+\end{agradecimentos}
+
 <%= '\bibliography{' + @bibtext +  '}' %>
-<%= '\end{document}' %>
+
+\end{document}

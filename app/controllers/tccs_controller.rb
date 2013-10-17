@@ -7,6 +7,9 @@ class TccsController < ApplicationController
   skip_before_filter :authorize, :only => :show_pdf
   skip_before_filter :get_tcc, :only => :show_pdf
 
+  skip_before_filter :authorize, :only => :parse_html
+  skip_before_filter :get_tcc, :only => :parse_html
+
   def show
     set_tab :data
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
@@ -66,6 +69,7 @@ class TccsController < ApplicationController
   def parse_html
     #Config rails-latex
     LatexToPdf.config[:arguments].delete('-halt-on-error')
+    LatexToPdf.config.merge! :parse_twice => true
 
     #abstract
     coder = HTMLEntities.new
