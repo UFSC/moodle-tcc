@@ -16,6 +16,12 @@ module Authentication
     elsif current_user.view_all?
       logger.debug 'LTI user is part of a view_all role'
       redirect_to instructor_admin_path
+    elsif current_user.coordenador_tutoria? && @type == 'portfolio'
+      logger.debug 'LTI user is part of a coordtutoria role'
+      redirect_to instructor_admin_path
+    elsif current_user.coordenador_curso? && @type == 'tcc'
+      logger.debug 'LTI user is part of a coordcurso role'
+      redirect_to instructor_admin_path
     elsif current_user.student? && @type == 'tcc'
       logger.debug 'LTI user identified as a student'
       redirect_to show_tcc_path
@@ -58,7 +64,7 @@ module Authentication
       if admin?
         true
       else
-        coordenador_avea? || coordenador_curso? || coordenador_tutoria?
+        coordenador_avea?
       end
     end
 
@@ -83,8 +89,6 @@ module Authentication
     end
 
 
-
-
   end # User class
 
   module LTI
@@ -99,8 +103,6 @@ module Authentication
 
       return false
     end
-
-
 
 
     def initialize_tool_provider!
