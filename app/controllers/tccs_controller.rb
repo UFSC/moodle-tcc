@@ -5,7 +5,7 @@ class TccsController < ApplicationController
 
   def show
     set_tab :data
-    @orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).nome
+    @orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).nome if @tcc.orientador
   end
 
   def evaluate

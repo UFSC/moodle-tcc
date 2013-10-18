@@ -1,5 +1,5 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :leader, :grade, :orientador, :moodle_user, :name, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
+  attr_accessible :grade, :orientador, :moodle_user, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes,
                   :final_considerations_attributes, :tcc_definition
 

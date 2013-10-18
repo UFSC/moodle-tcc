@@ -39,8 +39,10 @@ module LtiTccFilters
         group = TutorGroup.get_tutor_group(username)
         tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
 
-        @tcc = Tcc.create(moodle_user: @user_id, name: @tp.lis_person_name_full,
+        @tcc = Tcc.create(moodle_user: @user_id,
                           tutor_group: group, tcc_definition: tcc_definition)
+        @tcc.name = @tp.lis_person_name_full
+        @tcc.save!
       end
     end
   end

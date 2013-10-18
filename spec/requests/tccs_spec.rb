@@ -28,7 +28,6 @@ describe "Tccs" do
         click_link 'Dados'
         page.should have_content('Nome')
         page.should have_content('Título')
-        page.should have_content('Data da defesa')
         page.should have_content('Orientador')
 
       end
