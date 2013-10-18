@@ -13,7 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-.idea/
+.idea/*
 public/assets
 app/assets/javascripts/ckeditor/plugins/placeholder
 db/*.sql
@@ -22,6 +22,9 @@ db/*.bz2
 /coverage
 /doc
 .yardoc
+
+# Ignore Excepts
+!/.idea/codeStyleSettings.xml
 
 # Config files
 config/tcc_config.yml
