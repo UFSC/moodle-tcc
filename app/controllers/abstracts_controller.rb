@@ -55,7 +55,7 @@ class AbstractsController < ApplicationController
         render :show
       end
     else
-      if params[:valued] != 'Aprovar'
+      if params[:valued] == 'Avaliado'
         @abstract.admin_evaluate_ok if @abstract.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluate_ok', @abstract)

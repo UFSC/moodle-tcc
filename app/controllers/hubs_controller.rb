@@ -109,7 +109,7 @@ class HubsController < ApplicationController
       # Ação do botão
       old_state = @hub.state
 
-      if params[:valued] != 'Aprovar'
+      if params[:valued] == 'Avaliado'
         @hub.admin_evaluate_ok if @hub.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluate_ok', @hub)

@@ -54,7 +54,7 @@ class PresentationsController < ApplicationController
         render :show
       end
     else
-      if params[:valued]
+      if params[:valued] == 'Avaliado'
         @presentation.admin_evaluate_ok if @presentation.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluate_ok', @presentation)

@@ -54,7 +54,7 @@ class FinalConsiderationsController < ApplicationController
         render :show
       end
     else
-      if params[:valued]
+      if params[:valued] == 'Avaliado'
         @final_considerations.admin_evaluate_ok if @final_considerations.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluate_ok', @final_considerations)

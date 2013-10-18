@@ -10,7 +10,7 @@ module StateMachineUtils
         to_revision(o)
       when 'sent_to_admin_for_evaluation'
         to_evaluation(o)
-      when 'admin_evaluate_ok'
+      when 'admin_evaluation_ok'
         to_evaluation_ok(o)
       else
         false
@@ -25,7 +25,7 @@ module StateMachineUtils
         o.send_back_to_student
       when :sent_to_admin_for_evaluation
         o.send_back_to_student
-      when :admin_evaluate_ok
+      when :admin_evaluation_ok
         o.state='draft'
     end
   end
@@ -37,7 +37,7 @@ module StateMachineUtils
       when :sent_to_admin_for_evaluation
         o.send_back_to_student
         o.send_to_admin_for_revision
-      when :admin_evaluate_ok
+      when :admin_evaluation_ok
         o.state='draft'
         o.send_to_admin_for_revision
     end
@@ -50,7 +50,7 @@ module StateMachineUtils
       when :sent_to_admin_for_revision
         o.send_back_to_student
         o.send_to_admin_for_evaluation
-      when :admin_evaluate_ok
+      when :admin_evaluation_ok
         o.state='draft'
         o.send_to_admin_for_evaluation
     end
