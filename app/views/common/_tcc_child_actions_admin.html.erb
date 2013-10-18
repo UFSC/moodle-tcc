@@ -1,9 +1,9 @@
 <% if object.sent_to_admin_for_evaluation? || object.sent_to_admin_for_revision? %>
-    <%= f.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: '4', style: 'width: 905px;'} unless @current_user.view_all? %>
-    <%= submit_tag 'Devolver para o aluno', name: 'draft', class: 'btn' %>
-    <% if object.sent_to_admin_for_evaluation? && @current_user.tutor? %>
-        <%= submit_tag 'Avaliado', name: 'valued', class: 'btn btn-success', confirm: 'O estudante não poderá mais editar o texto. Deseja continuar?' %>
-    <% elsif @current_user.orientador? %>
-        <%= submit_tag 'Aprovar', name: 'valued', class: 'btn btn-success', confirm: 'O estudante não poderá mais editar o texto. Deseja continuar?' %>
-    <% end %>
+  <%= f.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: '4', value: '', style: 'width: 905px;'} unless @current_user.view_all? %>
+  <%= submit_tag 'Devolver para o aluno', name: 'draft', class: 'btn' %>
+  <% if object.sent_to_admin_for_evaluation? && @current_user.tutor? %>
+    <%= submit_tag 'Avaliado', name: 'valued', class: 'btn btn-success', confirm: 'O estudante não poderá mais editar o texto. Deseja continuar?' %>
+  <% elsif @current_user.orientador? %>
+    <%= submit_tag 'Aprovar', name: 'valued', class: 'btn btn-success', confirm: 'O estudante não poderá mais editar o texto. Deseja continuar?' %>
+  <% end %>
 <% end %>
