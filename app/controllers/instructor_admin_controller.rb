@@ -21,7 +21,7 @@ class InstructorAdminController < ApplicationController
   private
 
   def check_permission
-    unless current_user.view_all?(@type)
+    unless current_user.view_all?
       flash[:error] = t(:cannot_access_page_without_enough_permission)
       redirect_user_to_start_page
     end

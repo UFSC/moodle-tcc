@@ -15,13 +15,12 @@ module LtiTccFilters
 
     else
       @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], lti_params)
-      @type = @tp.custom_params['type']
-      if (current_user.instructor? || current_user.orientador? || current_user.view_all?(@type)) && params['moodle_user']
+      if (current_user.instructor? || current_user.orientador? || current_user.view_all?) && params['moodle_user']
         @user_id = params['moodle_user']
       else
         @user_id = @tp.user_id
       end
-
+      @type = @tp.custom_params['type']
 
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end

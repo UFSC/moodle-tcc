@@ -13,7 +13,7 @@ module Authentication
     if current_user.student? && @type == 'portfolio'
       logger.debug 'LTI user identified as a student'
       redirect_to show_hubs_path(position: '1')
-    elsif current_user.view_all?(@type)
+    elsif current_user.view_all?
       logger.debug 'LTI user is part of a view_all role'
       redirect_to instructor_admin_path
     elsif current_user.student? && @type == 'tcc'
@@ -38,6 +38,7 @@ module Authentication
 
     def initialize(lti_tp)
       @lti_tp = lti_tp
+      @app_type = @lti_tp.custom_params['type']
     end
 
     def id
@@ -54,12 +55,12 @@ module Authentication
       end
     end
 
-    def view_all?(type)
+    def view_all?
       if admin?
         true
       else
-        coordenador_avea? || (coordenador_tutoria? && type == 'portfolio') ||
-            (coordenador_curso? && type == 'tcc')
+        coordenador_avea? || (coordenador_tutoria? && @app_type == 'portfolio') ||
+            (coordenador_curso? && @app_type == 'tcc')
       end
     end
 

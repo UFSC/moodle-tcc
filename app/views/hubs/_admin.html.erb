@@ -5,7 +5,7 @@
   <div class="row">
     <div class="span12">
       <div class="row">
-        <% unless @current_user.view_all?(@type) %>
+        <% unless @current_user.view_all? %>
             <h3 class="span12"> Reflexões do <%= @hub.hub_definition.title %> -
               <span class="text-info">
                 <%= t('states.'+@hub.aasm_current_state.to_s) %>
@@ -18,7 +18,7 @@
                 Reflexões do <%= @hub.hub_definition.title %> -
               </h3>
               <% if !@hub.nil? && !@hub.terminated? %>
-                  <% if @current_user.view_all?(@type) %>
+                  <% if @current_user.view_all? %>
                       <%= render partial: 'states', locals: {hub: @hub} %>
                   <% end %>
               <% elsif @hub.terminated? %>
