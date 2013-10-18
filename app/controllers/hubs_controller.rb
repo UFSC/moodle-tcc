@@ -109,8 +109,10 @@ class HubsController < ApplicationController
       # Ação do botão
       old_state = @hub.state
 
-      if params[:valued]
+      if params[:valued] == 'Avaliado'
         @hub.admin_evaluate_ok if @hub.may_admin_evaluate_ok?
+      elsif params[:valued] == 'Aprovar'
+        change_state('admin_evaluate_ok', @hub)
       else
         @hub.send_back_to_student if @hub.may_send_back_to_student?
       end
@@ -150,11 +152,11 @@ class HubsController < ApplicationController
 
     if change_state(new_state, @hub)
       @hub.save!
-      flash[:success] = t(:successfully_saved)      
+      flash[:success] = t(:successfully_saved)
     else
-      flash[:error] = t(:invalid_state)      
+      flash[:error] = t(:invalid_state)
     end
-    
+
     redirect_user_to_start_page
   end
 
