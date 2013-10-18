@@ -5,7 +5,7 @@ class TccsController < ApplicationController
 
   def show
     set_tab :data
-    @orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).nome if @tcc.orientador
+    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
   end
 
   def evaluate
@@ -31,7 +31,8 @@ class TccsController < ApplicationController
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
     end
-    redirect_to show_tcc_path(:moodle_user => params[:moodle_user])
+
+    redirect_to show_tcc_path(moodle_user: params[:moodle_user])
   end
 
   private
