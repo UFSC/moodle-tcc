@@ -3,10 +3,14 @@ class TccsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
+  require 'faker'
+
   before_filter :check_permission, :only => :evaluate
+  before_filter :config_latex, :only => :show_pdf
+
+  #Remover depois
   skip_before_filter :authorize, :only => :show_pdf
   skip_before_filter :get_tcc, :only => :show_pdf
-
   skip_before_filter :authorize, :only => :parse_html
   skip_before_filter :get_tcc, :only => :parse_html
 
@@ -55,15 +59,22 @@ class TccsController < ApplicationController
   end
 
   def show_pdf
+    #Selecionar TCC
     @tcc = Tcc.find(313)
-    coder = HTMLEntities.new
-    tmp = @tcc.abstract.content.gsub('&nbsp;', ' ').gsub('&acute;',%q('))
-    @abstract_content = coder.decode(tmp)
-    @hubs = @tcc.hubs.hub_tcc
-    @final_considerations = @tcc.final_considerations
 
-    #test nokogiri
-    @doc = Nokogiri::HTML(@tcc.abstract.content)
+    #Resumo
+    @abstract_content = TccLatex.apply_latex(@tcc.abstract.content)
+    @abstract_keywords = @tcc.abstract.key_words
+
+    #Introdução
+    @presentation = TccLatex.apply_latex(@tcc.presentation.content)
+
+    #Hubs
+    @hubs = @tcc.hubs.hub_tcc
+
+    #Consideracoes Finais
+    @finalconsiderations = TccLatex.apply_latex(@tcc.final_considerations.content)
+
   end
 
   def parse_html
@@ -90,7 +101,6 @@ class TccsController < ApplicationController
 
     bib = Rails.public_path + '/abntex2-modelo-references'
     @bibtext = bib
-
   end
 
   def preview_tcc
@@ -112,4 +122,11 @@ class TccsController < ApplicationController
       redirect_user_to_start_page
     end
   end
+
+  def config_latex
+    #Config rails-latex
+    LatexToPdf.config[:arguments].delete('-halt-on-error')
+    LatexToPdf.config.merge! :parse_twice => true
+  end
+
 end

@@ -1,6 +1,27 @@
 %% Desenvolvimento
 \chapter{Desenvolvimento}
 
-Isto é uma sinopse de capítulo. A ABNT não traz nenhuma
-normatização a respeito desse tipo de resumo, que é mais comum em romances
-e livros técnicos.
+%% Para cada eixo
+<% @hubs.each do |hub| %>
+
+    %% Imprimir hub_definition de cada Hub
+    \section{<%= lesc hub.hub_definition.title %>}
+
+    <% hub.diaries.each do |d| %>
+
+        %% Titulo do Diario
+        \subsection {<%= lesc d.diary_definition.title %>}
+        \par Texto explicativo <%= Faker::Lorem.paragraph(5) %>
+
+        %% Conteudo do diário
+        <%= lesc d.content %>
+
+    <% end %>
+
+    %% Imprimir Reflexão
+    \subsection {<%= lesc hub.hub_definition.title %>}
+
+    <% hub_tcc = @tcc.hubs.hub_tcc.find_by_position(hub.position) %>
+    <%= lesc hub_tcc.reflection unless hub_tcc.reflection.nil? %>
+
+<% end %>

@@ -1,4 +1,5 @@
-\documentclass[
+<%=
+'\documentclass[
 % -- opções da classe memoir --
 12pt,				% tamanho da fonte
 openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
@@ -48,60 +49,27 @@ brazil,				% o último idioma é o principal do documento
 \renewcommand{\backref}{}
 % Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-\ifcase #1 %
-Nenhuma citação no texto.%
-\or
-Citado na página #2.%
-\else
-Citado #1 vezes nas páginas #2.%
-\fi}%
-% ---
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---'
 
-\begin{document}
-
-\par Tomei conhecimento de questoes
-importantes em relação a ESF e Nasf;Dificuldades dos diferentes atores e possibilidades grandiosas de aprendizado e realizaçoes com toda a comunidade, Trabalhei sempre dentro de um isolamento,apenas com encaminhamentos, vi estas possibilidades de interaçao com alegria, conheci melhor a comunidade, com suas limitaçoes e varios poderes que muitas vezes nem sabem que tem. Saúde doença frequencia, incidencia,prevalencia e como a ESF pode acompanhar e interagir de perto todos os agravos. Diante disso planejar maneiras de cuidados tao amplos.
-
-\subsection{Minha tabelinha}
-
-\begin{center}\begin{tabular}{ccc}
-\hline
-Name& Address& Phone \\
-\hline
-John Doe&123 High St.&555-1212 \\
-\hline
-Jane Smith&456 Low St.&555-1234 \\
-\hline
-\end{tabular}
-\end{center}
-\section{Enumeracao}
-
-
-
-\par The following patterns are used to extract the
-title page material:
-
-\begin{itemize}
-\item
-\begin{itemize}
-\item title: caca\item abstract: ola\item author: Rafael
-\end{itemize}
-\item keywords: TCC\item terms:
-\end{itemize}
-\
-
-\begin{Considerações finais}
+%>
+<%= '\begin{document}' %>
+<%= @tex %>
+<%=
+'\citeonline{babel}
 
 \begin{citacao}
 As citações diretas, no texto, com mais de três linhas, devem ser
 destacadas com recuo de 4 cm da margem esquerda, com letra menor que a do texto
 utilizado e sem as aspas. No caso de documentos datilografados, deve-se
-observar apenas o recuo \cite[5.3]{NBR10520:2010}.
+observar apenas o recuo \cite[5.3]{NBR10520:2002}.
 \end{citacao}
-
-
-Este documento deve ser utilizado como complemento dos manuais
-\cite{babel}
 
 \end{Considerações finais}
 
@@ -124,7 +92,8 @@ novos voluntários do grupo
 contribuirão para a evolução do \abnTeX.
 
 \end{agradecimentos}
-
+'
+%>
 <%= '\bibliography{' + @bibtext +  '}' %>
+<%= '\end{document}' %>
 
-\end{document}
