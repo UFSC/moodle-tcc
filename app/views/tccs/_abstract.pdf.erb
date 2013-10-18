@@ -2,8 +2,8 @@
 \begin{resumo}
 
 %% Content
-<%= lesc @abstract_content unless @abstract_content.nil? %>
+<%= content unless content.nil? %>
 
 
-\textbf{Palavras-chaves}: <%= lesc abstract.key_words unless abstract.key_words.nil? %>
+\textbf{Palavras-chaves}: <%= lesc key_words unless key_words.nil? %>
 \end{resumo}

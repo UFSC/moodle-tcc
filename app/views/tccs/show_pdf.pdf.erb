@@ -14,8 +14,6 @@ openright,			% capítulos começam em pág ímpar (insere página vazia caso pre
 twoside,			% para impressão em verso e anverso. Oposto a oneside
 a4paper,			% tamanho do papel.
 english,			% idioma adicional para hifenização
-french,				% idioma adicional para hifenização
-spanish,			% idioma adicional para hifenização
 brazil,				% o último idioma é o principal do documento
 ]{abntex2}
 
@@ -49,12 +47,12 @@ brazil,				% o último idioma é o principal do documento
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{TÍTULO DO TRABALHO EM CAIXA ALTA E CENTRALIZADO}
-\autor{Fulano de Tal (Nome do Aluno)}
+\titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
+\autor{<%= lesc @tcc.name unless @tcc.name.nil? %>}
 \local{Florianópolis}
-\data{2013}
-\orientador{Nome do orientador}
-\coorientador{Nome do coorientador}
+\data{<%= lesc @tcc.defense_date.year unless @tcc.defense_date.nil? %>}
+\orientador{<%= lesc @tcc.orientador unless @tcc.orientador.nil? %>}
+\coorientador{Profa Dra Elza Berger Salema Coelho}
 \instituicao{%
     Universidade Federal de Santa Catarina
     \par
@@ -62,15 +60,20 @@ brazil,				% o último idioma é o principal do documento
     \par
     DEPARTAMENTO DE SAÚDE PÚBLICA
 }
-\tipotrabalho{Tese (Doutorado)}
+\tipotrabalho{Tese (Monografia)}
 
 % O preambulo deve conter o tipo do trabalho, o objetivo,
 % o nome da instituição e a área de concentração
-\preambulo{Modelo canônico de trabalho monográfico acadêmico em conformidade com
-as normas ABNT apresentado à comunidade de usuários \LaTeX.}
+\preambulo{Monografia apresentada ao Curso de Especialização Multiprofissional em Saúde da Família da
+Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista Saúde da Família.}
 
+% ---
+% compila o indice
+% ---
+\makeindex
+
+%% Inicio do documento
 \begin{document}
-
 
 
 % Retira espaço extra obsoleto entre as frases.
@@ -99,12 +102,17 @@ as normas ABNT apresentado à comunidade de usuários \LaTeX.}
 
     \hspace{.45\textwidth}
     \begin{minipage}{.5\textwidth}
-    \imprimirpreambulo
+
+    Essa monografia foi julgada adequada para obtenção do título de
+    “Especialista em Saúde da Família”, e aprovado em sua forma final pelo
+    Departamento de Saúde Pública da Universidade Federal de Santa
+    Catarina.
+
     \end{minipage}%
     \vspace*{\fill}
     \end{center}
 
-    Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
+    \imprimirlocal, <%= lesc l(@tcc.defense_date, :format => :long) unless @tcc.defense_date.nil? %>:
 
     \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
     \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
@@ -120,17 +128,23 @@ as normas ABNT apresentado à comunidade de usuários \LaTeX.}
 \end{folhadeaprovacao}
 
 %% Resumo do trabalho
-<%= render partial: 'abstract', locals: {abstract: @tcc.abstract} %>
+<%= render partial: 'abstract', locals: {content: @abstract_content, key_words: @abstract_keywords} %>
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
 
 %% Apresentação do trabalho
-<%= render partial: 'presentation' %>
+<%= render partial: 'presentation', locals: {presentation: @presentation} %>
 
 %% Desenvolvimento (Hubs e suas reflexoes)
 <%= render partial: 'hubs' %>
 
 %% Considerações finais
-<%= render partial: 'finalconsiderations' %>
-
-
+<%= render partial: 'finalconsiderations', locals: {finalconsiderations: @finalconsiderations} %>
 
 \end{document}
