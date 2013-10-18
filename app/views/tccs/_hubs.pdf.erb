@@ -19,7 +19,7 @@
     <% end %>
 
     %% Imprimir Reflexão
-    \subsection {<%= lesc hub.hub_definition.title %>}
+    \subsection {<%= lesc hub.reflection_title unless hub.reflection_title.nil? %>}
 
     <% hub_tcc = @tcc.hubs.hub_tcc.find_by_position(hub.position) %>
     <%= lesc hub_tcc.reflection unless hub_tcc.reflection.nil? %>
