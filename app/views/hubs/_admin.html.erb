@@ -18,19 +18,8 @@
               Reflexões do <%= @hub.hub_definition.title %> -
             </h3>
             <% if !@hub.nil? && !@hub.terminated? %>
-
-              <% if @current_user.coordenador_avea? || @current_user.admin? %>
+              <% if @current_user.view_all? %>
                 <%= render partial: 'states', locals: {hub: @hub} %>
-              <% else %>
-                <% if @type == 'tcc' %>
-                  <% if @current_user.coordenador_curso? %>
-                    <%= render partial: 'states', locals: {hub: @hub} %>
-                  <% end %>
-                <% else %>
-                  <% if @current_user.coordenador_tutoria? %>
-                    <%= render partial: 'states', locals: {hub: @hub} %>
-                  <% end %>
-                <% end %>
               <% end %>
             <% elsif @hub.terminated? %>
               <h3> Avaliado</h3>

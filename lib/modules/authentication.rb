@@ -38,6 +38,7 @@ module Authentication
 
     def initialize(lti_tp)
       @lti_tp = lti_tp
+      @app_type = @lti_tp.custom_params['type']
     end
 
     def id
@@ -58,7 +59,8 @@ module Authentication
       if admin?
         true
       else
-        coordenador_avea? || coordenador_curso? || coordenador_tutoria?
+        coordenador_avea? || (coordenador_tutoria? && @app_type == 'portfolio') ||
+            (coordenador_curso? && @app_type == 'tcc')
       end
     end
 
@@ -83,8 +85,6 @@ module Authentication
     end
 
 
-
-
   end # User class
 
   module LTI
@@ -99,8 +99,6 @@ module Authentication
 
       return false
     end
-
-
 
 
     def initialize_tool_provider!

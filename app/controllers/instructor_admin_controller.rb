@@ -14,8 +14,6 @@ class InstructorAdminController < ApplicationController
     else
       render 'tcc'
     end
-
-
   end
 
   private
