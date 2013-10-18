@@ -13,14 +13,8 @@ module Authentication
     if current_user.student? && @type == 'portfolio'
       logger.debug 'LTI user identified as a student'
       redirect_to show_hubs_path(position: '1')
-    elsif current_user.view_all?
+    elsif current_user.view_all?(@type)
       logger.debug 'LTI user is part of a view_all role'
-      redirect_to instructor_admin_path
-    elsif current_user.coordenador_tutoria? && @type == 'portfolio'
-      logger.debug 'LTI user is part of a coordtutoria role'
-      redirect_to instructor_admin_path
-    elsif current_user.coordenador_curso? && @type == 'tcc'
-      logger.debug 'LTI user is part of a coordcurso role'
       redirect_to instructor_admin_path
     elsif current_user.student? && @type == 'tcc'
       logger.debug 'LTI user identified as a student'
@@ -60,11 +54,12 @@ module Authentication
       end
     end
 
-    def view_all?
+    def view_all?(type)
       if admin?
         true
       else
-        coordenador_avea?
+        coordenador_avea? || (coordenador_tutoria? && type == 'portfolio') ||
+            (coordenador_curso? && type == 'tcc')
       end
     end
 
