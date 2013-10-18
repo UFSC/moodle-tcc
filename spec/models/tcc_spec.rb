@@ -16,6 +16,9 @@ describe Tcc do
 
   it { should validate_uniqueness_of :moodle_user }
 
+  it { should_not allow_mass_assignment_of :name }
+  it { should_not allow_mass_assignment_of :leader   }
+
   describe 'grade' do
     it 'should be zero or higher' do
       tcc.grade = 0

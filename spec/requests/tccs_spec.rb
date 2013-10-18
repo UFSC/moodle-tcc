@@ -11,6 +11,7 @@ describe "Tccs" do
 
     it 'should work with LTI connection' do
       page.set_rack_session(fake_lti_session('student', 'tcc'))
+      Middleware::Orientadores.stub_chain(:find_by_cpf, :nome).and_return('46427449915')
       visit show_tcc_path
 
       page.current_path.should_not == access_denied_path
@@ -21,6 +22,7 @@ describe "Tccs" do
     describe 'edit' do
       before :each do
         page.set_rack_session(fake_lti_session('student', 'tcc'))
+        Middleware::Orientadores.stub_chain(:find_by_cpf, :nome).and_return('46427449915')
         visit show_tcc_path
       end
 
@@ -28,9 +30,7 @@ describe "Tccs" do
         click_link 'Dados'
         page.should have_content('Nome')
         page.should have_content('Título')
-        page.should have_content('Data da defesa')
         page.should have_content('Orientador')
-
       end
 
       it 'tcc abstract' do
