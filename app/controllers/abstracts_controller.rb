@@ -58,7 +58,7 @@ class AbstractsController < ApplicationController
       if params[:valued] == 'Avaliado'
         @abstract.admin_evaluate_ok if @abstract.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
-        change_state('admin_evaluate_ok', @abstract)
+        change_state('admin_evaluation_ok', @abstract)
       else
         @abstract.send_back_to_student if @abstract.may_send_back_to_student?
       end
