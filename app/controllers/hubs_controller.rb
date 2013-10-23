@@ -112,7 +112,7 @@ class HubsController < ApplicationController
       if params[:valued] == 'Avaliado'
         @hub.admin_evaluate_ok if @hub.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
-        change_state('admin_evaluate_ok', @hub)
+        change_state('admin_evaluation_ok', @hub)
       else
         @hub.send_back_to_student if @hub.may_send_back_to_student?
       end
