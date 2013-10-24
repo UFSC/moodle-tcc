@@ -22,7 +22,16 @@
 set :output, 'sync-cron.log'
 job_type :rake, 'cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bundle exec rake :task :output'
 
-every 1.hour do
-  rake 'tcc:update_orientador'
-  rake 'tcc:update_email'
+# CRONTAB da produção
+if @stage == 'production'
+  every 1.hour do
+    rake 'tcc:sync'
+  end
+end
+
+# CRONTAB do staging
+if @stage == 'staging'
+  every 6.hour do
+    rake 'tcc:sync'
+  end
 end

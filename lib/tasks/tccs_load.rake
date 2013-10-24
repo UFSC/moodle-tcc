@@ -1,6 +1,9 @@
 # encoding: utf-8
 namespace :tcc do
 
+  desc 'TCC | Realiza procedimentos de sincronização na ordem correta'
+  task :sync => [:update_orientador, :update_email]
+
   desc 'TCC | Cria todos os TCCs das turmas'
   task :load_all, [:turma, :tcc_definition_id] => :environment do |t, args|
     #Turma A '20131', 1
@@ -9,7 +12,7 @@ namespace :tcc do
   end
 
   desc 'TCC | Cria um HubTcc para cada HubPortfolio existente'
-  task :sync => :environment do
+  task :update_hubs => :environment do
 
     Tcc.all.with_progress 'Criando HubTcc a partir do HubPortfolio existente' do |tcc|
 
@@ -45,7 +48,6 @@ namespace :tcc do
       orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
       if orientador_cpf
-        tcc.orientador = orientador_cpf
         tcc.email_orientador = Middleware::Usuario.where(:username => orientador_cpf).first.email
         tcc.save!
       end

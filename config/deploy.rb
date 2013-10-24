@@ -10,6 +10,7 @@ set :default_stage, 'staging'
 require 'capistrano/ext/multistage'
 
 # Whenever (crontab)
+set :whenever_variables, defer { "stage=#{stage}" }
 set :whenever_command, 'bundle exec whenever'
 set :whenever_identifier, defer { "#{application}_#{stage}" }
 require 'whenever/capistrano'
