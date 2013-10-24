@@ -1,4 +1,0 @@
-production:
-  api_key: # registre a aplicação em errbit.setic.ufsc.br e obtenha a api_key
-  host: errbit.setic.ufsc.br
-  port: 80
