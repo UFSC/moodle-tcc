@@ -10,18 +10,17 @@
     <% hub.diaries.each do |d| %>
 
         %% Titulo do Diario
-        \subsection {<%= lesc d.diary_definition.title %>}
+        \subsection {Diário do módulo: <%= lesc d.diary_definition.title %>}
         \par Texto explicativo <%= Faker::Lorem.paragraph(5) %>
 
         %% Conteudo do diário
-        <%= lesc d.content %>
+        <%= d.content.strip %>
 
     <% end %>
 
     %% Imprimir Reflexão
-    \subsection {<%= lesc hub.reflection_title unless hub.reflection_title.nil? %>}
+    \subsection {Síntese reflexiva: <%= lesc hub.reflection_title unless hub.reflection_title.nil? %>}
 
-    <% hub_tcc = @tcc.hubs.hub_tcc.find_by_position(hub.position) %>
-    <%= lesc hub_tcc.reflection unless hub_tcc.reflection.nil? %>
+    <%= hub.reflection.strip unless hub.reflection.nil? %>
 
 <% end %>

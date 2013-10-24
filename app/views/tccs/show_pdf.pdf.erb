@@ -67,6 +67,47 @@ brazil,				% o último idioma é o principal do documento
 \preambulo{Monografia apresentada ao Curso de Especialização Multiprofissional em Saúde da Família da
 Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista Saúde da Família.}
 
+\makeatletter
+
+\renewcommand{\folhaderostocontent}{
+\begin{center}
+{\ABNTEXchapterfont\large\imprimirautor}
+\vspace*{\fill}\vspace*{\fill}
+
+{\ABNTEXchapterfont\bfseries\Large\imprimirtitulo}
+
+\vspace*{\fill}
+
+\abntex@ifnotempty{\imprimirpreambulo}{%
+\hspace{.45\textwidth}
+\begin{minipage}{.5\textwidth}
+\SingleSpacing
+\imprimirpreambulo
+\end{minipage}%
+\vspace*{\fill}
+}%
+
+{\large\imprimirorientadorRotulo~\imprimirorientador\par}
+
+\abntex@ifnotempty{\imprimircoorientador}{%
+{\large\\Coordenadora do Curso: ~\imprimircoorientador}%
+}%
+
+\vspace*{\fill}
+
+{\abntex@ifnotempty{\imprimirinstituicao}{\imprimirinstituicao\vspace*{\fill}}}
+
+{\large\imprimirlocal}
+
+\par
+
+{\large\imprimirdata}
+\vspace*{1cm}
+\end{center}
+}
+
+\makeatother
+
 % ---
 % compila o indice
 % ---
@@ -114,8 +155,8 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 
     \imprimirlocal, <%= lesc l(@tcc.defense_date, :format => :long) unless @tcc.defense_date.nil? %>:
 
-    \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
     \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
+    \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
 
     \begin{center}
         \vspace*{0.5cm}
@@ -146,5 +187,8 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 
 %% Considerações finais
 <%= render partial: 'finalconsiderations', locals: {finalconsiderations: @finalconsiderations} %>
+
+%% Referencias
+<%= '\bibliography{' + @bibtex +  '}' %>
 
 \end{document}

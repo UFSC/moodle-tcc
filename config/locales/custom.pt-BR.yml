@@ -14,3 +14,5 @@
     successfully_deleted: "Removido com sucesso"
     unsuccessfully_saved: "Mudanças não foram salvas"
     unsuccessfully_deleted: "Não pode ser removido"
+    empty_text: "[ainda não existe texto para esta seção]"
+    empty_abstract: "[ainda não existe texto para o resumo]"

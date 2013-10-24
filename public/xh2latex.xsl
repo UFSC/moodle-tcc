@@ -539,11 +539,24 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:value-of select='.'/>
 </xsl:template>
 
-
 <!-- citation links -->
 <xsl:template match='xhtml:a[starts-with(., "[")]'>
   <xsl:text>\cite{</xsl:text>
   <xsl:value-of select="substring-after(@href,'#')"/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<!-- citation links -->
+<xsl:template match='xhtml:citacao'>
+  <xsl:text>\cite{</xsl:text>
+  <xsl:value-of select="@id"/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<!-- citation internet links -->
+<xsl:template match='xhtml:citacao[@ref-type,"internet"]'>
+  <xsl:text>\citeonline{</xsl:text>
+  <xsl:value-of select="@id"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
 

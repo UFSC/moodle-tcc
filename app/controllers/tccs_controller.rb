@@ -10,9 +10,12 @@ class TccsController < ApplicationController
 
   #Remover depois
   skip_before_filter :authorize, :only => :show_pdf
-  skip_before_filter :get_tcc, :only => :show_pdf
   skip_before_filter :authorize, :only => :parse_html
+  skip_before_filter :authorize, :only => :show_references
+
+  skip_before_filter :get_tcc, :only => :show_pdf
   skip_before_filter :get_tcc, :only => :parse_html
+  skip_before_filter :get_tcc, :only => :show_references
 
   def show
     set_tab :data
@@ -63,44 +66,41 @@ class TccsController < ApplicationController
     @tcc = Tcc.find(313)
 
     #Resumo
-    @abstract_content = TccLatex.apply_latex(@tcc.abstract.content)
-    @abstract_keywords = @tcc.abstract.key_words
+    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc.abstract.content)
+    @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.key_words
 
     #Introdução
-    @presentation = TccLatex.apply_latex(@tcc.presentation.content)
+    @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc.presentation.content)
 
     #Hubs
     @hubs = @tcc.hubs.hub_tcc
+    @hubs.each do |hub|
+      hub.fetch_diaries(@tcc.moodle_user)
+      hub.diaries.map {|diaries| diaries.content = TccLatex.apply_latex(diaries.content)}
+      hub.reflection = TccLatex.apply_latex(hub.reflection)
+    end
 
     #Consideracoes Finais
-    @finalconsiderations = TccLatex.apply_latex(@tcc.final_considerations.content)
+    @finalconsiderations = @tcc.final_considerations.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc.final_considerations.content)
 
+    #Referencias
+    @bibtex = generete_references(@tcc)
   end
 
   def parse_html
-    #Config rails-latex
-    LatexToPdf.config[:arguments].delete('-halt-on-error')
-    LatexToPdf.config.merge! :parse_twice => true
+    @tcc = Tcc.find(313)
 
-    #abstract
-    coder = HTMLEntities.new
-    tcc = Tcc.find(313)
-    content = coder.decode(tcc.abstract.content)
-    html = Nokogiri::HTML(content)
+    @references = @tcc.references
+    @general_refs = @tcc.general_refs
+    @book_refs = @tcc.book_refs
+    @book_cap_refs = @tcc.book_cap_refs
+    @article_refs = @tcc.article_refs
+    @internet_refs = @tcc.internet_refs
+    @legislative_refs = @tcc.legislative_refs
 
-    # Fazer um xhtml bem formado
-    doc = Nokogiri::XML(html.to_xhtml)
-
-    #aplicar xslt
-    xh2file = Rails.public_path + '/xh2latex.xsl'
-    xslt  = Nokogiri::XSLT(File.read(xh2file))
-    transform = xslt.apply_to(doc)
-
-    @tex = transform.gsub('\begin{document}','').gsub('end{document}','')
-    #@bibtext = TccLatex::references
-
-    bib = Rails.public_path + '/abntex2-modelo-references'
-    @bibtext = bib
+    #criar arquivo
+    content = render_to_string :show_references, :layout => false
+    @content = TccLatex.generate_references(content)
   end
 
   def preview_tcc
@@ -127,6 +127,20 @@ class TccsController < ApplicationController
     #Config rails-latex
     LatexToPdf.config[:arguments].delete('-halt-on-error')
     LatexToPdf.config.merge! :parse_twice => true
+  end
+
+  def generete_references (tcc)
+    @references = tcc.references
+    @general_refs = tcc.general_refs
+    @book_refs = tcc.book_refs
+    @book_cap_refs = tcc.book_cap_refs
+    @article_refs = tcc.article_refs
+    @internet_refs = tcc.internet_refs
+    @legislative_refs = tcc.legislative_refs
+
+    #criar arquivo
+    content = render_to_string(:partial => 'bibtex', :layout => false)
+    @bibtex = TccLatex.generate_references(content)
   end
 
 end
