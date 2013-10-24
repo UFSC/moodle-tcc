@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, 'sync-cron.log'
+set :output, 'log/sync-cron.log'
 job_type :rake, 'cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bundle exec rake :task :output'
 
 # CRONTAB da produção
