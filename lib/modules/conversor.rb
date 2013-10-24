@@ -15,8 +15,27 @@ module Conversor
       attr = Conversor::get_attributes(c)
       new_text = Conversor::get_citacao(tcc, attr)
 
-      c.content = new_text unless new_text.empty?
-      c[:title] = new_text unless new_text.empty?
+      c['reference_id'] = Conversor::get_reference_id(tcc, attr)
+
+      if !new_text.nil?
+        c.content = new_text unless new_text.empty?
+        c[:title] = new_text unless new_text.empty?
+      end
+    end
+
+    texto = texto.to_xml.sub("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body>", '')
+    texto = texto.sub("<p>", '')
+    texto = texto.sub("</p>", '')
+    texto = texto.sub("</body>", '')
+    texto = texto.sub("</html>", '')
+    texto
+  end
+
+  def self.add_reference_id(txt, tcc)
+    texto = Nokogiri::HTML(txt)
+    texto.search('citacao').each do |c|
+      attr = Conversor::get_attributes(c)
+      c['reference_id'] = Conversor::get_reference_id(tcc, attr)
     end
 
     texto = texto.to_xml.sub("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body>", '')
@@ -40,6 +59,11 @@ module Conversor
     ref = tcc.references.where(:element_id => attr[:id]).first
     ref = ref.element if !ref.nil?
     ref.send(CITACAO_TYPE[attr[:citacao_type]]) if !ref.nil?
+  end
+
+  def self.get_reference_id(tcc, attr)
+    ref = tcc.references.where(:element_id => attr[:id]).first
+    ref.id if !ref.nil?
   end
 
   def self.old?(text)
