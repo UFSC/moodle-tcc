@@ -10,9 +10,15 @@ class FinalConsiderationsController < ApplicationController
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
     @final_considerations.new_state = @final_considerations.aasm_current_state
 
-    last_comment_version = @final_considerations.versions.where('state != ?', 'draft').last
-    unless last_comment_version.nil?
-      @last_final_considerations_commented = last_comment_version.reify
+    last_draft_version = @final_considerations.versions.where('state = ?', 'draft').last
+    unless last_draft_version.nil?
+      @last_final_considerations_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+    end
+
+    if current_user.student? && !@final_considerations.draft? && !@final_considerations.new? && !@last_final_considerations_commented.nil?
+      @final_considerations = @last_final_considerations_commented
+    elsif((current_user.student? && @final_considerations.draft?) || (!current_user.student? && @final_considerations.draft?))
+      @last_final_considerations_commented = @final_considerations.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
     end
   end
 
@@ -58,7 +64,7 @@ class FinalConsiderationsController < ApplicationController
         @final_considerations.admin_evaluate_ok if @final_considerations.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluation_ok', @final_considerations)
-      else
+      elsif params[:draft]
         @final_considerations.send_back_to_student if @final_considerations.may_send_back_to_student?
       end
 

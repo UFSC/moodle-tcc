@@ -38,13 +38,19 @@ class HubsController < ApplicationController
     # TODO: escrever testes para essa condição, já que isso é crítico.
     @hub.reflection = hub_portfolio.reflection if @hub.new?
 
-    last_comment_version = @hub.versions.where('state != ? AND state != ?', 'draft', 'new').last
+    last_draft_version = @hub.versions.where('state = ?', 'draft').last
 
     begin
-      @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
+      @last_hub_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
     rescue Psych::SyntaxError
       # FIX-ME: Corrigir no banco o  que está ocasionando este problema.
       Rails.logger.error "WARNING: Falha ao tentar recuperar informações do papertrail. (user: #{@current_user.id}, hub: #{@hub.id})"
+    end
+
+    if current_user.student? && !@hub.draft? && !@hub.new? && !@last_hub_commented.nil?
+       @hub = @last_hub_commented
+    elsif((current_user.student? && @hub.draft?) || (!current_user.student? && @hub.draft?))
+      @last_hub_commented = @hub.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
     end
 
     @hub.new_state = @hub.aasm_current_state
@@ -113,7 +119,7 @@ class HubsController < ApplicationController
         @hub.admin_evaluate_ok if @hub.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluation_ok', @hub)
-      else
+      elsif params[:draft]
         @hub.send_back_to_student if @hub.may_send_back_to_student?
       end
 

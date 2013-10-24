@@ -10,9 +10,15 @@ class AbstractsController < ApplicationController
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
     @abstract.new_state = @abstract.aasm_current_state
 
-    last_comment_version = @abstract.versions.where('state != ?', 'draft').last
-    unless last_comment_version.nil?
-      @last_abstract_commented = last_comment_version.reify
+    last_draft_version = @abstract.versions.where('state = ?', 'draft').last
+    unless last_draft_version.nil?
+      @last_abstract_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+    end
+
+    if current_user.student? && !@abstract.draft? && !@abstract.new? && !@last_abstract_commented.nil?
+      @abstract = @last_abstract_commented
+    elsif ((current_user.student? && @abstract.draft?)|| (!current_user.student? && @abstract.draft?))
+      @last_abstract_commented = @abstract.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
     end
   end
 
@@ -34,7 +40,6 @@ class AbstractsController < ApplicationController
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
     new_state = params[:abstract][:new_state]
-
 
     unless params[:abstract][:commentary]
       @abstract.attributes = params[:abstract]
@@ -59,7 +64,7 @@ class AbstractsController < ApplicationController
         @abstract.admin_evaluate_ok if @abstract.may_admin_evaluate_ok?
       elsif params[:valued] == 'Aprovar'
         change_state('admin_evaluation_ok', @abstract)
-      else
+      elsif params[:draft]
         @abstract.send_back_to_student if @abstract.may_send_back_to_student?
       end
 
