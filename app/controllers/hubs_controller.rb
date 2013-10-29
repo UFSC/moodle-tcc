@@ -38,22 +38,23 @@ class HubsController < ApplicationController
     # TODO: escrever testes para essa condição, já que isso é crítico.
     @hub.reflection = hub_portfolio.reflection if @hub.new?
 
-    last_draft_version = @hub.versions.where('state = ?', 'draft').last
+    last_version = @hub.versions.where('state = ?', 'draft').last
 
     begin
-      @last_hub_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+      @last_hub_commented = last_version.reify.next_version unless last_version.nil?
     rescue Psych::SyntaxError
       # FIX-ME: Corrigir no banco o  que está ocasionando este problema.
       Rails.logger.error "WARNING: Falha ao tentar recuperar informações do papertrail. (user: #{@current_user.id}, hub: #{@hub.id})"
     end
 
     if current_user.student? && !@hub.draft? && !@hub.new? && !@last_hub_commented.nil?
-       @hub = @last_hub_commented
-    elsif((current_user.student? && @hub.draft?) || (!current_user.student? && @hub.draft?))
-      @last_hub_commented = @hub.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
+      @hub = @last_hub_commented
+    elsif ((current_user.student? && @hub.draft?) || (!current_user.student? && @hub.draft?))
+      last_version = @hub.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
+      @last_hub_commented = last_version.reify unless last_version.nil?
     end
 
-    @hub.new_state = @hub.aasm_current_state
+    @hub.new_state = @hub.new? ? :draft : @hub.aasm_current_state
 
     # Busca diários no moodle
     @hub.fetch_diaries(@user_id)

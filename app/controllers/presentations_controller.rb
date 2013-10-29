@@ -8,17 +8,18 @@ class PresentationsController < ApplicationController
     @current_user = current_user
     set_tab :presentation
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
-    @presentation.new_state = @presentation.aasm_current_state
+    @presentation.new_state = @presentation.new? ? :draft : @presentation.aasm_current_state
 
-    last_draft_version = @presentation.versions.where('state = ?', 'draft').last
-    unless last_draft_version.nil?
-      @last_presentation_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+    last_version = @presentation.versions.where('state = ?', 'draft').last
+    unless last_version.nil?
+      @last_presentation_commented = last_version.reify.next_version unless last_version.nil?
     end
 
     if current_user.student? && !@presentation.draft? && !@presentation.new? && !@last_presentation_commented.nil?
       @presentation = @last_presentation_commented
-    elsif((current_user.student? && @presentation.draft?) || (!current_user.student? && @presentation.draft?))
-      @last_presentation_commented = @presentation.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
+    elsif ((current_user.student? && @presentation.draft?) || (!current_user.student? && @presentation.draft?))
+      last_version = @presentation.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
+      @last_presentation_commented = last_version.reify unless last_version.nil?
     end
   end
 

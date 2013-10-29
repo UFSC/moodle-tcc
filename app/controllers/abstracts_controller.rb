@@ -8,17 +8,18 @@ class AbstractsController < ApplicationController
     @current_user = current_user
     set_tab :abstract
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
-    @abstract.new_state = @abstract.aasm_current_state
+    @abstract.new_state = @abstract.new? ? :draft : @abstract.aasm_current_state
 
-    last_draft_version = @abstract.versions.where('state = ?', 'draft').last
-    unless last_draft_version.nil?
-      @last_abstract_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+    last_version = @abstract.versions.where('state = ?', 'draft').last
+    unless last_version.nil?
+      @last_abstract_commented = last_version.reify.next_version unless last_version.nil?
     end
 
     if current_user.student? && !@abstract.draft? && !@abstract.new? && !@last_abstract_commented.nil?
       @abstract = @last_abstract_commented
     elsif ((current_user.student? && @abstract.draft?)|| (!current_user.student? && @abstract.draft?))
-      @last_abstract_commented = @abstract.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
+      last_version = @abstract.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
+      @last_abstract_commented = last_version.reify unless last_version.nil?
     end
   end
 

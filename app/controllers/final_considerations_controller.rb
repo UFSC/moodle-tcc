@@ -8,17 +8,18 @@ class FinalConsiderationsController < ApplicationController
     @current_user = current_user
     set_tab :final_considerations
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
-    @final_considerations.new_state = @final_considerations.aasm_current_state
+    @final_considerations.new_state = @final_considerations.new? ? :draft : @final_considerations.aasm_current_state
 
-    last_draft_version = @final_considerations.versions.where('state = ?', 'draft').last
-    unless last_draft_version.nil?
-      @last_final_considerations_commented = last_draft_version.reify.next_version unless last_draft_version.nil?
+    last_version = @final_considerations.versions.where('state = ?', 'draft').last
+    unless last_version.nil?
+      @last_final_considerations_commented = last_version.reify.next_version unless last_version.nil?
     end
 
     if current_user.student? && !@final_considerations.draft? && !@final_considerations.new? && !@last_final_considerations_commented.nil?
       @final_considerations = @last_final_considerations_commented
-    elsif((current_user.student? && @final_considerations.draft?) || (!current_user.student? && @final_considerations.draft?))
-      @last_final_considerations_commented = @final_considerations.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last.reify
+    elsif ((current_user.student? && @final_considerations.draft?) || (!current_user.student? && @final_considerations.draft?))
+      last_version = @final_considerations.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
+      @last_final_considerations_commented = last_version.reify unless last_version.nil?
     end
   end
 
