@@ -60,12 +60,10 @@ end
 
 group :development do
   gem 'thin'
-  gem 'simplecov', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'quiet_assets'
-  gem 'pry-rails', '~>0.3.2'
 end
 
 group :test do
@@ -84,6 +82,8 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'metric_fu', :require => false
+  gem 'pry-rails', '~>0.3.2'
+  gem 'simplecov', require: false
 end
 
 # Gems used only for assets and not required
