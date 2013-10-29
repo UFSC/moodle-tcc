@@ -1,8 +1,9 @@
 #encoding: utf-8
 require 'spec_helper'
 
-describe "Tccs" do
-  describe "GET /tcc" do
+describe 'Tccs' do
+
+  describe 'GET /tcc' do
     it 'should not work without LTI connection' do
       get show_tcc_path
       response.status.should be(302)
@@ -11,18 +12,17 @@ describe "Tccs" do
 
     it 'should work with LTI connection' do
       page.set_rack_session(fake_lti_session('student', 'tcc'))
-      Middleware::Orientadores.stub_chain(:find_by_cpf, :nome).and_return('46427449915')
+      Middleware::Orientadores.stub_chain(:find_by_cpf, :nome).and_return(Faker::Name.name)
       visit show_tcc_path
 
       page.current_path.should_not == access_denied_path
       page.should have_content('Apresentação')
     end
 
-
     describe 'edit' do
       before :each do
         page.set_rack_session(fake_lti_session('student', 'tcc'))
-        Middleware::Orientadores.stub_chain(:find_by_cpf, :nome).and_return('46427449915')
+        Middleware::Orientadores.stub_chain(:find_by_cpf, :nome).and_return(Faker::Name.name)
         visit show_tcc_path
       end
 
@@ -48,7 +48,7 @@ describe "Tccs" do
         page.should have_content('Eixo 1')
       end
 
-      xit 'tcc hub 2' do
+      it 'tcc hub 2' do
         click_link 'Eixo 2'
         page.should have_content('Eixo 2')
       end
