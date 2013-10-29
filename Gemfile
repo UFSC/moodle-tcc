@@ -65,6 +65,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'quiet_assets'
+  gem 'pry-rails', '~>0.3.2'
 end
 
 group :test do
