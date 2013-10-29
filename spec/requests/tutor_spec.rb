@@ -3,7 +3,18 @@ require 'spec_helper'
 
 describe 'Tutor' do
   describe 'GET /tutor' do
-    xit 'should work with moodle and portfolio type' do
+
+    before(:each) do
+      model = Fabricate(:tcc_with_all)
+      tcc = Tcc.where(id: model.id)
+
+      TutorGroup.stub(:get_tutor_group).and_return(0)
+      TutorGroup.stub(:get_tutor_group_name).and_return(Faker::Lorem.sentence(4))
+
+      Tcc.stub_chain(:where).and_return(tcc)
+    end
+
+    it 'should work with moodle and portfolio type' do
       page.set_rack_session(fake_lti_session('urn:moodle:role/td', 'portfolio'))
       visit tutor_index_path
 

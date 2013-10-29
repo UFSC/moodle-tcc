@@ -53,7 +53,7 @@ describe 'Tccs' do
         page.should have_content('Eixo 2')
       end
 
-      xit "tcc hub 3" do
+      it 'tcc hub 3' do
         click_link 'Eixo 3'
         page.should have_content('Eixo 3')
       end
