@@ -189,7 +189,6 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.string   "title"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.string   "course_id"
     t.string   "activity_url"
   end
 
