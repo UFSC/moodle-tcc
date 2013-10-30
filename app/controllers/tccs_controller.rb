@@ -63,7 +63,7 @@ class TccsController < ApplicationController
 
   def show_pdf
     #Selecionar TCC
-    @tcc = Tcc.find(313)
+    @tcc = Tcc.find(278)
 
     #Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc.abstract.content)
@@ -130,8 +130,13 @@ class TccsController < ApplicationController
   end
 
   def generete_references (tcc)
+    coder = HTMLEntities.new
+
     @references = tcc.references
     @general_refs = tcc.general_refs
+    @general_refs.each do |ref|
+      ref.reference_text = coder.decode(ref.reference_text).html_safe
+    end
     @book_refs = tcc.book_refs
     @book_cap_refs = tcc.book_cap_refs
     @article_refs = tcc.article_refs

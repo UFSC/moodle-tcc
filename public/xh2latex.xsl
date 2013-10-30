@@ -156,7 +156,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
     <xsl:text>[</xsl:text>
     <xsl:value-of select='.//xhtml:a/@title' />
     <xsl:text>]</xsl:text>
-  </xsl:if>    
+  </xsl:if>
   <xsl:text>{</xsl:text>
   <xsl:for-each select='xhtml:a[contains(@rel, "author")]'>
     <xsl:value-of select='.'/>
@@ -164,23 +164,23 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
       <xsl:text> \and </xsl:text>
     </xsl:if>
   </xsl:for-each>
-  
+
   <xsl:for-each select='*[contains(@class, "vcard")]'>
     <xsl:apply-templates mode="author" />
     <xsl:if test='following-sibling::*[contains(@class, "vcard")]'>
       <xsl:text> \and </xsl:text>
     </xsl:if>
   </xsl:for-each>
-  
+
   <xsl:for-each select='*[@class="thanks"]'>
     <xsl:text>\thanks{</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:for-each>
-  
+
   <xsl:text>}
   </xsl:text>
-  
+
   <xsl:if test='xhtml:a[@rel="institute"]'>
     <xsl:text>\institute{</xsl:text>
     <xsl:for-each select='xhtml:a[@rel="institute"]'>
@@ -357,9 +357,9 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <!-- tables -->
 <xsl:template match="xhtml:table[@border='1']">
   <xsl:text>\begin{center}</xsl:text>
-  <xsl:text>\begin{tabular}{</xsl:text>
+  <xsl:text>\begin{tabular}{||</xsl:text>
   <xsl:for-each select="xhtml:tr[1]/*">
-    <xsl:text>c</xsl:text>
+    <xsl:text>c||</xsl:text>
   </xsl:for-each>
   <xsl:text>}&#10;</xsl:text>
 
@@ -370,7 +370,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
       <xsl:apply-templates />
       <xsl:if test="name() = 'th'">}</xsl:if>
       <xsl:if test="position() != last()">
-	<xsl:text disable-output-escaping="yes">&amp;</xsl:text>
+        <xsl:text> {&amp;} </xsl:text>
       </xsl:if>
     </xsl:for-each>
     <xsl:text> \\&#10;</xsl:text>
@@ -539,6 +539,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:value-of select='.'/>
 </xsl:template>
 
+
 <!-- citation links -->
 <xsl:template match='xhtml:a[starts-with(., "[")]'>
   <xsl:text>\cite{</xsl:text>
@@ -546,18 +547,16 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:text>}</xsl:text>
 </xsl:template>
 
-<!-- citation links -->
+<!-- citation internet links -->
 <xsl:template match='xhtml:citacao'>
   <xsl:text>\cite{</xsl:text>
-  <xsl:value-of select="@id"/>
+  <xsl:value-of select="@reference_id"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
 
 <!-- citation internet links -->
-<xsl:template match='xhtml:citacao[@ref-type,"internet"]'>
-  <xsl:text>\citeonline{</xsl:text>
-  <xsl:value-of select="@id"/>
-  <xsl:text>}</xsl:text>
+<xsl:template match='xhtml:citacao[@ref-type="ref"]'>
+
 </xsl:template>
 
 <!-- section/figure references -->
@@ -582,7 +581,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
 <!-- text -->
 <xsl:template match="text()">
-  <!-- 
+  <!--
   per latex tutorial, the following need escaping: # $ % & ~ _ ^ \ { }
   -->
 

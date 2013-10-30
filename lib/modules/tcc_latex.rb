@@ -36,7 +36,8 @@ module TccLatex
     content = xslt.apply_to(doc)
 
     #Salvar arquivo bib no tmp
-    dir = File.join(Rails.root, 'tmp', 'rails-latex', "#{Process.pid}-#{Thread.current.hash}")
+    #dir = File.join(Rails.root, 'tmp', 'rails-latex', "#{Process.pid}-#{Thread.current.hash}")
+    dir = File.join(Rails.root, 'tmp', 'rails-latex', "teste")
     input = File.join(dir, 'input.bib')
 
     FileUtils.mkdir_p(dir)
