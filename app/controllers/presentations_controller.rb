@@ -10,16 +10,12 @@ class PresentationsController < ApplicationController
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
     @presentation.new_state = @presentation.new? ? :draft : @presentation.aasm_current_state
 
-    last_version = @presentation.versions.where('state = ?', 'draft').last
-    unless last_version.nil?
-      @last_presentation_commented = last_version.reify.next_version unless last_version.nil?
-    end
+    @last_commented = @presentation.last_useful_version
 
-    if current_user.student? && !@presentation.draft? && !@presentation.new? && !@last_presentation_commented.nil?
-      @presentation = @last_presentation_commented
-    elsif ((current_user.student? && @presentation.draft?) || (!current_user.student? && @presentation.draft?))
-      last_version = @presentation.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
-      @last_presentation_commented = last_version.reify unless last_version.nil?
+    # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
+    if current_user.student? && (@presentation.sent_to_admin_for_revision? || @presentation.sent_to_admin_for_evaluation?)
+      # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
+      @presentation = @last_commented
     end
   end
 

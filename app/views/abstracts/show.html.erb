@@ -4,18 +4,18 @@
                locals: {object: @abstract,
                         object_label: 'Resumo',
                         action_url: save_abstract_path,
-                        last_object_commented: @last_abstract_commented} %>
+                        last_object_commented: @last_commented} %>
 <% elsif @current_user.orientador? %>
     <%= render partial: 'common/tcc_child_form_orientador',
                locals: {object: @abstract,
                         object_label: 'Resumo',
                         action_url: save_abstract_path(moodle_user: @tcc.moodle_user),
-                        last_object_commented: @last_abstract_commented} %>
+                        last_object_commented: @last_commented} %>
 <% else %>
     <%= render partial: 'common/tcc_child_admin',
                locals: {object: @abstract,
                         object_label: 'Resumo',
                         action_url: save_abstract_path(moodle_user: @tcc.moodle_user),
                         update_state_url: update_state_abstracts_path(@abstract),
-                        last_object_commented: @last_abstract_commented} %>
+                        last_object_commented: @last_commented} %>
 <% end %>

@@ -13,14 +13,8 @@ class HubsController < ApplicationController
 
     @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
-    last_comment_version = @hub.versions.where('state != ? AND state != ?', 'draft', 'new').last
-
-    begin
-      @last_hub_commented = last_comment_version.reify unless last_comment_version.nil?
-    rescue Psych::SyntaxError
-      # FIX-ME: Corrigir no banco o que está ocasionando este problema.
-      Rails.logger.error "WARNING: Falha ao tentar recuperar informações do papertrail. (user: #{@current_user.id}, hub: #{@hub.id})"
-    end
+    # Recupera a ultima versão que nos interessa
+    @last_hub_commented = @hub.last_useful_version(current_user)
 
     @hub.new_state = @hub.aasm_current_state
 
@@ -35,29 +29,24 @@ class HubsController < ApplicationController
     @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
     hub_portfolio = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
+    # Garante que haverá a transição de "novo" para algum outro estado ao enviar o formulário
+    @hub.new_state = @hub.new? ? :draft : @hub.aasm_current_state
+
     # TODO: escrever testes para essa condição, já que isso é crítico.
     @hub.reflection = hub_portfolio.reflection if @hub.new?
 
-    last_version = @hub.versions.where('state = ?', 'draft').last
-
-    begin
-      @last_hub_commented = last_version.reify.next_version unless last_version.nil?
-    rescue Psych::SyntaxError
-      # FIX-ME: Corrigir no banco o  que está ocasionando este problema.
-      Rails.logger.error "WARNING: Falha ao tentar recuperar informações do papertrail. (user: #{@current_user.id}, hub: #{@hub.id})"
-    end
-
-    if current_user.student? && !@hub.draft? && !@hub.new? && !@last_hub_commented.nil?
-      @hub = @last_hub_commented
-    elsif ((current_user.student? && @hub.draft?) || (!current_user.student? && @hub.draft?))
-      last_version = @hub.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
-      @last_hub_commented = last_version.reify unless last_version.nil?
-    end
-
-    @hub.new_state = @hub.new? ? :draft : @hub.aasm_current_state
-
     # Busca diários no moodle
     @hub.fetch_diaries(@user_id)
+
+    # Recupera a ultima versão que nos interessa
+    @last_hub_commented = @hub.last_useful_version
+
+    # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
+    if current_user.student? && (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?)
+      # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
+      @hub = @last_hub_commented
+    end
+
     render 'show'
   end
 

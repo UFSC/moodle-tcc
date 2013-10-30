@@ -10,16 +10,12 @@ class AbstractsController < ApplicationController
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
     @abstract.new_state = @abstract.new? ? :draft : @abstract.aasm_current_state
 
-    last_version = @abstract.versions.where('state = ?', 'draft').last
-    unless last_version.nil?
-      @last_abstract_commented = last_version.reify.next_version unless last_version.nil?
-    end
+    @last_commented = @abstract.last_useful_version
 
-    if current_user.student? && !@abstract.draft? && !@abstract.new? && !@last_abstract_commented.nil?
-      @abstract = @last_abstract_commented
-    elsif ((current_user.student? && @abstract.draft?)|| (!current_user.student? && @abstract.draft?))
-      last_version = @abstract.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
-      @last_abstract_commented = last_version.reify unless last_version.nil?
+    # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
+    if current_user.student? && (@abstract.sent_to_admin_for_revision? || @abstract.sent_to_admin_for_evaluation?)
+      # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
+      @abstract = @last_commented
     end
   end
 

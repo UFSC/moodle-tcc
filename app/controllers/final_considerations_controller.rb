@@ -10,16 +10,12 @@ class FinalConsiderationsController < ApplicationController
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
     @final_considerations.new_state = @final_considerations.new? ? :draft : @final_considerations.aasm_current_state
 
-    last_version = @final_considerations.versions.where('state = ?', 'draft').last
-    unless last_version.nil?
-      @last_final_considerations_commented = last_version.reify.next_version unless last_version.nil?
-    end
+    @last_commented = @final_considerations.last_useful_version
 
-    if current_user.student? && !@final_considerations.draft? && !@final_considerations.new? && !@last_final_considerations_commented.nil?
-      @final_considerations = @last_final_considerations_commented
-    elsif ((current_user.student? && @final_considerations.draft?) || (!current_user.student? && @final_considerations.draft?))
-      last_version = @final_considerations.versions.where('state = ? OR state = ?', 'sent_to_admin_for_evaluation', 'sent_to_admin_for_revision').last
-      @last_final_considerations_commented = last_version.reify unless last_version.nil?
+    # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
+    if current_user.student? && (@final_considerations.sent_to_admin_for_revision? || @final_considerations.sent_to_admin_for_evaluation?)
+      # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
+      @final_considerations = @last_commented
     end
   end
 
