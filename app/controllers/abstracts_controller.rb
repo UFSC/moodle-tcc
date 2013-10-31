@@ -15,7 +15,7 @@ class AbstractsController < ApplicationController
     # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
     if current_user.student? && (@abstract.sent_to_admin_for_revision? || @abstract.sent_to_admin_for_evaluation?)
       # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
-      @abstract = @last_commented
+      @abstract = @last_commented if @last_commented
     end
   end
 

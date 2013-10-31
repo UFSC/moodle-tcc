@@ -15,7 +15,7 @@ class PresentationsController < ApplicationController
     # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
     if current_user.student? && (@presentation.sent_to_admin_for_revision? || @presentation.sent_to_admin_for_evaluation?)
       # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
-      @presentation = @last_commented
+      @presentation = @last_commented if @last_commented
     end
   end
 

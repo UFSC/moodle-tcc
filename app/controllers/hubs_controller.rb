@@ -44,7 +44,7 @@ class HubsController < ApplicationController
     # Se for estudante ele não deve conseguir ver as alterações do orientador enquanto ele não devolver ou aprovar
     if current_user.student? && (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?)
       # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
-      @hub = @last_hub_commented
+      @hub = @last_hub_commented if @last_hub_commented
     end
 
     render 'show'
