@@ -14,7 +14,7 @@ class HubsController < ApplicationController
     @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
     # Recupera a ultima versão que nos interessa
-    @last_hub_commented = @hub.last_useful_version(current_user)
+    @last_hub_commented = @hub.last_useful_version
 
     @hub.new_state = @hub.aasm_current_state
 
