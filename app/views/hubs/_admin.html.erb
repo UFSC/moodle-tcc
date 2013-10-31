@@ -69,7 +69,7 @@
         <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position, moodle_user: @tcc.moodle_user) do |h| %>
           <div class="rounded-border">
             <h4>Versão atual da reflexão</h4>
-            <% if (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?) && @current_user.orientador? %>
+            <% if (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?) && @current_user.orientador? && @type == 'tcc' %>
               <%= h.input :reflection_title, :input_html => {class: 'span9'} %>
               <%= h.cktext_area :reflection %>
             <% else %>
@@ -79,7 +79,7 @@
           </div>
 
           <%= h.input :position, :as => :hidden %>
-          <% if @hub.sent_to_admin_for_evaluation? && @current_user.tutor? %>
+          <% if @hub.sent_to_admin_for_evaluation? && @current_user.tutor? && @type == 'portfolio' %>
             <%= h.input :grade, :as => :number, label: 'Nota (de 0 à 100)' %>
           <% end %>
           <%= render partial: 'common/tcc_child_actions_admin', locals: {object: @hub, f: h} %>
