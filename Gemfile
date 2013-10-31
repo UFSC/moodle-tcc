@@ -40,6 +40,9 @@ gem 'formtastic-bootstrap'#, :github => 'mjbellantoni/formtastic-bootstrap'
 # ckeditor
 gem 'ckeditor'
 
+# Carrierwave (uploads)
+gem 'carrierwave'
+
 # Pagination
 gem 'will_paginate'
 

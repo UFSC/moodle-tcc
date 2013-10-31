@@ -1,4 +1,10 @@
 CKEDITOR.editorConfig = function( config ) {
+    // Url para upload
+    config.filebrowserImageUploadUrl = "/ckeditor/pictures";
+
+    // Todo: cogitar outra maneira que não envolvar remover botões desnecessários do insert
+    config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe';
+
     config.toolbarGroups = [
         { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
         { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
@@ -6,6 +12,7 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
         { name: 'styles' },
         { name: 'tools' },
+        { name: 'insert' },
     ];
 
     config.extraPlugins = 'citacao';
