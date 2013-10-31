@@ -39,7 +39,7 @@
   </div>
 
   <div class="row">
-    
+
     <!--old-->
     <div id="old_tcc_object" class="span6" style="display: none">
       <div class="rounded-border">
@@ -70,10 +70,10 @@
           <div class="rounded-border">
             <h4>Versão atual da reflexão</h4>
             <% if (@hub.sent_to_admin_for_revision? || @hub.sent_to_admin_for_evaluation?) && @current_user.orientador? && @type == 'tcc' %>
-              <%= h.input :reflection_title, :input_html => {class: 'span9'} %>
+              <%= h.input :reflection_title, :input_html => {class: 'span9'} if @hub.show_title? %>
               <%= h.cktext_area :reflection %>
             <% else %>
-              <h4 class="underline-text"><%= @hub.reflection_title %></h4>
+              <h4 class="underline-text"><%= @hub.reflection_title if @hub.show_title? %></h4>
               <%= @hub.reflection.try(:html_safe) %>
             <% end %>
           </div>

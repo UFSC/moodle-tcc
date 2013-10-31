@@ -33,7 +33,7 @@
 
                       <% unless @last_hub_commented.nil? %>
                           <h4>Última versão avaliada</h4>
-                          <h3><%= @last_hub_commented.reflection_title.try(:html_safe) %></h3>
+                          <h3><%= @last_hub_commented.reflection_title.try(:html_safe) if @last_hub_commented.show_title? %></h3>
                           <%= @last_hub_commented.reflection.try(:html_safe) %>
                       <% else %>
                           <p class="text-error">Este eixo ainda não foi avaliado</p>
@@ -43,7 +43,7 @@
                   </div>
                   <div id="new_tcc_object" class="span12">
                     <div class="rounded-border">
-                      <%= h.input :reflection_title, :input_html => { class: 'span9' } %>
+                      <%= h.input :reflection_title, :input_html => { class: 'span9' } if @hub.show_title? %>
                       <%= h.cktext_area :reflection %>
                       <%= render partial: 'common/state_options', locals: {f: h} %>
                       <%= h.action :submit, :as => :input, label: 'Salvar', button_html: {class: 'btn btn-primary'} %>
@@ -51,7 +51,7 @@
                   </div>
                 </div>
             <% else %>
-                <%= h.input :reflection_title, :input_html => { class: 'span9', :readonly => true } %>
+                <%= h.input :reflection_title, :input_html => { class: 'span9', :readonly => true } if @hub.show_title? %>
                 <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true, toolbar: 'readonly'}} %>
             <% end %>
           </div>
