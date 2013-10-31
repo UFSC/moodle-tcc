@@ -80,4 +80,28 @@ describe Hub do
       hub_tcc.class.new_states_collection.should_not be_empty
     end
   end
+
+  describe '#clear_commentary!' do
+    it 'should empty hub commentary' do
+      hub.commentary = 'blablabla'
+      hub.clear_commentary!
+      hub.commentary.should be_empty
+    end
+
+    it 'should be invoked on transition to sent_to_admin_for_revision' do
+      hub.commentary = 'blablabla'
+      hub.save!
+      hub.send_to_admin_for_revision
+      hub.save!
+      hub.commentary.should be_empty
+    end
+
+    it 'should be invoked on transition to sent_to_admin_for_evaluation' do
+      hub.commentary = 'blablabla'
+      hub.save!
+      hub.send_to_admin_for_evaluation
+      hub.save!
+      hub.commentary.should be_empty
+    end
+  end
 end

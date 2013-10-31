@@ -59,6 +59,10 @@ class Hub < ActiveRecord::Base
     new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
   end
 
+  def clear_commentary!
+    self.commentary = ''
+  end
+
   private
 
   def create_or_update_diaries

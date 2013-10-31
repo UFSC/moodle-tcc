@@ -28,7 +28,8 @@ module HubStateMachine
         transitions :from => :new, :to => :draft
       end
       event :send_to_admin_for_revision do
-        transitions from: [:draft, :new], :to => :sent_to_admin_for_revision
+        transitions from: [:draft, :new], :to => :sent_to_admin_for_revision,
+                    :on_transition => Proc.new { |hub| hub.clear_commentary! }
       end
 
       event :send_back_to_student do
@@ -36,7 +37,8 @@ module HubStateMachine
       end
 
       event :send_to_admin_for_evaluation do
-        transitions from: [:draft, :new], :to => :sent_to_admin_for_evaluation
+        transitions from: [:draft, :new], :to => :sent_to_admin_for_evaluation,
+                    :on_transition => Proc.new { |hub| hub.clear_commentary! }
       end
 
       event :admin_evaluate_ok do

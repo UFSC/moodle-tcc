@@ -29,7 +29,7 @@ module HubTccStateMachine
       end
       event :send_to_admin_for_revision do
         transitions from: [:draft, :new], :to => :sent_to_admin_for_revision,
-                    on_transition: Proc.new { |obj| obj.send_state_changed_mail(obj.tcc.email_orientador) }
+                    on_transition: Proc.new { |obj| obj.send_state_changed_mail(obj.tcc.email_orientador) && obj.clear_commentary! }
       end
 
       event :send_back_to_student do
@@ -39,7 +39,7 @@ module HubTccStateMachine
 
       event :send_to_admin_for_evaluation do
         transitions from: [:draft, :new], :to => :sent_to_admin_for_evaluation,
-                    on_transition: Proc.new { |obj| obj.send_state_changed_mail(obj.tcc.email_orientador) }
+                    on_transition: Proc.new { |obj| obj.send_state_changed_mail(obj.tcc.email_orientador) && obj.clear_commentary! }
       end
 
       event :admin_evaluate_ok do

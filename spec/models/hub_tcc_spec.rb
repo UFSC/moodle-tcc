@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe HubTcc do
   let(:hub) { Fabricate.build(:hub_tcc) }
+  let(:tcc) { Fabricate.build(:tcc_with_definitions) }
 
   it 'should versioning' do
     old_version = hub.versions.size
@@ -46,11 +47,12 @@ describe HubTcc do
   end
 
   context 'email notification' do
-    let(:tcc) { Fabricate.build(:tcc_with_definitions) }
+    before(:each) do
+      hub.tcc = tcc
+    end
 
     it 'should send email to orientador when state changed from draft to revision' do
       hub.state = 'draft'
-      hub.tcc = tcc
 
       hub.send_to_admin_for_revision
 
@@ -59,7 +61,6 @@ describe HubTcc do
 
     it 'should send email to orientador when state changed from draft to revision' do
       hub.state = 'sent_to_admin_for_revision'
-      hub.tcc = tcc
 
       hub.send_back_to_student
 
@@ -68,7 +69,6 @@ describe HubTcc do
 
     it 'should change states even if email is blank' do
       hub.state = 'sent_to_admin_for_revision'
-      hub.tcc = tcc
       tcc.email_estudante = ''
       tcc.save!
 
@@ -80,7 +80,6 @@ describe HubTcc do
 
     it 'should change states even if email is nil' do
       hub.state = 'sent_to_admin_for_revision'
-      hub.tcc = tcc
       tcc.email_estudante = nil
       tcc.save!
 
@@ -90,5 +89,33 @@ describe HubTcc do
       hub.state.should == 'draft'
     end
 
+  end
+
+  describe '#clear_commentary!' do
+    before(:each) do
+      hub.tcc = tcc
+    end
+
+    it 'should empty hub commentary' do
+      hub.commentary = 'blablabla'
+      hub.clear_commentary!
+      hub.commentary.should be_empty
+    end
+
+    it 'should be invoked on transition to sent_to_admin_for_revision' do
+      hub.commentary = 'blablabla'
+      hub.save!
+      hub.send_to_admin_for_revision
+      hub.save!
+      hub.commentary.should be_empty
+    end
+
+    it 'should be invoked on transition to sent_to_admin_for_evaluation' do
+      hub.commentary = 'blablabla'
+      hub.save!
+      hub.send_to_admin_for_evaluation
+      hub.save!
+      hub.commentary.should be_empty
+    end
   end
 end
