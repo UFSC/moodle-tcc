@@ -35,9 +35,6 @@ class HubsController < ApplicationController
     # TODO: escrever testes para essa condição, já que isso é crítico.
     @hub.reflection = hub_portfolio.reflection if @hub.new?
 
-    # Busca diários no moodle
-    @hub.fetch_diaries(@user_id)
-
     # Recupera a ultima versão que nos interessa
     @last_hub_commented = @hub.last_useful_version
 
@@ -46,6 +43,9 @@ class HubsController < ApplicationController
       # Vamos exibir a ultima versão enviada ao invés da atual para que o estudante não veja as edições do orientador
       @hub = @last_hub_commented if @last_hub_commented
     end
+
+    # Busca diários no moodle
+    @hub.fetch_diaries(@user_id)
 
     render 'show'
   end
