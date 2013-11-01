@@ -26,7 +26,12 @@
   <tbody>
   <% @tccs.each do |tcc| %>
     <tr>
-      <td><%= tcc.name %></td>
+      <td>
+        <%= tcc.name %>
+        <%= link_to "print_tcc?moodle_user=#{tcc.moodle_user}", target: '_blank' do %>
+            <small>Imprimir TCC</small>
+        <% end %>
+      </td>
       <% tcc.hub_definitions.each do |hub_definition| %>
         <% hub = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
 

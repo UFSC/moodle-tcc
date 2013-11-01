@@ -18,3 +18,18 @@
     display: inline;
   }
 }
+
+section.hub, section.final_considerations {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+section.hub, section.student-info {
+  border-bottom: solid 1px darkgrey;
+}
+section.student-info .dl-horizontal dt {
+  width: 100px;
+  text-align: left;
+}
+section.student-info .dl-horizontal dd {
+  margin-left: 0;
+}

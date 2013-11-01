@@ -13,34 +13,32 @@ SistemaTcc::Application.routes.draw do
   match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}
 
-  #TCC routes
-  get "tcc" => 'tccs#show', as: 'show_tcc'
-
+  # TCC routes
+  get "tcc/(:moodle_user)" => 'tccs#show', as: 'show_tcc'
+  put "tcc" => 'tccs#save', as: 'save_tcc'
+  get "/tccs/:moodle_user/preview" => "tccs#preview_tcc", as: 'preview_tcc'
   match '/tccs/:tcc_id/evaluate' => 'tccs#evaluate', :as => 'evaluate_tcc'
 
-  put "tcc" => 'tccs#save', as: 'save_tcc'
-
-
+  # Abstracts
   get "abstract" => "abstracts#show", as: 'show_abstract'
   match "abstract" => "abstracts#save", as: 'save_abstract', :via => [:post, :put]
+  match "abstracts" => "abstracts#update_state", as: 'update_state_abstracts', :via => [:post, :put]
 
+  # Presentations
   get "presentation" => "presentations#show", as: 'show_presentation'
   match "presentation" => "presentations#save", as: 'save_presentation', :via => [:post, :put]
+  match "presentations" => "presentations#update_state", as: 'update_state_presentations', :via => [:post, :put]
 
+  # Final Considerations
   get "final_considerations" => "final_considerations#show", as: 'show_final_considerations'
   match "final_considerations" => "final_considerations#save", as: 'save_final_considerations', :via => [:post, :put]
+  match "final_considerations" => "final_considerations#update_state", as: 'update_state_final_considerations', :via => [:post, :put]
 
+  # Hubs
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
-
-  get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
-
-
   match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
   match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]
-
-  match "presentations" => "presentations#update_state", as: 'update_state_presentations', :via => [:post, :put]
-  match "abstracts" => "abstracts#update_state", as: 'update_state_abstracts', :via => [:post, :put]
-  match "final_considerations" => "final_considerations#update_state", as: 'update_state_final_considerations', :via => [:post, :put]
+  get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
 
   # Resources
   resources :bibliographies
