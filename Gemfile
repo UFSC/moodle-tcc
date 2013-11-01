@@ -42,6 +42,7 @@ gem 'ckeditor'
 
 # Carrierwave (uploads)
 gem 'carrierwave'
+gem 'mini_magick'
 
 # Pagination
 gem 'will_paginate'
