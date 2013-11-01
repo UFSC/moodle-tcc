@@ -57,5 +57,6 @@ namespace :deploy do
     run "ln -s #{File.join(deploy_to, 'shared', 'tcc_config.yml')} #{File.join(current_release, 'config', 'tcc_config.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'errbit.yml')} #{File.join(current_release, 'config', 'errbit.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'email.yml')} #{File.join(current_release, 'config', 'email.yml')}"
+    run "ln -s #{File.join(deploy_to, 'shared', 'uploads')} #{File.join(current_release, 'public', 'uploads')}"
   end
 end
