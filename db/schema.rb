@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002214201) do
+ActiveRecord::Schema.define(:version => 20131023192447) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "moodle_shortname"
+    t.string   "subtitle"
   end
 
   add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
@@ -138,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.integer  "hub_definition_id"
     t.string   "type"
     t.string   "reflection_title"
+    t.string   "subtitle"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
@@ -189,6 +191,7 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.string   "title"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "course_id"
     t.string   "activity_url"
   end
 
