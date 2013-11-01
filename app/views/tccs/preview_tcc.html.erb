@@ -31,7 +31,7 @@
 
   <!--presentation-->
   <section class="presentation">
-    <h2>Apresentação</h2>
+    <h2>Introdução</h2>
 
     <%= @presentation.content.try(:html_safe) if @presentation %>
   </section>
@@ -40,7 +40,7 @@
       <section class="hub">
 
         <div class="hub-header">
-          <h2><%= hub.hub_definition.title %></h2>
+          <h2><%= hub.hub_definition.subtitle %></h2>
         </div>
 
         <!--diaries-->
@@ -49,7 +49,7 @@
 
               <div class="">
                 <div class="heading">
-                  <h4><%= diary.diary_definition.title %></h4>
+                  <h4>Diário do Módulo: <%= diary.diary_definition.title %></h4>
                 </div>
                 <div class="diary">
                   <%= diary_content(diary.content) %>
@@ -61,9 +61,7 @@
 
         <!--reflections-->
         <div class="reflections">
-          <h3>Reflexões do <%= hub.hub_definition.title %></h3>
-
-          <h4><%= hub.reflection_title %></h4>
+          <h3>Síntese reflexiva: <%= hub.reflection_title %></h3>
 
           <%= hub.reflection.try(:html_safe) %>
         </div>
