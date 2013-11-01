@@ -35,7 +35,7 @@ class TccsController < ApplicationController
     redirect_to show_tcc_path(moodle_user: params[:moodle_user])
   end
 
-  def print_tcc
+  def preview_tcc
     @current_user = current_user
 
     @hubs = @tcc.hubs.hub_tcc

@@ -21,8 +21,8 @@
     <tr>
       <td>
         <%= tcc.name %>
-        <%= link_to "print_tcc?moodle_user=#{tcc.moodle_user}", target: '_blank' do %>
-            <small>Imprimir TCC</small>
+        <%= link_to preview_tcc_path(tcc.moodle_user), target: '_blank' do %>
+          <small>Visualizar TCC</small>
         <% end %>
       </td>
 
