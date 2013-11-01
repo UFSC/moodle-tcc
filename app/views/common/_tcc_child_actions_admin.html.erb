@@ -1,12 +1,19 @@
 <% if object.sent_to_admin_for_evaluation? || object.sent_to_admin_for_revision? %>
-  <%= f.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: '4', style: 'width: 905px;'} unless @current_user.view_all? %>
+  <% if @type == 'tcc' %>
+    <%= f.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: '4', style: 'width: 905px;'} unless @current_user.view_all? %>
+  <% else %>
+    <%= f.input :commentary, :as => :text, label: 'Comentário', input_html: {rows: '4', value: '', style: 'width: 905px;'} unless @current_user.view_all? %>
+  <% end %>
+
+
   <% if object.sent_to_admin_for_evaluation? %>
     <% @state_name = 'sent_to_admin_for_evaluation' %>
   <% else %>
     <% @state_name = 'sent_to_admin_for_revision' %>
   <% end %>
 
-  <%= submit_tag 'Salvar', name: @state_name, class: 'btn' %>
+  <%= submit_tag 'Salvar', name: @state_name, class: 'btn' if @type =='tcc' %>
+
   <%= submit_tag 'Devolver para o aluno', name: 'draft', class: 'btn' %>
 
   <% if object.sent_to_admin_for_evaluation? && @current_user.tutor? && @type == 'portfolio' %>
