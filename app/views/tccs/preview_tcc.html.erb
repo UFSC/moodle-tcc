@@ -1,19 +1,39 @@
-<div class="span12">
+<div class="span12" xmlns="http://www.w3.org/1999/html">
+
+  <section class="well">
+    <strong>IMPORTANTE:</strong> Isto é uma pré-visualização em estado de <strong>RASCUNHO</strong> do documento final.<br />
+    Ela <strong>não contem</strong> as formatações seguindo os padrões da ABNT e serve como mero instrumento de leitura.<br />
+    Este documento não possui também toda a estrutura final do documento como capa, indices e listagem de referências.
+  </section>
 
   <!--student info-->
   <section class="student-info">
-    <h2>Usuário</h2>
+    <h2>Informações</h2>
 
     <dl class="dl-horizontal">
       <dt>Matrícula:</dt>
-      <dd><%= @tcc.moodle_user %></dd>
+      <dd><%= @matricula %></dd>
 
       <dt>Nome:</dt>
       <dd><%= @tcc.name %></dd>
 
       <dt>Orientador:</dt>
-      <dd><%= @tcc.orientador %></dd>
+      <dd><%= @nome_orientador %></dd>
     </dl>
+  </section>
+
+  <!--abstract-->
+  <section class="abstract">
+    <h2>Resumo</h2>
+
+    <%= @abstract.content.try(:html_safe) if @abstract %>
+  </section>
+
+  <!--presentation-->
+  <section class="presentation">
+    <h2>Apresentação</h2>
+
+    <%= @presentation.content.try(:html_safe) if @presentation %>
   </section>
 
   <% @hubs.each do |hub| %>
@@ -25,14 +45,14 @@
 
         <!--diaries-->
         <div class="diaries">
-          <% hub.diaries.each do |d| %>
+          <% hub.diaries.each do |diary| %>
 
               <div class="">
                 <div class="heading">
-                  <h4><%= d.diary_definition.title %></h4>
+                  <h4><%= diary.diary_definition.title %></h4>
                 </div>
                 <div class="diary">
-                  <%= diary_content(d.content) %>
+                  <%= diary_content(diary.content) %>
                 </div>
               </div>
 
@@ -43,11 +63,9 @@
         <div class="reflections">
           <h3>Reflexões do <%= hub.hub_definition.title %></h3>
 
-          <h4>Reflexão - Título</h4>
+          <h4><%= hub.reflection_title %></h4>
 
-          <% hub_portfolio = @tcc.hubs.hub_portfolio.find_by_position(hub.position) %>
-          <%= hub_portfolio.reflection.html_safe unless hub_portfolio.reflection.nil? %>
-
+          <%= hub.reflection.try(:html_safe) %>
         </div>
 
       </section>
@@ -59,7 +77,7 @@
   <section class="final_considerations">
     <h2>Considerações finais</h2>
 
-    <%= @final_considerations.content.html_safe unless @final_considerations.nil? %>
+    <%= @final_considerations.content.try(:html_safe) if @final_considerations %>
   </section>
 
 </div>
