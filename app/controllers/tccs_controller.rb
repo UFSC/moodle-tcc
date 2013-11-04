@@ -63,7 +63,7 @@ class TccsController < ApplicationController
 
   def show_pdf
     #Selecionar TCC
-    @tcc = Tcc.find(278)
+    @tcc = Tcc.find(313)
 
     #Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc.abstract.content)
@@ -85,6 +85,10 @@ class TccsController < ApplicationController
 
     #Referencias
     @bibtex = generete_references(@tcc)
+
+    #figuras
+    #tmp = TccLatex.generate_figures(@tcc.abstract.content)
+
   end
 
   def parse_html

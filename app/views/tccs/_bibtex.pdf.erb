@@ -2,16 +2,6 @@
 <body>
 <dl class="bib">
 
-  <!--General references-->
-  <% @general_refs.each do |r| %>
-    <dt class="misc">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
-    <dd>
-      <span class="title"><%= r.direct_citation %></span>
-      <span class="direct"><%= r.direct_citation %></span>
-      <span class="howpublished"><%= r.reference_text %></span>
-    </dd>
-  <% end %>
-
   <!--Book references-->
   <% @book_refs.each do |r| %>
       <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>

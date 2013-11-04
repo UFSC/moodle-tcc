@@ -547,20 +547,43 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:text>}</xsl:text>
 </xsl:template>
 
-<!-- citation internet links -->
-<xsl:template match='xhtml:citacao'>
+<!-- Direct citation internet links -->
+<xsl:template match='xhtml:citacao[@citacao_type="cd"]'>
   <xsl:text>\cite{</xsl:text>
   <xsl:value-of select="@reference_id"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
 
-<!-- citation internet links -->
-<xsl:template match='xhtml:citacao[@ref-type="ref"]'>
+<!-- Indirect citation links -->
+<xsl:template match='xhtml:citacao[@citacao_type="ci"]'>
+  <xsl:text>\citeonline{</xsl:text>
+  <xsl:value-of select="@reference_id"/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
 
+<!-- General indirect citation -->
+<xsl:template match='xhtml:citacao[@ref-type="gerais" and @citacao_type="ci"]'>
+  <xsl:value-of select="@citacao-text"/>
+</xsl:template>
+
+<!-- General direct citation -->
+<xsl:template match='xhtml:citacao[@ref-type="gerais" and @citacao_type="cd"]'>
+  <xsl:text>(</xsl:text>
+  <xsl:value-of select="translate(@citacao-text,
+                                'abcdefghijklmnopqrstuvwxyz',
+                                'ABCDEFGHIJKLMNOPQRSTUVWXYZ')" />
+  <xsl:text>)</xsl:text>
 </xsl:template>
 
 <!-- section/figure references -->
 <xsl:template match='xhtml:a[@rel="ref"]'>
+  <xsl:text>\ref{</xsl:text>
+  <xsl:value-of select="substring-after(@href,'#')"/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<!-- section/figure references -->
+<xsl:template match='xhtml:img[@src]'>
   <xsl:text>\ref{</xsl:text>
   <xsl:value-of select="substring-after(@href,'#')"/>
   <xsl:text>}</xsl:text>
@@ -703,6 +726,31 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:text>\end{figure}&#10;</xsl:text>
 </xsl:template>
 
+<!--Figuras  -->
+<xsl:template match='xhtml:img[@class="figure"]'>
+  <!-- dunno what [tb] is for, exactly @@-->
+  <xsl:text>\begin{figure}[tb]&#10;</xsl:text>
+
+  <xsl:text>\centerline{\epsfig{file=</xsl:text>
+  <xsl:value-of select="@src" />
+  <xsl:if test="@height">
+    <xsl:text>, height=</xsl:text>
+    <xsl:value-of select="@height" />
+  </xsl:if>
+  <xsl:if test="@width">
+    <xsl:text>, width=</xsl:text>
+    <xsl:value-of select="@width" />
+  </xsl:if>
+  <xsl:text>}}&#10;</xsl:text>
+
+  <xsl:text>\caption{</xsl:text>
+  <xsl:value-of select="@alt" />
+  <xsl:text>}</xsl:text>
+
+  <xsl:apply-templates />
+  <xsl:text>\end{figure}&#10;</xsl:text>
+</xsl:template>
+
 <xsl:template match='xhtml:p[@class="caption"]'>
   <xsl:text>\caption{</xsl:text>
   <xsl:apply-templates />
@@ -765,11 +813,6 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:value-of select="substring-after(.,'tex4ht:label?:')"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
-
-
-
-
-
 
 </xsl:stylesheet>
 

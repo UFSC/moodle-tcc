@@ -21,7 +21,7 @@ module TccLatex
     transform = xslt.apply_to(doc)
 
     # Remover begin document, pois ja está no layout
-    tex = transform.gsub('\begin{document}','').gsub('end{document}','')
+    tex = transform.gsub('\begin{document}','').gsub('\end{document}','')
     return tex
   end
 
@@ -49,6 +49,22 @@ module TccLatex
     return input
   end
 
+  def self.generate_figures(content)
+    dir = File.join(Rails.root, 'tmp', 'rails-latex', 'teste')
+    doc = Nokogiri::HTML(content)
 
+    begin
+      #Salvar imagens
+      img_srcs = doc.css('img').map{ |i| i['src'] }
+      img_dst = img_srcs.map{ |i| File.join(dir, File.basename(i)) }
+
+
+      FileUtils.mkdir_p(dir)
+      FileUtils.cp(img_srcs, dir);
+     rescue
+      raise "read tag src from img failed: Debug it for more details ;)"
+    end
+
+  end
 
 end
