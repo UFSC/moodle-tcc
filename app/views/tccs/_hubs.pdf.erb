@@ -14,13 +14,14 @@
         \par Texto explicativo <%= Faker::Lorem.paragraph(5) %>
 
         %% Conteudo do diário
-        <%= d.content.strip %>
+        <%= d.content.try(:html_safe) %>
 
     <% end %>
 
     %% Imprimir Reflexão
     \subsection {Síntese reflexiva: <%= lesc hub.reflection_title unless hub.reflection_title.nil? %>}
 
-    <%= hub.reflection.strip unless hub.reflection.nil? %>
+
+    <%= hub.reflection.try(:html_safe) %>
 
 <% end %>
