@@ -15,6 +15,7 @@
 /tmp
 .idea/*
 public/assets
+public/uploads
 app/assets/javascripts/ckeditor/plugins/placeholder
 db/*.sql
 db/*.bz2
