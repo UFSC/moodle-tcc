@@ -10,8 +10,7 @@ class InternetRef < ActiveRecord::Base
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :references
 
-  VALID_URL_EXPRESSION = /^(http|https|ftp|ftps):\/\/(([a-z0-9]+\:)?[a-z0-9]+\@)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
-
+  VALID_URL_EXPRESSION = /^(http|https|ftp|ftps):\/\/(([a-z0-9]+\:)?[a-z0-9]+\@)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.([a-z]{2,5}|[0-9]{1,3})(([0-9]{1,5})?\/.*)?$/ix
   validates_presence_of :access_date, :author, :title, :url
 
   attr_accessible :access_date, :author, :subtitle, :title, :url

@@ -18,6 +18,7 @@ describe InternetRef do
       it { should_not allow_value('abcd').for(:url) }
       it { should_not allow_value('domain.com').for(:url) }
       it { should_not allow_value('http://').for(:url) }
+      it { should_not allow_value('http://domain.c/path/file.ext').for(:url) }
       it { should allow_value('http://domain.com').for(:url) }
       it { should allow_value('http://domain.com/').for(:url) }
       it { should allow_value('http://domain.com/path').for(:url) }
@@ -27,6 +28,9 @@ describe InternetRef do
       it { should allow_value('ftp://user@domain.com/path/file.ext').for(:url) }
       it { should allow_value('ftp://user:pass@domain.com/path/file.ext').for(:url) }
       it { should allow_value('ftps://domain.com/path/file.ext').for(:url) }
+      it { should allow_value('http://200.200.1.1/test/test%20de%20arquivo.ext').for(:url) }
+      it { should allow_value('http://200.20.1.1/test/test%20de%20arquivo.ext').for(:url) }
+      it { should allow_value('http://200.200.1.1/test/test%20de%20arquivo.super.ext').for(:url) }
     end
 
   end
