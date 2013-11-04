@@ -2,6 +2,14 @@ CKEDITOR.editorConfig = function( config ) {
     // Url para upload
     config.filebrowserImageUploadUrl = "/ckeditor/pictures";
 
+    // Para resolver o problema do token perdido após o upload
+    var csrf_token = $('meta[name=csrf-token]').attr('content'),
+        csrf_param = $('meta[name=csrf-param]').attr('content');
+
+    if (csrf_param !== undefined && csrf_token !== undefined) {
+        config.filebrowserImageUploadUrl += "?" + csrf_param + "=" + encodeURIComponent(csrf_token)
+    }
+
     // Todo: cogitar outra maneira que não envolvar remover botões desnecessários do insert
     config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe';
 
