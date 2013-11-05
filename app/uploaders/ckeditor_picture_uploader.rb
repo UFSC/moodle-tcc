@@ -35,8 +35,10 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   #  process :resize_to_fill => [118, 100]
   #end
   #
-  version :content do
-    process :resize_to_fit => [800, 400]
+  version :a4 do
+    # Formato a4 com largura definida por width
+    width = 500
+    process :resize_to_fit => [width, (Math.sqrt(2)*width).to_i]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
