@@ -16,10 +16,10 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.article_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.article_title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)
 
       end
       it 'should convert citacao indireta' do
@@ -33,10 +33,10 @@ describe Conversor do
         ref_id = ref.id
 
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.article_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.article_title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.indirect_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.indirect_citation)
       end
       it 'should just convert citacao' do
         ref = Fabricate(:article_ref)
@@ -51,11 +51,11 @@ describe Conversor do
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.article_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.article_title))
         text = prefix+citacao+sufix
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix
 
       end
 
@@ -72,14 +72,14 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.article_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.article_title))
 
         title1 = ref1.article_title
         citacao_type1 = "cd"
         class_type1 = Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]
         ref_id1 = ref1.id
 
-        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, "[[#{Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]}#{ref1.id} #{ref1.article_title}]]")
+        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id,  old_citacao_text(ref1.class.to_s, ref1.id, ref1.article_title))
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
@@ -87,7 +87,7 @@ describe Conversor do
         text = prefix+citacao+sufix+citacao1
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.direct_citation)
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, ref1.direct_citation)
 
       end
     end
@@ -102,10 +102,10 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.book_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.book_title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)
 
       end
       it 'should convert citacao indireta' do
@@ -119,10 +119,10 @@ describe Conversor do
         ref_id = ref.id
 
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.book_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.book_title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.indirect_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.indirect_citation)
       end
       it 'should just convert citacao' do
         ref = Fabricate(:book_cap_ref)
@@ -137,11 +137,11 @@ describe Conversor do
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.book_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.book_title))
         text = prefix+citacao+sufix
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix
 
       end
 
@@ -158,14 +158,14 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.book_title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.book_title))
 
         title1 = ref1.book_title
         citacao_type1 = "cd"
         class_type1 = Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]
         ref_id1 = ref1.id
 
-        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, "[[#{Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]}#{ref1.id} #{ref1.book_title}]]")
+        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, old_citacao_text(ref1.class.to_s, ref1.id, ref1.book_title))
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
@@ -173,7 +173,7 @@ describe Conversor do
         text = prefix+citacao+sufix+citacao1
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.direct_citation)
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id,  ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, ref1.direct_citation)
 
       end
     end
@@ -188,10 +188,10 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)
 
       end
       it 'should convert citacao indireta' do
@@ -205,10 +205,10 @@ describe Conversor do
         ref_id = ref.id
 
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.indirect_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.indirect_citation)
       end
       it 'should just convert citacao' do
         ref = Fabricate(:book_ref)
@@ -223,11 +223,11 @@ describe Conversor do
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = prefix+citacao+sufix
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix
 
       end
 
@@ -244,14 +244,14 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
 
         title1 = ref1.title
         citacao_type1 = "cd"
         class_type1 = Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]
         ref_id1 = ref1.id
 
-        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, "[[#{Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]}#{ref1.id} #{ref1.title}]]")
+        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id,  old_citacao_text(ref1.class.to_s, ref1.id, ref1.title))
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
@@ -259,7 +259,7 @@ describe Conversor do
         text = prefix+citacao+sufix+citacao1
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.direct_citation)
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, ref1.direct_citation)
 
       end
     end
@@ -274,10 +274,10 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.reference_text}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.reference_text))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)
 
       end
       it 'should convert citacao indireta' do
@@ -291,10 +291,10 @@ describe Conversor do
         ref_id = ref.id
 
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.reference_text}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.reference_text))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.indirect_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.indirect_citation)
       end
       it 'should just convert citacao' do
         ref = Fabricate(:general_ref)
@@ -309,11 +309,11 @@ describe Conversor do
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.reference_text}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.reference_text))
         text = prefix+citacao+sufix
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix
 
       end
 
@@ -330,14 +330,14 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.reference_text}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.reference_text))
 
         title1 = ref1.reference_text
         citacao_type1 = "cd"
         class_type1 = Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]
         ref_id1 = ref1.id
 
-        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, "[[#{Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]}#{ref1.id} #{ref1.reference_text}]]")
+        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, old_citacao_text(ref1.class.to_s, ref1.id, ref1.reference_text))
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
@@ -345,7 +345,7 @@ describe Conversor do
         text = prefix+citacao+sufix+citacao1
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.direct_citation)
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, ref1.direct_citation)
 
       end
     end
@@ -360,10 +360,10 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)
 
       end
       it 'should convert citacao indireta' do
@@ -377,10 +377,10 @@ describe Conversor do
         ref_id = ref.id
 
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.indirect_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.indirect_citation)
       end
       it 'should just convert citacao' do
         ref = Fabricate(:internet_ref)
@@ -395,11 +395,11 @@ describe Conversor do
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = prefix+citacao+sufix
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix
 
       end
 
@@ -416,14 +416,14 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
 
         title1 = ref1.title
         citacao_type1 = "cd"
         class_type1 = Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]
         ref_id1 = ref1.id
 
-        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, "[[#{Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]}#{ref1.id} #{ref1.title}]]")
+        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, old_citacao_text(ref1.class.to_s, ref1.id, ref1.title))
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
@@ -431,7 +431,7 @@ describe Conversor do
         text = prefix+citacao+sufix+citacao1
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.direct_citation)
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, ref1.direct_citation)
 
       end
     end
@@ -446,10 +446,10 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)
 
       end
       it 'should convert citacao indireta' do
@@ -463,10 +463,10 @@ describe Conversor do
         ref_id = ref.id
 
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = Conversor::convert_text(citacao, tcc)
 
-        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.indirect_citation)
+        text.rstrip.should == citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.indirect_citation)
       end
       it 'should just convert citacao' do
         ref = Fabricate(:legislative_ref)
@@ -481,11 +481,11 @@ describe Conversor do
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
         text = prefix+citacao+sufix
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix
 
       end
 
@@ -502,14 +502,14 @@ describe Conversor do
         class_type = Conversor::REFERENCES_TYPE.invert[ref.class.to_s]
         ref_id = ref.id
 
-        citacao = citacao(title, citacao_type, class_type, ref_id, "[[#{Conversor::REFERENCES_TYPE.invert[ref.class.to_s]}#{ref.id} #{ref.title}]]")
+        citacao = citacao(title, citacao_type, class_type, ref_id, ref.reference.id, old_citacao_text(ref.class.to_s, ref.id, ref.title))
 
         title1 = ref1.title
         citacao_type1 = "cd"
         class_type1 = Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]
         ref_id1 = ref1.id
 
-        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, "[[#{Conversor::REFERENCES_TYPE.invert[ref1.class.to_s]}#{ref1.id} #{ref1.title}]]")
+        citacao1 = citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, old_citacao_text(ref1.class.to_s, ref1.id, ref1.title))
 
         prefix = Faker::Lorem.paragraph(1)
         sufix = Faker::Lorem.paragraph(1)
@@ -517,14 +517,19 @@ describe Conversor do
         text = prefix+citacao+sufix+citacao1
 
         text = Conversor::convert_text(text, tcc)
-        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.direct_citation)
+        text.rstrip.should == prefix+citacao(title, citacao_type, class_type, ref_id, ref.reference.id, ref.direct_citation)+sufix+citacao(title1, citacao_type1, class_type1, ref_id1, ref1.reference.id, ref1.direct_citation)
 
       end
     end
 
 
-    def citacao(title, citacao_type, class_type, id, text)
-      %Q(<citacao citacao-text="#{title}" citacao_type="#{citacao_type}" class="citacao-class" contenteditable="false" id="#{id}" ref-type="#{class_type}" title="#{text}">#{text}</citacao>)
+    def citacao(title, citacao_type, class_type, id, reference_id, text)
+      %Q(<citacao citacao-text="#{title}" citacao_type="#{citacao_type}" class="citacao-class" contenteditable="false" id="#{id}" ref-type="#{class_type}" title="#{text}" reference_id="#{reference_id}">#{text}</citacao>)
+    end
+
+
+    def old_citacao_text(c, id, title)
+      "[[#{Conversor::REFERENCES_TYPE.invert[c]}#{id} #{title}]]"
     end
 
   end
