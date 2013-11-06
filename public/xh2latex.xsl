@@ -333,30 +333,76 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 </xsl:template>
 
 <!-- tables -->
-<xsl:template match="xhtml:table[@border='1']">
-  <xsl:text>\begin{center}</xsl:text>
-  <xsl:text>\begin{tabular}{||</xsl:text>
-  <xsl:for-each select="xhtml:tr[1]/*">
-    <xsl:text>c||</xsl:text>
-  </xsl:for-each>
-  <xsl:text>}&#10;</xsl:text>
+<xsl:template match="xhtml:table">
+  <xsl:text>\begin{center}&#10;</xsl:text>
+  <xsl:text>\begin{tabulary}{\linewidth}{</xsl:text>
 
+  <xsl:variable name="total_columns">
+    <xsl:for-each select="xhtml:tr[1]/*">
+      <xsl:choose>
+        <xsl:when test="@colspan">
+          <xsl:for-each select="(//*)[position()&lt;=current()/@colspan]">
+            <xsl:if test="position()=last()">
+              <xsl:value-of select="position()"/>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:if test="position()=last()">
+            <xsl:value-of select="position()"/>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:variable>
+
+  <xsl:text>*{</xsl:text>
+  <xsl:value-of select="$total_columns"/>
+  <xsl:text>}{C</xsl:text>
+  <!--<xsl:value-of select="13 div $total_columns" />-->
+  <xsl:text>}}&#10;</xsl:text>
+
+  <xsl:text>\toprule&#10;</xsl:text>
   <xsl:for-each select="xhtml:tr">
-    <xsl:text>\hline&#10;</xsl:text>
-    <xsl:for-each select="*">
-      <xsl:if test="name() = 'th'">{\bf </xsl:if>
-      <xsl:apply-templates />
-      <xsl:if test="name() = 'th'">}</xsl:if>
+    <xsl:if test="position() != 1">
+      <xsl:text>\midrule&#10;</xsl:text>
+    </xsl:if>
+
+    <xsl:if test="position() = 2">
+      <xsl:text>\midrule&#10;</xsl:text>
+    </xsl:if>
+
+    <xsl:for-each select="xhtml:td|xhtml:th">
+      <xsl:if test="self::xhtml:th">\bfseries</xsl:if>
+
+      <xsl:choose>
+        <xsl:when test="@colspan">
+
+          <xsl:if test="current()/@colspan&gt;=0">\multicolumn{<xsl:value-of select="current()/@colspan"/>}{c}{
+          </xsl:if>
+
+        </xsl:when>
+      </xsl:choose>
+
+      <xsl:apply-templates/>
+
+      <xsl:choose>
+        <xsl:when test="@colspan">
+          <xsl:if test="current()/@colspan&gt;=0">}</xsl:if>
+        </xsl:when>
+      </xsl:choose>
+
       <xsl:if test="position() != last()">
-        <xsl:text> {&amp;} </xsl:text>
+        <xsl:text>&amp;</xsl:text>
       </xsl:if>
     </xsl:for-each>
-    <xsl:text> \\&#10;</xsl:text>
-  </xsl:for-each>
-  <xsl:text>\hline&#10;</xsl:text>
 
-  <xsl:text>\end{tabular}&#10;</xsl:text>
-  <xsl:text>\end{center}&#10;</xsl:text>
+    <xsl:if test="position()!=last()">\\&#10;</xsl:if>
+  </xsl:for-each>
+
+  <xsl:text>\end{tabulary}&#10;</xsl:text>
+  <xsl:text>\end{center}</xsl:text>
+
 </xsl:template>
 
 <!-- ol, img code untested -->

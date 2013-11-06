@@ -10,7 +10,8 @@ module TccLatex
     # Substituir caracteres html pelo respectivo em utf-8
     coder = HTMLEntities.new
     content = coder.decode(text)
-    html = Nokogiri::HTML(content)
+    clean = content.gsub('<tbody>','').gsub('</tbody>','')
+    html = Nokogiri::HTML(clean)
 
     # XHTML bem formado
     doc = Nokogiri::XML(html.to_xhtml)
