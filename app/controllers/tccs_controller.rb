@@ -50,7 +50,7 @@ class TccsController < ApplicationController
   end
 
   def create_pdf
-    @output_dir = '/home/caca/latex'
+    @output_dir = File.join(Rails.root, 'latex')
     @path = params[:path]
 
     if !@path.nil?

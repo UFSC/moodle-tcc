@@ -29,6 +29,8 @@ brazil,				% o último idioma é o principal do documento
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{epsfig}			% Inclusão de imagens
+\usepackage{multirow}           % Tabelas com diferentes números de colunas
+\usepackage{tabulary,booktabs}
 
 %% Pacotes para html
 
@@ -44,6 +46,9 @@ brazil,				% o último idioma é o principal do documento
 \usepackage[brazilian,hyperpageref]{backref}    % Paginas com as citações na bibl
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 
+\DeclareUnicodeCharacter{00A0}{~}
+\newcommand{\degree}{\ensuremath{^\circ}}
+\DeclareUnicodeCharacter{B0}{\degree}
 
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
@@ -118,6 +123,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \begin{document}
 
 
+
 % Retira espaço extra obsoleto entre as frases.
 \frenchspacing
 
@@ -156,8 +162,8 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 
     \imprimirlocal, <%= lesc l(@tcc.defense_date, :format => :long) unless @tcc.defense_date.nil? %>:
 
-    \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
     \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
+    \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
 
     \begin{center}
         \vspace*{0.5cm}
