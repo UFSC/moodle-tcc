@@ -93,12 +93,6 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <xsl:template match="xhtml:div[@class='date']" mode="maketitle">
 </xsl:template>
 
-<xsl:template match="xhtml:h1" mode="maketitle">
-  <xsl:text>\title{</xsl:text>
-  <xsl:apply-templates/>
-  <xsl:text>}&#10;</xsl:text>
-</xsl:template>
-
 <xsl:template match="*[@class='subtitle']" mode="maketitle">
   <xsl:text>\subtitle{</xsl:text>
   <xsl:apply-templates/>
@@ -269,24 +263,8 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 </xsl:template>
 
 <!-- body sections -->
-<xsl:template match="xhtml:h2">
-  <xsl:text>\section{</xsl:text>
-  <xsl:apply-templates/>
-  <xsl:text>}
-  </xsl:text>
-  <xsl:call-template name="section-label" />
-</xsl:template>
 
-
-<xsl:template match="xhtml:h3">
-  <xsl:text>\subsection{</xsl:text>
-  <xsl:apply-templates/>
-  <xsl:text>}
-  </xsl:text>
-  <xsl:call-template name="section-label" />
-</xsl:template>
-
-<xsl:template match="xhtml:h4">
+<xsl:template match="xhtml:h1|xhtml:h2|xhtml:h3|xhtml:h4">
   <xsl:text>\subsubsection{</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>}
@@ -510,13 +488,19 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 </xsl:template>
 
 <xsl:template match="xhtml:i">
-  <xsl:text>{\it </xsl:text>
+  <xsl:text>\textit{ </xsl:text>
   <xsl:apply-templates/>
   <xsl:text>}</xsl:text>
 </xsl:template>
 
-<xsl:template match="xhtml:b">
-  <xsl:text>{\bf </xsl:text>
+<xsl:template match="xhtml:b|xhtml:strong">
+  <xsl:text>\textbf{ </xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="xhtml:u">
+  <xsl:text>\underline{ </xsl:text>
   <xsl:apply-templates/>
   <xsl:text>}</xsl:text>
 </xsl:template>
@@ -539,7 +523,6 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:value-of select='.'/>
 </xsl:template>
 
-
 <!-- citation links -->
 <xsl:template match='xhtml:a[starts-with(., "[")]'>
   <xsl:text>\cite{</xsl:text>
@@ -549,14 +532,26 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
 <!-- Direct citation internet links -->
 <xsl:template match='xhtml:citacao[@citacao_type="cd"]'>
-  <xsl:text>\cite{</xsl:text>
+  <xsl:text>\cite</xsl:text>
+  <xsl:if test="@pagina">
+    <xsl:text>[p. </xsl:text>
+    <xsl:value-of select="@pagina"/>
+    <xsl:text>]</xsl:text>
+  </xsl:if>
+  <xsl:text>{</xsl:text>
   <xsl:value-of select="@reference_id"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
 
 <!-- Indirect citation links -->
 <xsl:template match='xhtml:citacao[@citacao_type="ci"]'>
-  <xsl:text>\citeonline{</xsl:text>
+  <xsl:text>\citeonline</xsl:text>
+  <xsl:if test="@pagina">
+    <xsl:text>[p. </xsl:text>
+    <xsl:value-of select="@pagina"/>
+    <xsl:text>]</xsl:text>
+  </xsl:if>
+  <xsl:text>{</xsl:text>
   <xsl:value-of select="@reference_id"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
