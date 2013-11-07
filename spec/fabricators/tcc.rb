@@ -10,7 +10,7 @@ Fabricator(:tcc_without_hubs, :class_name => :tcc) do
   email_estudante { Faker::Internet.email }
 
   grade (0..100).to_a.sample
-  defense_date Date.new
+  defense_date { Date.today }
   presentation
   abstract
   final_considerations
@@ -27,7 +27,7 @@ Fabricator(:tcc_without_dependencies, :class_name => :tcc) do
   email_estudante { Faker::Internet.email }
 
   grade (0..100).to_a.sample
-  defense_date Date.new
+  defense_date { Date.today }
 end
 
 Fabricator(:tcc, :from => :tcc_without_hubs, :class_name => :tcc) do
