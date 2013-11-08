@@ -49,18 +49,6 @@ class TccsController < ApplicationController
     redirect_to show_tcc_path(moodle_user: params[:moodle_user])
   end
 
-  def create_pdf
-    @output_dir = File.join(Rails.root, 'latex')
-    @path = params[:path]
-
-    if !@path.nil?
-      command = "pdflatex -output-directory=#{@output_dir} -interaction=nonstopmode #{@path}"
-      @path = command
-      system(command)
-    end
-
-  end
-
   def show_pdf
     #Selecionar TCC
     @tcc = Tcc.find(313)
@@ -89,22 +77,6 @@ class TccsController < ApplicationController
     #figuras
     #tmp = TccLatex.generate_figures(@tcc.abstract.content)
 
-  end
-
-  def parse_html
-    @tcc = Tcc.find(313)
-
-    @references = @tcc.references
-    @general_refs = @tcc.general_refs
-    @book_refs = @tcc.book_refs
-    @book_cap_refs = @tcc.book_cap_refs
-    @article_refs = @tcc.article_refs
-    @internet_refs = @tcc.internet_refs
-    @legislative_refs = @tcc.legislative_refs
-
-    #criar arquivo
-    content = render_to_string :show_references, :layout => false
-    @content = TccLatex.generate_references(content)
   end
 
   def preview_tcc
