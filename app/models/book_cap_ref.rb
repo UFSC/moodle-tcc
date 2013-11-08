@@ -26,6 +26,9 @@ class BookCapRef < ActiveRecord::Base
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validate :initial_page_less_than_end_page
 
+  alias_attribute :title, :book_title
+
+
   def direct_citation
     "(#{book_author.split(' ').last.upcase}, #{year})"
   end

@@ -21,6 +21,7 @@ class ArticleRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
 
+  alias_attribute :title, :article_title
 
   def direct_et_al
     "(#{first_author.split(' ').last.upcase} et al., #{year})"
