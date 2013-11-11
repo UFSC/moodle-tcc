@@ -23,7 +23,7 @@ module TccLatex
 
     # Remover begin document, pois ja está no layout
     tex = transform.gsub('\begin{document}','').gsub('\end{document}','')
-    return tex
+    return tex.strip
   end
 
   def self.generate_references(content)
@@ -37,8 +37,7 @@ module TccLatex
     content = xslt.apply_to(doc)
 
     #Salvar arquivo bib no tmp
-    #dir = File.join(Rails.root, 'tmp', 'rails-latex', "#{Process.pid}-#{Thread.current.hash}")
-    dir = File.join(Rails.root, 'tmp', 'rails-latex', "teste")
+    dir = File.join(Rails.root, 'tmp', 'rails-latex', "#{Process.pid}-#{Thread.current.hash}")
     input = File.join(dir, 'input.bib')
 
     FileUtils.mkdir_p(dir)
@@ -54,17 +53,9 @@ module TccLatex
     dir = File.join(Rails.root, 'tmp', 'rails-latex', 'teste')
     doc = Nokogiri::HTML(content)
 
-    begin
       #Salvar imagens
       img_srcs = doc.css('img').map{ |i| i['src'] }
       img_dst = img_srcs.map{ |i| File.join(dir, File.basename(i)) }
-
-
-      FileUtils.mkdir_p(dir)
-      FileUtils.cp(img_srcs, dir);
-     rescue
-      raise "read tag src from img failed: Debug it for more details ;)"
-    end
 
   end
 

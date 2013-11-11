@@ -1,5 +1,6 @@
 # encoding: utf-8
 class TccsController < ApplicationController
+
   include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
@@ -7,15 +8,6 @@ class TccsController < ApplicationController
 
   before_filter :check_permission, :only => :evaluate
   before_filter :config_latex, :only => :show_pdf
-
-  #Remover depois
-  skip_before_filter :authorize, :only => :show_pdf
-  skip_before_filter :authorize, :only => :parse_html
-  skip_before_filter :authorize, :only => :show_references
-
-  skip_before_filter :get_tcc, :only => :show_pdf
-  skip_before_filter :get_tcc, :only => :parse_html
-  skip_before_filter :get_tcc, :only => :show_references
 
   def show
     set_tab :data
@@ -51,7 +43,17 @@ class TccsController < ApplicationController
 
   def show_pdf
     #Selecionar TCC
-    @tcc = Tcc.find(313)
+    if current_user.admin? && params[:moodle_user]
+      @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
+    else
+      @tcc = Tcc.find_by_moodle_user(@user_id)
+    end
+
+    #Redirecionar se não encontrar tcc
+    if @tcc.nil?
+      flash[:error] = t(:empty_tcc)
+      redirect_user_to_start_page
+    end
 
     #Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc.abstract.content)

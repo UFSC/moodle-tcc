@@ -28,8 +28,11 @@
     <tr>
       <td>
         <%= tcc.name %>
-        <%= link_to "print_tcc?moodle_user=#{tcc.moodle_user}", target: '_blank' do %>
+        <%= link_to preview_tcc_path(tcc.moodle_user), target: '_blank' do %>
             <small>Imprimir TCC</small>
+        <% end %>
+        <%= link_to "showpdf.pdf?moodle_user=#{tcc.moodle_user}", target: '_blank' do %>
+            <small>Gerar TCC</small>
         <% end %>
       </td>
       <% tcc.hub_definitions.each do |hub_definition| %>
