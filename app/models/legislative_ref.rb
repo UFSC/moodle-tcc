@@ -1,6 +1,7 @@
 class LegislativeRef < ActiveRecord::Base
 
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -25,11 +26,11 @@ class LegislativeRef < ActiveRecord::Base
     "(#{jurisdiction_or_header.split(' ').first.upcase}, #{year})"
   end
 
-  def indirect_citation
-    "#{UnicodeUtils.titlecase(jurisdiction_or_header.split(' ').first)} (#{year})"
-  end
-
   private
+
+  def get_all_authors
+    [jurisdiction_or_header]
+  end
 
   def check_equality
     legislative_refs = LegislativeRef.where('(publisher = ? ) AND (year = ?)', publisher, year)

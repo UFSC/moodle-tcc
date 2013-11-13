@@ -1,5 +1,7 @@
 class BookRef < ActiveRecord::Base
+
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -27,10 +29,6 @@ class BookRef < ActiveRecord::Base
   end
 
 
-  def indirect_et_al
-    "#{first_author.split(' ').last.capitalize} et al. (#{year})"
-  end
-
   def direct_citation
     return direct_et_al if et_all
 
@@ -51,23 +49,15 @@ class BookRef < ActiveRecord::Base
     "(#{authors}, #{year})"
   end
 
-  def indirect_citation
-    return indirect_et_al if et_all
-    authors = "#{UnicodeUtils.titlecase(first_author.split(' ').last)}"
-    if !second_author.nil?
-      authors = "#{authors}, #{UnicodeUtils.titlecase(second_author.split(' ').last)}" if !second_author.empty?
-    end
-    if !third_author.nil?
-      authors = "#{authors} e #{UnicodeUtils.titlecase(third_author.split(' ').last)}" if !third_author.empty?
-    end
-    "#{authors} (#{year})"
-  end
-
   def type_quantity_defined?
     !type_quantity.blank?
   end
 
   private
+
+  def get_all_authors
+    [first_author, second_author, third_author]
+  end
 
   def check_equality
     book_refs = BookRef.where('(

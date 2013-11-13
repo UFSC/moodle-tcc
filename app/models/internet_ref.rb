@@ -1,6 +1,7 @@
 class InternetRef < ActiveRecord::Base
 
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -19,13 +20,8 @@ class InternetRef < ActiveRecord::Base
   alias_attribute :first_author, :author
 
 
-
   def direct_citation
     "(#{author.split(' ').last.upcase}, #{year})"
-  end
-
-  def indirect_citation
-    "#{UnicodeUtils.titlecase(author.split(' ').first)} (#{year})"
   end
 
   def year
@@ -34,7 +30,9 @@ class InternetRef < ActiveRecord::Base
 
   private
 
-
+  def get_all_authors
+    [author]
+  end
 
   def check_equality
     internet_refs = InternetRef.where('(author = ? ) AND (YEAR(access_date) = ?)', author, access_date.year)

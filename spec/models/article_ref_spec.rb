@@ -97,25 +97,6 @@ describe ArticleRef do
 
     end
 
-    describe '#indirect_citation' do
-
-      it 'should include cap_author' do
-        article_ref.indirect_citation.should include("#{article_ref.first_author.split(' ').last.capitalize}")
-      end
-
-      it 'should include year' do
-        article_ref.indirect_citation.should include(article_ref.year.to_s)
-      end
-
-      it 'should include (' do
-        article_ref.indirect_citation.should include('(')
-      end
-
-      it 'should include )' do
-        article_ref.indirect_citation.should include(')')
-      end
-
-    end
   end
 
   context 'same_author' do
@@ -213,7 +194,7 @@ describe ArticleRef do
 
   context '#indirect_citation' do
     it_should_behave_like "indirect_citation with more than one author" do
-      let(:ref) { Fabricate(:article_ref) }
+      let(:ref) { Fabricate.build(:article_ref) }
     end
   end
 end

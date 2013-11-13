@@ -1,6 +1,7 @@
 class BookCapRef < ActiveRecord::Base
 
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -29,16 +30,15 @@ class BookCapRef < ActiveRecord::Base
   alias_attribute :title, :book_title
   alias_attribute :first_author, :book_author
 
-
   def direct_citation
     "(#{book_author.split(' ').last.upcase}, #{year})"
   end
 
-  def indirect_citation
-    "#{UnicodeUtils.titlecase(book_author.split(' ').first)} (#{year})"
-  end
-
   private
+
+  def get_all_authors
+    [first_author]
+  end
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
