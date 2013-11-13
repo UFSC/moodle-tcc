@@ -211,5 +211,9 @@ describe ArticleRef do
     end
   end
 
-
+  context '#indirect_citation' do
+    it_should_behave_like "indirect_citation with more than one author" do
+      let(:ref) { Fabricate(:article_ref) }
+    end
+  end
 end

@@ -16,16 +16,25 @@ class InternetRef < ActiveRecord::Base
   attr_accessible :access_date, :author, :subtitle, :title, :url
 
   validates_format_of :url, :with => VALID_URL_EXPRESSION
+  alias_attribute :first_author, :author
+
+
 
   def direct_citation
-    "(#{author.split(' ').last.upcase}, #{access_date.year})"
+    "(#{author.split(' ').last.upcase}, #{year})"
   end
 
   def indirect_citation
-    "#{author.split(' ').last.capitalize} (#{access_date.year})"
+    "#{UnicodeUtils.titlecase(author.split(' ').first)} (#{year})"
+  end
+
+  def year
+    self.access_date.year
   end
 
   private
+
+
 
   def check_equality
     internet_refs = InternetRef.where('(author = ? ) AND (YEAR(access_date) = ?)', author, access_date.year)

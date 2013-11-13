@@ -19,12 +19,14 @@ class LegislativeRef < ActiveRecord::Base
   validates :year, :numericality => {:only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => (Date.today.year)}
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
 
+  alias_attribute :first_author, :jurisdiction_or_header
+
   def direct_citation
     "(#{jurisdiction_or_header.split(' ').first.upcase}, #{year})"
   end
 
   def indirect_citation
-    "#{jurisdiction_or_header.split(' ').first.capitalize} (#{year})"
+    "#{UnicodeUtils.titlecase(jurisdiction_or_header.split(' ').first)} (#{year})"
   end
 
   private

@@ -36,29 +36,29 @@ class BookRef < ActiveRecord::Base
 
     authors = "#{first_author.split(' ').last.upcase}"
     if !second_author.nil?
-      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty? || second_author != ''
+      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty?
     end
     if !third_author.nil?
-      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty? || third_author != ''
+      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty?
     end
     authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
     if !second_author.nil?
-      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if !second_author.empty? || second_author != ''
+      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if !second_author.empty?
     end
     if !third_author.nil?
-      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty? || third_author != ''
+      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty?
     end
     "(#{authors}, #{year})"
   end
 
   def indirect_citation
     return indirect_et_al if et_all
-    authors = "#{first_author.split(' ').last.capitalize}"
+    authors = "#{UnicodeUtils.titlecase(first_author.split(' ').last)}"
     if !second_author.nil?
-      authors = "#{authors}, #{second_author.split(' ').last.capitalize}" if !second_author.empty? || second_author != ''
+      authors = "#{authors}, #{UnicodeUtils.titlecase(second_author.split(' ').last)}" if !second_author.empty?
     end
     if !third_author.nil?
-      authors = "#{authors} e #{third_author.split(' ').last.capitalize}" if !third_author.empty? || third_author != ''
+      authors = "#{authors} e #{UnicodeUtils.titlecase(third_author.split(' ').last)}" if !third_author.empty?
     end
     "#{authors} (#{year})"
   end

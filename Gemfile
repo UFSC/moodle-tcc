@@ -6,6 +6,9 @@ gem 'mysql2'
 
 gem 'oauth'
 
+# Unicode Utils
+gem 'unicode_utils'
+
 # Moodle Web Service
 gem 'rest-client'
 gem 'nokogiri'

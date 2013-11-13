@@ -27,6 +27,7 @@ class BookCapRef < ActiveRecord::Base
   validate :initial_page_less_than_end_page
 
   alias_attribute :title, :book_title
+  alias_attribute :first_author, :book_author
 
 
   def direct_citation
@@ -34,7 +35,7 @@ class BookCapRef < ActiveRecord::Base
   end
 
   def indirect_citation
-    "#{book_author.split(' ').last.capitalize} (#{year})"
+    "#{UnicodeUtils.titlecase(book_author.split(' ').first)} (#{year})"
   end
 
   private
