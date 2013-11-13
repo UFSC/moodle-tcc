@@ -10,6 +10,8 @@ module Conversor
   CITACAO_TYPE = {'cd' => :direct_citation, 'ci' => :indirect_citation}
 
   def self.convert_text(txt, tcc)
+    return if txt.nil? || txt.empty?
+
     texto = Nokogiri::HTML(txt)
     texto.search('citacao').each do |c|
       attr = Conversor::get_attributes(c)
