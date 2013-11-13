@@ -1,6 +1,8 @@
 class ArticleRef < ActiveRecord::Base
 
+  include Shared::Citacao
   include ModelsUtils
+
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
@@ -21,42 +23,41 @@ class ArticleRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
 
+  alias_attribute :title, :article_title
 
   def direct_et_al
     "(#{first_author.split(' ').last.upcase} et al., #{year})"
   end
 
-
-  def indirect_et_al
-    "#{first_author.split(' ').last.capitalize} et al. (#{year})"
-  end
-
   def direct_citation
+    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
+
+    if !second_author.nil?
+      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if  !second_author.empty?
+    end
+
+    if !third_author.nil?
+      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty?
+    end
+
+    "(#{authors}, #{year}, p. #{initial_page})"
     return direct_et_al if et_all
 
     authors = "#{first_author.split(' ').last.upcase}"
     if !second_author.nil?
-      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty? || second_author != ''
+      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty?
     end
     if !third_author.nil?
-      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty? || third_author != ''
+      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty?
     end
     "(#{authors}, #{year})"
   end
 
-  def indirect_citation
-    return indirect_et_al if et_all
-    authors = "#{first_author.split(' ').last.capitalize}"
-    if !second_author.nil?
-      authors = "#{authors}, #{second_author.split(' ').last.capitalize}" if !second_author.empty? || second_author != ''
-    end
-    if !third_author.nil?
-      authors = "#{authors} e #{third_author.split(' ').last.capitalize}" if !third_author.empty? || third_author != ''
-    end
-    "#{authors} (#{year})"
-  end
-
   private
+
+  def get_all_authors
+    [first_author, second_author, third_author]
+  end
 
   def check_changed
     self.first_author.changed? || self.second_author.changed? || self.third_author.changed?

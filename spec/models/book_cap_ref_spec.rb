@@ -138,6 +138,10 @@ describe BookCapRef do
 
     end
   end
-
+  context '#indirect_citation' do
+    it_should_behave_like "indirect_citation" do
+      let(:ref) { Fabricate(:book_cap_ref) }
+    end
+  end
 
 end

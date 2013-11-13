@@ -113,6 +113,11 @@ describe InternetRef do
 
     end
   end
+  context '#indirect_citation' do
+    it_should_behave_like "indirect_citation" do
+      let(:ref) { Fabricate(:internet_ref) }
+    end
+  end
 
 
 end

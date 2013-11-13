@@ -1,6 +1,7 @@
 class BookCapRef < ActiveRecord::Base
 
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -26,15 +27,18 @@ class BookCapRef < ActiveRecord::Base
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validate :initial_page_less_than_end_page
 
+  alias_attribute :title, :book_title
+  alias_attribute :first_author, :book_author
+
   def direct_citation
     "(#{book_author.split(' ').last.upcase}, #{year})"
   end
 
-  def indirect_citation
-    "#{book_author.split(' ').last.capitalize} (#{year})"
-  end
-
   private
+
+  def get_all_authors
+    [first_author]
+  end
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)

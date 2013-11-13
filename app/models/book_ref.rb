@@ -1,5 +1,7 @@
 class BookRef < ActiveRecord::Base
+
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -27,33 +29,24 @@ class BookRef < ActiveRecord::Base
   end
 
 
-  def indirect_et_al
-    "#{first_author.split(' ').last.capitalize} et al. (#{year})"
-  end
-
   def direct_citation
     return direct_et_al if et_all
 
     authors = "#{first_author.split(' ').last.upcase}"
     if !second_author.nil?
-      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty? || second_author != ''
+      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty?
     end
     if !third_author.nil?
-      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty? || third_author != ''
+      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty?
+    end
+    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
+    if !second_author.nil?
+      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if !second_author.empty?
+    end
+    if !third_author.nil?
+      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty?
     end
     "(#{authors}, #{year})"
-  end
-
-  def indirect_citation
-    return indirect_et_al if et_all
-    authors = "#{first_author.split(' ').last.capitalize}"
-    if !second_author.nil?
-      authors = "#{authors}, #{second_author.split(' ').last.capitalize}" if !second_author.empty? || second_author != ''
-    end
-    if !third_author.nil?
-      authors = "#{authors} e #{third_author.split(' ').last.capitalize}" if !third_author.empty? || third_author != ''
-    end
-    "#{authors} (#{year})"
   end
 
   def type_quantity_defined?
@@ -61,6 +54,10 @@ class BookRef < ActiveRecord::Base
   end
 
   private
+
+  def get_all_authors
+    [first_author, second_author, third_author]
+  end
 
   def check_equality
     book_refs = BookRef.where('(

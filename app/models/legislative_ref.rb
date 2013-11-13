@@ -1,6 +1,7 @@
 class LegislativeRef < ActiveRecord::Base
 
   include ModelsUtils
+  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -19,15 +20,17 @@ class LegislativeRef < ActiveRecord::Base
   validates :year, :numericality => {:only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => (Date.today.year)}
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
 
-  def direct_citation
-    "(#{jurisdiction_or_header.split(' ').last.upcase}, #{year})"
-  end
+  alias_attribute :first_author, :jurisdiction_or_header
 
-  def indirect_citation
-    "#{jurisdiction_or_header.split(' ').last.capitalize} (#{year})"
+  def direct_citation
+    "(#{jurisdiction_or_header.split(' ').first.upcase}, #{year})"
   end
 
   private
+
+  def get_all_authors
+    [jurisdiction_or_header]
+  end
 
   def check_equality
     legislative_refs = LegislativeRef.where('(publisher = ? ) AND (year = ?)', publisher, year)
