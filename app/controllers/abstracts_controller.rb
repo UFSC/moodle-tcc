@@ -1,6 +1,5 @@
 # encoding: utf-8
 class AbstractsController < ApplicationController
-  include LtiTccFilters
   include StateMachineUtils
 
 

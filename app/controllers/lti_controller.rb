@@ -1,5 +1,7 @@
 # encoding: utf-8
 class LtiController < ApplicationController
+  skip_before_filter :authorize
+  skip_before_filter :get_tcc
 
   # Responsável por realizar a troca de mensagens e validação do LTI como um Tool Provider
   # De acordo com o papel informado pelo LTI Consumer, redireciona o usuário

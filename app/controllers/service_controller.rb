@@ -1,5 +1,7 @@
 # encoding: utf-8
 class ServiceController < ApplicationController
+  skip_before_filter :authorize
+  skip_before_filter :get_tcc
   before_filter :check_consumer_key
 
   def report

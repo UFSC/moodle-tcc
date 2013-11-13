@@ -1,6 +1,5 @@
 # encoding: utf-8
 class OrientadorController < ApplicationController
-  include LtiTccFilters
   before_filter :check_permission
 
   def index

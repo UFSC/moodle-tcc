@@ -1,6 +1,5 @@
 # encoding: utf-8
 class PresentationsController < ApplicationController
-  include LtiTccFilters
   include StateMachineUtils
 
 

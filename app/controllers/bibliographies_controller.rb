@@ -1,6 +1,5 @@
 # encoding: utf-8
 class BibliographiesController < ApplicationController
-  include LtiTccFilters
 
   def index
     set_tab :bibliographies

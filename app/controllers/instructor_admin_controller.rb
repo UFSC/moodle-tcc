@@ -1,6 +1,5 @@
 # encoding: utf-8
 class InstructorAdminController < ApplicationController
-  include LtiTccFilters
 
   before_filter :check_permission
 

@@ -1,7 +1,7 @@
 # encoding: utf-8
 class BookCapRefsController < ApplicationController
   inherit_resources
-  include LtiTccFilters
+  #include LtiTccFilters
 
   before_filter :set_current_tab
 

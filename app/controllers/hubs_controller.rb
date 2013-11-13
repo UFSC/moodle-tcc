@@ -1,7 +1,6 @@
 # encoding: utf-8
 class HubsController < ApplicationController
 
-  include LtiTccFilters
   include StateMachineUtils
 
   before_filter :check_visibility, :only => [:show_tcc]

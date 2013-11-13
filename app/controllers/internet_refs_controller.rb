@@ -1,7 +1,6 @@
 # encoding: utf-8
 class InternetRefsController < ApplicationController
   inherit_resources
-  include LtiTccFilters
 
   before_filter :set_current_tab
 
