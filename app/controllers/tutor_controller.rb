@@ -10,10 +10,11 @@ class TutorController < ApplicationController
     # Problema no webservice
     render 'public/404.html' unless username
 
-    group = TutorGroup.get_tutor_group(username)
-    @group_name = TutorGroup.get_tutor_group_name(group)
+    group = TutorGroup.get_tutor_groups(username)
+    @groups = TutorGroup.get_tutor_group_names(group)
 
-    @tccs = Tcc.where(tutor_group: group, tcc_definition_id: tcc_definition_id).paginate(:page => params[:page], :per_page => 30) unless group.nil?
+    @tccs = Tcc.where(tutor_group: group, tcc_definition_id: tcc_definition_id).paginate(:page => params[:page],
+                                                                         :per_page => 30) unless group.nil?
     @hubs = Tcc.hub_names
   end
 
