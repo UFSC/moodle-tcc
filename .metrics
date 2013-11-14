@@ -1,3 +1,5 @@
 MetricFu::Configuration.run do |config|
-  config.configure_metric :cane, line_length: 120
+  config.configure_metric :cane do |cane|
+    cane.line_length = 120
+  end
 end
