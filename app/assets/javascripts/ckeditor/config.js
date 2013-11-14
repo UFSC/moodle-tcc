@@ -1,4 +1,4 @@
-CKEDITOR.editorConfig = function( config ) {
+CKEDITOR.editorConfig = function(config) {
     // Url para upload
     config.filebrowserImageUploadUrl = "/ckeditor/pictures";
 
@@ -10,21 +10,33 @@ CKEDITOR.editorConfig = function( config ) {
         config.filebrowserImageUploadUrl += "?" + csrf_param + "=" + encodeURIComponent(csrf_token)
     }
 
-    // Todo: cogitar outra maneira que nao envolvar remover botoes desnecessarios do insert
-    config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe';
-
-    config.toolbarGroups = [
-        { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-        { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-        { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
-        { name: 'styles' },
-        { name: 'tools' },
-        { name: 'insert' },
-    ];
-
+    // Plugin de Citacao
     config.extraPlugins = 'citacao';
     config.allowedContent = true;
+
+    // Configuracao de auto-resize
+    config.autoGrow_maxHeight = 600;
+
+
+    // Configuracao do Colar do Word
+    config.pasteFromWordNumberedHeadingToList = true;
+    config.pasteFromWordPromptCleanup = true;
+    config.pasteFromWordRemoveFontStyles = true;
+    config.pasteFromWordRemoveStyles = true;
+
+    // Remover botoes que nao vao ser utilizados
+    config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,CreateDiv,Styles,Font,FontSize';
+
+    config.toolbarGroups = [
+        { name: 'styles' },
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+        { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
+        { name: 'insert' },
+        '/',
+        { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+        { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+        { name: 'tools' },
+    ];
 
     config.toolbar_mini = [
         ['Bold', 'Italic', 'Underline', 'Subscript', 'Superscript', '-', 'RemoveFormat'],
