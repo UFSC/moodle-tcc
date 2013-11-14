@@ -24,6 +24,9 @@
         <%= link_to preview_tcc_path(tcc.moodle_user), target: '_blank' do %>
           <small>Visualizar TCC</small>
         <% end %>
+        <%= link_to generate_tcc_path(tcc.moodle_user), target: '_blank' do %>
+          <small>Gerar TCC</small>
+        <% end %>
       </td>
 
       <td>

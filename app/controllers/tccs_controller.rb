@@ -4,8 +4,6 @@ class TccsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
-  require 'faker'
-
   before_filter :check_permission, :only => :evaluate
   before_filter :config_latex, :only => :show_pdf
 
