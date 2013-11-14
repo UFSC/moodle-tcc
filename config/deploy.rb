@@ -32,8 +32,6 @@ role :web, 'tcc.unasus.ufsc.br'                          # Your HTTP server, Apa
 role :app, 'tcc.unasus.ufsc.br'                          # This may be the same as your `Web` server
 role :db,  'tcc.unasus.ufsc.br', :primary => true        # This is where Rails migrations will run
 
-depend :remote, :file, "#{File.join(deploy_to, 'shared', 'database.yml')}"
-
 namespace :deploy do
   task :setup_db, :roles => :db, :desc => 'Configura base de dados inicial.' do
     strategy.deploy!
