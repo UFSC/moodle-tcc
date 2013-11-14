@@ -1,3 +1,4 @@
+# encoding: utf-8
 module TutorGroup
   def self.get_tutor_group(mat)
     p = Middleware::PessoasGruposTutoria.find_by_matricula(mat)

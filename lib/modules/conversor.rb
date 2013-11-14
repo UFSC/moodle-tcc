@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Conversor
 
   REFERENCES_TYPE = {'internet' => 'InternetRef',

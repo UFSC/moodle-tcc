@@ -1,3 +1,4 @@
+# encoding: utf-8
 module MoodleUser
 
   # Busca o username no Moodle com base no user_id informado

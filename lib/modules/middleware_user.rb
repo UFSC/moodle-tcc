@@ -1,3 +1,4 @@
+# encoding: utf-8
 module MiddlewareUser
   def self.check_enrol(username, shortname)
     # TODO: tratar falhas de conexão

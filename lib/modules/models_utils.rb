@@ -1,3 +1,4 @@
+# encoding: utf-8
 module ModelsUtils
 
   def update_subtype_field(main, objects)

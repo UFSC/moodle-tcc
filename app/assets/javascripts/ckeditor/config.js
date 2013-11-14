@@ -10,7 +10,7 @@ CKEDITOR.editorConfig = function( config ) {
         config.filebrowserImageUploadUrl += "?" + csrf_param + "=" + encodeURIComponent(csrf_token)
     }
 
-    // Todo: cogitar outra maneira que nao envolvar remover botoes desnecessários do insert
+    // Todo: cogitar outra maneira que nao envolvar remover botoes desnecessarios do insert
     config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe';
 
     config.toolbarGroups = [

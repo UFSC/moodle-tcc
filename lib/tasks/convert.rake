@@ -1,3 +1,4 @@
+# encoding: utf-8
 namespace :tcc do
 
   namespace :citacao do

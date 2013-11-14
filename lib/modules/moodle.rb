@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Moodle
 
   # Executa uma chamada remota a um webservice do Moodle
