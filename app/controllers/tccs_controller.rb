@@ -5,7 +5,6 @@ class TccsController < ApplicationController
   include TccLatex
 
   before_filter :check_permission, :only => :evaluate
-  before_filter :config_latex, :only => :show_pdf
 
   def show
     set_tab :data
@@ -97,12 +96,6 @@ class TccsController < ApplicationController
       flash[:error] = t(:cannot_access_page_without_enough_permission)
       redirect_user_to_start_page
     end
-  end
-
-  def config_latex
-    #Config rails-latex
-    LatexToPdf.config[:arguments].delete('-halt-on-error')
-    LatexToPdf.config.merge! :parse_twice => true
   end
 
   def generete_references (tcc)
