@@ -41,6 +41,10 @@ class Tcc < ActiveRecord::Base
 
   default_scope order(:name)
 
+  # Retorna o nome do estudante sem a matrícula ()
+  def student_name
+    self.name.gsub(/ \([0-9].*\)/, '')
+  end
 
   # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
   def is_ok?

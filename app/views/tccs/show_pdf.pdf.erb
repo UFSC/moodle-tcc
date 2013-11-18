@@ -32,19 +32,32 @@ brazil,				% o último idioma é o principal do documento
 \usepackage{multirow}           % Tabelas com diferentes números de colunas
 \usepackage{tabulary,booktabs}
 
-%% Pacotes para html
-
-% ---
-% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
-% ---
-\usepackage{lipsum}				% para geração de dummy text
-% ---
-
 % ---
 % Pacotes de citações
 % ---
-\usepackage[brazilian,hyperpageref]{backref}    % Paginas com as citações na bibl
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+% ---
+% CONFIGURAÇÕES DE PACOTES
+% ---
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
 
 \DeclareUnicodeCharacter{00A0}{~}
 \newcommand{\degree}{\ensuremath{^\circ}}
@@ -54,10 +67,10 @@ brazil,				% o último idioma é o principal do documento
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 \titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
-\autor{<%= lesc @tcc.name unless @tcc.name.nil? %>}
+\autor{<%= lesc @tcc.student_name unless @tcc.name.nil? %>}
 \local{Florianópolis}
 \data{<%= lesc @tcc.defense_date.year unless @tcc.defense_date.nil? %>}
-\orientador{<%= lesc @tcc.orientador unless @tcc.orientador.nil? %>}
+\orientador{<%= lesc @nome_orientador unless @tcc.orientador.nil? %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 \instituicao{%
     Universidade Federal de Santa Catarina
@@ -186,6 +199,11 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \cleardoublepage
 % ---
 
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
 %% Apresentação do trabalho
 <%= render partial: 'presentation', locals: {presentation: @presentation} %>
 
@@ -194,6 +212,11 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 
 %% Considerações finais
 <%= render partial: 'finalconsiderations', locals: {finalconsiderations: @finalconsiderations} %>
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
 
 %% Referencias
 <%= '\bibliography{' + @bibtex +  '}' %>
