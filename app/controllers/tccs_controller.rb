@@ -52,6 +52,8 @@ class TccsController < ApplicationController
       redirect_user_to_start_page
     end
 
+    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
+
     #Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc.abstract.content)
     @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.key_words

@@ -5,7 +5,7 @@
 <% @hubs.each do |hub| %>
 
     %% Imprimir hub_definition de cada Hub
-    \section{<%= lesc hub.hub_definition.title %>}
+    \section{<%= lesc hub.hub_definition.subtitle %>}
 
     <% hub.diaries.each do |d| %>
 

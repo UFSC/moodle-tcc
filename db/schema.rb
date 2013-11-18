@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20131030145342) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "moodle_shortname"
+    t.string   "subtitle"
   end
 
   add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"

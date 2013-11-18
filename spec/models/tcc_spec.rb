@@ -211,4 +211,14 @@ describe Tcc do
 
   end
 
+  describe '#student_name' do
+
+    it 'should return student name without matricula' do
+      tcc = Fabricate.build(:tcc_without_dependencies)
+      name = tcc.name
+      tcc.name += ' (201301010)'
+      expect(tcc.student_name).to eq(name)
+    end
+  end
+
 end
