@@ -10,7 +10,7 @@ gem 'oauth'
 gem 'unicode_utils'
 
 # Latex tcc -> pdf
-gem 'rails-latex'
+gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
 gem 'htmlentities'
 
 # Moodle Web Service
