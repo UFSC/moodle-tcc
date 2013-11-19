@@ -378,7 +378,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
       <xsl:choose>
         <xsl:when test="@colspan">
 
-          <xsl:if test="current()/@colspan&gt;=0">\multicolumn{<xsl:value-of select="current()/@colspan"/>}{c}{
+          <xsl:if test="current()/@colspan&gt;=0">\multicolumn{<xsl:value-of select="current()/@colspan"/>}{>{\centering\arraybackslash}m{<xsl:value-of select="16 div ($total_columns - current()/@colspan + 1)"/>cm}}{
           </xsl:if>
 
         </xsl:when>
@@ -400,6 +400,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
     <xsl:if test="position()!=last()">\\&#10;</xsl:if>
   </xsl:for-each>
 
+  <xsl:text>\\&#10;\bottomrule&#10;</xsl:text>
   <xsl:text>\end{tabulary}&#10;</xsl:text>
   <xsl:text>\end{center}</xsl:text>
 
