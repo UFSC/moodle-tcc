@@ -5,7 +5,7 @@ def current_git_branch
   branch
 end
 
-set :deploy_to, '/home/gabriel/tcc.labsoft.ufsc.br'
+set :deploy_to, '/home/gabriel/tcc.teste-moodle.ufsc.br'
 set :branch, current_git_branch
 
 # Verificação de dependências
