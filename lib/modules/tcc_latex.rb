@@ -17,6 +17,9 @@ module TccLatex
     # XHTML bem formado
     doc = Nokogiri::XML(html.to_xhtml)
 
+    #Processar imagens
+    doc = process_figures(doc)
+
     # Aplicar xslt
     xh2file = Rails.public_path + '/xh2latex.xsl'
     xslt  = Nokogiri::XSLT(File.read(xh2file))
@@ -50,14 +53,16 @@ module TccLatex
     return input
   end
 
-  def self.generate_figures(content)
-    dir = File.join(Rails.root, 'tmp', 'rails-latex', 'teste')
-    doc = Nokogiri::HTML(content)
+  def self.process_figures(doc)
+    #Inserir class figure nas imagens e resolver caminho
+    images = doc.css('img').map{ |i|
+      i['class'] = 'figure'
+      if i['src'] !~ URI::regexp
+        i['src'] = Rails.public_path << i['src']
+      end
+    }
 
-      #Salvar imagens
-      img_srcs = doc.css('img').map{ |i| i['src'] }
-      img_dst = img_srcs.map{ |i| File.join(dir, File.basename(i)) }
-
+    return doc
   end
 
 end

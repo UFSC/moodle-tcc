@@ -75,9 +75,6 @@ class TccsController < ApplicationController
     #Referencias
     @bibtex = generete_references(@tcc)
 
-    #figuras
-    #tmp = TccLatex.generate_figures(@tcc.abstract.content)
-
   end
 
   def preview_tcc
