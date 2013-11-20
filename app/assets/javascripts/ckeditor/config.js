@@ -59,14 +59,15 @@ CKEDITOR.on('dialogDefinition', function(event) {
     //some code here
 
     // janela de imagens: desabilita "URL, borda, espacamentos"
-    if (dialogName == 'image') {
-        dialogDefinition.onShow = function() {
-            this.getContentElement("info", "txtBorder").disable();
-            this.getContentElement("info", "txtHSpace").disable();
-            this.getContentElement("info", "txtVSpace").disable();
-            this.getContentElement("info", "txtUrl").disable();
-        }
-    }
+    // TODO: FIX-ME ta dando problema quando clica em "formatar imagem, ele não preenche a url quando a função abaixo é executada
+//    if (dialogName == 'image') {
+//        dialogDefinition.onShow = function() {
+//            this.getContentElement("info", "txtBorder").disable();
+//            this.getContentElement("info", "txtHSpace").disable();
+//            this.getContentElement("info", "txtVSpace").disable();
+//            this.getContentElement("info", "txtUrl").disable();
+//        }
+//    }
 
     // janela de tabelas: desabilita "borda, resumo, espacamentos"
     if (dialogName == 'table' || dialogName == 'tableProperties') {
