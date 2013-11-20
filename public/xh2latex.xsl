@@ -334,9 +334,16 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
 <!-- tables -->
 <xsl:template match="xhtml:table">
-  <xsl:text>\begin{center}&#10;</xsl:text>
-  <xsl:text>\begin{tabulary}{\linewidth}{</xsl:text>
+  <xsl:text>\begin{table}</xsl:text>
+  <xsl:text>\centering</xsl:text>
 
+  <xsl:for-each select="xhtml:caption">
+    <xsl:text>\caption{</xsl:text>
+      <xsl:apply-templates />
+    <xsl:text>}</xsl:text>
+  </xsl:for-each>
+
+  <xsl:text>\begin{tabulary}{\linewidth}{</xsl:text>
   <xsl:variable name="total_columns">
     <xsl:for-each select="xhtml:tr[1]/*">
       <xsl:choose>
@@ -402,7 +409,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
   <xsl:text>\\&#10;\bottomrule&#10;</xsl:text>
   <xsl:text>\end{tabulary}&#10;</xsl:text>
-  <xsl:text>\end{center}</xsl:text>
+  <xsl:text>\end{table}</xsl:text>
 
 </xsl:template>
 
@@ -799,7 +806,6 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:text>}</xsl:text>
   <xsl:call-template name="section-label" />
 </xsl:template>
-
 
 <xsl:template match="xhtml:td[@class='figure']">
   <xsl:text>\begin{figure}</xsl:text>
