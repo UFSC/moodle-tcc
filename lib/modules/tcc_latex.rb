@@ -9,10 +9,7 @@ module TccLatex
     end
 
     # Substituir caracteres html pelo respectivo em utf-8
-    coder = HTMLEntities.new
-    content = coder.decode(text)
-    clean = content.gsub('<tbody>','').gsub('</tbody>','')
-    html = Nokogiri::HTML(clean)
+    html = cleanup_html(text)
 
     # XHTML bem formado
     doc = Nokogiri::XML(html.to_xhtml)
@@ -28,6 +25,24 @@ module TccLatex
     # Remover begin document, pois ja está no layout
     tex = transform.gsub('\begin{document}','').gsub('\end{document}','')
     return tex.strip
+  end
+
+  def self.cleanup_html(text)
+    reader = HTMLEntities.new
+    content = reader.decode(text)
+
+    # Remove tags tbody e thead de tabelas para impressão correta no latex
+    cleanup_pattern = %w(<tbody> </tbody> <thead> </thead>)
+    cleanup_pattern.each { |pattern| content = content.gsub(pattern, '') }
+
+    html = Nokogiri::HTML(content)
+
+    # Remove tabela dentro de tabelas
+    html.search('table').each do |tab|
+      tab.search('table').remove
+    end
+
+    return html
   end
 
   def self.generate_references(content)
