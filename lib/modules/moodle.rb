@@ -32,6 +32,32 @@ module Moodle
     m.fetch_hub_diaries(hub, user_id)
   end
 
+  def self.fetch_user_image(userid, coursemoduleid)
+    Moodle.remote_call('local_wstcc_get_user_text_for_generate_doc',
+      userid: userid,
+      coursemoduleid: coursemoduleid
+    ) do |response|
+      # Utiliza Nokogiri como parser XML
+      doc = Nokogiri.parse(response)
+
+      # Verifica se ocorreu algum problema com o acesso
+      if !doc.xpath('/EXCEPTION').blank?
+        error_code = doc.xpath('/EXCEPTION/ERRORCODE').text
+        error_message = doc.xpath('/EXCEPTION/MESSAGE').text
+        debug_info = doc.xpath('/EXCEPTION/DEBUGINFO').text
+
+        Rails.logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
+        return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
+      end
+
+      # Recupera o conteúdo do texto online e coloca o token de ws
+      onlinetext = doc.xpath('/RESPONSE/SINGLE/KEY[@name="onlinetext"]/VALUE').text
+      onlinetext.gsub! '@@TOKEN@@', TCC_CONFIG['token']
+
+    end
+
+  end
+
   class MoodleHub
     def fetch_hub_diaries(hub, user_id)
       hub.diaries.each { |diary|
@@ -65,4 +91,29 @@ module Moodle
       end
     end
   end
+
+  def self.fetch_user_text_for_generate_doc(user_id, coursemodule_id)
+    Moodle.remote_call('local_wstcc_get_user_text_for_generate_doc',
+                       :userid => user_id, :coursemoduleid => coursemodule_id) do |response|
+
+      # Utiliza Nokogiri como parser XML
+      doc = Nokogiri.parse(response)
+
+      # Verifica se ocorreu algum problema com o acesso
+      if !doc.xpath('/EXCEPTION').blank?
+
+
+        error_code = doc.xpath('/EXCEPTION/ERRORCODE').text
+        error_message = doc.xpath('/EXCEPTION/MESSAGE').text
+        debug_info = doc.xpath('/EXCEPTION/DEBUGINFO').text
+
+        Rails.logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
+        return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
+      end
+
+      # Recupera o conteúdo do texto online
+      online_text = doc.xpath('/RESPONSE/SINGLE/KEY[@name="onlinetext"]/VALUE').text
+    end
+  end
+
 end
