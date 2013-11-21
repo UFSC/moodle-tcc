@@ -12,13 +12,15 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
     "uploads/ckeditor/pictures/#{model.id}"
   end
 
-  version :a4 do
-    # Formato a4 com largura definida por width
-    width = 500
+  # Tamanho original da figura é o equivalente a uma folha A4
+  process :resize_to_fit => [500, 707]
+
+  version :content do
+    width = 452
     process :resize_to_fit => [width, (Math.sqrt(2)*width).to_i]
   end
 
-  version :thumb, :from_version => :a4 do
+  version :thumb, :from_version => :content do
     process :resize_to_fill => [118, 100]
   end
 
