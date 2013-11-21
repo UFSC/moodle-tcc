@@ -337,11 +337,13 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:text>\begin{table}</xsl:text>
   <xsl:text>\centering</xsl:text>
 
-  <xsl:for-each select="xhtml:caption">
+  <xsl:choose>
+  <xsl:when test="xhtml:caption">
     <xsl:text>\caption{</xsl:text>
-      <xsl:apply-templates />
+    <xsl:value-of select="xhtml:caption"/>
     <xsl:text>}</xsl:text>
-  </xsl:for-each>
+  </xsl:when>
+  </xsl:choose>
 
   <xsl:text>\begin{tabulary}{\linewidth}{</xsl:text>
   <xsl:variable name="total_columns">
