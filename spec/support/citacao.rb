@@ -1,3 +1,4 @@
+# encoding: utf-8
 shared_examples_for 'indirect_citation' do
   before(:each) do
     ref.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
