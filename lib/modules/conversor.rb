@@ -4,7 +4,7 @@ module Conversor
   REFERENCES_TYPE = {'internet' => 'InternetRef',
                      'gerais' => 'GeneralRef',
                      'livros' => 'BookRef',
-                     'capítulos' => 'CapRef',
+                     'capítulos' => 'BookCapRef',
                      'artigos' => 'ArticleRef',
                      'legislative' => 'LegislativeRef'}
 
@@ -32,19 +32,18 @@ module Conversor
     {:ref_type => c['ref-type'], :citacao_type => c['citacao_type'], :id => c['id']}
   end
 
-  def self.search_for_citacoes(text)
-    citacoes = Nokogiri::HTML(text).search('citacao')
-    citacoes
+  def self.get_reference(tcc, attr)
+    return tcc.references.where(:element_id => attr[:id],
+                                :element_type => REFERENCES_TYPE[attr[:ref_type]]).first
   end
 
   def self.get_citacao(tcc, attr)
-    ref = tcc.references.where(:element_id => attr[:id]).first
-    ref = ref.element if !ref.nil?
-    ref.send(CITACAO_TYPE[attr[:citacao_type]]) if !ref.nil?
+    ref = get_reference(tcc, attr)
+    ref.element.send(CITACAO_TYPE[attr[:citacao_type]]) unless ref.nil?
   end
 
   def self.get_reference_id(tcc, attr)
-    ref = tcc.references.where(:element_id => attr[:id]).first
-    ref.id if !ref.nil?
+    ref = get_reference(tcc, attr)
+    ref.id unless ref.nil?
   end
 end
