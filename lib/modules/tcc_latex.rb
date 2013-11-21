@@ -56,15 +56,15 @@ module TccLatex
   end
 
   def self.generate_references(content)
-    #Criar arquivo de referência
+    # Criar arquivo de referência
     doc = Nokogiri::XML(content)
 
-    #aplicar xslt
+    # Aplicar xslt
     xh2file = File.read(File.join(self.latex_path, 'xh2bib.xsl'))
     xslt = Nokogiri::XSLT(xh2file)
     content = xslt.apply_to(doc)
 
-    #Salvar arquivo bib no tmp
+    # Salvar arquivo bib no tmp
     dir = File.join(Rails.root, 'tmp', 'rails-latex', "#{Process.pid}-#{Thread.current.hash}")
     input = File.join(dir, 'input.bib')
 
@@ -78,15 +78,41 @@ module TccLatex
   end
 
   def self.process_figures(doc)
-    #Inserir class figure nas imagens e resolver caminho
-    images = doc.css('img').map { |i|
-      i['class'] = 'figure'
-      if i['src'] !~ URI::regexp
-        i['src'] = Rails.public_path << i['src']
+
+    # Inserir class figure nas imagens e resolver caminho
+    doc.css('img').map do |img|
+      img['class'] = 'figure'
+
+      if img['src'] =~ /@@PLUGINFILE@@/
+        img['src'] = img['src'].gsub('@@PLUGINFILE@@', '')
+        img['src'] = "Imagem do Moodle: #{img['src']}"
+      elsif img['src'] !~ URI::regexp
+        img['src'] = File.join(Rails.public_path, img['src'])
       end
-    }
+
+
+      # Extrai as tuplas de estilo inline
+      img_attributes = extract_style_attributes(img)
+      img['width'] = img_attributes[:width] if img_attributes.has_key? :width
+      img['height'] = img_attributes[:height] if img_attributes.has_key? :height
+    end
 
     return doc
+  end
+
+  def self.extract_style_attributes(img)
+    style_attributes = {}
+
+    unless img['style'].nil? || img['style'].empty?
+      styles = img['style'].split(';').map { |item| item.strip }
+
+      styles.each do |style_item|
+        key, value = style_item.split(':')
+        style_attributes[key.to_sym] = value.strip
+      end
+    end
+
+    return style_attributes
   end
 
 end
