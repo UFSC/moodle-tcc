@@ -2,9 +2,13 @@
 module TccLatex
   unloadable
 
+  def self.latex_path
+    File.join(Rails.root, 'latex')
+  end
+
   def self.apply_latex(text)
-    #texto vazio, retornar mensagem genérica de texto vazio
-    if (text.nil?)
+    if text.nil?
+      #texto vazio, retornar mensagem genérica de texto vazio
       return '[ainda não existe texto para esta seção]'
     end
 
@@ -18,12 +22,18 @@ module TccLatex
     doc = process_figures(doc)
 
     # Aplicar xslt
-    xh2file = Rails.public_path + '/xh2latex.xsl'
-    xslt  = Nokogiri::XSLT(File.read(xh2file))
+    doc = process_xslt(doc)
+
+    return doc
+  end
+
+  def self.process_xslt(doc)
+    xh2file = File.read(File.join(self.latex_path, 'xh2latex.xsl'))
+    xslt = Nokogiri::XSLT(xh2file)
     transform = xslt.apply_to(doc)
 
     # Remover begin document, pois ja está no layout
-    tex = transform.gsub('\begin{document}','').gsub('\end{document}','')
+    tex = transform.gsub('\begin{document}', '').gsub('\end{document}', '')
     return tex.strip
   end
 
@@ -50,9 +60,8 @@ module TccLatex
     doc = Nokogiri::XML(content)
 
     #aplicar xslt
-    xh2file = Rails.public_path + '/xh2bib.xsl'
-    tmpFile = File.read(xh2file)
-    xslt  = Nokogiri::XSLT(tmpFile)
+    xh2file = File.read(File.join(self.latex_path, 'xh2bib.xsl'))
+    xslt = Nokogiri::XSLT(xh2file)
     content = xslt.apply_to(doc)
 
     #Salvar arquivo bib no tmp
@@ -70,7 +79,7 @@ module TccLatex
 
   def self.process_figures(doc)
     #Inserir class figure nas imagens e resolver caminho
-    images = doc.css('img').map{ |i|
+    images = doc.css('img').map { |i|
       i['class'] = 'figure'
       if i['src'] !~ URI::regexp
         i['src'] = Rails.public_path << i['src']
