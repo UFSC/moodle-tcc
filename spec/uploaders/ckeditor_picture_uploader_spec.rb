@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'carrierwave/test/matchers'
 
 describe CkeditorPictureUploader do
@@ -17,7 +18,7 @@ describe CkeditorPictureUploader do
   context 'the a4 version' do
     it "should scale down a landscape image to fit within a4 pattern" do
       width = 500
-      @uploader.a4.should be_no_larger_than(width, (Math.sqrt(2)*width).to_i)
+      @uploader.should be_no_larger_than(width, (Math.sqrt(2)*width).to_i)
     end
   end
 
