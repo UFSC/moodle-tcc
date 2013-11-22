@@ -38,6 +38,12 @@ module TccLatex
   end
 
   def self.cleanup_html(text)
+
+    # Remove caracter &nbsp antes da conversão de HTML Entities
+    text = text.gsub('&nbsp;', ' ')
+    text = text.gsub(/\u00a0/, ' ')
+
+    # Converte caracteres HTML entities para equivalente em utf8
     reader = HTMLEntities.new
     content = reader.decode(text)
 
