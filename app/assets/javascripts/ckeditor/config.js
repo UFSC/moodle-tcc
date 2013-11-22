@@ -5,11 +5,14 @@ CKEDITOR.editorConfig = function(config) {
 
     // Para resolver o problema do token perdido após o upload
     var csrf_token = $('meta[name=csrf-token]').attr('content'),
-        csrf_param = $('meta[name=csrf-param]').attr('content');
+        csrf_param = $('meta[name=csrf-param]').attr('content'),
+        moodle_user = $('meta[name=moodle-user]').attr('content');
 
     if (csrf_param !== undefined && csrf_token !== undefined) {
         config.filebrowserImageUploadUrl += "?" + csrf_param + "=" + encodeURIComponent(csrf_token)
     }
+    // Para outros alem do aluno poderem enviar imagem
+    if( moodle_user !== undefined )  config.filebrowserImageUploadUrl += '&moodle_user=' + moodle_user
 
     // Plugin de Citacao
     config.extraPlugins = 'citacao';
