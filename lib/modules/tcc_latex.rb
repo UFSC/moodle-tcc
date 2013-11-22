@@ -57,6 +57,10 @@ module TccLatex
     html.search('table').each do |tab|
       tab.search('table').remove
     end
+    
+    html.search('table').each do |t|
+      t.replace t.to_s.gsub(/<p\b[^>]*>/,'').gsub('</p>','')
+    end
 
     return html
   end
