@@ -11,7 +11,9 @@
 
         %% Titulo do Diario
         \subsection {Diário do módulo: <%= lesc d.diary_definition.title %>}
-        \par Texto explicativo: [TODO: INSERIR TEXTO]
+
+        \emph{O texto desse sub-capítulo foi elaborado pelo aluno no desenvolvimento dessa disciplina.}
+        \linebreak
 
         %% Conteudo do diário
         <%= d.content.try(:html_safe) %>
