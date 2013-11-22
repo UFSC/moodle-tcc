@@ -1,6 +1,6 @@
 GIT
   remote: git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git
-  revision: cad4b39db3870d2e6e32e75d0a03e25ad4eff476
+  revision: 981364a16137ddcadc29ed02e860a96629f9b86f
   specs:
     rails-latex (1.0.11)
       rails (>= 3.0.0)
