@@ -1,6 +1,6 @@
 GIT
   remote: git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git
-  revision: 0d212788dc755a5d02a247a78fed4938f3e94bc1
+  revision: cad4b39db3870d2e6e32e75d0a03e25ad4eff476
   specs:
     rails-latex (1.0.11)
       rails (>= 3.0.0)
@@ -304,9 +304,9 @@ GEM
     systemu (2.5.2)
     tabs_on_rails (2.2.0)
     terminal-table (1.4.5)
-    thin (1.5.1)
+    thin (1.6.1)
       daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
+      eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
     thor (0.18.1)
     tilt (1.4.1)
