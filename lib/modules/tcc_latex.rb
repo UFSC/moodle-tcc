@@ -17,6 +17,10 @@ module TccLatex
     # XHTML bem formado
     doc = Nokogiri::XML(html.to_xhtml)
 
+    doc.search('table').each do |t|
+      t.replace t.to_s.gsub(/<p\b[^>]*>/,'').gsub('</p>','')
+    end
+
     # Aplicar xslt
     xh2file = Rails.public_path + '/xh2latex.xsl'
     xslt  = Nokogiri::XSLT(File.read(xh2file))
