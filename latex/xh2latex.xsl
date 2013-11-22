@@ -520,7 +520,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <!-- phrase markup -->
 
 <xsl:template match="xhtml:em|xhtml:dfn">
-  <xsl:text>{\em </xsl:text>
+  <xsl:text>\emph{ </xsl:text>
   <xsl:apply-templates/>
   <xsl:text>}</xsl:text>
 </xsl:template>
