@@ -73,12 +73,12 @@ CKEDITOR.on('dialogDefinition', function(event) {
 //    }
 
     // janela de tabelas: desabilita "borda, resumo, espacamentos"
-    if (dialogName == 'table' || dialogName == 'tableProperties') {
-        dialogDefinition.onShow = function() {
-            this.getContentElement("info", "txtBorder").disable();
-            this.getContentElement("info", "txtCellSpace").disable();
-            this.getContentElement("info", "txtCellPad").disable();
-            this.getContentElement("info", "txtSummary").disable();
-        }
-    }
+//    if (dialogName == 'table' || dialogName == 'tableProperties') {
+//        dialogDefinition.onShow = function() {
+//            this.getContentElement("info", "txtBorder").disable();
+//            this.getContentElement("info", "txtCellSpace").disable();
+//            this.getContentElement("info", "txtCellPad").disable();
+//            this.getContentElement("info", "txtSummary").disable();
+//        }
+//    }
 });
