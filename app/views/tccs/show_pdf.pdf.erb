@@ -20,16 +20,18 @@ brazil,				% o último idioma é o principal do documento
 % ---
 % Pacotes fundamentais
 % ---
-\usepackage{cmap}				% Mapear caracteres especiais no PDF
-\usepackage{lmodern}			% Usa a fonte Latin Modern
-\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
-\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
-\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{cmap}           % Mapear caracteres especiais no PDF
+\usepackage{lmodern}			  % Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}    % Selecao de codigos de fonte.
+\usepackage{newunicodechar} % Mapear caracteres unicodes novos
+\usepackage{gensymb}        % Gerar simbolos
+\usepackage{textcomp}       % Outros simbulos
+\usepackage{lastpage}		  	% Usado pela Ficha catalográfica
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
-\usepackage{color}				% Controle das cores
-\usepackage{graphicx}			% Inclusão de gráficos
-\usepackage{epsfig}			% Inclusão de imagens
-\usepackage{multirow}           % Tabelas com diferentes números de colunas
+\usepackage{color}			  	% Controle das cores
+\usepackage{graphicx}		  	% Inclusão de gráficos
+\usepackage{epsfig}			    % Inclusão de imagens
+\usepackage{multirow}       % Tabelas com diferentes números de colunas
 \usepackage{tabulary,booktabs}
 
 % ---
@@ -59,9 +61,19 @@ brazil,				% o último idioma é o principal do documento
 	\fi}%
 % ---
 
-\DeclareUnicodeCharacter{00A0}{~}
+% ----
+% Consertar o LaTeX para aceitar caracteres UTF8
+% ----
+
+\newunicodechar{²}{\textsuperscript{2}}
+
+% Faz o ~ funcionar
+% \DeclareUnicodeCharacter{00A0}{~}
+\newunicodechar{½}{\textonehalf}
+
+% Faz simbulo de grau funcionar
 \newcommand{\degree}{\ensuremath{^\circ}}
-\DeclareUnicodeCharacter{B0}{\degree}
+\newunicodechar{º}{\degree}
 
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
