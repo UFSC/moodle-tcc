@@ -106,6 +106,8 @@ module TccLatex
         img['src'] = File.join(Rails.public_path, img['src'])
       end
 
+      # Se a URL contiver espaços ou caracter especial, deve ser decodificada
+      img['src'] = URI.unescape(img['src'])
 
       # Extrai as tuplas de estilo inline
       img_attributes = extract_style_attributes(img)
