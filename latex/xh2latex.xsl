@@ -347,29 +347,12 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
   <xsl:text>\begin{tabulary}{\linewidth}{</xsl:text>
   <xsl:variable name="total_columns">
-    <xsl:for-each select="xhtml:tr[1]/*">
-      <xsl:choose>
-        <xsl:when test="@colspan">
-          <xsl:for-each select="(//*)[position()&lt;=current()/@colspan]">
-            <xsl:if test="position()=last()">
-              <xsl:value-of select="position()"/>
-            </xsl:if>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:if test="position()=last()">
-            <xsl:value-of select="position()"/>
-          </xsl:if>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:value-of select="sum(xhtml:tr[1]/*/@colspan) + count(xhtml:tr[1]/*[not(@colspan)])"/>
   </xsl:variable>
 
   <xsl:text>*{</xsl:text>
   <xsl:value-of select="$total_columns"/>
-  <xsl:text>}{C</xsl:text>
-  <!--<xsl:value-of select="13 div $total_columns" />-->
-  <xsl:text>}}&#10;</xsl:text>
+  <xsl:text>}{C}}&#10;</xsl:text>
 
   <xsl:text>\toprule&#10;</xsl:text>
   <xsl:for-each select="xhtml:tr">
@@ -387,18 +370,19 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
       <xsl:choose>
         <xsl:when test="@colspan">
 
-          <xsl:if test="current()/@colspan&gt;=0">\multicolumn{<xsl:value-of select="current()/@colspan"/>}{>{\centering\arraybackslash}m{<xsl:value-of select="16 div ($total_columns - current()/@colspan + 1)"/>cm}}{
+          <xsl:if test="current()/@colspan&gt;=0">\multicolumn{<xsl:value-of select="current()/@colspan"/>}{>{\centering\arraybackslash}m{<xsl:value-of select="((15 div $total_columns) * current()/@colspan)"/>cm}}{<xsl:apply-templates/>
           </xsl:if>
 
         </xsl:when>
       </xsl:choose>
 
-      <xsl:apply-templates/>
-
       <xsl:choose>
         <xsl:when test="@colspan">
           <xsl:if test="current()/@colspan&gt;=0">}</xsl:if>
         </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
       </xsl:choose>
 
       <xsl:if test="position() != last()">
@@ -409,8 +393,8 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
     <xsl:if test="position()!=last()">\\&#10;</xsl:if>
   </xsl:for-each>
 
-  <xsl:text>\\&#10;\bottomrule&#10;</xsl:text>
-  <xsl:text>\end{tabulary}&#10;</xsl:text>
+  <xsl:text>\\&#10;\bottomrule</xsl:text>
+  <xsl:text>&#10;\end{tabulary}&#10;</xsl:text>
   <xsl:text>\end{table}</xsl:text>
 
 </xsl:template>

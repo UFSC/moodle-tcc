@@ -57,9 +57,15 @@ module TccLatex
     html.search('table').each do |tab|
       tab.search('table').remove
     end
-    
+
+    # Remove parágrafos dentro das tabelas, se tiver parágrafo não renderiza corretamente
     html.search('table').each do |t|
-      t.replace t.to_s.gsub(/<p\b[^>]*>/,'').gsub('</p>','')
+      t.replace t.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
+    end
+
+    # Remove espaço extra no inicio e final da celula da tabela
+    html.search('td').each do |cell|
+      cell.inner_html = cell.inner_html.strip
     end
 
     return html
