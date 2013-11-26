@@ -1,7 +1,7 @@
 CKEDITOR.editorConfig = function(config) {
     // Url para upload
     config.filebrowserImageUploadUrl = "/ckeditor/pictures";
-    config.filebrowserImageBrowseUrl = "/ckeditor/pictures";
+    //config.filebrowserImageBrowseUrl = "/ckeditor/pictures";
 
     // Para resolver o problema do token perdido após o upload
     var csrf_token = $('meta[name=csrf-token]').attr('content'),
