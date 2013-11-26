@@ -6,7 +6,8 @@ shared_examples_for 'indirect_citation' do
 
 
   it 'should include author' do
-    ref.indirect_citation.should include("#{UnicodeUtils.titlecase(ref.first_author.split(' ').last)}")
+    lastname = UnicodeUtils.titlecase(ref.first_author.split(' ').last)
+    ref.indirect_citation.should include(lastname)
   end
 
   it 'should include year' do
