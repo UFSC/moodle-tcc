@@ -22,4 +22,15 @@ module ApplicationHelper
   def display_icon(icon_name)
     content_tag('i', '', class: icon_name)
   end
+
+  def lesc(text)
+    LatexToPdf.escape_latex(text)
+  end
+
+  def moodle_user_meta_tag
+    if @tcc
+      tag('meta', :name => 'moodle-user', :content => @tcc.moodle_user)
+    end
+  end
+
 end

@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<dl class="bib">
+
+  <!--Book references-->
+  <% @book_refs.each do |r| %>
+    <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dd>
+      <span class="address"><%= r.local %></span>
+        <span class="author">
+          <%= r.first_author %>
+          <%= ', and ' << r.second_author  if  !r.second_author.blank? %>
+          <%= ', and ' << r.third_author if !r.third_author.blank? %>
+        </span>
+      <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
+      <span class="publisher"><%= r.publisher %></span>
+      <span class="title"><%= r.title %></span>
+      <span class="year"><%= r.year %></span>
+    </dd>
+      <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+      <dd>
+        <span class="address"><%= r.local %></span>
+        <span class="author"><%= r.first_author %></span>
+        <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
+        <span class="publisher"><%= r.publisher %></span>
+        <span class="title"><%= r.title %></span>
+        <span class="year"><%= r.year %></span>
+      </dd>
+  <% end %>
+
+  <!--Book Cap_refs references-->
+  <% @book_cap_refs.each do |r| %>
+    <dt class="inbook">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dd>
+      <span class="address"><%= r.local %></span>
+      <span class="author"><%= r.cap_author %></span>
+      <span class="booktitle"><%= r.book_title %></span>
+      <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
+      <span class="publisher"><%= r.publisher %></span>
+      <span class="title"><%= r.cap_title %></span>
+      <span class="month"><%= l(r.reference.created_at, :format => "%b.") %></span>
+      <span class="year"><%= r.year %></span>
+    </dd>
+  <% end %>
+
+  <!--Article references-->
+  <% @article_refs.each do |r| %>
+    <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dd>
+        <span class="author">
+          <%= r.first_author %>
+          <%= ', and ' << r.second_author  if  !r.second_author.blank? %>
+          <%= ', and ' << r.third_author if !r.third_author.blank? %>
+        </span>
+      <span class="journal"><%= r.journal_name %></span>
+      <span class="number"><%= r.number_or_fascicle unless r.number_or_fascicle.nil? %></span>
+      <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
+      <span class="title"><%= r.article_title %></span>
+      <span class="volume"><%= r.volume_number unless r.volume_number.nil? %></span>
+      <span class="year"><%= r.year %></span>
+    </dd>
+  <% end %>
+
+  <!--Internet references-->
+  <% @internet_refs.each do |r| %>
+    <dt class="misc">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dd>
+      <span class="title"><%= r.title %></span>
+      <span class="author"><%= r.author %></span>
+      <span class="year"><%= r.access_date.year unless r.access_date.nil? %></span>
+      <span class="url"><%= r.url %></span>
+      <span class="urlaccessdate"><%= l(r.access_date, :format => "%d %b. %Y.") unless r.access_date.nil? %></span>
+    </dd>
+  <% end %>
+
+  <!--Legislative refs references-->
+  <% @legislative_refs.each do |r| %>
+    <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dd>
+      <span class="address"><%= r.local %></span>
+      <span class="journal"><%= r.jurisdiction_or_header %></span>
+      <span class="number"><%= r.edition %></span>
+      <span class="organization"><%= r.local %></span>
+      <span class="publisher"><%= r.publisher %></span>
+      <span class="title"><%= r.title %></span>
+      <span class="year"><%= r.year %></span>
+    </dd>
+  <% end %>
+
+</dl>
+</body>
+
+</html>
+

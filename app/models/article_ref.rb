@@ -30,26 +30,21 @@ class ArticleRef < ActiveRecord::Base
   end
 
   def direct_citation
-    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
-
-    if !second_author.nil?
-      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if  !second_author.empty?
-    end
-
-    if !third_author.nil?
-      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty?
-    end
-
-    "(#{authors}, #{year}, p. #{initial_page})"
     return direct_et_al if et_all
 
-    authors = "#{first_author.split(' ').last.upcase}"
-    if !second_author.nil?
-      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty?
+    lastname = UnicodeUtils.titlecase(first_author.split(' ').last)
+    authors = lastname
+
+    unless second_author.nil? || second_author.empty?
+      lastname = UnicodeUtils.titlecase(second_author.split(' ').last)
+      authors = "#{authors}; #{lastname}"
     end
-    if !third_author.nil?
-      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty?
+
+    unless third_author.nil? || third_author.empty?
+      lastname = UnicodeUtils.titlecase(third_author.split(' ').last)
+      authors = "#{authors}; #{lastname}"
     end
+
     "(#{authors}, #{year})"
   end
 

@@ -74,13 +74,16 @@ describe ArticleRef do
     describe '#direct_citation' do
 
       it 'should include first_author' do
-        article_ref.direct_citation.should include("#{article_ref.first_author.split(' ').last.upcase};")
+        last_name = UnicodeUtils.titlecase(article_ref.first_author.split(' ').last)
+        article_ref.direct_citation.should include("#{last_name};")
       end
       it 'should include second_author' do
-        article_ref.direct_citation.should include("#{article_ref.second_author.split(' ').last.upcase};")
+        last_name = UnicodeUtils.titlecase(article_ref.second_author.split(' ').last)
+        article_ref.direct_citation.should include("#{last_name};")
       end
       it 'should include third_author' do
-        article_ref.direct_citation.should include("#{article_ref.third_author.split(' ').last.upcase},")
+        last_name = UnicodeUtils.titlecase(article_ref.third_author.split(' ').last)
+        article_ref.direct_citation.should include("#{last_name},")
       end
 
       it 'should include year' do
@@ -193,7 +196,7 @@ describe ArticleRef do
   end
 
   context '#indirect_citation' do
-    it_should_behave_like "indirect_citation with more than one author" do
+    it_should_behave_like 'indirect_citation with more than one author' do
       let(:ref) { Fabricate.build(:article_ref) }
     end
   end
