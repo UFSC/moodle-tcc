@@ -574,9 +574,11 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <xsl:template match='xhtml:citacao[@citacao_type="cd"]'>
   <xsl:text>\cite</xsl:text>
   <xsl:if test="@pagina">
-    <xsl:text>[p. </xsl:text>
-    <xsl:value-of select="@pagina"/>
-    <xsl:text>]</xsl:text>
+    <xsl:if test="@pagina != ''">
+      <xsl:text>[p. </xsl:text>
+      <xsl:value-of select="@pagina"/>
+      <xsl:text>]</xsl:text>
+    </xsl:if>
   </xsl:if>
   <xsl:text>{</xsl:text>
   <xsl:value-of select="@reference_id"/>
@@ -587,9 +589,11 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <xsl:template match='xhtml:citacao[@citacao_type="ci"]'>
   <xsl:text>\citeonline</xsl:text>
   <xsl:if test="@pagina">
-    <xsl:text>[p. </xsl:text>
-    <xsl:value-of select="@pagina"/>
-    <xsl:text>]</xsl:text>
+    <xsl:if test="@pagina != ''">
+      <xsl:text>[p. </xsl:text>
+      <xsl:value-of select="@pagina"/>
+      <xsl:text>]</xsl:text>
+     </xsl:if>
   </xsl:if>
   <xsl:text>{</xsl:text>
   <xsl:value-of select="@reference_id"/>
