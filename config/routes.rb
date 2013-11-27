@@ -14,6 +14,7 @@ SistemaTcc::Application.routes.draw do
   # Web Service
   match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}
+  match 'ping' => 'service#ping'
 
   # TCC routes
   get "tcc/(:moodle_user)" => 'tccs#show', as: 'show_tcc'

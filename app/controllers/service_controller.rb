@@ -22,6 +22,10 @@ class ServiceController < ApplicationController
     end
   end
 
+  def ping
+    render text: 'Ok', status: :ok
+  end
+
   private
 
   def check_consumer_key
