@@ -9,23 +9,14 @@
       <span class="address"><%= r.local %></span>
         <span class="author">
           <%= r.first_author %>
-          <%= ', and ' << r.second_author  if  !r.second_author.blank? %>
-          <%= ', and ' << r.third_author if !r.third_author.blank? %>
+          <%= ' and ' << r.second_author  if  !r.second_author.blank? %>
+          <%= ' and ' << r.third_author if !r.third_author.blank? %>
         </span>
       <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
       <span class="publisher"><%= r.publisher %></span>
       <span class="title"><%= r.title %></span>
       <span class="year"><%= r.year %></span>
     </dd>
-      <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
-      <dd>
-        <span class="address"><%= r.local %></span>
-        <span class="author"><%= r.first_author %></span>
-        <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
-        <span class="publisher"><%= r.publisher %></span>
-        <span class="title"><%= r.title %></span>
-        <span class="year"><%= r.year %></span>
-      </dd>
   <% end %>
 
   <!--Book Cap_refs references-->
@@ -49,8 +40,8 @@
     <dd>
         <span class="author">
           <%= r.first_author %>
-          <%= ', and ' << r.second_author  if  !r.second_author.blank? %>
-          <%= ', and ' << r.third_author if !r.third_author.blank? %>
+          <%= ' and ' << r.second_author  if  !r.second_author.blank? %>
+          <%= ' and ' << r.third_author if !r.third_author.blank? %>
         </span>
       <span class="journal"><%= r.journal_name %></span>
       <span class="number"><%= r.number_or_fascicle unless r.number_or_fascicle.nil? %></span>
