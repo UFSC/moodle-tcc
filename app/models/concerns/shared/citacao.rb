@@ -9,8 +9,8 @@ module Shared::Citacao
 
       elements = Array.new
       get_all_authors.each do |author|
-        if !author.nil?
-          elements << UnicodeUtils.titlecase(author.split(' ').last) if !author.empty?
+        unless author.nil? || author.empty?
+          elements << UnicodeUtils.titlecase(author.split(' ').last)
         end
       end
       "#{elements.to_sentence} (#{year})"
