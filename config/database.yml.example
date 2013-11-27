@@ -3,7 +3,7 @@ common: &common
   pool: 5
   timeout: 5000
   username: root
-  password: root
+  password:
   host: localhost
 
 development:
@@ -26,6 +26,6 @@ middleware:
   pool: 5
   timeout: 5000
   username: root
-  password: root
+  password: 
   host: localhost
   database: middleware
