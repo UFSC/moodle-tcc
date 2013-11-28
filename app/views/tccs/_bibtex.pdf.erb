@@ -11,6 +11,7 @@
           <%= r.first_author %>
           <%= ' and ' << r.second_author  if  !r.second_author.blank? %>
           <%= ' and ' << r.third_author if !r.third_author.blank? %>
+          <%= ' and others ' if r.et_all %>
         </span>
       <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
       <span class="publisher"><%= r.publisher %></span>
@@ -42,6 +43,7 @@
           <%= r.first_author %>
           <%= ' and ' << r.second_author  if  !r.second_author.blank? %>
           <%= ' and ' << r.third_author if !r.third_author.blank? %>
+          <%= ' and others ' if r.et_all %>
         </span>
       <span class="journal"><%= r.journal_name %></span>
       <span class="number"><%= r.number_or_fascicle unless r.number_or_fascicle.nil? %></span>
