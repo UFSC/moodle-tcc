@@ -33,19 +33,14 @@ class BookRef < ActiveRecord::Base
     return direct_et_al if et_all
 
     authors = "#{first_author.split(' ').last.upcase}"
+
     if !second_author.nil?
       authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty?
     end
     if !third_author.nil?
       authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty?
     end
-    authors = "#{first_author.split(' ').last.upcase}; #{first_author.split(' ').first.upcase}"
-    if !second_author.nil?
-      authors = "#{authors}, #{second_author.split(' ').last.upcase}; #{second_author.split(' ').first.upcase}" if !second_author.empty?
-    end
-    if !third_author.nil?
-      authors = "#{authors}, #{third_author.split(' ').last.upcase}; #{third_author.split(' ').first.upcase}" if !third_author.empty?
-    end
+
     "(#{authors}, #{year})"
   end
 
