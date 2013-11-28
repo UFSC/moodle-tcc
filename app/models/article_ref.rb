@@ -32,16 +32,16 @@ class ArticleRef < ActiveRecord::Base
   def direct_citation
     return direct_et_al if et_all
 
-    lastname = UnicodeUtils.titlecase(first_author.split(' ').last)
+    lastname = UnicodeUtils.upcase(first_author.split(' ').last)
     authors = lastname
 
     unless second_author.nil? || second_author.empty?
-      lastname = UnicodeUtils.titlecase(second_author.split(' ').last)
+      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
       authors = "#{authors}; #{lastname}"
     end
 
     unless third_author.nil? || third_author.empty?
-      lastname = UnicodeUtils.titlecase(third_author.split(' ').last)
+      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
       authors = "#{authors}; #{lastname}"
     end
 
