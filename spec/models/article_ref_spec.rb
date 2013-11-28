@@ -74,15 +74,15 @@ describe ArticleRef do
     describe '#direct_citation' do
 
       it 'should include first_author' do
-        last_name = UnicodeUtils.titlecase(article_ref.first_author.split(' ').last)
+        last_name = UnicodeUtils.upcase(article_ref.first_author.split(' ').last)
         article_ref.direct_citation.should include("#{last_name};")
       end
       it 'should include second_author' do
-        last_name = UnicodeUtils.titlecase(article_ref.second_author.split(' ').last)
+        last_name = UnicodeUtils.upcase(article_ref.second_author.split(' ').last)
         article_ref.direct_citation.should include("#{last_name};")
       end
       it 'should include third_author' do
-        last_name = UnicodeUtils.titlecase(article_ref.third_author.split(' ').last)
+        last_name = UnicodeUtils.upcase(article_ref.third_author.split(' ').last)
         article_ref.direct_citation.should include("#{last_name},")
       end
 
