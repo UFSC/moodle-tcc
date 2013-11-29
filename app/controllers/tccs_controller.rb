@@ -55,22 +55,22 @@ class TccsController < ApplicationController
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
 
     #Resumo
-    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc.abstract.content)
+    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc,@tcc.abstract.content)
     @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.key_words
 
     #Introdução
-    @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc.presentation.content)
+    @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.presentation.content)
 
     #Hubs
     @hubs = @tcc.hubs.hub_tcc
     @hubs.each do |hub|
       hub.fetch_diaries(@tcc.moodle_user)
-      hub.diaries.map {|diaries| diaries.content = TccLatex.apply_latex(diaries.content)}
-      hub.reflection = TccLatex.apply_latex(hub.reflection)
+      hub.diaries.map {|diaries| diaries.content = TccLatex.apply_latex(@tcc,diaries.content)}
+      hub.reflection = TccLatex.apply_latex(@tcc, hub.reflection)
     end
 
     #Consideracoes Finais
-    @finalconsiderations = @tcc.final_considerations.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc.final_considerations.content)
+    @finalconsiderations = @tcc.final_considerations.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.final_considerations.content)
 
     #Referencias
     @bibtex = generete_references(@tcc)
