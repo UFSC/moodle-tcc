@@ -28,6 +28,9 @@ module TccLatex
     #Simula rowspan
     doc = fix_rowspan(doc)
 
+    #Simula rowspan
+    doc = fix_rowspan(doc)
+
     # Aplicar xslt
     doc = process_xslt(doc)
 
@@ -70,31 +73,35 @@ module TccLatex
       t.replace t.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
     end
 
-    # Adiciona celulas em branco para rowspan
+    # Remove espaço extra no inicio e final da celula da tabela
+    html.search('td').each do |cell|
+      cell.inner_html = cell.inner_html.strip
+    end
 
-    tdp = Array.new
-    trp = 0
-    rs  = 0
+    return html
+  end
 
-    html.search('tr').each_with_index do |tr, i|
-      tr.search('td').each_with_index do |td, j|
-        if trp > (i - rs) and tdp.include? j
+  def self.fix_rowspan(html)
+    td_position = Array.new
+    tr_position = 0
+    rowspan = 0
+
+    html.search('tr').each_with_index do |tr, current_tr_position|
+      tr.search('td').each_with_index do |td, current_td_position|
+        #Verifica se a linha e a célula devem receber espaço em branco
+        if tr_position > (current_tr_position - rowspan) and td_position.include? current_td_position
           td.replace "<td></td>" + td.to_s
         end
 
         if td.to_s.include? "rowspan"
-          rs = td.xpath('@rowspan').first.value.to_i
+          rowspan = td.xpath('@rowspan').first.value.to_i
 
-          td.replace td.to_s.gsub(/rowspan=\"[^>]*\"/,'') # Remove o rowspan da tag, apesar de não fazer diferença
-          trp = i
-          tdp.push(j)
+          #Salva posição da linha que tenha rowspan
+          tr_position = current_tr_position
+          #Salva posição da célular que tenha rowspan
+          td_position.push(current_td_position)
         end
       end
-    end
-
-    # Remove espaço extra no inicio e final da celula da tabela
-    html.search('td').each do |cell|
-      cell.inner_html = cell.inner_html.strip
     end
 
     return html
