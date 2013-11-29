@@ -70,6 +70,28 @@ module TccLatex
       t.replace t.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
     end
 
+    # Adiciona celulas em branco para rowspan
+
+    tdp = Array.new
+    trp = 0
+    rs  = 0
+
+    html.search('tr').each_with_index do |tr, i|
+      tr.search('td').each_with_index do |td, j|
+        if trp > (i - rs) and tdp.include? j
+          td.replace "<td></td>" + td.to_s
+        end
+
+        if td.to_s.include? "rowspan"
+          rs = td.xpath('@rowspan').first.value.to_i
+
+          td.replace td.to_s.gsub(/rowspan=\"[^>]*\"/,'') # Remove o rowspan da tag, apesar de não fazer diferença
+          trp = i
+          tdp.push(j)
+        end
+      end
+    end
+
     # Remove espaço extra no inicio e final da celula da tabela
     html.search('td').each do |cell|
       cell.inner_html = cell.inner_html.strip
