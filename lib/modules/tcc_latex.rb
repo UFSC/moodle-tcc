@@ -178,8 +178,8 @@ module TccLatex
       item[:dom]['src'] = asset.data.current_path
     end
 
-  ensure
-    tmp_files.each {|tmp_file| File.delete(tmp_file)}
+  #ensure
+  #  tmp_files.each {|tmp_file| File.delete(tmp_file)}
   end
 
   def self.extract_style_attributes(img)
