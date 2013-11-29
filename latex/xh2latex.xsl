@@ -770,16 +770,16 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <!-- dunno what [tb] is for, exactly @@-->
   <xsl:text>\begin{figure}[tb]&#10;</xsl:text>
 
-  <xsl:text>\centerline{\epsfig{file=</xsl:text>
+  <xsl:text>\centerline{\includegraphics{</xsl:text>
   <xsl:value-of select="@src" />
-  <xsl:if test="@height">
-    <xsl:text>, height=</xsl:text>
-    <xsl:value-of select="@height" />
-  </xsl:if>
-  <xsl:if test="@width">
-    <xsl:text>, width=</xsl:text>
-    <xsl:value-of select="@width" />
-  </xsl:if>
+  <!--<xsl:if test="@height">-->
+    <!--<xsl:text>, height=</xsl:text>-->
+    <!--<xsl:value-of select="@height" />-->
+  <!--</xsl:if>-->
+  <!--<xsl:if test="@width">-->
+    <!--<xsl:text>, width=</xsl:text>-->
+    <!--<xsl:value-of select="@width" />-->
+  <!--</xsl:if>-->
   <xsl:text>}}&#10;</xsl:text>
 
   <xsl:text>\caption{</xsl:text>
