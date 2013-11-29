@@ -171,15 +171,21 @@ module TccLatex
       asset = MoodleAsset.new
       asset.tcc_id = tcc_id
       asset.data = file
-      asset.save!
-      file.close
 
-      # Mudar caminho da imagem para onde foi salvo
-      item[:dom]['src'] = asset.data.current_path
+      if asset.valid?
+        asset.save
+
+        # Mudar caminho da imagem para onde foi salvo
+        item[:dom]['src'] = asset.data.current_path
+      else
+        Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (#{asset.errors.messages})"
+      end
+
+      file.close
     end
 
-  #ensure
-  #  tmp_files.each {|tmp_file| File.delete(tmp_file)}
+  ensure
+    tmp_files.each { |tmp_file| File.delete(tmp_file) }
   end
 
   def self.extract_style_attributes(img)

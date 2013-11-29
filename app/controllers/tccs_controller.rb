@@ -55,7 +55,7 @@ class TccsController < ApplicationController
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
 
     #Resumo
-    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc,@tcc.abstract.content)
+    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc, @tcc.abstract.content)
     @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.key_words
 
     #Introdução
@@ -64,8 +64,8 @@ class TccsController < ApplicationController
     #Hubs
     @hubs = @tcc.hubs.hub_tcc
     @hubs.each do |hub|
-      hub.fetch_diaries(@tcc.moodle_user)
-      hub.diaries.map {|diaries| diaries.content = TccLatex.apply_latex(@tcc,diaries.content)}
+      hub.fetch_diaries_for_printing(@tcc.moodle_user)
+      hub.diaries.map { |diaries| diaries.content = TccLatex.apply_latex(@tcc, diaries.content) }
       hub.reflection = TccLatex.apply_latex(@tcc, hub.reflection)
     end
 
