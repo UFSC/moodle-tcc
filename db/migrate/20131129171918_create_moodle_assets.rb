@@ -4,6 +4,7 @@ class CreateMoodleAssets < ActiveRecord::Migration
       t.string  :data_file_name, :null => false
       t.string  :data_content_type
       t.integer :data_file_size
+      t.references :tcc
 
       t.timestamps
     end
