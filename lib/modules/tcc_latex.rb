@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'typhoeus/adapters/faraday'
+
 module TccLatex
   unloadable
 
