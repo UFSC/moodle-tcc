@@ -29,7 +29,7 @@ class PresentationsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_user_to_start_page
+    redirect_to save_presentation_path(moodle_user: @user_id)
   end
 
   def save

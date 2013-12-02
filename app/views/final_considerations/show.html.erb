@@ -16,6 +16,6 @@
                locals: {object: @final_considerations,
                         object_label: 'Considerações finais',
                         action_url: save_final_considerations_path(moodle_user: @tcc.moodle_user),
-                        update_state_url: update_state_final_considerations_path(@final_considerations),
+                        update_state_url: update_state_final_considerations_path(@final_considerations, moodle_user: @tcc.moodle_user),
                         last_object_commented: @last_commented} %>
 <% end %>

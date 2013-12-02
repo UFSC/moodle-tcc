@@ -29,7 +29,7 @@ class FinalConsiderationsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_user_to_start_page
+    redirect_to  show_final_considerations_path(moodle_user: params[:moodle_user])
   end
 
   def save
