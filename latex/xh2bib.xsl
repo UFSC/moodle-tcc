@@ -89,8 +89,12 @@ http://www.cc.gatech.edu/classes/RWL/Projects/citation/Docs/UserManuals/Referenc
    <xsl:with-param name="n" select='"booktitle"'/>
  </xsl:call-template>
 
-  <xsl:call-template name="cfield">
+ <xsl:call-template name="cfield">
    <xsl:with-param name="n" select='"title"'/>
+ </xsl:call-template>
+
+ <xsl:call-template name="cfield">
+   <xsl:with-param name="n" select='"organization"'/>
  </xsl:call-template>
 
   <xsl:call-template name="cfield">
