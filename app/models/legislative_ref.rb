@@ -1,7 +1,6 @@
 class LegislativeRef < ActiveRecord::Base
 
   include ModelsUtils
-  include Shared::Citacao
 
   before_save :check_equality
   before_update :check_equality
@@ -23,7 +22,11 @@ class LegislativeRef < ActiveRecord::Base
   alias_attribute :first_author, :jurisdiction_or_header
 
   def direct_citation
-    "(#{jurisdiction_or_header.split(' ').first.upcase}, #{year})"
+    "(#{jurisdiction_or_header.upcase}, #{year})"
+  end
+
+  def indirect_citation
+    "(#{jurisdiction_or_header.titlecase}, #{year})"
   end
 
   private
