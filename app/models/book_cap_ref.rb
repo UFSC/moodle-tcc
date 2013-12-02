@@ -1,3 +1,4 @@
+# encoding: utf-8
 class BookCapRef < ActiveRecord::Base
 
   include ModelsUtils
@@ -31,7 +32,8 @@ class BookCapRef < ActiveRecord::Base
   alias_attribute :first_author, :book_author
 
   def direct_citation
-    "(#{book_author.split(' ').last.upcase}, #{year})"
+    lastname = UnicodeUtils.upcase(book_author.split(' ').last)
+    "(#{lastname}, #{year})"
   end
 
   private
@@ -42,7 +44,7 @@ class BookCapRef < ActiveRecord::Base
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
-      errors.add(:initial_page, "Can't be less than end page")
+      errors.add(:initial_page, 'Deve ser igual ou anterior a página final')
     end
   end
 

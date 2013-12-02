@@ -21,7 +21,8 @@ class InternetRef < ActiveRecord::Base
 
 
   def direct_citation
-    "(#{author.split(' ').last.upcase}, #{year})"
+    lastname = UnicodeUtils.upcase(author.split(' ').last)
+    "(#{lastname}, #{year})"
   end
 
   def year
