@@ -118,9 +118,25 @@ describe LegislativeRef do
   end
 
   context '#indirect_citation' do
-    it_should_behave_like "indirect_citation" do
-      let(:ref) { Fabricate(:legislative_ref) }
+    let(:ref) { Fabricate.build(:legislative_ref) }
+
+    it 'should include jurisdiction' do
+      lastname = UnicodeUtils.titlecase(ref.jurisdiction_or_header)
+      ref.indirect_citation.should include(lastname)
     end
+
+    it 'should include year' do
+      ref.indirect_citation.should include(ref.year.to_s)
+    end
+
+    it 'should include (' do
+      ref.indirect_citation.should include('(')
+    end
+
+    it 'should include )' do
+      ref.indirect_citation.should include(')')
+    end
+
   end
 
 
