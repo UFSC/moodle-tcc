@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe LegislativeRef do
@@ -117,11 +118,32 @@ describe LegislativeRef do
     end
   end
 
-  context '#indirect_citation' do
-    it_should_behave_like "indirect_citation" do
-      let(:ref) { Fabricate(:legislative_ref) }
+  context '#direct_citation' do
+    let(:ref) { Fabricate(:legislative_ref) }
+
+    it 'should capitalize jurisdiction' do
+      expect(ref.direct_citation).to include(UnicodeUtils.upcase(ref.jurisdiction_or_header))
+    end
+
+    it 'should respect the direct citation format' do
+      ref.jurisdiction_or_header = 'são paulo'
+      ref.year = '2009'
+      expect(ref.direct_citation).to eq('(SÃO PAULO, 2009)')
     end
   end
 
+  context '#indirect_citation' do
+    let(:ref) { Fabricate(:legislative_ref) }
+
+    it 'should capitalize jurisdiction as a title' do
+      expect(ref.indirect_citation).to include(UnicodeUtils.titlecase(ref.jurisdiction_or_header))
+    end
+
+    it 'should respect the indirect citation format' do
+      ref.jurisdiction_or_header = 'SÃO PAULO'
+      ref.year = '2009'
+      expect(ref.indirect_citation).to eq('São Paulo (2009)')
+    end
+  end
 
 end
