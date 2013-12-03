@@ -22,11 +22,11 @@ class LegislativeRef < ActiveRecord::Base
   alias_attribute :first_author, :jurisdiction_or_header
 
   def direct_citation
-    "(#{jurisdiction_or_header.upcase}, #{year})"
+    "(#{UnicodeUtils.upcase(jurisdiction_or_header)}, #{year})"
   end
 
   def indirect_citation
-    "(#{jurisdiction_or_header.titlecase}, #{year})"
+    "#{UnicodeUtils.titlecase(jurisdiction_or_header)} (#{year})"
   end
 
   private
