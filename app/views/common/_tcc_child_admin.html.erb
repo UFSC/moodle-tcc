@@ -61,7 +61,7 @@
               <%= object.key_words.try(:html_safe) %>
             </div>
           <% end %>
-          <%= semantic_form_for object, url: action_url do |p| %>
+          <%= semantic_form_for object, url: action_url, method: 'put' do |p| %>
             <%= render partial: 'common/tcc_child_actions_admin', locals: {object: object, f: p} %>
           <% end %>
         </div>

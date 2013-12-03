@@ -25,20 +25,21 @@ SistemaTcc::Application.routes.draw do
   get "showreferences" => 'tccs#show_references', as: 'show_references'
 
   # Abstracts
-  get "abstract" => "abstracts#show", as: 'show_abstract'
-  post "abstract" => "abstracts#save", as: 'save_abstract'
-  post "abstracts/update_state" => "abstracts#update_state", as: 'update_state_abstracts'
-
-  # Presentations
-  get "presentation" => "presentations#show", as: 'show_presentation'
-  post "presentation" => "presentations#save", as: 'save_presentation'
-  post "presentations/update_state" => "presentations#update_state", as: 'update_state_presentations'
-
-  # Final Considerations
-  get "final_considerations" => "final_considerations#show", as: 'show_final_considerations'
-  post "final_considerations" => "final_considerations#save", as: 'save_final_considerations'
-  post "final_considerations/update_state" => "final_considerations#update_state",
-      as: 'update_state_final_considerations'
+  resource :abstracts do
+    member do
+      post 'update_state' => 'abstracts#update_state'
+    end
+  end
+  resource :presentations do
+    member do
+      post 'update_state' => 'presentations#update_state'
+    end
+  end
+  resource :final_considerations do
+    member do
+      post 'update_state' => 'final_considerations#update_state'
+    end
+  end
 
   # Hubs
   get "hubs/:position" => "hubs#show", as: 'show_hubs'

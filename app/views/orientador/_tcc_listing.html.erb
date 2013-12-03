@@ -50,10 +50,10 @@
       </td>
 
       <td>
-        <%= action_label(tcc.abstract, save_abstract_path(moodle_user: tcc.moodle_user)) %>
+        <%= action_label(tcc.abstract, edit_abstracts_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <td>
-        <%= action_label(tcc.presentation, save_presentation_path(moodle_user: tcc.moodle_user)) %>
+        <%= action_label(tcc.presentation, edit_presentations_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <% tcc.hub_definitions.each do |hub_definition| %>
         <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
@@ -80,7 +80,7 @@
         <% end %>
       <% end %>
       <td>
-        <%= action_label(tcc.final_considerations, save_final_considerations_path(moodle_user: tcc.moodle_user)) %>
+        <%= action_label(tcc.final_considerations, edit_final_considerations_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <td>
         <%= link_to 'Editar', bibliographies_path(moodle_user: tcc.moodle_user), class: 'label label-success', target: '_blank' %>

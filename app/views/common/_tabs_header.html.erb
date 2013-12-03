@@ -2,8 +2,8 @@
   <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
     <% if @type == 'tcc' %>
       <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
-      <%= tab.abstract 'Resumo', show_abstract_path %>
-      <%= tab.presentation 'Apresentação', show_presentation_path %>
+      <%= tab.abstract 'Resumo', edit_abstracts_path %>
+      <%= tab.presentation 'Apresentação', edit_presentations_path %>
     <% end %>
 
     <% @tcc.hubs.hub_by_type(@type).each do |hub| %>
@@ -12,7 +12,7 @@
     <% end %>
 
     <% if @type == 'tcc' %>
-      <%= tab.final_considerations 'Considerações finais', show_final_considerations_path %>
+      <%= tab.final_considerations 'Considerações finais', edit_final_considerations_path %>
     <% end %>
 
     <%= tab.bibliographies 'Referências', bibliographies_path %>
