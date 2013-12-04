@@ -3,7 +3,7 @@ class PresentationsController < ApplicationController
   include StateMachineUtils
 
 
-  def show
+  def edit
     @current_user = current_user
     set_tab :presentation
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
@@ -29,7 +29,15 @@ class PresentationsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_user_to_start_page
+    redirect_to edit_presentations_path(moodle_user: @user_id)
+  end
+
+  def update
+    save
+  end
+
+  def create
+    save
   end
 
   def save
@@ -51,9 +59,9 @@ class PresentationsController < ApplicationController
 
         @presentation.save
         flash[:success] = t(:successfully_saved)
-        redirect_to save_presentation_path(moodle_user: @user_id)
+        redirect_to edit_presentations_path(moodle_user: @user_id)
       else
-        render :show
+        render :edit
       end
     else
       if params[:valued] == 'Avaliado'
@@ -65,7 +73,7 @@ class PresentationsController < ApplicationController
       end
 
       if @presentation.update_attributes(params[:presentation])
-        redirect_to save_presentation_path(moodle_user: @user_id)
+        redirect_to edit_presentations_path(moodle_user: @user_id)
       end
     end
   end

@@ -3,7 +3,7 @@ class FinalConsiderationsController < ApplicationController
   include StateMachineUtils
 
 
-  def show
+  def edit
     @current_user = current_user
     set_tab :final_considerations
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
@@ -29,7 +29,15 @@ class FinalConsiderationsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_user_to_start_page
+    redirect_to  edit_final_considerations_path(moodle_user: params[:moodle_user])
+  end
+
+  def update
+    save
+  end
+
+  def create
+    save
   end
 
   def save
@@ -51,9 +59,9 @@ class FinalConsiderationsController < ApplicationController
 
         @final_considerations.save
         flash[:success] = t(:successfully_saved)
-        redirect_to save_final_considerations_path(moodle_user: @user_id)
+        redirect_to edit_final_considerations_path(moodle_user: @user_id)
       else
-        render :show
+        render :edit
       end
     else
       if params[:valued] == 'Avaliado'
@@ -65,7 +73,7 @@ class FinalConsiderationsController < ApplicationController
       end
 
       if @final_considerations.update_attributes(params[:final_considerations])
-        redirect_to save_final_considerations_path(moodle_user: @user_id)
+        redirect_to edit_final_considerations_path(moodle_user: @user_id)
       end
     end
   end

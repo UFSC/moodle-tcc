@@ -3,7 +3,7 @@ class AbstractsController < ApplicationController
   include StateMachineUtils
 
 
-  def show
+  def edit
     @current_user = current_user
     set_tab :abstract
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
@@ -29,7 +29,15 @@ class AbstractsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_user_to_start_page
+    redirect_to  edit_abstracts_path(@abstract, moodle_user: params[:moodle_user])
+  end
+
+  def update
+    save
+  end
+
+  def create
+    save
   end
 
   def save
@@ -51,9 +59,9 @@ class AbstractsController < ApplicationController
 
         @abstract.save
         flash[:success] = t(:successfully_saved)
-        redirect_to save_abstract_path(moodle_user: @user_id)
+        redirect_to edit_abstracts_path(moodle_user: @user_id)
       else
-        render :show
+        render :edit
       end
     else
       if params[:valued] == 'Avaliado'
@@ -65,7 +73,7 @@ class AbstractsController < ApplicationController
       end
 
       if @abstract.update_attributes(params[:abstract])
-        redirect_to save_abstract_path(moodle_user: @user_id)
+        redirect_to edit_abstracts_path(moodle_user: @user_id)
       end
     end
   end
