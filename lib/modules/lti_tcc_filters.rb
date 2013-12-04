@@ -44,6 +44,11 @@ module LtiTccFilters
                           tutor_group: group, tcc_definition: tcc_definition)
         @tcc.name = @tp.lis_person_name_full
         @tcc.save!
+      else
+        if @tcc.nil?
+          flash[:error] = t(:empty_tcc)
+          redirect_user_to_start_page
+        end
       end
     end
   end

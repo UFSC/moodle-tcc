@@ -4,8 +4,6 @@ class TccsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
-  before_filter :check_permission
-
   def show
     set_tab :data
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
@@ -89,13 +87,6 @@ class TccsController < ApplicationController
   end
 
   private
-  def check_permission
-    # Redirecionar se não encontrar tcc
-    if @tcc.nil?
-      flash[:error] = t(:empty_tcc)
-      redirect_user_to_start_page
-    end
-  end
 
   def generete_references (tcc)
     coder = HTMLEntities.new

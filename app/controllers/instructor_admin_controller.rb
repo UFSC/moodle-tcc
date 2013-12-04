@@ -1,6 +1,6 @@
 # encoding: utf-8
 class InstructorAdminController < ApplicationController
-
+  skip_before_filter :get_tcc
   before_filter :check_permission
 
   def index
