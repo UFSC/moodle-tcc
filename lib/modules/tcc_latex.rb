@@ -193,7 +193,7 @@ module TccLatex
 
     # Salvar imagens no db
     process.each do |item|
-      tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{rand(100)}")
+      tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{SecureRandom.base64}")
       Dir.mkdir(tmp_dir)
 
       #Criar imagem tmp
