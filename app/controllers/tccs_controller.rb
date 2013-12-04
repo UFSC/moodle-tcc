@@ -4,7 +4,7 @@ class TccsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
-  before_filter :check_permission, :only => :evaluate
+  before_filter :check_permission
 
   def show
     set_tab :data
@@ -12,6 +12,11 @@ class TccsController < ApplicationController
   end
 
   def evaluate
+    unless current_user.orientador?
+      flash[:error] = t(:cannot_access_page_without_enough_permission)
+      return redirect_user_to_start_page
+    end
+
     @tcc = Tcc.find(params[:tcc_id])
     @tcc.grade = params[:tcc][:grade]
     if @tcc.valid?
@@ -44,12 +49,6 @@ class TccsController < ApplicationController
       @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
     else
       @tcc = Tcc.find_by_moodle_user(@user_id)
-    end
-
-    #Redirecionar se não encontrar tcc
-    if @tcc.nil?
-      flash[:error] = t(:empty_tcc)
-      return redirect_user_to_start_page
     end
 
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
@@ -91,8 +90,9 @@ class TccsController < ApplicationController
 
   private
   def check_permission
-    unless current_user.orientador?
-      flash[:error] = t(:cannot_access_page_without_enough_permission)
+    # Redirecionar se não encontrar tcc
+    if @tcc.nil?
+      flash[:error] = t(:empty_tcc)
       redirect_user_to_start_page
     end
   end

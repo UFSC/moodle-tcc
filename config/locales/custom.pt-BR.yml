@@ -16,4 +16,4 @@
     unsuccessfully_deleted: "Não pode ser removido"
     empty_text: "[ainda não existe texto para esta seção]"
     empty_abstract: "[ainda não existe texto para o resumo]"
-    empty_tcc: "<p style='color:red'>TCC não encontrado</p>"
+    empty_tcc: "TCC não encontrado"
