@@ -49,7 +49,7 @@ class TccsController < ApplicationController
     #Redirecionar se não encontrar tcc
     if @tcc.nil?
       flash[:error] = t(:empty_tcc)
-      redirect_user_to_start_page
+      return redirect_user_to_start_page
     end
 
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
