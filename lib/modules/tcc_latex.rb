@@ -166,6 +166,7 @@ module TccLatex
 
     # Requisição das imagens
     process = []
+    tmp_files = []
 
     conn.in_parallel do
       doc.css('img').map do |img|
@@ -186,8 +187,7 @@ module TccLatex
       end
     end
 
-    tmp_files = []
-    #Salvar imagens no db
+    # Salvar imagens no db
     process.each do |item|
       tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{rand(100)}")
       Dir.mkdir(tmp_dir)
