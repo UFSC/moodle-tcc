@@ -1,7 +1,7 @@
 <xsl:stylesheet
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:xhtml="http://www.w3.org/1999/xhtml"
-version="1.0">
+        xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        version="1.0" xmlns:xls="http://www.w3.org/1999/XSL/Transform">
 
 <!--
 $Id: xh2latex.xsl,v 1.14 2006/10/27 01:34:15 connolly Exp $
@@ -369,17 +369,15 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
       <xsl:choose>
         <xsl:when test="@colspan">
-
-          <xsl:if test="current()/@colspan&gt;=0">\multicolumn{<xsl:value-of select="current()/@colspan"/>}{>{\centering\arraybackslash}m{<xsl:value-of select="((15 div $total_columns) * current()/@colspan)"/>cm}}{<xsl:apply-templates/>
-          </xsl:if>
-
+          <xls:text>\multicolumn{</xls:text>
+          <xsl:value-of select="current()/@colspan"/>
+          <xsl:text>}{>{\centering\arraybackslash}m{</xsl:text>
+          <xsl:value-of select="((15 div $total_columns) * current()/@colspan)"/>
+          <xsl:text>cm}}{</xsl:text>
+          <xsl:apply-templates/>
+          <xsl:text>}</xsl:text>
         </xsl:when>
-      </xsl:choose>
 
-      <xsl:choose>
-        <xsl:when test="@colspan">
-          <xsl:if test="current()/@colspan&gt;=0">}</xsl:if>
-        </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
         </xsl:otherwise>
@@ -575,9 +573,13 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   <xsl:text>\cite</xsl:text>
   <xsl:if test="@pagina">
     <xsl:if test="@pagina != ''">
-      <xsl:text>[p. </xsl:text>
-      <xsl:value-of select="@pagina"/>
-      <xsl:text>]</xsl:text>
+      <xsl:if test="@pagina != 'null'">
+        <xsl:if test="@pagina != 'undefined'">
+          <xsl:text>[p. </xsl:text>
+          <xsl:value-of select="@pagina"/>
+          <xsl:text>]</xsl:text>
+        </xsl:if>
+      </xsl:if>
     </xsl:if>
   </xsl:if>
   <xsl:text>{</xsl:text>
