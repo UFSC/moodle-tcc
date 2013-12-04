@@ -1,5 +1,9 @@
 set :deploy_to, '/home/gabriel/tcc.unasus.ufsc.br'
 
+role :web, 'tcc.unasus.ufsc.br'                          # Your HTTP server, Apache/etc
+role :app, 'tcc.unasus.ufsc.br'                          # This may be the same as your `Web` server
+role :db,  'tcc.unasus.ufsc.br', :primary => true        # This is where Rails migrations will run
+
 # Verificação de dependências
 shared_files = %w(database.yml moodle.yml tcc_config.yml errbit.yml email.yml new_relic.yml)
 shared_files.each do |rfile|
