@@ -1,6 +1,6 @@
 GIT
   remote: git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git
-  revision: 684f66184b62a865ce08456e7dd48c1b09f12ace
+  revision: 34d4a29f3460cbf2c2ed27afaa2d602e40fb2f81
   specs:
     rails-latex (1.0.11)
       rails (>= 3.0.0)
@@ -9,12 +9,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     aasm (3.0.22)
-    actionmailer (3.2.15)
-      actionpack (= 3.2.15)
+    actionmailer (3.2.16)
+      actionpack (= 3.2.16)
       mail (~> 2.5.4)
-    actionpack (3.2.15)
-      activemodel (= 3.2.15)
-      activesupport (= 3.2.15)
+    actionpack (3.2.16)
+      activemodel (= 3.2.16)
+      activesupport (= 3.2.16)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
@@ -22,18 +22,18 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    activemodel (3.2.15)
-      activesupport (= 3.2.15)
+    activemodel (3.2.16)
+      activesupport (= 3.2.16)
       builder (~> 3.0.0)
-    activerecord (3.2.15)
-      activemodel (= 3.2.15)
-      activesupport (= 3.2.15)
+    activerecord (3.2.16)
+      activemodel (= 3.2.16)
+      activesupport (= 3.2.16)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.15)
-      activemodel (= 3.2.15)
-      activesupport (= 3.2.15)
-    activesupport (3.2.15)
+    activeresource (3.2.16)
+      activemodel (= 3.2.16)
+      activesupport (= 3.2.16)
+    activesupport (3.2.16)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     airbrake (3.1.14)
@@ -128,7 +128,7 @@ GEM
     hike (1.2.3)
     hirb (0.7.1)
     htmlentities (4.3.1)
-    i18n (0.6.5)
+    i18n (0.6.9)
     ims-lti (1.1.3)
       builder
       oauth (~> 0.4.5)
@@ -222,14 +222,14 @@ GEM
     rack_session_access (0.1.1)
       builder (>= 2.0.0)
       rack (>= 1.0.0)
-    rails (3.2.15)
-      actionmailer (= 3.2.15)
-      actionpack (= 3.2.15)
-      activerecord (= 3.2.15)
-      activeresource (= 3.2.15)
-      activesupport (= 3.2.15)
+    rails (3.2.16)
+      actionmailer (= 3.2.16)
+      actionpack (= 3.2.16)
+      activerecord (= 3.2.16)
+      activeresource (= 3.2.16)
+      activesupport (= 3.2.16)
       bundler (~> 1.0)
-      railties (= 3.2.15)
+      railties (= 3.2.16)
     rails_best_practices (1.14.3)
       activesupport
       awesome_print
@@ -239,9 +239,9 @@ GEM
       i18n
       require_all
       ruby-progressbar
-    railties (3.2.15)
-      actionpack (= 3.2.15)
-      activesupport (= 3.2.15)
+    railties (3.2.16)
+      actionpack (= 3.2.16)
+      activesupport (= 3.2.16)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
