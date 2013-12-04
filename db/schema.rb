@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030145342) do
+ActiveRecord::Schema.define(:version => 20131129171918) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -179,6 +179,17 @@ ActiveRecord::Schema.define(:version => 20131030145342) do
     t.integer "total_pages"
     t.string  "subtype"
   end
+
+  create_table "moodle_assets", :force => true do |t|
+    t.string   "data_file_name",    :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "tcc_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "moodle_assets", ["tcc_id"], :name => "index_moodle_assets_on_tcc_id"
 
   create_table "presentations", :force => true do |t|
     t.text     "content",    :limit => 16777215

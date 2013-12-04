@@ -12,6 +12,8 @@ gem 'unicode_utils'
 # Latex tcc -> pdf
 gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
 gem 'htmlentities'
+gem 'faraday'
+gem 'typhoeus'
 
 # Moodle Web Service
 gem 'rest-client'

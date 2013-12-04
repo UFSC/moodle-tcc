@@ -5,8 +5,13 @@ def current_git_branch
   branch
 end
 
-set :deploy_to, '/home/gabriel/tcc.teste-moodle.ufsc.br'
+set :user, 'deploy'
+set :deploy_to, '/home/deploy/tcc.teste-moodle.ufsc.br'
 set :branch, current_git_branch
+
+role :web, 'tcc.teste-moodle.ufsc.br'                          # Your HTTP server, Apache/etc
+role :app, 'tcc.teste-moodle.ufsc.br'                          # This may be the same as your `Web` server
+role :db,  'tcc.teste-moodle.ufsc.br', :primary => true        # This is where Rails migrations will run
 
 # Verificação de dependências
 shared_files = %w(database.yml moodle.yml tcc_config.yml errbit.yml email.yml)
