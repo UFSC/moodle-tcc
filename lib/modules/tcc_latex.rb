@@ -140,10 +140,10 @@ module TccLatex
         img['src'] = img['src'].gsub('@@TOKEN@@', TCC_CONFIG['token'])
       elsif img['src'] !~ URI::regexp
         img['src'] = File.join(Rails.public_path, img['src'])
-      end
 
-      # Se a URL contiver espaços ou caracter especial, deve ser decodificada
-      img['src'] = URI.unescape(img['src'])
+        # Se a URL contiver espaços ou caracter especial, deve ser decodificada
+        img['src'] = URI.unescape(img['src'])
+      end
 
       # Extrai as tuplas de estilo inline
       img_attributes = extract_style_attributes(img)
