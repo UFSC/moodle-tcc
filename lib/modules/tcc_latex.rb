@@ -145,9 +145,9 @@ module TccLatex
         if remote_img =~ URI::regexp(%w(http https))
           cache = MoodleAsset.where(tcc_id: tcc_id, data_file_name: File.basename(remote_img)).first
 
-          #Verificar se imagem está em cache e se existe no sistema
+          # Verificar se imagem está em cache e se existe no sistema
           if !cache.blank? && File.exist?(File.join(moodle_dir, cache.data_file_name))
-            img['src'] = File.join(moodle_dir, cache.data_file_name)
+            img['src'] = cache.data.content.file
           else
             process << {:dom => img, :request => conn.get(remote_img)}
           end

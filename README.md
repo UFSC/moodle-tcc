@@ -61,6 +61,16 @@ A instalação é feita pelo próprio gerenciador de pacotes do LaTex (tlmgr):
     sudo tlmgr install abntex2
     sudo texhash
 
+Para concluir é preciso alterar uma variavel de configuração do texmf.cnf:
+
+    sudo vim /usr/local/texlive/2013/texmf-dist/web2c/texmf.cnf
+
+    # Procurar pelo trexo abaixo: (próximo da linha 598)
+    openout_any = p
+
+    # trocar para:
+    openout_any = a
+
 ### Instalação e configuração da aplicação: ###
 
 Criar arquivos yml baseados nos arquivos: 
