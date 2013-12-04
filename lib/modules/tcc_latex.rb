@@ -138,6 +138,10 @@ module TccLatex
       elsif img['src'] =~ /@@TOKEN@@/
         # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
         img['src'] = img['src'].gsub('@@TOKEN@@', TCC_CONFIG['token'])
+
+        # é feito unescape e depois escape para garantir que a url estará correta
+        # essa maneira é estranha, mas evita problemas :)
+        img['src'] = URI.escape(URI.unescape(img['src']))
       elsif img['src'] !~ URI::regexp
         img['src'] = File.join(Rails.public_path, img['src'])
 
