@@ -33,6 +33,14 @@ class FinalConsiderationsController < ApplicationController
   end
 
   def update
+    save
+  end
+
+  def create
+    save
+  end
+
+  def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
     new_state = params[:final_considerations][:new_state]

@@ -33,6 +33,14 @@ class AbstractsController < ApplicationController
   end
 
   def update
+    save
+  end
+
+  def create
+    save
+  end
+
+  def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
     new_state = params[:abstract][:new_state]

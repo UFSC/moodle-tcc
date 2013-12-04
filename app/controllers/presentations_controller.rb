@@ -33,6 +33,14 @@ class PresentationsController < ApplicationController
   end
 
   def update
+    save
+  end
+
+  def create
+    save
+  end
+
+  def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @presentation= @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
     new_state = params[:presentation][:new_state]
