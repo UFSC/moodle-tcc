@@ -1,4 +1,5 @@
-set :deploy_to, '/home/gabriel/tcc.unasus.ufsc.br'
+set :user, 'deploy'
+set :deploy_to, '/home/deploy/tcc.unasus.ufsc.br'
 
 role :web, 'tcc.unasus.ufsc.br'                          # Your HTTP server, Apache/etc
 role :app, 'tcc.unasus.ufsc.br'                          # This may be the same as your `Web` server

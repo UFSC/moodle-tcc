@@ -24,7 +24,6 @@ set :git_enable_submodules, true
 
 set :ssh_options, {forward_agent: true, port: '2200'}
 
-set :user, 'gabriel'
 set :use_sudo, false
 set :deploy_via, :remote_cache
 
