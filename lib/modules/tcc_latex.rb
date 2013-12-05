@@ -95,32 +95,7 @@ module TccLatex
 
         if td.to_s.include? "rowspan"
           rowspan = td.xpath('@rowspan').first.value.to_i
-
-          #Salva posição da linha que tenha rowspan
-          tr_position = current_tr_position
-          #Salva posição da célular que tenha rowspan
-          td_position.push(current_td_position)
-        end
-      end
-    end
-
-    return html
-  end
-
-  def self.fix_rowspan(html)
-    td_position = Array.new
-    tr_position = 0
-    rowspan = 0
-
-    html.search('tr').each_with_index do |tr, current_tr_position|
-      tr.search('td').each_with_index do |td, current_td_position|
-        #Verifica se a linha e a célula devem receber espaço em branco
-        if tr_position > (current_tr_position - rowspan) and td_position.include? current_td_position
-          td.replace "<td></td>" + td.to_s
-        end
-
-        if td.to_s.include? "rowspan"
-          rowspan = td.xpath('@rowspan').first.value.to_i
+          td.replace td.to_s.gsub('rowspan', '')
 
           #Salva posição da linha que tenha rowspan
           tr_position = current_tr_position
