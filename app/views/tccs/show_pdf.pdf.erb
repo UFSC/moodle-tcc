@@ -184,8 +184,76 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 % Retira espaço extra obsoleto entre as frases.
 \frenchspacing
 
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+
+    \includegraphics[width=100pt]{<%="#{Rails.root}/app/assets/images/logo"%>}
+
+    \ABNTEXchapterfont\large
+      UNIVERSIDADE FEDERAL DE SANTA CATARINA \\
+      CENTRO DE CIENCIAS DA SAÚDE \\
+      DEPARTAMENTO DE SAÚDE PÚBLICA \\
+      CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL EM SAÚDE DA FAMÍLIA \\
+
+    \vspace*{3cm}
+
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vfill
+    \ABNTEXchapterfont\LARGE\imprimirtitulo
+    \vfill
+
+    \large\imprimirlocal , 2013 \\
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{1cm}
+  \end{capa}
+}
+
 % Capa
 \imprimircapa
+
+\makeatletter
+
+\renewcommand{\folhaderostocontent}{
+\begin{center}
+
+\vspace*{\fill}\vspace*{\fill}
+
+\begin{center}
+\ABNTEXchapterfont\Large\imprimirtitulo
+\end{center}
+
+\vspace*{\fill}
+
+\abntex@ifnotempty{\imprimirpreambulo}{%
+\hspace{.45\textwidth}
+\begin{minipage}{.5\textwidth}
+\SingleSpacing
+\imprimirpreambulo
+\end{minipage}%
+\vspace*{\fill}
+}%
+
+{\large\imprimirorientadorRotulo~\imprimirorientador\par}
+
+\abntex@ifnotempty{\imprimircoorientador}{%
+{\large\imprimircoorientadorRotulo~\imprimircoorientador}%
+}%
+
+\vspace*{\fill}
+
+{\large\imprimirlocal}
+
+\par
+
+{\large\imprimirdata}
+\vspace*{1cm}
+\end{center}
+}
+
+\makeatother
 
 % Contra capa
 \imprimirfolhaderosto
@@ -202,7 +270,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
     {\ABNTEXchapterfont\large\imprimirautor}
 
     \vspace*{\fill}\vspace*{\fill}
-    {\ABNTEXchapterfont\bfseries\Large\imprimirtitulo}
+    {\ABNTEXchapterfont\Large\imprimirtitulo}
     \vspace*{\fill}
 
     \hspace{.45\textwidth}
