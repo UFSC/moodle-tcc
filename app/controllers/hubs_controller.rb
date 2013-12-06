@@ -137,11 +137,11 @@ class HubsController < ApplicationController
       @hub = @tcc.hubs.hub_tcc.find_by_position(params[:position])
       new_state = params[:hub_tcc][:new_state]
     else
+      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
       if params[:hub_portfolio][:new_state] == 'admin_evaluation_ok' && @hub.grade.nil?
         flash[:error] = t(:cannot_change_to_state_without_grade)
         return redirect_user_to_start_page
       end
-      @hub = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
       new_state = params[:hub_portfolio][:new_state]
     end
 
