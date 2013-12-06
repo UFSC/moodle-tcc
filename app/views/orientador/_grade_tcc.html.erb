@@ -5,7 +5,7 @@
     <h5><%= tcc.name %></h5>
   </div>
   <div class="modal-body">
-    <%= semantic_form_for tcc, url: evaluate_tcc_path(tcc) do |t| %>
+    <%= semantic_form_for tcc, url: evaluate_tcc_path(tcc, moodle_user: tcc.moodle_user) do |t| %>
       <p><%= t.input :grade, label: 'Nota para o TCC:', hint: 'atribuir um valor de 0 à 100' %></p>
 
       <div class="modal-footer">
