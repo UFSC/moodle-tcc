@@ -90,6 +90,7 @@ brazil,				% o último idioma é o principal do documento
 \data{<%= lesc @tcc.defense_date.year unless @tcc.defense_date.nil? %>}
 \orientador{<%= lesc @nome_orientador unless @tcc.orientador.nil? %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
+
 \instituicao{%
     Universidade Federal de Santa Catarina
     \par
@@ -135,7 +136,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \renewcommand{\folhaderostocontent}{
 \begin{center}
 {\ABNTEXchapterfont\large\imprimirautor}
-\vspace*{\fill}\vspace*{\fill}
+\vspace*{\fill}
 
 {\ABNTEXchapterfont\bfseries\Large\imprimirtitulo}
 
@@ -152,9 +153,6 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 
 {\large\imprimirorientadorRotulo~\imprimirorientador\par}
 
-\abntex@ifnotempty{\imprimircoorientador}{%
-{\large\\Coordenadora do Curso: ~\imprimircoorientador}%
-}%
 
 \vspace*{\fill}
 
@@ -194,11 +192,11 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
       DEPARTAMENTO DE SAÚDE PÚBLICA \\
       CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL EM SAÚDE DA FAMÍLIA \\
 
-    \vspace*{3cm}
+    \vspace*{2cm}
 
     {\ABNTEXchapterfont\large\imprimirautor}
 
-    \vfill
+    \vspace*{3cm}
     \ABNTEXchapterfont\LARGE\imprimirtitulo
     \vfill
 
@@ -217,7 +215,9 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \renewcommand{\folhaderostocontent}{
 \begin{center}
 
-\vspace*{\fill}\vspace*{\fill}
+{\ABNTEXchapterfont\large\imprimirautor}
+
+\vspace*{\fill}
 
 \begin{center}
 \ABNTEXchapterfont\Large\imprimirtitulo
@@ -237,7 +237,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 {\large\imprimirorientadorRotulo~\imprimirorientador\par}
 
 \abntex@ifnotempty{\imprimircoorientador}{%
-{\large\imprimircoorientadorRotulo~\imprimircoorientador}%
+{\large\\Coordenadora do Curso: ~\imprimircoorientador}%
 }%
 
 \vspace*{\fill}
@@ -267,7 +267,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
     \begin{center}
     {\ABNTEXchapterfont\large\imprimirautor}
 
-    \vspace*{\fill}\vspace*{\fill}
+    \vspace*{\fill}
     {\ABNTEXchapterfont\Large\imprimirtitulo}
     \vspace*{\fill}
 
