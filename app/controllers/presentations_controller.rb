@@ -74,6 +74,8 @@ class PresentationsController < ApplicationController
 
       if @presentation.update_attributes(params[:presentation])
         redirect_to edit_presentations_path(moodle_user: @user_id)
+      else
+        render :edit
       end
     end
   end

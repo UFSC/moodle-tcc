@@ -29,7 +29,7 @@ class AbstractsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_to  edit_abstracts_path(@abstract, moodle_user: params[:moodle_user])
+    redirect_to edit_abstracts_path(@abstract, moodle_user: params[:moodle_user])
   end
 
   def update
@@ -74,6 +74,8 @@ class AbstractsController < ApplicationController
 
       if @abstract.update_attributes(params[:abstract])
         redirect_to edit_abstracts_path(moodle_user: @user_id)
+      else
+        render :edit
       end
     end
   end

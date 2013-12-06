@@ -74,6 +74,8 @@ class FinalConsiderationsController < ApplicationController
 
       if @final_considerations.update_attributes(params[:final_considerations])
         redirect_to edit_final_considerations_path(moodle_user: @user_id)
+      else
+        render :edit
       end
     end
   end
