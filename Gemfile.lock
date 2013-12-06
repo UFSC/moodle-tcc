@@ -41,6 +41,7 @@ GEM
       json
     arel (3.0.3)
     arrayfields (4.9.0)
+    attribute_normalizer (1.1.0)
     awesome_print (1.1.0)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
@@ -346,6 +347,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   airbrake
+  attribute_normalizer
   better_errors
   binding_of_caller
   bootstrap-datepicker-rails
