@@ -422,11 +422,11 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <!-- blockquote -->
 <xsl:template match="xhtml:blockquote">
   <xsl:text>
-    \begin{quote}
+    \begin{citacao}
   </xsl:text>
   <xsl:apply-templates />
   <xsl:text>
-    \end{quote}
+    \end{citacao}
   </xsl:text>
 </xsl:template>
 
