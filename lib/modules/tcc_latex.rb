@@ -68,6 +68,11 @@ module TccLatex
       tab.search('table').remove
     end
 
+    # Remove tags h1, h2, h3, h4, h5 das tabelas
+    html.search('table').each do |t|
+      t.replace t.to_s.gsub(/<h[0-9]\b[^>]*>/, '').gsub('</h>', '')
+    end
+
     # Remove parágrafos dentro das tabelas, se tiver parágrafo não renderiza corretamente
     html.search('table').each do |t|
       t.replace t.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
