@@ -8,13 +8,13 @@
 <% elsif @current_user.orientador? %>
     <%= render partial: 'common/tcc_child_form_orientador',
                locals: {object: @presentation,
-                        object_label: 'Apresentação',
+                        object_label: 'Apresentação - ' + @tcc.name,
                         action_url: presentations_path(moodle_user: @tcc.moodle_user),
                         last_object_commented: @last_commented} %>
 <% else %>
     <%= render partial: 'common/tcc_child_admin',
                locals: { object: @presentation,
-                         object_label: 'Apresentação',
+                         object_label: 'Apresentação - ' + @tcc.name,
                          action_url: presentations_path(moodle_user: @tcc.moodle_user),
                          update_state_url: update_state_presentations_path(@presentation, moodle_user: @tcc.moodle_user),
                          last_object_commented: @last_commented } %>
