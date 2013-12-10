@@ -3,7 +3,7 @@
   <%= render 'common/tabs_header' %>
   <%= render partial: 'form' %>
 <% else %>
-  <h3><%= @hub.hub_definition.title %></h3>
+    <h3><%= @hub.hub_definition.title + ' - ' + @tcc.name %></h3>
   <%= render partial: 'admin' %>
 <% end %>
 </div>

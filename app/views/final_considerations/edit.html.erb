@@ -8,13 +8,13 @@
 <% elsif @current_user.orientador? %>
     <%= render partial: 'common/tcc_child_form_orientador',
                locals: {object: @final_considerations,
-                        object_label: 'Considerações finais',
+                        object_label: 'Considerações finais - ' + @tcc.name,
                         action_url: final_considerations_path(moodle_user: @tcc.moodle_user),
                         last_object_commented: @last_commented} %>
 <% else %>
     <%= render partial: 'common/tcc_child_admin',
                locals: {object: @final_considerations,
-                        object_label: 'Considerações finais',
+                        object_label: 'Considerações finais - ' + @tcc.name,
                         action_url: final_considerations_path(moodle_user: @tcc.moodle_user),
                         update_state_url: update_state_final_considerations_path(@final_considerations, moodle_user: @tcc.moodle_user),
                         last_object_commented: @last_commented} %>
