@@ -47,6 +47,10 @@ module TccLatex
     return tex.strip
   end
 
+  def self.cleanup_title(title)
+      title.gsub('"', '')
+  end
+
   def self.cleanup_html(text)
 
     # Remove caracter &nbsp antes da conversão de HTML Entities
