@@ -62,8 +62,12 @@ class TccsController < ApplicationController
     @hubs = @tcc.hubs.hub_tcc
     @hubs.each do |hub|
       hub.fetch_diaries_for_printing(@tcc.moodle_user)
-      hub.diaries.map { |diaries| diaries.content = TccLatex.apply_latex(@tcc, diaries.content) }
+      hub.diaries.map do |diaries|
+        diaries.diary_definition.title = TccLatex.cleanup_title(diaries.diary_definition.title)
+        diaries.content = TccLatex.apply_latex(@tcc, diaries.content)
+      end
       hub.reflection = TccLatex.apply_latex(@tcc, hub.reflection)
+      hub.reflection_title = TccLatex.cleanup_title(hub.reflection_title)
     end
 
     #Consideracoes Finais

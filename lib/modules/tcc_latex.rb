@@ -47,6 +47,10 @@ module TccLatex
     return tex.strip
   end
 
+  def self.cleanup_title(title)
+      title.gsub('"', '')
+  end
+
   def self.cleanup_html(text)
 
     # Remove caracter &nbsp antes da conversão de HTML Entities
@@ -158,10 +162,6 @@ module TccLatex
         img['src'] = URI.unescape(img['src'])
       end
 
-      # Extrai as tuplas de estilo inline
-      img_attributes = extract_style_attributes(img)
-      img['width'] = img_attributes[:width] if img_attributes.has_key? :width
-      img['height'] = img_attributes[:height] if img_attributes.has_key? :height
     end
 
     return doc
