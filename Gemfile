@@ -9,6 +9,9 @@ gem 'oauth'
 # Unicode Utils
 gem 'unicode_utils'
 
+# Autocomplete no search
+gem 'rails3-jquery-autocomplete'
+
 # Latex tcc -> pdf
 gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
 gem 'htmlentities'
@@ -18,6 +21,10 @@ gem 'typhoeus'
 # Moodle Web Service
 gem 'rest-client'
 gem 'nokogiri'
+
+
+# Jquery UI
+gem 'jquery-ui-rails'
 
 # State machine
 gem 'aasm'

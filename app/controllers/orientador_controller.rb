@@ -1,5 +1,7 @@
 # encoding: utf-8
 class OrientadorController < ApplicationController
+  autocomplete :tcc, :name, :full => true
+
   skip_before_filter :get_tcc
   before_filter :check_permission
 
@@ -10,8 +12,7 @@ class OrientadorController < ApplicationController
     # Problema no webservice
     render 'public/404.html' unless username
 
-    @tccs = Tcc.where(tcc_definition_id: tcc_definition_id,
-                      orientador: username).paginate(:page => params[:page], :per_page => 30)
+    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, nil, username)
     @hubs = Tcc.hub_names
   end
 

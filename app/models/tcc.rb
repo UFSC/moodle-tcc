@@ -41,6 +41,22 @@ class Tcc < ActiveRecord::Base
 
   default_scope order(:name)
 
+
+  def self.search(search, page, tcc_definition_id, group = nil, orientador = nil)
+
+    query = 'tcc_definition_id = ? AND name LIKE? '
+    query = query+"AND tutor_group = #{group}" unless group.nil?
+    query = query+"AND orientador = #{orientador}" unless orientador.nil?
+
+    if (search)
+      t = self.where(query, tcc_definition_id, "%#{search}%")
+    else
+      t = self.where(tcc_definition_id: tcc_definition_id)
+    end
+
+    t.paginate(:page => page, :per_page => 30) if t
+  end
+
   # Retorna o nome do estudante sem a matrícula ()
   def student_name
     self.name.gsub(/ \([0-9].*\)/, '')

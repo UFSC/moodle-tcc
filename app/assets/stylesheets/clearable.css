@@ -1,0 +1,15 @@
+.clearable{
+  background:url(http://i.imgur.com/z7ZSYjt.png) no-repeat right -10px center;
+  border:1px solid #999;
+  padding:3px 18px 3px 4px; /* USE the same right padding in jQ! */
+  border-radius:3px;
+  transition: background 0.4s;
+}
+/* (jQ addClass:) if input has value: */
+.clearable.x{
+  background-position: right 5px center;
+}
+/* (jQ addClass:) if mouse is over the 'x' input area*/
+.clearable.onX{
+  cursor:pointer;
+}
