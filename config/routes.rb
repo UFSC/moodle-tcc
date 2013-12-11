@@ -8,8 +8,14 @@ SistemaTcc::Application.routes.draw do
 
   match 'instructor_admin' => 'instructor_admin#index'
 
+  # Autocomplete routes
+  get 'instructor_admin/autocomplete_tcc_name'
+  get 'tutor/autocomplete_tcc_name'
+  get 'orientador/autocomplete_tcc_name'
+
   # Ajax
   match "ajax/build" => "ajax#build"
+
 
   # Web Service
   match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}

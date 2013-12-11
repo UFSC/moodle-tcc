@@ -2,11 +2,9 @@
 <h4>
   Tela de Tutor para <%= @group_name %>
 </h4>
-
-<%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
-  <%= display_icon('icon-refresh') %> Atualizar lista
-<% end %>
-
+<%= render :partial => 'common/search_bar', locals: {path: instructor_admin_path,
+                                                     autocomplete_path:
+                                                             instructor_admin_autocomplete_tcc_name_path} %>
 <table class="table table-bordered" id="hubs-table">
   <thead>
   <tr class="blue-header-table">

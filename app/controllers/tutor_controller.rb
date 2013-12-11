@@ -1,5 +1,6 @@
 # encoding: utf-8
 class TutorController < ApplicationController
+  autocomplete :tcc, :name, :full => true
   skip_before_filter :get_tcc
   before_filter :check_permission
 
@@ -13,8 +14,7 @@ class TutorController < ApplicationController
     group = TutorGroup.get_tutor_groups(username)
     @groups = TutorGroup.get_tutor_group_names(group)
 
-    @tccs = Tcc.where(tutor_group: group, tcc_definition_id: tcc_definition_id).paginate(:page => params[:page],
-                                                                         :per_page => 30) unless group.nil?
+    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, group) unless group.nil?
     @hubs = Tcc.hub_names
   end
 

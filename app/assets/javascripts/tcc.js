@@ -16,27 +16,27 @@ function hideOldTccObject() {
 
 function warnLeavingUnsaved() {
     changed = false;
-    $("input[type='text']").change(function(){
+    $("input[type='text']").change(function() {
         changed = true;
     });
-    $('form').submit(function(){
+    $('form').submit(function() {
         window.onbeforeunload = null;
         changed = false
     });
     window.onbeforeunload = function(e) {
         for (instance in CKEDITOR.instances) {
             var editor = CKEDITOR.instances[instance];
-            if(editor.checkDirty()) {
+            if (editor.checkDirty()) {
                 changed = true;
             }
         }
-        if(changed) {
-            return "Dados não salvos serão perdidos" ;
+        if (changed) {
+            return "Dados não salvos serão perdidos";
         }
     };
 }
 
-$(function(){
+$(function() {
     $("#refresh-list").click(function() {
         location.reload();
     });
@@ -45,7 +45,18 @@ $(function(){
     warnLeavingUnsaved();
 
 });
-$(function(){
+$(function() {
     $('.tooltipped').tooltip();
 });
+function tog(v) {
+    return v ? 'addClass' : 'removeClass';
+}
+
+$(document).on('input', '.clearable',function() {
+    $(this)[tog(this.value)]('x');
+}).on('mousemove', '.x',function(e) {
+        $(this)[tog(this.offsetWidth - 18 < e.clientX - this.getBoundingClientRect().left)]('onX');
+    }).on('click', '.onX', function() {
+        $(this).removeClass('x onX').val('');
+    });
 

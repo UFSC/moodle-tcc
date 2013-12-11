@@ -1,11 +1,12 @@
 <h3>Lista de TCCs</h3><br/>
 <h4>
   Tela de Visão Geral
-  <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
-    <%= display_icon('icon-refresh') %>
-    Atualizar lista
-  <% end %>
 </h4>
 
-<%= render :partial => 'orientador/tcc_listing' %>
+<%= render :partial => 'common/search_bar', locals: {path: instructor_admin_path,
+                                                     autocomplete_path:
+                                                             instructor_admin_autocomplete_tcc_name_path} %>
+<%= render :partial => 'orientador/tcc_listing', locals: {path: instructor_admin_path,
+                                                          autocomplete_path:
+                                                                  instructor_admin_autocomplete_tcc_name_path} %>
 <%= will_paginate @tccs %>
