@@ -44,17 +44,12 @@ class Tcc < ActiveRecord::Base
 
   def self.search(search, page, tcc_definition_id, group = nil, orientador = nil)
 
-    query = 'tcc_definition_id = ? AND name LIKE? '
-    query = query+"AND tutor_group = #{group}" unless group.nil?
-    query = query+"AND orientador = #{orientador}" unless orientador.nil?
+    query = "tcc_definition_id = #{tcc_definition_id} "
+    query = query + "AND name LIKE '%#{search}%' " if search
+    query = query+"AND tutor_group IN (#{group.to_s.gsub('[', '').gsub(']', '')}) " unless group.nil?
+    query = query+"AND orientador = '#{orientador}'" unless orientador.nil?
 
-    if (search)
-      t = self.where(query, tcc_definition_id, "%#{search}%")
-    else
-      t = self.where(tcc_definition_id: tcc_definition_id)
-    end
-
-    t.paginate(:page => page, :per_page => 30) if t
+    self.where(query).paginate(:page => page, :per_page => 30)
   end
 
   # Retorna o nome do estudante sem a matrícula ()
