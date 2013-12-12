@@ -6,25 +6,21 @@ class Hub < ActiveRecord::Base
   has_many :diaries, :inverse_of => :hub
   accepts_nested_attributes_for :diaries
 
-  include TccStateMachine
-
   # Salvar a nota no moodle caso ela tenha mudado
   before_save :post_moodle_grade
 
-  # Virtual attribute
-  attr_accessor :course_id
-  attr_accessible :course_id
-
-  # Estados para combo
-  enumerize :new_state, in: Hub.aasm_states
-
   # Mass-Assignment
-  attr_accessible :new_state, :category, :position, :reflection, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
+  attr_accessible :type, :new_state, :category, :position, :reflection, :reflection_title, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :admin_evaluation_ok?
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
+
+  # Hubs por tipo (polimórfico)
+  scope :hub_portfolio, where(:type => 'HubPortfolio')
+  scope :hub_tcc, where(:type => 'HubTcc')
+  scope :hub_by_type, ->(type) { send("hub_#{type}") }
 
   def comparable_versions
     versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
@@ -32,6 +28,10 @@ class Hub < ActiveRecord::Base
 
   def fetch_diaries(user_id)
     Moodle.fetch_hub_diaries(self, user_id)
+  end
+
+  def fetch_diaries_for_printing(user_id)
+    Moodle.fetch_hub_diaries_for_printing(self, user_id)
   end
 
   # Verifica se possui todos os diário associados a este eixo com algum tipo de conteúdo
@@ -50,6 +50,25 @@ class Hub < ActiveRecord::Base
 
   def empty?
     self.reflection.blank?
+  end
+
+  def grade_date
+    if self.grade && self.admin_evaluation_ok?
+      self.updated_at
+    else
+      last_version = self.versions.where(state: 'admin_evaluation_ok').order(:created_at).last
+      unless last_version.nil?
+        last_version.reify.updated_at
+      end
+    end
+  end
+
+  def self.new_states_collection
+    new_state.options - [['Finalizado', 'terminated']] - [['Novo', 'new']]
+  end
+
+  def clear_commentary!
+    self.commentary = ''
   end
 
   def post_moodle_grade
