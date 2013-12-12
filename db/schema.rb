@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002214201) do
+ActiveRecord::Schema.define(:version => 20131129171918) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -74,6 +74,22 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.string  "subtype"
   end
 
+  create_table "ckeditor_assets", :force => true do |t|
+    t.string   "data_file_name",                  :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type",    :limit => 30
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+
   create_table "diaries", :force => true do |t|
     t.text     "content",             :limit => 16777215
     t.integer  "position"
@@ -121,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "moodle_shortname"
+    t.string   "subtitle"
   end
 
   add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
@@ -138,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.integer  "hub_definition_id"
     t.string   "type"
     t.string   "reflection_title"
+    t.string   "subtitle"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
@@ -163,6 +181,17 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.string  "subtype"
   end
 
+  create_table "moodle_assets", :force => true do |t|
+    t.string   "data_file_name",    :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "tcc_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "moodle_assets", ["tcc_id"], :name => "index_moodle_assets_on_tcc_id"
+
   create_table "presentations", :force => true do |t|
     t.text     "content",    :limit => 16777215
     t.text     "commentary"
@@ -187,9 +216,10 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
 
   create_table "tcc_definitions", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "course_id"
+    t.string   "activity_url"
   end
 
   create_table "tccs", :force => true do |t|
@@ -205,6 +235,8 @@ ActiveRecord::Schema.define(:version => 20131002214201) do
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
     t.string   "orientador"
+    t.string   "email_estudante"
+    t.string   "email_orientador"
   end
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
