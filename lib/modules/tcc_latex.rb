@@ -145,10 +145,7 @@ module TccLatex
     doc.css('img').map do |img|
       img['class'] = 'figure'
 
-      if img['src'] =~ /@@PLUGINFILE@@/
-        img['src'] = img['src'].gsub('@@PLUGINFILE@@', '')
-        img['src'] = "Imagem do Moodle: #{img['src']}"
-      elsif img['src'] =~ /@@TOKEN@@/
+      if img['src'] =~ /@@TOKEN@@/
         # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
         img['src'] = img['src'].gsub('@@TOKEN@@', TCC_CONFIG['token'])
 
