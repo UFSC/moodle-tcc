@@ -25,6 +25,7 @@ db/*.bz2
 .yardoc
 /tags
 /gems.tags
+config/*.save
 
 # Ignore Excepts
 !/.idea/codeStyleSettings.xml
