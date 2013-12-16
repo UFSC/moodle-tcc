@@ -12,7 +12,7 @@ class Hub < ActiveRecord::Base
   # Mass-Assignment
   attr_accessible :type, :new_state, :category, :position, :reflection, :reflection_title, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
 
-  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :admin_evaluation_ok?
+  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :has_grade?
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
@@ -24,6 +24,10 @@ class Hub < ActiveRecord::Base
 
   def comparable_versions
     versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
+  end
+
+  def has_grade?
+    self.type == 'HubPortfolio' && self.admin_evaluation_ok?
   end
 
   def fetch_diaries(user_id)
