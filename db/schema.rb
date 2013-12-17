@@ -155,7 +155,6 @@ ActiveRecord::Schema.define(:version => 20131129171918) do
     t.integer  "hub_definition_id"
     t.string   "type"
     t.string   "reflection_title"
-    t.string   "subtitle"
   end
 
   add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
@@ -218,8 +217,8 @@ ActiveRecord::Schema.define(:version => 20131129171918) do
     t.string   "title"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.string   "course_id"
     t.string   "activity_url"
+    t.string   "course_id"
   end
 
   create_table "tccs", :force => true do |t|
