@@ -24,6 +24,11 @@ class BookRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
   validates :edition_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
 
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :first_author, :second_author, :third_author, :title, :local, :with => [:squish, :blank]
+
+
   def direct_et_al
     "(#{first_author.split(' ').last.upcase} et al., #{year})"
   end
@@ -34,11 +39,14 @@ class BookRef < ActiveRecord::Base
 
     authors = "#{first_author.split(' ').last.upcase}"
 
-    if !second_author.nil?
-      authors = "#{authors}; #{second_author.split(' ').last.upcase}" if !second_author.empty?
+    unless second_author.nil? || second_author.empty?
+      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
+      authors = "#{authors}; #{lastname}"
     end
-    if !third_author.nil?
-      authors = "#{authors}; #{third_author.split(' ').last.upcase}" if !third_author.empty?
+
+    unless third_author.nil? || third_author.empty?
+      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
+      authors = "#{authors}; #{lastname}"
     end
 
     "(#{authors}, #{year})"

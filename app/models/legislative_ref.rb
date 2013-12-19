@@ -21,6 +21,11 @@ class LegislativeRef < ActiveRecord::Base
 
   alias_attribute :first_author, :jurisdiction_or_header
 
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :jurisdiction_or_header, :title, :local, :with => [:squish, :blank]
+
+
   def direct_citation
     "(#{UnicodeUtils.upcase(jurisdiction_or_header)}, #{year})"
   end

@@ -20,6 +20,9 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 
+  # AttributeNormalizer
+  config.include AttributeNormalizer::RSpecMatcher, :type => :model
+
   # Capybara Domain Specific language
   config.include Capybara::DSL
   Capybara.javascript_driver = :webkit

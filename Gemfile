@@ -29,18 +29,18 @@ gem 'jquery-ui-rails'
 # State machine
 gem 'aasm'
 
-# Tabs
-gem 'tabs_on_rails'
-
 # Inherited Resources
 gem 'inherited_resources'
-
-# Model versioning
-gem 'paper_trail'
 
 # Twitter Bootstrap
 gem 'bootstrap-datepicker-rails'
 gem 'twitter-bootstrap-rails-confirm'
+
+# Pagination
+gem 'will_paginate'
+
+# Tabs
+gem 'tabs_on_rails'
 
 # LTI for moodle integration
 gem 'ims-lti'
@@ -57,9 +57,6 @@ gem 'ckeditor'
 gem 'carrierwave'
 gem 'mini_magick'
 
-# Pagination
-gem 'will_paginate'
-
 # RABL
 gem 'rabl'
 
@@ -68,8 +65,12 @@ gem 'progress'
 gem 'terminal-table'
 gem 'whenever', require: false
 
-# Enumerize
+# Model Utils
 gem 'enumerize'
+gem 'attribute_normalizer'
+
+# Model versioning
+gem 'paper_trail'
 
 # Errbit (monitoração de falhas)
 gem 'airbrake'

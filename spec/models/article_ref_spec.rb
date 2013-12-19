@@ -8,7 +8,6 @@ describe ArticleRef do
     it { should respond_to(:article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name, :local, :number_or_fascicle, :year, :second_author, :third_author, :volume_number) }
     it { should have_one(:reference) }
 
-    # Pending
     it { should have_one(:tcc).through(:reference) }
 
     it { should validate_presence_of(:first_author) }
@@ -18,6 +17,19 @@ describe ArticleRef do
     it { should validate_presence_of(:year) }
     it { should validate_presence_of(:initial_page) }
     it { should validate_presence_of(:end_page) }
+  end
+
+  context 'normalizations' do
+    it { should normalize_attribute(:first_author) }
+    it { should normalize_attribute(:first_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:second_author) }
+    it { should normalize_attribute(:second_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:third_author) }
+    it { should normalize_attribute(:third_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:journal_name) }
+    it { should normalize_attribute(:journal_name).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:local) }
+    it { should normalize_attribute(:local).from(' Nome   Completo  ').to('Nome Completo') }
   end
 
   describe '#volume_number' do

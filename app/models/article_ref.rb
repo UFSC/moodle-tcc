@@ -23,6 +23,10 @@ class ArticleRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
 
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :first_author, :second_author, :third_author, :journal_name, :local, :with => [:squish, :blank]
+
   alias_attribute :title, :article_title
 
   def direct_et_al

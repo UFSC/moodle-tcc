@@ -1,3 +1,4 @@
+# encoding: utf-8
 class BookCapRef < ActiveRecord::Base
 
   include ModelsUtils
@@ -27,11 +28,16 @@ class BookCapRef < ActiveRecord::Base
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validate :initial_page_less_than_end_page
 
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :book_author, :cap_author, :book_title, :local, :with => [:squish, :blank]
+
   alias_attribute :title, :book_title
   alias_attribute :first_author, :book_author
 
   def direct_citation
-    "(#{book_author.split(' ').last.upcase}, #{year})"
+    lastname = UnicodeUtils.upcase(book_author.split(' ').last)
+    "(#{lastname}, #{year})"
   end
 
   private
@@ -42,7 +48,7 @@ class BookCapRef < ActiveRecord::Base
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
-      errors.add(:initial_page, "Can't be less than end page")
+      errors.add(:initial_page, 'Deve ser igual ou anterior a página final')
     end
   end
 

@@ -29,6 +29,17 @@ describe BookCapRef do
     it { should validate_numericality_of(:end_page) }
   end
 
+  context 'normalizations' do
+    it { should normalize_attribute(:book_author) }
+    it { should normalize_attribute(:book_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:cap_author) }
+    it { should normalize_attribute(:cap_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:book_title) }
+    it { should normalize_attribute(:book_title).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:local) }
+    it { should normalize_attribute(:local).from(' Nome   Completo  ').to('Nome Completo') }
+  end
+
   describe '#initial_page' do
     it { should validate_numericality_of(:initial_page).only_integer }
     it { should_not allow_value(-1).for(:initial_page) }
