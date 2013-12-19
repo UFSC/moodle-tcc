@@ -103,13 +103,23 @@ namespace :tcc do
     end
   end
 
-  desc 'TCC | Busca as notas no Sistema de TCC e popula no moodle'
-  task :update_all_grades => :environment do
-    Tcc.all.with_progress 'Atualizando notas' do |tcc|
+  desc 'TCC | Busca as notas de hubs no Sistema de TCC e popula no moodle'
+  task :update_all_hubs_grades => :environment do
+    Tcc.all.with_progress 'Atualizando notasdos hubs' do |tcc|
       tcc.hubs.each do|h|
         if h.grade?
           MoodleGrade.set_grade(h.tcc.moodle_user, h.tcc.tcc_definition.course_id, h.hub_definition.title, h.grade)
         end
+      end
+    end
+  end
+
+  desc 'TCC | Busca as notas de TCCs no Sistema de TCC e popula no moodle'
+  task :update_all_tccs_grades => :environment do
+    # tcc_name é o nome da tarefa LTI
+    Tcc.all.with_progress 'Atualizando notas dos tccs' do |tcc|
+      if tcc.grade?
+        MoodleGrade.set_grade(tcc.moodle_user, tcc.tcc_definition.course_id, tcc.tcc_definition.name, tcc.grade)
       end
     end
   end

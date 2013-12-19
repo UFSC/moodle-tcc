@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 # Helper para realizar a criação e popular TccDefinitions, HubDefinitions, DiaryDefinitions
-def create_or_update_tcc_definitions(title, hub_diaries, course_id, activity_url)
+def create_or_update_tcc_definitions(title, hub_diaries, course_id, activity_url, tcc_name)
 
   # Numero de operações para criação de Hubs + Diários + 1 (Tcc)
   num_operations = hub_diaries.flatten.flatten.count+1
@@ -9,6 +9,7 @@ def create_or_update_tcc_definitions(title, hub_diaries, course_id, activity_url
   Progress.start("TCC Definition: #{title}", num_operations) do
     tcc_def = TccDefinition.find_or_initialize_by_title(title: title)
     tcc_def.course_id = course_id
+    tcc_def.name = tcc_name
     tcc_def.activity_url = activity_url
     tcc_def.save!
     Progress.step
@@ -56,7 +57,7 @@ definition = {
 
 }
 activity_url = 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3321'
-create_or_update_tcc_definitions('Turma A', definition, 101, activity_url)
+create_or_update_tcc_definitions('Turma A', definition, 101, activity_url, 'TCC')
 
 #
 # TCC Definition - Turma B
@@ -78,7 +79,7 @@ definition = {
     ]
 }
 activity_url = 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322'
-create_or_update_tcc_definitions('Turma B', definition, 102, activity_url)
+create_or_update_tcc_definitions('Turma B', definition, 102, activity_url, 'TCC')
 
 
 #
