@@ -6,7 +6,7 @@ describe ThesisRef do
     after(:all) { @thesis_ref.destroy }
 
     it { should respond_to(:author, :chapter, :course, :degree, :department, :institution, :local,
-                           :pages_or_volumes_number, :subtitle, :title, :type, :type_number, :year) }
+                           :pages_or_volumes_number, :subtitle, :title, :type_thesis, :type_number, :year) }
     it { should have_one(:reference) }
 
     it { should have_one(:tcc).through(:reference) }
