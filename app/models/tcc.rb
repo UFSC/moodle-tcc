@@ -105,8 +105,8 @@ class Tcc < ActiveRecord::Base
     self.build_presentation if self.presentation.nil?
   end
 
-  def post_moodle_grade
-    if self.grade_changed?
+  def post_moodle_graden
+    if self.grade_changed? && self.tcc_definition
       MoodleGrade.set_grade(self.moodle_user, self.tcc_definition.course_id, self.tcc_definition.name, self.grade);
     end
   end
