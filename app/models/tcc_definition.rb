@@ -4,5 +4,5 @@ class TccDefinition < ActiveRecord::Base
 
   validates_presence_of :title
 
-  attr_accessible :title, :activity_url
+  attr_accessible :title, :activity_url, :course_id
 end

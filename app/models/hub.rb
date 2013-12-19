@@ -1,4 +1,3 @@
-# encoding: utf-8
 class Hub < ActiveRecord::Base
   extend Enumerize
 
@@ -7,8 +6,13 @@ class Hub < ActiveRecord::Base
   has_many :diaries, :inverse_of => :hub
   accepts_nested_attributes_for :diaries
 
+  # Salvar a nota no moodle caso ela tenha mudado
+  before_save :post_moodle_grade
+
   # Mass-Assignment
   attr_accessible :type, :new_state, :category, :position, :reflection, :reflection_title, :commentary, :grade, :diaries_attributes, :hub_definition, :tcc
+
+  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, if: :has_grade?
 
   # TODO: renomear campo category no banco e remover esse workaround
   alias_attribute :category, :position
@@ -20,6 +24,10 @@ class Hub < ActiveRecord::Base
 
   def comparable_versions
     versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))
+  end
+
+  def has_grade?
+    self.type == 'HubPortfolio' && self.admin_evaluation_ok?
   end
 
   def fetch_diaries(user_id)
@@ -65,6 +73,12 @@ class Hub < ActiveRecord::Base
 
   def clear_commentary!
     self.commentary = ''
+  end
+
+  def post_moodle_grade
+    if self.grade_changed? && self.tcc && self.hub_definition
+      MoodleGrade.set_grade(self.tcc.moodle_user, self.tcc.tcc_definition.course_id, self.hub_definition.title, self.grade);
+    end
   end
 
   private

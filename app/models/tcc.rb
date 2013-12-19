@@ -24,6 +24,8 @@ class Tcc < ActiveRecord::Base
   has_many :internet_refs, :through => :references, :source => :element, :source_type => 'InternetRef'
   has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
 
+  # Salvar a nota no moodle caso ela tenha mudado
+  before_save :post_moodle_grade
 
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations
 
@@ -101,6 +103,12 @@ class Tcc < ActiveRecord::Base
     self.build_abstract if self.abstract.nil?
     self.build_final_considerations if self.final_considerations.nil?
     self.build_presentation if self.presentation.nil?
+  end
+
+  def post_moodle_grade
+    if self.grade_changed? && self.tcc_definition && self.tcc_definition.course_id
+      MoodleGrade.set_grade(self.moodle_user, self.tcc_definition.course_id, self.tcc_definition.name, self.grade);
+    end
   end
 
   private
