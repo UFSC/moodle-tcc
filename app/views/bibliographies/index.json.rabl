@@ -1,10 +1,10 @@
-node :general_refs do
-  {
-      :tab_name => 'Gerais',
-      :url => 'general_refs',
-      :collection => partial('general_refs/index', :object => @general_refs)
-  }
-end
+#node :general_refs do
+#  {
+#      :tab_name => 'Gerais',
+#      :url => 'general_refs',
+#      :collection => partial('general_refs/index', :object => @general_refs)
+#  }
+#end
 node :book_refs do
   {
       :tab_name => 'Livros',
