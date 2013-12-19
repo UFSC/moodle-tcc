@@ -23,6 +23,7 @@ class Tcc < ActiveRecord::Base
   has_many :article_refs, :through => :references, :source => :element, :source_type => 'ArticleRef'
   has_many :internet_refs, :through => :references, :source => :element, :source_type => 'InternetRef'
   has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
+  has_many :thesis_refs, :through => :references, :source => :element, :source_type => 'ThesisRef'
 
 
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations

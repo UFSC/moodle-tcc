@@ -62,6 +62,7 @@ SistemaTcc::Application.routes.draw do
   resources :article_refs
   resources :internet_refs
   resources :legislative_refs
+  resources :thesis_refs
   resources :orientador
   resources :tutor
 

@@ -1,0 +1,8 @@
+<% if @current_user.student? %>
+    <%= render 'common/tabs_header' %>
+<% end %>
+
+<fieldset>
+  <legend><%= @book_cap_ref.cap_title %></legend>
+  <%= render :partial => 'form' %>
+</fieldset>
