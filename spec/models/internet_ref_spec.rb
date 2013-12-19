@@ -34,7 +34,12 @@ describe InternetRef do
     end
 
   end
-
+  context 'normalizations' do
+    it { should normalize_attribute(:author) }
+    it { should normalize_attribute(:author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:title) }
+    it { should normalize_attribute(:title).from(' Nome   Completo  ').to('Nome Completo') }
+  end
   context 'same_author' do
     describe '#check_equality' do
       after(:each) do

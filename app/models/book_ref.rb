@@ -24,6 +24,11 @@ class BookRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
   validates :edition_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
 
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :first_author, :second_author, :third_author, :title, :local, :with => [:squish, :blank]
+
+
   def direct_et_al
     "(#{first_author.split(' ').last.upcase} et al., #{year})"
   end

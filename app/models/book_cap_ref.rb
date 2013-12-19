@@ -28,6 +28,10 @@ class BookCapRef < ActiveRecord::Base
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validate :initial_page_less_than_end_page
 
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :book_author, :cap_author, :book_title, :local, :with => [:squish, :blank]
+
   alias_attribute :title, :book_title
   alias_attribute :first_author, :book_author
 

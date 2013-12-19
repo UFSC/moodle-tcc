@@ -14,7 +14,14 @@ describe LegislativeRef do
     it { should validate_presence_of(:publisher) }
     it { should validate_presence_of(:total_pages) }
   end
-
+  context 'normalizations' do
+    it { should normalize_attribute(:jurisdiction_or_header) }
+    it { should normalize_attribute(:jurisdiction_or_header).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:title) }
+    it { should normalize_attribute(:title).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:local) }
+    it { should normalize_attribute(:local).from(' Nome   Completo  ').to('Nome Completo') }
+  end
   describe '#edition' do
     it { should validate_numericality_of(:edition).only_integer }
     it { should_not allow_value(-1).for(:edition) }

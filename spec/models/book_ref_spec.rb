@@ -36,7 +36,18 @@ describe BookRef do
     it { should allow_value(1).for(:edition_number) }
     it { should allow_value(5).for(:edition_number) }
   end
-
+  context 'normalizations' do
+    it { should normalize_attribute(:first_author) }
+    it { should normalize_attribute(:first_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:second_author) }
+    it { should normalize_attribute(:second_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:third_author) }
+    it { should normalize_attribute(:third_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:title) }
+    it { should normalize_attribute(:title).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:local) }
+    it { should normalize_attribute(:local).from(' Nome   Completo  ').to('Nome Completo') }
+  end
   context 'same_author' do
     describe '#check_equality' do
       after(:each) do

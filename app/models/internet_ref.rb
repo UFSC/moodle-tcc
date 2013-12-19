@@ -17,6 +17,12 @@ class InternetRef < ActiveRecord::Base
   attr_accessible :access_date, :author, :subtitle, :title, :url
 
   validates_format_of :url, :with => VALID_URL_EXPRESSION
+
+  # Garante que os atributos principais estarão dentro de um padrão mínimo:
+  # sem espaços no inicio e final e espaços duplos
+  normalize_attributes :author, :title, :with => [:squish, :blank]
+
+
   alias_attribute :first_author, :author
 
 
