@@ -1,5 +1,5 @@
 <% if @current_user.student? %>
-    <%= render 'common/tabs_header' %>
+  <%= render 'common/tabs_header' %>
 <% end %>
 <div class='span12'>
   <h3>Referências Bibliográficas</h3>
@@ -11,6 +11,7 @@
     <li id='article' class='bibliographie-tab'><a href='#article'>Artigos</a></li>
     <li id='internet' class='bibliographie-tab'><a href='#internet'>Internet</a></li>
     <li id='legs' class='bibliographie-tab'><a href='#legs'>Legislativo</a></li>
+    <li id='thesis' class='bibliographie-tab'><a href='#thesis'>Teses e Monografias</a></li>
   </ul>
 
   <!--<div id='content-geral' class='tab-content'><%= render :template => 'general_refs/index' %></div>-->
@@ -19,4 +20,5 @@
   <div id='content-article' class='tab-content'><%= render :template => 'article_refs/index' %></div>
   <div id='content-internet' class='tab-content'><%= render :template => 'internet_refs/index' %></div>
   <div id='content-legs' class='tab-content'><%= render :template => 'legislative_refs/index' %></div>
+  <div id='content-thesis' class='tab-content'><%= render :template => 'thesis_refs/index' %></div>
 </div>
