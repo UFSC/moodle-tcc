@@ -14,15 +14,16 @@ class ThesisRef < ActiveRecord::Base
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
 
-  attr_accessible :author, :chapter, :course, :degree, :department, :institution, :local, :pages_or_volumes_number, :subtitle, :title, :type_thesis, :type_number, :year
+  attr_accessible :author, :chapter, :course, :degree, :department, :institution, :local, :pages_or_volumes_number,
+                  :subtitle, :title, :type_thesis, :type_number, :year, :year_of_submission
 
   validates_presence_of :author, :title, :subtitle, :local, :year, :institution, :pages_or_volumes_number,
-                        :type_number, :course
+                        :type_number, :course, :year_of_submission
 
   validates :type_number, :inclusion => {:in => TYPES}
   validates :type_thesis, :inclusion => {:in => THESIS_TYPES}
 
-  validates :year, :pages_or_volumes_number, :numericality => {:only_integer => true}
+  validates :year, :year_of_submission, :pages_or_volumes_number, :numericality => {:only_integer => true}
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos

@@ -6,6 +6,7 @@ class CreateThesisRefs < ActiveRecord::Migration
       t.string :subtitle
       t.string :local
       t.integer :year
+      t.integer :year_of_submission
       t.integer :chapter
       t.string :type_thesis
       t.integer :pages_or_volumes_number

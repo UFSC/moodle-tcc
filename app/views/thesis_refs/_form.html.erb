@@ -1,31 +1,30 @@
-<%= semantic_form_for @book_cap_ref do |ref| %>
-    <div id="data_tab_content">
-      <input type="hidden" name="moodle_user" value="<%=j params[:moodle_user] %>" />
-      <%= ref.inputs do %>
-          <div class="span4">
-            <%= ref.input :type_participation, :as => :radio, :collection => %w(Autor Organizador Compilador Editor) %>
-            <%= ref.input :book_author %>
-            <%= ref.input :cap_author %>
-          </div>
-          <div class="span4">
-            <%= ref.input :book_title %>
-            <%= ref.input :book_subtitle %>
-            <%= ref.input :cap_title %>
-            <%= ref.input :cap_subtitle %>
-          </div>
-          <div class="span3">
-            <%= ref.input :local %>
-            <%= ref.input :publisher %>
-            <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
-            <div style='width:110px; float:left;'>
-              <%= ref.input :initial_page, :input_html => {:min => 0, :style => 'width:90px;'} %>
-            </div>
-            <div style='width:110px; float:left;'>
-              <%= ref.input :end_page, :input_html => {:min => 0, :style => 'width:90px;'} %>
-            </div>
-          </div>
-      <% end %>
-      <%= required_fields  %>
-      <%= ref.actions :submit %>
+<%= semantic_form_for @thesis_ref do |ref| %>
+  <div id="data_tab_content">
+    <input type="hidden" name="moodle_user" value="<%=j params[:moodle_user] %>" />
+    <%= ref.inputs do %>
+      <div class="span4">
+        <%= ref.input :author %>
+        <%= ref.input :title %>
+        <%= ref.input :subtitle %>
+        <%= ref.input :local %>
+      </div>
+      <div class="span4">
+        <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
+        <%= ref.input :chapter %>
+        <%= ref.input :type_thesis, :as => :radio, :collection => %W(Tese Dissertação Monografia TCC) %>
+        <%= ref.input :type_number, :as => :radio, :collection => %w(Folhas Volumes) %>
+        <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
+      </div>
+      <div class="span4">
+        <%= ref.input :degree %>
+        <%= ref.input :institution %>
+        <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
+        <%= ref.input :course %>
+        <%= ref.input :department %>
+      </div>
+      </div>
+    <% end %>
+    <%= required_fields  %>
+    <%= ref.actions :submit %>
     </div>
 <% end %>
