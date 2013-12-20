@@ -241,6 +241,24 @@ ActiveRecord::Schema.define(:version => 20131219201035) do
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
 
+  create_table "thesis_refs", :force => true do |t|
+    t.string  "author"
+    t.string  "title"
+    t.string  "subtitle"
+    t.string  "local"
+    t.integer "year"
+    t.integer "year_of_submission"
+    t.integer "chapter"
+    t.string  "type_thesis"
+    t.integer "pages_or_volumes_number"
+    t.string  "type_number"
+    t.string  "degree"
+    t.string  "institution"
+    t.string  "course"
+    t.string  "department"
+    t.string  "subtype"
+  end
+
   create_table "versions", :force => true do |t|
     t.string   "item_type",                        :null => false
     t.integer  "item_id",                          :null => false

@@ -4,6 +4,7 @@ Fabricator(:thesis_ref) do
   subtitle                { Faker::Lorem.sentence(4) }
   local                   { Faker::Address.city }
   year                    2000
+  year_of_submission      2000
   chapter                 1
   type_thesis                    { ThesisRef::THESIS_TYPES.sample }
   pages_or_volumes_number 20
