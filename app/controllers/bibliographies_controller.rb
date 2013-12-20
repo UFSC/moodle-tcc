@@ -11,6 +11,7 @@ class BibliographiesController < ApplicationController
     @article_refs = @tcc.article_refs
     @internet_refs = @tcc.internet_refs
     @legislative_refs = @tcc.legislative_refs
+    @thesis_refs = @tcc.thesis_refs
 
   end
 end

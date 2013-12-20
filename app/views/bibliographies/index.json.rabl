@@ -40,3 +40,10 @@ node :legislative_refs do
       :collection => partial('internet_refs/index', :object => @legislative_refs)
   }
 end
+node :thesis_refs do
+  {
+      :tab_name => 'Teses',
+      :url => 'thesis_refs',
+      :collection => partial('thesis_refs/index', :object => @thesis_refs)
+  }
+end
