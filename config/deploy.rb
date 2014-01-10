@@ -26,6 +26,7 @@ set :ssh_options, {forward_agent: true, port: '2200'}
 
 set :use_sudo, false
 set :deploy_via, :remote_cache
+set :rails_env, 'production'
 
 namespace :deploy do
   task :setup_db, :roles => :db, :desc => 'Configura base de dados inicial.' do
