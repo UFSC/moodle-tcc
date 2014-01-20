@@ -11,7 +11,7 @@ module TccLatex
 
   def self.apply_latex(tcc, text)
     if text.nil?
-      #texto vazio, retornar mensagem genérica de texto vazio
+      # texto vazio, retornar mensagem genérica de texto vazio
       return '[ainda não existe texto para esta seção]'
     end
 
@@ -48,7 +48,7 @@ module TccLatex
   end
 
   def self.cleanup_title(title)
-      title.gsub('"', '')
+    title.gsub('"', '')
   end
 
   def self.cleanup_html(text)
@@ -147,7 +147,7 @@ module TccLatex
 
       if img['src'] =~ /@@TOKEN@@/
         # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
-        img['src'] = img['src'].gsub('@@TOKEN@@', TCC_CONFIG['token'])
+        img['src'] = img['src'].gsub('@@TOKEN@@', Settings.moodle_token)
 
         # é feito unescape e depois escape para garantir que a url estará correta
         # essa maneira é estranha, mas evita problemas :)
@@ -165,19 +165,20 @@ module TccLatex
   end
 
   def self.download_figures(tcc, doc)
-    conn = Faraday.new(:url => 'http://ufsc.br') do |faraday|
-      faraday.adapter :typhoeus
-    end
-
-    #Definicao de Tcc id e Diretorios
-    tcc_id = tcc.id
-    app_name = Rails.application.class.parent_name.parameterize
-    moodle_dir = File.join(Rails.public_path, 'uploads', 'moodle', 'pictures', tcc_id.to_s)
-
-    # Requisição das imagens
     process = []
     tmp_files = []
 
+    conn = Faraday.new(Settings.moodle_url,
+                       :ssl => {:verify => false}) do |faraday|
+      faraday.request :url_encoded
+      faraday.adapter :typhoeus
+    end
+
+    # Definicao de Tcc id e Diretorios
+    tcc_id = tcc.id
+    moodle_dir = File.join(Rails.public_path, 'uploads', 'moodle', 'pictures', tcc_id.to_s)
+
+    # Requisição das imagens
     conn.in_parallel do
       doc.css('img').map do |img|
         remote_img = img['src']
@@ -199,17 +200,10 @@ module TccLatex
 
     # Salvar imagens no db
     process.each do |item|
-      tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{SecureRandom.hex(12)}")
-      Dir.mkdir(tmp_dir)
-
-      #Criar imagem tmp
-      url = URI.parse item[:dom]['src']
-      filename = File.join tmp_dir, File.basename(url.path)
-      file = File.open(filename, 'wb')
-      file.write(item[:request].body)
+      file, filename = create_file_to_upload(item)
       tmp_files << filename
 
-      #Salvar
+      # Salvar
       asset = MoodleAsset.new
       asset.tcc_id = tcc_id
       asset.data = file
@@ -228,6 +222,20 @@ module TccLatex
 
   ensure
     tmp_files.each { |tmp_file| File.delete(tmp_file) }
+  end
+
+  def self.create_file_to_upload(item)
+    # Setup temporary directory
+    app_name = Rails.application.class.parent_name.parameterize
+    tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{SecureRandom.hex(12)}")
+    Dir.mkdir(tmp_dir)
+
+    # Criar imagem tmp
+    url = URI.parse item[:dom]['src']
+    filename = File.join tmp_dir, File.basename(url.path)
+    file = File.open(filename, 'wb')
+    file.write(item[:request].body)
+    return file, filename
   end
 
   def self.extract_style_attributes(img)

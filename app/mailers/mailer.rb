@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Mailer < ActionMailer::Base
-  default from: -> { TCC_CONFIG['notification_email'] }
+  default from: -> { Settings.notification_email }
 
   def state_altered(email, old_state, new_state, url)
     @old = old_state

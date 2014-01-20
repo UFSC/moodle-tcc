@@ -108,7 +108,7 @@ module Authentication
       instance_guid = params['tool_consumer_instance_guid']
 
       # Verifica se a chave foi informada e se é uma chave existente
-      if key.blank? || key != TCC_CONFIG['consumer_key']
+      if key.blank? || key != Settings.consumer_key
         logger.error 'Invalid OAuth consumer key informed'
 
         @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
@@ -121,7 +121,7 @@ module Authentication
 
       # Verifica se o host está autorizado a realizar a requisição
       # A idéia aqui é principalmente evitar que erroneamente seja acessado pelo desenvolvimento
-      if TCC_CONFIG['instance_guid'] && instance_guid != TCC_CONFIG['instance_guid']
+      if Settings.instance_guid && instance_guid != Settings.instance_guid
         logger.error 'Unauthorized instance guid'
 
         @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
@@ -134,7 +134,7 @@ module Authentication
 
       logger.debug 'LTI TP Initialized with valid key/secret'
 
-      @tp = IMS::LTI::ToolProvider.new(key, TCC_CONFIG['consumer_secret'], params)
+      @tp = IMS::LTI::ToolProvider.new(key, Settings.consumer_secret, params)
 
       return true
     end

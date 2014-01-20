@@ -1,35 +1,29 @@
 development:
-  server: http://localhost/moodle/webservice/rest/server.php
-  token: 59864ec673b9eadc141ec43d3e634065
+  # Integração com Moodle
+  moodle_url: https://moodle.local
+  moodle_token: 59864ec673b9eadc141ec43d3e634065
 
+  # Integração OAUTH
   consumer_key: consumer_key
   consumer_secret: consumer_secret
-
-  # Instance guid deve ser o domínio da instalação Moodle
-  instance_guid: localhost
 
   notification_email: notification@example.org
 
 test:
-  server: http://localhost/moodle/webservice/rest/server.php
-  token: 59864ec673b9eadc141ec43d3e634065
-  get_user_name_token: 59864ec673b9eadc141ec43d3e634065
+  # Integração com Moodle
+  moodle_url: https://moodle.local
+  moodle_token: 59864ec673b9eadc141ec43d3e634065
 
+  # Integração OAUTH
   consumer_key: consumer_key
   consumer_secret: consumer_secret
 
-  # Instance guid deve ser o domínio da instalação Moodle
-  instance_guid: localhost
-
   notification_email: notification@example.org
 production:
-#  server:
-#  token:
+#  moodle_url:
+#  moodle_token:
 
 #  consumer_key:
 #  consumer_secret:
-
-# Instance guid deve ser o domínio da instalação Moodle
-#  instance_guid:
 
 #  notification_email:

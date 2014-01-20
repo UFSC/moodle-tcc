@@ -61,6 +61,7 @@ gem 'whenever', require: false
 gem 'enumerize'
 gem 'attribute_normalizer'
 gem 'paper_trail' # Versionamento
+gem 'settingslogic' # Configurações
 
 # Errbit (monitoração de falhas)
 gem 'airbrake'

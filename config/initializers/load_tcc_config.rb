@@ -1,1 +1,0 @@
-TCC_CONFIG = YAML.load_file("#{Rails.root}/config/tcc_config.yml")[Rails.env]

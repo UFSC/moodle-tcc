@@ -4,7 +4,7 @@ require 'spec_helper'
 def moodle_lti_params(roles = 'student', type = 'portfolio')
   @tcc ||= Fabricate(:tcc_with_all)
 
-  tc = IMS::LTI::ToolConsumer.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'])
+  tc = IMS::LTI::ToolConsumer.new(Settings.consumer_key, Settings.consumer_secret)
   tc.launch_url = 'http://moodle.local/mod/lti/service.php'
   tc.resource_link_id = 1
   tc.roles = roles
@@ -23,5 +23,5 @@ def fake_lti_session(roles = 'student', type = 'portfolio')
 end
 
 def fake_lti_tp(roles = 'student', type = 'portfolio')
-  IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], moodle_lti_params(roles, type))
+  IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, moodle_lti_params(roles, type))
 end

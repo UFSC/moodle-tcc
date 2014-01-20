@@ -15,7 +15,7 @@ module LtiTccFilters
       redirect_to access_denied_path
 
     else
-      @tp = IMS::LTI::ToolProvider.new(TCC_CONFIG['consumer_key'], TCC_CONFIG['consumer_secret'], lti_params)
+      @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
       if (current_user.instructor? || current_user.orientador? || current_user.view_all?) && params['moodle_user']
         @user_id = params['moodle_user']
       else

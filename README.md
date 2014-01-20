@@ -77,7 +77,7 @@ Criar arquivos yml baseados nos arquivos:
  
 * database.yml.example
 * moodle.yml.example 
-* tcc_config.yml.example (Verifique o endereço da sua instalação do Moodle na variavel **server** e **instance\_guid**)
+* tcc_config.yml.example (Verifique o endereço da sua instalação do Moodle na variavel **moodle_url**)
 * email.yml.example
 
 Instalar gems e executar a migração do banco:
