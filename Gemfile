@@ -60,7 +60,7 @@ gem 'whenever', require: false
 # Model Utils
 gem 'enumerize'
 gem 'attribute_normalizer'
-gem 'paper_trail' # Versionamento
+gem 'paper_trail', '2.7.2' # Versionamento
 gem 'settingslogic' # Configurações
 
 # Errbit (monitoração de falhas)

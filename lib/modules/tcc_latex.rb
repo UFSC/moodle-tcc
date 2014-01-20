@@ -168,17 +168,16 @@ module TccLatex
     process = []
     tmp_files = []
 
-    conn = Faraday.new(Settings.moodle_url,
-                       :ssl => {:verify => false}) do |faraday|
-      faraday.request :url_encoded
-      faraday.adapter :typhoeus
-    end
-
     # Definicao de Tcc id e Diretorios
     tcc_id = tcc.id
     moodle_dir = File.join(Rails.public_path, 'uploads', 'moodle', 'pictures', tcc_id.to_s)
 
     # Requisição das imagens
+    conn = Faraday.new(Settings.moodle_url, :ssl => {:verify => false}) do |faraday|
+      faraday.request :url_encoded
+      faraday.adapter :typhoeus
+    end
+
     conn.in_parallel do
       doc.css('img').map do |img|
         remote_img = img['src']
@@ -201,6 +200,13 @@ module TccLatex
     # Salvar imagens no db
     process.each do |item|
       file, filename = create_file_to_upload(item)
+
+      # se houver algum problema com a transferência, vamos ignorar e processar o próximo
+      unless file
+        Rails.logger.error "[Moodle Asset]: Falhou ao tentar transferir #{filename} (#{item[:dom]['src']})"
+        next
+      end
+
       tmp_files << filename
 
       # Salvar

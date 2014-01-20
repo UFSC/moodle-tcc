@@ -1,6 +1,6 @@
 development:
   # Integração com Moodle
-  moodle_url: https://moodle.local
+  moodle_url: http://localhost
   moodle_token: 59864ec673b9eadc141ec43d3e634065
 
   # Integração OAUTH
@@ -11,7 +11,7 @@ development:
 
 test:
   # Integração com Moodle
-  moodle_url: https://moodle.local
+  moodle_url: http://localhost
   moodle_token: 59864ec673b9eadc141ec43d3e634065
 
   # Integração OAUTH

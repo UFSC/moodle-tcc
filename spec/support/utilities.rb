@@ -5,11 +5,11 @@ def moodle_lti_params(roles = 'student', type = 'portfolio')
   @tcc ||= Fabricate(:tcc_with_all)
 
   tc = IMS::LTI::ToolConsumer.new(Settings.consumer_key, Settings.consumer_secret)
-  tc.launch_url = 'http://moodle.local/mod/lti/service.php'
+  tc.launch_url = URI.parse(Settings.moodle_url).merge!('/mod/lti/service.php').to_s
   tc.resource_link_id = 1
   tc.roles = roles
   tc.user_id = @tcc.moodle_user
-  tc.tool_consumer_instance_guid = 'localhost'
+  tc.tool_consumer_instance_guid = Settings.instance_guid
   tc.custom_params = {
       'type' => type,
       'tcc_definition' => @tcc.tcc_definition.id
