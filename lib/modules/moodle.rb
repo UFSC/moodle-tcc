@@ -8,12 +8,12 @@ module Moodle
   def self.remote_call(remote_method_name, params={}, &block)
     Rails.logger.debug "[Moodle WS] Chamada remota: #{remote_method_name}, parametros: #{params}"
 
-    default = {:wstoken => TCC_CONFIG['token'], :wsfunction => remote_method_name}
+    default = {:wstoken => Settings.moodle_token, :wsfunction => remote_method_name}
 
     post_params = default
     post_params.merge!(params) unless params.empty?
 
-    RestClient.post(TCC_CONFIG['server'], post_params) do |response|
+    RestClient.post(Settings.moodle_rest_url, post_params) do |response|
       Rails.logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
 
       if response.code != 200

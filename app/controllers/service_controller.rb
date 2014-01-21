@@ -40,7 +40,7 @@ class ServiceController < ApplicationController
   private
 
   def check_consumer_key
-    if params[:consumer_key] != TCC_CONFIG['consumer_key']
+    if params[:consumer_key] != Settings.consumer_key
       Rails.logger.debug "[WS Relatórios]: Falha na autenticação. #{params.inspect}"
       render status: :unauthorized, json: {error_message: 'Invalid consumer key'}
     end
