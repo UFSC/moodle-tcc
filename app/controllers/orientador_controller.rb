@@ -12,11 +12,14 @@ class OrientadorController < ApplicationController
     # Problema no webservice
     render 'public/404.html' unless username
 
-    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, nil, username)
+    search_options = {orientador: username,
+                      eager_load: [:abstract, :presentation, :tcc_definition, :final_considerations]}
+
+    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, search_options)
     @hubs = Tcc.hub_names
   end
 
-  private
+  protected
 
   def check_permission
     unless current_user.orientador?

@@ -56,8 +56,8 @@
         <%= action_label(tcc.presentation, edit_presentations_path(moodle_user: tcc.moodle_user)) %>
       </td>
       <% tcc.hub_definitions.each do |hub_definition| %>
-        <% hub = tcc.hubs.hub_tcc.where(hub_definition_id: hub_definition.id).first %>
-        <% hub_portfolio = tcc.hubs.hub_portfolio.where(hub_definition_id: hub_definition.id).first %>
+        <% hub = tcc.hubs_tccs.where(hub_definition_id: hub_definition.id).first %>
+        <% hub_portfolio = tcc.hubs_portfolios.where(hub_definition_id: hub_definition.id).first %>
 
         <% if !hub_portfolio.nil? %>
           <% if hub_portfolio.admin_evaluation_ok? || hub_portfolio.terminated? %>
