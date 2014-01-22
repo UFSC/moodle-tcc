@@ -53,6 +53,9 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.0.4)
+    bullet (4.7.1)
+      activesupport
+      uniform_notifier (>= 1.4.0)
     callsite (0.0.11)
     cane (2.6.1)
       parallel
@@ -339,6 +342,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode_utils (1.4.0)
+    uniform_notifier (1.4.0)
     uuid (2.3.7)
       macaddr (~> 1.0)
     whenever (0.9.0)
@@ -359,6 +363,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-datepicker-rails
   bootstrap-sass (~> 2.3.2.1)
+  bullet
   capistrano (~> 2.15.5)
   capistrano-db-tasks
   capybara

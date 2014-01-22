@@ -37,4 +37,14 @@ SistemaTcc::Application.configure do
 
   # Rubymine binding for BetterErrors
   BetterErrors.editor='x-mine://open?file=%{file}&line=%{line}' if defined? BetterErrors
+
+  # Configuração do Bullet (gem de apoio ao desenvolvimento)
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.airbrake = true
+    Bullet.add_footer = true
+  end
 end
