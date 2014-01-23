@@ -72,10 +72,14 @@ end
 
 group :development do
   gem 'thin'
+
+  # Auxilia depuração da aplicação: http://railscasts.com/episodes/402-better-errors-railspanel
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'quiet_assets'
+
+  # previne N+1 queries
   gem 'bullet'
 end
 
