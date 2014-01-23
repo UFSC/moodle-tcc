@@ -4,7 +4,7 @@ class BibliographiesController < ApplicationController
   def index
     set_tab :bibliographies
 
-    @references = @tcc.references.collect { |r| r.element }
+    @references = @tcc.references.includes(:element).collect { |r| r.element }
     @general_refs = @tcc.general_refs
     @book_refs = @tcc.book_refs
     @book_cap_refs = @tcc.book_cap_refs

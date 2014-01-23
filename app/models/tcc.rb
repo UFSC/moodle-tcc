@@ -7,8 +7,8 @@ class Tcc < ActiveRecord::Base
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
 
   has_many :hubs, :inverse_of => :tcc
-  has_many :hubs_portfolios, class_name: 'HubPortfolio', conditions: "type = 'HubPortfolio'"
-  has_many :hubs_tccs, class_name: 'HubTcc', conditions: "type = 'HubTcc'"
+  has_many :hubs_portfolios, class_name: 'HubPortfolio'
+  has_many :hubs_tccs, class_name: 'HubTcc'
   has_one :bibliography
   has_one :presentation
   has_one :abstract
@@ -45,14 +45,18 @@ class Tcc < ActiveRecord::Base
   default_scope order(:name)
 
 
-  def self.search(search, page, tcc_definition_id, group = nil, orientador = nil)
+  def self.search(search, page, tcc_definition_id, *options)
+
+    options = options.extract_options!
+    options[:eager_load] ||= []
+    options[:group] = options[:group].to_s.gsub('[', '').gsub(']', '') if options[:group]
 
     query = "tcc_definition_id = #{tcc_definition_id} "
-    query = query + "AND name LIKE '%#{search}%' " if search
-    query = query+"AND tutor_group IN (#{group.to_s.gsub('[', '').gsub(']', '')}) " unless group.nil?
-    query = query+"AND orientador = '#{orientador}'" unless orientador.nil?
+    query += "AND name LIKE '%#{search}%' " if search
+    query += "AND tutor_group IN (#{options[:group]}) " unless options[:group].nil?
+    query += "AND orientador = '#{options[:orientador]}'" unless options[:orientador].nil?
 
-    self.where(query).paginate(:page => page, :per_page => 30)
+    self.where(query).includes(options[:eager_load]).paginate(:page => page, :per_page => 30)
   end
 
   # Retorna o nome do estudante sem a matrícula ()
@@ -62,10 +66,11 @@ class Tcc < ActiveRecord::Base
 
   # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
   def is_ok?
-    p = !presentation.nil? ? presentation.admin_evaluation_ok? : false
-    a = !abstract.nil? ? abstract.admin_evaluation_ok? : false
-    f = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
-    p && a && f && is_hubs_tcc_ok?
+    presentation = !presentation.nil? ? presentation.admin_evaluation_ok? : false
+    abstract = !abstract.nil? ? abstract.admin_evaluation_ok? : false
+    final_considerations = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
+
+    presentation && abstract && final_considerations && is_hubs_tcc_ok?
   end
 
   # Verifica se os hubs estão todos avaliados

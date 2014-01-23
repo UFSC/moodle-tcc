@@ -13,12 +13,13 @@ class TutorController < ApplicationController
 
     group = TutorGroup.get_tutor_groups(username)
     @groups = TutorGroup.get_tutor_group_names(group)
+    search_options = {group: group, eager_load: [:tcc_definition]}
 
-    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, group) unless group.nil?
+    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, search_options) unless group.nil?
     @hubs = Tcc.hub_names
   end
 
-  private
+  protected
 
   def check_permission
     unless current_user.tutor?

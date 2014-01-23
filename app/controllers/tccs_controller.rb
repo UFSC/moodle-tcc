@@ -28,11 +28,7 @@ class TccsController < ApplicationController
   end
 
   def save
-    if params[:moodle_user]
-      @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
-    else
-      @tcc = Tcc.find_by_moodle_user(@user_id)
-    end
+    @tcc = Tcc.find_by_moodle_user(moodle_user)
 
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
@@ -42,12 +38,9 @@ class TccsController < ApplicationController
   end
 
   def show_pdf
-    #Selecionar TCC
-    if current_user.admin? && params[:moodle_user]
-      @tcc = Tcc.find_by_moodle_user(params[:moodle_user])
-    else
-      @tcc = Tcc.find_by_moodle_user(@user_id)
-    end
+    eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
+                  {:internet_refs => :reference}, {:legislative_refs => :reference}]
+    @tcc = Tcc.includes(eager_load).find_by_moodle_user(moodle_user)
 
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
 
@@ -59,7 +52,7 @@ class TccsController < ApplicationController
     @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.presentation.content)
 
     #Hubs
-    @hubs = @tcc.hubs.hub_tcc
+    @hubs = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
     @hubs.each do |hub|
       hub.fetch_diaries_for_printing(@tcc.moodle_user)
       hub.diaries.map do |diaries|
@@ -85,21 +78,31 @@ class TccsController < ApplicationController
 
     @abstract = @tcc.abstract
     @presentation = @tcc.presentation
-    @hubs = @tcc.hubs.hub_tcc
+    @hubs = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
     @hubs.each { |hub| hub.fetch_diaries(@user_id) }
     @final_considerations = @tcc.final_considerations
   end
 
-  private
+  protected
+
+  def moodle_user
+    if current_user.view_all? && params[:moodle_user]
+      moodle_user = params[:moodle_user]
+    else
+      moodle_user = @user_id
+    end
+
+    moodle_user
+  end
 
   def generete_references (tcc)
     coder = HTMLEntities.new
 
-    @references = tcc.references
     @general_refs = tcc.general_refs
     @general_refs.each do |ref|
       ref.reference_text = coder.decode(ref.reference_text).html_safe
     end
+
     @book_refs = tcc.book_refs
     @book_cap_refs = tcc.book_cap_refs
     @article_refs = tcc.article_refs
