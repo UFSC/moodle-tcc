@@ -6,7 +6,7 @@ class TccsController < ApplicationController
 
   def show
     set_tab :data
-    @nome_orientador = Middleware::Orientadores.where(cpf: @tcc.orientador).first.try(:nome) if @tcc.orientador
+    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
   end
 
   def evaluate
@@ -28,7 +28,7 @@ class TccsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.where(moodle_user: moodle_user).first
+    @tcc = Tcc.find_by_moodle_user(moodle_user)
 
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
@@ -40,9 +40,9 @@ class TccsController < ApplicationController
   def show_pdf
     eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
                   {:internet_refs => :reference}, {:legislative_refs => :reference}]
-    @tcc = Tcc.includes(eager_load).where(moodle_user: moodle_user).first
+    @tcc = Tcc.includes(eager_load).find_by_moodle_user(moodle_user)
 
-    @nome_orientador = Middleware::Orientadores.where(cpf: @tcc.orientador).first.try(:nome) if @tcc.orientador
+    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
 
     #Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc, @tcc.abstract.content)
