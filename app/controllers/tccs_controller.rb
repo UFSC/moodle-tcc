@@ -6,7 +6,7 @@ class TccsController < ApplicationController
 
   def show
     set_tab :data
-    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
+    @nome_orientador = Middleware::Orientadores.where(cpf: @tcc.orientador).first.try(:nome) if @tcc.orientador
   end
 
   def evaluate
@@ -42,7 +42,7 @@ class TccsController < ApplicationController
                   {:internet_refs => :reference}, {:legislative_refs => :reference}]
     @tcc = Tcc.includes(eager_load).where(moodle_user: moodle_user).first
 
-    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
+    @nome_orientador = Middleware::Orientadores.where(cpf: @tcc.orientador).first.try(:nome) if @tcc.orientador
 
     #Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc, @tcc.abstract.content)
@@ -78,7 +78,7 @@ class TccsController < ApplicationController
 
     @abstract = @tcc.abstract
     @presentation = @tcc.presentation
-    @hubs = @tcc.hubs.hub_tcc
+    @hubs = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
     @hubs.each { |hub| hub.fetch_diaries(@user_id) }
     @final_considerations = @tcc.final_considerations
   end
