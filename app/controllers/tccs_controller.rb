@@ -108,6 +108,7 @@ class TccsController < ApplicationController
     @article_refs = tcc.article_refs
     @internet_refs = tcc.internet_refs
     @legislative_refs = tcc.legislative_refs
+    @thesis_refs = tcc.thesis_refs
 
     #criar arquivo
     content = render_to_string(:partial => 'bibtex', :layout => false)

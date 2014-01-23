@@ -80,6 +80,18 @@
     </dd>
   <% end %>
 
+  <!--Thesis refs references-->
+  <% @thesis_refs.each do |r| %>
+    <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dd>
+      <span class="address"><%= r.local %></span>
+      <span class="author"><%= r.author %></span>
+      <span class="organization"><%= r.institution %></span>
+      <span class="title"><%= r.title %></span>
+      <span class="year"><%= r.year %></span>
+    </dd>
+  <% end %>
+
 </dl>
 </body>
 
