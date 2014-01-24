@@ -34,6 +34,19 @@ describe InternetRef do
     end
 
   end
+
+  context 'authors' do
+    let(:internet_ref) { Fabricate.build(:internet_ref) }
+    describe 'author' do
+      it 'should have last name' do
+        internet_ref.author = 'firstname'
+        internet_ref.should_not be_valid
+        internet_ref.author = 'firstname lastname'
+        internet_ref.should be_valid
+      end
+    end
+  end
+
   context 'normalizations' do
     it { should normalize_attribute(:author) }
     it { should normalize_attribute(:author).from(' Nome   Completo  ').to('Nome Completo') }
