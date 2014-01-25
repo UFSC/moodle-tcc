@@ -66,11 +66,11 @@ class Tcc < ActiveRecord::Base
 
   # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
   def is_ok?
-    presentation = !presentation.nil? ? presentation.admin_evaluation_ok? : false
-    abstract = !abstract.nil? ? abstract.admin_evaluation_ok? : false
-    final_considerations = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
+    boolean_presentation = !presentation.nil? ? presentation.admin_evaluation_ok? : false
+    boolean_abstract = !abstract.nil? ? abstract.admin_evaluation_ok? : false
+    boolean_final_considerations = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
 
-    presentation && abstract && final_considerations && is_hubs_tcc_ok?
+    boolean_presentation && boolean_abstract && boolean_final_considerations && is_hubs_tcc_ok?
   end
 
   # Verifica se os hubs estão todos avaliados
