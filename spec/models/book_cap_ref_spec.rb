@@ -35,7 +35,7 @@ describe BookCapRef do
       it 'should have last name' do
         book_cap_ref.cap_author = 'firstname'
         book_cap_ref.should_not be_valid
-        book_cap_ref.book_author = 'firstname lastname'
+        book_cap_ref.cap_author = 'firstname lastname'
         book_cap_ref.should be_valid
       end
     end

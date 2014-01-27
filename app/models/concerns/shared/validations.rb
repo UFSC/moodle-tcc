@@ -1,7 +1,7 @@
 module Shared::Validations
   extend ActiveSupport::Concern
 
-  class CompletenameValidator < ActiveModel::EachValidator
+  class CompleteNameValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       unless value.nil? || value.blank?
         unless value.split(' ').size > 1

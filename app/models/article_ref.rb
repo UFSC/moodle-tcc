@@ -2,7 +2,7 @@ class ArticleRef < ActiveRecord::Base
 
   include Shared::Citacao
   include ModelsUtils
-
+  include Shared::Validations
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
@@ -22,6 +22,8 @@ class ArticleRef < ActiveRecord::Base
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
+
+  validates :first_author, :second_author, :third_author, complete_name: true
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos

@@ -2,6 +2,7 @@ class BookRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
+  include Shared::Validations
 
   before_save :check_equality
   before_update :check_equality
@@ -23,6 +24,8 @@ class BookRef < ActiveRecord::Base
   validates :year, :numericality => {:only_integer => true}
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
   validates :edition_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
+
+  validates :first_author, :second_author, :third_author, complete_name: true
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos

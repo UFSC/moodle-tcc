@@ -3,6 +3,7 @@ class ThesisRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
+  include Shared::Validations
 
   TYPES = %w(Volumes Folhas)
   THESIS_TYPES = %W(Tese Dissertação Monografia TCC)
@@ -24,6 +25,8 @@ class ThesisRef < ActiveRecord::Base
   validates :type_thesis, :inclusion => {:in => THESIS_TYPES}
 
   validates :year, :year_of_submission, :pages_or_volumes_number, :numericality => {:only_integer => true}
+
+  validates :author, complete_name: true
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
