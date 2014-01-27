@@ -42,12 +42,12 @@ class BookRef < ActiveRecord::Base
 
     authors = "#{first_author.split(' ').last.upcase}"
 
-    unless second_author.nil? || second_author.empty?
+    unless second_author.nil? || second_author.blank?
       lastname = UnicodeUtils.upcase(second_author.split(' ').last)
       authors = "#{authors}; #{lastname}"
     end
 
-    unless third_author.nil? || third_author.empty?
+    unless third_author.nil? || third_author.blank?
       lastname = UnicodeUtils.upcase(third_author.split(' ').last)
       authors = "#{authors}; #{lastname}"
     end
