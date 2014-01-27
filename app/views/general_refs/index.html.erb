@@ -17,7 +17,8 @@
                 <td><%= sanitize(element.reference_text, :tags => []) %></td>
                 <td>
                   <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id, moodle_user: @tcc.moodle_user %>
-                  <%= link_to 'Remover', general_ref_path(element, moodle_user: @tcc.moodle_user), :confirm =>  t(:label_confirm_message), :method => :delete %>
+                  <%#= link_to 'Remover', general_ref_path(element, moodle_user: @tcc.moodle_user),
+                               :confirm =>  t(:label_confirm_message), :method => :delete %>
                 </td>
               </tr>
           <% end %>
@@ -27,6 +28,10 @@
     <p>Não há referências cadastradas.</p>
 <% end %>
 
-<%= link_to 'Criar', new_general_ref_path(moodle_user: @tcc.moodle_user), :class => 'btn btn-small' %>
+<div class="alert alert-block">
+  As referências bibliográficas do tipo "Geral" foram descontinuadas. Por favor utilize os demais tipos.
+</div>
+
+<%#= link_to 'Criar', new_general_ref_path(moodle_user: @tcc.moodle_user), :class => 'btn btn-small' %>
 
 
