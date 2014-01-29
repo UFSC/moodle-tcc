@@ -17,3 +17,4 @@
     empty_text: "[ainda não existe texto para esta seção]"
     empty_abstract: "[ainda não existe texto para o resumo]"
     empty_tcc: "TCC não encontrado"
+    is_not_complete_name: "incompleto (o campo deve ter no mínimo 1 sobrenome)"

@@ -29,6 +29,26 @@ describe BookCapRef do
     it { should validate_numericality_of(:end_page) }
   end
 
+  context 'authors' do
+    let(:book_cap_ref) { Fabricate.build(:book_cap_ref) }
+    describe 'cap_author' do
+      it 'should have last name' do
+        book_cap_ref.cap_author = 'firstname'
+        book_cap_ref.should_not be_valid
+        book_cap_ref.cap_author = 'firstname lastname'
+        book_cap_ref.should be_valid
+      end
+    end
+    describe 'book_author' do
+      it 'should have last name' do
+        book_cap_ref.book_author = 'firstname'
+        book_cap_ref.should_not be_valid
+        book_cap_ref.book_author = 'firstname lastname'
+        book_cap_ref.should be_valid
+      end
+    end
+  end
+
   context 'normalizations' do
     it { should normalize_attribute(:book_author) }
     it { should normalize_attribute(:book_author).from(' Nome   Completo  ').to('Nome Completo') }

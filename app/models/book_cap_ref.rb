@@ -3,6 +3,7 @@ class BookCapRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
+  include Shared::Validations
 
   before_save :check_equality
   before_update :check_equality
@@ -27,6 +28,8 @@ class BookCapRef < ActiveRecord::Base
   validates :initial_page, :numericality => {:only_integer => true, :greater_than => 0}
   validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
   validate :initial_page_less_than_end_page
+
+  validates :book_author, :cap_author, complete_name: true
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos

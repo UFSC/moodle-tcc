@@ -9,7 +9,7 @@ module Shared::Citacao
 
       elements = Array.new
       get_all_authors.each do |author|
-        unless author.nil? || author.empty?
+        unless author.nil? || author.blank?
           elements << UnicodeUtils.titlecase(author.split(' ').last)
         end
       end

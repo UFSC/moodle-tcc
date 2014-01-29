@@ -28,6 +28,18 @@ describe ThesisRef do
 
   end
 
+  context 'authors' do
+    let(:thesis_ref) { Fabricate.build(:thesis_ref) }
+    describe 'author' do
+      it 'should have last name' do
+        thesis_ref.author = 'firstname'
+        thesis_ref.should_not be_valid
+        thesis_ref.author = 'firstname lastname'
+        thesis_ref.should be_valid
+      end
+    end
+  end
+
 
   context 'citacoes' do
     let(:thesis_ref) { Fabricate.build(:thesis_ref) }

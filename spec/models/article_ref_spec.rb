@@ -17,6 +17,7 @@ describe ArticleRef do
     it { should validate_presence_of(:year) }
     it { should validate_presence_of(:initial_page) }
     it { should validate_presence_of(:end_page) }
+
   end
 
   context 'normalizations' do
@@ -30,6 +31,34 @@ describe ArticleRef do
     it { should normalize_attribute(:journal_name).from(' Nome   Completo  ').to('Nome Completo') }
     it { should normalize_attribute(:local) }
     it { should normalize_attribute(:local).from(' Nome   Completo  ').to('Nome Completo') }
+  end
+
+  context 'authors' do
+    let(:article_ref) { Fabricate.build(:article_ref) }
+    describe 'first_author' do
+      it 'should have last name' do
+        article_ref.first_author = 'firstname'
+        article_ref.should_not be_valid
+        article_ref.first_author = 'firstname lastname'
+        article_ref.should be_valid
+      end
+    end
+    describe 'second_author' do
+      it 'should have last name' do
+        article_ref.second_author = 'firstname'
+        article_ref.should_not be_valid
+        article_ref.second_author = 'firstname lastname'
+        article_ref.should be_valid
+      end
+    end
+    describe 'third_author' do
+      it 'should have last name' do
+        article_ref.third_author = 'firstname'
+        article_ref.should_not be_valid
+        article_ref.third_author = 'firstname lastname'
+        article_ref.should be_valid
+      end
+    end
   end
 
   describe '#volume_number' do

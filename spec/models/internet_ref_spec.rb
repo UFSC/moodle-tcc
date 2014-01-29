@@ -34,6 +34,7 @@ describe InternetRef do
     end
 
   end
+
   context 'normalizations' do
     it { should normalize_attribute(:author) }
     it { should normalize_attribute(:author).from(' Nome   Completo  ').to('Nome Completo') }

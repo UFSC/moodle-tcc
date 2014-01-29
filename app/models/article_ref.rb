@@ -2,7 +2,7 @@ class ArticleRef < ActiveRecord::Base
 
   include Shared::Citacao
   include ModelsUtils
-
+  include Shared::Validations
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
@@ -23,6 +23,8 @@ class ArticleRef < ActiveRecord::Base
   validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
 
+  validates :first_author, :second_author, :third_author, complete_name: true
+
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :journal_name, :local, :with => [:squish, :blank]
@@ -39,12 +41,12 @@ class ArticleRef < ActiveRecord::Base
     lastname = UnicodeUtils.upcase(first_author.split(' ').last)
     authors = lastname
 
-    unless second_author.nil? || second_author.empty?
+    unless second_author.nil? || second_author.blank?
       lastname = UnicodeUtils.upcase(second_author.split(' ').last)
       authors = "#{authors}; #{lastname}"
     end
 
-    unless third_author.nil? || third_author.empty?
+    unless third_author.nil? || third_author.blank?
       lastname = UnicodeUtils.upcase(third_author.split(' ').last)
       authors = "#{authors}; #{lastname}"
     end
