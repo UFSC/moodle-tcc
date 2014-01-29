@@ -39,7 +39,7 @@ class TccsController < ApplicationController
 
   def show_pdf
     eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
-                  {:internet_refs => :reference}, {:legislative_refs => :reference}]
+                  {:internet_refs => :reference}, {:legislative_refs => :reference}, {:thesis_refs => :reference}]
     @tcc = Tcc.includes(eager_load).find_by_moodle_user(moodle_user)
 
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
@@ -108,6 +108,7 @@ class TccsController < ApplicationController
     @article_refs = tcc.article_refs
     @internet_refs = tcc.internet_refs
     @legislative_refs = tcc.legislative_refs
+    @thesis_refs = tcc.thesis_refs
 
     #criar arquivo
     content = render_to_string(:partial => 'bibtex', :layout => false)
