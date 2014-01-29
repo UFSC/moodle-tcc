@@ -3,7 +3,7 @@
     <% if @type == 'tcc' %>
       <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
       <%= tab.abstract 'Resumo', edit_abstracts_path %>
-      <%= tab.presentation 'Apresentação', edit_presentations_path %>
+      <%= tab.presentation 'Introdução', edit_presentations_path %>
     <% end %>
 
     <% @tcc.hubs.hub_by_type(@type).each do |hub| %>

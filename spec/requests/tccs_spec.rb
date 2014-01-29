@@ -16,7 +16,7 @@ describe 'Tccs' do
       visit show_tcc_path
 
       page.current_path.should_not == access_denied_path
-      page.should have_content('Apresentação')
+      page.should have_content('Introdução')
     end
 
     describe 'edit' do
@@ -39,8 +39,8 @@ describe 'Tccs' do
       end
 
       it 'tcc presentation' do
-        click_link 'Apresentação'
-        page.should have_content('Apresentação')
+        click_link 'Introdução'
+        page.should have_content('Introdução')
       end
 
       it 'tcc hub 1' do
