@@ -39,7 +39,7 @@ class TccsController < ApplicationController
 
   def show_pdf
     eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
-                  {:internet_refs => :reference}, {:legislative_refs => :reference}]
+                  {:internet_refs => :reference}, {:legislative_refs => :reference}, {:thesis_refs => :reference}]
     @tcc = Tcc.includes(eager_load).find_by_moodle_user(moodle_user)
 
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
