@@ -20,7 +20,7 @@ class BookCapRef < ActiveRecord::Base
   attr_accessible :first_entire_author, :second_entire_author, :third_entire_author, :book_subtitle, :book_title,
                   :first_part_author, :second_part_author, :third_part_author, :cap_subtitle,
                   :cap_title, :end_page,
-                  :initial_page, :local, :publisher, :type_participation, :year
+                  :initial_page, :local, :publisher, :type_participation, :year, :et_al_entire, :et_al_part
 
   validates_presence_of :first_entire_author, :book_title, :first_part_author, :cap_title, :end_page, :initial_page, :local, :publisher,
                         :type_participation, :year
@@ -48,7 +48,12 @@ class BookCapRef < ActiveRecord::Base
   alias_attribute :second_author, :second_part_author
   alias_attribute :third_author, :third_part_author
 
+  def direct_et_al
+    "(#{first_author.split(' ').last.upcase} et al., #{year})"
+  end
+
   def direct_citation
+    return direct_et_al if et_al_part
     lastname = UnicodeUtils.upcase(first_entire_author.split(' ').last)
     "(#{lastname}, #{year})"
   end
