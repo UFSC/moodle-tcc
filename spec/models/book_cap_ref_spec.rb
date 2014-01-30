@@ -5,7 +5,9 @@ describe BookCapRef do
     before(:all) { @book_cap_ref = Fabricate(:book_cap_ref) }
     after(:all) { @book_cap_ref.destroy }
 
-    it { should respond_to(:first_entire_author, :book_subtitle, :book_title, :first_part_author, :cap_subtitle, :cap_title, :end_page, :initial_page, :local, :publisher, :type_participation, :year) }
+    it { should respond_to(:et_al_entire, :et_al_part, :first_entire_author, :book_subtitle, :book_title,
+                           :first_part_author,
+                           :cap_subtitle, :cap_title, :end_page, :initial_page, :local, :publisher, :type_participation, :year) }
     it { should have_one(:reference) }
 
     # Pending
