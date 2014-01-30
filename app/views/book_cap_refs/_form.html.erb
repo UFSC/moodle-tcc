@@ -4,11 +4,13 @@
     <%= ref.inputs do %>
       <div class="span4">
         <%= ref.input :type_participation, :as => :radio, :collection => %w(Autor Organizador Compilador Editor) %>
+        <%= ref.input :et_al_entire, :label => false, :input_html => {:id => 'et_al_entire'} %>
         <%= ref.input :first_entire_author %>
         <%= ref.input :second_entire_author %>
         <%= ref.input :third_entire_author %>
       </div>
       <div class="span4">
+        <%= ref.input :et_al_part, :label => false, :input_html => {:id => 'et_al_part'} %>
         <%= ref.input :first_part_author %>
         <%= ref.input :second_part_author %>
         <%= ref.input :third_part_author %>
