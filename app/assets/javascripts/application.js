@@ -31,3 +31,16 @@ $.fn.twitter_bootstrap_confirmbox.defaults = {
     proceed: "Sim",
     proceed_class: "btn proceed btn-primary"
 };
+
+function change_book_authors_state(checked, authors) {
+    if (checked) {
+        $.each(authors, function(index, author) {
+            author.attr('disabled', 'dislabled');
+        });
+    }
+    else {
+        $.each(authors, function(index, author) {
+            author.removeAttr("disabled");
+        });
+    }
+}
