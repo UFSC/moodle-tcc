@@ -10,7 +10,7 @@ module TccLatex
   end
 
   def self.apply_latex(tcc, text)
-    if text.nil?
+    if !text || text.nil?
       # texto vazio, retornar mensagem genérica de texto vazio
       return '[ainda não existe texto para esta seção]'
     end
