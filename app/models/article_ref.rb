@@ -1,7 +1,7 @@
 class ArticleRef < ActiveRecord::Base
 
-  include Shared::Citacao
   include ModelsUtils
+  include Shared::Citacao
   include Shared::Validations
 
   has_one :reference, :as => :element, :dependent => :destroy
@@ -16,11 +16,11 @@ class ArticleRef < ActiveRecord::Base
 
   validates_presence_of :first_author, :article_title, :journal_name, :local, :year, :initial_page, :end_page
 
-  validates :volume_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
-  validates :number_or_fascicle, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
-  validates :initial_page, :numericality => {:only_integer => true, :greater_than => 0}
-  validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
-  validates :year, :inclusion => {:in => lambda { |article| 0..Date.today.year }}
+  validates :volume_number, :numericality => {only_integer: true, greater_than: 0}, :allow_blank => true
+  validates :number_or_fascicle, :numericality => {only_integer: true, greater_than: 0}, :allow_blank => true
+  validates :initial_page, :numericality => {only_integer: true, greater_than: 0}
+  validates :end_page, :numericality => {only_integer: true, greater_than: 0}
+  validates :year, :inclusion => {in: lambda { |article| 0..Date.today.year }}
   validate :initial_page_less_than_end_page
 
   validates :first_author, :second_author, :third_author, complete_name: true

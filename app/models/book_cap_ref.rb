@@ -7,9 +7,7 @@ class BookCapRef < ActiveRecord::Base
 
   before_save :check_equality
   before_update :check_equality
-  after_update :check_difference, if: Proc.new { (self.first_entire_author_changed? || self
-  .second_entire_author_changed? ||
-      self.third_entire_author_changed?) }
+  after_update :check_difference, if: Proc.new { (self.first_entire_author_changed? || self.second_entire_author_changed? || self.third_entire_author_changed?) }
 
 
   has_one :reference, :as => :element, :dependent => :destroy
@@ -25,12 +23,12 @@ class BookCapRef < ActiveRecord::Base
   validates_presence_of :first_entire_author, :book_title, :first_part_author, :cap_title, :end_page, :initial_page, :local, :publisher,
                         :type_participation, :year
 
-  validates :type_participation, :inclusion => {:in => PARTICIPATION_TYPES}
-  validates :year, :end_page, :initial_page, :numericality => {:only_integer => true}
-  validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
+  validates :type_participation, :inclusion => {in: PARTICIPATION_TYPES}
+  validates :year, :end_page, :initial_page, :numericality => {only_integer: true}
+  validates :year, :inclusion => {in: lambda { |book| 0..Date.today.year }}
 
-  validates :initial_page, :numericality => {:only_integer => true, :greater_than => 0}
-  validates :end_page, :numericality => {:only_integer => true, :greater_than => 0}
+  validates :initial_page, :numericality => {only_integer: true, greater_than: 0}
+  validates :end_page, :numericality => {only_integer: true, greater_than: 0}
   validate :initial_page_less_than_end_page
 
   validates :book_author, :cap_author, complete_name: true
@@ -38,10 +36,7 @@ class BookCapRef < ActiveRecord::Base
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_entire_author, :second_entire_author, :third_entire_author, :first_part_author,
-                       :second_part_author, :third_part_author,
-                       :book_title, :local,
-                       :with => [:squish,
-                                 :blank]
+                       :second_part_author, :third_part_author,:book_title, :local, :with => [:squish, :blank]
 
   alias_attribute :title, :book_title
   alias_attribute :first_author, :first_part_author
