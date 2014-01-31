@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219201035) do
+ActiveRecord::Schema.define(:version => 20140130125016) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(:version => 20131219201035) do
     t.string  "cap_subtitle"
     t.string  "book_title"
     t.string  "book_subtitle"
-    t.string  "cap_author"
-    t.string  "book_author"
+    t.string  "first_part_author"
+    t.string  "first_entire_author"
     t.string  "type_participation"
     t.string  "local"
     t.string  "publisher"
@@ -56,6 +56,12 @@ ActiveRecord::Schema.define(:version => 20131219201035) do
     t.integer "initial_page"
     t.integer "end_page"
     t.string  "subtype"
+    t.string  "second_entire_author"
+    t.string  "third_entire_author"
+    t.string  "second_part_author"
+    t.string  "third_part_author"
+    t.boolean "et_al_part"
+    t.boolean "et_al_entire"
   end
 
   create_table "book_refs", :force => true do |t|
