@@ -4,6 +4,12 @@
     <%= f.input :title, :input_html => {:style => 'width:450px;'} %>
     <%= f.input :name, :input_html => {:style => 'width:450px;', :disabled => true, :value => @tcc.name} %>
     <%= f.input :leader, :input_html => {:style => 'width:450px;', :disabled => true, :value => @nome_orientador} %>
+    <% if @current_user.coordenador_avea? %>
+      <%= f.input :defense_date %>
+    <% else %>
+      <%= f.input :defense_date, :as => :string, :input_html => {:style => 'width:450px;', :disabled => true,
+                                                                 :value => @tcc.defense_date} %>
+    <% end %>
   <% end %>
 
   <%= f.actions do %>
