@@ -5,9 +5,11 @@ describe BookCapRef do
     before(:all) { @book_cap_ref = Fabricate(:book_cap_ref) }
     after(:all) { @book_cap_ref.destroy }
 
-    it { should respond_to(:et_al_entire, :et_al_part, :first_entire_author, :book_subtitle, :book_title,
-                           :first_part_author,
-                           :cap_subtitle, :cap_title, :end_page, :initial_page, :local, :publisher, :type_participation, :year) }
+    it { should respond_to(:et_al_entire, :et_al_part, :book_subtitle, :book_title, :cap_subtitle, :cap_title,
+                           :first_part_author, :second_part_author, :third_part_author,
+                           :first_entire_author, :second_entire_author, :third_entire_author,
+                           :end_page, :initial_page, :local, :publisher, :type_participation, :year) }
+
     it { should have_one(:reference) }
 
     # Pending
@@ -33,19 +35,57 @@ describe BookCapRef do
 
   context 'authors' do
     let(:book_cap_ref) { Fabricate.build(:book_cap_ref) }
-    describe 'cap_author' do
+
+    describe 'first_entire_author' do
       it 'should have last name' do
-        book_cap_ref.cap_author = 'firstname'
+        book_cap_ref.first_entire_author = 'firstname'
         book_cap_ref.should_not be_valid
-        book_cap_ref.cap_author = 'firstname lastname'
+        book_cap_ref.first_entire_author = 'firstname lastname'
         book_cap_ref.should be_valid
       end
     end
-    describe 'book_author' do
+
+    describe 'second_entire_author' do
       it 'should have last name' do
-        book_cap_ref.book_author = 'firstname'
+        book_cap_ref.second_entire_author = 'firstname'
         book_cap_ref.should_not be_valid
-        book_cap_ref.book_author = 'firstname lastname'
+        book_cap_ref.second_entire_author = 'firstname lastname'
+        book_cap_ref.should be_valid
+      end
+    end
+
+    describe 'third_entire_author' do
+      it 'should have last name' do
+        book_cap_ref.third_entire_author = 'firstname'
+        book_cap_ref.should_not be_valid
+        book_cap_ref.third_entire_author = 'firstname lastname'
+        book_cap_ref.should be_valid
+      end
+    end
+
+    describe 'first_part_author' do
+      it 'should have last name' do
+        book_cap_ref.first_part_author = 'firstname'
+        book_cap_ref.should_not be_valid
+        book_cap_ref.first_part_author = 'firstname lastname'
+        book_cap_ref.should be_valid
+      end
+    end
+
+    describe 'second_part_author' do
+      it 'should have last name' do
+        book_cap_ref.second_part_author = 'firstname'
+        book_cap_ref.should_not be_valid
+        book_cap_ref.second_part_author = 'firstname lastname'
+        book_cap_ref.should be_valid
+      end
+    end
+
+    describe 'third_part_author' do
+      it 'should have last name' do
+        book_cap_ref.third_part_author = 'firstname'
+        book_cap_ref.should_not be_valid
+        book_cap_ref.third_part_author = 'firstname lastname'
         book_cap_ref.should be_valid
       end
     end
