@@ -3,17 +3,17 @@
     <%= autocomplete_field_tag :search, params[:search], autocomplete_path, {
             placeholder: 'Busca', class: 'clearable'} %>
 
-    <%= link_to path, class: 'btn', id: 'clean-search', title: 'Atualizar lista' do %>
+    <%= link_to path, class: 'btn', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
       <%= display_icon('icon-remove') %>
     <% end %>
 
-    <%= button_tag :class => 'btn btn-default', name: nil do %>
+    <%= button_tag :class => 'btn btn-default', name: nil, title: 'Filtrar lista' do %>
       <%= display_icon('icon-search') %>
     <% end %>
   </div>
 
   <div class="pull-right">
-    <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
+    <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar a lista abaixo' do %>
       <%= display_icon('icon-refresh') %>
       Atualizar lista
     <% end %>
