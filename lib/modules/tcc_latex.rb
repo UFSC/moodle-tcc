@@ -48,7 +48,7 @@ module TccLatex
   end
 
   def self.cleanup_title(title)
-    title.gsub('"', '')
+    title.gsub('"', '') unless title.nil?
   end
 
   def self.cleanup_html(text)
