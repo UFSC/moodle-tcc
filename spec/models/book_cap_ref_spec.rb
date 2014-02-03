@@ -63,31 +63,8 @@ describe BookCapRef do
       end
     end
 
-    describe 'first_part_author' do
-      it 'should have last name' do
-        book_cap_ref.first_part_author = 'firstname'
-        book_cap_ref.should_not be_valid
-        book_cap_ref.first_part_author = 'firstname lastname'
-        book_cap_ref.should be_valid
-      end
-    end
-
-    describe 'second_part_author' do
-      it 'should have last name' do
-        book_cap_ref.second_part_author = 'firstname'
-        book_cap_ref.should_not be_valid
-        book_cap_ref.second_part_author = 'firstname lastname'
-        book_cap_ref.should be_valid
-      end
-    end
-
-    describe 'third_part_author' do
-      it 'should have last name' do
-        book_cap_ref.third_part_author = 'firstname'
-        book_cap_ref.should_not be_valid
-        book_cap_ref.third_part_author = 'firstname lastname'
-        book_cap_ref.should be_valid
-      end
+    it_should_behave_like "authors with first and lastname" do
+      let(:ref) { Fabricate(:book_cap_ref) }
     end
   end
 
