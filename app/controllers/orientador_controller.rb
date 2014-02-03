@@ -12,10 +12,11 @@ class OrientadorController < ApplicationController
     # Problema no webservice
     render 'public/404.html' unless username
 
-    search_options = {orientador: username,
-                      eager_load: [:abstract, :presentation, :tcc_definition, :final_considerations]}
+    search_options = {eager_load: [:abstract, :presentation, :tcc_definition, :final_considerations]}
 
-    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, search_options)
+    @tccs = Tcc.where(orientador: username, tcc_definition_id: tcc_definition_id).search(
+        params[:search], params[:page], search_options)
+
     @hubs = Tcc.hub_names
   end
 

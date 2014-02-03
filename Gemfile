@@ -62,6 +62,7 @@ gem 'enumerize'
 gem 'attribute_normalizer'
 gem 'paper_trail', '2.7.2' # Versionamento
 gem 'settingslogic' # Configurações
+gem 'scoped_search'
 
 # Errbit (monitoração de falhas)
 gem 'airbrake'

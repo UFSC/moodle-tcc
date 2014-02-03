@@ -43,20 +43,14 @@ class Tcc < ActiveRecord::Base
   end
 
   default_scope order(:name)
+  scoped_search :on => [:name]
 
-
-  def self.search(search, page, tcc_definition_id, *options)
+  def self.search(search, page, *options)
 
     options = options.extract_options!
     options[:eager_load] ||= []
-    options[:group] = options[:group].to_s.gsub('[', '').gsub(']', '') if options[:group]
 
-    query = "tcc_definition_id = #{tcc_definition_id} "
-    query += "AND name LIKE '%#{search}%' " if search
-    query += "AND tutor_group IN (#{options[:group]}) " unless options[:group].nil?
-    query += "AND orientador = '#{options[:orientador]}'" unless options[:orientador].nil?
-
-    self.where(query).includes(options[:eager_load]).paginate(:page => page, :per_page => 30)
+    search_for(search).includes(options[:eager_load]).paginate(:page => page, :per_page => 30)
   end
 
   # Retorna o nome do estudante sem a matrícula ()

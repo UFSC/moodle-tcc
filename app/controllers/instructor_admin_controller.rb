@@ -10,12 +10,18 @@ class InstructorAdminController < ApplicationController
 
     if @type == 'portfolio'
       search_options = {eager_load: [:tcc_definition]}
-      @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, search_options)
+
+      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).search(
+          params[:search], params[:page], search_options)
+
       @hubs = Tcc.hub_names
       render 'portfolio'
     else
       search_options = {eager_load: [:abstract, :presentation, :tcc_definition, :final_considerations]}
-      @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, search_options)
+
+      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).search(
+          params[:search], params[:page], search_options)
+
       @hubs = Tcc.hub_names
       render 'tcc'
     end

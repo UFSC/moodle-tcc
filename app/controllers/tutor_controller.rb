@@ -13,9 +13,11 @@ class TutorController < ApplicationController
 
     group = TutorGroup.get_tutor_groups(username)
     @groups = TutorGroup.get_tutor_group_names(group)
-    search_options = {group: group, eager_load: [:tcc_definition]}
+    search_options = {eager_load: [:tcc_definition]}
 
-    @tccs = Tcc.search(params[:search], params[:page], tcc_definition_id, search_options) unless group.nil?
+    @tccs = Tcc.where(tutor_group: @groups, tcc_definition_id: tcc_definition_id).search(
+        params[:search], params[:page], search_options) unless group.nil?
+
     @hubs = Tcc.hub_names
   end
 
