@@ -43,10 +43,10 @@ class AbstractsController < ApplicationController
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
-    new_state = params[:abstract][:new_state]
 
     unless params[:abstract][:commentary]
       @abstract.attributes = params[:abstract]
+      new_state = params[:abstract][:new_state]
       if @abstract.valid?
         case new_state
           when 'sent_to_admin_for_revision'

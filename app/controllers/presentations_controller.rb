@@ -43,10 +43,11 @@ class PresentationsController < ApplicationController
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @presentation= @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
-    new_state = params[:presentation][:new_state]
 
     unless params[:presentation][:commentary]
       @presentation.attributes = params[:presentation]
+      new_state = params[:presentation][:new_state]
+
       if @presentation.valid?
         case new_state
           when 'sent_to_admin_for_revision'

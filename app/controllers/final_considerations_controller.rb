@@ -43,10 +43,11 @@ class FinalConsiderationsController < ApplicationController
   def save
     @tcc = Tcc.find_by_moodle_user(@user_id)
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
-    new_state = params[:final_considerations][:new_state]
 
     unless params[:final_considerations][:commentary]
       @final_considerations.attributes = params[:final_considerations]
+      new_state = params[:final_considerations][:new_state]
+
       if @final_considerations.valid?
         case new_state
           when 'sent_to_admin_for_revision'
