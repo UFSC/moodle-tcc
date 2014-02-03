@@ -2,16 +2,18 @@
   <div class="input-append">
     <%= autocomplete_field_tag :search, params[:search], autocomplete_path, {
             placeholder: 'Busca', class: 'clearable'} %>
-    <span class="icon_clear">x</span>
+
+    <%= link_to path, class: 'btn', id: 'clean-search', title: 'Atualizar lista' do %>
+      <%= display_icon('icon-remove') %>
+    <% end %>
+
     <%= button_tag :class => 'btn btn-default', name: nil do %>
       <%= display_icon('icon-search') %>
     <% end %>
-    <%= link_to path, class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
-      <%= display_icon('icon-share-alt inverted') %>
-    <% end %>
   </div>
+
   <div class="pull-right">
-    <%= link_to '#', class: 'btn', id: 'clean-search', title: 'Atualizar lista' do %>
+    <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar lista' do %>
       <%= display_icon('icon-refresh') %>
       Atualizar lista
     <% end %>
