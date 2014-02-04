@@ -37,7 +37,7 @@ class BookCapRef < ActiveRecord::Base
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_entire_author, :second_entire_author, :third_entire_author, :first_part_author,
-                       :second_part_author, :third_part_author,:book_title, :local, :with => [:squish, :blank]
+                       :second_part_author, :third_part_author, :book_title, :local, :with => [:squish, :blank]
 
   alias_attribute :title, :book_title
   alias_attribute :first_author, :first_part_author
@@ -50,8 +50,19 @@ class BookCapRef < ActiveRecord::Base
 
   def direct_citation
     return direct_et_al if et_al_part
-    lastname = UnicodeUtils.upcase(first_entire_author.split(' ').last)
-    "(#{lastname}, #{year})"
+    authors = "#{first_author.split(' ').last.upcase}"
+
+    unless second_author.nil? || second_author.blank?
+      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
+      authors = "#{authors}; #{lastname}"
+    end
+
+    unless third_author.nil? || third_author.blank?
+      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
+      authors = "#{authors}; #{lastname}"
+    end
+
+    "(#{authors}, #{year})"
   end
 
   private
