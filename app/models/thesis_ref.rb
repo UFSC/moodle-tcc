@@ -24,6 +24,7 @@ class ThesisRef < ActiveRecord::Base
 
   validates :type_number, :inclusion => {:in => TYPES}
   validates :type_thesis, :inclusion => {:in => THESIS_TYPES}
+  validates :degree, :inclusion => {:in => DEGREE_TYPES}
 
   validates :year, :year_of_submission, :pages_or_volumes_number, :numericality => {:only_integer => true}
 

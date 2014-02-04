@@ -22,6 +22,7 @@ describe ThesisRef do
     it { should validate_presence_of(:type_number) }
     it { should ensure_inclusion_of(:type_number).in_array(ThesisRef::TYPES) }
     it { should ensure_inclusion_of(:type_thesis).in_array(ThesisRef::THESIS_TYPES) }
+    it { should ensure_inclusion_of(:degree).in_array(ThesisRef::DEGREE_TYPES) }
 
     it { should validate_presence_of(:course) }
 
