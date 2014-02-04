@@ -9,13 +9,14 @@
       <span class="address"><%= r.local %></span>
         <span class="author">
           <%= r.first_author %>
-          <%= ' and ' << r.second_author  if  !r.second_author.blank? %>
+          <%= ' and ' << r.second_author if  !r.second_author.blank? %>
           <%= ' and ' << r.third_author if !r.third_author.blank? %>
           <%= ' and others ' if r.et_all %>
         </span>
       <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
       <span class="publisher"><%= r.publisher %></span>
       <span class="title"><%= r.title %></span>
+      <span class="subtitle"><%= r.subtitle %></span>
       <span class="year"><%= r.year %></span>
     </dd>
   <% end %>
@@ -35,6 +36,7 @@
       <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
       <span class="publisher"><%= r.publisher %></span>
       <span class="title"><%= r.cap_title %></span>
+      <span class="subtitle"><%= r.cap_subtitle %></span>
       <span class="month"><%= l(r.reference.created_at, :format => "%b.") %></span>
       <span class="year"><%= r.year %></span>
     </dd>
@@ -46,7 +48,7 @@
     <dd>
         <span class="author">
           <%= r.first_author %>
-          <%= ' and ' << r.second_author  if  !r.second_author.blank? %>
+          <%= ' and ' << r.second_author if  !r.second_author.blank? %>
           <%= ' and ' << r.third_author if !r.third_author.blank? %>
           <%= ' and others ' if r.et_all %>
         </span>
@@ -54,6 +56,7 @@
       <span class="number"><%= r.number_or_fascicle unless r.number_or_fascicle.nil? %></span>
       <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
       <span class="title"><%= r.article_title %></span>
+      <span class="subtitle"><%= r.article_subtitle %></span>
       <span class="volume"><%= r.volume_number unless r.volume_number.nil? %></span>
       <span class="year"><%= r.year %></span>
     </dd>
@@ -64,6 +67,7 @@
     <dt class="misc">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="title"><%= r.title %></span>
+      <span class="subtitle"><%= r.subtitle %></span>
       <span class="author"><%= r.author %></span>
       <span class="year"><%= r.access_date.year unless r.access_date.nil? %></span>
       <span class="url"><%= r.url %></span>
@@ -93,7 +97,17 @@
       <span class="author"><%= r.author %></span>
       <span class="organization"><%= r.institution %></span>
       <span class="title"><%= r.title %></span>
+      <span class="subtitle"><%= r.subtitle %></span>
       <span class="year"><%= r.year %></span>
+      <span class="chapter"><%= r.chapter %></span>
+      <span class="type"><%= r.type_thesis %></span>
+      <span class="number"><%= r.pages_or_volumes_number %></span>
+      <% note = "Curso de #{r.course}, " if !r.course.empty? %>
+      <% note = note+ "Departamento de #{r.department}, " if !r.department.empty? %>
+      <% note = note+"#{r.institution}. " %>
+      <% note = note+"Cap. #{r.chapter}." if !r.chapter.nil? %>
+
+      <span class="note"><%= note %></span>
     </dd>
   <% end %>
 

@@ -7,6 +7,7 @@ class ThesisRef < ActiveRecord::Base
 
   TYPES = %w(Volumes Folhas)
   THESIS_TYPES = %W(Tese Dissertação Monografia TCC)
+  DEGREE_TYPES = %w(Doutorado Mestrado Especialização Graduação)
 
   before_save :check_equality
   before_update :check_equality
