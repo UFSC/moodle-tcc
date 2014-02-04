@@ -22,11 +22,8 @@ module TccLatex
     doc = Nokogiri::XML(html.to_xhtml)
 
     #Processar imagens
-    doc = process_figures(doc)
-    docx = download_figures(tcc, doc)
-
-    #Simula rowspan
-    doc = fix_rowspan(doc)
+    process_figures(doc)
+    download_figures(tcc, doc)
 
     #Simula rowspan
     doc = fix_rowspan(doc)
