@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Tcc do
   let(:tcc) { Fabricate.build(:tcc) }
 
-  it { should respond_to(:leader, :moodle_user, :name, :title, :grade, :defense_date) }
+  it { should respond_to(:leader, :moodle_user, :name, :title, :grade, :defense_date, :grade_updated_at) }
 
   it { should have_many(:references) }
   it { should have_many(:general_refs).through(:references) }
