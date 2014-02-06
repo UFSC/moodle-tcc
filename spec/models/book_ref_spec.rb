@@ -29,30 +29,8 @@ describe BookRef do
   end
 
   context 'authors' do
-    let(:book_ref) { Fabricate.build(:book_ref) }
-    describe 'first_author' do
-      it 'should have last name' do
-        book_ref.first_author = 'firstname'
-        book_ref.should_not be_valid
-        book_ref.first_author = 'firstname lastname'
-        book_ref.should be_valid
-      end
-    end
-    describe 'second_author' do
-      it 'should have last name' do
-        book_ref.second_author = 'firstname'
-        book_ref.should_not be_valid
-        book_ref.second_author = 'firstname lastname'
-        book_ref.should be_valid
-      end
-    end
-    describe 'third_author' do
-      it 'should have last name' do
-        book_ref.third_author = 'firstname'
-        book_ref.should_not be_valid
-        book_ref.third_author = 'firstname lastname'
-        book_ref.should be_valid
-      end
+    it_should_behave_like "authors with first and lastname" do
+      let(:ref) { Fabricate(:book_ref) }
     end
   end
 

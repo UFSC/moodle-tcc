@@ -34,30 +34,8 @@ describe ArticleRef do
   end
 
   context 'authors' do
-    let(:article_ref) { Fabricate.build(:article_ref) }
-    describe 'first_author' do
-      it 'should have last name' do
-        article_ref.first_author = 'firstname'
-        article_ref.should_not be_valid
-        article_ref.first_author = 'firstname lastname'
-        article_ref.should be_valid
-      end
-    end
-    describe 'second_author' do
-      it 'should have last name' do
-        article_ref.second_author = 'firstname'
-        article_ref.should_not be_valid
-        article_ref.second_author = 'firstname lastname'
-        article_ref.should be_valid
-      end
-    end
-    describe 'third_author' do
-      it 'should have last name' do
-        article_ref.third_author = 'firstname'
-        article_ref.should_not be_valid
-        article_ref.third_author = 'firstname lastname'
-        article_ref.should be_valid
-      end
+    it_should_behave_like "authors with first and lastname" do
+      let(:ref) { Fabricate(:article_ref) }
     end
   end
 

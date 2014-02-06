@@ -1,38 +1,38 @@
 <h5>Referências de Capítulos de Livros</h5>
 <% if @book_cap_refs.count > 0 %>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Autor do Livro</th>
-        <th>Autor do Capítulo</th>
-        <th>Título do Livro</th>
-        <th>Título do Capítulo</th>
-        <th>Ano</th>
-        <th>Editora</th>
-        <th>Local (Cidade)</th>
-        <th>Ação</th>
-      </tr>
-      </thead>
-      <% @book_cap_refs.each do |element| %>
-          <% if !element.nil? %>
-              <tr>
-                <td><%= element.book_author %></td>
-                <td><%= element.cap_author %></td>
-                <td><%= element.book_title %></td>
-                <td><%= element.cap_title %></td>
-                <td><%= element.year %></td>
-                <td><%= element.publisher %></td>
-                <td><%= element.local %></td>
-                <td>
-                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id, :moodle_user => params[:moodle_user] %>
-                  <%= link_to 'Remover', book_cap_ref_path(element, :moodle_user => params[:moodle_user]), :confirm =>  t(:label_confirm_message), :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Autor do Livro</th>
+      <th>Autor do Capítulo</th>
+      <th>Título do Livro</th>
+      <th>Título do Capítulo</th>
+      <th>Ano</th>
+      <th>Editora</th>
+      <th>Local (Cidade)</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <% @book_cap_refs.each do |element| %>
+      <% if !element.nil? %>
+        <tr>
+          <td><%= element.first_entire_author %></td>
+          <td><%= element.first_part_author %></td>
+          <td><%= element.book_title %></td>
+          <td><%= element.cap_title %></td>
+          <td><%= element.year %></td>
+          <td><%= element.publisher %></td>
+          <td><%= element.local %></td>
+          <td>
+            <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id, :moodle_user => params[:moodle_user] %>
+            <%= link_to 'Remover', book_cap_ref_path(element, :moodle_user => params[:moodle_user]), :confirm => t(:label_confirm_message), :method => :delete %>
+          </td>
+        </tr>
       <% end %>
-    </table>
+    <% end %>
+  </table>
 <% else %>
-    <p>Não há referências cadastradas.</p>
+  <p>Não há referências cadastradas.</p>
 <% end %>
 <%= link_to 'Criar', new_book_cap_ref_path(:moodle_user => params[:moodle_user]), :class => 'btn btn-small' %>
 
