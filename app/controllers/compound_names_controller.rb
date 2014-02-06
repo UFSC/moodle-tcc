@@ -4,11 +4,7 @@ class CompoundNamesController < ApplicationController
 
   before_filter :set_current_tab
 
-  def index
-
-  end
-
-  def show
+  def new
 
   end
 
@@ -23,7 +19,6 @@ class CompoundNamesController < ApplicationController
   def destroy
 
   end
-
 
   private
 

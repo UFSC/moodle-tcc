@@ -65,5 +65,6 @@ SistemaTcc::Application.routes.draw do
   resources :thesis_refs
   resources :orientador
   resources :tutor
+  resources :compound_names
 
 end
