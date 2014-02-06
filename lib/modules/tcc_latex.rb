@@ -10,7 +10,7 @@ module TccLatex
   end
 
   def self.apply_latex(tcc, text)
-    if text.nil?
+    if !text || text.nil?
       # texto vazio, retornar mensagem genérica de texto vazio
       return '[ainda não existe texto para esta seção]'
     end
@@ -22,11 +22,8 @@ module TccLatex
     doc = Nokogiri::XML(html.to_xhtml)
 
     #Processar imagens
-    doc = process_figures(doc)
-    docx = download_figures(tcc, doc)
-
-    #Simula rowspan
-    doc = fix_rowspan(doc)
+    process_figures(doc)
+    download_figures(tcc, doc)
 
     #Simula rowspan
     doc = fix_rowspan(doc)
@@ -199,7 +196,7 @@ module TccLatex
 
     # Salvar imagens no db
     process.each do |item|
-      file, filename = create_file_to_upload(item)
+      file, filename = create_file_to_upload(item, doc)
 
       # se houver algum problema com a transferência, vamos ignorar e processar o próximo
       unless file
@@ -230,17 +227,28 @@ module TccLatex
     tmp_files.each { |tmp_file| File.delete(tmp_file) }
   end
 
-  def self.create_file_to_upload(item)
+  def self.create_file_to_upload(item, doc)
     # Setup temporary directory
     app_name = Rails.application.class.parent_name.parameterize
     tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{SecureRandom.hex(12)}")
     Dir.mkdir(tmp_dir)
 
-    # Criar imagem tmp
-    url = URI.parse item[:dom]['src']
-    filename = File.join tmp_dir, File.basename(url.path)
-    file = File.open(filename, 'wb')
-    file.write(item[:request].body)
+    if item[:request].status == 200
+      # Criar imagem tmp
+      url = URI.parse item[:dom]['src']
+      filename = File.join tmp_dir, File.basename(url.path)
+      file = File.open(filename, 'wb')
+      file.write(item[:request].body)
+    else
+      file = false
+      filename = item[:dom]['src'].split('?')[0].split('/').last
+
+      # Troca a tag da imagem não carregada pela mensagem no pdf
+      new_node = Nokogiri::XML::Node.new('p',doc)
+      new_node.content = "[ Imagem do Moodle não carregada: #{filename} ]"
+      item[:dom].replace new_node
+    end
+
     return file, filename
   end
 
