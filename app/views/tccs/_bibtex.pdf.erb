@@ -25,7 +25,12 @@
     <dt class="inbook">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= r.local %></span>
-      <span class="author"><%= r.cap_author %></span>
+      <span class="author">
+        <%= r.first_part_author %>
+        <%= ' and ' << r.second_part_author if !r.second_part_author.blank? %>
+        <%= ' and ' << r.third_part_author if !r.third_part_author.blank? %>
+        <%= ' and others ' if r.et_al_part %>
+      </span>
       <span class="booktitle"><%= r.book_title %></span>
       <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
       <span class="publisher"><%= r.publisher %></span>
