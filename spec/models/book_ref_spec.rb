@@ -145,4 +145,8 @@ describe BookRef do
     end
   end
 
+  it_should_behave_like 'references with citations in the text' do
+    let(:ref) { Fabricate.build(:book_ref) }
+  end
+
 end

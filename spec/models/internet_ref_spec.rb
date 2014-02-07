@@ -125,5 +125,8 @@ describe InternetRef do
     end
   end
 
+  it_should_behave_like 'references with citations in the text' do
+    let(:ref) { Fabricate.build(:internet_ref) }
+  end
 
 end

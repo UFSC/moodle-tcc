@@ -5,7 +5,7 @@ class LegislativeRef < ActiveRecord::Base
   before_save :check_equality
   before_update :check_equality
   after_update :check_difference, if: Proc.new { (self.publisher_changed?) }
-
+  before_destroy :check_for_usage
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :references

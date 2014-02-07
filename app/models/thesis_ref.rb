@@ -11,6 +11,7 @@ class ThesisRef < ActiveRecord::Base
   before_save :check_equality
   before_update :check_equality
   after_update :check_difference, if: Proc.new { (self.author_changed?) }
+  before_destroy :check_for_usage
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference
@@ -55,6 +56,5 @@ class ThesisRef < ActiveRecord::Base
     update_refs(thesis_refs)
     thesis_refs = ThesisRef.where('(author = ? ) AND (year = ?)', author_was, year)
     update_refs(thesis_refs)
-
   end
 end

@@ -10,6 +10,7 @@ class ArticleRef < ActiveRecord::Base
   before_create :check_equality
   before_update :check_equality
   after_update :check_difference, if: Proc.new { (self.first_author_changed? || self.second_author_changed? || self.third_author_changed?) }
+  before_destroy :check_for_usage
 
   attr_accessible :article_subtitle, :article_title, :end_page, :et_all, :first_author, :initial_page, :journal_name,
                   :local, :number_or_fascicle, :year, :second_author, :third_author, :volume_number
