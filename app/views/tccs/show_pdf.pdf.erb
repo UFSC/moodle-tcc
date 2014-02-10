@@ -9,26 +9,26 @@
 
 \documentclass[
 % -- opções da classe memoir --
-12pt,        % tamanho da fonte
-openright,      % capítulos começam em pág ímpar (insere página vazia caso preciso)
-twoside,      % para impressão em verso e anverso. Oposto a oneside
-a4paper,      % tamanho do papel.
-english,      % idioma adicional para hifenização
-brazil,        % o último idioma é o principal do documento
+12pt,				% tamanho da fonte
+openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+twoside,			% para impressão em verso e anverso. Oposto a oneside
+a4paper,			% tamanho do papel.
+english,			% idioma adicional para hifenização
+brazil,				% o último idioma é o principal do documento
 ]{abntex2}
 
 % ---
 % Pacotes fundamentais
 % ---
 \usepackage{cmap}           % Mapear caracteres especiais no PDF
-\usepackage{lmodern}        % Usa a fonte Latin Modern
+\usepackage{lmodern}			  % Usa a fonte Latin Modern
 \usepackage{newunicodechar} % Mapear caracteres unicodes novos
 \usepackage{gensymb}        % Gerar simbolos
 \usepackage{textcomp}       % Outros simbulos
-\usepackage{lastpage}        % Usado pela Ficha catalográfica
-\usepackage{indentfirst}    % Indenta o primeiro parágrafo de cada seção.
-\usepackage{color}          % Controle das cores
-\usepackage{graphicx}        % Inclusão de gráficos
+\usepackage{lastpage}		  	% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}			  	% Controle das cores
+\usepackage{graphicx}		  	% Inclusão de gráficos
 \usepackage{multirow}       % Tabelas com diferentes números de colunas
 \usepackage{tabulary,booktabs}
 
@@ -41,8 +41,8 @@ brazil,        % o último idioma é o principal do documento
 % ---
 % Pacotes de citações
 % ---
-\usepackage[brazilian,hyperpageref]{backref}   % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}  % Citações padrão ABNT
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	                 % Citações padrão ABNT
 
 % ---
 % CONFIGURAÇÕES DE PACOTES
@@ -56,13 +56,13 @@ brazil,        % o último idioma é o principal do documento
 \renewcommand{\backref}{}
 % Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-\ifcase #1 %
-Nenhuma citação no texto.%
-\or
-Citado na página #2.%
-\else
-Citado #1 vezes nas páginas #2.%
-\fi}%
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
 % ---
 
 % ----
@@ -92,11 +92,11 @@ Citado #1 vezes nas páginas #2.%
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
 \instituicao{%
-Universidade Federal de Santa Catarina
-\par
-CENTRO DE CIÊNCIAS DA SAÚDE
-\par
-DEPARTAMENTO DE SAÚDE PÚBLICA
+    Universidade Federal de Santa Catarina
+    \par
+    CENTRO DE CIÊNCIAS DA SAÚDE
+    \par
+    DEPARTAMENTO DE SAÚDE PÚBLICA
 }
 \tipotrabalho{Tese (Monografia)}
 
@@ -115,18 +115,18 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 % informações do PDF
 \makeatletter
 \hypersetup{
-%pagebackref=true,
-pdftitle={\@title},
-pdfauthor={\@author},
-pdfsubject={\imprimirpreambulo},
-pdfcreator={LaTeX with abnTeX2},
-pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
-colorlinks=true,          % false: boxed links; true: colored links
-linkcolor=blue,            % color of internal links
-citecolor=blue,            % color of links to bibliography
-filecolor=magenta,          % color of file links
-urlcolor=blue,
-bookmarksdepth=4
+     	%pagebackref=true,
+		pdftitle={\@title},
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,         % color of internal links
+    	citecolor=blue,        	% color of links to bibliography
+    	filecolor=magenta,      % color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
 }
 \makeatother
 % ---
@@ -181,29 +181,29 @@ bookmarksdepth=4
 \frenchspacing
 
 \renewcommand{\imprimircapa}{%
-\begin{capa}%
-\center
+  \begin{capa}%
+    \center
 
-\includegraphics[width=70pt]{<%= "#{Rails.root}/app/assets/images/logo" %>}
+    \includegraphics[width=70pt]{<%="#{Rails.root}/app/assets/images/logo"%>}
 
-\ABNTEXchapterfont\small
-UNIVERSIDADE FEDERAL DE SANTA CATARINA \\
-CENTRO DE CIÊNCIAS DA SAÚDE \\
-DEPARTAMENTO DE SAÚDE PÚBLICA \\
-CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL EM SAÚDE DA FAMÍLIA \\
+    \ABNTEXchapterfont\small
+      UNIVERSIDADE FEDERAL DE SANTA CATARINA \\
+      CENTRO DE CIÊNCIAS DA SAÚDE \\
+      DEPARTAMENTO DE SAÚDE PÚBLICA \\
+      CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL EM SAÚDE DA FAMÍLIA \\
 
-\vspace*{2cm}
+    \vspace*{2cm}
 
-{\ABNTEXchapterfont\large\imprimirautor}
+    {\ABNTEXchapterfont\large\imprimirautor}
 
-\vspace*{3cm}
-\ABNTEXchapterfont\LARGE\imprimirtitulo
-\vfill
+    \vspace*{3cm}
+    \ABNTEXchapterfont\LARGE\imprimirtitulo
+    \vfill
 
-\large\imprimirlocal , \large\imprimirdata \\
+    \large\imprimirlocal , \large\imprimirdata \\
 
-\vspace*{1cm}
-\end{capa}
+    \vspace*{1cm}
+  \end{capa}
 }
 
 % Capa
@@ -260,35 +260,35 @@ CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL EM SAÚDE DA FAMÍLIA \\
 % ---
 \begin{folhadeaprovacao}
 
-\begin{center}
-{\ABNTEXchapterfont\large\imprimirautor}
+    \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
 
-\vspace*{\fill}
-{\ABNTEXchapterfont\Large\imprimirtitulo}
-\vspace*{\fill}
+    \vspace*{\fill}
+    {\ABNTEXchapterfont\Large\imprimirtitulo}
+    \vspace*{\fill}
 
-\hspace{.45\textwidth}
-\begin{minipage}{.5\textwidth}
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
 
-Essa monografia foi julgada adequada para obtenção do título de
-“Especialista em Saúde da Família”, e aprovada em sua forma final pelo
-Departamento de Saúde Pública da Universidade Federal de Santa
-Catarina.
+    Essa monografia foi julgada adequada para obtenção do título de
+    “Especialista em Saúde da Família”, e aprovada em sua forma final pelo
+    Departamento de Saúde Pública da Universidade Federal de Santa
+    Catarina.
 
-\end{minipage}%
-\vspace*{\fill}
-\end{center}
+    \end{minipage}%
+    \vspace*{\fill}
+    \end{center}
 
-\assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
-\assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
+    \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
+    \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
 
-\begin{center}
-\vspace*{0.5cm}
+    \begin{center}
+        \vspace*{0.5cm}
 
-\large\imprimirlocal , \large\imprimirdata \\
+        \large\imprimirlocal , \large\imprimirdata \\
 
-\vspace*{1cm}
-\end{center}
+        \vspace*{1cm}
+    \end{center}
 
 \end{folhadeaprovacao}
 
