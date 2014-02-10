@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140130125016) do
+ActiveRecord::Schema.define(:version => 20140205173943) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(:version => 20140130125016) do
     t.string   "orientador"
     t.string   "email_estudante"
     t.string   "email_orientador"
+    t.datetime "grade_updated_at"
   end
 
   add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"

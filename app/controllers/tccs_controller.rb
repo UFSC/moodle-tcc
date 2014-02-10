@@ -17,6 +17,11 @@ class TccsController < ApplicationController
 
     @tcc = Tcc.find(params[:tcc_id])
     @tcc.grade = params[:tcc][:grade]
+
+    if @tcc.grade_changed?
+      @tcc.grade_updated_at = DateTime.now
+    end
+
     if @tcc.valid?
       @tcc.save!
       flash[:success] = t(:successfully_saved)

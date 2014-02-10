@@ -1,7 +1,7 @@
 class Tcc < ActiveRecord::Base
   attr_accessible :grade, :orientador, :moodle_user, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes,
-                  :final_considerations_attributes, :tcc_definition
+                  :final_considerations_attributes, :tcc_definition, :grade_updated_at
 
   validates_uniqueness_of :moodle_user
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
