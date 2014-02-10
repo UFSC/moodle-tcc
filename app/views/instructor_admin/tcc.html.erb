@@ -9,4 +9,4 @@
 <%= render :partial => 'orientador/tcc_listing', locals: {path: instructor_admin_path,
                                                           autocomplete_path:
                                                                   instructor_admin_autocomplete_tcc_name_path} %>
-<%= will_paginate @tccs %>
+<%= paginate @tccs %>
