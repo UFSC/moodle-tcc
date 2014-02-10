@@ -21,6 +21,7 @@ module Shared::Citacao
     end
 
     def check_for_usage
+      return if self.reference.nil?
       tcc = self.reference.tcc
       tcc.hubs.each do |hub|
         return false unless is_citation_free_to_destroy?(hub.reflection)
