@@ -7,7 +7,7 @@ class BookRef < ActiveRecord::Base
   before_save :check_equality
   before_update :check_equality
   after_update :check_difference, if: Proc.new { (self.first_author_changed? || self.second_author_changed? || self.third_author_changed?) }
-
+  before_destroy :check_for_usage
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference

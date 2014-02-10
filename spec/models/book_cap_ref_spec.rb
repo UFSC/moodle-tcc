@@ -209,5 +209,7 @@ describe BookCapRef do
       let(:ref) { Fabricate(:book_cap_ref) }
     end
   end
-
+  it_should_behave_like 'references with citations in the text' do
+    let(:ref) { Fabricate.build(:book_cap_ref) }
+  end
 end

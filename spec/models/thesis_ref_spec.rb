@@ -152,4 +152,8 @@ describe ThesisRef do
       let(:ref) { Fabricate(:thesis_ref) }
     end
   end
+
+  it_should_behave_like 'references with citations in the text' do
+    let(:ref) { Fabricate.build(:thesis_ref) }
+  end
 end

@@ -46,7 +46,7 @@ class BookRefsController < ApplicationController
     if @book_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else
-      flash[:success] = t(:successfully_deleted)
+      flash[:error] = @book_ref.errors.full_messages.to_sentence
     end
     redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
   end

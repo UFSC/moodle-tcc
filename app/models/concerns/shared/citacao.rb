@@ -19,6 +19,28 @@ module Shared::Citacao
     def indirect_et_al
       "#{UnicodeUtils.titlecase(first_author.split(' ').last)} et al. (#{year})"
     end
+
+    def check_for_usage
+      return if self.reference.nil?
+      tcc = self.reference.tcc
+      tcc.hubs.each do |hub|
+        return false unless is_citation_free_to_destroy?(hub.reflection)
+      end
+      return false unless (is_citation_free_to_destroy?(tcc.abstract.content) &&
+          is_citation_free_to_destroy?(tcc.presentation.content) &&
+          is_citation_free_to_destroy?(tcc.final_considerations.content))
+    end
+  end
+
+  def is_citation_free_to_destroy?(text)
+    doc = Nokogiri::HTML(text)
+    doc.search('citacao').each do |c|
+      if (c[:id].to_i == self.id)
+        errors[:base] << 'Esta referência está sendo usada em algum texto. Não é possível deletá-la.'
+        return false
+      end
+    end
+    true
   end
 
 end
