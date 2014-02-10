@@ -192,7 +192,7 @@
 
     <xsl:if test='$v'>
       <xsl:value-of select='$f'/>
-      <xsl:text>= {</xsl:text>
+      <xsl:text> = {</xsl:text>
       <xsl:apply-templates select='$v' mode="value"/>
       <xsl:text>},
       </xsl:text>
@@ -205,7 +205,7 @@
 
     <xsl:if test='$v'>
       <xsl:value-of select='$f'/>
-      <xsl:text>= "{</xsl:text>
+      <xsl:text> = "{</xsl:text>
       <xsl:apply-templates select='$v' mode="value"/>
       <xsl:text>}",
       </xsl:text>
