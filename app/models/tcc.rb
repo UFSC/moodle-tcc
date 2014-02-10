@@ -50,7 +50,7 @@ class Tcc < ActiveRecord::Base
     options = options.extract_options!
     options[:eager_load] ||= []
 
-    search_for(search).includes(options[:eager_load]).paginate(:page => page, :per_page => 30)
+    search_for(search).includes(options[:eager_load]).page(page).per(30)
   end
 
   # Retorna o nome do estudante sem a matrícula ()

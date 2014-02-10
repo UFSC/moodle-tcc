@@ -32,7 +32,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'twitter-bootstrap-rails-confirm'
 
 # Pagination
-gem 'will_paginate'
+gem 'kaminari'
 
 # Tabs
 gem 'tabs_on_rails'
