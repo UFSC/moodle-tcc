@@ -31,7 +31,8 @@ pt-BR:
     - Sexta
     - Sábado
     formats:
-      default: ! '%B de %Y'
+      default: ! '%d/%m/%Y'
+      abnt:  ! '%B de %Y'
       long: ! '%d de %B de %Y'
       short: ! '%d de %B'
     month_names:
