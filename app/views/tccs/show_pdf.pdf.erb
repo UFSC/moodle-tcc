@@ -87,16 +87,16 @@ brazil,				% o último idioma é o principal do documento
 \titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
 \autor{<%= lesc @tcc.student_name unless @tcc.name.nil? %>}
 \local{Florianópolis}
-\data{<%= lesc l(@defense_date) %>}
+\data{<%= lesc l(@defense_date, format: :abnt) %>}
 \orientador{<%= lesc @nome_orientador unless @tcc.orientador.nil? %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
 \instituicao{%
-    Universidade Federal de Santa Catarina
-    \par
-    CENTRO DE CIÊNCIAS DA SAÚDE
-    \par
-    DEPARTAMENTO DE SAÚDE PÚBLICA
+Universidade Federal de Santa Catarina
+\par
+CENTRO DE CIÊNCIAS DA SAÚDE
+\par
+DEPARTAMENTO DE SAÚDE PÚBLICA
 }
 \tipotrabalho{Tese (Monografia)}
 
