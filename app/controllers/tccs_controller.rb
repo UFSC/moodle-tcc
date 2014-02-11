@@ -47,6 +47,8 @@ class TccsController < ApplicationController
                   {:internet_refs => :reference}, {:legislative_refs => :reference}, {:thesis_refs => :reference}]
     @tcc = Tcc.includes(eager_load).find_by_moodle_user(moodle_user)
 
+    @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
+
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
 
     #Resumo

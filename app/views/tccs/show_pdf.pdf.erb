@@ -42,7 +42,7 @@ brazil,				% o último idioma é o principal do documento
 % Pacotes de citações
 % ---
 \usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage[alf]{abntex2cite}	                 % Citações padrão ABNT
 
 % ---
 % CONFIGURAÇÕES DE PACOTES
@@ -87,16 +87,16 @@ brazil,				% o último idioma é o principal do documento
 \titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
 \autor{<%= lesc @tcc.student_name unless @tcc.name.nil? %>}
 \local{Florianópolis}
-\data{<%= lesc @tcc.defense_date.year unless @tcc.defense_date.nil? %>}
+\data{<%= lesc l(@defense_date, format: :abnt) %>}
 \orientador{<%= lesc @nome_orientador unless @tcc.orientador.nil? %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
 \instituicao{%
-    Universidade Federal de Santa Catarina
-    \par
-    CENTRO DE CIÊNCIAS DA SAÚDE
-    \par
-    DEPARTAMENTO DE SAÚDE PÚBLICA
+Universidade Federal de Santa Catarina
+\par
+CENTRO DE CIÊNCIAS DA SAÚDE
+\par
+DEPARTAMENTO DE SAÚDE PÚBLICA
 }
 \tipotrabalho{Tese (Monografia)}
 
@@ -122,9 +122,9 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 	    pdfcreator={LaTeX with abnTeX2},
 		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
 		colorlinks=true,       		% false: boxed links; true: colored links
-    	linkcolor=blue,          	% color of internal links
-    	citecolor=blue,        		% color of links to bibliography
-    	filecolor=magenta,      		% color of file links
+    	linkcolor=blue,         % color of internal links
+    	citecolor=blue,        	% color of links to bibliography
+    	filecolor=magenta,      % color of file links
 		urlcolor=blue,
 		bookmarksdepth=4
 }
@@ -200,8 +200,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
     \ABNTEXchapterfont\LARGE\imprimirtitulo
     \vfill
 
-    \large\imprimirlocal , 2013 \\
-    {\ABNTEXchapterfont\large\imprimirautor}
+    \large\imprimirlocal , \large\imprimirdata \\
 
     \vspace*{1cm}
   \end{capa}
@@ -242,11 +241,8 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 
 \vspace*{\fill}
 
-{\large\imprimirlocal}
+\large\imprimirlocal , \large\imprimirdata \\
 
-\par
-
-{\large\imprimirdata}
 \vspace*{1cm}
 \end{center}
 }
@@ -283,16 +279,14 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
     \vspace*{\fill}
     \end{center}
 
-    \imprimirlocal, <%= lesc l(@tcc.defense_date, :format => :long) unless @tcc.defense_date.nil? %>:
-
     \assinatura{\textbf{\imprimircoorientador} \\ Coordenadora do Curso}
     \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
 
     \begin{center}
         \vspace*{0.5cm}
-        {\large\imprimirlocal}
-        \par
-        {\large\imprimirdata}
+
+        \large\imprimirlocal , \large\imprimirdata \\
+
         \vspace*{1cm}
     \end{center}
 
@@ -329,6 +323,6 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \postextual
 
 %% Referencias
-<%= '\bibliography{' + @bibtex +  '}' %>
+<%= '\bibliography{' + @bibtex + '}' %>
 
 \end{document}
