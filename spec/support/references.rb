@@ -11,6 +11,7 @@ shared_examples_for 'references with citations in the text' do
   let(:sufix) { Faker::Lorem.paragraph(1) }
   let(:citacao) { build_tag_citacao(ref, 'ci', ref.indirect_citation) }
   let(:text) { "<p>#{prefix}#{citacao}#{sufix}</p>" }
+
   before(:each) do
     ref.save!
     ref.reload
@@ -36,6 +37,14 @@ shared_examples_for 'references with citations in the text' do
     ref.destroy
     ref.class.all.size.should eq(count)
   end
+  it 'should do nothing if abstract is nil' do
+    @tcc.abstract = nil
+    @tcc.save!
+    count = ref.class.all.size
+    ref.destroy
+    ref.class.all.size.should eq(count)
+  end
+
 
 end
 
