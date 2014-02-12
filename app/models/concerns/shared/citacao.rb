@@ -26,9 +26,9 @@ module Shared::Citacao
       tcc.hubs.each do |hub|
         return false unless is_citation_free_to_destroy?(hub.reflection)
       end
-      return false unless (is_citation_free_to_destroy?(tcc.abstract.content) &&
-          is_citation_free_to_destroy?(tcc.presentation.content) &&
-          is_citation_free_to_destroy?(tcc.final_considerations.content))
+      return false unless (check_conten(tcc.abstract) &&
+          check_conten(tcc.presentation) &&
+          check_conten(tcc.final_considerations))
     end
   end
 
@@ -43,4 +43,11 @@ module Shared::Citacao
     true
   end
 
+  def check_content(object)
+    if !object.nil?
+      return is_citation_free_to_destroy?(object.content)
+    else
+      return false
+    end
+  end
 end
