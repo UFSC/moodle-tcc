@@ -47,9 +47,6 @@ $(function() {
 });
 
 $(function() {
-    var tooltips = $( "[title]" ).tooltip();
-
-    $(document)(function() {
-        tooltips.tooltip();
-    });
+    var tooltips = $("[title]").tooltip();
+    tooltips.tooltip();
 });

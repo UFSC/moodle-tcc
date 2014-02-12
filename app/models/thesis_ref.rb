@@ -7,6 +7,7 @@ class ThesisRef < ActiveRecord::Base
 
   TYPES = %w(Volumes Folhas)
   THESIS_TYPES = %W(Tese Dissertação Monografia TCC)
+  DEGREE_TYPES = %w(Doutorado Mestrado Especialização Graduação)
 
   before_save :check_equality
   before_update :check_equality
@@ -19,11 +20,12 @@ class ThesisRef < ActiveRecord::Base
   attr_accessible :author, :chapter, :course, :degree, :department, :institution, :local, :pages_or_volumes_number,
                   :subtitle, :title, :type_thesis, :type_number, :year, :year_of_submission
 
-  validates_presence_of :author, :title, :subtitle, :local, :year, :institution, :pages_or_volumes_number,
+  validates_presence_of :author, :title, :local, :year, :institution, :pages_or_volumes_number,
                         :type_number, :course, :year_of_submission
 
   validates :type_number, :inclusion => {:in => TYPES}
   validates :type_thesis, :inclusion => {:in => THESIS_TYPES}
+  validates :degree, :inclusion => {:in => DEGREE_TYPES}
 
   validates :year, :year_of_submission, :pages_or_volumes_number, :numericality => {:only_integer => true}
 

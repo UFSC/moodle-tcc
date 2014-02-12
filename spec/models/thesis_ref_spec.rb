@@ -13,7 +13,6 @@ describe ThesisRef do
 
     it { should validate_presence_of(:author) }
     it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:subtitle) }
     it { should validate_presence_of(:local) }
     it { should validate_presence_of(:year) }
     it { should validate_numericality_of(:year).only_integer }
@@ -22,6 +21,7 @@ describe ThesisRef do
     it { should validate_presence_of(:type_number) }
     it { should ensure_inclusion_of(:type_number).in_array(ThesisRef::TYPES) }
     it { should ensure_inclusion_of(:type_thesis).in_array(ThesisRef::THESIS_TYPES) }
+    it { should ensure_inclusion_of(:degree).in_array(ThesisRef::DEGREE_TYPES) }
 
     it { should validate_presence_of(:course) }
 

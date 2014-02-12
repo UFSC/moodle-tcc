@@ -1,6 +1,6 @@
 <%= semantic_form_for @thesis_ref do |ref| %>
   <div id="data_tab_content">
-    <input type="hidden" name="moodle_user" value="<%=j params[:moodle_user] %>" />
+    <input type="hidden" name="moodle_user" value="<%= j params[:moodle_user] %>"/>
     <%= ref.inputs do %>
       <div class="span4">
         <%= ref.input :author %>
@@ -11,12 +11,16 @@
       <div class="span4">
         <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
         <%= ref.input :chapter %>
-        <%= ref.input :type_thesis, :as => :radio, :collection => %W(Tese Dissertação Monografia TCC) %>
-        <%= ref.input :type_number, :as => :radio, :collection => %w(Folhas Volumes) %>
+        <%= ref.input :type_thesis, :as => :radio, :collection => ThesisRef::THESIS_TYPES %>
+        <%= ref.input :type_number, :as => :radio, :collection => ThesisRef::TYPES %>
         <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
       </div>
       <div class="span4">
-        <%= ref.input :degree %>
+        <%= ref.input :degree, :name => 'degree_options', :collection => ThesisRef::DEGREE_TYPES,
+                      :input_html => {:disabled => true} %>
+        <input id="degree" type="hidden" name="thesis_ref[degree]"/>
+
+
         <%= ref.input :institution %>
         <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
         <%= ref.input :course %>
@@ -24,7 +28,7 @@
       </div>
       </div>
     <% end %>
-    <%= required_fields  %>
+    <%= required_fields %>
     <%= ref.actions :submit %>
     </div>
 <% end %>

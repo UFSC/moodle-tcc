@@ -9,7 +9,7 @@ Fabricator(:thesis_ref) do
   type_thesis                    { ThesisRef::THESIS_TYPES.sample }
   pages_or_volumes_number 20
   type_number             { ThesisRef::TYPES.sample }
-  degree                  { Faker::Lorem.sentence(4) }
+  degree                  { ThesisRef::DEGREE_TYPES.sample }
   institution             { Faker::Lorem.sentence(4) }
   course                  { Faker::Lorem.sentence(4) }
   department              { Faker::Lorem.sentence(4) }
