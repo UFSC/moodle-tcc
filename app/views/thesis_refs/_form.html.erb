@@ -16,7 +16,11 @@
         <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
       </div>
       <div class="span4">
-        <%= ref.input :degree, :collection => ThesisRef::DEGREE_TYPES, :input_html => {:disabled => true} %>
+        <%= ref.input :degree, :name => 'degree_options', :collection => ThesisRef::DEGREE_TYPES,
+                      :input_html => {:disabled => true} %>
+        <input id="degree" type="hidden" name="thesis_ref[degree]"/>
+
+
         <%= ref.input :institution %>
         <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
         <%= ref.input :course %>

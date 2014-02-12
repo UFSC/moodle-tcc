@@ -13,7 +13,6 @@ describe ThesisRef do
 
     it { should validate_presence_of(:author) }
     it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:subtitle) }
     it { should validate_presence_of(:local) }
     it { should validate_presence_of(:year) }
     it { should validate_numericality_of(:year).only_integer }

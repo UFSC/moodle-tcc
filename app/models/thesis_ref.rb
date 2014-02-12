@@ -19,7 +19,7 @@ class ThesisRef < ActiveRecord::Base
   attr_accessible :author, :chapter, :course, :degree, :department, :institution, :local, :pages_or_volumes_number,
                   :subtitle, :title, :type_thesis, :type_number, :year, :year_of_submission
 
-  validates_presence_of :author, :title, :subtitle, :local, :year, :institution, :pages_or_volumes_number,
+  validates_presence_of :author, :title, :local, :year, :institution, :pages_or_volumes_number,
                         :type_number, :course, :year_of_submission
 
   validates :type_number, :inclusion => {:in => TYPES}
