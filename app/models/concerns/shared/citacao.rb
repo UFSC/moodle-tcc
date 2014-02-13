@@ -47,7 +47,7 @@ module Shared::Citacao
     if !object.nil?
       return is_citation_free_to_destroy?(object.content)
     else
-      return false
+      return true
     end
   end
 end
