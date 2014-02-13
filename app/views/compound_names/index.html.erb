@@ -1,4 +1,15 @@
-<h5>Nomes compostos</h5>
+<h3>Nomes compostos</h3>
+
+<%= render :partial => 'common/search_bar', locals: {
+        path: bibliographies_path( moodle_user: params[:moodle_user], anchor: 'compound_names' ),
+        autocomplete_path: compound_names_autocomplete_name_path(moodle_user: params[:moodle_user],
+        anchor: 'compound_names') } %>
+
+<% if params[:search] %>
+  <h4>Resultado para: <%= params[:search] %></h4>
+<% else %>
+  <h4>Lista geral</h4>
+<% end %>
 
 <% if @compound_names.count > 0 %>
   <% @compound_names.each_with_index do |element, index| %>

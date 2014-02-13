@@ -96,6 +96,12 @@ ActiveRecord::Schema.define(version: 20140814182612) do
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
+  create_table "compound_names", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "diaries", force: true do |t|
     t.text     "content",             limit: 16777215
     t.integer  "position"

@@ -12,7 +12,7 @@ class BibliographiesController < ApplicationController
     @internet_refs = @tcc.internet_refs
     @legislative_refs = @tcc.legislative_refs
     @thesis_refs = @tcc.thesis_refs
-    @compound_names = CompoundName.page(params[:page]).per(60)
+    @compound_names = CompoundName.search(params[:search], params[:page], { per: 60 })
 
   end
 end
