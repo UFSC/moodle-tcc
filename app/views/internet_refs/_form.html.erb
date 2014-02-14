@@ -3,7 +3,7 @@
     <input type="hidden" name="moodle_user" value="<%= j params[:moodle_user] %>"/>
     <%= ref.inputs do %>
       <div class="span4">
-        <%= ref.input :et_all, :label => false, :input_html => {:id => 'et_all'} %>
+        <%= ref.input :et_al, :label => false, :input_html => {:id => 'et_all'} %>
         <%= ref.input :first_author %>
         <%= ref.input :second_author %>
         <%= ref.input :third_author %>
@@ -14,9 +14,9 @@
         <%= ref.input :url %>
       </div>
       <div class="span3">
-        <%= ref.input :ref_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
+        <%= ref.input :publication_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
                       :input_html => {:'data-behaviour' => 'datepicker',
-                                      value: ((I18n.l @internet_ref.ref_date) unless @internet_ref.ref_date.nil?)}
+                                      value: ((I18n.l @internet_ref.publication_date) unless @internet_ref.publication_date.nil?)}
         %>
         <%= ref.input :access_date, :as => :string, :hint => 'Formato: dd/mm/aaaa',
                       :input_html => {:'data-behaviour' => 'datepicker',
