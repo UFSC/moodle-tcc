@@ -53,4 +53,6 @@ namespace :deploy do
     run "ln -s #{File.join(deploy_to, 'shared', 'email.yml')} #{File.join(current_release, 'config', 'email.yml')}"
     run "ln -s #{File.join(deploy_to, 'shared', 'uploads')} #{File.join(current_release, 'public', 'uploads')}"
   end
+
+  after 'deploy', 'deploy:migrate'
 end
