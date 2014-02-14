@@ -87,7 +87,7 @@ brazil,				% o último idioma é o principal do documento
 \titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
 \autor{<%= lesc @tcc.student_name unless @tcc.name.nil? %>}
 \local{Florianópolis}
-\data{<%= lesc l(@defense_date, format: :abnt) %>}
+\data{<%= lesc l(@defense_date, format: :abnt) unless @defense_date.nil? %>}
 \orientador{<%= lesc @nome_orientador unless @tcc.orientador.nil? %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
