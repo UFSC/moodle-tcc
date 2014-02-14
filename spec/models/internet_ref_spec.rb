@@ -6,7 +6,7 @@ describe InternetRef do
     before(:all) { @internet_ref = Fabricate(:internet_ref) }
     after(:all) { @internet_ref.destroy }
 
-    it { should respond_to(:access_date, :first_author, :second_author, :third_author, :ref_date, :et_al,
+    it { should respond_to(:access_date, :first_author, :second_author, :third_author, :publication_date, :et_al,
                            :complementary_information, :subtitle,
                            :title,
                            :url) }
@@ -15,7 +15,7 @@ describe InternetRef do
     it { should validate_presence_of(:first_author) }
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:access_date) }
-    it { should validate_presence_of(:ref_date) }
+
 
     describe '#url' do
       it { should validate_presence_of(:url) }

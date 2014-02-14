@@ -2,6 +2,8 @@ class InternetRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
+  include Shared::Validations
+
 
   before_save :check_equality
   before_update :check_equality
@@ -12,11 +14,11 @@ class InternetRef < ActiveRecord::Base
   has_one :tcc, :through => :references
 
   VALID_URL_EXPRESSION = /^(http|https|ftp|ftps):\/\/(([a-z0-9]+\:)?[a-z0-9]+\@)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.([a-z]{2,5}|[0-9]{1,3})(([0-9]{1,5})?\/.*)?$/ix
-  validates_presence_of :access_date, :ref_date, :first_author, :title, :url
+  validates_presence_of :access_date, :first_author, :title, :url
 
   attr_accessible :access_date, :first_author, :second_author, :third_author, :et_al, :complementary_information,
                   :subtitle, :title, :url,
-                  :ref_date
+                  :publication_date
 
   validates_format_of :url, :with => VALID_URL_EXPRESSION
 
@@ -49,7 +51,8 @@ class InternetRef < ActiveRecord::Base
   end
 
   def year
-    self.ref_date.year
+    !publication_date.nil? ? data = self.publication_date.year : data = self.access_date.year
+    data
   end
 
   private
@@ -66,14 +69,14 @@ class InternetRef < ActiveRecord::Base
                                (first_author = ? AND second_author = ? AND third_author = ?) OR
                                (first_author = ? AND second_author = ? AND third_author = ?) OR
                                (first_author = ? AND second_author = ? AND third_author = ?)                                 )
-                                AND ref_date = ?',
+                                AND publication_date = ?',
                                       first_author, second_author, third_author,
                                       first_author, third_author, second_author,
                                       second_author, first_author, third_author,
                                       second_author, third_author, first_author,
                                       third_author, first_author, second_author,
                                       third_author, second_author, first_author,
-                                      ref_date)
+                                      publication_date)
 
     update_subtype_field(self, internet_refs)
   end
@@ -87,14 +90,14 @@ class InternetRef < ActiveRecord::Base
                                     (first_author = ? AND second_author = ? AND third_author = ?) OR
                                     (first_author = ? AND second_author = ? AND third_author = ?)
                                     )
-                                    AND ref_date = ?',
+                                    AND publication_date = ?',
                                       first_author, second_author, third_author,
                                       first_author, third_author, second_author,
                                       second_author, first_author, third_author,
                                       second_author, third_author, first_author,
                                       third_author, first_author, second_author,
                                       third_author, second_author, first_author,
-                                      ref_date)
+                                      publication_date)
     update_refs(internet_refs)
     internet_refs = InternetRef.where('(
                                     (first_author = ? AND second_author = ? AND third_author = ?) OR
@@ -104,14 +107,14 @@ class InternetRef < ActiveRecord::Base
                                     (first_author = ? AND second_author = ? AND third_author = ?) OR
                                     (first_author = ? AND second_author = ? AND third_author = ?)
                                     )
-                                    AND ref_date = ?',
+                                    AND publication_date = ?',
                                       first_author_was, second_author_was, third_author_was,
                                       first_author_was, third_author_was, second_author_was,
                                       second_author_was, first_author_was, third_author_was,
                                       second_author_was, third_author_was, first_author_was,
                                       third_author_was, first_author_was, second_author_was,
                                       third_author_was, second_author_was, first_author_was,
-                                      ref_date)
+                                      publication_date)
 
     update_refs(internet_refs)
   end
