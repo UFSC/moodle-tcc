@@ -25,6 +25,19 @@ module ModelsUtils
     end
   end
 
+  def get_records(table, columns, first_author, second_author, third_author, year)
+    t = table.arel_table
+    return table.where(
+        t[columns[0]].eq(first_author).and(t[columns[1]].eq(second_author)).and(t[columns[2]].eq(third_author))
+        .or(t[columns[0]].eq(first_author).and(t[columns[1]].eq(third_author)).and(t[columns[2]].eq(second_author)))
+        .or(t[columns[0]].eq(second_author).and(t[columns[1]].eq(first_author)).and(t[columns[2]].eq(third_author)))
+        .or(t[columns[0]].eq(second_author).and(t[columns[1]].eq(third_author)).and(t[columns[2]].eq(first_author)))
+        .or(t[columns[0]].eq(third_author).and(t[columns[1]].eq(first_author)).and(t[columns[2]].eq(second_author)))
+        .or(t[columns[0]].eq(third_author).and(t[columns[1]].eq(second_author)).and(t[columns[2]].eq(first_author)))
+        .and(t[:year].eq(year))
+    ).all
+  end
+
   private
 
   def order_subtype_fields(objects)

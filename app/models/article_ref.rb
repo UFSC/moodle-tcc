@@ -72,66 +72,17 @@ class ArticleRef < ActiveRecord::Base
   end
 
   def check_equality
-    article_refs = ArticleRef.where('(
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?)
-                                    )
-                                    AND year = ?',
-                                    first_author, second_author, third_author,
-                                    first_author, third_author, second_author,
-                                    second_author, first_author, third_author,
-                                    second_author, third_author, first_author,
-                                    third_author, first_author, second_author,
-                                    third_author, second_author, first_author,
-                                    year)
-
+    columns =[:first_author, :second_author, :third_author]
+    article_refs = get_records(ArticleRef, columns, first_author, second_author, third_author, year)
     update_subtype_field(self, article_refs)
-
   end
 
   def check_difference
-    article_refs = ArticleRef.where('(
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?)
-                                    )
-                                    AND year = ?',
-                                    first_author, second_author, third_author,
-                                    first_author, third_author, second_author,
-                                    second_author, first_author, third_author,
-                                    second_author, third_author, first_author,
-                                    third_author, first_author, second_author,
-                                    third_author, second_author, first_author,
-                                    year)
-
+    columns =[:first_author, :second_author, :third_author]
+    article_refs = get_records(ArticleRef, columns, first_author, second_author, third_author, year)
     update_refs(article_refs)
 
-    article_refs = ArticleRef.where('(
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?)
-                                    )
-                                    AND year = ?',
-                                    first_author_was, second_author_was, third_author_was,
-                                    first_author_was, third_author_was, second_author_was,
-                                    second_author_was, first_author_was, third_author_was,
-                                    second_author_was, third_author_was, first_author_was,
-                                    third_author_was, first_author_was, second_author_was,
-                                    third_author_was, second_author_was, first_author_was,
-                                    year)
-
+    article_refs = get_records(ArticleRef, columns, first_author_was, second_author_was, third_author_was, year)
     update_refs(article_refs)
-
-
   end
 end
