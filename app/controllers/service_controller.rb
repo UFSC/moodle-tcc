@@ -2,6 +2,7 @@
 class ServiceController < ApplicationController
   skip_before_filter :authorize
   skip_before_filter :get_tcc
+  skip_before_filter :verify_authenticity_token # Prevents CSRF warning
   before_filter :check_consumer_key
 
   def report
