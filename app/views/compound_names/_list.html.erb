@@ -1,0 +1,30 @@
+<% if @compound_names.count > 0 %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Editar</th>
+      <th>Remover</th>
+    </tr>
+    </thead>
+    <% @compound_names.each_with_index do |element, index| %>
+      <% if !element.nil? && ((index < 30 && type == 'left') || (index >= 30 && type == 'right')) %>
+        <tr>
+          <td><%= element.name %></td>
+          <td>
+            <%= link_to '#', class: 'btn', title: 'Editar nome composto' do %>
+              <%= display_icon('icon-edit') %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to '#', class: 'btn btn-danger', title: 'Remover nome composto' do %>
+              <%= display_icon('icon-remove') %>
+            <% end %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <br />
+<% else %>
+  <p>Não há nomes compostos cadastrados.</p>
+<% end %>

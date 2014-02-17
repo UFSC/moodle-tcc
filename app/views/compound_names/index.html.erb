@@ -12,19 +12,12 @@
   <h4>Lista geral</h4>
 <% end %>
 
-<% if @compound_names.count > 0 %>
-  <% @compound_names.each_with_index do |element, index| %>
-    <% unless element.nil? %>
-      <% unless index == @compound_names.size - 1 %>
-        <%= element.name %>,
-      <% else %>
-        <%= ' '+element.name %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <br />
-<% else %>
-  <p>Não há nomes compostos cadastrados.</p>
-<% end %>
+<div class="span6" style="margin-left: 0px;">
+  <%= render partial: 'compound_names/list', locals: { type: 'left' } %>
+</div>
+
+<div class="span6" style="margin-right: 0px;">
+  <%= render partial: 'compound_names/list', locals: { type: 'right' } %>
+</div>
 
 <%= paginate @compound_names, :params => { anchor: 'compound_names' } %>
