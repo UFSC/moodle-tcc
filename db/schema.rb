@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205173943) do
+ActiveRecord::Schema.define(:version => 20140217173301) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(:version => 20140205173943) do
     t.string   "state"
   end
 
+  add_index "versions", ["item_id", "item_type", "state"], :name => "index_versions_on_item_id_and_item_type_and_state"
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
 end
