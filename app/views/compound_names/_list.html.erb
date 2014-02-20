@@ -12,14 +12,17 @@
         <tr>
           <td><%= element.name %></td>
           <td>
-            <%= link_to '#', class: 'btn', title: 'Editar nome composto' do %>
+            <%= link_to '', class: 'btn', title: 'Editar nome composto' do %>
               <%= display_icon('icon-edit') %>
             <% end %>
           </td>
           <td>
-            <%= link_to '#', class: 'btn btn-danger', title: 'Remover nome composto' do %>
-              <%= display_icon('icon-remove') %>
-            <% end %></td>
+            <%= button_to 'Remover', compound_name_path(element, moodle_user: params[:moodle_user]),
+                          class: 'btn btn-danger',
+                          confirm: "Tem certeza que deseja apagar o nome composto: #{element.name}?",
+                          method: :delete, title: 'Remover nome composto' do %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     <% end %>

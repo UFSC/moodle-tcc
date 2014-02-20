@@ -1,23 +1,37 @@
-<h3>Nomes compostos</h3>
 
-<%= render :partial => 'common/search_bar', locals: {
-        path: bibliographies_path( moodle_user: params[:moodle_user], anchor: 'compound_names' ),
-        autocomplete_path: compound_names_autocomplete_name_path(
-                moodle_user: params[:moodle_user],anchor: 'compound_names'),
-        simple_search_bar: true } %>
+<div class="span12">
+  <h3>Nomes compostos</h3>
+  <div class="span6" style="margin-left: 0">
+    <%= render :partial => 'common/search_bar', locals: {
+            path: bibliographies_path( moodle_user: params[:moodle_user], anchor: 'compound_names' ),
+            autocomplete_path: compound_names_autocomplete_name_path(
+                    moodle_user: params[:moodle_user],anchor: 'compound_names'),
+            simple_search_bar: true } %>
+  </div>
 
-<% if params[:search] %>
-  <h4>Resultado para: <%= params[:search] %></h4>
-<% else %>
-  <h4>Lista geral</h4>
-<% end %>
-
-<div class="span6" style="margin-left: 0px;">
-  <%= render partial: 'compound_names/list', locals: { type: 'left' } %>
+  <div class="span6">
+    <%= link_to 'Adicionar nome composto', '#',  {:remote => true, 'data-toggle' =>  'modal',
+                                         'data-target' => '#modal-window', class: 'btn btn-success'}  %>
+  </div>
 </div>
 
-<div class="span6" style="margin-right: 0px;">
-  <%= render partial: 'compound_names/list', locals: { type: 'right' } %>
+<div class="span12">
+  <% if params[:search] %>
+    <h4>Resultado para: <%= params[:search] %></h4>
+  <% else %>
+    <h4>Lista geral</h4>
+  <% end %>
+
+  <div class="span6" style="margin-left: 0px;">
+    <%= render partial: 'compound_names/list', locals: { type: 'left' } %>
+  </div>
+
+  <div class="span6" style="margin-right: 0px;">
+    <%= render partial: 'compound_names/list', locals: { type: 'right' } %>
+  </div>
+
+  <%= paginate @compound_names, :params => { anchor: 'compound_names' } %>
 </div>
 
-<%= paginate @compound_names, :params => { anchor: 'compound_names' } %>
+<!-- Modal dialog -->
+<%= render 'compound_names/new' %>

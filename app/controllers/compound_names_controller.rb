@@ -5,12 +5,11 @@ class CompoundNamesController < ApplicationController
 
   before_filter :set_current_tab
 
-  def new
-
-  end
-
   def create
-
+    compound_name = CompoundName.new(params[:compound_name])
+    compound_name.save
+    redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names'),
+                :notice => "Nome composto \"#{compound_name.name}\" salvo."
   end
 
   def update
@@ -18,7 +17,10 @@ class CompoundNamesController < ApplicationController
   end
 
   def destroy
-
+    @compound_name = CompoundName.find(params[:id])
+    @compound_name.destroy
+    redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names'),
+                :notice => "Nome composto \"#{@compound_name.name}\" removido."
   end
 
   private
