@@ -78,58 +78,23 @@ class BookCapRef < ActiveRecord::Base
   end
 
   def check_equality
-    book_cap_refs = BookCapRef.where('(
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?)                                 )
-                                AND year = ?',
-                                     first_entire_author, second_entire_author, third_entire_author,
-                                     first_entire_author, third_entire_author, second_entire_author,
-                                     second_entire_author, first_entire_author, third_entire_author,
-                                     second_entire_author, third_entire_author, first_entire_author,
-                                     third_entire_author, first_entire_author, second_entire_author,
-                                     third_entire_author, second_entire_author, first_entire_author,
-                                     year)
+    columns =[:first_entire_author, :second_entire_author, :third_entire_author]
+    book_cap_refs = get_records(BookCapRef, columns, first_entire_author, second_entire_author, third_entire_author,
+                                year)
     update_subtype_field(self, book_cap_refs)
   end
 
   def check_difference
-    book_cap_refs = BookCapRef.where('(
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?)                                 )
-                                AND year = ?',
-                                     first_entire_author, second_entire_author, third_entire_author,
-                                     first_entire_author, third_entire_author, second_entire_author,
-                                     second_entire_author, first_entire_author, third_entire_author,
-                                     second_entire_author, third_entire_author, first_entire_author,
-                                     third_entire_author, first_entire_author, second_entire_author,
-                                     third_entire_author, second_entire_author, first_entire_author,
-                                     year)
-    update_refs(book_cap_refs)
-    book_cap_refs = BookCapRef.where('(
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?) OR
-                               (first_entire_author = ? AND second_entire_author = ? AND third_entire_author = ?)                                 )
-                                AND year = ?',
-                                     first_entire_author_was, second_entire_author_was, third_entire_author_was,
-                                     first_entire_author_was, third_entire_author_was, second_entire_author_was,
-                                     second_entire_author_was, first_entire_author_was, third_entire_author_was,
-                                     second_entire_author_was, third_entire_author_was, first_entire_author_was,
-                                     third_entire_author_was, first_entire_author_was, second_entire_author_was,
-                                     third_entire_author_was, second_entire_author_was, first_entire_author_was,
-                                     year)
-    update_refs(book_cap_refs)
+    columns =[:first_entire_author, :second_entire_author, :third_entire_author]
 
+    book_cap_refs = get_records(BookCapRef, columns, first_entire_author, second_entire_author, third_entire_author,
+                                year)
+    update_refs(book_cap_refs)
+    columns =[:first_entire_author, :second_entire_author, :third_entire_author]
+
+    book_cap_refs = get_records(BookCapRef, columns, first_entire_author_was, second_entire_author_was,
+                                third_entire_author_was, year)
+    update_refs(book_cap_refs)
   end
 
 end
