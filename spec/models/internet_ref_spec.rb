@@ -136,6 +136,21 @@ describe InternetRef do
 
     end
   end
+
+  context '#year' do
+    let(:internet_ref) { Fabricate(:internet_ref) }
+    it 'should display publication date instead of acess date' do
+      internet_ref.publication_date = '2012-05-05'
+      internet_ref.access_date = '2013-05-05'
+      internet_ref.year.should eq(2012)
+      internet_ref.year.should_not eq(2013)
+    end
+    it 'should display access date when publication date is nil' do
+      internet_ref.publication_date = nil
+      internet_ref.access_date = '2013-05-05'
+      internet_ref.year.should eq(2013)
+    end
+  end
   context '#indirect_citation' do
     it_should_behave_like "indirect_citation with more than one author" do
       let(:ref) { Fabricate(:internet_ref) }
