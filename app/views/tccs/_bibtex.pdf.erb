@@ -66,12 +66,19 @@
   <% @internet_refs.each do |r| %>
     <dt class="misc">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
+      <span class="author">
+      <%= r.first_author %>
+      <%= ' and ' << r.second_author if  !r.second_author.blank? %>
+      <%= ' and ' << r.third_author if !r.third_author.blank? %>
+      <%= ' and others ' if r.et_al %>
+      </span>
       <span class="title"><%= r.title %></span>
       <span class="subtitle"><%= r.subtitle %></span>
       <span class="author"><%= r.author %></span>
-      <span class="year"><%= r.access_date.year unless r.access_date.nil? %></span>
+      <span class="year"><%= !r.publication_date.nil? ? r.publication_date.year : r.access_date.year %></span>
       <span class="url"><%= r.url %></span>
       <span class="urlaccessdate"><%= l(r.access_date, :format => "%d %b. %Y.") unless r.access_date.nil? %></span>
+      <span class="note"><%= r.complementary_information %></span>
     </dd>
   <% end %>
 

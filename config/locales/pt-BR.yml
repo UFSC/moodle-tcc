@@ -100,11 +100,16 @@ pt-BR:
         number_or_fascicle: 'Número ou Fascículo'
         journal_name: 'Nome do Periódico'
       internet_ref:
-        author: 'Autor'
+        et_al: 'Mais de 3 autores'
+        first_author: 'Autor'
+        second_author: 'Segundo Autor'
+        third_author: 'Terceiro Autor'
         title: 'Título'
         subtitle: 'Subtítulo'
         url: 'URL'
         access_date: 'Data de Acesso'
+        publication_date: 'Data de Publicação'
+        complementary_information: 'Informações Complementares'
       legislative_ref:
         jurisdiction_or_header: 'Jurisdição ou Cabeçalho'
         title: 'Título'

@@ -6,12 +6,16 @@ describe InternetRef do
     before(:all) { @internet_ref = Fabricate(:internet_ref) }
     after(:all) { @internet_ref.destroy }
 
-    it { should respond_to(:access_date, :author, :subtitle, :title, :url) }
+    it { should respond_to(:access_date, :first_author, :second_author, :third_author, :publication_date, :et_al,
+                           :complementary_information, :subtitle,
+                           :title,
+                           :url) }
     it { should have_one(:reference) }
 
-    it { should validate_presence_of(:author) }
+    it { should validate_presence_of(:first_author) }
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:access_date) }
+
 
     describe '#url' do
       it { should validate_presence_of(:url) }
@@ -36,8 +40,12 @@ describe InternetRef do
   end
 
   context 'normalizations' do
-    it { should normalize_attribute(:author) }
-    it { should normalize_attribute(:author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:first_author) }
+    it { should normalize_attribute(:first_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:second_author) }
+    it { should normalize_attribute(:second_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:third_author) }
+    it { should normalize_attribute(:third_author).from(' Nome   Completo  ').to('Nome Completo') }
     it { should normalize_attribute(:title) }
     it { should normalize_attribute(:title).from(' Nome   Completo  ').to('Nome Completo') }
   end
@@ -55,7 +63,9 @@ describe InternetRef do
 
       it 'subtype should be nil' do
         internet_ref1 = Fabricate.build(:internet_ref)
-        internet_ref1.author = 'Autor A1'
+        internet_ref1.first_author = 'Autor A1'
+        internet_ref1.second_author = 'Autor A2'
+        internet_ref1.third_author = 'Autor A3'
 
         internet_ref1.save!
 
@@ -64,7 +74,9 @@ describe InternetRef do
 
       it 'subtype should be nil after one update' do
         internet_ref1 = Fabricate.build(:internet_ref)
-        internet_ref1.author = 'Autor A1'
+        internet_ref1.first_author = 'Autor A1'
+        internet_ref1.second_author = 'Autor A2'
+        internet_ref1.third_author = 'Autor A3'
 
         internet_ref1.save!
         internet_ref1.save!
@@ -74,12 +86,15 @@ describe InternetRef do
 
       it 'subtype should be set correctly' do
         internet_ref1 = Fabricate.build(:internet_ref)
-        internet_ref1.author = 'Autor A1'
-
+        internet_ref1.first_author = 'Autor A1'
+        internet_ref1.second_author = 'Autor A2'
+        internet_ref1.third_author = 'Autor A3'
         internet_ref1.save!
 
         internet_ref2 = Fabricate.build(:internet_ref)
-        internet_ref2.author = 'Autor A1'
+        internet_ref2.first_author = 'Autor A1'
+        internet_ref2.second_author = 'Autor A2'
+        internet_ref2.third_author = 'Autor A3'
 
         internet_ref2.save!
 
@@ -92,13 +107,15 @@ describe InternetRef do
 
       it 'should set subtype to nil if object is different' do
         internet_ref1 = Fabricate.build(:internet_ref)
-        internet_ref1.author = 'Autor A1'
-
+        internet_ref1.first_author = 'Autor A1'
+        internet_ref1.second_author = 'Autor A2'
+        internet_ref1.third_author = 'Autor A3'
         internet_ref1.save!
 
         internet_ref2 = Fabricate.build(:internet_ref)
-        internet_ref2.author = 'Autor A1'
-
+        internet_ref2.first_author = 'Autor A1'
+        internet_ref2.second_author = 'Autor A2'
+        internet_ref2.third_author = 'Autor A3'
         internet_ref2.save!
 
         internet_ref1.reload
@@ -107,7 +124,7 @@ describe InternetRef do
         internet_ref2.subtype.should == 'b'
 
         internet_ref2
-        internet_ref2.author = 'Autor A10'
+        internet_ref2.first_author = 'Autor A10'
         internet_ref2.save!
         internet_ref1.reload
         internet_ref2.reload
@@ -119,8 +136,23 @@ describe InternetRef do
 
     end
   end
+
+  context '#year' do
+    let(:internet_ref) { Fabricate(:internet_ref) }
+    it 'should display publication date instead of acess date' do
+      internet_ref.publication_date = '2012-05-05'
+      internet_ref.access_date = '2013-05-05'
+      internet_ref.year.should eq(2012)
+      internet_ref.year.should_not eq(2013)
+    end
+    it 'should display access date when publication date is nil' do
+      internet_ref.publication_date = nil
+      internet_ref.access_date = '2013-05-05'
+      internet_ref.year.should eq(2013)
+    end
+  end
   context '#indirect_citation' do
-    it_should_behave_like "indirect_citation" do
+    it_should_behave_like "indirect_citation with more than one author" do
       let(:ref) { Fabricate(:internet_ref) }
     end
   end

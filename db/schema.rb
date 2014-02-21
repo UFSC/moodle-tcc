@@ -167,12 +167,17 @@ ActiveRecord::Schema.define(:version => 20140217173301) do
   add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"
 
   create_table "internet_refs", :force => true do |t|
-    t.string "author"
-    t.string "title"
-    t.string "subtitle"
-    t.string "url"
-    t.date   "access_date"
-    t.string "subtype"
+    t.string  "first_author"
+    t.string  "title"
+    t.string  "subtitle"
+    t.string  "url"
+    t.date    "access_date"
+    t.string  "subtype"
+    t.string  "second_author"
+    t.string  "third_author"
+    t.date    "publication_date"
+    t.boolean "et_al"
+    t.string  "complementary_information"
   end
 
   create_table "legislative_refs", :force => true do |t|
@@ -226,6 +231,7 @@ ActiveRecord::Schema.define(:version => 20140217173301) do
     t.string   "activity_url"
     t.string   "course_id"
     t.string   "name"
+    t.date     "defense_date"
   end
 
   create_table "tccs", :force => true do |t|
