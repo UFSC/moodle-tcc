@@ -7,20 +7,26 @@ class CompoundNamesController < ApplicationController
 
   def create
     compound_name = CompoundName.new(params[:compound_name])
-    compound_name.save
-    redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names'),
-                :notice => "Nome composto \"#{compound_name.name}\" salvo."
+    if compound_name.save
+      flash[:success] = t(:successfully_saved)
+    end
+
+    redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names')
   end
 
   def update
-
+    compound_name = CompoundName.find(params[:id])
+    if compound_name.update_attributes(params[:compound_name])
+      flash[:success] = t(:successfully_saved)
+    end
+    redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names')
   end
 
   def destroy
     @compound_name = CompoundName.find(params[:id])
     @compound_name.destroy
     redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names'),
-                :notice => "Nome composto \"#{@compound_name.name}\" removido."
+                notice: "Nome composto \"#{@compound_name.name}\" removido."
   end
 
   private

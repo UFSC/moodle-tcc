@@ -10,8 +10,11 @@
   </div>
 
   <div class="span6">
-    <%= link_to 'Adicionar nome composto', '#',  {:remote => true, 'data-toggle' =>  'modal',
-                                         'data-target' => '#modal-window', class: 'btn btn-success'}  %>
+    <%= link_to '#',  {:remote => true, 'data-toggle' =>  'modal',
+                                         'data-target' => '#modal-window-new-compound-name', class: 'btn btn-success'}  do %>
+      <%= display_icon 'icon-plus icon-white' %>
+      <b>Adicionar nome composto ou sufixo</b>
+    <% end %>
   </div>
 </div>
 

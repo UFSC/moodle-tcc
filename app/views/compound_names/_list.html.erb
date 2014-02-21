@@ -12,9 +12,9 @@
         <tr>
           <td><%= element.name %></td>
           <td>
-            <%= link_to '', class: 'btn', title: 'Editar nome composto' do %>
-              <%= display_icon('icon-edit') %>
-            <% end %>
+            <%= link_to 'Editar', '#',  {:remote => true, 'data-toggle' =>  'modal',
+                                                          'data-target' => '#'+element.id.to_s, class: 'btn'}  %>
+
           </td>
           <td>
             <%= button_to 'Remover', compound_name_path(element, moodle_user: params[:moodle_user]),
@@ -24,6 +24,8 @@
             <% end %>
           </td>
         </tr>
+        <!-- Edit modal -->
+        <%= render partial: 'compound_names/edit', locals: { compound_name: element } %>
       <% end %>
     <% end %>
   </table>
