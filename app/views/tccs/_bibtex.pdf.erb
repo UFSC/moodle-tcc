@@ -74,7 +74,6 @@
       </span>
       <span class="title"><%= r.title %></span>
       <span class="subtitle"><%= r.subtitle %></span>
-      <span class="author"><%= r.author %></span>
       <span class="year"><%= !r.publication_date.nil? ? r.publication_date.year : r.access_date.year %></span>
       <span class="url"><%= r.url %></span>
       <span class="urlaccessdate"><%= l(r.access_date, :format => "%d %b. %Y.") unless r.access_date.nil? %></span>
