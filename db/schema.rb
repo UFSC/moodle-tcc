@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20140814182612) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type_name"
   end
 
   create_table "diaries", force: true do |t|

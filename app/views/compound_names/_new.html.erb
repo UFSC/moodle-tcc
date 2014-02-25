@@ -7,9 +7,11 @@
   </div>
 
   <div class="modal-body">
-    <%= semantic_form_for CompoundName.new, url: compound_names_path(moodle_user: params[:moodle_user]),
+    <%= semantic_form_for CompoundName.new(type_name: 'simple'),
+                          url: compound_names_path(moodle_user: params[:moodle_user]),
                           button_html: {method: :post} do |f| %>
       <p><%= f.input :name, label: 'Nome composto:' %></p>
+      <%= f.input :type_name, as: :radio, collection: [['Normal', 'simple'], ['Sufixo', 'suffix']] %>
 
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
