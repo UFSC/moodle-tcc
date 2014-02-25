@@ -47,12 +47,14 @@
           <div class="rounded-border">
             <h4>Versão anterior da reflexão</h4>
             <h5 class="underline-text"><%= @last_hub_commented.reflection_title %></h5>
-            <%= @last_hub_commented.reflection.try(:html_safe) %>
+            <%= cktext_area(:last_hub_commented, :reflection, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                          height: '100%'}}) %>
           </div>
           <% unless @hub.commentary.blank? %>
             <div class="rounded-border">
               <h5><%= display_icon('icon-comment') %> Comentário da reflexão anterior</h5>
-              <%= @last_hub_commented.commentary.try(:html_safe) %>
+              <%= cktext_area(:last_hub_commented, :reflection, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                            height: '100%'}}) %>
             </div>
           <% else %>
             <h5 class="text-info">Sem comentário para esta versão</h5>
@@ -74,7 +76,8 @@
               <%= h.cktext_area :reflection %>
             <% else %>
               <h4 class="underline-text"><%= @hub.reflection_title if @hub.show_title? %></h4>
-              <%= @hub.reflection.try(:html_safe) %>
+              <%= cktext_area(:hub, :reflection, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                            height: '100%'}}) %>
             <% end %>
           </div>
 
