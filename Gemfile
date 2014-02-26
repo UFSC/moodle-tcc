@@ -74,6 +74,9 @@ gem 'paper_trail', '~> 3.0.0' # Versionamento
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
 
+# Decorator pattern
+gem 'draper', '~> 1.3'
+
 # Errbit (monitoração de falhas)
 gem 'airbrake'
 
