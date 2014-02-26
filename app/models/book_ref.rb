@@ -32,38 +32,11 @@ class BookRef < ActiveRecord::Base
   normalize_attributes :first_author, :second_author, :third_author, :title, :local, :with => [:squish, :blank]
 
 
-  def direct_et_al
-    "(#{first_author.split(' ').last.upcase} et al., #{year})"
-  end
-
-
-  def direct_citation
-    return direct_et_al if et_all
-
-    authors = "#{first_author.split(' ').last.upcase}"
-
-    unless second_author.nil? || second_author.blank?
-      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    unless third_author.nil? || third_author.blank?
-      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    "(#{authors}, #{year})"
-  end
-
   def type_quantity_defined?
     !type_quantity.blank?
   end
 
   private
-
-  def get_all_authors
-    [first_author, second_author, third_author]
-  end
 
   def check_equality
     columns =[:first_author, :second_author, :third_author]

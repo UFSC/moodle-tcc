@@ -44,32 +44,7 @@ class BookCapRef < ActiveRecord::Base
   alias_attribute :second_author, :second_part_author
   alias_attribute :third_author, :third_part_author
 
-  def direct_et_al
-    "(#{first_author.split(' ').last.upcase} et al., #{year})"
-  end
-
-  def direct_citation
-    return direct_et_al if et_al_part
-    authors = "#{first_author.split(' ').last.upcase}"
-
-    unless second_author.nil? || second_author.blank?
-      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    unless third_author.nil? || third_author.blank?
-      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    "(#{authors}, #{year})"
-  end
-
   private
-
-  def get_all_authors
-    [first_author, second_author, third_author]
-  end
 
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)

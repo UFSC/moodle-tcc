@@ -11,13 +11,27 @@ end
 
 shared_examples_for 'references with citations in the text' do
 
+  before(:each) do
+    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef)
+      @ref = GenericReferenceDecorator.new(ref)
+    else
+      @ref = ref
+    end
+  end
+  
   let(:prefix) { Faker::Lorem.paragraph(1) }
   let(:sufix) { Faker::Lorem.paragraph(1) }
-  let(:citacao) { build_tag_citacao(ref, 'ci', ref.indirect_citation) }
+  let(:citacao) { build_tag_citacao(@ref, 'ci', @ref.indirect_citation) }
   let(:text) { "<p>#{prefix}#{citacao}#{sufix}</p>" }
   let(:text_without_reference) { Faker::Lorem.paragraph(1) }
 
   before(:each) do
+    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef)
+      @ref = GenericReferenceDecorator.new(ref)
+    else
+      @ref = ref
+    end
+    
     ref.save!
     ref.reload
 

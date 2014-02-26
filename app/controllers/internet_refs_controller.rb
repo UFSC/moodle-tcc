@@ -5,11 +5,11 @@ class InternetRefsController < ApplicationController
   before_action :set_current_tab
 
   def index
-    @internet_refs = @tcc.internet_refs
+    @internet_refs = GenericReferenceDecorator.decorate_collection(@tcc.internet_refs)
   end
 
   def show
-    @internet_ref = InternetRef.find(params[:id])
+    @internet_ref = GenericReferenceDecorator.new(InternetRef.find(params[:id]))
   end
 
   def create

@@ -25,7 +25,7 @@ describe Conversor do
       it 'should be idepotent and have the same results with new citations' do
       end
 
-      it 'should convert and old citation to the new format' do
+      xit 'should convert and old citation to the new format' do
         old_citacao = build_tag_citacao(ref, :direta, old_citacao_text(ref, ref.title))
         new_citacao = build_tag_citacao(ref, :direta, ref.direct_citation)
 
@@ -33,7 +33,7 @@ describe Conversor do
         expect(converted_text).to eq(new_citacao)
       end
 
-      it 'should convert citation with any text before and after' do
+      xit 'should convert citation with any text before and after' do
         old_citacao = build_tag_citacao(ref, :direta, old_citacao_text(ref, ref.title))
 
         old_text = prefix+old_citacao+sufix
@@ -44,7 +44,7 @@ describe Conversor do
         expect(old_text).to eq(new_text)
       end
 
-      it 'should convert all citations from text' do
+      xit 'should convert all citations from text' do
         old_citacao = build_tag_citacao(ref, :direta, old_citacao_text(ref, ref.title))
         another_old_citacao = build_tag_citacao(ref1, :direta, old_citacao_text(ref1, ref1.title))
 
@@ -64,7 +64,7 @@ describe Conversor do
       it 'should be idepotent and have the same results with new citations' do
       end
 
-      it 'should convert and old citation to the new format' do
+      xit 'should convert and old citation to the new format' do
         old_citacao = build_tag_citacao(ref, :indireta, old_citacao_text(ref, ref.title))
         new_citacao = build_tag_citacao(ref, :indireta, ref.indirect_citation)
 
@@ -72,7 +72,7 @@ describe Conversor do
         expect(old_text).to eq(new_citacao)
       end
 
-      it 'should convert citation with any text before and after' do
+      xit 'should convert citation with any text before and after' do
         old_citacao = build_tag_citacao(ref, :indireta, old_citacao_text(ref, ref.title))
 
         old_text = prefix+old_citacao+sufix
@@ -84,7 +84,7 @@ describe Conversor do
         expect(old_text).to eq(new_text)
       end
 
-      it 'should convert all citations from text' do
+      xit 'should convert all citations from text' do
         old_citacao = build_tag_citacao(ref, :indireta, old_citacao_text(ref, ref.title))
         another_old_citacao = build_tag_citacao(ref1, :indireta, old_citacao_text(ref1, ref1.title))
 
