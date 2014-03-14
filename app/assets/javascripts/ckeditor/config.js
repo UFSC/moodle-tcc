@@ -27,6 +27,13 @@ CKEDITOR.editorConfig = function(config) {
     config.pasteFromWordRemoveFontStyles = true;
     config.pasteFromWordRemoveStyles = true;
 
+    // Evitar problemas com html entities e linhas em branco
+    config.basicEntities = false;
+    config.entities_greek = false;
+    config.entities_latin = false;
+    config.entities_additional = false;
+    config.fillEmptyBlocks = false;
+
     // Remover botoes que nao vao ser utilizados
     config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,CreateDiv,Styles,Font,FontSize';
 
