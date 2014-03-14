@@ -5,11 +5,11 @@ class BookCapRefsController < ApplicationController
   before_action :set_current_tab
 
   def index
-    @book_cap_refs = GenericReferenceDecorator.decorate_collection(@tcc.book_cap_refs)
+    @book_cap_refs = @tcc.book_cap_refs.decorate
   end
 
   def show
-    @book_cap_ref = GenericReferenceDecorator.new(BookCapRef.find(params[:id]))
+    @book_cap_ref = BookCapRef.find(params[:id]).decorate
   end
 
   def create

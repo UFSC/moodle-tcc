@@ -5,11 +5,11 @@ class LegislativeRefsController < ApplicationController
   before_action :set_current_tab
 
   def index
-    @legislative_refs = @tcc.legislative_refs
+    @legislative_refs = @tcc.legislative_refs.decorate
   end
 
   def show
-    @legislative_ref = LegislativeRef.find(params[:id])
+    @legislative_ref = LegislativeRef.find(params[:id]).decorate
   end
 
   def create

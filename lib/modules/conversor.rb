@@ -37,9 +37,19 @@ module Conversor
                                 :element_type => REFERENCES_TYPE[attr[:ref_type]]).first
   end
 
+  def self.get_decorator_element(ref)
+    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef || ref.class == ArticleRef)
+      return GenericReferenceDecorator.new(ref)
+    elsif ref.class == GeneralRef
+      return ref
+    else
+      return ref.decorate
+    end
+  end
+
   def self.get_citacao(tcc, attr)
     ref = get_reference(tcc, attr)
-    ref.element.send(CITACAO_TYPE[attr[:citacao_type]]) unless ref.nil?
+    get_decorator_element(ref.element).send(CITACAO_TYPE[attr[:citacao_type]]) unless ref.nil?
   end
 
   def self.get_reference_id(tcc, attr)

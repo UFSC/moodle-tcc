@@ -1,11 +1,7 @@
 # encoding: utf-8
 shared_examples_for 'indirect_citation' do
   before(:each) do
-    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef)
-      @ref = GenericReferenceDecorator.new(ref)
-    else
-      @ref = ref
-    end
+    @ref = ref.decorate
     @ref.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
   end
 
@@ -37,11 +33,7 @@ end
 shared_examples_for 'indirect_citation with more than one author' do
 
   before(:each) do
-    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef)
-      @ref = GenericReferenceDecorator.new(ref)
-    else
-      @ref = ref
-    end
+    @ref = ref.decorate
   end
 
   it 'should capitalize correctly with three authors' do

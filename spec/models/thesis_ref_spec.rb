@@ -42,7 +42,7 @@ describe ThesisRef do
 
 
   context 'citacoes' do
-    let(:thesis_ref) { Fabricate.build(:thesis_ref) }
+    let(:thesis_ref) { Fabricate.build(:thesis_ref).decorate }
 
     describe '#direct_citation' do
 

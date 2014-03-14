@@ -20,7 +20,7 @@
                 <td><%= element.publisher %></td>
                 <td><%= element.total_pages %></td>
                 <td>
-                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id, :moodle_user => params[:moodle_user] %>
+                  <%= link_to 'Editar', edit_legislative_ref_path(element.id, :moodle_user => params[:moodle_user]) %>
                   <%= link_to 'Remover', legislative_ref_path(element, :moodle_user => params[:moodle_user]), :confirm =>  t(:label_confirm_message), :method => :delete %>
                 </td>
               </tr>

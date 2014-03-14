@@ -6,11 +6,11 @@ class ThesisRefsController < ApplicationController
   before_action :set_current_tab
 
   def index
-    @thesis_refs = @tcc.thesis_refs
+    @thesis_refs = @tcc.thesis_refs.decorate
   end
 
   def show
-    @thesis_ref = ThesisRef.find(params[:id])
+    @thesis_ref = ThesisRef.find(params[:id]).decorate
   end
 
   def create

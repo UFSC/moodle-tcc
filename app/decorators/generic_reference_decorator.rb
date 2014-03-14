@@ -1,40 +1,35 @@
 class GenericReferenceDecorator < Draper::Decorator
   delegate_all
 
-  # Redefinindo para as views que utilizam .class não obterem 'GenericReferenceDecorator'
-  def class
-    object.class
-  end
-
   def direct_et_al
-    "(#{first_author.split(' ').last.upcase} et al., #{year})"
+    "(#{citation_author(first_author)} et al., #{year})"
   end
 
   def direct_citation
-    # Pequena diferença de nomes nos models, talvez seja boa ideia considerar a troca para igualar
+    # Pequena diferença de nomes nos models, talvez seja boa ide  ia considerar a troca para igualar
     if object.respond_to? :et_all
       return direct_et_al if et_all
     elsif object.respond_to? :et_al_part
       return direct_et_al if et_al_part
     end
 
-    authors = "#{first_author.split(' ').last.upcase}"
+    authors = citation_author(first_author)
 
     unless second_author.nil? || second_author.blank?
-      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
+      author = citation_author(second_author)
+      authors = "#{authors}; #{author}"
     end
 
     unless third_author.nil? || third_author.blank?
-      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
+      author = citation_author(third_author)
+      authors = "#{authors}; #{author}"
     end
 
     "(#{authors}, #{year})"
   end
 
   def indirect_et_al
-    "#{UnicodeUtils.titlecase(first_author.split(' ').last)} et al. (#{year})"
+    "#{citation_author(first_author)} et al. (#{year})"
   end
 
   def indirect_citation
@@ -47,7 +42,7 @@ class GenericReferenceDecorator < Draper::Decorator
     elements = Array.new
     get_all_authors.each do |author|
       unless author.nil? || author.blank?
-        elements << UnicodeUtils.titlecase(author.split(' ').last)
+        elements << UnicodeUtils.titlecase(citation_author(author))
       end
     end
     "#{elements.to_sentence} (#{year})"
@@ -55,6 +50,31 @@ class GenericReferenceDecorator < Draper::Decorator
 
   def get_all_authors
     [first_author, second_author, third_author]
+  end
+
+  def citation_author(author)
+    compound_names = []
+    names = author.split(' ')
+    name = UnicodeUtils.upcase(names.last)
+    names.each{ |name|
+      ns = CompoundName.where('name like ?', "%#{name}%")
+      compound_names += ns unless ns.empty?
+    }
+
+    unless compound_names.empty?
+      compound_names_included = compound_names.select{ |cn| author.include? cn.name}
+      compound_names_included.each{ |n|
+        if (n.type_name == 'simple' || n.type_name.nil?) &&
+            (n.name == author || author.include?(' ' + n.name))
+          name = UnicodeUtils.upcase(n.name)
+          break
+        elsif n.type_name == 'suffix'
+          name = UnicodeUtils.upcase(names[-2] + ' ' + n.name) if names.last == n.name && names.size > 1
+        end
+      }
+    end
+
+    return name
   end
 
 

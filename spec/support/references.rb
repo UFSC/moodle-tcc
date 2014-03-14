@@ -12,11 +12,7 @@ end
 shared_examples_for 'references with citations in the text' do
 
   before(:each) do
-    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef)
-      @ref = GenericReferenceDecorator.new(ref)
-    else
-      @ref = ref
-    end
+    @ref = ref.decorate
   end
   
   let(:prefix) { Faker::Lorem.paragraph(1) }
@@ -26,12 +22,6 @@ shared_examples_for 'references with citations in the text' do
   let(:text_without_reference) { Faker::Lorem.paragraph(1) }
 
   before(:each) do
-    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef)
-      @ref = GenericReferenceDecorator.new(ref)
-    else
-      @ref = ref
-    end
-    
     ref.save!
     ref.reload
 

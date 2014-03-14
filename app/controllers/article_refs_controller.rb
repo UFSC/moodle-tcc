@@ -5,11 +5,11 @@ class ArticleRefsController < ApplicationController
   before_action :set_current_tab
 
   def index
-    @article_refs = @tcc.article_refs
+    @article_refs = @tcc.article_refs.decorate
   end
 
   def show
-    @article_ref = ArticleRef.find(params[:id])
+    @article_ref = ArticleRef.find(params[:id]).decorate
   end
 
   def create

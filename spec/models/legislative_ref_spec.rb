@@ -126,7 +126,7 @@ describe LegislativeRef do
   end
 
   context '#direct_citation' do
-    let(:ref) { Fabricate(:legislative_ref) }
+    let(:ref) { Fabricate(:legislative_ref).decorate }
 
     it 'should capitalize jurisdiction' do
       expect(ref.direct_citation).to include(UnicodeUtils.upcase(ref.jurisdiction_or_header))
@@ -140,7 +140,7 @@ describe LegislativeRef do
   end
 
   context '#indirect_citation' do
-    let(:ref) { Fabricate(:legislative_ref) }
+    let(:ref) { Fabricate(:legislative_ref).decorate }
 
     it 'should capitalize jurisdiction as a title' do
       expect(ref.indirect_citation).to include(UnicodeUtils.titlecase(ref.jurisdiction_or_header))

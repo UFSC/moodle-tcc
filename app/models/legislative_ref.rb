@@ -27,19 +27,7 @@ class LegislativeRef < ActiveRecord::Base
   normalize_attributes :jurisdiction_or_header, :title, :local, :with => [:squish, :blank]
 
 
-  def direct_citation
-    "(#{UnicodeUtils.upcase(jurisdiction_or_header)}, #{year})"
-  end
-
-  def indirect_citation
-    "#{UnicodeUtils.titlecase(jurisdiction_or_header)} (#{year})"
-  end
-
   private
-
-  def get_all_authors
-    [jurisdiction_or_header]
-  end
 
   def check_equality
     legislative_refs = LegislativeRef.where('(publisher = ? ) AND (year = ?)', publisher, year)
