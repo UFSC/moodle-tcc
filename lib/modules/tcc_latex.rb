@@ -137,23 +137,26 @@ module TccLatex
   end
 
   def self.process_figures(doc)
-
     # Inserir class figure nas imagens e resolver caminho
     doc.css('img').map do |img|
       img['class'] = 'figure'
 
+
+
       if img['src'] =~ /@@TOKEN@@/
         # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
         img['src'] = img['src'].gsub('@@TOKEN@@', Settings.moodle_token)
-
         # é feito unescape e depois escape para garantir que a url estará correta
         # essa maneira é estranha, mas evita problemas :)
         img['src'] = URI.escape(URI.unescape(img['src']))
       elsif img['src'] !~ URI::regexp
         img['src'] = File.join(Rails.public_path, img['src'])
-
         # Se a URL contiver espaços ou caracter especial, deve ser decodificada
         img['src'] = URI.unescape(img['src'])
+      else
+        src = (URI.unescape(img['src']))
+        img['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
+        img['alt'] = "Imagem inválida ou não encontrada. - #{src}"
       end
 
     end
