@@ -27,11 +27,14 @@ CKEDITOR.editorConfig = function(config) {
     config.pasteFromWordRemoveFontStyles = true;
     config.pasteFromWordRemoveStyles = true;
 
+    // Cola como plaintext
+    config.forcePasteAsPlainText = true
+
     // Evitar problemas com html entities e linhas em branco
     config.basicEntities = false;
     config.entities_greek = false;
     config.entities_latin = false;
-    config.entities_additional = false;
+    config.entities_additional = '';
     config.fillEmptyBlocks = false;
 
     // Remover botoes que nao vao ser utilizados
