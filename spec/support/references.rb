@@ -1,11 +1,15 @@
-shared_examples_for 'references with citations in the text' do
+module ReferencesUtils
   REFERENCES = {'internet' => 'InternetRef',
                 'gerais' => 'GeneralRef',
                 'livros' => 'BookRef',
                 'capítulos' => 'BookCapRef',
                 'artigos' => 'ArticleRef',
                 'legislative' => 'LegislativeRef'}
+
   CLASSES_STRINGS = ['abstract', 'presentation', 'final_considerations']
+end
+
+shared_examples_for 'references with citations in the text' do
 
   let(:prefix) { Faker::Lorem.paragraph(1) }
   let(:sufix) { Faker::Lorem.paragraph(1) }
@@ -30,7 +34,7 @@ shared_examples_for 'references with citations in the text' do
   end
 
 
-  CLASSES_STRINGS.each do |string|
+  ReferencesUtils::CLASSES_STRINGS.each do |string|
     it 'should allow to delete reference if there is not a citation in the text' do
       @tcc.send("#{string}=", nil)
       @tcc.save!
@@ -41,7 +45,7 @@ shared_examples_for 'references with citations in the text' do
     end
   end
 
-  CLASSES_STRINGS.each do |string|
+  ReferencesUtils::CLASSES_STRINGS.each do |string|
     it 'should not allow to delete reference if there is a citation in the text' do
       @tcc.abstract.content = text
       @tcc.presentation.content = text
@@ -64,6 +68,6 @@ end
 
 def build_tag_citacao(model, citacao_type, text)
   %Q(<citacao citacao-text="#{model.title}" citacao_type="#{citacao_type}"
-class="citacao-class" contenteditable="false" id="#{model.id}" ref-type="#{REFERENCES.invert[model.class.to_s]}"
+class="citacao-class" contenteditable="false" id="#{model.id}" ref-type="#{ReferencesUtils::REFERENCES.invert[model.class.to_s]}"
  title="#{text}" reference_id="999">#{text}</citacao>)
 end
