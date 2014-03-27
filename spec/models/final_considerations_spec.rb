@@ -47,30 +47,25 @@ describe FinalConsiderations do
     end
 
     it 'should change states even if email is blank' do
-
       final_considerations.state = 'sent_to_admin_for_revision'
       final_considerations.tcc = tcc
       tcc.email_estudante = ''
-      tcc.save!
-
+      tcc.save
 
       final_considerations.send_back_to_student
-      final_considerations.save!
+      final_considerations.save
       final_considerations.state.should == 'draft'
     end
 
     it 'should change states even if email is nil' do
-
       final_considerations.state = 'sent_to_admin_for_revision'
       final_considerations.tcc = tcc
       tcc.email_estudante = nil
-      tcc.save!
-
+      tcc.save
 
       final_considerations.send_back_to_student
-      final_considerations.save!
+      final_considerations.save
       final_considerations.state.should == 'draft'
-
     end
 
   end

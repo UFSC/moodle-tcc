@@ -70,20 +70,20 @@ describe HubTcc do
     it 'should change states even if email is blank' do
       hub.state = 'sent_to_admin_for_revision'
       tcc.email_estudante = ''
-      tcc.save!
+      tcc.save
 
       hub.send_back_to_student
-      hub.save!
+      hub.save
       hub.state.should == 'draft'
     end
 
     it 'should change states even if email is nil' do
       hub.state = 'sent_to_admin_for_revision'
       tcc.email_estudante = nil
-      tcc.save!
+      tcc.save
 
       hub.send_back_to_student
-      hub.save!
+      hub.save
       hub.state.should == 'draft'
     end
 

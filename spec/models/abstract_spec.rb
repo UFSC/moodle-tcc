@@ -50,10 +50,10 @@ describe Abstract do
       abstract.state = 'sent_to_admin_for_revision'
       abstract.tcc = tcc
       tcc.email_estudante = ''
-      tcc.save!
+      tcc.save
 
       abstract.send_back_to_student
-      abstract.save!
+      abstract.save
       abstract.state.should == 'draft'
     end
 
@@ -61,10 +61,10 @@ describe Abstract do
       abstract.state = 'sent_to_admin_for_revision'
       abstract.tcc = tcc
       tcc.email_estudante = nil
-      tcc.save!
+      tcc.save
 
       abstract.send_back_to_student
-      abstract.save!
+      abstract.save
       abstract.state.should == 'draft'
     end
   end

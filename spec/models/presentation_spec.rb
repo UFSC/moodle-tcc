@@ -47,31 +47,25 @@ describe Presentation do
     end
 
     it 'should change states even if email is blank' do
-
       presentation.state = 'sent_to_admin_for_revision'
       presentation.tcc = tcc
       tcc.email_estudante = ''
-      tcc.save!
+      tcc.save
 
       presentation.send_back_to_student
-      presentation.save!
+      presentation.save
       presentation.state.should == 'draft'
-
     end
 
     it 'should change states even if email is nil' do
-
       presentation.state = 'sent_to_admin_for_revision'
       presentation.tcc = tcc
       tcc.email_estudante = nil
-      tcc.save!
+      tcc.save
 
       presentation.send_back_to_student
-      presentation.save!
+      presentation.save
       presentation.state.should == 'draft'
-
     end
-
-
   end
 end
