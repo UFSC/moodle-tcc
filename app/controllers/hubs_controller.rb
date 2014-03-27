@@ -15,7 +15,7 @@ class HubsController < ApplicationController
     # Recupera a ultima versão que nos interessa
     @last_hub_commented = @hub.last_useful_version
 
-    @hub.new_state = @hub.aasm_current_state
+    @hub.new_state = @hub.aasm.current_state
 
     # Busca diários no moodle
     @hub.fetch_diaries(@user_id)
@@ -29,7 +29,7 @@ class HubsController < ApplicationController
     hub_portfolio = @tcc.hubs.hub_portfolio.find_by_position(params[:position])
 
     # Garante que haverá a transição de "novo" para algum outro estado ao enviar o formulário
-    @hub.new_state = @hub.new? ? :draft : @hub.aasm_current_state
+    @hub.new_state = @hub.new? ? :draft : @hub.aasm.current_state
 
     # TODO: escrever testes para essa condição, já que isso é crítico.
     @hub.reflection = hub_portfolio.reflection if @hub.new?

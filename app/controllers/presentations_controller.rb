@@ -7,7 +7,7 @@ class PresentationsController < ApplicationController
     @current_user = current_user
     set_tab :presentation
     @presentation = @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
-    @presentation.new_state = @presentation.new? ? :draft : @presentation.aasm_current_state
+    @presentation.new_state = @presentation.new? ? :draft : @presentation.aasm.current_state
 
     @last_commented = @presentation.last_useful_version
 

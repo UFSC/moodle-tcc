@@ -51,7 +51,7 @@ module TccStateMachine
 
     # Enumerize
     base.send :extend, Enumerize
-    base.enumerize :new_state, in: base.aasm_states
+    base.enumerize :new_state, in: base.aasm.states
 
     # Injetar metodos de instancia
     base.send :include, InstanceMethods

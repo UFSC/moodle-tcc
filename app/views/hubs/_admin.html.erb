@@ -8,7 +8,7 @@
         <% unless @current_user.view_all? %>
           <h3 class="span12"> Reflexões do <%= @hub.hub_definition.title %> -
               <span class="text-info">
-                <%= t('states.'+@hub.aasm_current_state.to_s) %>
+                <%= t('states.'+@hub.aasm.current_state.to_s) %>
                 <%= "/ Nota: #{@hub.grade}" if @hub.show_grade? %>
               </span>
           </h3>

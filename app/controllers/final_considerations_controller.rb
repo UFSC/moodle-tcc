@@ -7,7 +7,7 @@ class FinalConsiderationsController < ApplicationController
     @current_user = current_user
     set_tab :final_considerations
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
-    @final_considerations.new_state = @final_considerations.new? ? :draft : @final_considerations.aasm_current_state
+    @final_considerations.new_state = @final_considerations.new? ? :draft : @final_considerations.aasm.current_state
 
     @last_commented = @final_considerations.last_useful_version
 

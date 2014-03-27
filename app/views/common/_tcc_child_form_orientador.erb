@@ -1,7 +1,7 @@
 <div class="span12">
   <div class="rounded-border row">
     <h3>
-      <%= object_label %> - <span class="text-info"> <%= t('states.'+object.aasm_current_state.to_s) %></span>
+      <%= object_label %> - <span class="text-info"> <%= t('states.'+object.aasm.current_state.to_s) %></span>
     </h3>
     <span>
       <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>

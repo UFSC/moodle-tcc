@@ -217,7 +217,7 @@ namespace :tcc do
   end
 
   def to_draft(hub)
-    case hub.aasm_current_state
+    case hub.aasm.current_state
       when :draft
         # ta certo
       when :revision
@@ -228,21 +228,21 @@ namespace :tcc do
   end
 
   def to_revision(hub)
-    case hub.aasm_current_state
+    case hub.aasm.current_state
       when :draft
         hub.send_to_admin_for_revision
     end
   end
 
   def to_evaluation(hub)
-    case hub.aasm_current_state
+    case hub.aasm.current_state
       when :draft
         hub.send_to_admin_for_evaluation
     end
   end
 
   def to_evaluation_ok(hub)
-    case hub.aasm_current_state
+    case hub.aasm.current_state
       when :draft
         hub.send_to_admin_for_evaluation
         hub.admin_evaluate_ok

@@ -7,7 +7,7 @@ class AbstractsController < ApplicationController
     @current_user = current_user
     set_tab :abstract
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
-    @abstract.new_state = @abstract.new? ? :draft : @abstract.aasm_current_state
+    @abstract.new_state = @abstract.new? ? :draft : @abstract.aasm.current_state
 
     @last_commented = @abstract.last_useful_version
 

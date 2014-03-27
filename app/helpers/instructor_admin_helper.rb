@@ -6,7 +6,7 @@ module InstructorAdminHelper
                           terminated: 'label-success'}
 
   def action_label(object, link_to_path)
-    state = object.blank? ? 'new' : object.aasm_current_state
+    state = object.blank? ? 'new' : object.aasm.current_state
 
     if object.nil?
       content_tag('span', label_text('actions', state), class: status_label_class(state))
@@ -16,7 +16,7 @@ module InstructorAdminHelper
   end
 
   def hub_status_label(hub, moodle_user)
-    state = hub.blank? ? 'blank' : hub.aasm_current_state
+    state = hub.blank? ? 'blank' : hub.aasm.current_state
 
     link_to label_text('states_label', state),
             show_hubs_path(position: (hub.position), moodle_user: moodle_user),

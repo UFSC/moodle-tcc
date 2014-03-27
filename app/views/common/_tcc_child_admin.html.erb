@@ -6,7 +6,7 @@
         <%= render partial: 'common/states', locals: {object: object, update_state_url: update_state_url} %>
       <% else %>
         <span class="text-info">
-          <%= t('states.'+object.aasm_current_state.to_s) %>
+          <%= t('states.'+object.aasm.current_state.to_s) %>
         </span>
       <% end %>
     </h3>

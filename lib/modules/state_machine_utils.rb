@@ -21,7 +21,7 @@ module StateMachineUtils
   private
 
   def to_draft(o)
-    case o.aasm_current_state
+    case o.aasm.current_state
       when :sent_to_admin_for_revision
         o.send_back_to_student
       when :sent_to_admin_for_evaluation
@@ -32,7 +32,7 @@ module StateMachineUtils
   end
 
   def to_revision(o)
-    case o.aasm_current_state
+    case o.aasm.current_state
       when :draft
         o.send_to_admin_for_revision
       when :sent_to_admin_for_evaluation
@@ -45,7 +45,7 @@ module StateMachineUtils
   end
 
   def to_evaluation(o)
-    case o.aasm_current_state
+    case o.aasm.current_state
       when :draft
         o.send_to_admin_for_evaluation
       when :sent_to_admin_for_revision
@@ -58,7 +58,7 @@ module StateMachineUtils
   end
 
   def to_evaluation_ok(o)
-    case o.aasm_current_state
+    case o.aasm.current_state
       when :draft
         o.send_to_admin_for_evaluation
         o.admin_evaluate_ok
