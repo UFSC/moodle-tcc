@@ -133,6 +133,7 @@ describe ArticleRef do
 
         article_ref1.save!
       end
+
       xit 'should invoke check_difference' do
         article_ref1 = Fabricate.build(:article_ref)
         article_ref1.first_author = 'Autor A10'

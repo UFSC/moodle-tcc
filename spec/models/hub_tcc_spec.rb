@@ -67,22 +67,20 @@ describe HubTcc do
       ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
     end
 
-    xit 'should change states even if email is blank' do
+    it 'should change states even if email is blank' do
       hub.state = 'sent_to_admin_for_revision'
       tcc.email_estudante = ''
       tcc.save!
-
 
       hub.send_back_to_student
       hub.save!
       hub.state.should == 'draft'
     end
 
-    xit 'should change states even if email is nil' do
+    it 'should change states even if email is nil' do
       hub.state = 'sent_to_admin_for_revision'
       tcc.email_estudante = nil
       tcc.save!
-
 
       hub.send_back_to_student
       hub.save!
