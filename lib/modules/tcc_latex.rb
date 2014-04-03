@@ -150,6 +150,7 @@ module TccLatex
         # essa maneira é estranha, mas evita problemas :)
         img['src'] = URI.escape(URI.unescape(img['src']))
       elsif img['src'] !~ URI::regexp
+        next if img['src'].nil?
         img['src'] = File.join(Rails.public_path, img['src'])
         # Se a URL contiver espaços ou caracter especial, deve ser decodificada
         img['src'] = URI.unescape(img['src'])
