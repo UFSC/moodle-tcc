@@ -223,6 +223,8 @@ module TccLatex
         item[:dom]['src'] = asset.data.current_path
       else
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{original_src}) (error: #{asset.errors.messages})"
+        item[:dom]['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
+        item[:dom]['alt'] = "Imagem inválida ou não encontrada. - #{filename}"
       end
 
       file.close
