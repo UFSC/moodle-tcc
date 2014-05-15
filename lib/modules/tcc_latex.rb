@@ -157,7 +157,7 @@ module TccLatex
       else
         src = (URI.unescape(img['src']))
         img['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
-        img['alt'] = "Imagem inválida ou não encontrada. - #{src}"
+        img['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(src)}"
       end
 
     end
@@ -224,7 +224,7 @@ module TccLatex
       else
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{original_src}) (error: #{asset.errors.messages})"
         item[:dom]['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
-        item[:dom]['alt'] = "Imagem inválida ou não encontrada. - #{filename}"
+        item[:dom]['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(filename)}"
       end
 
       file.close
