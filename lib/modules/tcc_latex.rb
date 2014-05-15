@@ -156,8 +156,10 @@ module TccLatex
         img['src'] = URI.unescape(img['src'])
       else
         src = (URI.unescape(img['src']))
+        original_filename = File.basename(URI.parse(img['src']).path)
+
         img['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
-        img['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(src)}"
+        img['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(original_filename)}"
       end
 
     end
@@ -201,6 +203,7 @@ module TccLatex
     # Salvar imagens no db
     process.each do |item|
       original_src = item[:dom]['src']
+      original_filename = File.basename(URI.parse(item[:dom]['src']).path)
       file, filename = create_file_to_upload(item, doc)
 
       # se houver algum problema com a transferência, vamos ignorar e processar o próximo
@@ -224,7 +227,7 @@ module TccLatex
       else
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{original_src}) (error: #{asset.errors.messages})"
         item[:dom]['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
-        item[:dom]['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(filename)}"
+        item[:dom]['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(original_filename)}"
       end
 
       file.close
