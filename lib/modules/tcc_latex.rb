@@ -200,6 +200,7 @@ module TccLatex
 
     # Salvar imagens no db
     process.each do |item|
+      original_src = item[:dom]['src']
       file, filename = create_file_to_upload(item, doc)
 
       # se houver algum problema com a transferência, vamos ignorar e processar o próximo
@@ -221,7 +222,7 @@ module TccLatex
         # Mudar caminho da imagem para onde foi salvo
         item[:dom]['src'] = asset.data.current_path
       else
-        Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (#{asset.errors.messages})"
+        Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{original_src}) (error: #{asset.errors.messages})"
       end
 
       file.close
