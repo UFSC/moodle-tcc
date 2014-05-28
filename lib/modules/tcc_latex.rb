@@ -156,7 +156,7 @@ module TccLatex
         img['src'] = URI.unescape(img['src'])
       else
         src = (URI.unescape(img['src']))
-        original_filename = File.basename(URI.parse(img['src']).path)
+        original_filename = File.basename(URI.parse(img['src']).path.to_s)
 
         img['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
         img['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(original_filename)}"
