@@ -6,7 +6,7 @@
   <% @book_refs.each do |r| %>
     <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
-      <span class="address"><%= r.local %></span>
+      <span class="address"><%= lesc r.local %></span>
         <span class="author">
           <%= r.first_author %>
           <%= ' and ' << r.second_author if  !r.second_author.blank? %>
@@ -74,7 +74,7 @@
       </span>
       <span class="title"><%= r.title %></span>
       <span class="subtitle"><%= r.subtitle %></span>
-      <span class="year"><%= !r.publication_date.nil? ? r.publication_date.year : r.access_date.year %></span>
+      <span class="year"><%= r.publication_date.nil? ? r.access_date.year : r.publication_date.year %></span>
       <span class="url"><%= r.url %></span>
       <span class="urlaccessdate"><%= l(r.access_date, :format => "%d %b. %Y.") unless r.access_date.nil? %></span>
       <span class="note"><%= r.complementary_information %></span>

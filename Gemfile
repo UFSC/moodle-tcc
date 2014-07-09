@@ -17,7 +17,7 @@ gem 'rest-client'
 gem 'nokogiri'
 
 # Jquery UI
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '~> 4.1.1'
 
 # State machine
 gem 'aasm'
@@ -96,7 +96,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.99'
   gem 'metric_fu', :require => false
   gem 'pry-rails', '~>0.3.2'
   gem 'simplecov', require: false
@@ -105,6 +105,7 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+  gem 'sass', '~> 3.2.14'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'bootstrap-sass', '~> 2.3.2.1'
