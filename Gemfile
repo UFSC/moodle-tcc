@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '~>3.2.12'
 gem 'mysql2'
 
+# Auxilia a migração para Rails 4
+gem 'rails4_upgrade'
+
 # Unicode Utils
 gem 'unicode_utils'
 
@@ -58,7 +61,7 @@ gem 'whenever', require: false
 # Model Utils
 gem 'enumerize'
 gem 'attribute_normalizer'
-gem 'paper_trail', '2.7.2' # Versionamento
+gem 'paper_trail', '~> 3.0.0' # Versionamento
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
 
