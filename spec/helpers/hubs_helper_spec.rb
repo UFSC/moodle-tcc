@@ -12,7 +12,7 @@ describe HubsHelper do
     end
 
     it 'should return a html_safe content' do
-      helper.diary_content('<strong>algumacoisa</strong>').html_safe?.should be_true
+      helper.diary_content('<strong>algumacoisa</strong>').html_safe?.should be true
     end
   end
 end

@@ -18,7 +18,7 @@ describe Hub do
     it 'should allow empty reflection if hub is new or draft' do
       hub.reflection = ''
 
-      hub.new?.should be_true
+      hub.new?.should be true
       hub.should be_valid
 
       hub.state = 'draft'

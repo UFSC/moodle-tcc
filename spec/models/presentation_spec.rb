@@ -16,14 +16,14 @@ describe Presentation do
   describe 'content' do
     it 'should allow empty reflection if presentation is new' do
       presentation.content = ''
-      presentation.new?.should be_true
+      presentation.new?.should be true
       presentation.should be_valid
     end
 
     it 'should validate presence of reflection if presentation is not new' do
       presentation.content = ''
       presentation.state = 'draft'
-      presentation.draft?.should be_true
+      presentation.draft?.should be true
       presentation.should_not be_valid
     end
   end

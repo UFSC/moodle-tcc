@@ -18,7 +18,7 @@ describe HubTcc do
     it 'should allow empty reflection if hub is new or draft' do
       hub.reflection = ''
 
-      hub.new?.should be_true
+      hub.new?.should be true
       hub.should be_valid
 
       hub.state = 'draft'
@@ -46,7 +46,7 @@ describe HubTcc do
     it "should allow change to 'avaliado' even without grade as HubTcc doesn't have grades" do
       hub.grade = nil
       hub.state='sent_to_admin_for_evaluation'
-      hub.may_admin_evaluate_ok?.should be_true
+      hub.may_admin_evaluate_ok?.should be true
     end
   end
 

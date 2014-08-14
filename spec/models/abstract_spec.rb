@@ -16,14 +16,14 @@ describe Abstract do
   describe 'content' do
     it 'should allow empty reflection if abstract is new' do
       abstract.content = ''
-      abstract.new?.should be_true
+      abstract.new?.should be true
       abstract.should be_valid
     end
 
     it 'should validate presence of reflection if abstract is not new' do
       abstract.content = ''
       abstract.state = 'draft'
-      abstract.draft?.should be_true
+      abstract.draft?.should be true
       abstract.should_not be_valid
     end
   end
