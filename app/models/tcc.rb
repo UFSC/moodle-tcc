@@ -122,8 +122,8 @@ class Tcc < ActiveRecord::Base
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
         else
-          hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by_position hub_definition.position
-          hub_tcc = self.hubs.hub_tcc.find_or_initialize_by_position hub_definition.position
+          hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by(position: hub_definition.position)
+          hub_tcc = self.hubs.hub_tcc.find_or_initialize_by(position: hub_definition.position)
           hub_portfolio.hub_definition = hub_definition
           hub_tcc.hub_definition = hub_definition
           hub_portfolio.save!

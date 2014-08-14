@@ -35,7 +35,7 @@ module ModelsUtils
         .or(t[columns[0]].eq(third_author).and(t[columns[1]].eq(first_author)).and(t[columns[2]].eq(second_author)))
         .or(t[columns[0]].eq(third_author).and(t[columns[1]].eq(second_author)).and(t[columns[2]].eq(first_author)))
         .and(t[:year].eq(year))
-    ).all
+    ).to_a
   end
 
   private

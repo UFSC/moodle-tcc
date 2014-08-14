@@ -2,7 +2,7 @@ SistemaTcc::Application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
 
-  root to: 'lti#establish_connection'
+  root to: 'lti#establish_connection', via: [:get, :post]
   match 'lti' => 'lti#establish_connection', via: [:get, :post]
   get 'access_denied' => 'lti#access_denied'
 
@@ -28,7 +28,7 @@ SistemaTcc::Application.routes.draw do
   put "tcc" => 'tccs#save', as: 'save_tcc'
   get "/tccs/:moodle_user/preview" => "tccs#preview_tcc", as: 'preview_tcc'
   match '/tccs/:tcc_id/evaluate' => 'tccs#evaluate', :as => 'evaluate_tcc', via: [:get, :post]
-  get "/tccs/:moodle_user/generate.:format" => 'tccs#show_pdf', as: 'generate_tcc', :defaults => {:format => 'pdf'}
+  get "/tccs/:moodle_user/generate", to: 'tccs#show_pdf', as: 'generate_tcc', defaults: {format: 'pdf'}
   get "showreferences" => 'tccs#show_references', as: 'show_references'
 
   # Abstracts

@@ -88,7 +88,7 @@ class Hub < ActiveRecord::Base
       if self.diaries.empty?
         self.diaries.build(hub: self, diary_definition: diary_definition, position: diary_definition.position)
       else
-        diary = self.diaries.find_or_initialize_by_position diary_definition.position
+        diary = self.diaries.find_or_initialize_by(position: diary_definition.position)
         diary.diary_definition = diary_definition
         diary.save!
       end

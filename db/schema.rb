@@ -9,23 +9,23 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140814182612) do
+ActiveRecord::Schema.define(version: 20140814182612) do
 
-  create_table "abstracts", :force => true do |t|
-    t.text     "content",    :limit => 16777215
+  create_table "abstracts", force: true do |t|
+    t.text     "content",    limit: 16777215
     t.string   "key_words"
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "state"
   end
 
-  add_index "abstracts", ["tcc_id"], :name => "index_abstracts_on_tcc_id"
+  add_index "abstracts", ["tcc_id"], name: "index_abstracts_on_tcc_id", using: :btree
 
-  create_table "article_refs", :force => true do |t|
+  create_table "article_refs", force: true do |t|
     t.string  "first_author"
     t.string  "second_author"
     t.string  "third_author"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.string  "subtype"
   end
 
-  create_table "book_cap_refs", :force => true do |t|
+  create_table "book_cap_refs", force: true do |t|
     t.string  "cap_title"
     t.string  "cap_subtitle"
     t.string  "book_title"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.boolean "et_al_entire"
   end
 
-  create_table "book_refs", :force => true do |t|
+  create_table "book_refs", force: true do |t|
     t.string  "first_author"
     t.string  "second_author"
     t.string  "third_author"
@@ -80,93 +80,93 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.string  "subtype"
   end
 
-  create_table "ckeditor_assets", :force => true do |t|
-    t.string   "data_file_name",                  :null => false
+  create_table "ckeditor_assets", force: true do |t|
+    t.string   "data_file_name",               null: false
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.integer  "assetable_id"
-    t.string   "assetable_type",    :limit => 30
-    t.string   "type",              :limit => 30
+    t.string   "assetable_type",    limit: 30
+    t.string   "type",              limit: 30
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
-  create_table "diaries", :force => true do |t|
-    t.text     "content",             :limit => 16777215
+  create_table "diaries", force: true do |t|
+    t.text     "content",             limit: 16777215
     t.integer  "position"
     t.integer  "hub_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "diary_definition_id"
   end
 
-  add_index "diaries", ["diary_definition_id"], :name => "index_diaries_on_diary_definition_id"
-  add_index "diaries", ["hub_id"], :name => "index_diaries_on_hub_id"
+  add_index "diaries", ["diary_definition_id"], name: "index_diaries_on_diary_definition_id", using: :btree
+  add_index "diaries", ["hub_id"], name: "index_diaries_on_hub_id", using: :btree
 
-  create_table "diary_definitions", :force => true do |t|
+  create_table "diary_definitions", force: true do |t|
     t.integer  "hub_definition_id"
     t.integer  "external_id"
     t.string   "title"
     t.integer  "position"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "diary_definitions", ["hub_definition_id"], :name => "index_diary_definitions_on_hub_definition_id"
+  add_index "diary_definitions", ["hub_definition_id"], name: "index_diary_definitions_on_hub_definition_id", using: :btree
 
-  create_table "final_considerations", :force => true do |t|
-    t.text     "content",    :limit => 16777215
+  create_table "final_considerations", force: true do |t|
+    t.text     "content",    limit: 16777215
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "state"
   end
 
-  add_index "final_considerations", ["tcc_id"], :name => "index_final_considerations_on_tcc_id"
+  add_index "final_considerations", ["tcc_id"], name: "index_final_considerations_on_tcc_id", using: :btree
 
-  create_table "general_refs", :force => true do |t|
+  create_table "general_refs", force: true do |t|
     t.string "direct_citation"
     t.string "indirect_citation"
     t.string "reference_text"
   end
 
-  create_table "hub_definitions", :force => true do |t|
+  create_table "hub_definitions", force: true do |t|
     t.integer  "tcc_definition_id"
     t.string   "title"
     t.integer  "position"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "moodle_shortname"
     t.string   "subtitle"
   end
 
-  add_index "hub_definitions", ["tcc_definition_id"], :name => "index_hub_definitions_on_tcc_definition_id"
+  add_index "hub_definitions", ["tcc_definition_id"], name: "index_hub_definitions_on_tcc_definition_id", using: :btree
 
-  create_table "hubs", :force => true do |t|
-    t.text     "reflection",        :limit => 16777215
+  create_table "hubs", force: true do |t|
+    t.text     "reflection",        limit: 16777215
     t.text     "commentary"
     t.integer  "position"
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
     t.string   "type"
     t.string   "reflection_title"
   end
 
-  add_index "hubs", ["hub_definition_id"], :name => "index_hubs_on_hub_definition_id"
-  add_index "hubs", ["tcc_id"], :name => "index_hubs_on_tcc_id"
+  add_index "hubs", ["hub_definition_id"], name: "index_hubs_on_hub_definition_id", using: :btree
+  add_index "hubs", ["tcc_id"], name: "index_hubs_on_tcc_id", using: :btree
 
-  create_table "internet_refs", :force => true do |t|
+  create_table "internet_refs", force: true do |t|
     t.string  "first_author"
     t.string  "title"
     t.string  "subtitle"
@@ -180,7 +180,7 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.string  "complementary_information"
   end
 
-  create_table "legislative_refs", :force => true do |t|
+  create_table "legislative_refs", force: true do |t|
     t.string  "jurisdiction_or_header"
     t.string  "title"
     t.string  "edition"
@@ -191,50 +191,50 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.string  "subtype"
   end
 
-  create_table "moodle_assets", :force => true do |t|
-    t.string   "data_file_name",    :null => false
+  create_table "moodle_assets", force: true do |t|
+    t.string   "data_file_name",    null: false
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.integer  "tcc_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "moodle_assets", ["tcc_id"], :name => "index_moodle_assets_on_tcc_id"
+  add_index "moodle_assets", ["tcc_id"], name: "index_moodle_assets_on_tcc_id", using: :btree
 
-  create_table "presentations", :force => true do |t|
-    t.text     "content",    :limit => 16777215
+  create_table "presentations", force: true do |t|
+    t.text     "content",    limit: 16777215
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "state"
   end
 
-  add_index "presentations", ["tcc_id"], :name => "index_presentations_on_tcc_id"
+  add_index "presentations", ["tcc_id"], name: "index_presentations_on_tcc_id", using: :btree
 
-  create_table "references", :force => true do |t|
+  create_table "references", force: true do |t|
     t.integer  "tcc_id"
     t.integer  "element_id"
     t.string   "element_type"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "references", ["element_id"], :name => "index_references_on_element_id"
-  add_index "references", ["tcc_id"], :name => "index_references_on_tcc_id"
+  add_index "references", ["element_id"], name: "index_references_on_element_id", using: :btree
+  add_index "references", ["tcc_id"], name: "index_references_on_tcc_id", using: :btree
 
-  create_table "tcc_definitions", :force => true do |t|
+  create_table "tcc_definitions", force: true do |t|
     t.string   "title"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "activity_url"
     t.string   "course_id"
     t.string   "name"
     t.date     "defense_date"
   end
 
-  create_table "tccs", :force => true do |t|
+  create_table "tccs", force: true do |t|
     t.string   "moodle_user"
     t.string   "title"
     t.string   "name"
@@ -242,8 +242,8 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.float    "grade"
     t.date     "defense_date"
     t.string   "state"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "tutor_group"
     t.integer  "tcc_definition_id"
     t.string   "orientador"
@@ -252,9 +252,9 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.datetime "grade_updated_at"
   end
 
-  add_index "tccs", ["tcc_definition_id"], :name => "index_tccs_on_tcc_definition_id"
+  add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree
 
-  create_table "thesis_refs", :force => true do |t|
+  create_table "thesis_refs", force: true do |t|
     t.string  "author"
     t.string  "title"
     t.string  "subtitle"
@@ -272,19 +272,19 @@ ActiveRecord::Schema.define(:version => 20140814182612) do
     t.string  "subtype"
   end
 
-  create_table "versions", :force => true do |t|
-    t.string   "item_type",                            :null => false
-    t.integer  "item_id",                              :null => false
-    t.string   "event",                                :null => false
+  create_table "versions", force: true do |t|
+    t.string   "item_type",                         null: false
+    t.integer  "item_id",                           null: false
+    t.string   "event",                             null: false
     t.string   "whodunnit"
-    t.text     "object",         :limit => 2147483647
+    t.text     "object",         limit: 2147483647
     t.datetime "created_at"
     t.text     "comment"
     t.string   "state"
     t.text     "object_changes"
   end
 
-  add_index "versions", ["item_id", "item_type", "state"], :name => "index_versions_on_item_id_and_item_type_and_state"
-  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+  add_index "versions", ["item_id", "item_type", "state"], name: "index_versions_on_item_id_and_item_type_and_state", using: :btree
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end
