@@ -99,7 +99,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.99'
+  gem 'rspec-rails', '~> 3.0'
   gem 'metric_fu', :require => false
   gem 'pry-rails', '~>0.3.2'
   gem 'simplecov', require: false
