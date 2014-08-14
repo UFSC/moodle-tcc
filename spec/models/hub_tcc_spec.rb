@@ -4,10 +4,14 @@ describe HubTcc do
   let(:hub) { Fabricate.build(:hub_tcc) }
   let(:tcc) { Fabricate.build(:tcc_with_definitions) }
 
-  it 'should versioning' do
-    old_version = hub.versions.size
-    hub.update_attribute(:reflection, 'new content')
-    hub.versions.size.should == (old_version + 1)
+
+  with_versioning do
+    it 'should versioning' do
+      old_version = hub.versions.size
+      hub.update_attribute(:reflection, 'new content')
+      hub.reload
+      hub.versions.size.should == (old_version + 1)
+    end
   end
 
   describe 'reflection' do

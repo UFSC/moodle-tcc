@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140217173301) do
+ActiveRecord::Schema.define(:version => 20140814182612) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content",    :limit => 16777215
@@ -273,14 +273,15 @@ ActiveRecord::Schema.define(:version => 20140217173301) do
   end
 
   create_table "versions", :force => true do |t|
-    t.string   "item_type",                        :null => false
-    t.integer  "item_id",                          :null => false
-    t.string   "event",                            :null => false
+    t.string   "item_type",                            :null => false
+    t.integer  "item_id",                              :null => false
+    t.string   "event",                                :null => false
     t.string   "whodunnit"
-    t.text     "object",     :limit => 2147483647
+    t.text     "object",         :limit => 2147483647
     t.datetime "created_at"
     t.text     "comment"
     t.string   "state"
+    t.text     "object_changes"
   end
 
   add_index "versions", ["item_id", "item_type", "state"], :name => "index_versions_on_item_id_and_item_type_and_state"

@@ -5,10 +5,12 @@ describe Presentation do
 
   it { respond_to :commentary, :content, :state }
 
-  it 'should versioning' do
-    old_version = presentation.versions.size
-    presentation.update_attribute(:content, 'new content')
-    presentation.versions.size.should == (old_version + 1)
+  with_versioning do
+    it 'should versioning' do
+      old_version = presentation.versions.size
+      presentation.update_attribute(:content, 'new content')
+      presentation.versions.size.should == (old_version + 1)
+    end
   end
 
   describe 'content' do

@@ -6,10 +6,12 @@ describe Hub do
 
   it { should respond_to(:category, :reflection, :reflection_title, :grade, :commentary) }
 
-  it 'should versioning' do
-    old_version = hub.versions.size
-    hub.update_attribute(:reflection, 'new content')
-    hub.versions.size.should == (old_version + 1)
+  with_versioning do
+    it 'should versioning' do
+      old_version = hub.versions.size
+      hub.update_attribute(:reflection, 'new content')
+      hub.versions.size.should == (old_version + 1)
+    end
   end
 
   describe 'reflection' do
