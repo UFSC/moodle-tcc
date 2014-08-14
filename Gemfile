@@ -1,7 +1,24 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~>3.2.12'
+gem 'rails', '~> 4.0.8'
 gem 'mysql2'
+gem 'protected_attributes', '~>1.0.1'
+
+# Asset Pipeline
+gem 'sass-rails', '~> 4.0.2'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'bootstrap-sass', '~> 2.3.2.1'
+gem 'uglifier', '>= 1.3.0'
+gem 'turbo-sprockets-rails3'
+
+# Assets
+gem 'jquery-rails'
+gem 'jquery-ui-rails', '~> 4.1.1'
+gem 'bootstrap-datepicker-rails'
+gem 'twitter-bootstrap-rails-confirm'
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+# gem 'turbolinks'
 
 # Auxilia a migração para Rails 4
 gem 'rails4_upgrade'
@@ -19,18 +36,11 @@ gem 'typhoeus'
 gem 'rest-client'
 gem 'nokogiri'
 
-# Jquery UI
-gem 'jquery-ui-rails', '~> 4.1.1'
-
 # State machine
 gem 'aasm'
 
 # Inherited Resources
 gem 'inherited_resources'
-
-# Twitter Bootstrap
-gem 'bootstrap-datepicker-rails'
-gem 'twitter-bootstrap-rails-confirm'
 
 # Pagination
 gem 'kaminari'
@@ -105,22 +115,10 @@ group :development, :test do
   gem 'simplecov', require: false
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass', '~> 3.2.14'
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'bootstrap-sass', '~> 2.3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
-  gem 'turbo-sprockets-rails3'
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
 end
-
-gem 'jquery-rails'
 
 # Deploy with Capistrano
 group :deploy do
