@@ -1,58 +1,61 @@
 # -*- encoding : utf-8 -*-
-require 'bundler/capistrano'
-require 'capistrano-db-tasks'
-require 'new_relic/recipes'
-require 'airbrake/capistrano'
-
-# Capistrano Multistage
-set :stages, %w(production staging)
-set :default_stage, 'staging'
-require 'capistrano/ext/multistage'
 
 # Whenever (crontab)
-set :whenever_variables, defer { "stage=#{stage}" }
-set :whenever_command, 'bundle exec whenever'
-set :whenever_identifier, defer { "#{application}_#{stage}" }
-require 'whenever/capistrano'
+set :whenever_variables, -> { "stage=#{fetch(:stage)}" }
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 set :application, 'tcc.unasus.ufsc.br'
-set :repository,  'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
+set :repo_url, 'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
 set :scm, :git
 
-set :default_environment, {'LANG' => 'pt_BR.UTF-8'}
-set :git_enable_submodules, true
+# set :format, :pretty
+set :log_level, :info
+# set :pty, true
 
-set :ssh_options, {forward_agent: true, port: '2200'}
+# Capistrano Db Tasks:
+# if you want to remove the dump file after loading
+set :db_local_clean, true
 
-set :use_sudo, false
-set :deploy_via, :remote_cache
-set :rails_env, 'production'
+# Capistrano Upload Config:
+set :config_files, %w{config/database.yml config/email.yml config/errbit.yml config/moodle.yml config/newrelic.yml
+                      config/tcc_config.yml}
+set :config_example_prefix, '.example'
+
+set :linked_files, fetch(:config_files)
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+
+set :default_env, {'LANG' => 'pt_BR.UTF-8'}
+set :keep_releases, 10
+
+set :ssh_options, {
+    forward_agent: true,
+    port: 2200
+}
+
+set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
+
+# TODO: FIXME
+# set :git_enable_submodules, true
 
 namespace :deploy do
-  task :setup_db, :roles => :db, :desc => 'Configura base de dados inicial.' do
-    strategy.deploy!
-    linka_dependencias
-    bundle.install
-    run "cd #{release_path} && #{rake} db:create RAILS_ENV=#{rails_env}"
+
+  desc 'Configura base de dados inicial.'
+  task :setup_db do
+    on roles(:db) do
+      strategy.deploy!
+      linka_dependencias
+      bundle.install
+      run "cd #{release_path} && #{rake} db:create RAILS_ENV=#{rails_env}"
+    end
   end
 
-  task :start do ; end
-  task :stop do ; end
-
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
   end
 
-  after 'deploy:finalize_update', 'deploy:linka_dependencias'
-  task :linka_dependencias, :roles => :app, :desc => 'Faz os links simbólicos com arquivos de configuração' do
-    run "ln -s #{File.join(deploy_to, 'shared', 'database.yml')} #{File.join(current_release, 'config', 'database.yml')}"
-    run "ln -s #{File.join(deploy_to, 'shared', 'moodle.yml')} #{File.join(current_release, 'config', 'moodle.yml')}"
-    run "ln -s #{File.join(deploy_to, 'shared', 'newrelic.yml')} #{File.join(current_release, 'config', 'newrelic.yml')}"
-    run "ln -s #{File.join(deploy_to, 'shared', 'tcc_config.yml')} #{File.join(current_release, 'config', 'tcc_config.yml')}"
-    run "ln -s #{File.join(deploy_to, 'shared', 'errbit.yml')} #{File.join(current_release, 'config', 'errbit.yml')}"
-    run "ln -s #{File.join(deploy_to, 'shared', 'email.yml')} #{File.join(current_release, 'config', 'email.yml')}"
-    run "ln -s #{File.join(deploy_to, 'shared', 'uploads')} #{File.join(current_release, 'public', 'uploads')}"
-  end
-
-  after 'deploy', 'deploy:migrate'
+  after :finishing, 'deploy:cleanup'
+  after :publishing, 'deploy:migrate'
+  after :publishing, 'deploy:restart'
 end

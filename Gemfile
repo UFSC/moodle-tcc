@@ -124,6 +124,9 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
 group :deploy do
-  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano', '~> 3.2'
+  gem 'capistrano-rails'
+  gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
+  gem 'capistrano-newrelic'
 end
