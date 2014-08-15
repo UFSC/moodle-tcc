@@ -5,5 +5,5 @@ class Middleware::OrientadoresAlunos < ActiveRecord::Base
   has_one :usuarios_matriculas_cpfs, class_name: 'Middleware::UsuariosMatriculasCpfs',
           :primary_key => :matricula_orientador, :foreign_key => :matricula
 
-  default_scope where(ativo: true)
+  default_scope -> { where(ativo: true) }
 end

@@ -108,8 +108,7 @@ describe Tcc do
       # Cria Tcc e Hub Definitions necessário pro teste
 
       3.times do |i|
-        hub_definition = Fabricate.build(:hub_definition_without_tcc)
-        hub_definition.position = i+1
+        hub_definition = Fabricate.build(:hub_definition_without_tcc, position: i+1)
         tcc_definition.hub_definitions << hub_definition
       end
 

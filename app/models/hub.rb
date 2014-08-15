@@ -18,9 +18,10 @@ class Hub < ActiveRecord::Base
   alias_attribute :category, :position
 
   # Hubs por tipo (polimórfico)
-  scope :hub_portfolio, where(:type => 'HubPortfolio')
-  scope :hub_tcc, where(:type => 'HubTcc')
+  scope :hub_portfolio, -> { where(:type => 'HubPortfolio') }
+  scope :hub_tcc, -> { where(:type => 'HubTcc') }
   scope :hub_by_type, ->(type) { send("hub_#{type}") }
+  scope :reflection_empty, -> { where(reflection: '') }
 
   def comparable_versions
     versions.where(:state => %w(sent_to_admin_for_evaluation, sent_to_admin_for_revision))

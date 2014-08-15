@@ -42,7 +42,7 @@ class Tcc < ActiveRecord::Base
     end
   end
 
-  default_scope order(:name)
+  default_scope -> { order(:name) }
   scoped_search :on => [:name]
 
   def self.search(search, page, *options)
