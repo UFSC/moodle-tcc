@@ -3,9 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'rake' # Workaround for Fabrication gem bug
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rspec'
-require "rack_session_access/capybara"
+require 'rack_session_access/capybara'
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
