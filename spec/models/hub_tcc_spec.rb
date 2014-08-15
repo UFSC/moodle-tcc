@@ -10,7 +10,7 @@ describe HubTcc do
       old_version = hub.versions.size
       hub.update_attribute(:reflection, 'new content')
       hub.reload
-      hub.versions.size.should == (old_version + 1)
+      expect(hub.versions.size).to eq(old_version + 1)
     end
   end
 
@@ -18,27 +18,27 @@ describe HubTcc do
     it 'should allow empty reflection if hub is new or draft' do
       hub.reflection = ''
 
-      hub.new?.should be true
-      hub.should be_valid
+      expect(hub.new?).to be true
+      expect(hub).to be_valid
 
       hub.state = 'draft'
-      hub.should be_valid
+      expect(hub).to be_valid
     end
 
     it 'should validate presence of reflection if hub is not new or draft' do
       hub.reflection = ''
 
       hub.state = 'sent_to_admin_for_revision'
-      hub.should_not be_valid
+      expect(hub).not_to be_valid
 
       hub.state = 'sent_to_admin_for_evaluation'
-      hub.should_not be_valid
+      expect(hub).not_to be_valid
 
       hub.state = 'admin_evaluation_ok'
-      hub.should_not be_valid
+      expect(hub).not_to be_valid
 
       hub.state = 'terminated'
-      hub.should_not be_valid
+      expect(hub).not_to be_valid
     end
   end
 
@@ -46,7 +46,7 @@ describe HubTcc do
     it "should allow change to 'avaliado' even without grade as HubTcc doesn't have grades" do
       hub.grade = nil
       hub.state='sent_to_admin_for_evaluation'
-      hub.may_admin_evaluate_ok?.should be true
+      expect(hub.may_admin_evaluate_ok?).to be true
     end
   end
 
@@ -60,7 +60,7 @@ describe HubTcc do
 
       hub.send_to_admin_for_revision
 
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+      expect(ActionMailer::Base.deliveries.last.to).to eq([tcc.email_orientador])
     end
 
     it 'should send email to orientador when state changed from draft to revision' do
@@ -68,7 +68,7 @@ describe HubTcc do
 
       hub.send_back_to_student
 
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
+      expect(ActionMailer::Base.deliveries.last.to).to eq([tcc.email_estudante])
     end
 
     it 'should change states even if email is blank' do
@@ -78,7 +78,7 @@ describe HubTcc do
 
       hub.send_back_to_student
       hub.save
-      hub.state.should == 'draft'
+      expect(hub.state).to eq('draft')
     end
 
     it 'should change states even if email is nil' do
@@ -88,7 +88,7 @@ describe HubTcc do
 
       hub.send_back_to_student
       hub.save
-      hub.state.should == 'draft'
+      expect(hub.state).to eq('draft')
     end
 
   end
@@ -101,7 +101,7 @@ describe HubTcc do
     it 'should empty hub commentary' do
       hub.commentary = 'blablabla'
       hub.clear_commentary!
-      hub.commentary.should be_empty
+      expect(hub.commentary).to be_empty
     end
 
     it 'should be invoked on transition to sent_to_admin_for_revision' do
@@ -109,7 +109,7 @@ describe HubTcc do
       hub.save!
       hub.send_to_admin_for_revision
       hub.save!
-      hub.commentary.should be_empty
+      expect(hub.commentary).to be_empty
     end
 
     it 'should be invoked on transition to sent_to_admin_for_evaluation' do
@@ -117,7 +117,7 @@ describe HubTcc do
       hub.save!
       hub.send_to_admin_for_evaluation
       hub.save!
-      hub.commentary.should be_empty
+      expect(hub.commentary).to be_empty
     end
   end
 end

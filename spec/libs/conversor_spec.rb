@@ -30,7 +30,7 @@ describe Conversor do
         new_citacao = build_tag_citacao(ref, :direta, ref.direct_citation)
 
         converted_text = Conversor::convert_text(old_citacao, tcc)
-        converted_text.should == new_citacao
+        expect(converted_text).to eq(new_citacao)
       end
 
       it 'should convert citation with any text before and after' do
@@ -41,7 +41,7 @@ describe Conversor do
 
         new_text = "<p>"+prefix+build_tag_citacao(ref, :direta, ref.direct_citation)+sufix+"</p>"
 
-        old_text.should == new_text
+        expect(old_text).to eq(new_text)
       end
 
       it 'should convert all citations from text' do
@@ -56,7 +56,7 @@ describe Conversor do
 
         new_text = "<p>#{prefix}#{new_citation1}#{sufix}#{new_citation2}</p>"
 
-        old_text.should == new_text
+        expect(old_text).to eq(new_text)
       end
     end
 
@@ -69,7 +69,7 @@ describe Conversor do
         new_citacao = build_tag_citacao(ref, :indireta, ref.indirect_citation)
 
         old_text = Conversor::convert_text(old_citacao, tcc)
-        old_text.should == new_citacao
+        expect(old_text).to eq(new_citacao)
       end
 
       it 'should convert citation with any text before and after' do
@@ -81,7 +81,7 @@ describe Conversor do
         new_citacao = build_tag_citacao(ref, :indireta, ref.indirect_citation)
         new_text = "<p>#{prefix}#{new_citacao}#{sufix}</p>"
 
-        old_text.should == new_text
+        expect(old_text).to eq(new_text)
       end
 
       it 'should convert all citations from text' do
@@ -96,7 +96,7 @@ describe Conversor do
 
         new_text = "<p>#{prefix}#{new_citation1}#{sufix}#{new_citation2}</p>"
 
-        old_text.should == new_text
+        expect(old_text).to eq(new_text)
       end
     end
   end

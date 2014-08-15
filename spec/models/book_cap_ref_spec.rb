@@ -39,27 +39,27 @@ describe BookCapRef do
     describe 'first_entire_author' do
       it 'should have last name' do
         book_cap_ref.first_entire_author = 'firstname'
-        book_cap_ref.should_not be_valid
+        expect(book_cap_ref).not_to be_valid
         book_cap_ref.first_entire_author = 'firstname lastname'
-        book_cap_ref.should be_valid
+        expect(book_cap_ref).to be_valid
       end
     end
 
     describe 'second_entire_author' do
       it 'should have last name' do
         book_cap_ref.second_entire_author = 'firstname'
-        book_cap_ref.should_not be_valid
+        expect(book_cap_ref).not_to be_valid
         book_cap_ref.second_entire_author = 'firstname lastname'
-        book_cap_ref.should be_valid
+        expect(book_cap_ref).to be_valid
       end
     end
 
     describe 'third_entire_author' do
       it 'should have last name' do
         book_cap_ref.third_entire_author = 'firstname'
-        book_cap_ref.should_not be_valid
+        expect(book_cap_ref).not_to be_valid
         book_cap_ref.third_entire_author = 'firstname lastname'
-        book_cap_ref.should be_valid
+        expect(book_cap_ref).to be_valid
       end
     end
 
@@ -99,11 +99,11 @@ describe BookCapRef do
       book_cap_ref = Fabricate.build(:book_cap_ref)
       book_cap_ref.initial_page = 5
       book_cap_ref.end_page = 2
-      book_cap_ref.should_not be_valid
+      expect(book_cap_ref).not_to be_valid
       book_cap_ref.end_page = 10
-      book_cap_ref.should be_valid
+      expect(book_cap_ref).to be_valid
       book_cap_ref.end_page = 5
-      book_cap_ref.should be_valid
+      expect(book_cap_ref).to be_valid
     end
 
   end
@@ -126,7 +126,7 @@ describe BookCapRef do
 
       it 'should invoke callback' do
         book_cap_ref1 = Fabricate.build(:book_cap_ref)
-        book_cap_ref1.should_receive(:check_equality)
+        expect(book_cap_ref1).to receive(:check_equality)
         book_cap_ref1.save!
       end
 
@@ -136,7 +136,7 @@ describe BookCapRef do
 
         book_cap_ref1.save!
 
-        book_cap_ref1.subtype.should be_nil
+        expect(book_cap_ref1.subtype).to be_nil
       end
 
       it 'subtype should be nil after one update' do
@@ -146,7 +146,7 @@ describe BookCapRef do
         book_cap_ref1.save!
         book_cap_ref1.save!
 
-        book_cap_ref1.subtype.should be_nil
+        expect(book_cap_ref1.subtype).to be_nil
       end
 
       it 'subtype should be set correctly' do
@@ -166,8 +166,8 @@ describe BookCapRef do
 
         book_cap_ref1.reload
 
-        book_cap_ref1.subtype.should == 'a'
-        book_cap_ref2.subtype.should == 'b'
+        expect(book_cap_ref1.subtype).to eq('a')
+        expect(book_cap_ref2.subtype).to eq('b')
 
       end
 
@@ -188,8 +188,8 @@ describe BookCapRef do
 
         book_cap_ref1.reload
 
-        book_cap_ref1.subtype.should == 'a'
-        book_cap_ref2.subtype.should == 'b'
+        expect(book_cap_ref1.subtype).to eq('a')
+        expect(book_cap_ref2.subtype).to eq('b')
 
         book_cap_ref2
         book_cap_ref2.first_entire_author = 'Autor A10'
@@ -197,8 +197,8 @@ describe BookCapRef do
         book_cap_ref1.reload
         book_cap_ref2.reload
 
-        book_cap_ref1.subtype.should be_nil
-        book_cap_ref2.subtype.should be_nil
+        expect(book_cap_ref1.subtype).to be_nil
+        expect(book_cap_ref2.subtype).to be_nil
 
       end
 

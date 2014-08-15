@@ -18,11 +18,11 @@ describe CkeditorPictureUploader do
   context 'the a4 version' do
     it "should scale down a landscape image to fit within a4 pattern" do
       width = 500
-      @uploader.should be_no_larger_than(width, (Math.sqrt(2)*width).to_i)
+      expect(@uploader).to be_no_larger_than(width, (Math.sqrt(2)*width).to_i)
     end
   end
 
   it "should make the file.." do
-    @uploader.should have_permissions(0644)
+    expect(@uploader).to have_permissions(0644)
   end
 end

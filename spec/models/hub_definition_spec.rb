@@ -12,6 +12,6 @@ describe HubDefinition do
 
   it 'should create a valid model' do
     hub = Fabricate.build(:hub_definition)
-    hub.should be_valid
+    expect(hub).to be_valid
   end
 end

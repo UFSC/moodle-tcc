@@ -54,7 +54,7 @@ describe LegislativeRef do
 
       it 'should invoke callback' do
         legislative_ref1 = Fabricate.build(:legislative_ref)
-        legislative_ref1.should_receive(:check_equality)
+        expect(legislative_ref1).to receive(:check_equality)
         legislative_ref1.save!
       end
 
@@ -64,7 +64,7 @@ describe LegislativeRef do
 
         legislative_ref1.save!
 
-        legislative_ref1.subtype.should be_nil
+        expect(legislative_ref1.subtype).to be_nil
       end
 
       it 'subtype should be nil after one update' do
@@ -74,7 +74,7 @@ describe LegislativeRef do
         legislative_ref1.save!
         legislative_ref1.save!
 
-        legislative_ref1.subtype.should be_nil
+        expect(legislative_ref1.subtype).to be_nil
       end
 
       it 'subtype should be set correctly' do
@@ -90,8 +90,8 @@ describe LegislativeRef do
 
         legislative_ref1.reload
 
-        legislative_ref1.subtype.should == 'a'
-        legislative_ref2.subtype.should == 'b'
+        expect(legislative_ref1.subtype).to eq('a')
+        expect(legislative_ref2.subtype).to eq('b')
 
       end
 
@@ -108,8 +108,8 @@ describe LegislativeRef do
 
         legislative_ref1.reload
 
-        legislative_ref1.subtype.should == 'a'
-        legislative_ref2.subtype.should == 'b'
+        expect(legislative_ref1.subtype).to eq('a')
+        expect(legislative_ref2.subtype).to eq('b')
 
         legislative_ref2
         legislative_ref2.publisher = 'Autor A10'
@@ -117,8 +117,8 @@ describe LegislativeRef do
         legislative_ref1.reload
         legislative_ref2.reload
 
-        legislative_ref1.subtype.should be_nil
-        legislative_ref2.subtype.should be_nil
+        expect(legislative_ref1.subtype).to be_nil
+        expect(legislative_ref2.subtype).to be_nil
 
       end
 

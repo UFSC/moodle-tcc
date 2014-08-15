@@ -62,7 +62,7 @@ describe BookRef do
 
       it 'should invoke callback' do
         book_ref1 = Fabricate.build(:book_ref)
-        book_ref1.should_receive(:check_equality)
+        expect(book_ref1).to receive(:check_equality)
         book_ref1.save!
       end
 
@@ -73,7 +73,7 @@ describe BookRef do
         book_ref1.third_author = 'Autor A3'
         book_ref1.save!
 
-        book_ref1.subtype.should be_nil
+        expect(book_ref1.subtype).to be_nil
       end
 
       it 'subtype should be nil after one update' do
@@ -84,7 +84,7 @@ describe BookRef do
         book_ref1.save!
         book_ref1.save!
 
-        book_ref1.subtype.should be_nil
+        expect(book_ref1.subtype).to be_nil
       end
 
       it 'subtype should be set correctly' do
@@ -102,8 +102,8 @@ describe BookRef do
 
         book_ref1.reload
 
-        book_ref1.subtype.should == 'a'
-        book_ref2.subtype.should == 'b'
+        expect(book_ref1.subtype).to eq('a')
+        expect(book_ref2.subtype).to eq('b')
 
       end
 
@@ -122,8 +122,8 @@ describe BookRef do
 
         book_ref1.reload
 
-        book_ref1.subtype.should == 'a'
-        book_ref2.subtype.should == 'b'
+        expect(book_ref1.subtype).to eq('a')
+        expect(book_ref2.subtype).to eq('b')
 
         book_ref2
         book_ref2.first_author = 'Autor A10'
@@ -131,8 +131,8 @@ describe BookRef do
         book_ref1.reload
         book_ref2.reload
 
-        book_ref1.subtype.should be_nil
-        book_ref2.subtype.should be_nil
+        expect(book_ref1.subtype).to be_nil
+        expect(book_ref2.subtype).to be_nil
 
       end
 

@@ -33,9 +33,9 @@ describe ThesisRef do
     describe 'author' do
       it 'should have last name' do
         thesis_ref.author = 'firstname'
-        thesis_ref.should_not be_valid
+        expect(thesis_ref).not_to be_valid
         thesis_ref.author = 'firstname lastname'
-        thesis_ref.should be_valid
+        expect(thesis_ref).to be_valid
       end
     end
   end
@@ -48,19 +48,19 @@ describe ThesisRef do
 
       it 'should include author' do
         last_name = UnicodeUtils.upcase(thesis_ref.author.split(' ').last)
-        thesis_ref.direct_citation.should include("#{last_name}")
+        expect(thesis_ref.direct_citation).to include("#{last_name}")
       end
 
       it 'should include year' do
-        thesis_ref.direct_citation.should include(thesis_ref.year.to_s)
+        expect(thesis_ref.direct_citation).to include(thesis_ref.year.to_s)
       end
 
       it 'should include (' do
-        thesis_ref.direct_citation.should include('(')
+        expect(thesis_ref.direct_citation).to include('(')
       end
 
       it 'should include )' do
-        thesis_ref.direct_citation.should include(')')
+        expect(thesis_ref.direct_citation).to include(')')
       end
 
     end
@@ -76,7 +76,7 @@ describe ThesisRef do
 
       it 'should invoke callback' do
         thesis_ref1 = Fabricate.build(:thesis_ref)
-        thesis_ref1.should_receive(:check_equality)
+        expect(thesis_ref1).to receive(:check_equality)
         thesis_ref1.save!
       end
 
@@ -86,7 +86,7 @@ describe ThesisRef do
 
         thesis_ref1.save!
 
-        thesis_ref1.subtype.should be_nil
+        expect(thesis_ref1.subtype).to be_nil
       end
 
       it 'subtype should be nil after one update' do
@@ -96,7 +96,7 @@ describe ThesisRef do
         thesis_ref1.save!
         thesis_ref1.save!
 
-        thesis_ref1.subtype.should be_nil
+        expect(thesis_ref1.subtype).to be_nil
       end
 
       it 'subtype should be set correctly' do
@@ -112,8 +112,8 @@ describe ThesisRef do
 
         thesis_ref1.reload
 
-        thesis_ref1.subtype.should == 'a'
-        thesis_ref2.subtype.should == 'b'
+        expect(thesis_ref1.subtype).to eq('a')
+        expect(thesis_ref2.subtype).to eq('b')
 
       end
 
@@ -130,8 +130,8 @@ describe ThesisRef do
 
         thesis_ref1.reload
 
-        thesis_ref1.subtype.should == 'a'
-        thesis_ref2.subtype.should == 'b'
+        expect(thesis_ref1.subtype).to eq('a')
+        expect(thesis_ref2.subtype).to eq('b')
 
         thesis_ref2
         thesis_ref2.author = 'Autor A10'
@@ -139,8 +139,8 @@ describe ThesisRef do
         thesis_ref1.reload
         thesis_ref2.reload
 
-        thesis_ref1.subtype.should be_nil
-        thesis_ref2.subtype.should be_nil
+        expect(thesis_ref1.subtype).to be_nil
+        expect(thesis_ref2.subtype).to be_nil
 
       end
 

@@ -12,6 +12,6 @@ describe DiaryDefinition do
 
   it 'should create a valid model' do
     diary = Fabricate.build(:diary_definition)
-    diary.should be_valid
+    expect(diary).to be_valid
   end
 end

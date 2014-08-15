@@ -41,7 +41,7 @@ shared_examples_for 'references with citations in the text' do
 
       count = ref.class.all.size
       ref.destroy
-      ref.class.all.size.should eq(count-1)
+      expect(ref.class.all.size).to eq(count-1)
     end
   end
 
@@ -60,7 +60,7 @@ shared_examples_for 'references with citations in the text' do
 
       count = ref.class.all.size
       ref.destroy
-      ref.class.all.size.should eq(count)
+      expect(ref.class.all.size).to eq(count)
     end
   end
 

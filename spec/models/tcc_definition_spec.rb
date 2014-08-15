@@ -7,6 +7,6 @@ describe TccDefinition do
 
   it 'should create a valid model' do
     tcc = Fabricate.build(:tcc_definition)
-    tcc.should be_valid
+    expect(tcc).to be_valid
   end
 end

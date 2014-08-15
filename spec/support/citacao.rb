@@ -7,19 +7,19 @@ shared_examples_for 'indirect_citation' do
 
   it 'should include author' do
     lastname = UnicodeUtils.titlecase(ref.first_author.split(' ').last)
-    ref.indirect_citation.should include(lastname)
+    expect(ref.indirect_citation).to include(lastname)
   end
 
   it 'should include year' do
-    ref.indirect_citation.should include(ref.year.to_s)
+    expect(ref.indirect_citation).to include(ref.year.to_s)
   end
 
   it 'should include (' do
-    ref.indirect_citation.should include('(')
+    expect(ref.indirect_citation).to include('(')
   end
 
   it 'should include )' do
-    ref.indirect_citation.should include(')')
+    expect(ref.indirect_citation).to include(')')
   end
 
   it 'should capitalize correctly' do
@@ -58,15 +58,15 @@ shared_examples_for 'indirect_citation with more than one author' do
   end
 
   it 'should include year' do
-    ref.indirect_citation.should include(ref.year.to_s)
+    expect(ref.indirect_citation).to include(ref.year.to_s)
   end
 
   it 'should include (' do
-    ref.indirect_citation.should include('(')
+    expect(ref.indirect_citation).to include('(')
   end
 
   it 'should include )' do
-    ref.indirect_citation.should include(')')
+    expect(ref.indirect_citation).to include(')')
   end
 
 end

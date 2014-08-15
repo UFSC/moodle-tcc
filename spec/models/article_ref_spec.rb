@@ -69,11 +69,11 @@ describe ArticleRef do
       article_ref = Fabricate.build(:article_ref)
       article_ref.initial_page = 5
       article_ref.end_page = 2
-      article_ref.should_not be_valid
+      expect(article_ref).not_to be_valid
       article_ref.end_page = 10
-      article_ref.should be_valid
+      expect(article_ref).to be_valid
       article_ref.end_page = 5
-      article_ref.should be_valid
+      expect(article_ref).to be_valid
     end
 
   end
@@ -94,27 +94,27 @@ describe ArticleRef do
 
       it 'should include first_author' do
         last_name = UnicodeUtils.upcase(article_ref.first_author.split(' ').last)
-        article_ref.direct_citation.should include("#{last_name};")
+        expect(article_ref.direct_citation).to include("#{last_name};")
       end
       it 'should include second_author' do
         last_name = UnicodeUtils.upcase(article_ref.second_author.split(' ').last)
-        article_ref.direct_citation.should include("#{last_name};")
+        expect(article_ref.direct_citation).to include("#{last_name};")
       end
       it 'should include third_author' do
         last_name = UnicodeUtils.upcase(article_ref.third_author.split(' ').last)
-        article_ref.direct_citation.should include("#{last_name},")
+        expect(article_ref.direct_citation).to include("#{last_name},")
       end
 
       it 'should include year' do
-        article_ref.direct_citation.should include(article_ref.year.to_s)
+        expect(article_ref.direct_citation).to include(article_ref.year.to_s)
       end
 
       it 'should include (' do
-        article_ref.direct_citation.should include('(')
+        expect(article_ref.direct_citation).to include('(')
       end
 
       it 'should include )' do
-        article_ref.direct_citation.should include(')')
+        expect(article_ref.direct_citation).to include(')')
       end
 
     end
@@ -129,7 +129,7 @@ describe ArticleRef do
 
       it 'should invoke check_equality' do
         article_ref1 = Fabricate.build(:article_ref)
-        article_ref1.should_receive(:check_equality)
+        expect(article_ref1).to receive(:check_equality)
 
         article_ref1.save!
       end
@@ -137,7 +137,7 @@ describe ArticleRef do
       xit 'should invoke check_difference' do
         article_ref1 = Fabricate.build(:article_ref)
         article_ref1.first_author = 'Autor A10'
-        article_ref1.should_receive(:check_difference)
+        expect(article_ref1).to receive(:check_difference)
 
         article_ref1.save!
       end
@@ -149,7 +149,7 @@ describe ArticleRef do
         article_ref1.third_author = 'Autor A3'
         article_ref1.save!
 
-        article_ref1.subtype.should be_nil
+        expect(article_ref1.subtype).to be_nil
       end
 
       it 'subtype should be nil after one update' do
@@ -160,7 +160,7 @@ describe ArticleRef do
         article_ref1.save!
         article_ref1.save!
 
-        article_ref1.subtype.should be_nil
+        expect(article_ref1.subtype).to be_nil
       end
 
       it 'subtype should be set correctly' do
@@ -178,8 +178,8 @@ describe ArticleRef do
 
         article_ref1.reload
 
-        article_ref1.subtype.should == 'a'
-        article_ref2.subtype.should == 'b'
+        expect(article_ref1.subtype).to eq('a')
+        expect(article_ref2.subtype).to eq('b')
 
       end
 
@@ -198,8 +198,8 @@ describe ArticleRef do
 
         article_ref1.reload
 
-        article_ref1.subtype.should == 'a'
-        article_ref2.subtype.should == 'b'
+        expect(article_ref1.subtype).to eq('a')
+        expect(article_ref2.subtype).to eq('b')
 
         article_ref2
         article_ref2.first_author = 'Autor A10'
@@ -207,8 +207,8 @@ describe ArticleRef do
         article_ref2.reload
         article_ref1.reload
 
-        article_ref1.subtype.should be_nil
-        article_ref2.subtype.should be_nil
+        expect(article_ref1.subtype).to be_nil
+        expect(article_ref2.subtype).to be_nil
 
       end
 

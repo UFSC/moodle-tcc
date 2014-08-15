@@ -57,7 +57,7 @@ describe InternetRef do
 
       it 'should invoke callback' do
         internet_ref1 = Fabricate.build(:internet_ref)
-        internet_ref1.should_receive(:check_equality)
+        expect(internet_ref1).to receive(:check_equality)
         internet_ref1.save!
       end
 
@@ -69,7 +69,7 @@ describe InternetRef do
 
         internet_ref1.save!
 
-        internet_ref1.subtype.should be_nil
+        expect(internet_ref1.subtype).to be_nil
       end
 
       it 'subtype should be nil after one update' do
@@ -81,7 +81,7 @@ describe InternetRef do
         internet_ref1.save!
         internet_ref1.save!
 
-        internet_ref1.subtype.should be_nil
+        expect(internet_ref1.subtype).to be_nil
       end
 
       it 'subtype should be set correctly' do
@@ -100,8 +100,8 @@ describe InternetRef do
 
         internet_ref1.reload
 
-        internet_ref1.subtype.should == 'a'
-        internet_ref2.subtype.should == 'b'
+        expect(internet_ref1.subtype).to eq('a')
+        expect(internet_ref2.subtype).to eq('b')
 
       end
 
@@ -120,8 +120,8 @@ describe InternetRef do
 
         internet_ref1.reload
 
-        internet_ref1.subtype.should == 'a'
-        internet_ref2.subtype.should == 'b'
+        expect(internet_ref1.subtype).to eq('a')
+        expect(internet_ref2.subtype).to eq('b')
 
         internet_ref2
         internet_ref2.first_author = 'Autor A10'
@@ -129,8 +129,8 @@ describe InternetRef do
         internet_ref1.reload
         internet_ref2.reload
 
-        internet_ref1.subtype.should be_nil
-        internet_ref2.subtype.should be_nil
+        expect(internet_ref1.subtype).to be_nil
+        expect(internet_ref2.subtype).to be_nil
 
       end
 
@@ -142,13 +142,13 @@ describe InternetRef do
     it 'should display publication date instead of acess date' do
       internet_ref.publication_date = '2012-05-05'
       internet_ref.access_date = '2013-05-05'
-      internet_ref.year.should eq(2012)
-      internet_ref.year.should_not eq(2013)
+      expect(internet_ref.year).to eq(2012)
+      expect(internet_ref.year).not_to eq(2013)
     end
     it 'should display access date when publication date is nil' do
       internet_ref.publication_date = nil
       internet_ref.access_date = '2013-05-05'
-      internet_ref.year.should eq(2013)
+      expect(internet_ref.year).to eq(2013)
     end
   end
   context '#indirect_citation' do

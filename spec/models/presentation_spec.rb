@@ -9,22 +9,22 @@ describe Presentation do
     it 'should versioning' do
       old_version = presentation.versions.size
       presentation.update_attribute(:content, 'new content')
-      presentation.versions.size.should == (old_version + 1)
+      expect(presentation.versions.size).to eq(old_version + 1)
     end
   end
 
   describe 'content' do
     it 'should allow empty reflection if presentation is new' do
       presentation.content = ''
-      presentation.new?.should be true
-      presentation.should be_valid
+      expect(presentation.new?).to be true
+      expect(presentation).to be_valid
     end
 
     it 'should validate presence of reflection if presentation is not new' do
       presentation.content = ''
       presentation.state = 'draft'
-      presentation.draft?.should be true
-      presentation.should_not be_valid
+      expect(presentation.draft?).to be true
+      expect(presentation).not_to be_valid
     end
   end
 
@@ -37,7 +37,7 @@ describe Presentation do
       presentation.state = 'draft'
       presentation.send_to_admin_for_revision
 
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+      expect(ActionMailer::Base.deliveries.last.to).to eq([tcc.email_orientador])
     end
 
     it 'should send email to orientador when state changed from draft to revision' do
@@ -45,7 +45,7 @@ describe Presentation do
       presentation.state = 'sent_to_admin_for_revision'
       presentation.send_back_to_student
 
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
+      expect(ActionMailer::Base.deliveries.last.to).to eq([tcc.email_estudante])
     end
 
     it 'should change states even if email is blank' do
@@ -56,7 +56,7 @@ describe Presentation do
 
       presentation.send_back_to_student
       presentation.save
-      presentation.state.should == 'draft'
+      expect(presentation.state).to eq('draft')
     end
 
     it 'should change states even if email is nil' do
@@ -67,7 +67,7 @@ describe Presentation do
 
       presentation.send_back_to_student
       presentation.save
-      presentation.state.should == 'draft'
+      expect(presentation.state).to eq('draft')
     end
   end
 end

@@ -9,22 +9,22 @@ describe FinalConsiderations do
     it 'should versioning' do
       old_version = final_considerations.versions.size
       final_considerations.update_attribute(:content, 'new content')
-      final_considerations.versions.size.should == (old_version + 1)
+      expect(final_considerations.versions.size).to eq(old_version + 1)
     end
   end
 
   describe 'content' do
     it 'should allow empty reflection if final_considerations is new' do
       final_considerations.content = ''
-      final_considerations.new?.should be true
-      final_considerations.should be_valid
+      expect(final_considerations.new?).to be true
+      expect(final_considerations).to be_valid
     end
 
     it 'should validate presence of reflection if final_considerations is not new' do
       final_considerations.content = ''
       final_considerations.state = 'draft'
-      final_considerations.draft?.should be true
-      final_considerations.should_not be_valid
+      expect(final_considerations.draft?).to be true
+      expect(final_considerations).not_to be_valid
     end
   end
 
@@ -37,7 +37,7 @@ describe FinalConsiderations do
       final_considerations.state = 'draft'
       final_considerations.send_to_admin_for_revision
 
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_orientador]
+      expect(ActionMailer::Base.deliveries.last.to).to eq([tcc.email_orientador])
     end
 
     it 'should send email to orientador when state changed from draft to revision' do
@@ -45,7 +45,7 @@ describe FinalConsiderations do
       final_considerations.state = 'sent_to_admin_for_revision'
       final_considerations.send_back_to_student
 
-      ActionMailer::Base.deliveries.last.to.should == [tcc.email_estudante]
+      expect(ActionMailer::Base.deliveries.last.to).to eq([tcc.email_estudante])
     end
 
     it 'should change states even if email is blank' do
@@ -56,7 +56,7 @@ describe FinalConsiderations do
 
       final_considerations.send_back_to_student
       final_considerations.save
-      final_considerations.state.should == 'draft'
+      expect(final_considerations.state).to eq('draft')
     end
 
     it 'should change states even if email is nil' do
@@ -67,7 +67,7 @@ describe FinalConsiderations do
 
       final_considerations.send_back_to_student
       final_considerations.save
-      final_considerations.state.should == 'draft'
+      expect(final_considerations.state).to eq('draft')
     end
 
   end

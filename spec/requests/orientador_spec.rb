@@ -8,13 +8,13 @@ describe 'Orientador' do
 
       visit orientador_index_path
 
-      page.current_path.should_not == access_denied_path
-      page.should have_content('Lista de TCCs')
+      expect(page.current_path).not_to eq(access_denied_path)
+      expect(page).to have_content('Lista de TCCs')
     end
 
     it 'should not work without moodle' do
       visit orientador_index_path
-      page.current_path.should == access_denied_path
+      expect(page.current_path).to eq(access_denied_path)
     end
   end
 end
