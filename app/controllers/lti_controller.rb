@@ -2,6 +2,7 @@
 class LtiController < ApplicationController
   skip_before_action :authorize
   skip_before_action :get_tcc
+  skip_before_action :verify_authenticity_token
 
   # Responsável por realizar a troca de mensagens e validação do LTI como um Tool Provider
   # De acordo com o papel informado pelo LTI Consumer, redireciona o usuário
