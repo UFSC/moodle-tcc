@@ -364,9 +364,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbo-sprockets-rails3 (0.2.9)
-      railties (>= 3.1.0)
-      sprockets (>= 2.0.0)
     twitter-bootstrap-rails-confirm (1.0.2)
     typhoeus (0.6.9)
       ethon (>= 0.7.1)
@@ -448,7 +445,6 @@ DEPENDENCIES
   tabs_on_rails
   terminal-table
   thin
-  turbo-sprockets-rails3
   twitter-bootstrap-rails-confirm
   typhoeus
   uglifier (>= 1.3.0)
