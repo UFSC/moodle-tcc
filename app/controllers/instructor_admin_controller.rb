@@ -2,8 +2,8 @@
 
 class InstructorAdminController < ApplicationController
   autocomplete :tcc, :name, :full => true
-  skip_before_filter :get_tcc
-  before_filter :check_permission
+  skip_before_action :get_tcc
+  before_action :check_permission
 
   def index
     tcc_definition_id = @tp.custom_params['tcc_definition']

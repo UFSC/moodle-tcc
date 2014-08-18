@@ -2,7 +2,7 @@
 class BookCapRefsController < ApplicationController
   inherit_resources
 
-  before_filter :set_current_tab
+  before_action :set_current_tab
 
   def index
     @book_cap_refs = @tcc.book_cap_refs

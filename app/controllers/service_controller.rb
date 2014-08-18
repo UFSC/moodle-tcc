@@ -1,9 +1,9 @@
 # encoding: utf-8
 class ServiceController < ApplicationController
-  skip_before_filter :authorize
-  skip_before_filter :get_tcc
-  skip_before_filter :verify_authenticity_token # Prevents CSRF warning
-  before_filter :check_consumer_key
+  skip_before_action :authorize
+  skip_before_action :get_tcc
+  skip_before_action :verify_authenticity_token # Prevents CSRF warning
+  before_action :check_consumer_key
 
   def report
     # Envia portfolios

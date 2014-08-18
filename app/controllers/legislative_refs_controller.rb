@@ -2,7 +2,7 @@
 class LegislativeRefsController < ApplicationController
   inherit_resources
 
-  before_filter :set_current_tab
+  before_action :set_current_tab
 
   def index
     @legislative_refs = @tcc.legislative_refs

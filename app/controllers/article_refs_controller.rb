@@ -2,7 +2,7 @@
 class ArticleRefsController < ApplicationController
   inherit_resources
 
-  before_filter :set_current_tab
+  before_action :set_current_tab
 
   def index
     @article_refs = @tcc.article_refs

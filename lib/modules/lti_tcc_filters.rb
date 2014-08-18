@@ -3,8 +3,8 @@ module LtiTccFilters
   unloadable
 
   def self.included(base)
-    base.before_filter :authorize
-    base.before_filter :get_tcc
+    base.before_action :authorize
+    base.before_action :get_tcc
   end
 
   def authorize

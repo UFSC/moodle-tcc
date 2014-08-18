@@ -2,7 +2,7 @@
 class InternetRefsController < ApplicationController
   inherit_resources
 
-  before_filter :set_current_tab
+  before_action :set_current_tab
 
   def index
     @internet_refs = @tcc.internet_refs

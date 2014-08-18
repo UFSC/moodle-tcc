@@ -1,8 +1,8 @@
 # encoding: utf-8
 class TutorController < ApplicationController
   autocomplete :tcc, :name, :full => true
-  skip_before_filter :get_tcc
-  before_filter :check_permission
+  skip_before_action :get_tcc
+  before_action :check_permission
 
   def index
     username = MoodleUser.find_username_by_user_id(@user_id)
