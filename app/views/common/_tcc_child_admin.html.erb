@@ -25,7 +25,9 @@
           <% unless last_object_commented.nil? %>
             <div class="rounded-border">
               <h4>Versão anterior</h4>
-              <%= last_object_commented.content.try(:html_safe) %>
+              <% @last_object_commented = last_object_commented %>
+              <%= cktext_area(:last_object_commented, :content, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                            height: '100%'}}) %>
             </div>
             <% if object.class == Abstract %>
               <div class="rounded-border">
@@ -53,7 +55,9 @@
         <div class="rounded-border">
           <div class="rounded-border">
             <h4>Versão atual</h4>
-            <%= object.content.try(:html_safe) %>
+            <% @object = object %>
+            <%= cktext_area(:object, :content, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                           height: '100%'}}) %>
           </div>
           <% if object.class == Abstract %>
             <div class="rounded-border">

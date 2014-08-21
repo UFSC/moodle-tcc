@@ -22,11 +22,14 @@
           <div id="old_tcc_object" class="span6" style="display: none">
             <div class="rounded-border">
               <% unless last_object_commented.nil? %>
+                <% @last_object_commented = last_object_commented %>
                 <h4>Última versão avaliada</h4>
                 <% if object.class != Abstract %>
-                  <%= last_object_commented.content.html_safe %>
+                  <%= cktext_area(:last_object_commented, :content, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                                height: '100%'}}) %>
                 <% else %>
-                  <%= last_object_commented.content.html_safe %>
+                  <%= cktext_area(:last_object_commented, :content, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                                height: '100%'}}) %>
                   <h4>Palavras chave</h4>
                   <%= last_object_commented.key_words.html_safe %>
                 <% end %>

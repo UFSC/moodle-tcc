@@ -1,70 +1,72 @@
 <%= semantic_form_for @hub, url: save_hubs_path(position: @hub.position) do |h| %>
-    <%= h.input :position, :as => :hidden %>
-    <%= render partial: 'diaries', locals: {hub: @hub, accordion_type: 'user_view'} %>
+  <%= h.input :position, :as => :hidden %>
+  <%= render partial: 'diaries', locals: {hub: @hub, accordion_type: 'user_view'} %>
 
-    <% if @hub.filled_diaries? %>
+  <% if @hub.filled_diaries? %>
 
-        <div class="row">
-          <div class="rounded-border">
-            <h3>
-              Reflexões do <%= @hub.hub_definition.title %> -
+    <div class="row">
+      <div class="rounded-border">
+        <h3>
+          Reflexões do <%= @hub.hub_definition.title %> -
                 <span class="text-info">
                     <%= t('states.'+@hub.aasm.current_state.to_s) %>
                   <%= "/ Nota: #{@hub.grade}" if @hub.show_grade? %>
                 </span>
 
-              <% if @hub.draft? && !@hub.comparable_versions.empty? %>
-                  <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
-              <% end %>
-            </h3>
-            <% if ((@hub.draft? || @hub.admin_evaluation_ok?) && !@hub.commentary.blank?) %>
-                <div class="rounded-border">
-                  <span><%= display_icon('icon-comment') %> Comentário do avaliador</span>
+          <% if @hub.draft? && !@hub.comparable_versions.empty? %>
+            <a class="btn" id="compareTccObjectButtom" onclick="compareTccObject()">Comparar versões</a>
+          <% end %>
+        </h3>
+        <% if ((@hub.draft? || @hub.admin_evaluation_ok?) && !@hub.commentary.blank?) %>
+          <div class="rounded-border">
+            <span><%= display_icon('icon-comment') %> Comentário do avaliador</span>
 
-                  <div class="text-info">
-                    <%= @hub.commentary.try(:html_safe) %>
-                  </div>
-                </div>
-            <% end %>
-            <% if @hub.draft? || @hub.new? %>
-                <div class="row">
-                  <div id="old_tcc_object" class="span6" style="display: none">
-                    <div class="rounded-border">
-
-                      <% unless @last_hub_commented.nil? %>
-                          <h4>Última versão avaliada</h4>
-                          <h3><%= @last_hub_commented.reflection_title.try(:html_safe) if @last_hub_commented.show_title? %></h3>
-                          <%= @last_hub_commented.reflection.try(:html_safe) %>
-                      <% else %>
-                          <p class="text-error">Este eixo ainda não foi avaliado</p>
-                      <% end %>
-
-                    </div>
-                  </div>
-                  <div id="new_tcc_object" class="span12">
-                    <div class="rounded-border">
-                      <%= h.input :reflection_title, :input_html => { class: 'span9' } if @hub.show_title? %>
-                      <%= h.cktext_area :reflection %>
-                      <%= render partial: 'common/state_options', locals: {f: h} %>
-                      <%= h.action :submit, :as => :input, label: 'Salvar', button_html: {class: 'btn btn-primary'} %>
-                    </div>
-                  </div>
-                </div>
-            <% else %>
-                <%= h.input :reflection_title, :input_html => { class: 'span9', :readonly => true } if @hub.show_title? %>
-                <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true, toolbar: 'readonly'}} %>
-            <% end %>
-          </div>
-        </div>
-
-    <% else %>
-        <div class="row">
-            <div class="rounded-border">
-              <h3>
-                <span class="text-info">Você deve concluir o envio dos diários deste eixo antes de poder fazer a reflexão</span>
-              </h3>
+            <div class="text-info">
+              <%= @hub.commentary.try(:html_safe) %>
             </div>
-        </div>
-    <% end %>
+          </div>
+        <% end %>
+        <% if @hub.draft? || @hub.new? %>
+          <div class="row">
+            <div id="old_tcc_object" class="span6" style="display: none">
+              <div class="rounded-border">
+
+                <% unless @last_hub_commented.nil? %>
+                  <h4>Última versão avaliada</h4>
+
+                  <h3><%= @last_hub_commented.reflection_title.try(:html_safe) if @last_hub_commented.show_title? %></h3>
+                  <%= cktext_area(:last_hub_commented, :reflection, {ckeditor: {readOnly: true, toolbar: 'readonly',
+                                                                                height: '100%'}}) %>
+                <% else %>
+                  <p class="text-error">Este eixo ainda não foi avaliado</p>
+                <% end %>
+
+              </div>
+            </div>
+            <div id="new_tcc_object" class="span12">
+              <div class="rounded-border">
+                <%= h.input :reflection_title, :input_html => {class: 'span9'} if @hub.show_title? %>
+                <%= h.cktext_area :reflection %>
+                <%= render partial: 'common/state_options', locals: {f: h} %>
+                <%= h.action :submit, :as => :input, label: 'Salvar', button_html: {class: 'btn btn-primary'} %>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <%= h.input :reflection_title, :input_html => {class: 'span9', :readonly => true} if @hub.show_title? %>
+          <%= h.input :reflection, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true, toolbar: 'readonly'}} %>
+        <% end %>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="row">
+      <div class="rounded-border">
+        <h3>
+          <span class="text-info">Você deve concluir o envio dos diários deste eixo antes de poder fazer a reflexão</span>
+        </h3>
+      </div>
+    </div>
+  <% end %>
 
 <% end %>
