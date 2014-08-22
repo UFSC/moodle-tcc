@@ -6,7 +6,7 @@ class GenericReferenceDecorator < Draper::Decorator
   end
 
   def direct_citation
-    # Pequena diferença de nomes nos models, talvez seja boa ide  ia considerar a troca para igualar
+    # Pequena diferença de nomes nos models, talvez seja boa ideia considerar a troca para igualar
     if object.respond_to? :et_all
       return direct_et_al if et_all
     elsif object.respond_to? :et_al_part
