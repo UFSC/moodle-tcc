@@ -23,7 +23,7 @@ set :config_files, %w{config/database.yml config/email.yml config/errbit.yml con
 set :config_example_prefix, '.example'
 
 set :linked_files, fetch(:config_files)
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/assets public/uploads}
 
 set :default_env, {'LANG' => 'pt_BR.UTF-8'}
 set :keep_releases, 10
