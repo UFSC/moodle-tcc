@@ -66,6 +66,8 @@ GEM
       sshkit (~> 1.2)
     capistrano-db-tasks (0.3)
       capistrano (>= 3.0.0)
+    capistrano-git-submodule-strategy (0.1.8)
+      capistrano (~> 3.1)
     capistrano-newrelic (0.0.8)
       capistrano (~> 3.0)
       newrelic_rpm
@@ -395,6 +397,7 @@ DEPENDENCIES
   bullet
   capistrano (~> 3.2)
   capistrano-db-tasks
+  capistrano-git-submodule-strategy
   capistrano-newrelic
   capistrano-rails
   capistrano-upload-config
