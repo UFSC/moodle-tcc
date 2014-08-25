@@ -126,5 +126,5 @@ group :deploy do
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
   gem 'capistrano-newrelic'
-  gem 'capistrano-git-submodule-strategy'
+  gem 'capistrano-git-submodule-strategy', '0.1.3'
 end
