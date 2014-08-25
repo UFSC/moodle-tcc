@@ -1,6 +1,5 @@
 # encoding: utf-8
 module LtiTccFilters
-  unloadable
 
   def self.included(base)
     base.before_action :authorize
@@ -28,7 +27,7 @@ module LtiTccFilters
   end
 
   def get_tcc
-    if @tcc = Tcc.find_by_moodle_user(@user_id)
+    if @tcc = Tcc.includes(hubs: [:hub_definition]).where(moodle_user: @user_id).first
       if current_user.student? && @tcc.name.blank?
         @tcc.name = @tp.lis_person_name_full
         @tcc.save! if @tcc.valid?

@@ -22,8 +22,9 @@
                 <td><%= element.access_date %></td>
                 <td><%= element.publication_date %></td>
                 <td>
-                  <%= link_to 'Editar', edit_internet_ref_path(element.id, :moodle_user => params[:moodle_user]) %>
-                  <%= link_to 'Remover', internet_ref_path(element, :moodle_user => params[:moodle_user]), :confirm =>  t(:label_confirm_message), :method => :delete %>
+                  <%= link_to 'Editar', edit_internet_ref_path(element, :moodle_user => params[:moodle_user]) %>
+                  <%= link_to 'Remover', internet_ref_path(element, :moodle_user => params[:moodle_user]),
+                              data: { confirm: t(:label_confirm_message)}, :method => :delete %>
                 </td>
               </tr>
           <% end %>

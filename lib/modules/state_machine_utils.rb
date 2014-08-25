@@ -1,7 +1,5 @@
 # encoding: utf-8
 module StateMachineUtils
-  unloadable
-
 
   def change_state(state, o)
     case state

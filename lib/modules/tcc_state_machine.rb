@@ -2,7 +2,6 @@
 
 # Máquina de estados do TCC
 module TccStateMachine
-  unloadable
 
   def self.included(base)
 
