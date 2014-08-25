@@ -7,6 +7,7 @@ set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 set :application, 'tcc.unasus.ufsc.br'
 set :repo_url, 'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
 set :scm, :git
+set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
 # set :format, :pretty
 set :log_level, :info
