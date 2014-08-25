@@ -50,8 +50,8 @@ SistemaTcc::Application.routes.draw do
 
   # Hubs
   get "hubs/:position" => "hubs#show", as: 'show_hubs'
-  match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:post, :put]
-  match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:post, :put]
+  match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:pos, :patch, :put]
+  match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:patch]
   get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
 
   # Resources
