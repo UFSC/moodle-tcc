@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/airbrake/airbrake.git
+  revision: 86cc8c1d54afbd24f45dd3e6e1a9df88653eb123
+  specs:
+    airbrake (4.0.0)
+      builder
+      multi_json
+
+GIT
   remote: git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git
   revision: 34d4a29f3460cbf2c2ed27afaa2d602e40fb2f81
   specs:
@@ -34,9 +42,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.6)
-    airbrake (4.0.0)
-      builder
-      multi_json
     arel (4.0.2)
     arrayfields (4.9.2)
     attribute_normalizer (1.2.0)
@@ -388,7 +393,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
-  airbrake
+  airbrake!
   attribute_normalizer
   better_errors
   binding_of_caller

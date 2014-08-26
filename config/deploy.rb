@@ -56,7 +56,6 @@ namespace :deploy do
     end
   end
 
-  after :finishing, 'deploy:cleanup'
-  after :publishing, 'deploy:migrate'
   after :publishing, 'deploy:restart'
+  after :published, 'airbrake:deploy'
 end
