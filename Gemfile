@@ -52,7 +52,7 @@ gem 'ims-lti'
 gem 'oauth'
 
 # Formulários e views
-gem 'formtastic', '~> 2.2'
+gem 'formtastic', '~> 2.3'
 gem 'formtastic-bootstrap', '~> 2.1.3'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
