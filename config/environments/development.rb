@@ -29,7 +29,6 @@ SistemaTcc::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  config.assets.debug = true
 
   # Rubymine binding for BetterErrors
   BetterErrors.editor='x-mine://open?file=%{file}&line=%{line}' if defined? BetterErrors
@@ -41,6 +40,7 @@ SistemaTcc::Application.configure do
     Bullet.console = true
     Bullet.rails_logger = true
     Bullet.airbrake = true
-    Bullet.add_footer = true
+    Bullet.add_footer = false
+    Bullet.unused_eager_loading_enable = false
   end
 end
