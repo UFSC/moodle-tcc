@@ -70,7 +70,7 @@ gem 'whenever', require: false
 # Model Utils
 gem 'enumerize'
 gem 'attribute_normalizer'
-gem 'paper_trail', '~> 3.0.0' # Versionamento
+gem 'paper_trail', '~> 3.0.5' # Versionamento
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
 
