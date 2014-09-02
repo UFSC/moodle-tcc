@@ -108,7 +108,8 @@ namespace :tcc do
     Tcc.all.with_progress 'Atualizando notasdos hubs' do |tcc|
       tcc.hubs.each do|h|
         if h.grade?
-          MoodleGrade.set_grade(h.tcc.moodle_user, h.tcc.tcc_definition.course_id, h.hub_definition.title, h.grade)
+          MoodleAPI::MoodleGrade.set_grade(h.tcc.moodle_user, h.tcc.tcc_definition.course_id, h.hub_definition.title,
+                                      h.grade)
         end
       end
     end

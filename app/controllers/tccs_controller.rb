@@ -80,7 +80,7 @@ class TccsController < ApplicationController
 
   def preview_tcc
     @current_user = current_user
-    @matricula = MoodleUser::find_username_by_user_id(@tcc.moodle_user)
+    @matricula = MoodleAPI::MoodleUser.find_username_by_user_id(@tcc.moodle_user)
     @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
 
     @abstract = @tcc.abstract

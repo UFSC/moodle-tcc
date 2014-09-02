@@ -46,7 +46,7 @@ namespace :tcc do
     sem_orientador = []
 
     Tcc.all.with_progress 'Atualizando orientador responsável pelos TCCs' do |tcc|
-      matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
+      matricula = MoodleAPI::MoodleUser.find_username_by_user_id(tcc.moodle_user)
       orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
 
       tcc.orientador = orientador_cpf
@@ -90,7 +90,7 @@ namespace :tcc do
     failed = []
     Tcc.all.with_progress 'Atualizando emails' do |tcc|
 
-      matricula = MoodleUser.find_username_by_user_id(tcc.moodle_user)
+      matricula = MoodleAPI::MoodleUser.find_username_by_user_id(tcc.moodle_user)
       orientador_cpf = OrientadorGroup.find_orientador_by_matricula_aluno(matricula)
       usuario_orientador = Middleware::Usuario.where(:username => orientador_cpf).first
 

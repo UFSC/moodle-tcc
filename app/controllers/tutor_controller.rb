@@ -5,7 +5,7 @@ class TutorController < ApplicationController
   before_action :check_permission
 
   def index
-    username = MoodleUser.find_username_by_user_id(@user_id)
+    username = MoodleAPI::MoodleUser.find_username_by_user_id(@user_id)
     tcc_definition_id = @tp.custom_params['tcc_definition']
 
     # Problema no webservice

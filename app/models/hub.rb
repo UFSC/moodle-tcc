@@ -31,12 +31,14 @@ class Hub < ActiveRecord::Base
     self.type == 'HubPortfolio' && self.admin_evaluation_ok?
   end
 
+  # @deprecated funcionalidade será descontinuada na nova versão
   def fetch_diaries(user_id)
-    Moodle.fetch_hub_diaries(self, user_id)
+    MoodleAPI::MoodleHub.fetch_hub_diaries(self, user_id)
   end
 
+  # @deprecated funcionalidade será descontinuada na nova versão
   def fetch_diaries_for_printing(user_id)
-    Moodle.fetch_hub_diaries_for_printing(self, user_id)
+    MoodleAPI::MoodleHub.fetch_hub_diaries_for_printing(self, user_id)
   end
 
   # Verifica se possui todos os diário associados a este eixo com algum tipo de conteúdo
