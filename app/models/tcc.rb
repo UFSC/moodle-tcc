@@ -41,17 +41,10 @@ class Tcc < ActiveRecord::Base
       transitions :from => :admin_evaluating, :to => :teacher_evaluating
     end
   end
-
+  
+  include Shared::Search
   default_scope -> { order(:name) }
   scoped_search :on => [:name]
-
-  def self.search(search, page, *options)
-
-    options = options.extract_options!
-    options[:eager_load] ||= []
-
-    search_for(search).includes(options[:eager_load]).page(page).per(30)
-  end
 
   # Retorna o nome do estudante sem a matrícula ()
   def student_name

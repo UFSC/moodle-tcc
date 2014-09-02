@@ -26,40 +26,12 @@ class InternetRef < ActiveRecord::Base
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :title, :with => [:squish, :blank]
 
-
-  def direct_et_al
-    "(#{first_author.split(' ').last.upcase} et al., #{year})"
-  end
-
-
-  def direct_citation
-    return direct_et_al if et_al
-
-    authors = "#{first_author.split(' ').last.upcase}"
-
-    unless second_author.nil? || second_author.blank?
-      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    unless third_author.nil? || third_author.blank?
-      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    "(#{authors}, #{year})"
-  end
-
   def year
     !publication_date.nil? ? data = self.publication_date.year : data = self.access_date.year
     data
   end
 
   private
-
-  def get_all_authors
-    [first_author, second_author, third_author]
-  end
 
   def check_equality
     internet_refs = InternetRef.where('(

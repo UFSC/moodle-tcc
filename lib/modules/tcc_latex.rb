@@ -3,7 +3,6 @@
 require 'typhoeus/adapters/faraday'
 
 module TccLatex
-  unloadable
 
   def self.latex_path
     File.join(Rails.root, 'latex')

@@ -32,34 +32,7 @@ class ArticleRef < ActiveRecord::Base
 
   alias_attribute :title, :article_title
 
-  def direct_et_al
-    "(#{first_author.split(' ').last.upcase} et al., #{year})"
-  end
-
-  def direct_citation
-    return direct_et_al if et_all
-
-    lastname = UnicodeUtils.upcase(first_author.split(' ').last)
-    authors = lastname
-
-    unless second_author.nil? || second_author.blank?
-      lastname = UnicodeUtils.upcase(second_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    unless third_author.nil? || third_author.blank?
-      lastname = UnicodeUtils.upcase(third_author.split(' ').last)
-      authors = "#{authors}; #{lastname}"
-    end
-
-    "(#{authors}, #{year})"
-  end
-
   private
-
-  def get_all_authors
-    [first_author, second_author, third_author]
-  end
 
   def check_changed
     self.first_author.changed? || self.second_author.changed? || self.third_author.changed?

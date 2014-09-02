@@ -12,6 +12,7 @@ SistemaTcc::Application.routes.draw do
   get 'instructor_admin/autocomplete_tcc_name'
   get 'tutor/autocomplete_tcc_name'
   get 'orientador/autocomplete_tcc_name'
+  get 'compound_names_autocomplete_name' => 'compound_names#autocomplete_compound_name_name'
 
   # Ajax
   match 'ajax/build' => 'ajax#build', via: [:get, :post]
@@ -65,5 +66,6 @@ SistemaTcc::Application.routes.draw do
   resources :thesis_refs
   resources :orientador
   resources :tutor
+  resources :compound_names
 
 end

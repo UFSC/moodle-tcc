@@ -5,11 +5,11 @@ class BookRefsController < ApplicationController
   before_action :set_current_tab
 
   def index
-    @book_refs = @tcc.book_refs
+    @book_refs = @tcc.book_refs.decorate
   end
 
   def show
-    @book_ref = BookRef.find(params[:id])
+    @book_ref = BookRef.find(params[:id]).decorate
   end
 
   def create

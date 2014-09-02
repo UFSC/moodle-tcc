@@ -88,7 +88,7 @@ describe ArticleRef do
   end
 
   context 'citacoes' do
-    let(:article_ref) { Fabricate.build(:article_ref) }
+    let(:article_ref) { GenericReferenceDecorator.new(Fabricate.build(:article_ref)) }
 
     describe '#direct_citation' do
 

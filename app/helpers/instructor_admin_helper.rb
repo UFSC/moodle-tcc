@@ -1,5 +1,4 @@
 module InstructorAdminHelper
-  unloadable
 
   STATUS_LABEL_CLASSES = {draft: 'label-info', sent_to_admin_for_revision: 'label-warning',
                           sent_to_admin_for_evaluation: 'label-important', admin_evaluation_ok: 'label-success',

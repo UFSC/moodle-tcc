@@ -52,8 +52,8 @@ gem 'ims-lti'
 gem 'oauth'
 
 # Formulários e views
-gem 'formtastic', '~> 2.2'
-gem 'formtastic-bootstrap'
+gem 'formtastic', '~> 2.3'
+gem 'formtastic-bootstrap', '~> 2.1.3'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
 gem 'rabl'
@@ -70,9 +70,12 @@ gem 'whenever', require: false
 # Model Utils
 gem 'enumerize'
 gem 'attribute_normalizer'
-gem 'paper_trail', '~> 3.0.0' # Versionamento
+gem 'paper_trail', '~> 3.0.5' # Versionamento
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
+
+# Decorator pattern
+gem 'draper', '~> 1.3'
 
 # Errbit (monitoração de falhas)
 # Usando temporariamgente versão do github pois a 4.0.0 tem conflitos com o Capistrano 3.x (https://github.com/airbrake/airbrake/commit/86cc8c1d54afbd24f45dd3e6e1a9df88653eb123)

@@ -37,16 +37,7 @@ class ThesisRef < ActiveRecord::Base
 
   alias_attribute :first_author, :author
 
-  def direct_citation
-    lastname = UnicodeUtils.upcase(author.split(' ').last)
-    "(#{lastname}, #{year})"
-  end
-
   private
-
-  def get_all_authors
-    [author]
-  end
 
   def check_equality
     thesis_refs = ThesisRef.where('(author = ? ) AND (year = ?)', author, year)

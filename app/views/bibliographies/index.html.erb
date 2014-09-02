@@ -12,6 +12,9 @@
     <li id='internet' class='bibliographie-tab'><a href='#internet'>Internet</a></li>
     <li id='legs' class='bibliographie-tab'><a href='#legs'>Legislativo</a></li>
     <li id='thesis' class='bibliographie-tab'><a href='#thesis'>Teses e Monografias</a></li>
+    <% if (@current_user.coordenador_avea? || @current_user.admin?) %>
+      <li id='compound_names' class='bibliographie-tab'><a href='#compound_names'>Nomes Compostos</a></li>
+    <% end %>
   </ul>
 
   <div id='content-geral' class='tab-content'><%= render :template => 'general_refs/index' %></div>
@@ -21,4 +24,7 @@
   <div id='content-internet' class='tab-content'><%= render :template => 'internet_refs/index' %></div>
   <div id='content-legs' class='tab-content'><%= render :template => 'legislative_refs/index' %></div>
   <div id='content-thesis' class='tab-content'><%= render :template => 'thesis_refs/index' %></div>
+  <% if (@current_user.coordenador_avea? || @current_user.admin?) %>
+    <div id='content-compound_names' class='tab-content'><%= render :template => 'compound_names/index' %></div>
+  <% end %>
 </div>

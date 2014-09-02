@@ -16,7 +16,7 @@
                 <td><%= element.indirect_citation %></td>
                 <td><%= sanitize(element.reference_text, :tags => []) %></td>
                 <td>
-                  <%= link_to 'Editar', :controller => element.class.to_s.tableize, :action => 'edit', :id => element.id, moodle_user: @tcc.moodle_user %>
+                  <%= link_to 'Editar', edit_general_ref_path(element.id, moodle_user: @tcc.moodle_user) %>
                   <%#= link_to 'Remover', general_ref_path(element, moodle_user: @tcc.moodle_user),
                                :confirm =>  t(:label_confirm_message), :method => :delete %>
                 </td>

@@ -12,6 +12,18 @@ describe Conversor do
       tcc.save!
       tcc.references.create!(element: ref)
       tcc.references.create!(element: ref1)
+
+      if ref.class == GeneralRef
+        @ref = ref
+      else
+        @ref = ref.decorate
+      end
+
+      if ref1.class == GeneralRef
+        @ref1 = ref1
+      else
+        @ref1 = ref1.decorate
+      end
     end
 
     it 'should not modify a text without citation' do
@@ -26,33 +38,33 @@ describe Conversor do
       end
 
       it 'should convert and old citation to the new format' do
-        old_citacao = build_tag_citacao(ref, :direta, old_citacao_text(ref, ref.title))
-        new_citacao = build_tag_citacao(ref, :direta, ref.direct_citation)
+        old_citacao = build_tag_citacao(@ref, :direta, old_citacao_text(@ref, @ref.title))
+        new_citacao = build_tag_citacao(@ref, :direta, @ref.direct_citation)
 
         converted_text = Conversor::convert_text(old_citacao, tcc)
         expect(converted_text).to eq(new_citacao)
       end
 
       it 'should convert citation with any text before and after' do
-        old_citacao = build_tag_citacao(ref, :direta, old_citacao_text(ref, ref.title))
+        old_citacao = build_tag_citacao(@ref, :direta, old_citacao_text(@ref, @ref.title))
 
         old_text = prefix+old_citacao+sufix
         old_text = Conversor::convert_text(old_text, tcc)
 
-        new_text = "<p>"+prefix+build_tag_citacao(ref, :direta, ref.direct_citation)+sufix+"</p>"
+        new_text = "<p>"+prefix+build_tag_citacao(@ref, :direta, @ref.direct_citation)+sufix+"</p>"
 
         expect(old_text).to eq(new_text)
       end
 
       it 'should convert all citations from text' do
-        old_citacao = build_tag_citacao(ref, :direta, old_citacao_text(ref, ref.title))
-        another_old_citacao = build_tag_citacao(ref1, :direta, old_citacao_text(ref1, ref1.title))
+        old_citacao = build_tag_citacao(@ref, :direta, old_citacao_text(@ref, @ref.title))
+        another_old_citacao = build_tag_citacao(@ref1, :direta, old_citacao_text(@ref1, @ref1.title))
 
         old_text = prefix+old_citacao+sufix+another_old_citacao
         old_text = Conversor::convert_text(old_text, tcc)
 
-        new_citation1 = build_tag_citacao(ref, :direta, ref.direct_citation)
-        new_citation2 = build_tag_citacao(ref1, :direta, ref1.direct_citation)
+        new_citation1 = build_tag_citacao(@ref, :direta, @ref.direct_citation)
+        new_citation2 = build_tag_citacao(@ref1, :direta, @ref1.direct_citation)
 
         new_text = "<p>#{prefix}#{new_citation1}#{sufix}#{new_citation2}</p>"
 
@@ -65,34 +77,34 @@ describe Conversor do
       end
 
       it 'should convert and old citation to the new format' do
-        old_citacao = build_tag_citacao(ref, :indireta, old_citacao_text(ref, ref.title))
-        new_citacao = build_tag_citacao(ref, :indireta, ref.indirect_citation)
+        old_citacao = build_tag_citacao(@ref, :indireta, old_citacao_text(@ref, @ref.title))
+        new_citacao = build_tag_citacao(@ref, :indireta, @ref.indirect_citation)
 
         old_text = Conversor::convert_text(old_citacao, tcc)
         expect(old_text).to eq(new_citacao)
       end
 
       it 'should convert citation with any text before and after' do
-        old_citacao = build_tag_citacao(ref, :indireta, old_citacao_text(ref, ref.title))
+        old_citacao = build_tag_citacao(@ref, :indireta, old_citacao_text(@ref, @ref.title))
 
         old_text = prefix+old_citacao+sufix
         old_text = Conversor::convert_text(old_text, tcc)
 
-        new_citacao = build_tag_citacao(ref, :indireta, ref.indirect_citation)
+        new_citacao = build_tag_citacao(@ref, :indireta, @ref.indirect_citation)
         new_text = "<p>#{prefix}#{new_citacao}#{sufix}</p>"
 
         expect(old_text).to eq(new_text)
       end
 
       it 'should convert all citations from text' do
-        old_citacao = build_tag_citacao(ref, :indireta, old_citacao_text(ref, ref.title))
-        another_old_citacao = build_tag_citacao(ref1, :indireta, old_citacao_text(ref1, ref1.title))
+        old_citacao = build_tag_citacao(@ref, :indireta, old_citacao_text(@ref, @ref.title))
+        another_old_citacao = build_tag_citacao(@ref1, :indireta, old_citacao_text(@ref1, @ref1.title))
 
         old_text = prefix+old_citacao+sufix+another_old_citacao
         old_text = Conversor::convert_text(old_text, tcc)
 
-        new_citation1 = build_tag_citacao(ref, :indireta, ref.indirect_citation)
-        new_citation2 = build_tag_citacao(ref1, :indireta, ref1.indirect_citation)
+        new_citation1 = build_tag_citacao(@ref, :indireta, @ref.indirect_citation)
+        new_citation2 = build_tag_citacao(@ref1, :indireta, @ref1.indirect_citation)
 
         new_text = "<p>#{prefix}#{new_citation1}#{sufix}#{new_citation2}</p>"
 
@@ -144,11 +156,23 @@ describe Conversor do
   end
 
   def build_tag_citacao(model, citacao_type, text)
-    %Q(<citacao citacao-text="#{model.title}" citacao_type="#{CITACAO_TYPES[citacao_type]}" class="citacao-class" contenteditable="false" id="#{model.id}" ref-type="#{Conversor::REFERENCES_TYPE.invert[model.class.to_s]}" title="#{text}" reference_id="#{model.reference.id}">#{text}</citacao>)
+    unless model.class == GeneralRef
+      object = model.object
+    else
+      object = model
+    end
+  %Q(<citacao citacao-text="#{model.title}" citacao_type="#{CITACAO_TYPES[citacao_type]}" class="citacao-class")+" "+
+  %Q(contenteditable="false" id="#{model.id}" ref-type="#{Conversor::REFERENCES_TYPE.invert[object.class.to_s]}")+" "+
+  %Q(title="#{text}" reference_id="#{object.reference.id}">#{text}</citacao>)
   end
 
   def old_citacao_text(model, title)
-    "[[#{Conversor::REFERENCES_TYPE.invert[model.class.to_s]}#{model.id} #{title}]]"
+    unless model.class == GeneralRef
+      object = model.object
+    else
+      object = model
+    end
+    "[[#{Conversor::REFERENCES_TYPE.invert[object.class.to_s]}#{model.id} #{title}]]"
   end
 
 end

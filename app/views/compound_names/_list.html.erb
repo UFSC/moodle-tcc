@@ -1,0 +1,34 @@
+<% if @compound_names.count > 0 %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Editar</th>
+      <th>Remover</th>
+    </tr>
+    </thead>
+    <% @compound_names.each_with_index do |element, index| %>
+      <% if !element.nil? && ((index < 30 && type == 'left') || (index >= 30 && type == 'right')) %>
+        <tr>
+          <td><%= element.name %></td>
+          <td>
+            <%= link_to 'Editar', '#',  {:remote => true, 'data-toggle' =>  'modal',
+                                                          'data-target' => '#'+element.id.to_s, class: 'btn'}  %>
+
+          </td>
+          <td>
+            <%= button_to 'Remover', compound_name_path(element, moodle_user: params[:moodle_user]),
+                          class: 'btn btn-danger',
+                          confirm: "Tem certeza que deseja apagar o nome composto: #{element.name}?",
+                          method: :delete, title: 'Remover nome composto'%>
+          </td>
+        </tr>
+        <!-- Edit modal -->
+        <%= render partial: 'compound_names/edit', locals: { compound_name: element } %>
+      <% end %>
+    <% end %>
+  </table>
+  <br />
+<% else %>
+  <p>Não há nomes compostos cadastrados.</p>
+<% end %>

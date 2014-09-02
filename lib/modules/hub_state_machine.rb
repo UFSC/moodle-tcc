@@ -2,7 +2,6 @@
 
 # Máquina de estados dos Hubs
 module HubStateMachine
-  unloadable
 
   def self.included(base)
 
