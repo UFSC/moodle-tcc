@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814182612) do
+ActiveRecord::Schema.define(version: 20140902211046) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -208,6 +208,15 @@ ActiveRecord::Schema.define(version: 20140814182612) do
   end
 
   add_index "moodle_assets", ["tcc_id"], name: "index_moodle_assets_on_tcc_id", using: :btree
+
+  create_table "people", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "moodle_username"
+    t.integer  "moodle_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "presentations", force: true do |t|
     t.text     "content",    limit: 16777215
