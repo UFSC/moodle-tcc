@@ -4,9 +4,7 @@ module MoodleAPI
     # Busca o username no Moodle com base no user_id informado
     # @param [String] user_id user id no Moodle
     def self.find_username_by_user_id(user_id)
-
       MoodleAPI::Base.remote_call('local_wstcc_get_username', :userid => user_id) do |response|
-
         # Utiliza Nokogiri como parser XML
         doc = Nokogiri.parse(response)
 
@@ -18,7 +16,7 @@ module MoodleAPI
           error_message = doc.xpath('/EXCEPTION/MESSAGE').text
           debug_info = doc.xpath('/EXCEPTION/DEBUGINFO').text
 
-          #logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
+          logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
           # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
           return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
         end
@@ -26,6 +24,25 @@ module MoodleAPI
         # Recupera o conteúdo do user_name (matrícula)
         user_name = doc.xpath('/RESPONSE/SINGLE/KEY[@name="username"]/VALUE').text
 
+      end
+    end
+
+    def self.find_users_by_user_id(user_id)
+      MoodleAPI::Base.remote_json_call('core_user_get_users_by_field', field: 'id', values: [user_id]) do |raw_response|
+        response = JSON.parse(raw_response)
+
+        # Verifica se ocorreu algum problema com o acesso
+        if response.is_a? Hash and response.has_key? 'exception'
+          error_code = response['errorcode']
+          error_message = response['message']
+          debug_info = response['debuginfo']
+
+          logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
+          # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
+          return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
+        end
+
+        return response.first
       end
     end
   end

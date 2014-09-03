@@ -1,6 +1,6 @@
 module MoodleAPI
   class Base
-    # Executa uma chamada remota a um webservice do Moodle
+    # Executa uma chamada remota a um webservice do Moodle retornando XML
     # @param [String] remote_method_name
     # @param [Hash] params
     # @param [Proc] block
@@ -8,6 +8,31 @@ module MoodleAPI
       Rails.logger.debug "[Moodle WS] Chamada remota: #{remote_method_name}, parametros: #{params}"
 
       default = {:wstoken => Settings.moodle_token, :wsfunction => remote_method_name}
+
+      post_params = default
+      post_params.merge!(params) unless params.empty?
+
+      RestClient.post(Settings.moodle_rest_url, post_params) do |response|
+        Rails.logger.debug "[WS Moodle] resposta: #{response.code} #{response.inspect}"
+
+        if response.code != 200
+          Rails.logger.error "Falha ao acessar o webservice do Moodle: HTTP_ERROR: #{response.code}"
+
+          return false
+        end
+
+        block.call(response) if block_given?
+      end
+    end
+
+    # Executa uma chamada remota a um webservice do Moodle retornando JSON
+    # @param [String] remote_method_name
+    # @param [Hash] params
+    # @param [Proc] block
+    def self.remote_json_call(remote_method_name, params={}, &block)
+      Rails.logger.debug "[Moodle WS] Chamada remota: #{remote_method_name}, parametros: #{params}"
+
+      default = {:wstoken => Settings.moodle_token, :wsfunction => remote_method_name, :moodlewsrestformat => 'json'}
 
       post_params = default
       post_params.merge!(params) unless params.empty?
