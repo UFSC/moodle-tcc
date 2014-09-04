@@ -31,6 +31,7 @@ module Authentication
     end
   end
 
+  # FIX-ME: migrar para person
   class User
     attr_accessor :lti_tp
     delegate :student?, :to => :lti_tp

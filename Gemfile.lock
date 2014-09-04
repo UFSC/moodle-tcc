@@ -16,7 +16,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (3.3.3)
     actionmailer (4.0.9)
       actionpack (= 4.0.9)
       mail (~> 2.5.4)
@@ -399,7 +398,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm
   airbrake!
   attribute_normalizer
   better_errors

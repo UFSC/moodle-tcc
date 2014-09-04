@@ -35,9 +35,6 @@ gem 'typhoeus'
 gem 'rest-client'
 gem 'nokogiri'
 
-# State machine
-gem 'aasm'
-
 # Inherited Resources
 gem 'inherited_resources'
 

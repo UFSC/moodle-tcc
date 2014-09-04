@@ -1,10 +1,7 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :grade, :orientador, :moodle_user, :tutor_group, :title, :state, :defense_date, :hubs_attributes,
+  attr_accessible :orientador, :title, :defense_date, :hubs_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes,
-                  :final_considerations_attributes, :tcc_definition, :grade_updated_at
-
-  validates_uniqueness_of :moodle_user
-  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
+                  :final_considerations_attributes, :tcc_definition
 
   has_many :hubs, :inverse_of => :tcc
   has_many :hubs_portfolios, class_name: 'HubPortfolio'
@@ -29,25 +26,10 @@ class Tcc < ActiveRecord::Base
   belongs_to :tutor, class_name: 'Person'
   belongs_to :orientador, class_name: 'Person'
 
-  # Salvar a nota no moodle caso ela tenha mudado
-  before_save :post_moodle_grade
-
   accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations
-
-  include AASM
-  aasm_column :state
-
-  aasm do
-    state :admin_evaluating, :initial => true
-    state :teacher_evaluating
-
-    event :admin_evaluate_ok do
-      transitions :from => :admin_evaluating, :to => :teacher_evaluating
-    end
-  end
   
   include Shared::Search
-  default_scope -> { order(:name) }
+  default_scope -> { joins(:student).order('people.name') }
   scoped_search :on => [:name]
 
   # Retorna o nome do estudante sem a matrícula ()
@@ -102,19 +84,13 @@ class Tcc < ActiveRecord::Base
     self.build_presentation if self.presentation.nil?
   end
 
-  def post_moodle_grade
-    if self.grade_changed? && self.tcc_definition && self.tcc_definition.course_id
-      MoodleGrade.set_grade(self.moodle_user, self.tcc_definition.course_id, self.tcc_definition.name, self.grade);
-    end
-  end
-
   private
 
   def create_or_update_hubs
     self.tcc_definition.hub_definitions.each do |hub_definition|
 
       # Verificação da ramificação do usuário para os eixo que tiverem ramificações
-      if hub_definition.moodle_shortname.nil? || MiddlewareUser::check_enrol(self.moodle_user, hub_definition.moodle_shortname)
+      if hub_definition.moodle_shortname.nil? || MiddlewareUser::check_enrol(self.student.moodle_id, hub_definition.moodle_shortname)
         if self.hubs.empty?
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
           self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')

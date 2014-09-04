@@ -8,7 +8,7 @@ def moodle_lti_params(roles = 'student', type = 'portfolio')
   tc.launch_url = URI.parse(Settings.moodle_url).merge!('/mod/lti/service.php').to_s
   tc.resource_link_id = 1
   tc.roles = roles
-  tc.user_id = @tcc.moodle_user
+  tc.user_id = @tcc.student.moodle_id
   tc.tool_consumer_instance_guid = Settings.instance_guid
   tc.custom_params = {
       'type' => type,

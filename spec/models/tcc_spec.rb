@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Tcc do
   let(:tcc) { Fabricate.build(:tcc) }
 
-  it { should respond_to(:leader, :moodle_user, :name, :title, :grade, :defense_date, :grade_updated_at) }
+  it { should respond_to(:name, :title, :defense_date) }
 
   it { should have_many(:references) }
   it { should have_many(:general_refs).through(:references) }
@@ -15,28 +15,7 @@ describe Tcc do
   it { should have_many(:legislative_refs).through(:references) }
   it { should have_many(:thesis_refs).through(:references) }
 
-  it { should validate_uniqueness_of :moodle_user }
-
   it { should_not allow_mass_assignment_of :name }
-  it { should_not allow_mass_assignment_of :leader   }
-
-  describe 'grade' do
-    it 'should be zero or higher' do
-      tcc.grade = 0
-      expect(tcc).to be_valid
-
-      tcc.grade = 0.8
-      expect(tcc).to be_valid
-    end
-
-    it 'should not be higher than 100' do
-      tcc.grade = 101
-      expect(tcc).not_to be_valid
-
-      tcc.grade = 100.1
-      expect(tcc).not_to be_valid
-    end
-  end
 
   describe 'referencias' do
     before(:each) do
@@ -209,16 +188,6 @@ describe Tcc do
       expect(tcc.final_considerations).to equal(final_considerations)
     end
 
-  end
-
-  describe '#student_name' do
-
-    it 'should return student name without matricula' do
-      tcc = Fabricate.build(:tcc_without_dependencies)
-      name = tcc.name
-      tcc.name += ' (201301010)'
-      expect(tcc.student_name).to eq(name)
-    end
   end
 
 end

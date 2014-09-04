@@ -1,4 +1,5 @@
 # encoding: utf-8
+# FIX-ME: transformar em concern
 module LtiTccFilters
 
   def self.included(base)
@@ -27,14 +28,9 @@ module LtiTccFilters
   end
 
   def get_tcc
-    if @tcc = Tcc.includes(hubs: [:hub_definition]).where(moodle_user: @user_id).first
-      if current_user.student? && @tcc.name.blank?
-        @tcc.name = @tp.lis_person_name_full
-        @tcc.save! if @tcc.valid?
-      end
-
-    else
+    unless @tcc = Tcc.includes(hubs: [:hub_definition]).joins(:student).where(people: {moodle_id: @user_id}).first
       if current_user.student?
+        #FIX-ME: migrar informações para sistema de relacionamentos e usar o MoodleAPI.
         username = MoodleAPI::MoodleUser.find_username_by_user_id(@user_id)
         group = TutorGroup.get_tutor_group(username)
         tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
@@ -45,10 +41,12 @@ module LtiTccFilters
         @tcc.save!
       else
         if @tcc.nil?
+          # FIX-ME: redirecionar para uma página avisando o usuário que o TCC dele não existe na aplicação
           flash[:error] = t(:empty_tcc)
           redirect_user_to_start_page
         end
       end
     end
+
   end
 end

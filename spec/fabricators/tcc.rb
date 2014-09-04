@@ -1,15 +1,11 @@
 #encoding: utf-8
 Fabricator(:tcc_without_hubs, :class_name => :tcc) do
-  moodle_user { (0..9999).to_a.sample }
   title { Faker::Lorem.sentence(3) }
 
-  name { Faker::Name.name }
-  leader { Faker::Name.name }
+  student { Fabricate(:person) }
+  tutor { Fabricate(:person) }
+  orientador { Fabricate(:person) }
 
-  email_orientador { Faker::Internet.email }
-  email_estudante { Faker::Internet.email }
-
-  grade (0..100).to_a.sample
   defense_date { Date.today }
   presentation
   abstract
@@ -17,16 +13,12 @@ Fabricator(:tcc_without_hubs, :class_name => :tcc) do
 end
 
 Fabricator(:tcc_without_dependencies, :class_name => :tcc) do
-  moodle_user { Fabricate.sequence(:moodle_user) }
   title { Faker::Lorem.sentence(3) }
 
-  name { Faker::Name.name }
-  leader { Faker::Name.name }
+  student { Fabricate(:person) }
+  tutor { Fabricate(:person) }
+  orientador { Fabricate(:person) }
 
-  email_orientador { Faker::Internet.email }
-  email_estudante { Faker::Internet.email }
-
-  grade (0..100).to_a.sample
   defense_date { Date.today }
 end
 
