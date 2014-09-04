@@ -25,6 +25,10 @@ class Tcc < ActiveRecord::Base
   has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
   has_many :thesis_refs, :through => :references, :source => :element, :source_type => 'ThesisRef'
 
+  belongs_to :student, class_name: 'Person'
+  belongs_to :tutor, class_name: 'Person'
+  belongs_to :orientador, class_name: 'Person'
+
   # Salvar a nota no moodle caso ela tenha mudado
   before_save :post_moodle_grade
 

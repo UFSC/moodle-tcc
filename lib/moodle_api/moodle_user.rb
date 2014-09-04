@@ -27,8 +27,9 @@ module MoodleAPI
       end
     end
 
-    def self.find_users_by_user_id(user_id)
-      MoodleAPI::Base.remote_json_call('core_user_get_users_by_field', field: 'id', values: [user_id]) do |raw_response|
+    def self.find_users_by_field(field, values)
+      MoodleAPI::Base.remote_json_call('local_wstcc_get_users_by_field',
+                                       field: field, values: [values]) do |raw_response|
         response = JSON.parse(raw_response)
 
         # Verifica se ocorreu algum problema com o acesso
@@ -42,7 +43,7 @@ module MoodleAPI
           return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
         end
 
-        return response.first
+        return OpenStruct.new(response.first)
       end
     end
   end

@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902211046) do
+ActiveRecord::Schema.define(version: 20140902214223) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
     t.string   "key_words"
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state"
   end
 
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.string   "type",              limit: 30
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
@@ -107,8 +107,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.text     "content",             limit: 16777215
     t.integer  "position"
     t.integer  "hub_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "diary_definition_id"
   end
 
@@ -120,8 +120,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.integer  "external_id"
     t.string   "title"
     t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "diary_definitions", ["hub_definition_id"], name: "index_diary_definitions_on_hub_definition_id", using: :btree
@@ -130,8 +130,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.text     "content",    limit: 16777215
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state"
   end
 
@@ -147,8 +147,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.integer  "tcc_definition_id"
     t.string   "title"
     t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "moodle_shortname"
     t.string   "subtitle"
   end
@@ -162,8 +162,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "portfolio_state"
     t.integer  "hub_definition_id"
     t.string   "type"
@@ -203,8 +203,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.integer  "tcc_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "moodle_assets", ["tcc_id"], name: "index_moodle_assets_on_tcc_id", using: :btree
@@ -222,8 +222,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.text     "content",    limit: 16777215
     t.text     "commentary"
     t.integer  "tcc_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state"
   end
 
@@ -233,8 +233,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.integer  "tcc_id"
     t.integer  "element_id"
     t.string   "element_type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "references", ["element_id"], name: "index_references_on_element_id", using: :btree
@@ -242,8 +242,8 @@ ActiveRecord::Schema.define(version: 20140902211046) do
 
   create_table "tcc_definitions", force: true do |t|
     t.string   "title"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "activity_url"
     t.string   "course_id"
     t.string   "name"
@@ -251,21 +251,15 @@ ActiveRecord::Schema.define(version: 20140902211046) do
   end
 
   create_table "tccs", force: true do |t|
-    t.string   "moodle_user"
     t.string   "title"
     t.string   "name"
-    t.string   "leader"
-    t.float    "grade"
     t.date     "defense_date"
-    t.string   "state"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.integer  "tutor_group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tcc_definition_id"
-    t.string   "orientador"
-    t.string   "email_estudante"
-    t.string   "email_orientador"
-    t.datetime "grade_updated_at"
+    t.integer  "orientador_id"
+    t.integer  "student_id"
+    t.integer  "tutor_id"
   end
 
   add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree
