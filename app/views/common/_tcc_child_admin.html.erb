@@ -32,7 +32,7 @@
             <% if object.class == Abstract %>
               <div class="rounded-border">
                 <h4>Palavras-chave</h4>
-                <%= last_object_commented.key_words.try(:html_safe) %>
+                <%= last_object_commented.keywords.try(:html_safe) %>
               </div>
             <% end %>
             <% unless last_object_commented.commentary.blank? %>
@@ -62,7 +62,7 @@
           <% if object.class == Abstract %>
             <div class="rounded-border">
               <h4>Palavras-chave</h4>
-              <%= object.key_words.try(:html_safe) %>
+              <%= object.keywords.try(:html_safe) %>
             </div>
           <% end %>
           <%= semantic_form_for object, url: action_url, method: 'put' do |p| %>

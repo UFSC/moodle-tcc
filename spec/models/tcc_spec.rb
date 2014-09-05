@@ -73,16 +73,6 @@ describe Tcc do
       expect(tcc.hubs.size).to eq(2)
     end
 
-    it 'should create diaries defined on hub definition' do
-      tcc = Fabricate.build(:tcc_without_hubs)
-      hub_definition.diary_definitions << diary_definition
-      tcc_definition.hub_definitions << hub_definition
-      expect(tcc.hubs.size).to eq(0)
-
-      tcc.tcc_definition = tcc_definition
-      expect(tcc.hubs.first.diaries.size).to eq(1)
-    end
-
     it 'should update hubs if they already exists' do
       # Cria Tcc e Hub Definitions necessário pro teste
 

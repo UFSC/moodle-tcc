@@ -1,8 +1,7 @@
 class CreateFinalConsiderations < ActiveRecord::Migration
   def change
     create_table :final_considerations do |t|
-      t.text :content
-      t.text :commentary
+      t.text :content, limit: 16.megabytes-1 # MySQL: MEDIUMTEXT
       t.references :tcc
 
       t.timestamps

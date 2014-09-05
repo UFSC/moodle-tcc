@@ -3,7 +3,7 @@ class CreateHubDefinitions < ActiveRecord::Migration
     create_table :hub_definitions do |t|
       t.references :tcc_definition
       t.string :title
-      t.integer :order
+      t.integer :position
 
       t.timestamps
     end

@@ -1,8 +1,7 @@
 class CreatePresentations < ActiveRecord::Migration
   def change
     create_table :presentations do |t|
-      t.text :content
-      t.text :commentary
+      t.text :content, limit: 16.megabytes-1 # MySQL: MEDIUMTEXT
       t.references :tcc
 
       t.timestamps

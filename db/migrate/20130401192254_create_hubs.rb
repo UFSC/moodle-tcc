@@ -1,9 +1,8 @@
 class CreateHubs < ActiveRecord::Migration
   def change
     create_table :hubs do |t|
-      t.text :reflection
-      t.text :commentary
-      t.integer :category
+      t.text :reflection, limit: 16.megabytes-1 # MySQL: MEDIUMTEXT
+      t.integer :position
       t.string :state
       t.float :grade
       t.references :tcc

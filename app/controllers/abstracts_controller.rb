@@ -18,20 +18,6 @@ class AbstractsController < ApplicationController
     end
   end
 
-  def update_state
-    @abstract = Abstract.find(params[:format])
-    new_state = params[:abstract][:new_state]
-
-    if change_state(new_state, @abstract)
-      @abstract.save!
-      flash[:success] = t(:successfully_saved)
-    else
-      flash[:error] = t(:invalid_state)
-    end
-
-    redirect_to edit_abstracts_path(@abstract, moodle_user: params[:moodle_user])
-  end
-
   def update
     save
   end

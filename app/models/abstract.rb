@@ -1,9 +1,9 @@
 class Abstract < ActiveRecord::Base
   belongs_to :tcc
 
-  attr_accessible :commentary, :content, :key_words
+  attr_accessible :content, :keywords
 
   def empty?
-    self.content.blank? && self.key_words.blank?
+    self.content.blank? && self.keywords.blank?
   end
 end

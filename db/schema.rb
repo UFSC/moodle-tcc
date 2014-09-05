@@ -11,16 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902214223) do
+ActiveRecord::Schema.define(version: 20140902211046) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
-    t.string   "key_words"
-    t.text     "commentary"
+    t.string   "keywords"
     t.integer  "tcc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state"
   end
 
   add_index "abstracts", ["tcc_id"], name: "index_abstracts_on_tcc_id", using: :btree
@@ -103,36 +101,11 @@ ActiveRecord::Schema.define(version: 20140902214223) do
     t.string   "type_name"
   end
 
-  create_table "diaries", force: true do |t|
-    t.text     "content",             limit: 16777215
-    t.integer  "position"
-    t.integer  "hub_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "diary_definition_id"
-  end
-
-  add_index "diaries", ["diary_definition_id"], name: "index_diaries_on_diary_definition_id", using: :btree
-  add_index "diaries", ["hub_id"], name: "index_diaries_on_hub_id", using: :btree
-
-  create_table "diary_definitions", force: true do |t|
-    t.integer  "hub_definition_id"
-    t.integer  "external_id"
-    t.string   "title"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "diary_definitions", ["hub_definition_id"], name: "index_diary_definitions_on_hub_definition_id", using: :btree
-
   create_table "final_considerations", force: true do |t|
     t.text     "content",    limit: 16777215
-    t.text     "commentary"
     t.integer  "tcc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state"
   end
 
   add_index "final_considerations", ["tcc_id"], name: "index_final_considerations_on_tcc_id", using: :btree
@@ -157,14 +130,12 @@ ActiveRecord::Schema.define(version: 20140902214223) do
 
   create_table "hubs", force: true do |t|
     t.text     "reflection",        limit: 16777215
-    t.text     "commentary"
     t.integer  "position"
     t.string   "state"
     t.float    "grade"
     t.integer  "tcc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "portfolio_state"
     t.integer  "hub_definition_id"
     t.string   "type"
     t.string   "reflection_title"
@@ -220,11 +191,9 @@ ActiveRecord::Schema.define(version: 20140902214223) do
 
   create_table "presentations", force: true do |t|
     t.text     "content",    limit: 16777215
-    t.text     "commentary"
     t.integer  "tcc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state"
   end
 
   add_index "presentations", ["tcc_id"], name: "index_presentations_on_tcc_id", using: :btree
@@ -241,25 +210,24 @@ ActiveRecord::Schema.define(version: 20140902214223) do
   add_index "references", ["tcc_id"], name: "index_references_on_tcc_id", using: :btree
 
   create_table "tcc_definitions", force: true do |t|
+    t.string   "name"
     t.string   "title"
+    t.string   "activity_url"
+    t.integer  "course_id"
+    t.date     "defense_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "activity_url"
-    t.string   "course_id"
-    t.string   "name"
-    t.date     "defense_date"
   end
 
   create_table "tccs", force: true do |t|
     t.string   "title"
-    t.string   "name"
     t.date     "defense_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "tcc_definition_id"
     t.integer  "orientador_id"
     t.integer  "student_id"
     t.integer  "tutor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tcc_definition_id"
   end
 
   add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree
@@ -281,20 +249,5 @@ ActiveRecord::Schema.define(version: 20140902214223) do
     t.string  "department"
     t.string  "subtype"
   end
-
-  create_table "versions", force: true do |t|
-    t.string   "item_type",                         null: false
-    t.integer  "item_id",                           null: false
-    t.string   "event",                             null: false
-    t.string   "whodunnit"
-    t.text     "object",         limit: 2147483647
-    t.datetime "created_at"
-    t.text     "comment"
-    t.string   "state"
-    t.text     "object_changes"
-  end
-
-  add_index "versions", ["item_id", "item_type", "state"], name: "index_versions_on_item_id_and_item_type_and_state", using: :btree
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end

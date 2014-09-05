@@ -31,7 +31,7 @@
                   <%= cktext_area(:last_object_commented, :content, {ckeditor: {readOnly: true, toolbar: 'readonly',
                                                                                 height: '100%'}}) %>
                   <h4>Palavras chave</h4>
-                  <%= last_object_commented.key_words.html_safe %>
+                  <%= last_object_commented.keywords.html_safe %>
                 <% end %>
               <% else %>
                 <p class="text-error">Este eixo ainda não foi avaliado</p>
@@ -46,7 +46,7 @@
               <% else %>
                 <%= form.cktext_area :content %>
                 <br>
-                <%= form.input :key_words, :input_html => {class: 'span9'} %>
+                <%= form.input :keywords, :input_html => {class: 'span9'} %>
               <% end %>
               <%= form.actions do %>
                 <%= render partial: 'common/state_options', locals: {f: form} %>
@@ -56,7 +56,7 @@
           </div>
         </div>
       <% else %>
-        <%= form.input :key_words, :input_html => {class: 'span9', readOnly: true} if object.class == Abstract %>
+        <%= form.input :keywords, :input_html => {class: 'span9', readOnly: true} if object.class == Abstract %>
         <%= form.input :content, :as => :ckeditor, label: false, input_html: {ckeditor: {readOnly: true}} %>
       <% end %>
     <% end %>
