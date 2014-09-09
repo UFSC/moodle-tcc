@@ -46,5 +46,24 @@ module MoodleAPI
         return OpenStruct.new(response.first)
       end
     end
+
+    def self.find_tutor_by_studentid(userid, courseid)
+      MoodleAPI::Base.remote_json_call('local_wstcc_get_tutor_responsavel',
+                                       {userid: userid, courseid: courseid}) do |response|
+        response = JSON.parse(response)
+
+        # Verifica se ocorreu algum problema com o acesso
+        if response.has_key? 'exception'
+          error_code = response['errorcode']
+          error_message = response['message']
+          debug_info = response['debuginfo']
+
+          logger.error "Falha ao acessar o webservice do Moodle: #{error_message} (ERROR_CODE: #{error_code}) - #{debug_info}"
+          # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
+          return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
+        end
+        return OpenStruct.new(response)
+      end
+    end
   end
 end
