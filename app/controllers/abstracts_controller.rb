@@ -1,7 +1,5 @@
 # encoding: utf-8
 class AbstractsController < ApplicationController
-  include StateMachineUtils
-
 
   def edit
     @current_user = current_user

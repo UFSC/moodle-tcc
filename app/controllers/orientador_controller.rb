@@ -17,7 +17,7 @@ class OrientadorController < ApplicationController
     @tccs = Tcc.where(orientador: username, tcc_definition_id: tcc_definition_id).search(
         params[:search], params[:page], search_options)
 
-    @hubs = Tcc.hub_names
+    @chapters = Tcc.hub_names
   end
 
   protected

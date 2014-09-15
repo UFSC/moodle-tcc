@@ -36,7 +36,7 @@
     <%= @presentation.content.try(:html_safe) if @presentation %>
   </section>
 
-  <% @hubs.each do |hub| %>
+  <% @chapters.each do |hub| %>
       <section class="hub">
 
         <div class="hub-header">
@@ -67,7 +67,7 @@
         </div>
 
       </section>
-      <!--end section hub-->
+      <!--end section chapter-->
 
   <% end %>
 

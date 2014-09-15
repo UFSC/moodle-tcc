@@ -1,11 +1,9 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :orientador, :title, :defense_date, :hubs_attributes,
+  attr_accessible :orientador, :title, :defense_date, :chapters_attributes,
                   :bibliography_attributes, :presentation_attributes, :abstract_attributes,
                   :final_considerations_attributes, :tcc_definition
 
-  has_many :hubs, :inverse_of => :tcc
-  has_many :hubs_portfolios, class_name: 'HubPortfolio'
-  has_many :hubs_tccs, class_name: 'HubTcc'
+  has_many :chapters, :inverse_of => :tcc
   has_one :bibliography
   has_one :presentation
   has_one :abstract
@@ -13,6 +11,7 @@ class Tcc < ActiveRecord::Base
 
   belongs_to :tcc_definition, :inverse_of => :tccs
 
+  # Referencias
   has_many :references, :dependent => :destroy
   has_many :general_refs, :through => :references, :source => :element, :source_type => 'GeneralRef'
   has_many :book_refs, :through => :references, :source => :element, :source_type => 'BookRef'
@@ -22,11 +21,12 @@ class Tcc < ActiveRecord::Base
   has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
   has_many :thesis_refs, :through => :references, :source => :element, :source_type => 'ThesisRef'
 
+  # Pessoas / papeis envolvidos:
   belongs_to :student, class_name: 'Person'
   belongs_to :tutor, class_name: 'Person'
   belongs_to :orientador, class_name: 'Person'
 
-  accepts_nested_attributes_for :hubs, :bibliography, :presentation, :abstract, :final_considerations
+  accepts_nested_attributes_for :chapters, :bibliography, :presentation, :abstract, :final_considerations
   
   include Shared::Search
   default_scope -> { joins(:student).order('people.name') }
@@ -37,44 +37,20 @@ class Tcc < ActiveRecord::Base
     self.name.gsub(/ \([0-9].*\)/, '')
   end
 
-  # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
-  def is_ok?
-    boolean_presentation = !presentation.nil? ? presentation.admin_evaluation_ok? : false
-    boolean_abstract = !abstract.nil? ? abstract.admin_evaluation_ok? : false
-    boolean_final_considerations = !final_considerations.nil? ? final_considerations.admin_evaluation_ok? : false
-
-    boolean_presentation && boolean_abstract && boolean_final_considerations && is_hubs_tcc_ok?
-  end
-
-  # Verifica se os hubs estão todos avaliados
-  def is_hubs_tcc_ok?
-    hubs.hub_tcc.each do |hub|
-      return false if !hub.admin_evaluation_ok?
-    end
-    true
-  end
-
   def tcc_definition=(value)
     super(value)
-    create_or_update_hubs
+    create_or_update_chapters
   end
 
-  def fetch_all_hubs(type)
-    if type == 'portfolio'
-      self.hubs.hub_portfolio.order(:position)
-    else
-      self.hubs.hub_tcc.order(:position)
-    end
+  def chapter_definitions
+    # FIXME: order já foi migrada para scope, incluir testes
+    self.tcc_definition.chapter_definitions.order(:position)
   end
 
-  def hub_definitions
-    self.tcc_definition.hub_definitions.order(:position)
-  end
-
-  def self.hub_names
+  def self.chapter_names
     # Lógica temporária para contemplar recurso existente
     # TODO: Encontrar uma relação entre o tipo de tcc_definition passado no LTI e filtrar somente itens daquele tipo.
-    TccDefinition.first.hub_definitions.each.map { |h| h.title }
+    TccDefinition.first.chapter_definitions.each.map { |h| h.title }
   end
 
   # Método responsável por criar os models relacionados ao TCC
@@ -86,21 +62,17 @@ class Tcc < ActiveRecord::Base
 
   private
 
-  def create_or_update_hubs
-    self.tcc_definition.hub_definitions.each do |hub_definition|
+  def create_or_update_chapters
+    self.tcc_definition.chapter_definitions.each do |chapter_definition|
 
       # Verificação da ramificação do usuário para os eixo que tiverem ramificações
-      if hub_definition.moodle_shortname.nil? || MiddlewareUser::check_enrol(self.student.moodle_id, hub_definition.moodle_shortname)
-        if self.hubs.empty?
-          self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubPortfolio')
-          self.hubs.build(tcc: self, hub_definition: hub_definition, position: hub_definition.position, type: 'HubTcc')
+      if chapter_definition.moodle_shortname.nil? || MiddlewareUser::check_enrol(self.student.moodle_id, chapter_definition.moodle_shortname)
+        if self.chapters.empty?
+          self.chapters.build(tcc: self, chapter_definition: chapter_definition, position: chapter_definition.position)
         else
-          hub_portfolio = self.hubs.hub_portfolio.find_or_initialize_by(position: hub_definition.position)
-          hub_tcc = self.hubs.hub_tcc.find_or_initialize_by(position: hub_definition.position)
-          hub_portfolio.hub_definition = hub_definition
-          hub_tcc.hub_definition = hub_definition
-          hub_portfolio.save!
-          hub_tcc.save!
+          chapter_tcc = self.chapters.find_or_initialize_by(position: chapter_definition.position)
+          chapter_tcc.chapter_definition = chapter_definition
+          chapter_tcc.save!
         end
       end
 

@@ -49,11 +49,9 @@ SistemaTcc::Application.routes.draw do
     end
   end
 
-  # Hubs
-  get "hubs/:position" => "hubs#show", as: 'show_hubs'
-  match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:pos, :patch, :put]
-  match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:patch]
-  get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
+  # Chapters
+  get "chapters/:position" => "chapters#show", as: 'show_chapters'
+  match "chapters/:position" => "chapters#save", as: 'save_chapters', :via => [:pos, :patch, :put]
 
   # Resources
   resources :bibliographies

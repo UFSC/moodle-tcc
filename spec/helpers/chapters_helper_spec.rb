@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'spec_helper'
 
-describe HubsHelper do
+describe ChaptersHelper do
   describe '#diary_content' do
     it 'should return a error message when content is empty' do
       expect(helper.diary_content('')).to include('não existe nada postado')

@@ -28,7 +28,7 @@ module LtiTccFilters
   end
 
   def get_tcc
-    unless @tcc = Tcc.includes(hubs: [:hub_definition]).joins(:student).where(people: {moodle_id: @user_id}).first
+    unless @tcc = Tcc.includes(chapters: [:chapter_definition]).joins(:student).where(people: {moodle_id: @user_id}).first
       if current_user.student?
         #FIX-ME: migrar informações para sistema de relacionamentos e usar o MoodleAPI.
         username = MoodleAPI::MoodleUser.find_username_by_user_id(@user_id)

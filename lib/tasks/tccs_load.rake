@@ -17,10 +17,10 @@ namespace :tcc do
     Tcc.all.with_progress 'Criando HubTcc a partir do HubPortfolio existente' do |tcc|
 
       # Check if HubTcc's are there, if not they must be created
-      if tcc.hubs.hub_tcc.count == 0
+      if tcc.chapters.hub_tcc.count == 0
         # Each HubPortfolio must have its HubTcc match
-        tcc.hubs.hub_portfolio.each do |hub_port|
-          hub_tcc = tcc.hubs.build(tcc: tcc, hub_definition: hub_port.hub_definition, position: hub_port.hub_definition.position, type: 'HubTcc')
+        tcc.chapters.hub_portfolio.each do |hub_port|
+          hub_tcc = tcc.chapters.build(tcc: tcc, hub_definition: hub_port.hub_definition, position: hub_port.hub_definition.position, type: 'HubTcc')
           # FIXME: STI não está preservando o type no momento do build, o workaround abaixo "resolve" temporariamente
           hub_tcc.type = 'HubTcc'
           hub_tcc.save
@@ -34,7 +34,7 @@ namespace :tcc do
   task :update_definitions => :environment do
 
     Tcc.all.with_progress 'Atualizando TCCs baseado no TCC Definition associado' do |tcc|
-      tcc.send(:create_or_update_hubs)
+      tcc.send(:create_or_update_chapters)
     end
 
   end

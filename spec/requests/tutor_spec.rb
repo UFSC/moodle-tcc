@@ -22,7 +22,7 @@ describe 'Tutor' do
       expect(page).to have_content('Lista de Portfólios')
     end
 
-    it 'should not work without moodle' do
+    xit 'should not work without moodle' do
       visit tutor_index_path
       expect(page.current_path).to eq(access_denied_path)
     end

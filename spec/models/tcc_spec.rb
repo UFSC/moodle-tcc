@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Tcc do
   let(:tcc) { Fabricate.build(:tcc) }
 
-  it { should respond_to(:name, :title, :defense_date) }
+  it { should respond_to(:defense_date, :orientador, :student, :title, :tutor) }
 
   it { should have_many(:references) }
   it { should have_many(:general_refs).through(:references) }
@@ -49,8 +49,7 @@ describe Tcc do
 
   describe '#tcc_definitions=' do
     let(:tcc_definition) { Fabricate.build(:tcc_definition) }
-    let(:hub_definition) { Fabricate.build(:hub_definition_without_tcc) }
-    let(:diary_definition) { Fabricate.build(:diary_definition_without_hub) }
+    let(:chapter_definition) { Fabricate.build(:chapter_definition_without_tcc) }
 
     after(:all) do
       Tcc.destroy_all
@@ -62,33 +61,33 @@ describe Tcc do
       expect(tcc.tcc_definition).to eq(tcc_definition)
     end
 
-    it 'should create hubs defined on tcc definition' do
-      tcc = Fabricate.build(:tcc_without_hubs)
-      tcc_definition.hub_definitions << hub_definition
+    it 'should create chapters defined on tcc definition' do
+      tcc = Fabricate.build(:tcc_without_chapters)
+      tcc_definition.chapter_definitions << chapter_definition
 
-      expect(tcc_definition.hub_definitions.size).to eq(1)
+      expect(tcc_definition.chapter_definitions.size).to eq(1)
 
-      expect(tcc.hubs.size).to eq(0)
+      expect(tcc.chapters.size).to eq(0)
       tcc.tcc_definition = tcc_definition
-      expect(tcc.hubs.size).to eq(2)
+      expect(tcc.chapters.size).to eq(2)
     end
 
-    it 'should update hubs if they already exists' do
-      # Cria Tcc e Hub Definitions necessário pro teste
+    it 'should update chapters if they already exists' do
+      # Cria Tcc e Chapter Definitions necessário pro teste
 
       3.times do |i|
-        hub_definition = Fabricate.build(:hub_definition_without_tcc, position: i+1)
-        tcc_definition.hub_definitions << hub_definition
+        chapter_definition = Fabricate.build(:chapter_definition_without_tcc, position: i+1)
+        tcc_definition.chapter_definitions << chapter_definition
       end
 
       expect(tcc_definition).to be_valid
       tcc_definition.save!
 
       tcc = Fabricate.build(:tcc)
-      expect(tcc.hubs.size).to eq(3)
+      expect(tcc.chapters.size).to eq(3)
 
-      # garantir que não tem hub_definition
-      expect(tcc.hubs.first.hub_definition).to be_nil
+      # garantir que não tem chapter_definition
+      expect(tcc.chapters.first.chapter_definition).to be_nil
 
       # Garante que está tudo válido e persiste no banco
       expect(tcc.tcc_definition).to be_nil
@@ -100,35 +99,10 @@ describe Tcc do
       tcc.tcc_definition = tcc_definition
       tcc.save!
       tcc.reload
-      expect(tcc.hubs.size).to eq(6)
+      expect(tcc.chapters.size).to eq(3)
 
       # verificar se houve a atualização do campo
-      expect(tcc.hubs.first.hub_definition).not_to be_nil
-    end
-
-    it 'should update diaries if they already exists' do
-      hub_definition.position = 1
-      diary_definition.position = 1
-      hub_definition.diary_definitions << diary_definition
-      tcc_definition.hub_definitions << hub_definition
-      expect(tcc_definition).to be_valid
-      tcc_definition.save!
-
-      tcc = Fabricate.build(:tcc)
-      expect(tcc).to be_valid
-      expect(tcc.hubs.first.diaries.first.diary_definition).to be_nil
-      tcc.save!
-
-      # contagem em profundidade para garantir que não houve criação
-      expect(tcc.hubs.hub_portfolio.each.map { |h| h.diaries }.flatten.size).to eq(6)
-
-      tcc.tcc_definition = tcc_definition
-      tcc.save!
-      tcc.reload
-      expect(tcc.hubs.hub_portfolio.each.map { |h| h.diaries }.flatten.size).to eq(6)
-
-      # verificar se houve a atualização do campo
-      expect(tcc.hubs.first.diaries.first.diary_definition).not_to be_nil
+      expect(tcc.chapters.first.chapter_definition).not_to be_nil
     end
 
   end

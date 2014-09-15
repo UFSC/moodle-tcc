@@ -1,5 +1,5 @@
 class TccDefinition < ActiveRecord::Base
-  has_many :hub_definitions, :inverse_of => :tcc_definition, :dependent => :destroy
+  has_many :chapter_definitions, :inverse_of => :tcc_definition, :dependent => :destroy
   has_many :tccs, :inverse_of => :tcc_definition
 
   validates_presence_of :title

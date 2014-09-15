@@ -11,5 +11,5 @@ Fabricator(:tcc_definition_with_all, :class_name => :tcc_definition) do
   course_id 101
   name 'TCC'
 
-  hub_definitions(count: 3) { |attr, i| Fabricate.build(:hub_definition_without_tcc, position: i) }
+  chapter_definitions(count: 3) { |attr, i| Fabricate.build(:chapter_definition_without_tcc, position: i) }
 end

@@ -15,7 +15,7 @@ describe 'Lti' do
     end
 
     context 'when is a portfolio session' do
-      it 'should redirect a student to first hub position' do
+      it 'should redirect a student to first chapter position' do
         post root_path, moodle_lti_params('student')
         expect(response.status).to be(302)
         expect(response).to redirect_to(show_hubs_path(position: '1'))

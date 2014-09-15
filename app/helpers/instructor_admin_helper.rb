@@ -5,7 +5,7 @@ module InstructorAdminHelper
                           terminated: 'label-success'}
 
   def action_label(object, link_to_path)
-    state = object.blank? ? 'new' : object.aasm.current_state
+    state = object.blank? ? 'new' : 'draft'
 
     if object.nil?
       content_tag('span', label_text('actions', state), class: status_label_class(state))

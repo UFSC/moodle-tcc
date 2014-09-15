@@ -78,6 +78,30 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.string  "subtype"
   end
 
+  create_table "chapter_definitions", force: true do |t|
+    t.integer  "tcc_definition_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.integer  "position"
+    t.string   "moodle_shortname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chapter_definitions", ["tcc_definition_id"], name: "index_chapter_definitions_on_tcc_definition_id", using: :btree
+
+  create_table "chapters", force: true do |t|
+    t.text     "content",               limit: 16777215
+    t.integer  "position"
+    t.integer  "tcc_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "chapter_definition_id"
+  end
+
+  add_index "chapters", ["chapter_definition_id"], name: "index_chapters_on_chapter_definition_id", using: :btree
+  add_index "chapters", ["tcc_id"], name: "index_chapters_on_tcc_id", using: :btree
+
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
     t.string   "data_content_type"
@@ -115,34 +139,6 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.string "indirect_citation"
     t.string "reference_text"
   end
-
-  create_table "hub_definitions", force: true do |t|
-    t.integer  "tcc_definition_id"
-    t.string   "title"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "moodle_shortname"
-    t.string   "subtitle"
-  end
-
-  add_index "hub_definitions", ["tcc_definition_id"], name: "index_hub_definitions_on_tcc_definition_id", using: :btree
-
-  create_table "hubs", force: true do |t|
-    t.text     "reflection",        limit: 16777215
-    t.integer  "position"
-    t.string   "state"
-    t.float    "grade"
-    t.integer  "tcc_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "hub_definition_id"
-    t.string   "type"
-    t.string   "reflection_title"
-  end
-
-  add_index "hubs", ["hub_definition_id"], name: "index_hubs_on_hub_definition_id", using: :btree
-  add_index "hubs", ["tcc_id"], name: "index_hubs_on_tcc_id", using: :btree
 
   create_table "internet_refs", force: true do |t|
     t.string  "first_author"

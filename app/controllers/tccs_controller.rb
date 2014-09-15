@@ -59,8 +59,8 @@ class TccsController < ApplicationController
     @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.presentation.content)
 
     #Hubs
-    @hubs = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
-    @hubs.each do |hub|
+    @chapters = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
+    @chapters.each do |hub|
       hub.fetch_diaries_for_printing(@tcc.moodle_user)
       hub.diaries.map do |diaries|
         diaries.diary_definition.title = TccLatex.cleanup_title(diaries.diary_definition.title)
@@ -85,8 +85,7 @@ class TccsController < ApplicationController
 
     @abstract = @tcc.abstract
     @presentation = @tcc.presentation
-    @hubs = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
-    @hubs.each { |hub| hub.fetch_diaries(@user_id) }
+    @chapters = @tcc.chapters.includes([:chapter_definition])
     @final_considerations = @tcc.final_considerations
   end
 

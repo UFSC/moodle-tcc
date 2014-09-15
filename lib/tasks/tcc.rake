@@ -38,7 +38,7 @@ namespace :tcc do
       tcc.tutor_group = TutorGroup::get_tutor_group(val.username)
       tcc.name = "#{val.firstname} #{val.lastname}"
 
-      hub = tcc.hubs.find_or_initialize_by_position(args[:hub_position])
+      hub = tcc.chapters.find_or_initialize_by_position(args[:hub_position])
 
       hub.reflection = val.text
       hub.commentary = val.comment
@@ -49,7 +49,7 @@ namespace :tcc do
       # status_onlinetextversion: null, evaluation, revision
 
       #
-      # Determinando o estado que o hub deve ficar
+      # Determinando o estado que o chapter deve ficar
       #
 
       states_to_modify = {'revision' => :sent_to_admin_for_revision, 'evaluation' => :sent_to_admin_for_evaluation}
@@ -103,10 +103,10 @@ namespace :tcc do
     end
   end
 
-  desc 'TCC | Busca as notas de hubs no Sistema de TCC e popula no moodle'
+  desc 'TCC | Busca as notas de chapters no Sistema de TCC e popula no moodle'
   task :update_all_hubs_grades => :environment do
-    Tcc.all.with_progress 'Atualizando notasdos hubs' do |tcc|
-      tcc.hubs.each do|h|
+    Tcc.all.with_progress 'Atualizando notasdos chapters' do |tcc|
+      tcc.chapters.each do|h|
         if h.grade?
           MoodleAPI::MoodleGrade.set_grade(h.tcc.moodle_user, h.tcc.tcc_definition.course_id, h.hub_definition.title,
                                       h.grade)
@@ -153,7 +153,7 @@ namespace :tcc do
               ORDER BY u.username, ot.assignment, otv.timecreated", args[:coursemodule_id]])
 
 
-    headings = ['Moodle User ID', 'Hub ID', 'Grade (Moodle)', 'Grade (TCC)', 'Status']
+    headings = ['Moodle User ID', 'Chapter ID', 'Grade (Moodle)', 'Grade (TCC)', 'Status']
     rows = []
 
     result.with_progress("Migrando #{result.count} notas do texto online #{args[:coursemodule_id]} do moodle para eixo #{args[:hub_position]}") do |val|
@@ -168,10 +168,10 @@ namespace :tcc do
         exit(-1)
       end
 
-      hub = tcc.hubs.find_by_position(args[:hub_position])
+      hub = tcc.chapters.find_by_position(args[:hub_position])
 
       if hub.nil?
-        puts "Falha na migração. Tentou migrar um TCC sem o hub: #{args[:hub_position]} - userid: #{user_id }"
+        puts "Falha na migração. Tentou migrar um TCC sem o chapter: #{args[:hub_position]} - userid: #{user_id }"
         exit(-1)
       end
 
@@ -184,7 +184,7 @@ namespace :tcc do
       if hub.grade.nil? || !hub.admin_evaluation_ok?
 
         hub.grade = val.grade
-        Hub.transaction do
+        Chapter.transaction do
           to_evaluation_ok(hub)
 
           if hub.valid?

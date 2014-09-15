@@ -5,8 +5,8 @@ module Shared::Citacao
     def check_for_usage
       return if self.reference.nil?
       tcc = self.reference.tcc
-      tcc.hubs.each do |hub|
-        return false unless is_citation_free_to_destroy?(hub.reflection)
+      tcc.chapters.each do |chapter|
+        return false unless is_citation_free_to_destroy?(chapter.content)
       end
       return false unless (check_content(tcc.abstract) &&
           check_content(tcc.presentation) &&

@@ -15,7 +15,7 @@ def create_or_update_tcc_definitions(title, hub_diaries, course_id, activity_url
     Progress.step
 
     hub_diaries.each_with_index do |(hub_name, diaries), hub_index|
-      hub_def = HubDefinition.find_or_initialize_by_position_and_tcc_definition_id( position: hub_index+1, tcc_definition_id: tcc_def.id)
+      hub_def = ChapterDefinition.find_or_initialize_by_position_and_tcc_definition_id( position: hub_index+1, tcc_definition_id: tcc_def.id)
       hub_def.moodle_shortname = diaries[0][:shortname]
       hub_def.subtitle = hub_name[1]
       hub_def.save

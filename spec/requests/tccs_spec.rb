@@ -43,17 +43,17 @@ describe 'Tccs' do
         expect(page).to have_content('Introdução')
       end
 
-      it 'tcc hub 1' do
+      it 'tcc chapter 1' do
         click_link 'Eixo 1'
         expect(page).to have_content('Eixo 1')
       end
 
-      it 'tcc hub 2' do
+      it 'tcc chapter 2' do
         click_link 'Eixo 2'
         expect(page).to have_content('Eixo 2')
       end
 
-      it 'tcc hub 3' do
+      it 'tcc chapter 3' do
         click_link 'Eixo 3'
         expect(page).to have_content('Eixo 3')
       end

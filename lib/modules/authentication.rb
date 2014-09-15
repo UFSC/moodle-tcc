@@ -12,7 +12,7 @@ module Authentication
   def redirect_user_to_start_page
     if current_user.student? && @type == 'portfolio'
       logger.debug 'LTI user identified as a student'
-      redirect_to show_hubs_path(position: '1')
+      redirect_to show_chapters_path(position: '1')
     elsif current_user.student? && @type == 'tcc'
       logger.debug 'LTI user identified as a student'
       redirect_to show_tcc_path

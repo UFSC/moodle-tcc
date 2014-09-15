@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HubDefinition do
+describe ChapterDefinition do
   it { should respond_to(:order, :position, :title, :subtitle, :tcc_definition, :moodle_shortname) }
 
   context 'validations' do
@@ -11,7 +11,7 @@ describe HubDefinition do
   end
 
   it 'should create a valid model' do
-    hub = Fabricate.build(:hub_definition)
-    expect(hub).to be_valid
+    chapter = Fabricate.build(:chapter_definition)
+    expect(chapter).to be_valid
   end
 end
