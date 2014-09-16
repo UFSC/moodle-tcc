@@ -46,7 +46,7 @@ gem 'tabs_on_rails'
 
 # LTI for moodle integration
 gem 'ims-lti'
-gem 'oauth'
+gem 'oauth-instructure'
 
 # Formulários e views
 gem 'formtastic', '~> 2.3'
