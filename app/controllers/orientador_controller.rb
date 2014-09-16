@@ -7,7 +7,7 @@ class OrientadorController < ApplicationController
 
   def index
     tcc_definition_id = @tp.custom_params['tcc_definition']
-    username = MoodleAPI::MoodleUser.find_username_by_user_id(@user_id)
+    username = MoodleAPI::MoodleUser.find_username_by_user_id(current_moodle_user)
 
     # Problema no webservice
     render 'public/404.html' unless username

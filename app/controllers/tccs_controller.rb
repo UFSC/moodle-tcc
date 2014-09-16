@@ -33,7 +33,7 @@ class TccsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.find_by_moodle_user(moodle_user)
+    @tcc = Tcc.find_by_moodle_user(current_moodle_user)
 
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
@@ -45,7 +45,7 @@ class TccsController < ApplicationController
   def show_pdf
     eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
                   {:internet_refs => :reference}, {:legislative_refs => :reference}, {:thesis_refs => :reference}]
-    @tcc = Tcc.includes(eager_load).find_by_moodle_user(moodle_user)
+    @tcc = Tcc.includes(eager_load).find_by_moodle_user(current_moodle_user)
 
     @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
 

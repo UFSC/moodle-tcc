@@ -10,10 +10,7 @@
                    show_chapters_path(position: chapter.chapter_definition.position)) %>
     <% end %>
 
-    <% if @type == 'tcc' %>
-      <%= tab.final_considerations 'Considerações finais', edit_final_considerations_path %>
-    <% end %>
-
+    <%= tab.final_considerations 'Considerações finais', edit_final_considerations_path %>
     <%= tab.bibliographies 'Referências', bibliographies_path %>
   <% end %>
 </div>

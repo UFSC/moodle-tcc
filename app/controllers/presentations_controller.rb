@@ -27,7 +27,7 @@ class PresentationsController < ApplicationController
       flash[:error] = t(:invalid_state)
     end
 
-    redirect_to edit_presentations_path(moodle_user: @user_id)
+    redirect_to edit_presentations_path(moodle_user: current_moodle_user)
   end
 
   def update
@@ -39,7 +39,7 @@ class PresentationsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.find_by_moodle_user(@user_id)
+    @tcc = Tcc.find_by_moodle_user(current_moodle_user)
     @presentation= @tcc.presentation.nil? ? @tcc.build_presentation : @tcc.presentation
 
     unless params[:presentation][:commentary]
@@ -58,7 +58,7 @@ class PresentationsController < ApplicationController
 
         @presentation.save
         flash[:success] = t(:successfully_saved)
-        redirect_to edit_presentations_path(moodle_user: @user_id)
+        redirect_to edit_presentations_path(moodle_user: current_moodle_user)
       else
         render :edit
       end
@@ -72,7 +72,7 @@ class PresentationsController < ApplicationController
       end
 
       if @presentation.update_attributes(params[:presentation])
-        redirect_to edit_presentations_path(moodle_user: @user_id)
+        redirect_to edit_presentations_path(moodle_user: current_moodle_user)
       else
         render :edit
       end

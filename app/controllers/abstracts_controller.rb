@@ -25,7 +25,7 @@ class AbstractsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.find_by_moodle_user(@user_id)
+    @tcc = Tcc.find_by_moodle_user(current_moodle_user)
     @abstract = @tcc.abstract.nil? ? @tcc.build_abstract : @tcc.abstract
 
     unless params[:abstract][:commentary]
@@ -43,7 +43,7 @@ class AbstractsController < ApplicationController
 
         @abstract.save
         flash[:success] = t(:successfully_saved)
-        redirect_to edit_abstracts_path(moodle_user: @user_id)
+        redirect_to edit_abstracts_path(moodle_user: current_moodle_user)
       else
         render :edit
       end
@@ -57,7 +57,7 @@ class AbstractsController < ApplicationController
       end
 
       if @abstract.update_attributes(params[:abstract])
-        redirect_to edit_abstracts_path(moodle_user: @user_id)
+        redirect_to edit_abstracts_path(moodle_user: current_moodle_user)
       else
         render :edit
       end

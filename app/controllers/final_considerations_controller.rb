@@ -38,7 +38,7 @@ class FinalConsiderationsController < ApplicationController
   end
 
   def save
-    @tcc = Tcc.find_by_moodle_user(@user_id)
+    @tcc = Tcc.find_by_moodle_user(current_moodle_user)
     @final_considerations = @tcc.final_considerations.nil? ? @tcc.build_final_considerations : @tcc.final_considerations
 
     unless params[:final_considerations][:commentary]
@@ -57,7 +57,7 @@ class FinalConsiderationsController < ApplicationController
 
         @final_considerations.save
         flash[:success] = t(:successfully_saved)
-        redirect_to edit_final_considerations_path(moodle_user: @user_id)
+        redirect_to edit_final_considerations_path(moodle_user: current_moodle_user)
       else
         render :edit
       end
@@ -71,7 +71,7 @@ class FinalConsiderationsController < ApplicationController
       end
 
       if @final_considerations.update_attributes(params[:final_considerations])
-        redirect_to edit_final_considerations_path(moodle_user: @user_id)
+        redirect_to edit_final_considerations_path(moodle_user: current_moodle_user)
       else
         render :edit
       end
