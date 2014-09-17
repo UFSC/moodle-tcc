@@ -15,12 +15,12 @@
   <%= f.actions do %>
     <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
 
-    <%= link_to preview_tcc_path(@tcc.student.moodle_id), class: 'btn', target: '_blank' do %>
+    <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn', target: '_blank' do %>
       <%= display_icon('icon-list-alt') %>
       Visualizar TCC
     <% end %>
 
-    <%= link_to generate_tcc_path(@tcc.student.moodle_id), class: 'btn btn-info', target: '_blank' do %>
+    <%= link_to generate_tcc_path(moodle_user: params[:moodle_user]), class: 'btn btn-info', target: '_blank' do %>
       <%= display_icon('icon-print') %>
       Gerar TCC
     <% end %>

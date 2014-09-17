@@ -14,11 +14,15 @@ module LtiTccFilters
 
     if lti_params.nil?
       logger.error 'Access Denied: LTI not initialized'
-      redirect_to access_denied_path
 
+      raise Authentication::UnauthorizedError.new('Você precisa acessar essa aplicação a partir do Moodle')
     else
       @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
+    end
+
+    if current_user.student? && params[:moodle_user]
+      raise Authentication::UnauthorizedError.new('Você não pode acessar dados de outro usuário')
     end
   end
 
