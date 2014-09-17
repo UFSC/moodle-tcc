@@ -1,9 +1,6 @@
 <div class="span12">
-<% if @current_user.student? %>
-  <%= render 'common/tabs_header' %>
+  <% if @current_user.student? %>
+    <%= render 'common/tabs_header' %>
+  <% end %>
   <%= render partial: 'form' %>
-<% else %>
-    <h3><%= @chapter.chapter_definition.title + ' - ' + @tcc.student.name %></h3>
-  <%= render partial: 'admin' %>
-<% end %>
 </div>

@@ -2,14 +2,13 @@
   <thead>
   <tr class="blue-header-table">
     <th>Estudante</th>
-    <th>Dados</th>
     <th>Resumo</th>
     <th>Introdução</th>
     <% @chapters.each do |chapter_name| %>
       <th><%= chapter_name %></th>
     <% end %>
     <th>Considerações finais</th>
-    <th>Referências</th>
+    <th>Ações</th>
   </tr>
   </thead>
   <tbody>
@@ -20,16 +19,6 @@
     <tr>
       <td>
         <%= tcc.student.name %>
-        <%= link_to preview_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
-          <small>Visualizar TCC</small>
-        <% end %>
-        <%= link_to generate_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
-          <small>Gerar TCC</small>
-        <% end %>
-      </td>
-
-      <td>
-        <%= link_to 'Editar', show_tcc_path(moodle_user: tcc.student.moodle_id), class: 'label label-success', target: '_blank' %>
       </td>
 
       <td>
@@ -54,7 +43,34 @@
         <%= action_label(tcc.final_considerations, edit_final_considerations_path(moodle_user: tcc.student.moodle_id)) %>
       </td>
       <td>
-        <%= link_to 'Editar', bibliographies_path(moodle_user: tcc.student.moodle_id), class: 'label label-success', target: '_blank' %>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <%= display_icon('icon-tasks') %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu pull-right">
+            <li>
+              <%= link_to show_tcc_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-edit') %> Editar informações
+              <% end %>
+            </li>
+            <li>
+              <%= link_to bibliographies_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-book') %> Editar bibliografia
+              <% end %>
+            </li>
+            <li>
+              <%= link_to preview_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-file') %> Pré-visualizar TCC
+              <% end %>
+            </li>
+            <li>
+              <%= link_to generate_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-print') %> Gerar documento do TCC
+              <% end %>
+            </li>
+          </ul>
+        </div>
       </td>
     </tr>
   <% end %>

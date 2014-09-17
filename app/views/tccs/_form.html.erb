@@ -16,13 +16,11 @@
     <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
 
     <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn', target: '_blank' do %>
-      <%= display_icon('icon-list-alt') %>
-      Visualizar TCC
+      <%= display_icon('icon-file') %> Pré-visualizar TCC
     <% end %>
 
     <%= link_to generate_tcc_path(moodle_user: params[:moodle_user]), class: 'btn btn-info', target: '_blank' do %>
-      <%= display_icon('icon-print') %>
-      Gerar TCC
+      <%= display_icon('icon-print') %> Gerar documento do TCC
     <% end %>
   <% end %>
 <% end %>

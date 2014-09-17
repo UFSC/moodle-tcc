@@ -3,7 +3,7 @@ class ChaptersController < ApplicationController
 
   def show
     set_tab ('chapter'+params[:position]).to_sym
-    @chapter = @tcc.chapters.where(position: params[:position])
+    @chapter = @tcc.chapters.find_by(position: params[:position])
   end
 
 

@@ -19,6 +19,7 @@
 //= require bootstrap-tab
 //= require bootstrap-transition
 //= require bootstrap-tooltip
+//= require bootstrap-dropdown
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR
 //= require ckeditor/init
