@@ -17,7 +17,6 @@ SistemaTcc::Application.routes.draw do
   # Ajax
   match 'ajax/build' => 'ajax#build', via: [:get, :post]
 
-
   # Web Service
   match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}, via: [:get, :post]
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
@@ -25,45 +24,48 @@ SistemaTcc::Application.routes.draw do
   get 'ping' => 'service#ping'
 
   # TCC routes
-  get "tcc/(:moodle_user)" => 'tccs#show', as: 'show_tcc'
-  put "tcc" => 'tccs#save', as: 'save_tcc'
-  get "/tccs/:moodle_user/preview" => "tccs#preview_tcc", as: 'preview_tcc'
-  match '/tccs/:tcc_id/evaluate' => 'tccs#evaluate', :as => 'evaluate_tcc', via: [:get, :post]
-  get "/tccs/:moodle_user/generate", to: 'tccs#show_pdf', as: 'generate_tcc', defaults: {format: 'pdf'}
-  get "showreferences" => 'tccs#show_references', as: 'show_references'
+  scope "/(user/:moodle_user)" do
+    get "tcc" => 'tccs#show', as: 'show_tcc'
+    put "tcc" => 'tccs#save', as: 'save_tcc'
+    get "/tcc/preview" => "tccs#preview_tcc", as: 'preview_tcc'
+    get "/tcc/generate", to: 'tccs#show_pdf', as: 'generate_tcc', defaults: {format: 'pdf'}
+    get "showreferences" => 'tccs#show_references', as: 'show_references'
 
-  # Abstracts
-  resource :abstracts do
-    member do
-      post 'update_state' => 'abstracts#update_state'
+    resource :abstracts do
+      member do
+        post 'update_state' => 'abstracts#update_state'
+      end
     end
-  end
-  resource :presentations do
-    member do
-      post 'update_state' => 'presentations#update_state'
-    end
-  end
-  resource :final_considerations do
-    member do
-      post 'update_state' => 'final_considerations#update_state'
-    end
-  end
 
-  # Chapters
-  get "chapters/:position" => "chapters#show", as: 'show_chapters'
-  match "chapters/:position" => "chapters#save", as: 'save_chapters', :via => [:pos, :patch, :put]
+    resource :presentations do
+      member do
+        post 'update_state' => 'presentations#update_state'
+      end
+    end
 
-  # Resources
-  resources :bibliographies
-  resources :general_refs
-  resources :book_refs
-  resources :book_cap_refs
-  resources :article_refs
-  resources :internet_refs
-  resources :legislative_refs
-  resources :thesis_refs
-  resources :orientador
-  resources :tutor
-  resources :compound_names
+    resource :final_considerations do
+      member do
+        post 'update_state' => 'final_considerations#update_state'
+      end
+    end
+
+    # Chapters
+    get "chapters/:position" => "chapters#show", as: 'show_chapters'
+    match "chapters/:position" => "chapters#save", as: 'save_chapters', :via => [:pos, :patch, :put]
+
+    # Resources
+    resources :bibliographies
+    resources :general_refs
+    resources :book_refs
+    resources :book_cap_refs
+    resources :article_refs
+    resources :internet_refs
+    resources :legislative_refs
+    resources :thesis_refs
+    resources :compound_names
+
+    # FIXME: generalizar controller abaixo
+    resources :orientador
+  end
 
 end
