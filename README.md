@@ -91,3 +91,18 @@ Rodar testes
 
 1. rake db:test:prepare
 2. rake spec
+
+
+Componentes e Integração
+------------------------
+
+### Javascript
+
+Este projeto utiliza o editor [CKEditor](http://ckeditor.com/) disponibilizado pela gem 
+[galetahub/ckeditor](https://github.com/galetahub/ckeditor) que realiza diversos procedimentos para facilitar a 
+implantação do mesmo em um projeto Rails.
+
+Nós utilizamos dois plugins adicionais aos que são disponibilizados por padrão pelo CKEditor:
+
+* [Auto Grow](https://gitlab.setic.ufsc.br/tcc-unasus/ckeditor-autogrow): responsável por aumentar dinamicamente a altura do editor de texto
+* [Citação](https://gitlab.setic.ufsc.br/tcc-unasus/ckeditor-citacao): plugin próprio para disponibilizar marcação de citação

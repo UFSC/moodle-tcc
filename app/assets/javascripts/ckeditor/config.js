@@ -11,15 +11,20 @@ CKEDITOR.editorConfig = function(config) {
     if (csrf_param !== undefined && csrf_token !== undefined) {
         config.filebrowserImageUploadUrl += "?" + csrf_param + "=" + encodeURIComponent(csrf_token)
     }
-    // Para outros alem do aluno poderem enviar imagem
-    if( moodle_user !== undefined )  config.filebrowserImageUploadUrl += '&moodle_user=' + moodle_user
+
+    // Acrescenta o moodle_user para que qualquer pessoa acessando como o aluno também possa enviar as imagens
+    if (moodle_user !== undefined) {
+        config.filebrowserImageUploadUrl += '&moodle_user=' + moodle_user
+    }
 
     // Plugin de Citacao
-    config.extraPlugins = 'citacao';
+    config.removePlugins = 'about,colordialog,div,flash,forms,iframe,pagebreak,preview,smiley,specialchar,templates,scayt,wsc';
+    config.extraPlugins = 'citacao,autogrow';
     config.allowedContent = true;
 
     // Configuracao de auto-resize
-    config.autoGrow_maxHeight = 600;
+    config.autoGrow_onStartup = true;
+    config.autoGrow_maxHeight = 450;
 
     // Configuracao do Colar do Word
     config.pasteFromWordNumberedHeadingToList = true;
@@ -28,7 +33,7 @@ CKEDITOR.editorConfig = function(config) {
     config.pasteFromWordRemoveStyles = true;
 
     // Cola como plaintext
-    config.forcePasteAsPlainText = true
+    config.forcePasteAsPlainText = true;
 
     // Evitar problemas com html entities e linhas em branco
     config.basicEntities = false;
@@ -38,7 +43,7 @@ CKEDITOR.editorConfig = function(config) {
     config.fillEmptyBlocks = false;
 
     // Remover botoes que nao vao ser utilizados
-    config.removeButtons = 'Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,CreateDiv,Styles,Font,FontSize';
+    config.removeButtons = 'HorizontalRule,Styles,Font,FontSize';
 
     // Remover abas que nao devem aparecer
     config.removeDialogTabs = 'image:advanced;image:Link;table:advanced;tableProperties:advanced';
