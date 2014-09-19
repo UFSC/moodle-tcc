@@ -172,4 +172,45 @@ namespace :tcc do
     # Retorna as matriculas
     Middleware::Alunos.find_all_by_periodo_ingresso(turma, select: 'matricula')
   end
+
+=begin
+
+    O processo de sincronização então será realizado da seguinte forma:
+
+    1. Obter a lista de participantes de um determinado curso X informado no TCCDefinitions
+    2. De acordo com o id dos participantes, verificar quem ainda não foi sincronizado e selecionar estes
+    3. Realizar a geração inicial do TCC dessas pessoas e proceder com a obtenção de Tutor e Orientador
+    responsável pelos mesmos. Caso o Tutor ou Orientador não existam dentro do sistema de TCC, cadastrá-los.
+    4. Ao final, verificar quais TCCs ainda estão sem tutor ou orientador, e tentar localizar as
+    pessoas responsáveis por estes.
+
+=end
+
+    desc 'TCC | Realiza procedimentos de sincronização segundo o novo modelo de TCC'
+    task :sync2 => :environment do
+
+      students = []
+      TccDefinition.all.with_progress 'Obtendo a lista de participantes do curso' do |tcc|
+        students << MoodleAPI::MoodleUser.get_students_by_course(tcc.course_id)
+
+        students.each do |student|
+          #Verifica se estudante já foi sincronizado
+          unless synchronized?(student, tcc.course_id)
+            tutor = MoodleAPI::MoodleUser.find_tutor_by_studentid(student, tcc.course_id)
+            orientador = MoodleAPI::MoodleUser.find_orientador_responsavel(student, tcc.course_id)
+
+          end
+        end
+      end
+    end
+
+    def synchronized(user_id, tcc_definition_id)
+      tcc = Tcc.find_by_moodle_user(user_id)
+
+      if tcc.nil?
+        tcc = Tcc.create(:moodle_user => user_id)
+        tcc.tcc_definition = TccDefinition.find(tcc_definition_id)
+        tcc.save!
+      end
+    end
 end
