@@ -62,7 +62,8 @@ module MoodleAPI
           # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
           return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
         end
-        return OpenStruct.new(response)
+
+        return response['tutor_id']
       end
     end
 
@@ -101,7 +102,7 @@ module MoodleAPI
           # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
           return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
         end
-        return OpenStruct.new(response)
+        return response['orientador_id']
       end
     end
 

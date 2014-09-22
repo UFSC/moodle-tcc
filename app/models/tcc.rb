@@ -21,7 +21,7 @@ class Tcc < ActiveRecord::Base
   has_many :thesis_refs, :through => :references, :source => :element, :source_type => 'ThesisRef'
 
   # Pessoas / papeis envolvidos:
-  belongs_to :student, class_name: 'Person'
+  belongs_to :student, class_name: 'Person', :inverse_of => :student_tcc
   belongs_to :tutor, class_name: 'Person'
   belongs_to :orientador, class_name: 'Person'
 
