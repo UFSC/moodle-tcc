@@ -2,8 +2,8 @@
 <%= semantic_form_for @tcc, url: save_tcc_path(:moodle_user => params[:moodle_user]) do |f| %>
   <%= f.inputs do %>
     <%= f.input :title, :input_html => {:style => 'width:450px;'} %>
-    <%#= f.input :name, :input_html => {:style => 'width:450px;', :disabled => true, :value => @tcc.name} %>
-    <%#= f.input :leader, :input_html => {:style => 'width:450px;', :disabled => true, :value => @nome_orientador} %>
+    <%= content_tag :span, @tcc.student.name, {:style => 'width:450px;'} %>
+    <%= content_tag :span, @tcc.orientador.name, {:style => 'width:450px;'} %>
     <% if @current_user.coordenador_avea? %>
       <%= f.input :defense_date, :input_html => {:style => 'width:141px;'} %>
     <% else %>

@@ -1,9 +1,0 @@
-<h3>Lista de TCCs</h3><br/>
-<h4>
-  Tela de Orientador
-</h4>
-<%= render :partial => 'common/search_bar', locals: {path: orientador_index_path,
-                                                     autocomplete_path:
-                                                             orientador_autocomplete_tcc_name_path} %>
-<%= render :partial => 'tcc_listing' %>
-<%= paginate @tccs %>

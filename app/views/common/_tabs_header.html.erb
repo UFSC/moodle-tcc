@@ -2,7 +2,6 @@
   <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
     <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
     <%= tab.abstract 'Resumo', edit_abstracts_path %>
-    <%= tab.presentation 'Introdução', edit_presentations_path %>
 
     <% @tcc.chapters.each do |chapter| %>
       <%= tab.send("chapter#{chapter.chapter_definition.position}",
@@ -10,7 +9,6 @@
                    show_chapters_path(position: chapter.chapter_definition.position)) %>
     <% end %>
 
-    <%= tab.final_considerations 'Considerações finais', edit_final_considerations_path %>
     <%= tab.bibliographies 'Referências', bibliographies_path %>
   <% end %>
 </div>

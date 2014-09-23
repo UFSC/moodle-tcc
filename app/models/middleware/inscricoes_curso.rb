@@ -1,4 +1,0 @@
-class Middleware::InscricoesCurso < ActiveRecord::Base
-  self.table_name='View_UNASUS2_Inscricoes_Cursos'
-  establish_connection :middleware
-end
