@@ -27,10 +27,10 @@ module Authentication
       redirect_to show_tcc_path
     elsif current_user.tutor?
       logger.debug 'LTI user identified as a tutor'
-      redirect_to tutor_index_path
+      redirect_to instructor_admin_path
     elsif current_user.orientador?
       logger.debug 'LTI user identified as a leader'
-      redirect_to orientador_index_path
+      redirect_to instructor_admin_path
     elsif current_user.view_all?
       logger.debug 'LTI user is part of a view_all role'
       redirect_to instructor_admin_path

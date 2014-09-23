@@ -6,14 +6,14 @@ class InstructorAdminController < ApplicationController
   before_action :check_permission
 
   def index
-    tcc_definition_id = @tp.custom_params['tcc_definition']
+    tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
 
-    search_options = {eager_load: [:abstract, :presentation, :tcc_definition, :final_considerations]}
+    search_options = {eager_load: [:abstract, :tcc_definition]}
 
-    @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).search(
+    @tccs = Tcc.where(tcc_definition_id: tcc_definition.id).search(
         params[:search], params[:page], search_options)
 
-    @chapters = Tcc.chapter_names
+    @chapters = tcc_definition.chapter_definitions.map { |h| h.title }
   end
 
   protected

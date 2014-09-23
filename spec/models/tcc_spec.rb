@@ -62,14 +62,14 @@ describe Tcc do
     end
 
     it 'should create chapters defined on tcc definition' do
-      tcc = Fabricate.build(:tcc_without_chapters)
+      tcc = Fabricate.build(:tcc_without_dependencies)
       tcc_definition.chapter_definitions << chapter_definition
 
       expect(tcc_definition.chapter_definitions.size).to eq(1)
 
       expect(tcc.chapters.size).to eq(0)
       tcc.tcc_definition = tcc_definition
-      expect(tcc.chapters.size).to eq(2)
+      expect(tcc.chapters.size).to eq(1)
     end
 
     it 'should update chapters if they already exists' do
@@ -110,20 +110,6 @@ describe Tcc do
   describe '#create_dependencies!' do
     let (:tcc) { Fabricate.build(:tcc_without_dependencies) }
 
-    it 'should create presentations when invoked' do
-      tcc.create_dependencies!
-      expect(tcc.presentation).not_to be_nil
-      expect(tcc.presentation).to be_valid
-    end
-
-    it 'should not create another presentation when one is available' do
-      tcc.create_dependencies!
-      presentation = tcc.presentation
-
-      tcc.create_dependencies!
-      expect(tcc.presentation).to equal(presentation)
-    end
-
     it 'should create abstract when invoked' do
       tcc.create_dependencies!
       expect(tcc.abstract).not_to be_nil
@@ -136,20 +122,6 @@ describe Tcc do
 
       tcc.create_dependencies!
       expect(tcc.abstract).to equal(abstract)
-    end
-
-    it 'should create final considerations when invoked' do
-      tcc.create_dependencies!
-      expect(tcc.final_considerations).not_to be_nil
-      expect(tcc.abstract).to be_valid
-    end
-
-    it 'should not create final considerations when one is available' do
-      tcc.create_dependencies!
-      final_considerations = tcc.final_considerations
-
-      tcc.create_dependencies!
-      expect(tcc.final_considerations).to equal(final_considerations)
     end
 
   end

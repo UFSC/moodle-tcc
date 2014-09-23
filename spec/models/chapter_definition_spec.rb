@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ChapterDefinition do
-  it { should respond_to(:order, :position, :title, :subtitle, :tcc_definition, :moodle_shortname) }
+  it { should respond_to(:chapters, :coursemodule_id, :position, :title, :tcc_definition) }
 
   context 'validations' do
-    it { should validate_presence_of :order }
+    it { should validate_presence_of :position }
     it { should validate_presence_of :tcc_definition }
     it { should validate_presence_of :title }
     it { should belong_to :tcc_definition }

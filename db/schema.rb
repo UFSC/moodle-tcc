@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 20140902211046) do
   create_table "chapter_definitions", force: true do |t|
     t.integer  "tcc_definition_id"
     t.string   "title"
-    t.string   "subtitle"
+    t.integer  "coursemodule_id"
     t.integer  "position"
-    t.string   "moodle_shortname"
+    t.boolean  "is_numbered_title", default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -124,15 +124,6 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.datetime "updated_at"
     t.string   "type_name"
   end
-
-  create_table "final_considerations", force: true do |t|
-    t.text     "content",    limit: 16777215
-    t.integer  "tcc_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "final_considerations", ["tcc_id"], name: "index_final_considerations_on_tcc_id", using: :btree
 
   create_table "general_refs", force: true do |t|
     t.string "direct_citation"
@@ -185,15 +176,6 @@ ActiveRecord::Schema.define(version: 20140902211046) do
     t.datetime "updated_at"
   end
 
-  create_table "presentations", force: true do |t|
-    t.text     "content",    limit: 16777215
-    t.integer  "tcc_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "presentations", ["tcc_id"], name: "index_presentations_on_tcc_id", using: :btree
-
   create_table "references", force: true do |t|
     t.integer  "tcc_id"
     t.integer  "element_id"
@@ -206,8 +188,7 @@ ActiveRecord::Schema.define(version: 20140902211046) do
   add_index "references", ["tcc_id"], name: "index_references_on_tcc_id", using: :btree
 
   create_table "tcc_definitions", force: true do |t|
-    t.string   "name"
-    t.string   "title"
+    t.string   "internal_name"
     t.string   "activity_url"
     t.integer  "course_id"
     t.date     "defense_date"

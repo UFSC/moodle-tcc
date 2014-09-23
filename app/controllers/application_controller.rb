@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :allow_iframe
   protect_from_forgery with: :exception
 
+  # rescue_from Authentication::Authentication::UnauthorizedError, :with => :unauthorized_error
   # rescue_from Authentication::PersonNotFoundError, :with => :person_not_found_error
   # rescue_from Authentication::LTI::CredentialsError, :with => :lti_credentials_error
 
@@ -34,6 +35,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render :template => 'errors/person_not_found' }
       format.all  { render :nothing => true, :status => 404 }
+    end
+  end
+
+  def unauthorized_error(exception)
+    @exception = exception
+
+    respond_to do |format|
+      format.html { render :template => 'errors/unauthorized' }
+      format.all  { render :nothing => true, :status => 403 }
     end
   end
 end

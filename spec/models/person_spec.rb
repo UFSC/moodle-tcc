@@ -10,7 +10,7 @@ describe Person do
   it { should validate_presence_of :moodle_username }
   it { should validate_presence_of :moodle_id }
   it { should validate_numericality_of :moodle_id }
-  it { should validate_uniqueness_of :moodle_username }
+  it { should validate_uniqueness_of :moodle_id }
 
   it { should allow_mass_assignment_of(:name) }
   it { should allow_mass_assignment_of(:email) }

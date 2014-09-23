@@ -54,33 +54,6 @@ describe Authentication do
           expect(user.view_all?).to be false
         end
       end
-
-      describe 'type = portfolio' do
-        it 'should return true if admin role is present' do
-          user = Authentication::User.new fake_lti_tp('administrator', 'portfolio')
-          expect(user.view_all?).to be true
-        end
-
-        it 'should return true for coordavea moodle\'s roles' do
-          user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordavea', 'portfolio')
-          expect(user.view_all?).to be true
-        end
-
-        it 'should return false for coordcurso, tutoria moodle\'s roles' do
-          user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso', 'portfolio')
-          expect(user.view_all?).to be false
-        end
-
-        it 'should return false for tutoria moodle\'s roles' do
-          user = Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria', 'portfolio')
-          expect(user.view_all?).to be true
-        end
-
-        it 'should return false if none of the expected roles are present' do
-          user = Authentication::User.new fake_lti_tp('invalidrole', 'tcc')
-          expect(user.view_all?).to be false
-        end
-      end
     end
 
     describe '#coordenador_avea?' do

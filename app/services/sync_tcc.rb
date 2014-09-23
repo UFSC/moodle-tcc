@@ -15,7 +15,7 @@ class SyncTcc
   private
 
   def synchronize_tcc(student)
-    tcc = Tcc.create_with(tcc_definition: @tcc_definition).find_or_create_by(student: student)
+    tcc = Tcc.create_with(tcc_definition: @tcc_definition).find_or_create_by(student_id: student.id)
 
     tutor = get_tutor(student.moodle_id)
     tcc.tutor = tutor
@@ -41,8 +41,10 @@ class SyncTcc
   end
 
   def get_students
-    student_ids = MoodleAPI::MoodleUser.get_students_by_course(@tcc_definition.course_id)
-    student_ids.collect { |student_id| find_or_create_person(student_id) }
+    students = MoodleAPI::MoodleUser.get_students_by_course(@tcc_definition.course_id)
+    students.with_progress("Sincronizando estudantes do curso '#{@tcc_definition.course_id}'").collect do |student_id|
+      find_or_create_person(student_id)
+    end
   end
 
   def get_tutor(student)

@@ -8,9 +8,7 @@ module Shared::Citacao
       tcc.chapters.each do |chapter|
         return false unless is_citation_free_to_destroy?(chapter.content)
       end
-      return false unless (check_content(tcc.abstract) &&
-          check_content(tcc.presentation) &&
-          check_content(tcc.final_considerations))
+      return false unless check_content(tcc.abstract)
     end
   end
 
