@@ -39,8 +39,10 @@ describe SyncTcc do
 
     let(:tcc_definition) { Fabricate(:tcc_definition) }
     let(:sync) { SyncTcc.new(tcc_definition) }
-    let(:tcc) { Fabricate.build(:tcc) }
     let(:_student) { Fabricate.build(:person) }
+    let(:_tutor) { Fabricate.build(:person) }
+    let(:_tutor_updated) { Fabricate.build(:person) }
+    let(:_orientador) { Fabricate.build(:person) }
 
     it 'expects to be created' do
       allow(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [_student.moodle_id] }
@@ -51,9 +53,24 @@ describe SyncTcc do
     end
 
     it 'expects to be updated' do
+      allow(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [255] }
+      allow(sync).to receive(:get_tutor) { _tutor }
+      allow(sync).to receive(:get_orientador) { _orientador }
+      sync.call
+      allow(sync).to receive(:get_tutor) { _tutor_updated }
+      sync.call
+      moodle_id_tutor = _tutor.moodle_id
+      expect {Tcc.find_by_student_id 255}.to change{ moodle_id_tutor }.from(moodle_id_tutor).to(_tutor_updated
+                                                                                                .moodle_id)
     end
 
-    it 'expects to not duplicate when updated' do
+    it 'expects to not duplicate' do
+      # allow(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [256] }
+      # allow(sync).to receive(:get_tutor) { _tutor }
+      # allow(sync).to receive(:get_orientador) { _orientador }
+      # tcc = sync.call
+      # duplicated_tcc = tcc.dup
+      # expect{ Tcc.find_by_student_id 256 }.to_not change(tcc, tcc.moodle_id).to(duplicated_tcc.moodle_id)
     end
   end
 
