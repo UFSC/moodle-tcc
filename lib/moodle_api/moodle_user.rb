@@ -61,7 +61,7 @@ module MoodleAPI
           return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
         end
 
-        return response['tutor_id']
+        return response['id_tutor']
       end
     end
 
@@ -98,7 +98,8 @@ module MoodleAPI
           # TODO: quando não conseguir encontrar, salvar mensagem de erro em variavel de instancia e retornar false
           return "Falha ao acessar o Moodle: #{error_message} (ERROR_CODE: #{error_code})"
         end
-        return response['orientador_id']
+
+        return response['id_orientador']
       end
     end
 
