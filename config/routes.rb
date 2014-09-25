@@ -55,7 +55,6 @@ SistemaTcc::Application.routes.draw do
 
     # Resources
     resources :bibliographies
-    resources :general_refs
     resources :book_refs
     resources :book_cap_refs
     resources :article_refs

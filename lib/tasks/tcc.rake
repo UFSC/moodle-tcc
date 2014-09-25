@@ -21,6 +21,7 @@ namespace :tcc do
 
       sync = SyncTcc.new(tccd)
       sync.call
+      sync.display_errors!
     end
   end
 

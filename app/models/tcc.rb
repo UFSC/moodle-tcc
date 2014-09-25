@@ -28,7 +28,7 @@ class Tcc < ActiveRecord::Base
   accepts_nested_attributes_for :chapters, :presentation, :abstract, :final_considerations
 
   include Shared::Search
-  default_scope -> { joins(:student).order('people.name') }
+  scope :ordered, -> { joins(:student).order('people.name') }
   scoped_search :on => [:name]
 
   # Retorna o nome do estudante sem a matrícula ()

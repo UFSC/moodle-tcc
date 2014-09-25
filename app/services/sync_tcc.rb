@@ -4,19 +4,34 @@ class SyncTcc
 
   def initialize(context)
     @tcc_definition = context
+    @errors = {people: []}
   end
 
   def call
-      get_students.with_progress 'Sincronizando TCCs' do |student|
-        synchronize_tcc(student)
+    get_students.with_progress 'Sincronizando TCCs' do |student|
+      synchronize_tcc(student)
+    end
+  end
+
+  def display_errors!
+    unless @errors[:people].empty?
+      rows = []
+      rows << %w(Tipo Dados Erros)
+
+      @errors[:people].each do |(person, attributes)|
+        rows << ['Person', attributes, person.errors.messages]
       end
+
+      puts Terminal::Table.new rows: rows
+    end
   end
 
   private
 
   def synchronize_tcc(student)
-    tcc = Tcc.create_with(tcc_definition: @tcc_definition).find_or_create_by(student_id: student.id)
+    tcc = Tcc.find_or_initialize_by(student: student)
 
+    tcc.tcc_definition = @tcc_definition
     tutor = get_tutor(student.moodle_id)
     tcc.tutor = tutor
 
@@ -27,14 +42,18 @@ class SyncTcc
   end
 
   def find_or_create_person(moodle_id)
-    person = Person.find_or_create_by(moodle_id: moodle_id)
+    person = Person.find_or_initialize_by(moodle_id: moodle_id)
 
-    unless person.valid?
+    unless person.persisted?
       attributes = MoodleAPI::MoodleUser.find_users_by_field('id', moodle_id)
       person.moodle_username = attributes.username
       person.email = attributes.email
       person.name = attributes.name
-      person.save!
+
+      unless person.valid? && person.save
+        @errors[:people] << [person, attributes]
+        return false
+      end
     end
 
     person

@@ -2,7 +2,8 @@
 # FIX-ME: transformar em concern
 module LtiTccFilters
 
-  class TccNotFoundError < RuntimeError; end
+  class TccNotFoundError < RuntimeError;
+  end
 
   def self.included(base)
     base.before_action :authorize
@@ -21,7 +22,7 @@ module LtiTccFilters
       logger.debug "Recovering LTI TP for: '#{@tp.roles}' "
     end
 
-    if current_user.student? && params[:moodle_user]
+    if current_user.student? && (!params[:moodle_user].nil? && !params[:moodle_user].empty?)
       raise Authentication::UnauthorizedError.new('Você não pode acessar dados de outro usuário')
     end
   end

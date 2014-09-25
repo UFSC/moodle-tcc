@@ -5,7 +5,6 @@
   <h3>Referências Bibliográficas</h3>
 
   <ul id='tabs' class='nav nav-pills'>
-    <li id='geral' class='bibliographie-tab'><a href='#geral'>Gerais</a></li>
     <li id='book' class='bibliographie-tab'><a href='#book'>Livros</a></li>
     <li id='book_cap' class='bibliographie-tab'><a href='#book_cap'>Capítulos de Livros</a></li>
     <li id='article' class='bibliographie-tab'><a href='#article'>Artigos</a></li>
@@ -17,7 +16,6 @@
     <% end %>
   </ul>
 
-  <div id='content-geral' class='tab-content'><%= render :template => 'general_refs/index' %></div>
   <div id='content-book' class='tab-content'><%= render :template => 'book_refs/index' %></div>
   <div id='content-book_cap' class='tab-content'><%= render :template => 'book_cap_refs/index' %></div>
   <div id='content-article' class='tab-content'><%= render :template => 'article_refs/index' %></div>
