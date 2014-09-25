@@ -4,7 +4,7 @@ class SyncTcc
 
   def initialize(context)
     @tcc_definition = context
-    @errors = {people: []}
+    @errors = {person: [], tutor: [], orientador: []}
   end
 
   def call
@@ -14,12 +14,20 @@ class SyncTcc
   end
 
   def display_errors!
-    unless @errors[:people].empty?
+    unless @errors[:person].empty? && @errors[:tutor].empty? && @errors[:orientador].empty?
       rows = []
-      rows << %w(Tipo Dados Erros)
+      rows << %w(type, attributes, errors)
 
-      @errors[:people].each do |(person, attributes)|
-        rows << ['Person', attributes, person.errors.messages]
+      @errors[:person].each do |person|
+        rows << ['Person', person.attributes, person.errors.messages]
+      end
+
+      @errors[:tutor].each do |student|
+        rows << ['Tutor', student, 'tutor não definido para este estudante']
+      end
+
+      @errors[:orientador].each do |student|
+        rows << ['Orientador', student, 'orientador não definido para este estudante']
       end
 
       puts Terminal::Table.new rows: rows
@@ -42,17 +50,18 @@ class SyncTcc
   end
 
   def find_or_create_person(moodle_id)
+    raise ArgumentError.new('É necessário passar um moodle_id') if moodle_id.nil?
+
     person = Person.find_or_initialize_by(moodle_id: moodle_id)
 
+    # Só busca os dados do usuário se ele ainda foi criado
     unless person.persisted?
       attributes = MoodleAPI::MoodleUser.find_users_by_field('id', moodle_id)
-      person.moodle_username = attributes.username
-      person.email = attributes.email
-      person.name = attributes.name
+      person.attributes = {moodle_username: attributes.username, email: attributes.email, name: attributes.name}
 
       unless person.valid? && person.save
-        @errors[:people] << [person, attributes]
-        return false
+        @errors[:person] << [person]
+        return nil
       end
     end
 
@@ -68,11 +77,25 @@ class SyncTcc
 
   def get_tutor(student)
     tutor_id = MoodleAPI::MoodleUser.find_tutor_by_studentid(student, @tcc_definition.course_id)
+
+    # Se o estudante não tiver um estudante atribuído, vamos salvar a informação para exibir depois
+    if tutor_id.nil?
+      @errors[:tutor] << student
+      return nil
+    end
+
     find_or_create_person(tutor_id)
   end
 
   def get_orientador(student)
     orientador_id = MoodleAPI::MoodleUser.find_orientador_responsavel(student, @tcc_definition.course_id)
+
+    # Se o estudante não tiver um orientador atribuído, vamos salvar a informação para exibir depois
+    if orientador_id.nil?
+      @errors[:orientador] << student
+      return nil
+    end
+
     find_or_create_person(orientador_id)
   end
 
