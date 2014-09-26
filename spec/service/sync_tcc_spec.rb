@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SyncTcc do
 
-  context 'People creation' do
+  context 'when a people is created' do
 
     let(:tcc_definition) { Fabricate(:tcc_definition) }
     let(:sync) { SyncTcc.new(tcc_definition) }
@@ -35,7 +35,7 @@ describe SyncTcc do
     end
   end
 
-  context 'TCC' do
+  context 'when a TCC is created' do
 
     let(:tcc_definition) { Fabricate(:tcc_definition) }
     let(:sync) { SyncTcc.new(tcc_definition) }
@@ -63,15 +63,5 @@ describe SyncTcc do
       expect {Tcc.find_by_student_id 255}.to change{ moodle_id_tutor }.from(moodle_id_tutor).to(_tutor_updated
                                                                                                 .moodle_id)
     end
-
-    it 'expects to not duplicate' do
-      # allow(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [256] }
-      # allow(sync).to receive(:get_tutor) { _tutor }
-      # allow(sync).to receive(:get_orientador) { _orientador }
-      # tcc = sync.call
-      # duplicated_tcc = tcc.dup
-      # expect{ Tcc.find_by_student_id 256 }.to_not change(tcc, tcc.moodle_id).to(duplicated_tcc.moodle_id)
-    end
   end
-
 end
