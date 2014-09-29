@@ -1,8 +1,9 @@
 <div class="span12" xmlns="http://www.w3.org/1999/html">
 
   <section class="well">
-    <strong>IMPORTANTE:</strong> Isto é uma pré-visualização em estado de <strong>RASCUNHO</strong> do documento final.<br />
-    Ela <strong>não contem</strong> as formatações seguindo os padrões da ABNT e serve como mero instrumento de leitura.<br />
+    <strong>IMPORTANTE:</strong> Isto é uma pré-visualização em estado de <strong>RASCUNHO</strong> do documento
+    final.<br/>
+    Ela <strong>não contem</strong> as formatações seguindo os padrões da ABNT e serve como mero instrumento de leitura.<br/>
     Este documento não possui também toda a estrutura final do documento como capa, indices e listagem de referências.
   </section>
 
@@ -12,13 +13,13 @@
 
     <dl class="dl-horizontal">
       <dt>Matrícula:</dt>
-      <dd><%= @matricula %></dd>
+      <dd><%= @student.moodle_username %></dd>
 
       <dt>Nome:</dt>
-      <dd><%= @tcc.name %></dd>
+      <dd><%= @student.name %></dd>
 
       <dt>Orientador:</dt>
-      <dd><%= @nome_orientador %></dd>
+      <dd><%= @tcc.orientador.try(:name) %></dd>
     </dl>
   </section>
 
@@ -26,56 +27,21 @@
   <section class="abstract">
     <h2>Resumo</h2>
 
-    <%= @abstract.content.try(:html_safe) if @abstract %>
+    <%= @tcc.abstract.content.try(:html_safe) if @tcc.abstract %>
   </section>
 
-  <!--presentation-->
-  <section class="presentation">
-    <h2>Introdução</h2>
 
-    <%= @presentation.content.try(:html_safe) if @presentation %>
-  </section>
+  <% @tcc.chapters.each do |chapter| %>
+    <!--chapters-->
+    <section class="chapter">
+      <div class="chapter-header">
+        <h2><%= chapter.chapter_definition.title %></h2>
+      </div>
 
-  <% @chapters.each do |hub| %>
-      <section class="hub">
-
-        <div class="hub-header">
-          <h2><%= hub.hub_definition.subtitle %></h2>
-        </div>
-
-        <!--diaries-->
-        <div class="diaries">
-          <% hub.diaries.each do |diary| %>
-
-              <div class="">
-                <div class="heading">
-                  <h4>Diário do Módulo: <%= diary.diary_definition.title %></h4>
-                </div>
-                <div class="diary">
-                  <%= diary_content(diary.content) %>
-                </div>
-              </div>
-
-          <% end %>
-        </div>
-
-        <!--reflections-->
-        <div class="reflections">
-          <h3>Síntese reflexiva: <%= hub.reflection_title %></h3>
-
-          <%= hub.reflection.try(:html_safe) %>
-        </div>
-
-      </section>
-      <!--end section chapter-->
-
+      <div class="chapter-content">
+        <%= chapter.content.try(:html_safe) %>
+      </div>
+    </section>
   <% end %>
-
-  <!--final considerations-->
-  <section class="final_considerations">
-    <h2>Considerações finais</h2>
-
-    <%= @final_considerations.content.try(:html_safe) if @final_considerations %>
-  </section>
 
 </div>
