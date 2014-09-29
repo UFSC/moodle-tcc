@@ -6,7 +6,7 @@ describe 'Hubs' do
   describe 'GET /chapters' do
 
     before :each do
-      page.set_rack_session(fake_lti_session('student', 'tcc'))
+      page.set_rack_session(fake_lti_session('student'))
       allow(Middleware::Orientadores).to receive_message_chain(:find_by_cpf, :nome).and_return(Faker::Name.name)
     end
 

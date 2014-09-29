@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'GeneralRef' do
   describe 'GET /general_refs.json' do
-    it 'should work with moodle' do
+    xit 'should work with moodle' do
       page.set_rack_session(fake_lti_session)
       visit general_refs_path(:format => :json)
 

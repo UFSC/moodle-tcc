@@ -11,7 +11,7 @@ describe 'Tccs' do
     end
 
     it 'should work with LTI connection' do
-      page.set_rack_session(fake_lti_session('student', 'tcc'))
+      page.set_rack_session(fake_lti_session('student'))
       visit show_tcc_path
 
       expect(page.current_path).not_to eq(access_denied_path)
@@ -20,7 +20,7 @@ describe 'Tccs' do
 
     describe 'edit' do
       before :each do
-        page.set_rack_session(fake_lti_session('student', 'tcc'))
+        page.set_rack_session(fake_lti_session('student'))
         visit show_tcc_path
       end
 

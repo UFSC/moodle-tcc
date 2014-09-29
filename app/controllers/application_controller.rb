@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   before_action :allow_iframe
   protect_from_forgery with: :exception
 
-  # rescue_from Authentication::Authentication::UnauthorizedError, :with => :unauthorized_error
-  # rescue_from Authentication::PersonNotFoundError, :with => :person_not_found_error
-  # rescue_from Authentication::LTI::CredentialsError, :with => :lti_credentials_error
+  rescue_from Authentication::UnauthorizedError, :with => :unauthorized_error
+  rescue_from Authentication::PersonNotFoundError, :with => :person_not_found_error
+  rescue_from Authentication::LTI::CredentialsError, :with => :lti_credentials_error
 
   # Set current_user as assetable
   def ckeditor_before_create_asset(asset)

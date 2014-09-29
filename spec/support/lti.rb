@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
 
-def moodle_lti_params(roles = 'student', type = 'portfolio')
+def moodle_lti_params(roles = 'student')
   @tcc ||= Fabricate(:tcc_with_all)
 
   tc = IMS::LTI::ToolConsumer.new(Settings.consumer_key, Settings.consumer_secret)
@@ -11,17 +11,16 @@ def moodle_lti_params(roles = 'student', type = 'portfolio')
   tc.user_id = @tcc.student.moodle_id
   tc.tool_consumer_instance_guid = Settings.instance_guid
   tc.custom_params = {
-      'type' => type,
       'tcc_definition' => @tcc.tcc_definition.id
   }
 
   tc.generate_launch_data
 end
 
-def fake_lti_session(roles = 'student', type = 'portfolio')
-  {'lti_launch_params' => moodle_lti_params(roles, type)}
+def fake_lti_session(roles = 'student')
+  {'lti_launch_params' => moodle_lti_params(roles)}
 end
 
-def fake_lti_tp(roles = 'student', type = 'portfolio')
-  IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, moodle_lti_params(roles, type))
+def fake_lti_tp(roles = 'student')
+  IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, moodle_lti_params(roles))
 end

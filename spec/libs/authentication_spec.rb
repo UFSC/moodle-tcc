@@ -30,27 +30,27 @@ describe Authentication do
     describe '#view_all?' do
       describe 'type = tcc' do
         it 'should return true if admin role is present' do
-          user = Authentication::User.new fake_lti_tp('administrator', 'tcc')
+          user = Authentication::User.new fake_lti_tp('administrator')
           expect(user.view_all?).to be true
         end
 
         it 'should return true for coordavea moodle\'s roles' do
-          user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordavea', 'tcc')
+          user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordavea')
           expect(user.view_all?).to be true
         end
 
         it 'should return false for coordcurso, tutoria moodle\'s roles' do
-          user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso', 'tcc')
+          user = Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso')
           expect(user.view_all?).to be true
         end
 
         it 'should return false for tutoria moodle\'s roles' do
-          user = Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria', 'tcc')
+          user = Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria')
           expect(user.view_all?).to be false
         end
 
         it 'should return false if none of the expected roles are present' do
-          user = Authentication::User.new fake_lti_tp('invalidrole', 'tcc')
+          user = Authentication::User.new fake_lti_tp('invalidrole')
           expect(user.view_all?).to be false
         end
       end

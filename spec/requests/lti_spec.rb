@@ -44,25 +44,25 @@ describe 'Lti' do
 
     context 'when is a tcc session' do
       it 'should redirect a student to tcc screen' do
-        post root_path, moodle_lti_params('student', 'tcc')
+        post root_path, moodle_lti_params('student')
         expect(response.status).to be(302)
         expect(response).to redirect_to(show_tcc_path)
       end
 
       it 'should redirect a tutor to access denied screen' do
-        post root_path, moodle_lti_params('urn:moodle:role/td', 'tcc')
+        post root_path, moodle_lti_params('urn:moodle:role/td')
         expect(response.status).to be(302)
         expect(response).to redirect_to(access_denied_path)
       end
 
       it 'should redirect an orientador to access denied' do
-        post root_path, moodle_lti_params('urn:moodle:role/orientador', 'tcc')
+        post root_path, moodle_lti_params('urn:moodle:role/orientador')
         expect(response.status).to be(302)
         expect(response).to redirect_to(orientador_index_path)
       end
 
       it 'should redirect a coordenador de avea to admin screen' do
-        post root_path, moodle_lti_params('urn:moodle:role/coordavea', 'tcc')
+        post root_path, moodle_lti_params('urn:moodle:role/coordavea')
         expect(response.status).to be(302)
         expect(response).to redirect_to(instructor_admin_path)
       end

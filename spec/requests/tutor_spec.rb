@@ -15,7 +15,7 @@ describe 'Tutor' do
     end
 
     xit 'should work with moodle and portfolio type' do
-      page.set_rack_session(fake_lti_session('urn:moodle:role/td', 'portfolio'))
+      page.set_rack_session(fake_lti_session('urn:moodle:role/td'))
       visit tutor_index_path
 
       expect(page.current_path).not_to eq(access_denied_path)
