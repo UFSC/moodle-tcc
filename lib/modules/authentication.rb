@@ -96,7 +96,7 @@ module Authentication
     end
 
     def student?
-      self.lti_tp.has_role?('urn:moodle:role/student') || self.lti_tp.has_role?('urn:lti:role:ims/lis/learner')
+      self.lti_tp.has_role?('urn:moodle:role/student') || self.lti_tp.has_role?('urn:lti:role:ims/lis/learner') || self.lti_tp.has_role?('student')
     end
 
 
