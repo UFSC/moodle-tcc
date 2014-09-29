@@ -26,9 +26,10 @@ describe 'Tccs' do
 
       it 'tcc data' do
         click_link 'Dados'
-        expect(page).to have_content('Nome')
+        expect(page).to have_content('Estudante')
         expect(page).to have_content('Título')
         expect(page).to have_content('Orientador')
+        expect(page).to have_content('Data da defesa')
       end
 
       it 'tcc abstract' do

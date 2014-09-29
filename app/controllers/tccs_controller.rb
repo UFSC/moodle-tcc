@@ -6,6 +6,7 @@ class TccsController < ApplicationController
 
   def show
     set_tab :data
+    @student = @tcc.student.decorate
   end
 
   def evaluate
