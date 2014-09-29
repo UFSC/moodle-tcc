@@ -31,23 +31,7 @@ SistemaTcc::Application.routes.draw do
     get "/tcc/generate", to: 'tccs#show_pdf', as: 'generate_tcc', defaults: {format: 'pdf'}
     get "showreferences" => 'tccs#show_references', as: 'show_references'
 
-    resource :abstracts do
-      member do
-        post 'update_state' => 'abstracts#update_state'
-      end
-    end
-
-    resource :presentations do
-      member do
-        post 'update_state' => 'presentations#update_state'
-      end
-    end
-
-    resource :final_considerations do
-      member do
-        post 'update_state' => 'final_considerations#update_state'
-      end
-    end
+    resource :abstracts, only: [:show, :edit, :create, :update]
 
     # Chapters
     get "chapters/:position" => "chapters#show", as: 'show_chapters'
