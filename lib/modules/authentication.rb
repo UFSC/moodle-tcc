@@ -12,8 +12,10 @@ module Authentication
     @current_user ||= User.new(@tp) unless @tp.nil?
   end
 
+
+  # @return [Integer] ID do Moodle User atual ou a versão personificada
   def current_moodle_user
-    @user_id ||=
+    @moodle_user ||=
       if (current_user.instructor? || current_user.orientador? || current_user.view_all?) && params['moodle_user']
         params['moodle_user']
       else

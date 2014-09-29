@@ -8,7 +8,7 @@ class ChaptersController < ApplicationController
 
 
   def save
-    @chapter = @tcc.chapters.find_by_position(params[:position])
+    @chapter = @tcc.chapters.find_by(position: params[:position])
     @chapter.attributes = params[:chapter]
 
     #

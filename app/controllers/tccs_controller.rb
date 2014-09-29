@@ -90,16 +90,6 @@ class TccsController < ApplicationController
 
   protected
 
-  def moodle_user
-    if current_user.view_all? && params[:moodle_user]
-      moodle_user = params[:moodle_user]
-    else
-      moodle_user = @user_id
-    end
-
-    moodle_user
-  end
-
   def generete_references (tcc)
     coder = HTMLEntities.new
 
