@@ -85,10 +85,10 @@ brazil,				% o último idioma é o principal do documento
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 \titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
-\autor{<%= lesc @tcc.student_name unless @tcc.name.nil? %>}
+\autor{<%= lesc @student.name %>}
 \local{Florianópolis}
 \data{<%= lesc l(@defense_date, format: :abnt) unless @defense_date.nil? %>}
-\orientador{<%= lesc @nome_orientador unless @tcc.orientador.nil? %>}
+\orientador{<%= lesc @tcc.orientador.name unless @tcc.orientador.nil? %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
 \instituicao{%
@@ -293,7 +293,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \end{folhadeaprovacao}
 
 %% Resumo do trabalho
-<%= render partial: 'abstract', locals: {content: @abstract_content, key_words: @abstract_keywords} %>
+<%= render partial: 'abstract', locals: {content: @abstract_content, keywords: @abstract_keywords} %>
 
 % ---
 % inserir o sumario
@@ -308,14 +308,8 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 % ----------------------------------------------------------
 \textual
 
-%% Introdução do trabalho
-<%= render partial: 'presentation', locals: {presentation: @presentation} %>
-
-%% Desenvolvimento (Hubs e suas reflexoes)
-<%= render partial: 'hubs' %>
-
-%% Considerações finais
-<%= render partial: 'finalconsiderations', locals: {finalconsiderations: @finalconsiderations} %>
+%% Capítulos
+<%= render partial: 'chapters' %>
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS

@@ -43,35 +43,15 @@ class TccsController < ApplicationController
   end
 
   def show_pdf
-    eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
-                  {:internet_refs => :reference}, {:legislative_refs => :reference}, {:thesis_refs => :reference}]
-    @tcc = Tcc.includes(eager_load).find_by_moodle_user(current_moodle_user)
-
+    @student = @tcc.student.decorate
     @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
 
-    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
-
-    #Resumo
+    # Resumo
     @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc, @tcc.abstract.content)
-    @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.key_words
+    @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.keywords
 
-    #Introdução
-    @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.presentation.content)
-
-    #Hubs
-    @chapters = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
-    @chapters.each do |hub|
-      hub.fetch_diaries_for_printing(@tcc.moodle_user)
-      hub.diaries.map do |diaries|
-        diaries.diary_definition.title = TccLatex.cleanup_title(diaries.diary_definition.title)
-        diaries.content = TccLatex.apply_latex(@tcc, diaries.content)
-      end
-      hub.reflection = TccLatex.apply_latex(@tcc, hub.reflection)
-      hub.reflection_title = TccLatex.cleanup_title(hub.reflection_title)
-    end
-
-    #Consideracoes Finais
-    @finalconsiderations = @tcc.final_considerations.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.final_considerations.content)
+    # Capítulos
+    @chapters = @tcc.chapters.includes([:chapter_definition])
 
     #Referencias
     @bibtex = generete_references(@tcc)
