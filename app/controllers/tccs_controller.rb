@@ -52,9 +52,8 @@ class TccsController < ApplicationController
     # Capítulos
     @chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters.includes([:chapter_definition]).all)
 
-    #Referencias
+    # Referencias
     @bibtex = generete_references(@tcc)
-
   end
 
   def preview_tcc

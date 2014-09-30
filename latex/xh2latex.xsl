@@ -384,7 +384,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
       </xsl:choose>
 
       <xsl:if test="position() != last()">
-        <xsl:text>&amp;</xsl:text>
+        <xsl:text disable-output-escaping="yes"><![CDATA[&]]></xsl:text>
       </xsl:if>
     </xsl:for-each>
 

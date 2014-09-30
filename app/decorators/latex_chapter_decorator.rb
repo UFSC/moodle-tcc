@@ -2,9 +2,10 @@ class LatexChapterDecorator < Draper::Decorator
 
   def content
     # texto vazio, retornar mensagem genérica de texto vazio
-    return '[nenhum conteúdo foi produzido para este capítulo]' if object.content.nil? || object.content.empty?
+    return I18n.t('empty_chapter') if object.content.nil? || object.content.empty?
 
-    TccLatex.apply_latex(object.content)
+    # .html_safe é essencial para evitar do & ser convertido para &amp;
+    TccLatex.apply_latex(object.content).html_safe
   end
 
   def title
