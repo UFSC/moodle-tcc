@@ -8,7 +8,7 @@ class LatexAbstractDecorator < Draper::Decorator
 
   def keywords
     # texto vazio, retornar mensagem genérica de texto vazio
-    return I18n.t('empty_abstract') if object.keywords.nil? || object.content.empty?
+    return I18n.t('empty_abstract_keywords') if object.keywords.nil? || object.content.empty?
 
     object.keywords
   end

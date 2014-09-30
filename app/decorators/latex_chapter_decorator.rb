@@ -8,6 +8,9 @@ class LatexChapterDecorator < Draper::Decorator
   end
 
   def title
-    object.chapter_definition.title
+    title = object.chapter_definition.title
+    title.gsub('"', '') unless title.nil?
+
+    title
   end
 end

@@ -4,7 +4,13 @@ module TccDocument
     def execute(content)
       content = decode_entities(content)
       content = simplify_tables(content)
-      convert_to_xml(fix_tables!(content))
+
+      html = Nokogiri::HTML(content)
+
+      html = fix_tables!(html)
+      html = simulate_rowspan!(html)
+
+      convert_to_xml(html)
     end
 
     private
@@ -39,41 +45,73 @@ module TccDocument
     # Remove diversas tags que não são válidas dentro de tabelas para o Latex
     # E retorna o conteúdo em XHTML
     #
-    # @param [String] content
-    # @return [Nokogiri::HTML::Document] texto em XHTML com a remoção dos itens inválidos nas tabelas
-    def fix_tables!(content)
-      html = Nokogiri::HTML(content)
-
+    # @param [Nokogiri::HTML::Document] nokogiri_html Documento HTML (Nokogiri)
+    # @return [Nokogiri::HTML::Document] Documento HTML (Nokogiri) com a remoção dos itens inválidos nas tabelas
+    def fix_tables!(nokogiri_html)
       # Remove tabela dentro de tabelas
-      html.search('table').each do |tab|
-        tab.search('table').remove
+      nokogiri_html.search('table').each do |table|
+        table.search('table').remove
       end
 
       # Remove tags h1, h2, h3, h4, h5 das tabelas
-      html.search('table').each do |t|
-        t.replace t.to_s.gsub(/<h[0-9]\b[^>]*>/, '').gsub('</h>', '')
+      nokogiri_html.search('table').each do |table|
+        table.replace table.to_s.gsub(/<h[0-9]\b[^>]*>/, '').gsub('</h>', '')
       end
 
       # Remove parágrafos dentro das tabelas, se tiver parágrafo não renderiza corretamente
-      html.search('table').each do |tab|
-        tab.replace tab.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
+      nokogiri_html.search('table').each do |table|
+        table.replace table.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
       end
 
       # Remove espaço extra no inicio e final da celula da tabela
-      html.search('td').each do |cell|
+      nokogiri_html.search('td').each do |cell|
         cell.inner_html = cell.inner_html.strip
       end
 
       # Remove bullets dentro das tabelas
-      html.search('table').each do |tab|
-        tab.replace tab.to_s.gsub('<ul>', '').gsub('</ul>', '').gsub('<li>', '').gsub('</li>', '')
+      nokogiri_html.search('table').each do |table|
+        table.replace table.to_s.gsub('<ul>', '').gsub('</ul>', '').gsub('<li>', '').gsub('</li>', '')
       end
 
-      html
+      nokogiri_html
+    end
+
+    # Simula rowspan realizando transformação no HTML para gerar equivalente as diretivas @rowspan
+    #
+    # @param [Nokogiri::HTML::Document] nokogiri_html Documento HTML (Nokogiri)
+    # @return [Nokogiri::HTML::Document] Documento HTML (Nokogiri) com as alterações para simular @rowspan
+    def simulate_rowspan!(nokogiri_html)
+
+      td_position = Array.new
+      tr_position = 0
+      rowspan = 0
+
+      nokogiri_html.search('tr').each_with_index do |tr, current_tr_position|
+        tr.search('td').each_with_index do |td, current_td_position|
+
+          # Verifica se a linha e a célula devem receber espaço em branco
+          if tr_position > (current_tr_position - rowspan) and td_position.include? current_td_position
+            td.replace "<td></td>#{td.to_s}"
+          end
+
+          if td.to_s.include? 'rowspan'
+            rowspan = td.xpath('@rowspan').first.value.to_i
+            td.replace td.to_s.gsub('rowspan', '')
+
+            # Salva posição da linha que tenha rowspan
+            tr_position = current_tr_position
+            # Salva posição da célular que tenha rowspan
+            td_position.push(current_td_position)
+          end
+        end
+      end
+
+      nokogiri_html
     end
 
     # Converte um documento manipulado pelo Nokogiri como HTML para XHTML e depois para XML
     # @return [Nokogiri::XML::Document]
+    # @param [Nokogiri::HTML::Document] nokogiri_html
     def convert_to_xml(nokogiri_html)
       Nokogiri::XML(nokogiri_html.to_xhtml)
     end

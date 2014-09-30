@@ -80,7 +80,7 @@ class TccsController < ApplicationController
 
     #criar arquivo
     content = render_to_string(:partial => 'bibtex', :layout => false)
-    @bibtex = TccLatex.generate_references(content)
+    @bibtex = TccDocument::ReferencesProcessor.new.execute(content)
   end
 
 end
