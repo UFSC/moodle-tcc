@@ -1,6 +1,6 @@
 <div class="row">
   <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
-    <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
+    <%= tab.data 'Dados', tcc_path, :class => 'active' %>
     <%= tab.abstract 'Resumo', edit_abstracts_path %>
 
     <% @tcc.chapters.each do |chapter| %>

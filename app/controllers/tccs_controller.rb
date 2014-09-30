@@ -1,7 +1,5 @@
 # encoding: utf-8
 class TccsController < ApplicationController
-
-  include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
   def show
@@ -9,40 +7,15 @@ class TccsController < ApplicationController
     @student = @tcc.student.decorate
   end
 
-  def evaluate
-    unless current_user.orientador?
-      flash[:error] = t(:cannot_access_page_without_enough_permission)
-      return redirect_user_to_start_page
-    end
-
-    @tcc = Tcc.find(params[:tcc_id])
-    @tcc.grade = params[:tcc][:grade]
-
-    if @tcc.grade_changed?
-      @tcc.grade_updated_at = DateTime.now
-    end
-
-    if @tcc.valid?
-      @tcc.save!
-      flash[:success] = t(:successfully_saved)
-      redirect_user_to_start_page
-    else
-      flash[:error] = t(:unsuccessfully_saved)
-      redirect_user_to_start_page
-    end
-  end
-
-  def save
-    @tcc = Tcc.find_by_moodle_user(current_moodle_user)
-
+  def update
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
     end
 
-    redirect_to show_tcc_path(moodle_user: params[:moodle_user])
+    redirect_to tcc_path(moodle_user: params[:moodle_user])
   end
 
-  def show_pdf
+  def generate
     @student = @tcc.student.decorate
     @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
 
@@ -63,8 +36,6 @@ class TccsController < ApplicationController
   protected
 
   def generete_references (tcc)
-    coder = HTMLEntities.new
-
     @book_refs = tcc.book_refs.decorate
     @book_cap_refs = tcc.book_cap_refs.decorate
     @article_refs = tcc.article_refs.decorate

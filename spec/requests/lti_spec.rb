@@ -46,7 +46,7 @@ describe 'Lti' do
       it 'should redirect a student to tcc screen' do
         post root_path, moodle_lti_params('student')
         expect(response.status).to be(302)
-        expect(response).to redirect_to(show_tcc_path)
+        expect(response).to redirect_to(tcc_path)
       end
 
       it 'should redirect a tutor to access denied screen' do
