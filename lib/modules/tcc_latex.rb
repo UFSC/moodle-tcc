@@ -8,27 +8,20 @@ module TccLatex
     File.join(Rails.root, 'latex')
   end
 
-  def self.apply_latex(tcc, text)
-    if !text || text.nil?
-      # texto vazio, retornar mensagem genérica de texto vazio
-      return '[ainda não existe texto para esta seção]'
-    end
+  def self.apply_latex(text)
+    # XHTML bem formatado e com as correções necessárias para não atrapalhar o documento final do LaTex
+    xml = TccDocument::HTMLProcessor.new.execute(text)
 
-    # Substituir caracteres html pelo respectivo em utf-8
-    html = cleanup_html(text)
+    xml = TccDocument::ImageProcessor.new.execute(xml)
 
-    # XHTML bem formado
-    doc = Nokogiri::XML(html.to_xhtml)
-
-    #Processar imagens
-    process_figures(doc)
-    download_figures(tcc, doc)
+    # Processar imagens
+    # download_figures(tcc, xml)
 
     #Simula rowspan
-    doc = fix_rowspan(doc)
+    xml = fix_rowspan(xml)
 
     # Aplicar xslt
-    doc = process_xslt(doc)
+    doc = process_xslt(xml)
 
     return doc
   end
@@ -45,50 +38,6 @@ module TccLatex
 
   def self.cleanup_title(title)
     title.gsub('"', '') unless title.nil?
-  end
-
-  def self.cleanup_html(text)
-
-    # Remove caracter &nbsp antes da conversão de HTML Entities
-    text = text.gsub('&nbsp;', ' ')
-    text = text.gsub(/\u00a0/, ' ')
-
-    # Converte caracteres HTML entities para equivalente em utf8
-    reader = HTMLEntities.new
-    content = reader.decode(text)
-
-    # Remove tags tbody e thead de tabelas para impressão correta no latex
-    cleanup_pattern = %w(<tbody> </tbody> <thead> </thead>)
-    cleanup_pattern.each { |pattern| content = content.gsub(pattern, '') }
-
-    html = Nokogiri::HTML(content)
-
-    # Remove tabela dentro de tabelas
-    html.search('table').each do |tab|
-      tab.search('table').remove
-    end
-
-    # Remove tags h1, h2, h3, h4, h5 das tabelas
-    html.search('table').each do |t|
-      t.replace t.to_s.gsub(/<h[0-9]\b[^>]*>/, '').gsub('</h>', '')
-    end
-
-    # Remove parágrafos dentro das tabelas, se tiver parágrafo não renderiza corretamente
-    html.search('table').each do |tab|
-      tab.replace tab.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
-    end
-
-    # Remove espaço extra no inicio e final da celula da tabela
-    html.search('td').each do |cell|
-      cell.inner_html = cell.inner_html.strip
-    end
-
-    # Remove bullets dentro das tabelas
-    html.search('table').each do |tab|
-      tab.replace tab.to_s.gsub('<ul>', '').gsub('</ul>', '').gsub('<li>', '').gsub('</li>', '')
-    end
-
-    return html
   end
 
   def self.fix_rowspan(html)
@@ -138,37 +87,6 @@ module TccLatex
 
     # retorna "Rails-root/tmp/rails-latex/xxx/input.bib"
     return input
-  end
-
-  def self.process_figures(doc)
-    # Inserir class figure nas imagens e resolver caminho
-    doc.css('img').map do |img|
-      img['class'] = 'figure'
-
-
-
-      if img['src'] =~ /@@TOKEN@@/
-        # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
-        img['src'] = img['src'].gsub('@@TOKEN@@', Settings.moodle_token)
-        # é feito unescape e depois escape para garantir que a url estará correta
-        # essa maneira é estranha, mas evita problemas :)
-        img['src'] = URI.escape(URI.unescape(img['src']))
-      elsif img['src'] !~ URI::regexp
-        next if img['src'].nil?
-        img['src'] = File.join(Rails.public_path, img['src'])
-        # Se a URL contiver espaços ou caracter especial, deve ser decodificada
-        img['src'] = URI.unescape(img['src'])
-      else
-        src = (URI.unescape(img['src']))
-        original_filename = File.basename(URI.parse(img['src']).path.to_s)
-
-        img['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
-        img['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(original_filename)}"
-      end
-
-    end
-
-    return doc
   end
 
   def self.download_figures(tcc, doc)
@@ -258,7 +176,7 @@ module TccLatex
       filename = item[:dom]['src'].split('?')[0].split('/').last
 
       # Troca a tag da imagem não carregada pela mensagem no pdf
-      new_node = Nokogiri::XML::Node.new('p',doc)
+      new_node = Nokogiri::XML::Node.new('p', doc)
       new_node.content = "[ Imagem do Moodle não carregada: #{filename} ]"
       item[:dom].replace new_node
     end

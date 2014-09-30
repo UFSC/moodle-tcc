@@ -47,11 +47,10 @@ class TccsController < ApplicationController
     @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
 
     # Resumo
-    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc, @tcc.abstract.content)
-    @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.keywords
+    @abstract = LatexAbstractDecorator.new(@tcc.abstract)
 
     # Capítulos
-    @chapters = @tcc.chapters.includes([:chapter_definition])
+    @chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters.includes([:chapter_definition]).all)
 
     #Referencias
     @bibtex = generete_references(@tcc)

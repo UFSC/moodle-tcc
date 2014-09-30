@@ -5,7 +5,7 @@
 <% @chapters.each do |chapter| %>
 
   %% Título de cada capítulo está no chapter_definition
-  \section{<%= lesc chapter.chapter_definition.title %>}
+  \section{<%= lesc chapter.title %>}
 
   %% Conteudo do diário
   <%= chapter.content.try(:html_safe) %>
