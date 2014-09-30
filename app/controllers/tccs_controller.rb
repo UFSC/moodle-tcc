@@ -65,11 +65,6 @@ class TccsController < ApplicationController
   def generete_references (tcc)
     coder = HTMLEntities.new
 
-    @general_refs = tcc.general_refs
-    @general_refs.each do |ref|
-      ref.reference_text = coder.decode(ref.reference_text).html_safe
-    end
-
     @book_refs = tcc.book_refs.decorate
     @book_cap_refs = tcc.book_cap_refs.decorate
     @article_refs = tcc.article_refs.decorate

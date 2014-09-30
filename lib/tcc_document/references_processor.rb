@@ -17,7 +17,7 @@ module TccDocument
     end
 
     def xslt_template
-      File.read(File.join(self.latex_path, 'xh2latex.xsl'))
+      File.read(File.join(self.latex_path, 'xh2bib.xsl'))
     end
 
     def temp_dir
