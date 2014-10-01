@@ -1,22 +1,7 @@
 module MoodleAPI
-  class MoodleHub < Base
-    def self.fetch_hub_diaries(hub, user_id)
-      hub.diaries.each { |diary|
-        online_text = fetch_online_text(user_id, diary.diary_definition.external_id)
-        diary.content = online_text unless online_text.nil?
-      }
-    end
+  class MoodleOnlineText < Base
 
-    def self.fetch_hub_diaries_for_printing(hub, user_id)
-      hub.diaries.each { |diary|
-        online_text = fetch_online_text_for_printing(user_id, diary.diary_definition.external_id)
-        diary.content = online_text unless online_text.nil?
-      }
-    end
-
-    private
-
-    def fetch_online_text(user_id, coursemodule_id)
+    def self.fetch_online_text(user_id, coursemodule_id)
       MoodleAPI::Base.remote_call('local_wstcc_get_user_online_text_submission',
                                   :userid => user_id, :coursemoduleid => coursemodule_id) do |response|
 
@@ -41,7 +26,7 @@ module MoodleAPI
       end
     end
 
-    def fetch_online_text_for_printing(user_id, coursemodule_id)
+    def self.fetch_online_text_for_printing(user_id, coursemodule_id)
       MoodleAPI::Base.remote_call('local_wstcc_get_user_text_for_generate_doc',
                                   :userid => user_id, :coursemoduleid => coursemodule_id) do |response|
 

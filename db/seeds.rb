@@ -27,8 +27,8 @@ end
 # TCC Definition - Turma A (210000092)
 #
 definition = [
-    {title: 'Introdução', assign_id: 5206, is_numbered_title: false},
-    {title: 'Objetivo', assign_id: 5207, is_numbered_title: true},
+    {title: 'Introdução', coursemodule_id: 5206, is_numbered_title: false},
+    {title: 'Objetivo', coursemodule_id: 5207, is_numbered_title: true},
     {title: 'Revisão da Literatura', is_numbered_title: true},
     {title: 'Metodologia', is_numbered_title: true},
     {title: 'Resultados Esperados', is_numbered_title: true},
