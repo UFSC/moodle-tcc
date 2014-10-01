@@ -19,3 +19,5 @@
     empty_abstract_keywords: '[ainda não existe palavras-chaves para o resumo]'
     empty_tcc: 'TCC não encontrado'
     is_not_complete_name: 'incompleto (o campo deve ter no mínimo 1 sobrenome)'
+    chapter_import_cannot_proceed: 'Não é possível realizar uma importação quando o capítulo já possúi conteúdo'
+    chapter_import_successfully: 'Importação concluída com sucesso!'

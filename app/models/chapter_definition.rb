@@ -9,4 +9,8 @@ class ChapterDefinition < ActiveRecord::Base
   attr_accessible :position, :title, :subtitle, :tcc_definition, :tcc_definition_id
 
   default_scope -> { order(:position) }
+
+  def remote_text?
+    !coursemodule_id.nil?
+  end
 end

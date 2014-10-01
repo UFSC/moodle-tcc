@@ -5,6 +5,7 @@ class SyncTcc
   def initialize(context)
     @tcc_definition = context
     @errors = {person: [], tutor: [], orientador: []}
+    @remote_service = MoodleAPI::MoodleUser.new
   end
 
   def call
@@ -56,7 +57,7 @@ class SyncTcc
 
     # Só busca os dados do usuário se ele ainda foi criado
     unless person.persisted?
-      attributes = MoodleAPI::MoodleUser.find_users_by_field('id', moodle_id)
+      attributes = @remote_service.find_users_by_field('id', moodle_id)
       person.attributes = {moodle_username: attributes.username, email: attributes.email, name: attributes.name}
 
       unless person.valid? && person.save
@@ -69,14 +70,14 @@ class SyncTcc
   end
 
   def get_students
-    students = MoodleAPI::MoodleUser.get_students_by_course(@tcc_definition.course_id)
+    students = @remote_service.get_students_by_course(@tcc_definition.course_id)
     students.with_progress("Sincronizando estudantes do curso '#{@tcc_definition.course_id}'").collect do |student_id|
       find_or_create_person(student_id)
     end
   end
 
   def get_tutor(student)
-    tutor_id = MoodleAPI::MoodleUser.find_tutor_by_studentid(student, @tcc_definition.course_id)
+    tutor_id = @remote_service.find_tutor_by_studentid(student, @tcc_definition.course_id)
 
     # Se o estudante não tiver um estudante atribuído, vamos salvar a informação para exibir depois
     if tutor_id.nil?
@@ -88,7 +89,7 @@ class SyncTcc
   end
 
   def get_orientador(student)
-    orientador_id = MoodleAPI::MoodleUser.find_orientador_responsavel(student, @tcc_definition.course_id)
+    orientador_id = @remote_service.find_orientador_responsavel(student, @tcc_definition.course_id)
 
     # Se o estudante não tiver um orientador atribuído, vamos salvar a informação para exibir depois
     if orientador_id.nil?

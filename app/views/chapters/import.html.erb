@@ -7,7 +7,7 @@
       <h2>Não existe conteúdo ainda neste capítulo:</h2>
 
       <h4>Para iniciar este capítulo, você deve importar o texto realizado na atividade do Moodle:</h4>
-      <br />
+      <br/>
       <%= form_tag execute_import_chaptes_path do %>
         <%= submit_tag 'Importar texto da atividade do Moodle', class: 'btn btn-large btn-primary' %>
       <% end %>
@@ -15,9 +15,12 @@
     </div>
   <% else %>
     <div class="hero-unit">
-      <h2>Não existe conteúdo ainda neste capítulo:</h2>
+      <h2>Não existe conteúdo ainda neste capítulo</h2>
 
-      <h3>Você deve concluir inicialmente a atividade no Moodle</h3>
+      <h3>Você deve concluir primeiro a atividade no Moodle. </h3>
+      <h4>
+        Somente depois de receber a nota, na atividade no Moodle, você poderá iniciar a construção deste capítulo.
+      </h4>
     </div>
   <% end %>
 </div>
