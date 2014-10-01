@@ -40,7 +40,7 @@
           </a>
           <ul class="dropdown-menu pull-right">
             <li>
-              <%= link_to show_tcc_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
+              <%= link_to tcc_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
                 <%= display_icon('icon-edit') %> Editar informações
               <% end %>
             </li>

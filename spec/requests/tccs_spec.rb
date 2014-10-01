@@ -5,14 +5,14 @@ describe 'Tccs' do
 
   describe 'GET /tcc' do
     xit 'should not work without LTI connection' do
-      get show_tcc_path
+      get tcc_path
       expect(response.status).to be(302)
       expect(response).to redirect_to access_denied_path
     end
 
     it 'should work with LTI connection' do
       page.set_rack_session(fake_lti_session('student'))
-      visit show_tcc_path
+      visit tcc_path
 
       expect(page.current_path).not_to eq(access_denied_path)
       expect(page).to have_content('Dados')
@@ -21,7 +21,7 @@ describe 'Tccs' do
     describe 'edit' do
       before :each do
         page.set_rack_session(fake_lti_session('student'))
-        visit show_tcc_path
+        visit tcc_path
       end
 
       it 'tcc data' do

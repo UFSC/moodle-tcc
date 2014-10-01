@@ -26,7 +26,7 @@ module Authentication
   def redirect_user_to_start_page
     if current_user.student?
       logger.debug 'LTI user identified as a student'
-      redirect_to show_tcc_path
+      redirect_to tcc_path
     elsif current_user.tutor?
       logger.debug 'LTI user identified as a tutor'
       redirect_to instructor_admin_path

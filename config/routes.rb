@@ -25,11 +25,12 @@ SistemaTcc::Application.routes.draw do
 
   # TCC routes
   scope "/(user/:moodle_user)" do
-    get "tcc" => 'tccs#show', as: 'show_tcc'
-    put "tcc" => 'tccs#save', as: 'save_tcc'
-    get "/tcc/preview" => "tccs#preview_tcc", as: 'preview_tcc'
-    get "/tcc/generate", to: 'tccs#show_pdf', as: 'generate_tcc', defaults: {format: 'pdf'}
-    get "showreferences" => 'tccs#show_references', as: 'show_references'
+    resource :tcc, only: [:show, :update] do
+      member do
+        get 'preview'
+        get 'generate', defaults: {format: 'pdf'}
+      end
+    end
 
     resource :abstracts, only: [:show, :edit, :create, :update]
 

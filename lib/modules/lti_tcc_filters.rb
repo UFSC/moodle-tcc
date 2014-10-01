@@ -28,7 +28,8 @@ module LtiTccFilters
   end
 
   def get_tcc
-    @tcc = Tcc.includes(chapters: [:chapter_definition]).joins(:student).where(people: {moodle_id: current_moodle_user}).first
+    student = Person.where(moodle_id: current_moodle_user).first
+    @tcc = Tcc.includes(chapters: [:chapter_definition]).where(student_id: student.id).first
 
     raise TccNotFoundError unless @tcc
   end

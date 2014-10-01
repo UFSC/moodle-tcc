@@ -1,7 +1,5 @@
 # encoding: utf-8
 class TccsController < ApplicationController
-
-  include ActionView::Helpers::SanitizeHelper
   include TccLatex
 
   def show
@@ -9,73 +7,26 @@ class TccsController < ApplicationController
     @student = @tcc.student.decorate
   end
 
-  def evaluate
-    unless current_user.orientador?
-      flash[:error] = t(:cannot_access_page_without_enough_permission)
-      return redirect_user_to_start_page
-    end
-
-    @tcc = Tcc.find(params[:tcc_id])
-    @tcc.grade = params[:tcc][:grade]
-
-    if @tcc.grade_changed?
-      @tcc.grade_updated_at = DateTime.now
-    end
-
-    if @tcc.valid?
-      @tcc.save!
-      flash[:success] = t(:successfully_saved)
-      redirect_user_to_start_page
-    else
-      flash[:error] = t(:unsuccessfully_saved)
-      redirect_user_to_start_page
-    end
-  end
-
-  def save
-    @tcc = Tcc.find_by_moodle_user(current_moodle_user)
-
+  def update
     if @tcc.update_attributes(params[:tcc])
       flash[:success] = t(:successfully_saved)
     end
 
-    redirect_to show_tcc_path(moodle_user: params[:moodle_user])
+    redirect_to tcc_path(moodle_user: params[:moodle_user])
   end
 
-  def show_pdf
-    eager_load = [{:general_refs => :reference}, {:book_refs => :reference}, {:article_refs => :reference},
-                  {:internet_refs => :reference}, {:legislative_refs => :reference}, {:thesis_refs => :reference}]
-    @tcc = Tcc.includes(eager_load).find_by_moodle_user(current_moodle_user)
-
+  def generate
+    @student = @tcc.student.decorate
     @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
 
-    @nome_orientador = Middleware::Orientadores.find_by_cpf(@tcc.orientador).try(:nome) if @tcc.orientador
+    # Resumo
+    @abstract = LatexAbstractDecorator.new(@tcc.abstract)
 
-    #Resumo
-    @abstract_content = @tcc.abstract.blank? ? t('empty_abstract') : TccLatex.apply_latex(@tcc, @tcc.abstract.content)
-    @abstract_keywords = @tcc.abstract.blank? ? t('empty_abstract') : @tcc.abstract.key_words
+    # Capítulos
+    @chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters.includes([:chapter_definition]).all)
 
-    #Introdução
-    @presentation = @tcc.presentation.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.presentation.content)
-
-    #Hubs
-    @chapters = @tcc.hubs_tccs.includes([:diaries, :hub_definition])
-    @chapters.each do |hub|
-      hub.fetch_diaries_for_printing(@tcc.moodle_user)
-      hub.diaries.map do |diaries|
-        diaries.diary_definition.title = TccLatex.cleanup_title(diaries.diary_definition.title)
-        diaries.content = TccLatex.apply_latex(@tcc, diaries.content)
-      end
-      hub.reflection = TccLatex.apply_latex(@tcc, hub.reflection)
-      hub.reflection_title = TccLatex.cleanup_title(hub.reflection_title)
-    end
-
-    #Consideracoes Finais
-    @finalconsiderations = @tcc.final_considerations.blank? ? t('empty_text') : TccLatex.apply_latex(@tcc, @tcc.final_considerations.content)
-
-    #Referencias
+    # Referencias
     @bibtex = generete_references(@tcc)
-
   end
 
   def preview_tcc
@@ -85,13 +36,6 @@ class TccsController < ApplicationController
   protected
 
   def generete_references (tcc)
-    coder = HTMLEntities.new
-
-    @general_refs = tcc.general_refs
-    @general_refs.each do |ref|
-      ref.reference_text = coder.decode(ref.reference_text).html_safe
-    end
-
     @book_refs = tcc.book_refs.decorate
     @book_cap_refs = tcc.book_cap_refs.decorate
     @article_refs = tcc.article_refs.decorate
@@ -101,7 +45,7 @@ class TccsController < ApplicationController
 
     #criar arquivo
     content = render_to_string(:partial => 'bibtex', :layout => false)
-    @bibtex = TccLatex.generate_references(content)
+    @bibtex = TccDocument::ReferencesProcessor.new.execute(content)
   end
 
 end
