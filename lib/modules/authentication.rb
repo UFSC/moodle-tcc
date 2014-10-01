@@ -13,7 +13,9 @@ module Authentication
   end
 
 
-  # @return [Integer] ID do Moodle User atual ou a versão personificada
+  # ID do Moodle User atual ou o ID personificado quando o acesso for por não-estudantes.
+  #
+  # @return [Integer] ID do Moodle User
   def current_moodle_user
     @moodle_user ||=
       if (current_user.instructor? || current_user.orientador? || current_user.view_all?) && params['moodle_user']
@@ -23,6 +25,8 @@ module Authentication
       end
   end
 
+  # Redireciona o usuário atual para a página de início relativa as permissões de acesso dele
+  #
   def redirect_user_to_start_page
     if current_user.student?
       logger.debug 'LTI user identified as a student'
