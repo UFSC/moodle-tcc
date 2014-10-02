@@ -42,7 +42,7 @@ pt-BR:
       abstract:
         content_pt: 'Resumo'
         content_en: 'Abstract'
-        key_words: 'Palavras chaves'
+        keywords: 'Palavras chaves'
       chapter:
         content: 'Conteúdo'
       general_ref:

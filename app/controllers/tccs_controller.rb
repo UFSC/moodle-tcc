@@ -16,8 +16,7 @@ class TccsController < ApplicationController
   end
 
   def generate
-    @student = @tcc.student.decorate
-    @defense_date = @tcc.defense_date.nil? ? @tcc.defense_date : @tcc.tcc_definition.defense_date
+    @tcc_document = LatexTccDecorator.new(@tcc)
 
     # Resumo
     @abstract = LatexAbstractDecorator.new(@tcc.abstract)

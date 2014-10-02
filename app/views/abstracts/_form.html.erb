@@ -8,6 +8,9 @@
 
       <%= h.cktext_area :content %>
 
+      <br/>
+      <%= h.input :keywords, input_html: {class: 'span12'} %>
+
       <div class="form-actions">
         <%= h.action :submit, :as => :input, label: 'Salvar Rascunho',
                      button_html: {class: 'btn btn-primary'} %>

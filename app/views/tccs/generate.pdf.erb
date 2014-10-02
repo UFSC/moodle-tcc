@@ -84,11 +84,11 @@ brazil,				% o último idioma é o principal do documento
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{<%= lesc @tcc.title unless @tcc.title.nil? %>}
-\autor{<%= lesc @student.name %>}
+\titulo{<%= @tcc_document.title %>}
+\autor{<%= @tcc_document.student_name %>}
 \local{Florianópolis}
-\data{<%= lesc l(@defense_date, format: :abnt) unless @defense_date.nil? %>}
-\orientador{<%= lesc @tcc.orientador.name unless @tcc.orientador.nil? %>}
+\data{<%= @tcc_document.defense_date %>}
+\orientador{<%= @tcc_document.orientador_name %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
 \instituicao{%
