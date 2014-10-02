@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe ApplicationController do
 
+  it_should_behave_like 'a protected controller' do
+    let(:teste) { ApplicationController.new }
+  end
+
   context 'when raises a UnauthorizedError' do
     controller do
       def index
