@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
-  class PersonNotFoundError < RuntimeError; end
-  class UnauthorizedError < RuntimeError; end
+  include Authentication
+  include LtiTccFilters
 
   before_action :allow_iframe
   protect_from_forgery with: :exception
 
-  rescue_from UnauthorizedError, :with => :unauthorized_error
-  rescue_from PersonNotFoundError, :with => :person_not_found_error
+  rescue_from Authentication::UnauthorizedError, :with => :unauthorized_error
+  rescue_from Authentication::PersonNotFoundError, :with => :person_not_found_error
   rescue_from Authentication::LTI::CredentialsError, :with => :lti_credentials_error
 
   # Set current_user as assetable
