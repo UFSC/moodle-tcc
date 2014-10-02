@@ -14,4 +14,8 @@ class LatexChapterDecorator < Draper::Decorator
 
     title
   end
+
+  def is_numbered_title
+    object.chapter_definition.is_numbered_title
+  end
 end

@@ -265,7 +265,7 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 <!-- body sections -->
 
 <xsl:template match="xhtml:h1|xhtml:h2|xhtml:h3|xhtml:h4">
-  <xsl:text>\subsubsection{</xsl:text>
+  <xsl:text>\section{</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>}
   </xsl:text>
