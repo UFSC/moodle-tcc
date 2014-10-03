@@ -28,7 +28,7 @@ class TccsController < ApplicationController
     @bibtex = generete_references(@tcc)
   end
 
-  def preview_tcc
+  def preview
     @student = @tcc.student.decorate
   end
 

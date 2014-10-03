@@ -1,7 +1,7 @@
 <div class="row">
   <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
-    <%= tab.data 'Dados', tcc_path, :class => 'active' %>
-    <%= tab.abstract 'Resumo', edit_abstracts_path %>
+    <%= tab.data 'Dados', tcc_path(params[:moodle_user]), :class => 'active' %>
+    <%= tab.abstract 'Resumo', edit_abstracts_path(params[:moodle_user]) %>
 
     <% @tcc.chapters.each do |chapter| %>
       <%= tab.send("chapter#{chapter.chapter_definition.position}",
@@ -9,6 +9,6 @@
                    show_chapters_path(position: chapter.chapter_definition.position)) %>
     <% end %>
 
-    <%= tab.bibliographies 'Referências', bibliographies_path %>
+    <%= tab.bibliographies 'Referências', bibliographies_path(params[:moodle_user]) %>
   <% end %>
 </div>
