@@ -1,46 +1,16 @@
 require 'spec_helper'
+include Authentication
 
-shared_examples 'a protected controller' do
+shared_examples 'a protected controller' do |actions|
 
-  describe 'new' do
+  # user = Authentication::User.new fake_lti_session
 
-    it 'requires signin' do
-
-    end
-  end
-
-  describe 'edit' do
-
-    it 'requires signin' do
-
-    end
-  end
-
-  describe 'show' do
-
-    it 'requires signin' do
-
-    end
-  end
-
-  describe 'create' do
-
-    it 'requires signin' do
-
-    end
-  end
-
-  describe 'update' do
-
-    it 'requires signin' do
-
-    end
-  end
-
-  describe 'delete' do
-
-    it 'requires signin' do
-
+  context 'as a regular user' do
+    actions.each_pair do |action, verb|
+      specify "I should be able to access ##{action} via #{verb}" do
+        send(verb, action)
+        expect{ response }.to_not raise_error
+      end
     end
   end
 

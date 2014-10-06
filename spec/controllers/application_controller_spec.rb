@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe ApplicationController do
 
-  it_should_behave_like 'a protected controller' do
-    let(:teste) { ApplicationController.new }
-  end
-
   context 'when raises a UnauthorizedError' do
     controller do
       def index
@@ -41,7 +37,6 @@ describe ApplicationController do
 
   context 'when raises a CredentialsError' do
     controller do
-
       skip_before_action :authorize
       skip_before_action :get_tcc
 
