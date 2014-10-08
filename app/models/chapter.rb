@@ -10,7 +10,7 @@ class Chapter < ActiveRecord::Base
   scope :reflection_empty, -> { where(content: '') }
 
   def empty?
-    self.content.blank?
+    (self.content.nil? || self.content.empty?)
   end
 
 end
