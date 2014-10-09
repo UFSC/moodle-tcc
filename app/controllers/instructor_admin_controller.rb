@@ -36,7 +36,7 @@ class InstructorAdminController < ApplicationController
   end
 
   def tcc_searchable(tcc_definition)
-    tccs = Tcc.where(tcc_definition_id: tcc_definition.id)
+    tccs = Tcc.includes(:student, chapters: [:chapter_definition]).where(tcc_definition_id: tcc_definition.id)
 
     if current_user.orientador?
       tccs = tccs.where(orientador_id: current_user.person.id)
