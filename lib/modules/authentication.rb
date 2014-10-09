@@ -163,11 +163,8 @@ module Authentication
     # Verifica a assinatura do OAuth
     def verify_oauth_signature!
 
-      # FIX-ME: Temporariamente removendo validação de assinaturas pois está quebrado em produção:
-      return true
-
       if !@tp.valid_request?(request)
-        signature = OAuth::Signature.sign(request, :consumer_secret => @consumer_secret)
+        signature = OAuth::Signature.sign(request, {:consumer_secret => Settings.consumer_secret})
         logger.error 'Invalid OAuth signature'
         logger.error 'Should be: ' +signature
 

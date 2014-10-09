@@ -2,13 +2,13 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-# IMS-LTI
-OAUTH_10_SUPPORT = true
-require 'oauth/request_proxy/rack_request'
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# IMS-LTI
+OAUTH_10_SUPPORT = true
+require 'oauth/request_proxy/action_dispatch_request'
 
 module SistemaTcc
   class Application < Rails::Application

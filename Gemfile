@@ -45,7 +45,7 @@ gem 'kaminari'
 gem 'tabs_on_rails'
 
 # LTI for moodle integration
-gem 'ims-lti'
+gem 'ims-lti', git: 'https://github.com/instructure/ims-lti'
 gem 'oauth-instructure'
 
 # Formulários e views

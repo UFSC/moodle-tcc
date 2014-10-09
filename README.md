@@ -19,9 +19,11 @@ utilizado para rodar os testes de interface.
 Para geração correta do TCC em PDF é necessário instalar uma distribuição do LaTex
 juntamente com o Abntex2. A instalação do LaTex é diferente no Ubuntu e no Mac OS X.
 
+
 ### Dependências do Ubuntu: ###
 
     sudo apt-get install -y qt4-qmake libqt4-dev imagemagick libmagickwand-dev
+
 
 ### Instalação do Tex Live (Ubuntu)
 
@@ -45,6 +47,7 @@ Para que o PATH também seja incluído pro "sudo", edite o arquivo "/etc/sudoers
 
     # Para:
     Defaults        secure_path="/usr/local/texlive/2013/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 
 ### Instalação do MacTex (Mac OS X)
 
@@ -106,3 +109,17 @@ Nós utilizamos dois plugins adicionais aos que são disponibilizados por padrã
 
 * [Auto Grow](https://gitlab.setic.ufsc.br/tcc-unasus/ckeditor-autogrow): responsável por aumentar dinamicamente a altura do editor de texto
 * [Citação](https://gitlab.setic.ufsc.br/tcc-unasus/ckeditor-citacao): plugin próprio para disponibilizar marcação de citação
+
+
+### LTI
+
+O padrão LTI é gerenciado pela IMS Global, que fornece uma ferramenta
+para auxiliar a validação da implementação:
+http://validator.imsglobal.org/
+
+A implementação de LTI utilizada e disponibilizada pela "Instructureit"
+possui alguns caveats:
+
+* A URL no Moodle deve vir com uma / no final, pois o Rails inclui essa
+  barra independente dela existir ou não na URL original, e caso isso
+  não seja seguido, teremos uma assinatura inválida
