@@ -39,6 +39,7 @@ SistemaTcc::Application.routes.draw do
     match 'chapters/:position' => 'chapters#save', as: 'save_chapters', via: [:pos, :patch, :put]
     match 'chapters/:position/import' => 'chapters#import', as: 'import_chapters', via: [:get]
     match 'chapters/:position/import' => 'chapters#execute_import', as: 'execute_import_chaptes', via: [:post]
+    match 'chapters/:position/empty' => 'chapters#empty', as: 'empty_chapters', via: [:get]
 
     # Resources
     resources :bibliographies

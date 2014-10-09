@@ -1,10 +1,10 @@
-<table class="table table-bordered">
+<table class="table table-bordered" id="tcc-table">
   <thead>
   <tr class="blue-header-table">
     <th>Estudante</th>
-    <th>Resumo</th>
+    <th class="status">Resumo</th>
     <% @chapters.each do |chapter_name| %>
-      <th><%= chapter_name %></th>
+      <th class="status"><%= chapter_name %></th>
     <% end %>
     <th>Ações</th>
   </tr>
@@ -14,23 +14,15 @@
 
     <tr>
       <td>
-        <%= tcc.student.name %>
+        <%= student_name(tcc) %>
       </td>
 
-      <td>
-        <%= action_label(tcc.abstract, edit_abstracts_path(moodle_user: tcc.student.moodle_id)) %>
-      </td>
+      <%= status_cell(tcc.abstract, edit_abstracts_path(moodle_user: tcc.student.moodle_id)) %>
+
       <% tcc.chapter_definitions.each do |chapter_definition| %>
         <% chapter = tcc.chapters.select { |chapter| chapter.position == chapter_definition.position }.first %>
 
-        <% unless chapter.nil? %>
-          <td>
-            <%= action_label(chapter, show_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
-          </td>
-        <% else %>
-          <td class="empty-content"/>
-        <% end %>
-
+        <%= status_cell(chapter, show_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
       <% end %>
       <td>
         <div class="btn-group">

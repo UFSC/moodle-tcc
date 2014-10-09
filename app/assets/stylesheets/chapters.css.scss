@@ -1,16 +1,15 @@
-#hubs-table {
+#tcc-table {
   td.status, th.status {
-    width: 100px;
     text-align: center;
   }
-  td.grades, th.grades {
-    width: 80px;
-    text-align: center;
-  }
-}
 
-#refresh-list {
-  //  float: right;
-  //  display: inline-block;
-  //  margin-top: -3em;
+  td.status a {
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+  }
+
+  td.status.new {
+    background: #e1e1e1;
+  }
 }

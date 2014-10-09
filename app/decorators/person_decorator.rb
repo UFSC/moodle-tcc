@@ -7,4 +7,8 @@ class PersonDecorator < Draper::Decorator
     object.name.gsub(/ \([0-9].*\)/, '')
   end
 
+  def matricula
+    object.moodle_username
+  end
+
 end
