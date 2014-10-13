@@ -14,11 +14,16 @@ def moodle_lti_params(roles = 'student')
       'tcc_definition' => @tcc.tcc_definition.id
   }
 
+  @tcc.save! unless @tcc.changed?
+
   tc.generate_launch_data
 end
 
 def fake_lti_session(roles = 'student')
-  {'lti_launch_params' => moodle_lti_params(roles)}
+  lti_params = moodle_lti_params(roles)
+  @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
+
+  {'lti_launch_params' => lti_params}
 end
 
 def fake_lti_tp(roles = 'student')

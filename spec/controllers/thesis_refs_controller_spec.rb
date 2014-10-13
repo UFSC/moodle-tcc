@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe ArticleRefsController do
+describe ThesisRefsController do
 
   it_should_behave_like 'a protected controller', {
       :create  => :post,
-      :index => :get
+      :index  => :get
   }
 
   context 'Actions with parameters' do
@@ -23,4 +23,5 @@ describe ArticleRefsController do
       expect{ (delete :destroy, {:id => 0}) }.to raise_error(Authentication::UnauthorizedError)
     end
   end
+
 end
