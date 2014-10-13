@@ -22,6 +22,7 @@ module MoodleAPI
 
         if response.code != 200
           Rails.logger.error "Falha ao acessar o webservice do Moodle: HTTP_ERROR: #{response.code}"
+          @error = HashWithIndifferentAccess.new(error_code: response.code)
 
           return false
         end
@@ -48,6 +49,7 @@ module MoodleAPI
 
         if response.code != 200
           Rails.logger.error "Falha ao conectar com o webservice do Moodle: HTTP_ERROR: #{response.code}"
+          @error = HashWithIndifferentAccess.new(error_code: response.code)
 
           return false
         end
