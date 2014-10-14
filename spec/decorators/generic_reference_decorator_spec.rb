@@ -9,8 +9,8 @@ describe GenericReferenceDecorator do
   it 'should be properly decorate' do
     [book_ref, book_cap_ref, internet_ref, article_ref].each{ |ref|
       r = GenericReferenceDecorator.new(ref)
-      r.direct_citation.should_not be_nil
-      r.indirect_citation.should_not be_nil
+      expect(r.direct_citation).not_to be_nil
+      expect(r.indirect_citation).not_to be_nil
     }
   end
 end
