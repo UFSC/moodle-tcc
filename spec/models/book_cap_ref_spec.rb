@@ -16,8 +16,8 @@ describe BookCapRef do
     it { should have_one(:tcc).through(:reference) }
 
     it { should validate_numericality_of(:year).only_integer }
-    it { should ensure_inclusion_of(:year).in_range(0..(Date.today.year)) }
-    it { should ensure_inclusion_of(:type_participation).in_array(BookCapRef::PARTICIPATION_TYPES) }
+    it { should validate_inclusion_of(:year).in_range(0..(Date.today.year)) }
+    it { should validate_inclusion_of(:type_participation).in_array(BookCapRef::PARTICIPATION_TYPES) }
     it { should validate_numericality_of(:year) }
     it { should validate_presence_of(:local) }
     it { should validate_presence_of(:year) }
