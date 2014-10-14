@@ -3,14 +3,20 @@ module MoodleAPI
 
     # Busca o username no Moodle com base no user_id informado
     # @param [String] user_id user id no Moodle
+    # @deprecated Não é mais utiilizado por nenhum método. Remover
     def find_username_by_user_id(user_id)
       data = remote_json_call('local_wstcc_get_username', userid: user_id)
 
       return success? ? data['username'] : false
     end
 
-    def find_users_by_field(field, values)
-      data = remote_json_call('local_wstcc_get_users_by_field', field: field, values: [values])
+    # Retorna os dados de usuário do Moodle que nos interessam
+    #
+    # @param [String] field
+    # @param [String] value
+    # @return Dados do usuário do Moodle (id, name, email, username)
+    def find_users_by_field(field, value)
+      data = remote_json_call('local_wstcc_get_users_by_field', field: field, values: [value])
 
       return success? ? OpenStruct.new(data.first) : false
     end
