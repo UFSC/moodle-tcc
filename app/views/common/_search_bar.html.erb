@@ -4,7 +4,7 @@
 
   <div class="input-append">
     <%= autocomplete_field_tag :search, params[:search], autocomplete_path, {
-            placeholder: 'Busca', class: 'clearable'} %>
+            placeholder: 'Busca', class: 'clearable span5'} %>
 
     <%= link_to path, class: 'btn', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
       <%= display_icon('icon-remove') %>
@@ -15,12 +15,12 @@
     <% end %>
   </div>
 
-    <% unless local_assigns[:simple_search_bar] %>
-      <div class="pull-right">
-        <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar a lista abaixo' do %>
-          <%= display_icon('icon-refresh') %>
-          Atualizar lista
-        <% end %>
-      </div>
-    <% end %>
+  <% unless local_assigns[:simple_search_bar] %>
+    <div class="pull-right">
+      <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar a lista abaixo' do %>
+        <%= display_icon('icon-refresh') %>
+        Atualizar lista
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

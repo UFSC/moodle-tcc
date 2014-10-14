@@ -43,7 +43,7 @@ describe LegislativeRef do
   describe '#year' do
     it { should validate_presence_of(:year) }
     it { should validate_numericality_of(:year).only_integer }
-    it { should ensure_inclusion_of(:year).in_range(0..(Date.today.year)) }
+    it { should validate_inclusion_of(:year).in_range(0..(Date.today.year)) }
   end
 
   context 'same_publisher' do

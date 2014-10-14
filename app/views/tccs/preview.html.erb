@@ -1,0 +1,47 @@
+<div class="span12" xmlns="http://www.w3.org/1999/html">
+
+  <section class="well">
+    <strong>IMPORTANTE:</strong> Isto é uma pré-visualização em estado de <strong>RASCUNHO</strong> do documento
+    final.<br/>
+    Ela <strong>não contem</strong> as formatações seguindo os padrões da ABNT e serve como mero instrumento de leitura.<br/>
+    Este documento não possui também toda a estrutura final do documento como capa, indices e listagem de referências.
+  </section>
+
+  <!--student info-->
+  <section class="student-info">
+    <h2>Informações</h2>
+
+    <dl class="dl-horizontal">
+      <dt>Matrícula:</dt>
+      <dd><%= @student.moodle_username %></dd>
+
+      <dt>Nome:</dt>
+      <dd><%= @student.name %></dd>
+
+      <dt>Orientador:</dt>
+      <dd><%= @tcc.orientador.try(:name) %></dd>
+    </dl>
+  </section>
+
+  <!--abstract-->
+  <section class="abstract">
+    <h2>Resumo</h2>
+
+    <%= @tcc.abstract.content.try(:html_safe) if @tcc.abstract %>
+  </section>
+
+
+  <% @tcc.chapters.each do |chapter| %>
+    <!--chapters-->
+    <section class="chapter">
+      <div class="chapter-header">
+        <h2><%= chapter.chapter_definition.title %></h2>
+      </div>
+
+      <div class="chapter-content">
+        <%= chapter.content.try(:html_safe) %>
+      </div>
+    </section>
+  <% end %>
+
+</div>

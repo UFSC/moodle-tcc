@@ -2,13 +2,13 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-# IMS-LTI
-OAUTH_10_SUPPORT = true
-require 'oauth/request_proxy/rack_request'
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# IMS-LTI
+OAUTH_10_SUPPORT = true
+require 'oauth/request_proxy/action_dispatch_request'
 
 module SistemaTcc
   class Application < Rails::Application
@@ -17,6 +17,7 @@ module SistemaTcc
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
+    config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/lib/modules)
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
     config.autoload_paths += %W(#{config.root}/app/models/concerns)

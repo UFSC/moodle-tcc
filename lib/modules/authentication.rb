@@ -1,6 +1,9 @@
 # encoding: utf-8
 module Authentication
 
+  class PersonNotFoundError < RuntimeError; end
+  class UnauthorizedError < RuntimeError; end
+
   def self.included(base)
     base.send(:include, Authentication::LTI)
   end
@@ -9,19 +12,31 @@ module Authentication
     @current_user ||= User.new(@tp) unless @tp.nil?
   end
 
+
+  # ID do Moodle User atual ou o ID personificado quando o acesso for por não-estudantes.
+  #
+  # @return [Integer] ID do Moodle User
+  def current_moodle_user
+    @moodle_user ||=
+      if (current_user.instructor? || current_user.orientador? || current_user.view_all?) && params['moodle_user']
+        params['moodle_user']
+      else
+        current_user.id
+      end
+  end
+
+  # Redireciona o usuário atual para a página de início relativa as permissões de acesso dele
+  #
   def redirect_user_to_start_page
-    if current_user.student? && @type == 'portfolio'
+    if current_user.student?
       logger.debug 'LTI user identified as a student'
-      redirect_to show_hubs_path(position: '1')
-    elsif current_user.student? && @type == 'tcc'
-      logger.debug 'LTI user identified as a student'
-      redirect_to show_tcc_path
-    elsif current_user.tutor? && @type == 'portfolio'
+      redirect_to tcc_path
+    elsif current_user.tutor?
       logger.debug 'LTI user identified as a tutor'
-      redirect_to tutor_index_path
-    elsif current_user.orientador? && @type == 'tcc'
+      redirect_to instructor_admin_path
+    elsif current_user.orientador?
       logger.debug 'LTI user identified as a leader'
-      redirect_to orientador_index_path
+      redirect_to instructor_admin_path
     elsif current_user.view_all?
       logger.debug 'LTI user is part of a view_all role'
       redirect_to instructor_admin_path
@@ -31,18 +46,21 @@ module Authentication
     end
   end
 
+  # FIX-ME: migrar para person
   class User
     attr_accessor :lti_tp
-    delegate :student?, :to => :lti_tp
+    attr_accessor :person
     delegate :admin?, :to => :lti_tp
 
     def initialize(lti_tp)
       @lti_tp = lti_tp
-      @app_type = @lti_tp.custom_params['type']
+      @person = Person.find_by(moodle_id: lti_tp.user_id)
+
+      raise PersonNotFoundError unless @person
     end
 
     def id
-      self.lti_tp.user_id
+      self.person.moodle_id
     end
 
     def instructor?
@@ -59,8 +77,7 @@ module Authentication
       if admin?
         true
       else
-        coordenador_avea? || (coordenador_tutoria? && @app_type == 'portfolio') ||
-            (coordenador_curso? && @app_type == 'tcc')
+        coordenador_avea? || coordenador_tutoria? || coordenador_curso?
       end
     end
 
@@ -84,10 +101,17 @@ module Authentication
       self.lti_tp.has_role?('urn:moodle:role/orientador')
     end
 
+    def student?
+      self.lti_tp.has_role?('urn:moodle:role/student') || self.lti_tp.has_role?('urn:lti:role:ims/lis/learner') || self.lti_tp.has_role?('student')
+    end
+
 
   end # User class
 
   module LTI
+
+    class CredentialsError < RuntimeError; end
+
     # Inicializa o Tool Provider e faz todas as checagens necessárias para garantir permissões
     # Caso encontre algum problema, redireciona para uma página de erro
     # Ao final do processo, salva na sessão as variáveis de inicialização do LTI para posterior reuso
@@ -102,8 +126,6 @@ module Authentication
 
 
     def initialize_tool_provider!
-      # TODO: criar tabela para armazenar consumer_key => consumer_secret
-
       key = params['oauth_consumer_key']
       instance_guid = params['tool_consumer_instance_guid']
 
@@ -111,12 +133,12 @@ module Authentication
       if key.blank? || key != Settings.consumer_key
         logger.error 'Invalid OAuth consumer key informed'
 
+        # TODO: Migrar para o metodo "rescue_from"
         @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
-
         @tp.lti_msg = "Your consumer didn't use a recognized key."
         @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
 
-        return show_error "Consumer key wasn't recognized"
+        raise CredentialsError.new("Consumer key wasn't recognized")
       end
 
       # Verifica se o host está autorizado a realizar a requisição
@@ -124,16 +146,15 @@ module Authentication
       if Settings.instance_guid && instance_guid != Settings.instance_guid
         logger.error 'Unauthorized instance guid'
 
+        # TODO: Migrar para o metodo "rescue_from"
         @tp = IMS::LTI::ToolProvider.new(nil, nil, params)
-
         @tp.lti_msg = 'You are not authorized to use this application. (Unauthorized instance guid)'
         @tp.lti_errorlog = 'Unauthorized guid'
 
-        return show_error 'Unauthorized instance guid'
+        raise CredentialsError.new('Unauthorized instance guid')
       end
 
       logger.debug 'LTI TP Initialized with valid key/secret'
-
       @tp = IMS::LTI::ToolProvider.new(key, Settings.consumer_secret, params)
 
       return true
@@ -142,13 +163,12 @@ module Authentication
     # Verifica a assinatura do OAuth
     def verify_oauth_signature!
 
-      # FIX-ME: Temporariamente removendo validação de assinaturas pois está quebrado em produção:
-      return true
-
       if !@tp.valid_request?(request)
+        signature = OAuth::Signature.sign(request, {:consumer_secret => Settings.consumer_secret})
         logger.error 'Invalid OAuth signature'
+        logger.error 'Should be: ' +signature
 
-        return show_error 'The OAuth signature was invalid'
+        raise CredentialsError.new('Invalid OAuth signature')
       end
 
       return true
@@ -161,7 +181,7 @@ module Authentication
       if Time.now.utc.to_i - @tp.oauth_timestamp.to_i > 60*60
         logger.error 'OAuth request failed TTL'
 
-        return show_error 'Your request is too old.'
+        raise CredentialsError.new('Your request is too old')
       end
 
       return true
@@ -172,11 +192,6 @@ module Authentication
       # @tp.request_oauth_nonce
 
       return true
-    end
-
-    def show_error(error_message)
-      render :inline => error_message, :status => 403
-      return false
     end
   end
 end

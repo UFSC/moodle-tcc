@@ -1,28 +1,33 @@
 <h3>Dados</h3>
-<%= semantic_form_for @tcc, url: save_tcc_path(:moodle_user => params[:moodle_user]) do |f| %>
+<%= semantic_form_for @tcc, url: tcc_path(moodle_user: params[:moodle_user]) do |f| %>
   <%= f.inputs do %>
-    <%= f.input :title, :input_html => {:style => 'width:450px;'} %>
-    <%= f.input :name, :input_html => {:style => 'width:450px;', :disabled => true, :value => @tcc.name} %>
-    <%= f.input :leader, :input_html => {:style => 'width:450px;', :disabled => true, :value => @nome_orientador} %>
+    <%= f.input :title, input_html: {style: 'width:450px;'} %>
+
+    <%= f.inputs :for => :student do |s| %>
+      <%= s.input :name, input_html: {style: 'width:450px;', disabled: true, value: @student.name} %>
+    <% end %>
+
+    <%= f.inputs :for => :orientador do |s| %>
+      <%= s.input :name, input_html: {style: 'width:450px;', disabled: true, value: @tcc.orientador.name} %>
+    <% end %>
+
     <% if @current_user.coordenador_avea? %>
-      <%= f.input :defense_date, :input_html => {:style => 'width:141px;'} %>
+      <%= f.input :defense_date, input_html: {style: 'width:141px;'} %>
     <% else %>
-      <%= f.input :defense_date, :as => :string, :input_html => {:style => 'width:450px;', :disabled => true,
-                                                                 :value => @tcc.defense_date} %>
+      <%= f.input :defense_date, :as => :string, input_html: {style: 'width:450px;', disabled: true,
+                                                              value: @tcc.defense_date} %>
     <% end %>
   <% end %>
 
   <%= f.actions do %>
-    <%= f.action :submit, :as => :input, :label => 'Salvar alterações' %>
+    <%= f.action :submit, :as => :input, label: 'Salvar alterações' %>
 
-    <%= link_to preview_tcc_path(@tcc.moodle_user), class: 'btn', target: '_blank' do %>
-      <%= display_icon('icon-list-alt') %>
-      Visualizar TCC
+    <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn', target: '_blank' do %>
+      <%= display_icon('icon-file') %> Pré-visualizar TCC
     <% end %>
 
-    <%= link_to generate_tcc_path(@tcc.moodle_user), class: 'btn btn-info', target: '_blank' do %>
-      <%= display_icon('icon-print') %>
-      Gerar TCC
+    <%= link_to generate_tcc_path(moodle_user: params[:moodle_user]), class: 'btn btn-info', target: '_blank' do %>
+      <%= display_icon('icon-print') %> Gerar documento do TCC
     <% end %>
   <% end %>
 <% end %>

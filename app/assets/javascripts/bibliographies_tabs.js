@@ -7,8 +7,8 @@ $(document).ready(function() {
     var tabs = $("ul#tabs li");
 
     if (hash == '') {
-        $('#geral').addClass('active');
-        $('#content-geral').removeClass('hidden');
+        $('#book').addClass('active');
+        $('#content-book').removeClass('hidden');
     } else {
         var component = tabs.find('[href=' + hash + ']').parent();
         component.addClass('active');

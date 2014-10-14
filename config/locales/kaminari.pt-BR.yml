@@ -1,8 +1,8 @@
 pt-BR:
   views:
     pagination:
-      first: "&laquo; Primeiro"
-      last: "Último &raquo;"
-      previous: "&lsaquo; Anterior"
-      next: "Próximo &rsaquo;"
-      truncate: "..."
+      first: '&laquo; Primeiro'
+      last: 'Último &raquo;'
+      previous: '&lsaquo; Anterior'
+      next: 'Próximo &rsaquo;'
+      truncate: '...'

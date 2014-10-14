@@ -17,7 +17,6 @@ SistemaTcc::Application.routes.draw do
   # Ajax
   match 'ajax/build' => 'ajax#build', via: [:get, :post]
 
-
   # Web Service
   match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}, via: [:get, :post]
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
@@ -25,47 +24,35 @@ SistemaTcc::Application.routes.draw do
   get 'ping' => 'service#ping'
 
   # TCC routes
-  get "tcc/(:moodle_user)" => 'tccs#show', as: 'show_tcc'
-  put "tcc" => 'tccs#save', as: 'save_tcc'
-  get "/tccs/:moodle_user/preview" => "tccs#preview_tcc", as: 'preview_tcc'
-  match '/tccs/:tcc_id/evaluate' => 'tccs#evaluate', :as => 'evaluate_tcc', via: [:get, :post]
-  get "/tccs/:moodle_user/generate", to: 'tccs#show_pdf', as: 'generate_tcc', defaults: {format: 'pdf'}
-  get "showreferences" => 'tccs#show_references', as: 'show_references'
-
-  # Abstracts
-  resource :abstracts do
-    member do
-      post 'update_state' => 'abstracts#update_state'
+  scope "/(user/:moodle_user)" do
+    resource :tcc, only: [:show, :update] do
+      member do
+        get 'preview'
+        get 'generate', defaults: {format: 'pdf'}
+      end
     end
-  end
-  resource :presentations do
-    member do
-      post 'update_state' => 'presentations#update_state'
-    end
-  end
-  resource :final_considerations do
-    member do
-      post 'update_state' => 'final_considerations#update_state'
-    end
-  end
 
-  # Hubs
-  get "hubs/:position" => "hubs#show", as: 'show_hubs'
-  match "hubs/:position" => "hubs#save", as: 'save_hubs', :via => [:pos, :patch, :put]
-  match "hubs" => "hubs#update_state", as: 'update_state_hubs', :via => [:patch]
-  get "hubs/tcc/:position" => "hubs#show_tcc", as: 'show_hubs_tcc'
+    resource :abstracts, only: [:show, :edit, :create, :update]
 
-  # Resources
-  resources :bibliographies
-  resources :general_refs
-  resources :book_refs
-  resources :book_cap_refs
-  resources :article_refs
-  resources :internet_refs
-  resources :legislative_refs
-  resources :thesis_refs
-  resources :orientador
-  resources :tutor
-  resources :compound_names
+    # Chapters
+    get 'chapters/:position' => 'chapters#show', as: 'show_chapters'
+    match 'chapters/:position' => 'chapters#save', as: 'save_chapters', via: [:pos, :patch, :put]
+    match 'chapters/:position/import' => 'chapters#import', as: 'import_chapters', via: [:get]
+    match 'chapters/:position/import' => 'chapters#execute_import', as: 'execute_import_chaptes', via: [:post]
+    match 'chapters/:position/empty' => 'chapters#empty', as: 'empty_chapters', via: [:get]
+
+    # Resources
+    resources :bibliographies
+    resources :book_refs
+    resources :book_cap_refs
+    resources :article_refs
+    resources :internet_refs
+    resources :legislative_refs
+    resources :thesis_refs
+    resources :compound_names
+
+    # FIXME: generalizar controller abaixo
+    resources :orientador
+  end
 
 end

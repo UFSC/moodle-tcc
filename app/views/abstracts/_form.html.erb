@@ -1,0 +1,21 @@
+<%= semantic_form_for @abstract, url: abstracts_path(moodle_user: params[:moodle_user]) do |h| %>
+  <div class="row">
+    <div class="rounded-border">
+      <h3>
+        Resumo
+        <%= " - #{@tcc.student.name}" unless @current_user.student? %>
+      </h3>
+
+      <%= h.cktext_area :content %>
+
+      <br/>
+      <%= h.input :keywords, input_html: {class: 'span12'} %>
+
+      <div class="form-actions">
+        <%= h.action :submit, :as => :input, label: 'Salvar Rascunho',
+                     button_html: {class: 'btn btn-primary'} %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

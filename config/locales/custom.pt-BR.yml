@@ -1,20 +1,23 @@
   pt-BR:
-    cannot_access_hub_without_grading: "Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio"
-    cannot_access_page_without_enough_permission: "Você não possui permissão para acessar esta página"
-    cannot_change_to_state_without_grade: "Não é possível alterar para este estado sem ter dado uma nota."
-    could_not_find: "Não pôde ser encontrado"
-    empty_diaries: "[ ainda não existe nada postado para esta atividade ]"
+    cannot_access_hub_without_grading: 'Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio'
+    cannot_access_page_without_enough_permission: 'Você não possui permissão para acessar esta página'
+    cannot_change_to_state_without_grade: 'Não é possível alterar para este estado sem ter dado uma nota.'
+    could_not_find: 'Não pôde ser encontrado'
+    empty_diaries: '[ ainda não existe nada postado para esta atividade ]'
     hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
-    invalid_state: "Estado selecionado é invádlio"
+    invalid_state: 'Estado selecionado é invádlio'
     label_confirm_message: 'Você tem certeza que deseja remover?'
     online_text_error: "<p style='color:red'>Erro ao buscar</p>"
     online_text_null: "<p style='color:red'>Tarefa ainda não feita</p>"
-    please_fix_invalid_data: "Por favor corrija os erros no formulário abaixo"
-    successfully_saved: "Mudanças salvas com sucesso"
-    successfully_deleted: "Removido com sucesso"
-    unsuccessfully_saved: "Mudanças não foram salvas"
-    unsuccessfully_deleted: "Não pode ser removido"
-    empty_text: "[ainda não existe texto para esta seção]"
-    empty_abstract: "[ainda não existe texto para o resumo]"
-    empty_tcc: "TCC não encontrado"
-    is_not_complete_name: "incompleto (o campo deve ter no mínimo 1 sobrenome)"
+    please_fix_invalid_data: 'Por favor corrija os erros no formulário abaixo'
+    successfully_saved: 'Mudanças salvas com sucesso'
+    successfully_deleted: 'Removido com sucesso'
+    unsuccessfully_saved: 'Mudanças não foram salvas'
+    unsuccessfully_deleted: 'Não pode ser removido'
+    empty_chapter: '[nenhum conteúdo foi produzido para este capítulo]'
+    empty_abstract: '[nenhum conteúdo foi produzido para o resumo]'
+    empty_abstract_keywords: '[ainda não existe palavras-chaves para o resumo]'
+    empty_tcc: 'TCC não encontrado'
+    is_not_complete_name: 'incompleto (o campo deve ter no mínimo 1 sobrenome)'
+    chapter_import_cannot_proceed: 'Não é possível realizar uma importação quando o capítulo já possúi conteúdo'
+    chapter_import_successfully: 'Importação concluída com sucesso!'

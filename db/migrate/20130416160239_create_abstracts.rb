@@ -1,9 +1,8 @@
 class CreateAbstracts < ActiveRecord::Migration
   def change
     create_table :abstracts do |t|
-      t.text :content_pt
-      t.string :key_words_pt
-      t.text :commentary
+      t.text :content, limit: 16.megabytes-1 # MySQL: MEDIUMTEXT
+      t.string :keywords
       t.references :tcc
 
       t.timestamps

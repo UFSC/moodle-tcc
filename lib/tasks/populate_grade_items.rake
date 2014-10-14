@@ -18,7 +18,7 @@ namespace :tcc do
     # rake tcc:populate_grade_items[102,'Eixo 3',2,3]
 
     puts '[WS Moodle] Acessando Web Service para criar itens de nota'
-    MoodleGrade.populate_grade_items(args[:courseid], args[:itemname], args[:lti_id], args[:itemnumber])
+    MoodleAPI::MoodleGrade.populate_grade_items(args[:courseid], args[:itemname], args[:lti_id], args[:itemnumber])
   end
 
 end

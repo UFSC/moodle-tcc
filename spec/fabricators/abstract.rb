@@ -1,5 +1,4 @@
 Fabricator(:abstract, :class_name => :abstract) do
-  commentary 'comment blaval'
-  content 'comment pt'
-  key_words 'keys pt'
+  content { Faker::Lorem.paragraph(20) }
+  keywords { Faker::Lorem.words(10).join(' ') }
 end

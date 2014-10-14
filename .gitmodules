@@ -1,3 +1,6 @@
 [submodule "app/assets/javascripts/ckeditor/plugins/citacao"]
 	path = app/assets/javascripts/ckeditor/plugins/citacao
 	url = git@gitlab.setic.ufsc.br:tcc-unasus/ckeditor-citacao.git
+[submodule "app/assets/javascripts/ckeditor/plugins/autogrow"]
+	path = app/assets/javascripts/ckeditor/plugins/autogrow
+	url = git@gitlab.setic.ufsc.br:tcc-unasus/ckeditor-autogrow.git

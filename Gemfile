@@ -35,9 +35,6 @@ gem 'typhoeus'
 gem 'rest-client'
 gem 'nokogiri'
 
-# State machine
-gem 'aasm'
-
 # Inherited Resources
 gem 'inherited_resources'
 
@@ -48,8 +45,8 @@ gem 'kaminari'
 gem 'tabs_on_rails'
 
 # LTI for moodle integration
-gem 'ims-lti'
-gem 'oauth'
+gem 'ims-lti', git: 'https://github.com/instructure/ims-lti'
+gem 'oauth-instructure'
 
 # Formulários e views
 gem 'formtastic', '~> 2.3'

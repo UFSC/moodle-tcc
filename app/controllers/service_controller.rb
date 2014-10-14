@@ -28,7 +28,7 @@ class ServiceController < ApplicationController
 
   def tcc_definition
     if params[:tcc_definition_id]
-      @tcc_definition = TccDefinition.where(id: params[:tcc_definition_id]).includes(hub_definitions:
+      @tcc_definition = TccDefinition.where(id: params[:tcc_definition_id]).includes(chapter_definitions:
                                                                                          [:diary_definitions]).first
       render 'service/tcc_definition', status: :ok
     else

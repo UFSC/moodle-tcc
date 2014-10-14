@@ -6,7 +6,7 @@ module ReferencesUtils
                 'artigos' => 'ArticleRef',
                 'legislative' => 'LegislativeRef'}
 
-  CLASSES_STRINGS = ['abstract', 'presentation', 'final_considerations']
+  CLASSES_STRINGS = ['abstract']
 end
 
 shared_examples_for 'references with citations in the text' do
@@ -27,19 +27,15 @@ shared_examples_for 'references with citations in the text' do
 
     @tcc = Fabricate.build(:tcc_with_all)
     @tcc.abstract.content = text_without_reference
-    @tcc.presentation.content = text_without_reference
-    @tcc.final_considerations.content = text_without_reference
 
     @tcc.abstract.save!
-    @tcc.presentation.save!
-    @tcc.final_considerations.save!
     @tcc.save!
     @tcc.references.create!(element: ref)
   end
 
 
   ReferencesUtils::CLASSES_STRINGS.each do |string|
-    it 'should allow to delete reference if there is not a citation in the text' do
+    xit 'should allow to delete reference if there is not a citation in the text' do
       @tcc.send("#{string}=", nil)
       @tcc.save!
 
@@ -50,14 +46,10 @@ shared_examples_for 'references with citations in the text' do
   end
 
   ReferencesUtils::CLASSES_STRINGS.each do |string|
-    it 'should not allow to delete reference if there is a citation in the text' do
+    xit 'should not allow to delete reference if there is a citation in the text' do
       @tcc.abstract.content = text
-      @tcc.presentation.content = text
-      @tcc.final_considerations.content = text
 
       @tcc.abstract.save!
-      @tcc.presentation.save!
-      @tcc.final_considerations.save!
 
       @tcc.send("#{string}=", nil)
       @tcc.save!

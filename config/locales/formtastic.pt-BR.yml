@@ -2,7 +2,7 @@
     formtastic:
       actions:
         create: "Criar %{model}"
-        update: "Salvar mudanças"
-        reset: "Resetar formulário"
-        cancel: "Cancelar e voltar"
+        update: 'Salvar mudanças'
+        reset: 'Resetar formulário'
+        cancel: 'Cancelar e voltar'
       required: 'Atributo obrigatório'

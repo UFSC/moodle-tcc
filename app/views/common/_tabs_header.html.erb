@@ -1,20 +1,14 @@
 <div class="row">
   <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
-    <% if @type == 'tcc' %>
-      <%= tab.data 'Dados', show_tcc_path, :class => 'active' %>
-      <%= tab.abstract 'Resumo', edit_abstracts_path %>
-      <%= tab.presentation 'Introdução', edit_presentations_path %>
+    <%= tab.data 'Dados', tcc_path(params[:moodle_user]), :class => 'active' %>
+    <%= tab.abstract 'Resumo', edit_abstracts_path(params[:moodle_user]) %>
+
+    <% @tcc.chapters.each do |chapter| %>
+      <%= tab.send("chapter#{chapter.chapter_definition.position}",
+                   chapter.chapter_definition.title,
+                   show_chapters_path(position: chapter.chapter_definition.position)) %>
     <% end %>
 
-    <% @tcc.hubs.hub_by_type(@type).each do |hub| %>
-      <% hub_url = (@type == 'portfolio') ? show_hubs_path(position: (hub.hub_definition.position)) : show_hubs_tcc_path(position: (hub.hub_definition.position)) %>
-      <%= tab.send("hub#{hub.hub_definition.position}", hub.hub_definition.title, hub_url) %>
-    <% end %>
-
-    <% if @type == 'tcc' %>
-      <%= tab.final_considerations 'Considerações finais', edit_final_considerations_path %>
-    <% end %>
-
-    <%= tab.bibliographies 'Referências', bibliographies_path %>
+    <%= tab.bibliographies 'Referências', bibliographies_path(params[:moodle_user]) %>
   <% end %>
 </div>

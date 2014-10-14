@@ -1,6 +1,5 @@
-<%= semantic_form_for @thesis_ref do |ref| %>
+<%= semantic_form_for @thesis_ref, url: polymorphic_path(@thesis_ref, moodle_user: params[:moodle_user]) do |ref| %>
   <div id="data_tab_content">
-    <input type="hidden" name="moodle_user" value="<%= j params[:moodle_user] %>"/>
     <%= ref.inputs do %>
       <div class="span4">
         <%= ref.input :author %>

@@ -36,18 +36,15 @@ pt-BR:
   activerecord:
     attributes:
       tcc:
-        leader: "Orientador"
-        grade: "Nota"
-        name: "Nome"
-        title: "Título"
-        defense_date: "Data da defesa"
+        name: 'Nome'
+        title: 'Título'
+        defense_date: 'Data da defesa'
       abstract:
-        content_pt: "Resumo"
-        content_en: "Abstract"
-        key_words: "Palavras chaves"
-      hub:
-        reflection: "Reflexões"
-        reflection_title: 'Título'
+        content_pt: 'Resumo'
+        content_en: 'Abstract'
+        keywords: 'Palavras chaves'
+      chapter:
+        content: 'Conteúdo'
       general_ref:
         direct_citation: 'Citação Direta'
         indirect_citation: 'Citação Indireta'
@@ -141,3 +138,10 @@ pt-BR:
       internet_ref: 'Referência da Internet'
       legislative_ref: 'Referência do Legislativo'
       thesis_ref: 'Referência de Tese ou Monografia'
+  formtastic:
+    labels:
+      tcc:
+        student:
+          name: 'Estudante'
+        orientador:
+          name: 'Orientador'

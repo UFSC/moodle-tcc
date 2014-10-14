@@ -1,0 +1,20 @@
+<%= semantic_form_for @chapter, url: save_chapters_path(position: @chapter.position) do |h| %>
+  <%= h.input :position, :as => :hidden %>
+
+  <div class="row">
+    <div class="rounded-border">
+      <h3>
+        <%= @chapter.chapter_definition.title %>
+        <%= " - #{@tcc.student.name}" unless @current_user.student? %>
+      </h3>
+
+      <%= h.cktext_area :content %>
+
+      <div class="form-actions">
+        <%= h.action :submit, :as => :input, label: 'Salvar Rascunho',
+                     button_html: {class: 'btn btn-primary'} %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

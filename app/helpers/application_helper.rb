@@ -29,7 +29,7 @@ module ApplicationHelper
 
   def moodle_user_meta_tag
     if @tcc
-      tag('meta', :name => 'moodle-user', :content => @tcc.moodle_user)
+      tag('meta', :name => 'moodle-user', :content => @tcc.student.moodle_id)
     end
   end
 

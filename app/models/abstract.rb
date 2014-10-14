@@ -1,12 +1,9 @@
 class Abstract < ActiveRecord::Base
-  include TccStateMachine
   belongs_to :tcc
 
-  attr_accessible :commentary, :content, :key_words
-
-  validates :content, presence: true, unless: Proc.new { |abstract| abstract.new? }
+  attr_accessible :content, :keywords
 
   def empty?
-    self.content.blank? && self.key_words.blank?
+    self.content.blank? && self.keywords.blank?
   end
 end

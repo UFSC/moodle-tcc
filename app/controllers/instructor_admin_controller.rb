@@ -6,34 +6,45 @@ class InstructorAdminController < ApplicationController
   before_action :check_permission
 
   def index
-    tcc_definition_id = @tp.custom_params['tcc_definition']
+    tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
+    tccs = tcc_searchable(tcc_definition)
 
-    if @type == 'portfolio'
-      search_options = {eager_load: [:tcc_definition]}
+    search_options = {eager_load: [:abstract, :tcc_definition]}
+    @tccs = tccs.search(params[:search], params[:page], search_options)
 
-      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).search(
-          params[:search], params[:page], search_options)
+    @chapters = tcc_definition.chapter_definitions.map { |h| h.title }
+  end
 
-      @hubs = Tcc.hub_names
-      render 'portfolio'
-    else
-      search_options = {eager_load: [:abstract, :presentation, :tcc_definition, :final_considerations]}
+  def autocomplete_tcc_name
+    term = params[:term]
 
-      @tccs = Tcc.where(tcc_definition_id: tcc_definition_id).search(
-          params[:search], params[:page], search_options)
+    tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
+    tccs = tcc_searchable(tcc_definition)
 
-      @hubs = Tcc.hub_names
-      render 'tcc'
-    end
+    @tccs = tccs.search(term, 0)
+
+    render :json => @tccs.map { |tcc| {:id => tcc.id, :label => tcc.student.name, :value => tcc.student.name} }
   end
 
   protected
 
   def check_permission
-    unless current_user.view_all?
-      flash[:error] = t(:cannot_access_page_without_enough_permission)
+    unless current_user.view_all? || current_user.tutor? || current_user.orientador?
+      flash[:error] = t('cannot_access_page_without_enough_permission')
       redirect_user_to_start_page
     end
+  end
+
+  def tcc_searchable(tcc_definition)
+    tccs = Tcc.includes(:student, chapters: [:chapter_definition]).where(tcc_definition_id: tcc_definition.id)
+
+    if current_user.orientador?
+      tccs = tccs.where(orientador_id: current_user.person.id)
+    elsif current_user.tutor?
+      tccs = tccs.where(tutor_id: current_user.person.id)
+    end
+
+    tccs
   end
 
 

@@ -1,0 +1,15 @@
+#tcc-table {
+  td.status, th.status {
+    text-align: center;
+  }
+
+  td.status a {
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+  }
+
+  td.status.new {
+    background: #e1e1e1;
+  }
+}

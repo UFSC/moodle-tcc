@@ -6,10 +6,10 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'rack_session_access/capybara'
 
-
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/controllers/shared_examples/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   # ## Mock Framework

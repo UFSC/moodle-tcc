@@ -1,0 +1,60 @@
+<table class="table table-bordered" id="tcc-table">
+  <thead>
+  <tr class="blue-header-table">
+    <th>Estudante</th>
+    <th class="status">Resumo</th>
+    <% @chapters.each do |chapter_name| %>
+      <th class="status"><%= chapter_name %></th>
+    <% end %>
+    <th>Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tccs.each do |tcc| %>
+
+    <tr>
+      <td>
+        <%= student_name(tcc) %>
+      </td>
+
+      <%= status_cell(tcc.abstract, edit_abstracts_path(moodle_user: tcc.student.moodle_id)) %>
+
+      <% tcc.chapter_definitions.each do |chapter_definition| %>
+        <% chapter = tcc.chapters.select { |chapter| chapter.position == chapter_definition.position }.first %>
+
+        <%= status_cell(chapter, show_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
+      <% end %>
+      <td>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <%= display_icon('icon-tasks') %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu pull-right">
+            <li>
+              <%= link_to tcc_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-edit') %> Editar informações
+              <% end %>
+            </li>
+            <li>
+              <%= link_to bibliographies_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-book') %> Editar bibliografia
+              <% end %>
+            </li>
+            <li>
+              <%= link_to preview_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-file') %> Pré-visualizar TCC
+              <% end %>
+            </li>
+            <li>
+              <%= link_to generate_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
+                <%= display_icon('icon-print') %> Gerar documento do TCC
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

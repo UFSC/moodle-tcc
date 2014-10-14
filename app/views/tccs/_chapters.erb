@@ -1,0 +1,14 @@
+%% Para cada capitulo
+<% @chapters.each do |chapter| %>
+
+  %% Título de cada capítulo está no chapter_definition
+  <% if chapter.is_numbered_title %>
+    \chapter{<%= lesc chapter.title %>}
+  <% else %>
+    \chapter*{<%= lesc chapter.title %>}
+    \addcontentsline{toc}{chapter}{<%= lesc chapter.title %>}
+  <% end %>
+  %% Conteudo do diário
+  <%= chapter.content.try(:html_safe) %>
+
+<% end %>
