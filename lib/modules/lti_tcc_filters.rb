@@ -6,11 +6,11 @@ module LtiTccFilters
   end
 
   def self.included(base)
-    base.before_action :authorize
+    base.before_action :authorize_lti
     base.before_action :get_tcc
   end
 
-  def authorize
+  def authorize_lti
     lti_params = session['lti_launch_params']
 
     if lti_params.nil?

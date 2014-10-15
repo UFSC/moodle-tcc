@@ -4,6 +4,8 @@ class TccsController < ApplicationController
 
   def show
     set_tab :data
+    authorize @tcc
+
     @student = @tcc.student.decorate
   end
 

@@ -19,6 +19,11 @@ gem 'twitter-bootstrap-rails-confirm'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 
+# Pundit provides a set of helpers which guide you in leveraging regular Ruby classes
+# and object oriented design patterns to build a simple, robust and scaleable
+# authorization system.
+gem 'pundit'
+
 # Auxilia a migração para Rails 4
 gem 'rails4_upgrade'
 
