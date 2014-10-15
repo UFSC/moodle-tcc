@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Authentication
   include LtiTccFilters
+  include Pundit
 
   before_action :allow_iframe
   protect_from_forgery with: :exception

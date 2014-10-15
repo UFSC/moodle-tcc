@@ -248,6 +248,8 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    pundit (0.3.0)
+      activesupport (>= 3.0.0)
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rabl (0.11.0)
@@ -442,6 +444,7 @@ DEPENDENCIES
   progress
   protected_attributes (~> 1.0.1)
   pry-rails (~> 0.3.2)
+  pundit
   quiet_assets
   rabl
   rack_session_access
