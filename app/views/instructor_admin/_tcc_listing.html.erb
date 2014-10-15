@@ -1,19 +1,19 @@
 <table class="table table-bordered" id="tcc-table">
   <thead>
   <tr class="blue-header-table">
-    <th>Estudante</th>
+    <th class="name">Estudante</th>
     <th class="status">Resumo</th>
     <% @chapters.each do |chapter_name| %>
       <th class="status"><%= chapter_name %></th>
     <% end %>
-    <th>Ações</th>
+    <th class="action">Ações</th>
   </tr>
   </thead>
   <tbody>
   <% @tccs.each do |tcc| %>
 
     <tr>
-      <td>
+      <td class="name">
         <%= student_name(tcc) %>
       </td>
 
@@ -24,7 +24,7 @@
 
         <%= status_cell(chapter, show_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
       <% end %>
-      <td>
+      <td class="action">
         <div class="btn-group">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
             <%= display_icon('icon-tasks') %>

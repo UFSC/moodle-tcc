@@ -1,0 +1,33 @@
+#tcc-table {
+  th.status, th.action {
+    text-align: center;
+  }
+
+  th.name {
+    width: 100%;
+  }
+
+  td.status {
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+  }
+  td.status a {
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  td.status.new {
+    background: #e1e1e1;
+
+    a {
+      color: gray
+    }
+  }
+
+  td.action {
+    vertical-align: middle;
+  }
+}
