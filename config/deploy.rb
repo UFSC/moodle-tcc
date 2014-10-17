@@ -4,10 +4,13 @@
 set :whenever_variables, -> { "stage=#{fetch(:stage)}" }
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
+# Configurações do deploy padrão Capistrano:
 set :application, 'tcc.unasus.ufsc.br'
 set :repo_url, 'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
 set :scm, :git
 set :git_strategy, Capistrano::Git::SubmoduleStrategy
+
+set :bundle_binstubs, nil # não gerar binstubs via bundler, por causa do Rails 4.x
 
 # set :format, :pretty
 set :log_level, :info
@@ -23,7 +26,7 @@ set :config_files, %w{config/database.yml config/email.yml config/errbit.yml con
 set :config_example_prefix, '.example'
 
 set :linked_files, fetch(:config_files)
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/assets public/uploads}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/assets public/uploads}
 
 set :default_env, {'LANG' => 'pt_BR.UTF-8'}
 set :keep_releases, 10
