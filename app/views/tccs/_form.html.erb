@@ -8,10 +8,14 @@
     <% end %>
 
     <%= f.inputs :for => :orientador do |s| %>
-      <%= s.input :name, input_html: {style: 'width:450px;', disabled: true, value: @tcc.orientador.name} %>
+      <%= s.input :name, input_html: {style: 'width:450px;', disabled: true,
+                                      value: @tcc.orientador.nil? ?
+                                              "ATENÇÃO: Sem orientador definido, "+
+                                              "informe à secretaria do curso!" :
+                                              @tcc.orientador.name} %>
     <% end %>
 
-    <% if @current_user.coordenador_avea? %>
+    <% if policy(@tcc).can_edit_defense_date? %>
       <%= f.input :defense_date, input_html: {style: 'width:141px;'} %>
     <% else %>
       <%= f.input :defense_date, :as => :string, input_html: {style: 'width:450px;', disabled: true,

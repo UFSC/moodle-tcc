@@ -18,7 +18,7 @@ module Authentication
   # @return [Integer] ID do Moodle User
   def current_moodle_user
     @moodle_user ||=
-      if (current_user.instructor? || current_user.orientador? || current_user.view_all?) && params['moodle_user']
+      if (current_user.instructor? || current_user.view_all?) && params['moodle_user']
         params['moodle_user']
       else
         current_user.id
@@ -46,7 +46,7 @@ module Authentication
     end
   end
 
-  # FIX-ME: migrar para person
+  # FIXME: migrar para person
   class User
     attr_accessor :lti_tp
     attr_accessor :person
@@ -66,6 +66,8 @@ module Authentication
     def instructor?
       if self.lti_tp.instructor?
         true
+      elsif orientador?
+        true
       elsif tutor?
         true
       else
@@ -77,6 +79,7 @@ module Authentication
       if admin?
         true
       else
+        # os coordenadores devem ser inscritos na disciplina para que possam ser autenticados pelo LTI
         coordenador_avea? || coordenador_tutoria? || coordenador_curso?
       end
     end

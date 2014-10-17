@@ -1,14 +1,16 @@
 <div class="row">
-  <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
-    <%= tab.data 'Dados', tcc_path(params[:moodle_user]), :class => 'active' %>
-    <%= tab.abstract 'Resumo', edit_abstracts_path(params[:moodle_user]) %>
+  <% if policy(@tcc).can_show_tabs_header?  %>
+    <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
+      <%= tab.data 'Dados', tcc_path(params[:moodle_user]), :class => 'active' %>
+      <%= tab.abstract 'Resumo', edit_abstracts_path(params[:moodle_user]) %>
 
-    <% @tcc.chapters.each do |chapter| %>
-      <%= tab.send("chapter#{chapter.chapter_definition.position}",
-                   chapter.chapter_definition.title,
-                   show_chapters_path(position: chapter.chapter_definition.position)) %>
+      <% @tcc.chapters.each do |chapter| %>
+        <%= tab.send("chapter#{chapter.chapter_definition.position}",
+                     chapter.chapter_definition.title,
+                     show_chapters_path(position: chapter.chapter_definition.position)) %>
+      <% end %>
+
+      <%= tab.bibliographies 'Referências', bibliographies_path(params[:moodle_user]) %>
     <% end %>
-
-    <%= tab.bibliographies 'Referências', bibliographies_path(params[:moodle_user]) %>
   <% end %>
 </div>
