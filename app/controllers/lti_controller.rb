@@ -1,6 +1,6 @@
 # encoding: utf-8
 class LtiController < ApplicationController
-  skip_before_action :authorize
+  skip_before_action :authorize_lti
   skip_before_action :get_tcc
   skip_before_action :verify_authenticity_token
 

@@ -5,13 +5,13 @@
     <div class="rounded-border">
       <h3>
         <%= @chapter.chapter_definition.title %>
-        <%= " - #{@tcc.student.name}" unless @current_user.student? %>
+        <%= " - #{@tcc.student.name}" if policy(@tcc).can_identify_student? %>
       </h3>
 
       <%= h.cktext_area :content %>
 
       <div class="form-actions">
-        <%= h.action :submit, :as => :input, label: 'Salvar Rascunho',
+        <%= h.action :submit, :as => :input, label: 'Salvar Texto',
                      button_html: {class: 'btn btn-primary'} %>
       </div>
     </div>

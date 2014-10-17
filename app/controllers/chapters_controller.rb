@@ -22,16 +22,21 @@ class ChaptersController < ApplicationController
     #
     # Estudante
     #
-    if current_user.student?
+    #if current_user.student?
       if @chapter.valid? && @chapter.save
         flash[:success] = t(:successfully_saved)
         return redirect_to show_chapters_path(position: @chapter.position.to_s)
       end
+=begin
     else
+      #FIXME: Roberto: rever o roteamento quando for instrutor, aqui e no absrtact_controller.rb
+      # se for instrutor e salvar: mantem editando.
+      # se for instrutor e devolver para estudante: fecha a tela? (SIM) pois quando abriu a edição veio em nova aba
       if @chapter.valid? && @chapter.save
         return redirect_user_to_start_page
       end
     end
+=end
 
     # falhou, precisamos re-exibir as informações
     set_tab ('chapter'+params[:position]).to_sym

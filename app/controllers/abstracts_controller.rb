@@ -1,7 +1,8 @@
 # encoding: utf-8
 class AbstractsController < ApplicationController
   def edit
-    @current_user = current_user
+    # FIXME: Roberto: verificar com Gabriel se linha abaixo pode ser retirada.
+    #@current_user = current_user
     set_tab :abstract
     @abstract = @tcc.abstract || @tcc.build_abstract
   end

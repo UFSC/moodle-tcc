@@ -29,8 +29,8 @@ class InstructorAdminController < ApplicationController
   protected
 
   def check_permission
-    unless current_user.view_all? || current_user.tutor? || current_user.orientador?
-      flash[:error] = t('cannot_access_page_without_enough_permission')
+    unless current_user.view_all? || current_user.instructor?
+      raise Authentication::UnauthorizedError.new(t('cannot_access_page_without_enough_permission'))
       redirect_user_to_start_page
     end
   end
