@@ -3,6 +3,7 @@ class BibliographiesController < ApplicationController
 
   def index
     set_tab :bibliographies
+    authorize(@tcc, :show?)
 
     @references = @tcc.references.includes(:element).collect { |r| r.element }
     @book_refs = @tcc.book_refs.decorate

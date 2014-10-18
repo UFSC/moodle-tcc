@@ -19,7 +19,7 @@ describe ApplicationController do
 
   context 'when raises a PersonNotFoundError' do
     controller do
-      skip_before_action :authorize
+      skip_before_action :authorize_lti
       skip_before_action :get_tcc
 
       def custom
@@ -37,7 +37,7 @@ describe ApplicationController do
 
   context 'when raises a CredentialsError' do
     controller do
-      skip_before_action :authorize
+      skip_before_action :authorize_lti
       skip_before_action :get_tcc
 
       def index

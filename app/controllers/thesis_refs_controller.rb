@@ -9,8 +9,12 @@ class ThesisRefsController < ApplicationController
     @thesis_refs = @tcc.thesis_refs.decorate
   end
 
+  def edit
+    @thesis_ref = @tcc.thesis_refs.find(params[:id])
+  end
+
   def show
-    @thesis_ref = ThesisRef.find(params[:id]).decorate
+    @thesis_ref = @tcc.thesis_refs.find(params[:id]).decorate
   end
 
   def create
@@ -41,7 +45,7 @@ class ThesisRefsController < ApplicationController
   end
 
   def destroy
-    @thesis_ref = ThesisRef.find(params[:id])
+    @thesis_ref = @tcc.thesis_refs.find(params[:id])
     if @thesis_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else

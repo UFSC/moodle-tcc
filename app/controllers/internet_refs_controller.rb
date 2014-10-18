@@ -8,8 +8,12 @@ class InternetRefsController < ApplicationController
     @internet_refs = @tcc.internet_refs.decorate
   end
 
+  def edit
+    @internet_ref = @tcc.internet_refs.find(params[:id])
+  end
+
   def show
-    @internet_ref = InternetRef.find(params[:id]).decorate
+    @internet_ref = @tcc.internet_refs.find(params[:id]).decorate
   end
 
   def create
@@ -39,7 +43,7 @@ class InternetRefsController < ApplicationController
   end
 
   def destroy
-    @internet_ref = InternetRef.find(params[:id])
+    @internet_ref = @tcc.internet_refs.find(params[:id])
     if @internet_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else

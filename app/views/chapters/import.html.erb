@@ -3,17 +3,19 @@
   <% if @chapter.empty? %>
     <% if @can_import %>
       <div class="hero-unit">
+        <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
         <h2>Não existe conteúdo ainda neste capítulo:</h2>
 
         <h4>Para iniciar este capítulo, você deve importar o texto realizado na atividade do Moodle:</h4>
         <br/>
-        <%= form_tag execute_import_chaptes_path do %>
+        <%= form_tag execute_import_chapters_path(moodle_user: @tcc.student.moodle_id) do %>
           <%= submit_tag 'Importar texto da atividade do Moodle', class: 'btn btn-large btn-primary' %>
         <% end %>
 
       </div>
     <% else %>
       <div class="hero-unit">
+        <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
         <h2>Não existe conteúdo ainda neste capítulo</h2>
 
         <h3>Você deve concluir primeiro a atividade no Moodle. </h3>

@@ -3,7 +3,7 @@
     <div class="rounded-border">
       <h3>
         Resumo
-        <%= " - #{@tcc.student.name}" if policy(@tcc).can_identify_student? %>
+        <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
       </h3>
 
       <%= h.cktext_area :content %>

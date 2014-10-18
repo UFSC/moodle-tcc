@@ -8,8 +8,12 @@ class BookRefsController < ApplicationController
     @book_refs = @tcc.book_refs.decorate
   end
 
+  def edit
+    @book_ref = @tcc.book_refs.find(params[:id])
+  end
+
   def show
-    @book_ref = BookRef.find(params[:id]).decorate
+    @book_ref = @tcc.book_refs.find(params[:id]).decorate
   end
 
   def create
@@ -29,7 +33,7 @@ class BookRefsController < ApplicationController
   end
 
   def update
-    @book_ref = BookRef.find(params[:id])
+    @book_ref = @tcc.book_refs.find(params[:id])
     @book_ref.attributes = params[:book_ref]
     @book_ref.num_quantity = '' if @book_ref.type_quantity.empty?
     update! do |success, failure|
@@ -42,7 +46,8 @@ class BookRefsController < ApplicationController
   end
 
   def destroy
-    @book_ref = BookRef.find(params[:id])
+    # FIXME: somente o estudante pode remover
+    @book_ref = @tcc.book_refs.find(params[:id])
     if @book_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else

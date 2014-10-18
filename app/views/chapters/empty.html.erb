@@ -2,7 +2,7 @@
   <%= render 'common/tabs_header' %>
 
   <div class="hero-unit">
-    <h4><%= "#{@tcc.student.name}" if policy(@tcc).can_identify_student? %></h4>
+    <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
     <h2>Não existe conteúdo ainda neste capítulo:</h2>
     <h4>Para iniciar este capítulo, o estudante precisa importar o texto realizado na atividade do Moodle.</h4>
   </div>

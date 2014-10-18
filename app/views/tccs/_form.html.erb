@@ -15,7 +15,7 @@
                                               @tcc.orientador.name} %>
     <% end %>
 
-    <% if policy(@tcc).can_edit_defense_date? %>
+    <% if policy(@tcc).edit_defense_date? %>
       <%= f.input :defense_date, input_html: {style: 'width:141px;'} %>
     <% else %>
       <%= f.input :defense_date, :as => :string, input_html: {style: 'width:450px;', disabled: true,

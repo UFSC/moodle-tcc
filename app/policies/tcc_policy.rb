@@ -14,26 +14,49 @@ class TccPolicy < ApplicationPolicy
     false
   end
 
+  def create?
+    save?
+  end
+
+  def save?
+    show?
+  end
+
+  def edit?
+    save?
+  end
+
+  def update?
+    save?
+  end
+
   def list?
     false
   end
 
-  def can_edit_defense_date?
-    return user.coordenador_avea? || user.admin?
+  def edit_defense_date?
+    user.coordenador_avea? || user.admin?
   end
 
   # Apresenta as tabs somente para o estudante, pois para os outros o acesso aos itens do TCC será pela lista
-  def can_show_tabs_header?
-    return user.student?
+  def show_tabs_header?
+    user.student?
   end
 
   # Identifica o nome do estudante caso as telas não sejam abertas por abas
-  def can_identify_student?
-    return !can_show_tabs_header?
+  def show_student?
+    !show_tabs_header?
   end
 
-  def can_work_with_compound_names?
-    return (user.coordenador_avea? || user.admin?)
+  def show_compound_names?
+    (user.coordenador_avea? || user.admin?)
+  end
+
+  def import_chapters?
+    if user.student?
+      return record.student_id == user.person.id
+    end
+    show_compound_names?
   end
 
   class Scope < Scope

@@ -6,6 +6,7 @@ describe TccPolicy do
 
   subject { TccPolicy }
 
+=begin
   permissions ".scope" do
     pending "add some examples to (or delete) #{__FILE__}"
   end
@@ -25,4 +26,5 @@ describe TccPolicy do
   permissions :destroy? do
     pending "add some examples to (or delete) #{__FILE__}"
   end
+=end
 end

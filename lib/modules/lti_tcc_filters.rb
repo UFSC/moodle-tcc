@@ -23,7 +23,9 @@ module LtiTccFilters
     end
 
     if current_user.student? && (!params[:moodle_user].nil? && !params[:moodle_user].empty?)
-      raise Authentication::UnauthorizedError.new('Você não pode acessar dados de outro usuário')
+      if params[:moodle_user].to_i != (current_user.person.moodle_id)
+        raise Authentication::UnauthorizedError.new('Você não pode acessar dados de outro usuário')
+      end
     end
   end
 

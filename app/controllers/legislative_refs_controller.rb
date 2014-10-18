@@ -8,8 +8,12 @@ class LegislativeRefsController < ApplicationController
     @legislative_refs = @tcc.legislative_refs.decorate
   end
 
+  def edit
+    @legislative_ref = @tcc.legislative_refs.find(params[:id])
+  end
+
   def show
-    @legislative_ref = LegislativeRef.find(params[:id]).decorate
+    @legislative_ref = @tcc.legislative_refs.find(params[:id]).decorate
   end
 
   def create
@@ -39,7 +43,7 @@ class LegislativeRefsController < ApplicationController
   end
 
   def destroy
-    @legislative_ref = LegislativeRef.find(params[:id])
+    @legislative_ref = @tcc.legislative_refs.find(params[:id])
     if @legislative_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else

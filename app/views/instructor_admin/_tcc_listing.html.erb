@@ -22,7 +22,7 @@
       <% tcc.chapter_definitions.each do |chapter_definition| %>
         <% chapter = tcc.chapters.select { |chapter| chapter.position == chapter_definition.position }.first %>
 
-        <%= status_cell(chapter, show_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
+        <%= status_cell(chapter, edit_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
       <% end %>
       <td class="action">
         <div class="btn-group">

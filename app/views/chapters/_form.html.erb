@@ -5,7 +5,7 @@
     <div class="rounded-border">
       <h3>
         <%= @chapter.chapter_definition.title %>
-        <%= " - #{@tcc.student.name}" if policy(@tcc).can_identify_student? %>
+        <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
       </h3>
 
       <%= h.cktext_area :content %>

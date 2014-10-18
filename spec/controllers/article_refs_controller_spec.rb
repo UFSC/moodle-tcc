@@ -10,7 +10,7 @@ describe ArticleRefsController do
   context 'Actions with parameters' do
     it 'Should not be able to access show without start and LTI session' do
       bypass_rescue
-      expect{ (get :show, {:id => 0}) }.to raise_error(Authentication::UnauthorizedError)
+      expect{ (get :edit, {:id => 0}) }.to raise_error(Authentication::UnauthorizedError)
     end
 
     it 'Should not be able to access update without start and LTI session' do

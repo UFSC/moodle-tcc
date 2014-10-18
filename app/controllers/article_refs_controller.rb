@@ -8,8 +8,12 @@ class ArticleRefsController < ApplicationController
     @article_refs = @tcc.article_refs.decorate
   end
 
+  def edit
+    @article_ref = @tcc.article_refs.find(params[:id])
+  end
+
   def show
-    @article_ref = ArticleRef.find(params[:id]).decorate
+    @article_ref = @tcc.article_refs.find(params[:id]).decorate
   end
 
   def create
@@ -39,7 +43,7 @@ class ArticleRefsController < ApplicationController
   end
 
   def destroy
-    @article_ref = ArticleRef.find(params[:id])
+    @article_ref = @tcc.article_refs.find(params[:id])
     if @article_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else

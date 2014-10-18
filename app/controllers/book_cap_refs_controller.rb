@@ -8,8 +8,12 @@ class BookCapRefsController < ApplicationController
     @book_cap_refs = @tcc.book_cap_refs.decorate
   end
 
+  def edit
+    @book_cap_ref = @tcc.book_cap_refs.find(params[:id])
+  end
+
   def show
-    @book_cap_ref = BookCapRef.find(params[:id]).decorate
+    @book_cap_ref = @tcc.book_cap_refs.find(params[:id]).decorate
   end
 
   def create
@@ -39,7 +43,7 @@ class BookCapRefsController < ApplicationController
   end
 
   def destroy
-    @book_cap_ref = BookCapRef.find(params[:id])
+    @book_cap_ref = @tcc.book_cap_refs.find(params[:id])
     if @book_cap_ref.destroy
       flash[:success] = t(:successfully_deleted)
     else
