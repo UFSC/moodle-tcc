@@ -8,7 +8,7 @@
     <% end %>
 
     <%= f.inputs :for => :orientador do |s| %>
-      <%= s.input :name, input_html: {style: 'width:450px;', disabled: true, value: @tcc.orientador.name} %>
+      <%= s.input :name, input_html: {style: 'width:450px;', disabled: true, value: @tcc.orientador.try(:name)} %>
     <% end %>
 
     <% if @current_user.coordenador_avea? %>
