@@ -46,3 +46,17 @@ Fabricator(:tcc_with_all, :class_name => :tcc, :from => :tcc) do
     tcc.reload
   end
 end
+
+# Valid TCC with all Hubs and Diaries and their definitions
+Fabricator(:tcc_with_all_memory, :class_name => :tcc, :from => :tcc_memory) do
+
+  # Vamos gerar 3 capítulos
+  chapters(count: 3) { |attrs, i| Fabricate.build(:chapter, position: i) }
+
+  # Após a criação, vamos atribuir o tcc_definition
+  after_create do |tcc, transients|
+    tcc.tcc_definition = Fabricate.build(:tcc_definition_with_all)
+    tcc.save!
+    tcc.reload
+  end
+end

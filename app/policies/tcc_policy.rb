@@ -33,10 +33,12 @@ class TccPolicy < ApplicationPolicy
     false
   end
 
+  # Verifica se pode exibir a lista de TCCs
   def show_scope?
     (user.view_all? || user.instructor?)
   end
 
+  # Verifica se pode editar a data de defesa
   def edit_defense_date?
     user.coordenador_avea? || user.admin?
   end
@@ -51,10 +53,12 @@ class TccPolicy < ApplicationPolicy
     !show_tabs_header?
   end
 
+  # Verifica se pode apresentar a ferramenta de Nomes Composto (na bibliografia)
   def show_compound_names?
     (user.coordenador_avea? || user.admin?)
   end
 
+  # Verifica se pode importar os capítulos das atividades do Moodle
   def import_chapters?
     if user.student?
       return record.student_id == user.person.id
