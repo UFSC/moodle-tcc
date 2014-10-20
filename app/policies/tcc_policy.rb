@@ -1,14 +1,13 @@
 class TccPolicy < ApplicationPolicy
-
   def show?
     if user.view_all?
       return true
     elsif user.student?
-      return record.student_id == user.person.id
+      return record.student.id == user.person.id
     elsif user.orientador?
-      return record.orientador_id == user.person.id
+      return record.orientador.id == user.person.id
     elsif user.tutor?
-      return record.tutor_id == user.person.id
+      return record.tutor.id == user.person.id
     end
 
     false
@@ -32,6 +31,10 @@ class TccPolicy < ApplicationPolicy
 
   def list?
     false
+  end
+
+  def show_scope?
+    (user.view_all? || user.instructor?)
   end
 
   def edit_defense_date?
@@ -61,7 +64,15 @@ class TccPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope
+      if user.view_all?
+        return scope
+      elsif user.orientador?
+        return scope.where(orientador_id: user.person.id)
+      elsif user.tutor?
+        return scope.where(tutor_id: user.person.id)
+      end
+      #limita o acesso ao próprio usuário logado
+      scope.where(student_id: user.person.id)
     end
   end
 end

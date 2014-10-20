@@ -6,6 +6,7 @@ class InstructorAdminController < ApplicationController
   before_action :check_permission
 
   def index
+    authorize(Tcc, :show_scope?)
     tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
     tccs = tcc_searchable(tcc_definition)
 
@@ -28,7 +29,6 @@ class InstructorAdminController < ApplicationController
 
   protected
 
-  # TODO: colocar no tcc_policy.rb
   def check_permission
     unless current_user.view_all? || current_user.instructor?
       raise Authentication::UnauthorizedError.new(t('cannot_access_page_without_enough_permission'))
@@ -36,17 +36,9 @@ class InstructorAdminController < ApplicationController
     end
   end
 
-  # TODO: colocar no tcc_policy.rb
   def tcc_searchable(tcc_definition)
-    tccs = Tcc.includes(:student, chapters: [:chapter_definition]).where(tcc_definition_id: tcc_definition.id)
-
-    if current_user.orientador?
-      tccs = tccs.where(orientador_id: current_user.person.id)
-    elsif current_user.tutor?
-      tccs = tccs.where(tutor_id: current_user.person.id)
-    end
-
-    tccs
+    tccList = Tcc.includes(:student, chapters: [:chapter_definition]).where(tcc_definition_id: tcc_definition.id)
+    policy_scope(tccList)
   end
 
 
