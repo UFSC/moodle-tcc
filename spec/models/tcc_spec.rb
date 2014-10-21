@@ -19,7 +19,7 @@ describe Tcc do
 
   describe 'referencias' do
     before(:each) do
-      @tcc = Fabricate(:tcc)
+      @tcc = Fabricate(:tcc_memory)
       @ref = Fabricate(:general_ref)
     end
 

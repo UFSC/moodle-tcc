@@ -43,10 +43,10 @@ describe TccPolicy do
   end
 
   after :all do
-    @tcc_1.destroy
-    @tcc_2.destroy
-    @tcc_3.destroy
-    @other_tcc.destroy
+    #@tcc_1.destroy
+    #@tcc_2.destroy
+    #@tcc_3.destroy
+    #@other_tcc.destroy
   end
 
   permissions :show? do
@@ -389,4 +389,81 @@ describe TccPolicy do
       expect(TccPolicy).not_to permit(@tcc_2_tutor, @other_tcc)
     end
   end
+
+  context 'Na política do TCC: [' do
+    let(:scope) { Tcc.includes(:student, chapters: [:chapter_definition]) }
+    subject(:policy_scope) { TccPolicy::Scope.new(user, scope).resolve }
+
+    permissions '.scope' do
+      context '] verifica se o usuário estudante' do
+        let(:user)  { @tcc_1_user }
+        it 'pode ver o seu tcc 1' do
+          expect(policy_scope).to include(@tcc_1)
+        end
+
+        it 'nao pode ver o tcc de outro estudante' do
+          expect(policy_scope).not_to include(@tcc_2)
+        end
+
+        it 'pode ver o seu tcc 2' do
+          expect(Pundit.policy_scope(@tcc_2_user, scope)).to include(@tcc_2)
+        end
+      end
+
+      context '] verifica se o usuário com ViewAll[' do
+        context 'admin' do
+          let (:user) { Authentication::User.new fake_lti_tp('administrator') }
+          it '] pode ver todos os TCCs' do
+            expect(policy_scope).to include(@tcc_1,@tcc_2,@tcc_3,@other_tcc)
+          end
+        end
+      end
+    end
+  end
+=begin
+  describe ".policy_scope" do
+    it "returns an instantiated policy scope given a plain model class" do
+      expect(Pundit.policy_scope(user, Post)).to eq :published
+    end
+
+    it "returns an instantiated policy scope given an active model class" do
+      expect(Pundit.policy_scope(user, Comment)).to eq Comment
+    end
+
+    it "returns nil if the given policy scope can't be found" do
+      expect(Pundit.policy_scope(user, Article)).to be_nil
+    end
+  end
+
+  permissions ".scope" do
+    context "for an ordinary user" do
+      let(:user)  { User.new(:admin => false) }
+
+      it "hides unpublished post" do
+        post = Post.create(:published => false)
+        expect(policy_scope).to eq []
+      end
+
+      it "shows published post" do
+        post = Post.create(:published => true)
+        expect(policy_scope).to eq [post]
+      end
+    end
+
+    context "for an admin user" do
+      let(:user)  { User.new(:admin => true) }
+
+      it "shows unpublished post" do
+        post = Post.create(:published => false)
+        expect(policy_scope).to eq [post]
+      end
+
+      it "shows published post" do
+        post = Post.create(:published => true)
+        expect(policy_scope).to eq [post]
+      end
+    end
+  end
+=end
+
 end
