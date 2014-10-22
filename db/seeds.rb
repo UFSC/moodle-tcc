@@ -37,3 +37,18 @@ create_or_update_tcc_definitions(internal_name: 'Turma A (210000092)',
                                  definitions: definition,
                                  course_id: 230,
                                  activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322')
+
+#
+# TCC Definition - Turma B (210000092)
+#
+definition = [
+    {title: 'Introdução', coursemodule_id: 5203, is_numbered_title: false},
+    {title: 'Objetivo', coursemodule_id: 5204, is_numbered_title: true},
+    {title: 'Revisão da Literatura', is_numbered_title: true},
+    {title: 'Metodologia', is_numbered_title: true},
+    {title: 'Resultados Esperados', is_numbered_title: true},
+]
+create_or_update_tcc_definitions(internal_name: 'Turma B (210000092)',
+                                 definitions: definition,
+                                 course_id: 258,
+                                 activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322')
