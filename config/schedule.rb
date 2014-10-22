@@ -20,7 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 
 set :output, 'log/sync-cron.log'
-job_type :rake, 'cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bundle exec rake :task :output'
+job_type :rake, 'cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bin/rake :task :output'
 
 # CRONTAB da produção
 if @stage == 'production'
