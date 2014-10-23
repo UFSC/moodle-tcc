@@ -6,7 +6,8 @@ module Conversor
                      'livros' => 'BookRef',
                      'capítulos' => 'BookCapRef',
                      'artigos' => 'ArticleRef',
-                     'legislative' => 'LegislativeRef'}
+                     'legislative' => 'LegislativeRef',
+                     'thesis' => 'ThesisRef'}
 
   CITACAO_TYPE = {'cd' => :direct_citation, 'ci' => :indirect_citation}
 
@@ -38,13 +39,7 @@ module Conversor
   end
 
   def self.get_decorator_element(ref)
-    if(ref.class == BookRef || ref.class == BookCapRef || ref.class == InternetRef || ref.class == ArticleRef)
-      return GenericReferenceDecorator.new(ref)
-    elsif ref.class == GeneralRef
-      return ref
-    else
-      return ref.decorate
-    end
+    return ref.decorate
   end
 
   def self.get_citacao(tcc, attr)

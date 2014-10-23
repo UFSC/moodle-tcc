@@ -134,12 +134,27 @@ describe ArticleRef do
         article_ref1.save!
       end
 
-      xit 'should invoke check_difference' do
-        article_ref1 = Fabricate.build(:article_ref)
-        article_ref1.first_author = 'Autor A10'
-        expect(article_ref1).to receive(:check_difference)
+      it 'should invoke check_difference' do
+        reference = Fabricate.build(:article_ref)
+        reference.save!
+        #expect(reference).to receive(:check_equality)
 
-        article_ref1.save!
+        @tcc = Fabricate(:tcc_with_all)
+        @tcc.references.create!(element: reference)
+        reference.reload
+        @tcc.abstract.content = "<p>#{Faker::Lorem.paragraph(1)}
+                                    #{build_tag_citacao(reference.decorate,
+                                                        'ci',
+                                                        reference.decorate.indirect_citation)}
+                                    #{Faker::Lorem.paragraph(1)}</p>"
+        @tcc.abstract.save!
+        @tcc.save!
+
+        # changed reference
+        reference.first_author = 'Autor A100'
+        expect(reference).to receive(:check_difference)
+
+        reference.save!
       end
 
       it 'subtype should be nil' do
@@ -222,7 +237,7 @@ describe ArticleRef do
   end
 
   it_should_behave_like 'references with citations in the text' do
-    let(:ref) { Fabricate.build(:article_ref) }
+    let(:reference) { Fabricate(:article_ref) }
   end
 
 end

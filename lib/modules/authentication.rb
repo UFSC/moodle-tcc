@@ -28,18 +28,18 @@ module Authentication
   # Redireciona o usuário atual para a página de início relativa as permissões de acesso dele
   #
   def redirect_user_to_start_page
-    if current_user.student?
-      logger.debug 'LTI user identified as a student'
-      redirect_to tcc_path
-    elsif current_user.tutor?
-      logger.debug 'LTI user identified as a tutor'
+    if current_user.view_all?
+      logger.debug 'LTI user is part of a view_all role'
       redirect_to instructor_admin_path
     elsif current_user.orientador?
       logger.debug 'LTI user identified as a leader'
       redirect_to instructor_admin_path
-    elsif current_user.view_all?
-      logger.debug 'LTI user is part of a view_all role'
+    elsif current_user.tutor?
+      logger.debug 'LTI user identified as a tutor'
       redirect_to instructor_admin_path
+    elsif current_user.student?
+      logger.debug 'LTI user identified as a student'
+      redirect_to tcc_path
     else
       logger.error "LTI user identified as an unsupported role: '#{@tp.roles}'"
       redirect_to access_denied_path
@@ -55,8 +55,11 @@ module Authentication
     def initialize(lti_tp)
       @lti_tp = lti_tp
       @person = Person.find_by(moodle_id: lti_tp.user_id)
-
-      raise PersonNotFoundError unless @person
+      # se puder ver todos os usuários
+      # não precisa estar sincronizado/cadastrado no sistema de TCC
+      if !view_all?
+        raise PersonNotFoundError unless @person
+      end
     end
 
     def id
@@ -79,9 +82,12 @@ module Authentication
       if admin?
         true
       else
-        # os coordenadores devem ser inscritos na disciplina para que possam ser autenticados pelo LTI
         coordenador_avea? || coordenador_tutoria? || coordenador_curso?
       end
+    end
+
+    def admin?
+      self.lti_tp.has_role?('urn:lti:sysrole:ims/lis/administrator') || self.lti_tp.has_role?('administrator')
     end
 
     def coordenador_avea?
@@ -107,7 +113,6 @@ module Authentication
     def student?
       self.lti_tp.has_role?('urn:moodle:role/student') || self.lti_tp.has_role?('urn:lti:role:ims/lis/learner') || self.lti_tp.has_role?('student')
     end
-
 
   end # User class
 
@@ -141,7 +146,8 @@ module Authentication
         @tp.lti_msg = "Your consumer didn't use a recognized key."
         @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
 
-        raise CredentialsError.new("Consumer key wasn't recognized")
+        #raise CredentialsError.new("Consumer key wasn't recognized")
+        raise Authentication::LTI::CredentialsError.new("'Consumer key' não foi reconhecida")
       end
 
       # Verifica se o host está autorizado a realizar a requisição
@@ -154,7 +160,8 @@ module Authentication
         @tp.lti_msg = 'You are not authorized to use this application. (Unauthorized instance guid)'
         @tp.lti_errorlog = 'Unauthorized guid'
 
-        raise CredentialsError.new('Unauthorized instance guid')
+        #raise CredentialsError.new('Unauthorized instance guid')
+        raise Authentication::LTI::CredentialsError.new('Unauthorized instance guid')
       end
 
       logger.debug 'LTI TP Initialized with valid key/secret'
@@ -171,7 +178,8 @@ module Authentication
         logger.error 'Invalid OAuth signature'
         logger.error 'Should be: ' +signature
 
-        raise CredentialsError.new('Invalid OAuth signature')
+        #raise CredentialsError.new('Invalid OAuth signature')
+        raise Authentication::LTI::CredentialsError.new('Invalid OAuth signature')
       end
 
       return true

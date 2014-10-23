@@ -58,6 +58,29 @@ describe LegislativeRef do
         legislative_ref1.save!
       end
 
+      it 'should invoke check_difference' do
+        reference = Fabricate.build(:legislative_ref)
+        reference.save!
+        #expect(reference).to receive(:check_equality)
+
+        @tcc = Fabricate(:tcc_with_all)
+        @tcc.references.create!(element: reference)
+        reference.reload
+        @tcc.abstract.content = "<p>#{Faker::Lorem.paragraph(1)}
+        #{build_tag_citacao(reference.decorate,
+                            'ci',
+                            reference.decorate.indirect_citation)}
+        #{Faker::Lorem.paragraph(1)}</p>"
+        @tcc.abstract.save!
+        @tcc.save!
+
+        # changed reference
+        reference.publisher = 'Autor A100'
+        expect(reference).to receive(:check_difference)
+
+        reference.save!
+      end
+
       it 'subtype should be nil' do
         legislative_ref1 = Fabricate.build(:legislative_ref)
         legislative_ref1.publisher = 'Autor A1'
@@ -154,7 +177,7 @@ describe LegislativeRef do
   end
 
   it_should_behave_like 'references with citations in the text' do
-    let(:ref) { Fabricate.build(:legislative_ref) }
+    let(:reference) { Fabricate(:legislative_ref) }
   end
 
 end

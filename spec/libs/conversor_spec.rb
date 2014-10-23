@@ -13,17 +13,8 @@ describe Conversor do
       tcc.references.create!(element: ref)
       tcc.references.create!(element: ref1)
 
-      if ref.class == GeneralRef
-        @ref = ref
-      else
-        @ref = ref.decorate
-      end
-
-      if ref1.class == GeneralRef
-        @ref1 = ref1
-      else
-        @ref1 = ref1.decorate
-      end
+      @ref = ref.decorate
+      @ref1 = ref1.decorate
     end
 
     it 'should not modify a text without citation' do
@@ -134,13 +125,6 @@ describe Conversor do
     end
   end
 
-  describe 'general_refs' do
-    it_should_behave_like "citation" do
-      let(:ref) { Fabricate(:general_ref) }
-      let(:ref1) { Fabricate(:general_ref) }
-    end
-  end
-
   describe 'internet_refs' do
     it_should_behave_like "citation" do
       let(:ref) { Fabricate(:internet_ref) }
@@ -155,23 +139,24 @@ describe Conversor do
     end
   end
 
-  def build_tag_citacao(model, citacao_type, text)
-    unless model.class == GeneralRef
-      object = model.object
-    else
-      object = model
+  describe 'thesis_refs' do
+    it_should_behave_like "citation" do
+      let(:ref) { Fabricate(:thesis_ref) }
+      let(:ref1) { Fabricate(:thesis_ref) }
     end
-  %Q(<citacao citacao-text="#{model.title}" citacao_type="#{CITACAO_TYPES[citacao_type]}" class="citacao-class")+" "+
-  %Q(contenteditable="false" id="#{model.id}" ref-type="#{Conversor::REFERENCES_TYPE.invert[object.class.to_s]}")+" "+
-  %Q(title="#{text}" reference_id="#{object.reference.id}">#{text}</citacao>)
+  end
+
+  def build_tag_citacao(model, citacao_type, text)
+    object = model.object
+
+    %Q(<citacao citacao-text="#{model.title}" citacao_type="#{CITACAO_TYPES[citacao_type]}" class="citacao-class")+" "+
+        %Q(contenteditable="false" id="#{model.id}" ref-type="#{Conversor::REFERENCES_TYPE.invert[object.class.to_s]}")+" "+
+        %Q(title="#{text}" reference_id="#{object.reference.id}">#{text}</citacao>)
   end
 
   def old_citacao_text(model, title)
-    unless model.class == GeneralRef
-      object = model.object
-    else
-      object = model
-    end
+    object = model.object
+
     "[[#{Conversor::REFERENCES_TYPE.invert[object.class.to_s]}#{model.id} #{title}]]"
   end
 

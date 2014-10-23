@@ -7,7 +7,6 @@ describe Tcc do
   it { should respond_to(:defense_date, :orientador, :student, :title, :tutor) }
 
   it { should have_many(:references) }
-  it { should have_many(:general_refs).through(:references) }
   it { should have_many(:book_refs).through(:references) }
   it { should have_many(:book_cap_refs).through(:references) }
   it { should have_many(:article_refs).through(:references) }
@@ -18,9 +17,12 @@ describe Tcc do
   it { should_not allow_mass_assignment_of :name }
 
   describe 'referencias' do
+    let(:reference_type) { [:article_ref, :book_cap_ref, :book_ref, :internet_ref, :legislative_ref,
+                            :thesis_ref].sample }
+
     before(:each) do
       @tcc = Fabricate(:tcc_memory)
-      @ref = Fabricate(:general_ref)
+      @ref = Fabricate(reference_type)
     end
 
     after(:each) do
@@ -38,7 +40,7 @@ describe Tcc do
       expect(@tcc.references.count).to eq(1)
       expect(@tcc.references.first.element.hash).to eq(@ref.hash)
 
-      novo = Fabricate(:general_ref)
+      novo = Fabricate(reference_type)
 
       @tcc.references.create(:element => novo)
       expect(@tcc.references.count).to eq(2)

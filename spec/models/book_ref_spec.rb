@@ -28,12 +28,6 @@ describe BookRef do
     it { should validate_presence_of(:publisher) }
   end
 
-  context 'authors' do
-    it_should_behave_like "authors with first and lastname" do
-      let(:ref) { Fabricate(:book_ref) }
-    end
-  end
-
   describe '#edition_number' do
     it { should validate_numericality_of(:edition_number).only_integer }
     it { should_not allow_value(-1).for(:edition_number) }
@@ -64,6 +58,29 @@ describe BookRef do
         book_ref1 = Fabricate.build(:book_ref)
         expect(book_ref1).to receive(:check_equality)
         book_ref1.save!
+      end
+
+      it 'should invoke check_difference' do
+        reference = Fabricate.build(:book_ref)
+        reference.save!
+        #expect(reference).to receive(:check_equality)
+
+        @tcc = Fabricate(:tcc_with_all)
+        @tcc.references.create!(element: reference)
+        reference.reload
+        @tcc.abstract.content = "<p>#{Faker::Lorem.paragraph(1)}
+        #{build_tag_citacao(reference.decorate,
+                            'ci',
+                            reference.decorate.indirect_citation)}
+        #{Faker::Lorem.paragraph(1)}</p>"
+        @tcc.abstract.save!
+        @tcc.save!
+
+        # changed reference
+        reference.first_author = 'Autor A100'
+        expect(reference).to receive(:check_difference)
+
+        reference.save!
       end
 
       it 'subtype should be nil' do
@@ -139,14 +156,20 @@ describe BookRef do
     end
   end
 
+  context 'authors' do
+    it_should_behave_like 'authors with first and lastname' do
+      let(:ref) { Fabricate(:book_ref) }
+    end
+  end
+
   context '#indirect_citation' do
-    it_should_behave_like "indirect_citation with more than one author" do
+    it_should_behave_like 'indirect_citation with more than one author' do
       let(:ref) { Fabricate(:book_ref) }
     end
   end
 
   it_should_behave_like 'references with citations in the text' do
-    let(:ref) { Fabricate.build(:book_ref) }
+    let(:reference) { Fabricate(:book_ref) }
   end
 
 end

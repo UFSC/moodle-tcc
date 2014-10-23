@@ -130,6 +130,29 @@ describe BookCapRef do
         book_cap_ref1.save!
       end
 
+      it 'should invoke check_difference' do
+        reference = Fabricate.build(:book_cap_ref)
+        reference.save!
+        #expect(reference).to receive(:check_equality)
+
+        @tcc = Fabricate(:tcc_with_all)
+        @tcc.references.create!(element: reference)
+        reference.reload
+        @tcc.abstract.content = "<p>#{Faker::Lorem.paragraph(1)}
+        #{build_tag_citacao(reference.decorate,
+                            'ci',
+                            reference.decorate.indirect_citation)}
+        #{Faker::Lorem.paragraph(1)}</p>"
+        @tcc.abstract.save!
+        @tcc.save!
+
+        # changed reference
+        reference.first_entire_author = 'Autor A100'
+        expect(reference).to receive(:check_difference)
+
+        reference.save!
+      end
+
       it 'subtype should be nil' do
         book_cap_ref1 = Fabricate.build(:book_cap_ref)
         book_cap_ref1.first_entire_author = 'Autor A1'
@@ -204,12 +227,14 @@ describe BookCapRef do
 
     end
   end
+
   context '#indirect_citation' do
     it_should_behave_like "indirect_citation with more than one author" do
       let(:ref) { Fabricate(:book_cap_ref) }
     end
   end
+
   it_should_behave_like 'references with citations in the text' do
-    let(:ref) { Fabricate.build(:book_cap_ref) }
+    let(:reference) { Fabricate(:book_cap_ref) }
   end
 end

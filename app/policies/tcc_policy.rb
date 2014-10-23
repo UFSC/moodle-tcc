@@ -2,12 +2,12 @@ class TccPolicy < ApplicationPolicy
   def show?
     if user.view_all?
       return true
-    elsif user.student?
-      return record.student.id == user.person.id
     elsif user.orientador?
       return record.orientador.id == user.person.id
     elsif user.tutor?
       return record.tutor.id == user.person.id
+    elsif user.student?
+      return record.student.id == user.person.id
     end
 
     false
@@ -74,6 +74,7 @@ class TccPolicy < ApplicationPolicy
         return scope.where(orientador_id: user.person.id)
       elsif user.tutor?
         return scope.where(tutor_id: user.person.id)
+        #return scope.where(tutor_id: 0)
       end
       #limita o acesso ao próprio usuário logado
       scope.where(student_id: user.person.id)

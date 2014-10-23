@@ -4,7 +4,9 @@ describe SyncTcc do
 
   let(:tcc_definition) { Fabricate(:tcc_definition) }
   let(:sync) { SyncTcc.new(tcc_definition) }
+  let(:other_sync) { SyncTcc.new(tcc_definition) }
   let(:student) { Fabricate(:person) }
+  let(:other_student) { Fabricate(:person) }
   let(:tutor) { Fabricate.build(:person) }
   let(:orientador) { Fabricate.build(:person) }
 
@@ -51,7 +53,10 @@ describe SyncTcc do
 
 
   context 'when a TCC is created' do
+    let(:_tutor) { Fabricate.build(:person) }
+    let(:_orientador) { Fabricate.build(:person) }
     let(:_tutor_updated) { Fabricate.build(:person) }
+    let(:student_attributes) { Fabricate.attributes_for(:person) }
 
     before do
       allow(sync).to receive(:get_tutor) { tutor }
@@ -64,19 +69,32 @@ describe SyncTcc do
       expect(Tcc.where(student: student).exists?).to be true
     end
 
-    xit 'expects to be updated' do
-      allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [255] }
-      allow(sync).to receive(:get_tutor) { _tutor }
-      allow(sync).to receive(:get_orientador) { _orientador }
+    it 'expects to be updated' do
+      sync.send(:synchronize_tcc, student)
+      sync.send(:synchronize_tcc, other_student)
+
+      @tcc = Tcc.find_by_student_id(student.id)
+      moodle_id_orientador = @tcc.orientador.moodle_id
+      @other_tcc = Tcc.find_by_student_id(other_student.id)
+      moodle_id_other_orientador = @other_tcc.orientador.moodle_id
+      @course_id = @tcc.tcc_definition.course_id
+      @other_course_id = @other_tcc.tcc_definition.course_id
+      allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [@course_id] }
 
       sync.call
 
-      allow_any_instance_of(sync).to receive(:get_tutor) { _tutor_updated }
+      @tcc.orientador.moodle_id.should == moodle_id_orientador
+
+      allow(other_sync).to receive(:get_tutor) { _tutor_updated }
+      @tcc.orientador = @other_tcc.orientador
+      @tcc.save!
+
+      @tcc.orientador.moodle_id.should == moodle_id_other_orientador
 
       sync.call
 
-      moodle_id_tutor = _tutor.moodle_id
-      expect { Tcc.find_by_student_id 255 }.to change { moodle_id_tutor }.from(moodle_id_tutor).to(_tutor_updated.moodle_id)
+      @tcc.orientador.moodle_id.should == moodle_id_orientador
+
     end
   end
 end
