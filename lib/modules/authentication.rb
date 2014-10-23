@@ -146,7 +146,6 @@ module Authentication
         @tp.lti_msg = "Your consumer didn't use a recognized key."
         @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
 
-        #raise CredentialsError.new("Consumer key wasn't recognized")
         raise Authentication::LTI::CredentialsError.new("'Consumer key' não foi reconhecida")
       end
 
@@ -160,7 +159,6 @@ module Authentication
         @tp.lti_msg = 'You are not authorized to use this application. (Unauthorized instance guid)'
         @tp.lti_errorlog = 'Unauthorized guid'
 
-        #raise CredentialsError.new('Unauthorized instance guid')
         raise Authentication::LTI::CredentialsError.new('Unauthorized instance guid')
       end
 
@@ -178,7 +176,6 @@ module Authentication
         logger.error 'Invalid OAuth signature'
         logger.error 'Should be: ' +signature
 
-        #raise CredentialsError.new('Invalid OAuth signature')
         raise Authentication::LTI::CredentialsError.new('Invalid OAuth signature')
       end
 

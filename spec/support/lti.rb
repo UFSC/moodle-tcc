@@ -3,9 +3,13 @@ require 'spec_helper'
 
 def moodle_lti_params(roles = 'student')
   @tcc ||= Fabricate(:tcc_with_all)
-
   tc = IMS::LTI::ToolConsumer.new(Settings.consumer_key, Settings.consumer_secret)
-  tc.launch_url = URI.parse(Settings.moodle_url).merge!('/mod/lti/service.php').to_s
+  begin
+    tc.launch_url = root_url
+  rescue
+    tc.launch_url = "http://www.example.com/"
+  end
+  tc.lis_outcome_service_url = URI.parse(Settings.moodle_url).merge!('/mod/lti/service.php').to_s
   tc.resource_link_id = 1
   tc.roles = roles
   tc.user_id = @tcc.student.moodle_id
