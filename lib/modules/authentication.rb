@@ -82,7 +82,12 @@ module Authentication
       if admin?
         true
       else
-        coordenador_avea? || coordenador_tutoria? || coordenador_curso?
+        # tirado o coordenador de tutoria de ter o acesso de visão geral, posi os tutores não terão permissão de
+        # acesso nessa versão da ferramenta
+        #
+        # coordenador_avea? || coordenador_tutoria? || coordenador_curso?
+        #TODO: esperando o coordenador
+        coordenador_avea? || coordenador_curso?
       end
     end
 
@@ -103,7 +108,10 @@ module Authentication
     end
 
     def tutor?
-      self.lti_tp.has_role?('urn:moodle:role/td')
+      # tirado o tutor de ter o acesso à ferramenta
+      #
+      # self.lti_tp.has_role?('urn:moodle:role/td')
+      false
     end
 
     def orientador?

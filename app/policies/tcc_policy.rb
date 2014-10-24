@@ -73,8 +73,9 @@ class TccPolicy < ApplicationPolicy
       elsif user.orientador?
         return scope.where(orientador_id: user.person.id)
       elsif user.tutor?
-        return scope.where(tutor_id: user.person.id)
-        #return scope.where(tutor_id: 0)
+        # como o
+        #return scope.where(tutor_id: user.person.id)
+        return scope.where(tutor_id: 0)
       end
       #limita o acesso ao próprio usuário logado
       scope.where(student_id: user.person.id)

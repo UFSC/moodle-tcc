@@ -1,0 +1,3 @@
+class AbstractPolicy < ChapterPolicy
+
+end
