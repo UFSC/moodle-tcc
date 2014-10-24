@@ -6,6 +6,12 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'rack_session_access/capybara'
 
+# Simple Coverage
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
