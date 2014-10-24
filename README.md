@@ -2,7 +2,7 @@ Sistema de TCCs
 ===============
 
 [![build
-status](http://gitlabci.setic.ufsc.br/projects/3/status.png?ref=master)](http://gitlabci.setic.ufsc.br/projects/3?ref=master)
+status](https://gitlabci.setic.ufsc.br/projects/3/status.png?ref=master)](https://gitlabci.setic.ufsc.br/projects/3?ref=master)
 
 Sistema de controle e criação de TCCs dos estudantes da UNA-SUS curso Saúde da Família.
 
