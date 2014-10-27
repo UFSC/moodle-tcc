@@ -45,6 +45,8 @@ pt-BR:
         keywords: 'Palavras chaves'
       chapter:
         content: 'Conteúdo'
+      chapter_comment:
+        comment: 'Comentário'
       general_ref:
         direct_citation: 'Citação Direta'
         indirect_citation: 'Citação Indireta'

@@ -23,6 +23,8 @@ SistemaTcc::Application.routes.draw do
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
 
+  resources :chapter_comments
+
   # TCC routes
   scope "/(user/:moodle_user)" do
     resource :tcc, only: [:show, :update] do
@@ -32,7 +34,7 @@ SistemaTcc::Application.routes.draw do
       end
     end
 
-    resource :abstracts, only: [:show, :edit, :create, :update]
+    resource :abstracts, only: [:edit, :create, :update]
 
     # Chapters
     get 'chapters/:position' => 'chapters#edit', as: 'edit_chapters'

@@ -1,12 +1,9 @@
 class Tcc < ActiveRecord::Base
   attr_accessible :moodle_user, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
-                  :abstract_attributes, :chapters_attributes,
-                  :final_considerations_attributes, :presentation_attributes
+                  :abstract_attributes, :chapters_attributes
 
   has_many :chapters, :inverse_of => :tcc
-  has_one :presentation, :inverse_of => :tcc
   has_one :abstract, :inverse_of => :tcc
-  has_one :final_considerations, :inverse_of => :tcc
 
   belongs_to :tcc_definition, :inverse_of => :tccs
 
@@ -25,7 +22,7 @@ class Tcc < ActiveRecord::Base
   belongs_to :tutor, class_name: 'Person'
   belongs_to :orientador, class_name: 'Person'
 
-  accepts_nested_attributes_for :chapters, :presentation, :abstract, :final_considerations
+  accepts_nested_attributes_for :chapters, :abstract
 
   scope :ordered, -> { joins(:student).order('people.name') }
 

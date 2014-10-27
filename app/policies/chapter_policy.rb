@@ -1,5 +1,9 @@
 class ChapterPolicy < ApplicationPolicy
 
+  def show?
+    false
+  end
+
   def edit?
     Pundit.policy(@user, @record.tcc).edit?
   end
@@ -41,6 +45,12 @@ class ChapterPolicy < ApplicationPolicy
       return (status == 'submitted')
     end
     false
+  end
+
+  def edit_comment?
+    if user.orientador?
+      return record.tcc.orientador.id == user.person.id
+    end
   end
 
   class Scope < Scope

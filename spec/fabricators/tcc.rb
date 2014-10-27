@@ -6,29 +6,21 @@ Fabricator(:tcc_without_dependencies, :class_name => :tcc) do
   defense_date { Date.today }
 end
 
-Fabricator(:tcc_without_dependencies_memory, :class_name => :tcc) do
-  title { Faker::Lorem.sentence(3) }
-  student { Fabricate.build(:person) }
-
-  defense_date { Date.today }
-end
-
 Fabricator(:tcc, :from => :tcc_without_dependencies, :class_name => :tcc) do
-  abstract
   tutor { Fabricate(:person) }
+  abstract
   orientador { Fabricate(:person) }
 
   chapters(count: 3) { |attrs, i| Fabricate(:chapter, position: i) }
 end
 
-Fabricator(:tcc_memory, :from => :tcc_without_dependencies_memory, :class_name => :tcc) do
-  abstract
-  tutor { Fabricate.build(:person) }
-  orientador { Fabricate.build(:person) }
+Fabricator(:tcc_with_comments, :from => :tcc_without_dependencies, :class_name => :tcc) do
+  tutor { Fabricate(:person) }
+  abstract { Fabricate(:abstract_with_comment) }
+  orientador { Fabricate(:person) }
 
-  chapters(count: 3) { |attrs, i| Fabricate.build(:chapter, position: i) }
+  chapters(count: 3) { |attrs, i| Fabricate(:chapter_with_comment, position: i) }
 end
-
 Fabricator(:tcc_with_definitions, :class_name => :tcc, :from => :tcc) do
   tcc_definition
 end
@@ -48,14 +40,11 @@ Fabricator(:tcc_with_all, :class_name => :tcc, :from => :tcc) do
 end
 
 # Valid TCC with all Hubs and Diaries and their definitions
-Fabricator(:tcc_with_all_memory, :class_name => :tcc, :from => :tcc_memory) do
-
-  # Vamos gerar 3 capítulos
-  chapters(count: 3) { |attrs, i| Fabricate.build(:chapter, position: i) }
+Fabricator(:tcc_with_all_comments, :class_name => :tcc, :from => :tcc_with_comments) do
 
   # Após a criação, vamos atribuir o tcc_definition
   after_create do |tcc, transients|
-    tcc.tcc_definition = Fabricate.build(:tcc_definition_with_all)
+    tcc.tcc_definition = Fabricate(:tcc_definition_with_all)
     tcc.save!
     tcc.reload
   end

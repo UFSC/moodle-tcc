@@ -21,7 +21,7 @@ describe Tcc do
                             :thesis_ref].sample }
 
     before(:each) do
-      @tcc = Fabricate(:tcc_memory)
+      @tcc = Fabricate(:tcc)
       @ref = Fabricate(reference_type)
     end
 
