@@ -59,7 +59,7 @@ module MoodleAPI
         if data.is_a?(Hash) && data.has_key?('exception')
           @error = HashWithIndifferentAccess.new(data)
 
-          Rails.logger.error "Webservice do Moodle informou uma falha: #{data['message']} (ERROR_CODE: #{data['errorcode']}) - #{data['debuginfo']}"
+          Rails.logger.error error_message
           return false
         end
 
@@ -82,6 +82,10 @@ module MoodleAPI
     # @return [HashWithIndifferentAccess] hash contendo as chaves: 'errorcode', 'message', 'debuginfo' (Moodle)
     def errors
       @error
+    end
+
+    def error_message
+      "Webservice do Moodle informou uma falha: #{@error['message']} (ERROR_CODE: #{@error['errorcode']}) - #{@error['debuginfo']}"
     end
   end
 end

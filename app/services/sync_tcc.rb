@@ -4,31 +4,25 @@ class SyncTcc
 
   def initialize(context)
     @tcc_definition = context
-    @errors = {person: [], tutor: [], orientador: []}
+    @errors = {}
     @remote_service = MoodleAPI::MoodleUser.new
   end
 
   def call
-    get_students.with_progress 'Sincronizando TCCs' do |student|
+    students = get_students
+
+    students.with_progress "Sincronizando #{students.size} TCCs para #{@tcc_definition.internal_name}" do |student|
       synchronize_tcc(student)
     end
   end
 
   def display_errors!
-    unless @errors[:person].empty? && @errors[:tutor].empty? && @errors[:orientador].empty?
+    unless @errors.empty?
       rows = []
       rows << %w(type, attributes, errors)
 
-      @errors[:person].each do |person|
-        rows << ['Person', person.attributes, person.errors.messages]
-      end
-
-      @errors[:tutor].each do |student|
-        rows << ['Tutor', student, 'tutor não definido para este estudante']
-      end
-
-      @errors[:orientador].each do |student|
-        rows << ['Orientador', student, 'orientador não definido para este estudante']
+      @errors.each do |type, error_data|
+        rows << [type, error_data[:context], error_data[:message]]
       end
 
       puts Terminal::Table.new rows: rows
@@ -61,7 +55,7 @@ class SyncTcc
       person.attributes = {moodle_username: attributes.username, email: attributes.email, name: attributes.name}
 
       unless person.valid? && person.save
-        @errors[:person] << [person]
+        register_error(:person, person.attributes, person.error.messages)
         return nil
       end
     end
@@ -71,7 +65,14 @@ class SyncTcc
 
   def get_students
     students = @remote_service.get_students_by_course(@tcc_definition.course_id)
-    students.with_progress("Sincronizando estudantes do curso '#{@tcc_definition.course_id}'").collect do |student_id|
+
+    unless @remote_service.success?
+      register_error(:course, @tcc_definition.course_id, @remote_service.error_message)
+
+      return nil
+    end
+
+    students.with_progress("Sincronizando #{students.size} estudantes do curso '#{@tcc_definition.course_id}'").collect do |student_id|
       find_or_create_person(student_id)
     end
   end
@@ -79,9 +80,13 @@ class SyncTcc
   def get_tutor(student)
     tutor_id = @remote_service.find_tutor_by_studentid(student, @tcc_definition.course_id)
 
-    # Se o estudante não tiver um estudante atribuído, vamos salvar a informação para exibir depois
-    if tutor_id.nil?
-      @errors[:tutor] << student
+    if !@remote_service.success?
+      register_error(:tutor, student, @remote_service.error_message)
+
+      return nil
+    elsif tutor_id.nil? # estudante sem tutor atribuído
+      register_error(:tutor, student, 'tutor não definido para este estudante')
+
       return nil
     end
 
@@ -91,13 +96,22 @@ class SyncTcc
   def get_orientador(student)
     orientador_id = @remote_service.find_orientador_responsavel(student, @tcc_definition.course_id)
 
-    # Se o estudante não tiver um orientador atribuído, vamos salvar a informação para exibir depois
-    if orientador_id.nil?
-      @errors[:orientador] << student
+    if !@remote_service.success?
+      register_error(:orientador, student, @remote_service.error_message)
+
+      return nil
+    elsif orientador_id.nil? # estudante sem orientador atribuído
+      register_error(:orientador, student, 'orientador não definido para este estudante')
+
       return nil
     end
 
     find_or_create_person(orientador_id)
+  end
+
+  def register_error(type, context, error_message=nil)
+    @errors[type.to_sym] = [] unless @errors.has_key? type
+    @errors[type.to_sym] << {context: context, message: error_message}
   end
 
 end
