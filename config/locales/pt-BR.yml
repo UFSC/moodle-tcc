@@ -20,6 +20,10 @@ pt-BR:
     sent_to_admin_for_revision: 'requer revisão'
     sent_to_admin_for_evaluation: 'requer avaliação'
     admin_evaluation_ok: 'avaliado'
+  grade_label:
+    waiting: 'Aguardo'
+    for_evaluation: 'Avaliar'
+    insert_grade: 'Avaliar'
   actions:
     draft: 'Visualizar'
     new: 'Não editado'

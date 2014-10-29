@@ -17,6 +17,26 @@ class TccsController < ApplicationController
     redirect_to tcc_path(moodle_user: params[:moodle_user])
   end
 
+  def evaluate
+    @tcc = Tcc.find(params[:tcc_id])
+
+    authorize(@tcc, :edit_assign_grade?)
+
+    @tcc.grade = params[:tcc][:grade]
+    if @tcc.grade_changed?
+      @tcc.grade_updated_at = DateTime.now
+    end
+
+    if @tcc.valid?
+      @tcc.save!
+      flash[:success] = t(:successfully_saved)
+      redirect_user_to_start_page
+    else
+      flash[:error] = t(:unsuccessfully_saved)
+      redirect_user_to_start_page
+    end
+  end
+
   def generate
     @tcc_document = LatexTccDecorator.new(@tcc)
 

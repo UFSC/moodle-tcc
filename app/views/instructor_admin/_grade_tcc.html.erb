@@ -1,0 +1,17 @@
+<div id="<%= tcc.id %>" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Avaliação</h3>
+    <h5><%= student_name(tcc) %></h5>
+  </div>
+  <div class="modal-body">
+    <%= semantic_form_for tcc, url: evaluate_tcc_path(tcc, moodle_user: params[:moodle_user]) do |t| %>
+      <p><%= t.input :grade, label: 'Nota para o TCC:', hint: 'atribuir um valor de 0 à 100' %></p>
+
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+        <%= submit_tag 'Avaliar', class: 'btn btn-success' %>
+      </div>
+    <% end %>
+  </div>
+</div>

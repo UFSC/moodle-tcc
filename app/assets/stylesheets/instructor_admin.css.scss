@@ -27,6 +27,22 @@
     }
   }
 
+  td.status.insert_grade {
+    background: #ffb1bc;
+  }
+
+  td.status.for_evaluation {
+    background: #ffb1bc;
+  }
+
+  td.status.valued {
+    background: #b4ffb4;
+  }
+
+  td.status.readonly {
+    background: #b4ffb4;
+  }
+
   td.action {
     vertical-align: middle;
   }

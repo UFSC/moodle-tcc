@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026014906) do
+ActiveRecord::Schema.define(version: 20141028161522) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -135,6 +135,12 @@ ActiveRecord::Schema.define(version: 20141026014906) do
     t.string   "type_name"
   end
 
+  create_table "general_refs", force: true do |t|
+    t.string "direct_citation"
+    t.string "indirect_citation"
+    t.string "reference_text"
+  end
+
   create_table "internet_refs", force: true do |t|
     t.string  "first_author"
     t.string  "title"
@@ -198,6 +204,7 @@ ActiveRecord::Schema.define(version: 20141026014906) do
     t.date     "defense_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "moodle_instance_id"
   end
 
   create_table "tccs", force: true do |t|
@@ -209,6 +216,8 @@ ActiveRecord::Schema.define(version: 20141026014906) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tcc_definition_id"
+    t.float    "grade"
+    t.datetime "grade_updated_at"
   end
 
   add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree

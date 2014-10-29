@@ -38,6 +38,18 @@ class TccPolicy < ApplicationPolicy
     (user.view_all? || user.instructor?)
   end
 
+  def show_assign_grade?
+    user.orientador? || edit_defense_date?
+  end
+
+  def edit_assign_grade?
+    if user.orientador?
+      record.orientador.id == user.person.id
+    else
+      edit_defense_date?
+    end
+  end
+
   # Verifica se pode editar a data de defesa
   def edit_defense_date?
     user.coordenador_avea? || user.admin?

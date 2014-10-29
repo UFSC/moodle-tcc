@@ -1,5 +1,5 @@
 module MoodleAPI
-  class MoodleUser < Base
+  class MoodleUser < MoodleAPI::Base
 
     # Busca o username no Moodle com base no user_id informado
     # @param [String] user_id user id no Moodle
