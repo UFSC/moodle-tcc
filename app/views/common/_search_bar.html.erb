@@ -4,7 +4,7 @@
 
   <div class="input-append">
     <%= autocomplete_field_tag :search, params[:search], autocomplete_path, {
-            placeholder: 'Busca', class: 'clearable span5'} %>
+            placeholder: 'Busca', class: 'clearable span5', autofocus: 'autofocus' } %>
 
     <%= link_to path, class: 'btn', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
       <%= display_icon('icon-remove') %>

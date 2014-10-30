@@ -4,7 +4,7 @@
       <div class="span4">
         <%= ref.input :type_participation, :as => :radio, :collection => %w(Autor Organizador Compilador Editor) %>
         <%= ref.input :et_al_entire, :label => false, :input_html => {:id => 'et_al_entire'} %>
-        <%= ref.input :first_entire_author %>
+        <%= ref.input :first_entire_author, input_html: {:autofocus => true} %>
         <%= ref.input :second_entire_author %>
         <%= ref.input :third_entire_author %>
       </div>

@@ -4,7 +4,7 @@
       <%= ref.inputs do %>
           <div class="span12">
             <div class="span3">
-              <%= ref.input :jurisdiction_or_header %>
+              <%= ref.input :jurisdiction_or_header, input_html: {:autofocus => true}  %>
               <%= ref.input :title %>
               <%= ref.input :edition %>
               <%= ref.input :local %>

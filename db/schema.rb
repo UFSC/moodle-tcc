@@ -135,12 +135,6 @@ ActiveRecord::Schema.define(version: 20141028161522) do
     t.string   "type_name"
   end
 
-  create_table "general_refs", force: true do |t|
-    t.string "direct_citation"
-    t.string "indirect_citation"
-    t.string "reference_text"
-  end
-
   create_table "internet_refs", force: true do |t|
     t.string  "first_author"
     t.string  "title"
