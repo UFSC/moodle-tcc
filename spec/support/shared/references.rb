@@ -5,6 +5,12 @@ module ReferencesUtils
                 'artigos' => 'ArticleRef',
                 'legislative' => 'LegislativeRef',
                 'tesis' => 'ThesisRef'}
+
+  def self.build_tag_citacao(model, citacao_type, text)
+    %Q(<citacao citacao-text="#{model.title}" citacao_type="#{citacao_type}" class="citacao-class"
+contenteditable="false" id="#{model.id}" ref-type="#{ReferencesUtils::REFERENCES.invert[model.class.to_s]}"
+title="#{text}" reference_id="#{model.reference.id}">#{text}</citacao>)
+  end
 end
 
 shared_examples_for 'references with citations in the text' do
@@ -12,7 +18,7 @@ shared_examples_for 'references with citations in the text' do
   let(:decorated_reference) { reference.decorate }
   let(:prefix) { Faker::Lorem.paragraph(1) }
   let(:sufix) { Faker::Lorem.paragraph(1) }
-  let(:citacao) { build_tag_citacao(decorated_reference, 'ci', decorated_reference.indirect_citation) }
+  let(:citacao) { ReferencesUtils::build_tag_citacao(decorated_reference, 'ci', decorated_reference.indirect_citation) }
   let(:text_with_reference) { "<p>#{prefix}#{citacao}#{sufix}</p>" }
   let(:text_without_reference) { Faker::Lorem.paragraph(1) }
 
@@ -75,10 +81,4 @@ shared_examples_for 'references with citations in the text' do
     end
   end
 
-end
-
-def build_tag_citacao(model, citacao_type, text)
-  %Q(<citacao citacao-text="#{model.title}" citacao_type="#{citacao_type}"
-class="citacao-class" contenteditable="false" id="#{model.id}" ref-type="#{ReferencesUtils::REFERENCES.invert[model.class.to_s]}"
- title="#{text}" reference_id="#{model.reference.id}">#{text}</citacao>)
 end

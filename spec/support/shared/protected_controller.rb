@@ -1,6 +1,3 @@
-require 'spec_helper'
-include Authentication
-
 shared_examples 'a protected controller' do |actions|
 
   context 'as a general controller' do
