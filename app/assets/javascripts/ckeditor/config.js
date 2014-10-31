@@ -48,6 +48,9 @@ CKEDITOR.editorConfig = function(config) {
     // Remover abas que nao devem aparecer
     config.removeDialogTabs = 'image:advanced;image:Link;table:advanced;tableProperties:advanced';
 
+    // Se houver um CKEditor na tela ele entrará com o foco
+    config.startupFocus = true;
+
     config.toolbarGroups = [
         { name: 'styles' },
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -56,7 +59,7 @@ CKEDITOR.editorConfig = function(config) {
         '/',
         { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
         { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
-        { name: 'tools' },
+        { name: 'tools' }
     ];
 
     config.toolbar_mini = [

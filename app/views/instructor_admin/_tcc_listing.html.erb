@@ -2,6 +2,7 @@
   <thead>
   <tr class="blue-header-table">
     <th class="name">Estudante</th>
+    <th class="status">Nota</th>
     <th class="status">Resumo</th>
     <% @chapters.each do |chapter_name| %>
       <th class="status"><%= chapter_name %></th>
@@ -12,11 +13,29 @@
   <tbody>
   <% @tccs.each do |tcc| %>
 
+    <%= render :partial => 'instructor_admin/grade_tcc', locals: {tcc: tcc} if policy(tcc).show_assign_grade? %>
+
     <tr>
       <td class="name">
         <%= student_name(tcc) %>
       </td>
-
+      <% if tcc.grade.nil? # nao tem nota %>
+        <% if tcc.is_ok? # verifica se terminou %>
+          <% if policy(tcc).edit_assign_grade? # pode editar a nota%>
+            <%= grade_cell(tcc, 'insert_grade', 'Clique para atribuir a nota') %>
+          <% else # nao tem nota, terminou mas não pode editar a nota %>
+            <%= grade_cell(tcc, 'for_evaluation', '') %>
+          <% end %>
+        <% else # nao tem nota e não terminou%>
+          <%= grade_cell(tcc, 'waiting', '') %>
+        <% end %>
+      <% else # tem nota%>
+        <% if policy(tcc).edit_assign_grade? # pode editar a nota %>
+          <%= grade_cell(tcc, 'valued', 'Clique para alterar a nota') %>
+        <% else # tem nota mas não pode editá-la %>
+          <%= grade_cell(tcc, 'readonly', '') %>
+        <% end %>
+      <% end %>
       <%= status_cell(tcc.abstract, edit_abstracts_path(moodle_user: tcc.student.moodle_id)) %>
 
       <% tcc.chapter_definitions.each do |chapter_definition| %>

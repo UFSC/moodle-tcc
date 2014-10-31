@@ -1,5 +1,5 @@
 module MoodleAPI
-  class MoodleGrade < Base
+  class MoodleGrade < MoodleAPI::Base
 
     # Cria um item de nota para o curso especificado e com o nome determinado
     def populate_grade_items(courseid, itemname, lti_id, itemnumber)
@@ -11,7 +11,7 @@ module MoodleAPI
                   grademin: 0,
                   grademax: 100
       ) do |response|
-        self.check_error(response)
+        check_error(response)
         response
       end
     end
@@ -24,7 +24,20 @@ module MoodleAPI
                   userid: userid,
                   grade: grade.to_i
       ) do |response|
-        self.check_error(response)
+        check_error(response)
+        response
+      end
+    end
+
+    # Seta nota do usuário especificado no item especificado por 'itemname'
+    def set_grade_lti(userid, courseid, instanceid, grade)
+      remote_call('local_wstcc_set_grade_lti',
+                  courseid: courseid,
+                  instanceid: instanceid,
+                  userid: userid,
+                  grade: grade.to_i
+      ) do |response|
+        check_error(response)
         response
       end
     end

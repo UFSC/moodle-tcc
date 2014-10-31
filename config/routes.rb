@@ -31,6 +31,7 @@ SistemaTcc::Application.routes.draw do
       member do
         get 'preview'
         get 'generate', defaults: {format: 'pdf'}
+        match ':tcc_id/evaluate' => 'tccs#evaluate', as: 'evaluate', via: [:get, :post, :patch]
       end
     end
 

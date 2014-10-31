@@ -9,6 +9,30 @@ module InstructorAdminHelper
 
   end
 
+  def grade_cell(tcc, state, title)
+    #state = 'valued' - Avaliado
+    #state = 'waiting' - Aguardando  acabar
+    #state = 'for_evaluation' - Sem nota mas não pode editar
+    #state = 'insert_grade'- Acabou o TCC e pode inserir nota
+    #state = 'readonly' - com nota sem editar
+
+    action = 'grade_label'
+
+    content = (!tcc.nil? && tcc.grade) ? tcc.grade.to_s : label_text(action, state)
+    content_tag 'td', class: status_label_class(state) do
+      if %w(valued insert_grade).include?(state)
+        link_to(content,
+                "##{tcc.id}",
+                target: '_blank',
+                :data => {:toggle => "modal"},
+                "title" => "#{title}")
+      else
+        content
+      end
+    end
+
+  end
+
   def student_name(tcc)
     student = tcc.student.decorate
 

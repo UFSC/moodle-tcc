@@ -2,7 +2,7 @@
   <div id="data_tab_content">
     <%= ref.inputs do %>
       <div class="span4">
-        <%= ref.input :author %>
+        <%= ref.input :author, input_html: {:autofocus => true}  %>
         <%= ref.input :title %>
         <%= ref.input :subtitle %>
         <%= ref.input :local %>

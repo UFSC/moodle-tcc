@@ -3,6 +3,7 @@ Fabricator(:tcc_definition) do
   course_id { Fabricate.sequence(:course_id) }
   defense_date { Faker::Date.forward(30) }
   internal_name { Faker::Lorem.sentence(3) }
+  moodle_instance_id { Fabricate.sequence(:moodle_instance_id) }
 end
 
 Fabricator(:tcc_definition_with_all, :class_name => :tcc_definition, :from => :tcc_definition) do

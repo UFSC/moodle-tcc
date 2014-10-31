@@ -1,6 +1,7 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :moodle_user, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
+  attr_accessible :grade, :moodle_user, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
                   :abstract_attributes, :chapters_attributes
+  validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
 
   has_many :chapters, :inverse_of => :tcc
   has_one :abstract, :inverse_of => :tcc
@@ -21,6 +22,9 @@ class Tcc < ActiveRecord::Base
   belongs_to :student, class_name: 'Person'
   belongs_to :tutor, class_name: 'Person'
   belongs_to :orientador, class_name: 'Person'
+
+  # Salvar a nota no moodle caso ela tenha mudado
+  before_save :post_moodle_grade
 
   accepts_nested_attributes_for :chapters, :abstract
 
@@ -49,6 +53,27 @@ class Tcc < ActiveRecord::Base
     self.build_abstract if self.abstract.nil?
   end
 
+  def post_moodle_grade
+    if self.grade_changed? && !self.tcc_definition.nil? && (self.tcc_definition.course_id > 0)
+      remote = MoodleAPI::MoodleGrade.new
+      remote.set_grade_lti(self.student.moodle_id,
+                       self.tcc_definition.course_id,
+                       self.tcc_definition.moodle_instance_id,
+                       self.grade)
+    end
+  end
+
+  #FIXME: Roberto: Colocar no policy e mudar de nome
+  # Metodo para realizar se todos as partes do TCC estão avaliadas e ok
+  def is_ok?
+    # verificar se todos os capitulos estao avaliado
+    return false unless (!self.abstract.nil? && !self.abstract.empty?)
+    self.chapters.each do | ichapter |
+      return false unless (!ichapter.nil? && !ichapter.empty?)
+    end
+    true
+    #TODO: verificar se existe ao menos x referencias criadas
+  end
   private
 
   def create_or_update_chapters
