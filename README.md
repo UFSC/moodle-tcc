@@ -25,7 +25,7 @@ juntamente com o Abntex2. A instalação do LaTex é diferente no Ubuntu e no Ma
 
 ### Dependências do Ubuntu: ###
 
-    sudo apt-get install -y qt4-qmake libqt4-dev imagemagick libmagickwand-dev
+    sudo apt-get install -y qt4-qmake libqt4-dev imagemagick libmagickwand-dev graphviz
 
 
 ### Instalação do Tex Live (Ubuntu)
@@ -58,6 +58,8 @@ Baixar e instalar a distribuição [MacTex](http://tug.org/mactex/):
 
 [Download MacTex.pkg](http://mirror.ctan.org/systems/mac/mactex/MacTeX.pkg)
 [ 2.3G	- 30 May 2013 ]
+
+Instalar o Graphviz (opcional): `brew install graphviz`
 
 ### Instalação do Abntex2 (Ubuntu e Mac OS X)
 
@@ -126,3 +128,14 @@ possui alguns caveats:
 * A URL no Moodle deve vir com uma / no final, pois o Rails inclui essa
   barra independente dela existir ou não na URL original, e caso isso
   não seja seguido, teremos uma assinatura inválida
+  
+Gerar documentação
+------------------
+
+### State Machine
+
+Para gerar a imagem da máquina de estados definida, use o comando abaixo:
+
+    rake state_machine:draw CLASS=Abstract
+    
+Será gerada a imagem chamada **Abstract_state.png**

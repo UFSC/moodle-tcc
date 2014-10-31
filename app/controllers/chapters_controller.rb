@@ -27,6 +27,14 @@ class ChaptersController < ApplicationController
     @chapter_comment = @chapter.chapter_comment || @chapter.build_chapter_comment
     @chapter_comment.attributes = params[:chapter_comment]
 
+    if params[:done]
+      @chapter.to_done;
+    elsif params[:review]
+      @chapter.to_review;
+    elsif params[:draft]
+      @chapter.to_draft;
+    end
+
     if @chapter.valid? && @chapter.save
       @chapter_comment.save!
       flash[:success] = t(:successfully_saved)

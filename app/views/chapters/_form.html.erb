@@ -3,12 +3,14 @@
 
   <div class="row">
     <div class="rounded-border">
-      <h3>
-        <%= @chapter.chapter_definition.title %>
-        <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
-      </h3>
 
-      <%= h.cktext_area :content %>
+      <%= render partial: 'common/document_header',
+                 locals: {object: @chapter,
+                          object_label: @chapter.chapter_definition.title
+                 } %>
+
+      <%= h.cktext_area :content,  {ckeditor: {readOnly: !policy(@chapter).edit_content? }} %>
+
       <br/>
       <%= semantic_form_for @chapter_comment, url: chapter_comments_path(@chapter_comment,
                                                                          moodle_user: params[:moodle_user]) do |t| %>
@@ -19,11 +21,13 @@
                                            maxlength: '5000'
         } %>
       <% end %>
-
-      <div class="form-actions">
-        <%= h.action :submit, :as => :input, label: 'Salvar Texto',
-                     button_html: {class: 'btn btn-primary'} %>
-      </div>
+      <%= render partial: 'common/document_footer',
+                 locals: { object: @chapter,
+                           object_form: h,
+                           can_save: policy(@chapter).edit_content? || policy(@chapter).edit_comment?,
+                           can_send_to_review: policy(@chapter).can_send_to_review? ,
+                           can_send_draft_done: policy(@chapter).can_send_to_draft_done?
+                 } %>
     </div>
   </div>
 

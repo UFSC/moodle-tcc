@@ -1,6 +1,9 @@
 <%= render 'common/tabs_header' %>
 
 <fieldset>
-  <legend><%= @internet_ref.title %></legend>
+  <legend>Referência da Internet <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
+    </br>
+    <%= @internet_ref.title %>
+  </legend>
   <%= render :partial => 'form' %>
 </fieldset>

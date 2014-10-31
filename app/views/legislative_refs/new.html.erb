@@ -1,6 +1,6 @@
 <%= render 'common/tabs_header' %>
 
 <fieldset>
-  <legend>Nova Referência do Legislativo</legend>
+  <legend>Nova Referência do Legislativo <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %></legend>
   <%= render :partial => 'form' %>
 </fieldset>

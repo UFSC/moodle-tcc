@@ -1,4 +1,5 @@
 class Chapter < ActiveRecord::Base
+  include Shared::DocumentState
 
   belongs_to :tcc, :inverse_of => :chapters
   belongs_to :chapter_definition, :inverse_of => :chapters

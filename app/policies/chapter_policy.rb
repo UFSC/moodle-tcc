@@ -49,10 +49,42 @@ class ChapterPolicy < ApplicationPolicy
     false
   end
 
+  def edit_content?
+    can_edit = Pundit.policy(@user, @record.tcc).show?
+    if can_edit
+      if user.orientador?
+        return (%w(review).include?(record.state))
+      elsif user.student?
+        return (%w(draft).include?(record.state))
+      elsif user.view_all?
+        return (%w(review).include?(record.state))
+      end
+    end
+    false
+  end
+
+
+
   def edit_comment?
     if user.orientador?
-      return record.tcc.orientador.id == user.person.id
+      return (record.tcc.orientador.id == user.person.id) && edit_content?
     end
+  end
+
+  def can_send_to_review?
+    can_show = Pundit.policy(@user, @record.tcc).show?
+    if can_show
+      return user.student? && record.state.eql?(:draft.to_s)
+    end
+    false
+  end
+
+  def can_send_to_draft_done?
+    can_show = Pundit.policy(@user, @record.tcc).show?
+    if can_show
+      return (user.orientador? || user.view_all?) && record.state.eql?(:review.to_s)
+    end
+    false
   end
 
   class Scope < Scope

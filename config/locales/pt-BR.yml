@@ -24,20 +24,35 @@ pt-BR:
     waiting: 'Aguardo'
     for_evaluation: 'Avaliar'
     insert_grade: 'Avaliar'
+    readonly: 'Avaliado'
   actions:
-    draft: 'Visualizar'
     new: 'Não editado'
-    sent_to_admin_for_revision: 'Revisar'
-    sent_to_admin_for_evaluation: 'Avaliar'
-    admin_evaluation_ok: 'Avaliado'
-    tcc_draft: 'Visualizar'
-    sent_to_leader_for_revision: 'Revisar'
-    sent_to_leader_for_evaluation: 'Avaliar'
-    leader_evaluation_ok: 'Avaliado'
+    newTitle: 'visualizar o texto do estudante'
+    draft: 'Visualizar'
+    draftTitle: 'visualizar o texto em rascunho do estudante'
+    review: 'Revisar'
+    reviewTitle: 'revisar e avaliar o texto do estudante'
+    done: 'Avaliado'
+    doneTitle: 'visualizar o texto já avaliado do estudante'
   enumerize:
     new_state:
       <<: *estados
   activerecord:
+    errors:
+      messages:
+        invalid: 'desconhecido'
+        invalid_event: 'não pôde transicionar do estado %{state}'
+        invalid_transition: 'não pôde alterar o estado %{value} pelaa transição %{event}'
+    state_machines:
+      states:
+        new:
+        draft: 'Rascunho'
+        review: 'Revisando'
+        done: 'Avaliado'
+      events:
+        to_draft: 'Devolver ao estudante'
+        to_review: 'Revisar'
+        to_done: 'Avaliar'
     attributes:
       tcc:
         name: 'Nome'

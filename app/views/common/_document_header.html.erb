@@ -1,0 +1,11 @@
+<h3>
+  <%= object_label %>
+  <%= " - #{object.human_state_name}" %>
+  <%= " - #{object.state_date.strftime('%d-%m-%Y')}" unless object.state_date.nil?%>
+  <% if policy(@tcc).show_student? %>
+    <br/>
+    <h4>
+      <%= "#{@tcc.student.name}" %>
+    </h4>
+  <% end %>
+</h3>

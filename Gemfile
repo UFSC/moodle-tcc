@@ -71,6 +71,7 @@ gem 'enumerize'
 gem 'attribute_normalizer'
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
+gem 'state_machine'
 
 # Decorator pattern
 gem 'draper', '~> 1.3'
@@ -85,6 +86,7 @@ end
 
 group :development do
   gem 'thin'
+  gem 'ruby-graphviz', :require => 'graphviz' # usado pela state_machine
 
   # Auxilia depuração da aplicação: http://railscasts.com/episodes/402-better-errors-railspanel
   gem 'better_errors'
