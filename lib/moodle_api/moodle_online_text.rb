@@ -1,6 +1,12 @@
 module MoodleAPI
   class MoodleOnlineText < MoodleAPI::Base
 
+    def fetch_online_text_grade(user_id, coursemodule_id)
+      data = remote_json_call('local_wstcc_get_user_online_text_submission',
+                              userid: user_id, coursemoduleid: coursemodule_id)
+
+      success? ? data['grade'] : false
+    end
     def fetch_online_text_status(user_id, coursemodule_id)
       data = remote_json_call('local_wstcc_get_user_online_text_submission',
                               userid: user_id, coursemoduleid: coursemodule_id)

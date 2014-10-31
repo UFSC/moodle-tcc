@@ -42,7 +42,9 @@ class ChapterPolicy < ApplicationPolicy
       remote = MoodleAPI::MoodleOnlineText.new
       status = remote.fetch_online_text_status(@record.tcc.student.moodle_id,
                                                @record.chapter_definition.coursemodule_id)
-      return (status == 'submitted')
+      olt_grade = remote.fetch_online_text_grade(@record.tcc.student.moodle_id,
+                                                 @record.chapter_definition.coursemodule_id)
+      return ((status == 'submitted') && (olt_grade >= 0))
     end
     false
   end
