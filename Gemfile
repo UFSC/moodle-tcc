@@ -24,9 +24,6 @@ gem 'twitter-bootstrap-rails-confirm'
 # authorization system.
 gem 'pundit'
 
-# Auxilia a migração para Rails 4
-gem 'rails4_upgrade'
-
 # Unicode Utils
 gem 'unicode_utils'
 
@@ -72,7 +69,6 @@ gem 'whenever', require: false
 # Model Utils
 gem 'enumerize'
 gem 'attribute_normalizer'
-gem 'paper_trail', '~> 3.0.5' # Versionamento
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
 
