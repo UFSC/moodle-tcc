@@ -2,7 +2,6 @@ class ArticleRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
-  include Shared::Validations
 
   has_one :reference, :as => :element, :dependent => :destroy
   has_one :tcc, :through => :reference

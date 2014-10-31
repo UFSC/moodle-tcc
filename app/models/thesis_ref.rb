@@ -3,7 +3,6 @@ class ThesisRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
-  include Shared::Validations
 
   TYPES = %w(Volumes Folhas)
   THESIS_TYPES = %W(Tese Dissertação Monografia TCC)

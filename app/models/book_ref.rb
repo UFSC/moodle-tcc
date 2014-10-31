@@ -2,7 +2,6 @@ class BookRef < ActiveRecord::Base
 
   include ModelsUtils
   include Shared::Citacao
-  include Shared::Validations
 
   before_save :check_equality
   before_update :check_equality
