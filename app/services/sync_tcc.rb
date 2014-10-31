@@ -21,7 +21,7 @@ class SyncTcc
       rows = []
       rows << %w(type, attributes, errors)
 
-      @errors.each do |type, error_data|
+      @errors.each do |type, (error_data)|
         rows << [type, error_data[:context], error_data[:message]]
       end
 
@@ -110,8 +110,9 @@ class SyncTcc
   end
 
   def register_error(type, context, error_message=nil)
-    @errors[type.to_sym] = [] unless @errors.has_key? type
-    @errors[type.to_sym] << {context: context, message: error_message}
+    type = type.to_sym
+    @errors[type] = [] unless @errors.has_key? type
+    @errors[type] << {context: context, message: error_message}
   end
 
 end
