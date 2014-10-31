@@ -61,7 +61,7 @@ gem 'ckeditor'
 gem 'rabl'
 
 # Carrierwave (uploads)
-gem 'carrierwave'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick'
 
 # Rake e console
