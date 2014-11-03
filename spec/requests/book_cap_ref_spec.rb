@@ -19,7 +19,7 @@ describe 'BookCapRefs' do
     end
   end
 
-  context 'edit a book reference with success' do
+  context 'edit a book cap reference with success' do
     it '/edit' do
       visit edit_book_cap_ref_path(book.id)
       fill_in 'Título do Livro', :with => attributes[:book_title]
