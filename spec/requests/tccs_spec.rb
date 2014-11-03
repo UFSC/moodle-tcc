@@ -58,4 +58,13 @@ describe 'Tccs' do
       end
     end
   end
+
+  # context 'login as admin user' do
+  #   it '/user/id/tcc' do
+  #     visit instructor_admin_path
+  #
+  #   end
+  #
+  # end
+
 end
