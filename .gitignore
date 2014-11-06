@@ -33,7 +33,6 @@ config/*.save
 # Config files
 config/tcc_config.yml
 config/database.yml
-config/newrelic.yml
 config/moodle.yml
 config/errbit.yml
 config/email.yml
