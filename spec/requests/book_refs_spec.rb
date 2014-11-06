@@ -20,25 +20,24 @@ describe 'BookRef' do
   end
 
   context 'edit a book reference with success' do
-    xit '/edit' do
-      visit edit_book_ref_path(book_ref.id)
-      fill_in 'Segundo Autor', :with => attributes[:second_author]
-      fill_in 'Título', :with => attributes[:title]
-      expect(page).to have_content(:success)
+    it '/edit' do
+      get edit_book_ref_path(book_ref.id)
+      click_link 'Edit'
+      expect(response.status).to be(200)
     end
   end
 
   context 'destroy a book cap reference' do
     it '/destroy' do
       delete book_ref_path(book_ref.id)
-      expect(page).to have_content(:successfully_deleted)
+      expect(response.status).to be(200)
     end
   end
 
   context 'update a book cap reference' do
     it '/update' do
       put book_ref_path(book_ref.id)
-      expect(page).to have_content(:success)
+      expect(response.status).to be(200)
     end
   end
 

@@ -71,5 +71,4 @@ describe 'Tccs' do
       expect(page).to have_content('Mudanças salvas com sucesso')
     end
   end
-
 end
