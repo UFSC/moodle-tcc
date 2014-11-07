@@ -2,7 +2,7 @@
 class AbstractsController < ApplicationController
   def edit
     set_tab :abstract
-    @abstract = @tcc.abstract || @tcc.build_abstract
+    @abstract = @tcc.abstract || @tcc.abstract = Abstract.new
 
     authorize @abstract
 
@@ -16,6 +16,8 @@ class AbstractsController < ApplicationController
     authorize @abstract
 
     @chapter_comment = @tcc.abstract.build_chapter_comment(params[:chapter_comment])
+
+    change_state
 
     if @abstract.valid? && @abstract.save
       @chapter_comment.save!
@@ -36,6 +38,8 @@ class AbstractsController < ApplicationController
     @chapter_comment = @tcc.abstract.chapter_comment || @tcc.abstract.build_chapter_comment
     @chapter_comment.attributes = params[:chapter_comment]
 
+    change_state
+
     if @abstract.valid? && @abstract.save
       @chapter_comment.save!
       flash[:success] = t(:successfully_saved)
@@ -43,6 +47,18 @@ class AbstractsController < ApplicationController
     else
       set_tab :abstract
       render :edit
+    end
+  end
+
+  private
+
+  def change_state
+    if params[:done]
+      @abstract.to_done;
+    elsif params[:review]
+      @abstract.to_review;
+    elsif params[:draft]
+      @abstract.to_draft;
     end
   end
 end

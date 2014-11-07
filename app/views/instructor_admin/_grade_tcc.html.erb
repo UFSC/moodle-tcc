@@ -6,8 +6,8 @@
   </div>
   <div class="modal-body">
     <%= semantic_form_for tcc, url: evaluate_tcc_path(tcc, moodle_user: params[:moodle_user]) do |t| %>
-      <p><%= t.input :grade, label: 'Nota para o TCC:', hint: 'atribuir um valor de 0 à 100',
-                     input_html: {:autofocus => true} %></p>
+      <p><%= t.input :grade, label: 'Nota para o TCC:', hint: 'atribuir um valor inteiro de 0 à 100',
+                     input_html: {autofocus: true, step: 10} %></p>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
         <%= submit_tag 'Avaliar', class: 'btn btn-success' %>

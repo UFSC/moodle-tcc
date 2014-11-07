@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028161522) do
+ActiveRecord::Schema.define(version: 20141103084736) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20141028161522) do
     t.integer  "tcc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",                       default: "draft"
+    t.date     "state_date",                  
   end
 
   add_index "abstracts", ["tcc_id"], name: "index_abstracts_on_tcc_id", using: :btree
@@ -47,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141028161522) do
     t.string  "book_subtitle"
     t.string  "first_part_author"
     t.string  "first_entire_author"
-    t.string  "type_participation"
+    t.string  "type_participation",   default: "Autor"
     t.string  "local"
     t.string  "publisher"
     t.integer "year"
@@ -107,6 +109,8 @@ ActiveRecord::Schema.define(version: 20141028161522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "chapter_definition_id"
+    t.string   "state",                                  default: "draft"
+    t.date     "state_date",
   end
 
   add_index "chapters", ["chapter_definition_id"], name: "index_chapters_on_chapter_definition_id", using: :btree
@@ -210,7 +214,7 @@ ActiveRecord::Schema.define(version: 20141028161522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tcc_definition_id"
-    t.float    "grade"
+    t.integer  "grade"
     t.datetime "grade_updated_at"
   end
 

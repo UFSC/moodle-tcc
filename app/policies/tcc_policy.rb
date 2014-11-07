@@ -38,16 +38,31 @@ class TccPolicy < ApplicationPolicy
     (user.view_all? || user.instructor?)
   end
 
+  # Verifica se pode montar as telas de edição de notas
   def show_assign_grade?
     user.orientador? || edit_defense_date?
   end
 
+  # Verifica se pode alterar a nota na tela de edição de notas
   def edit_assign_grade?
     if user.orientador?
-      record.orientador.id == user.person.id
+      can_edit = record.orientador.id == user.person.id
     else
-      edit_defense_date?
+      can_edit = edit_defense_date?
     end
+    return can_edit
+  end
+
+  # Verifica se pode dar a nota, verificar se todas as partes do TCC estão avaliadas
+  def can_grade?
+    # verificar se todos os capitulos estao avaliado
+    return false unless (!record.abstract.nil? && !record.abstract.empty? && record.abstract.state.eql?('done'))
+    record.chapters.each do | ichapter |
+      return false unless (!ichapter.nil? && !ichapter.empty? && ichapter.state.eql?('done'))
+    end
+
+    #verifica se existe ao menos 5 referencias criadas
+    record.references.count >= 5
   end
 
   # Verifica se pode editar a data de defesa

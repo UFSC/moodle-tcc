@@ -1,0 +1,29 @@
+<% if can_save || can_send_to_review || can_send_draft_done %>
+  <div class="form-actions">
+    <%= object_form.action :submit, :as => :input, label: 'Salvar Texto',
+                           button_html: {class: 'btn btn-primary', disabled: !can_save} if can_save
+    %>
+    <%= object_form.action :submit, :as => :input, label: 'Devolver para o aluno',
+                           button_html: {class: 'btn',
+                                         name: 'draft'
+                           } if can_send_draft_done
+    %>
+    <%= object_form.action :submit, :as => :input, label: 'Enviar para Avaliação',
+                           button_html: {class: 'btn',
+                                         name: 'review',
+                                         confirm: 'Você não poderá mais editar o texto enquanto o orientador '+
+                                                 'estiver realizando a avaliação. </br> Deseja continuar?'
+                           } if can_send_to_review
+    %>
+    <%= object_form.action :submit, :as => :input, label: 'Aprovar',
+                           button_html: {class: 'btn btn-success',
+                                         name: 'done',
+                                         confirm: 'O texto não poderá mais ser alterado após sua aprovação. '+
+                                                 '</br> Deseja continuar?'
+                           } if can_send_draft_done
+    %>
+  </div>
+<% end %>
+
+<!-- , disabled: !can_save / if can_save -->
+

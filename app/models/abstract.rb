@@ -1,4 +1,6 @@
 class Abstract < ActiveRecord::Base
+  include Shared::DocumentState
+
   belongs_to :tcc
   has_one :chapter_comment, as: :chapter_commentable, :dependent => :destroy
 

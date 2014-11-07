@@ -22,7 +22,7 @@ class TccsController < ApplicationController
 
     authorize(@tcc, :edit_assign_grade?)
 
-    @tcc.grade = params[:tcc][:grade]
+    @tcc.grade = params[:tcc][:grade].empty? ? params[:tcc][:grade] : params[:tcc][:grade].to_i
     if @tcc.grade_changed?
       @tcc.grade_updated_at = DateTime.now
     end

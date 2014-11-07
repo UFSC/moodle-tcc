@@ -1,6 +1,7 @@
 <%= render 'common/tabs_header' %>
 
 <fieldset>
-  <legend>Nova Referência de Teses, Dissertações, Monografias E TCCs</legend>
+  <legend>Nova Referência de Teses, Dissertações, Monografias E TCCs <%= " - #{@tcc.student.name}" if policy(@tcc)
+  .show_student? %></legend>
   <%= render :partial => 'form' %>
 </fieldset>

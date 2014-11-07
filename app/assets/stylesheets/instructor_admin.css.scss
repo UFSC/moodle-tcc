@@ -12,6 +12,7 @@
     vertical-align: middle;
     height: 100%;
   }
+
   td.status a {
     white-space: nowrap;
     width: 100%;
@@ -20,28 +21,43 @@
   }
 
   td.status.new {
-    background: #e1e1e1;
-
+    background: #f4f4f4;
     a {
-      color: gray
+      color: gray;
     }
   }
 
-  td.status.insert_grade {
-    background: #ffb1bc;
+  td.status.review,
+  td.status.insert_grade,
+  td.status.for_evaluation,
+  {
+    background: $errorBackground;
+    color: $errorText;
+    a {
+      color: darken($errorText, 10%);
+      font-weight: 700;
+    }
   }
 
-  td.status.for_evaluation {
-    background: #ffb1bc;
+  td.status.draft,
+  td.status.waiting {
+    background: $warningBackground; //$infoBackground;
+    color: $warningText;
+    a {
+      color: darken($warningText, 10%);
+    }
   }
 
+  td.status.done,
+  td.status.readonly,
   td.status.valued {
-    background: #b4ffb4;
+    background: $successBackground;
+    color: $successText;
+    a {
+      color: darken($successText, 10%);
+    }
   }
 
-  td.status.readonly {
-    background: #b4ffb4;
-  }
 
   td.action {
     vertical-align: middle;

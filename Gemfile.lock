@@ -328,6 +328,7 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.0)
+    ruby-graphviz (1.2.1)
     ruby-progressbar (1.5.1)
     ruby2ruby (2.1.2)
       ruby_parser (~> 3.1)
@@ -368,6 +369,7 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    state_machine (1.2.0)
     subexec (0.2.3)
     systemu (2.6.4)
     tabs_on_rails (2.2.0)
@@ -451,12 +453,14 @@ DEPENDENCIES
   rails3-jquery-autocomplete
   rest-client
   rspec-rails (~> 3.0)
+  ruby-graphviz
   sass-rails (~> 4.0.2)
   scoped_search
   sdoc
   settingslogic
   shoulda-matchers
   simplecov
+  state_machine
   tabs_on_rails
   terminal-table
   thin
