@@ -3,6 +3,9 @@ require 'spec_helper'
 
 describe 'Tccs' do
 
+  let(:attributes) { Fabricate.attributes_for(:tcc) }
+  let(:tcc) { Fabricate(:tcc) }
+
   describe 'GET /tcc' do
     xit 'should not work without LTI connection' do
       get tcc_path
@@ -56,6 +59,16 @@ describe 'Tccs' do
         click_link 'Referências'
         expect(page).to have_content('Referências')
       end
+    end
+  end
+
+  context 'login as student user' do
+    it 'edit and save form with user information' do
+      page.set_rack_session(fake_lti_session('student'))
+      visit '/tcc'
+      fill_in 'Título', :with => attributes[:title]
+      click_button 'Salvar alterações'
+      expect(page).to have_content('Mudanças salvas com sucesso')
     end
   end
 end
