@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20141103084736) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state",                       default: "draft"
-    t.date     "state_date",                  
+    t.date     "state_date"
   end
 
   add_index "abstracts", ["tcc_id"], name: "index_abstracts_on_tcc_id", using: :btree
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20141103084736) do
     t.datetime "updated_at"
     t.integer  "chapter_definition_id"
     t.string   "state",                                  default: "draft"
-    t.date     "state_date",
+    t.date     "state_date"
   end
 
   add_index "chapters", ["chapter_definition_id"], name: "index_chapters_on_chapter_definition_id", using: :btree

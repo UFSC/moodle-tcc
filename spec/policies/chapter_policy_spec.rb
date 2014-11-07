@@ -174,14 +174,18 @@ describe ChapterPolicy do
           expect(ChapterPolicy).not_to permit(other_user, @tcc_1.chapters.last)
         end
       end
+
       context 'orientador do TCC pode editar os dados do ' do
         it 'capítulo Abstract' do
+          @tcc_1.abstract.to_review
           expect(ChapterPolicy).to permit(@tcc_1_leader, @tcc_1.abstract)
         end
         it 'primeiro capítulo' do
+          @tcc_1.chapters.first.to_review
           expect(ChapterPolicy).to permit(@tcc_1_leader, @tcc_1.chapters.first)
         end
         it 'último capítulo' do
+          @tcc_1.chapters.last.to_review
           expect(ChapterPolicy).to permit(@tcc_1_leader, @tcc_1.chapters.last)
         end
       end
