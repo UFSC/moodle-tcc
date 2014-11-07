@@ -11,15 +11,17 @@
     <%= object_form.action :submit, :as => :input, label: 'Enviar para Avaliação',
                            button_html: {class: 'btn',
                                          name: 'review',
-                                         confirm: 'Você não poderá mais editar o texto enquanto o orientador '+
+                                         data: {confirm: 'Você não poderá mais editar o texto enquanto o orientador '+
                                                  'estiver realizando a avaliação. </br> Deseja continuar?'
+                                         }
                            } if can_send_to_review
     %>
     <%= object_form.action :submit, :as => :input, label: 'Aprovar',
                            button_html: {class: 'btn btn-success',
                                          name: 'done',
-                                         confirm: 'O texto não poderá mais ser alterado após sua aprovação. '+
+                                         data: {confirm: 'O texto não poderá mais ser alterado após sua aprovação. '+
                                                  '</br> Deseja continuar?'
+                                         }
                            } if can_send_draft_done
     %>
   </div>

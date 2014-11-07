@@ -30,7 +30,7 @@ pt-BR:
     newTitle: 'visualizar o texto do estudante'
     draft: 'Visualizar'
     draftTitle: 'visualizar o texto em rascunho do estudante'
-    review: 'Revisar'
+    review: 'Avaliar'
     reviewTitle: 'revisar e avaliar o texto do estudante'
     done: 'Avaliado'
     doneTitle: 'visualizar o texto já avaliado do estudante'
@@ -47,7 +47,7 @@ pt-BR:
       states:
         new:
         draft: 'Rascunho'
-        review: 'Revisando'
+        review: 'Avaliando'
         done: 'Avaliado'
       events:
         to_draft: 'Devolver ao estudante'
