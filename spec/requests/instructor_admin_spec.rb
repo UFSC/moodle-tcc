@@ -18,9 +18,9 @@ describe 'InstructorAdmin' do
       expect(page).to have_content('Lista de TCCs')
     end
 
-    xit 'should not work without moodle' do
-      visit instructor_admin_path
-      expect(page.current_path).to eq(access_denied_path)
+    it 'should not work without moodle' do
+      get instructor_admin_path
+      expect(response).to render_template('errors/unauthorized')
     end
   end
 end

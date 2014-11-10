@@ -42,21 +42,23 @@ pt-BR:
       messages:
         invalid: 'desconhecido'
         invalid_event: 'não pôde transicionar do estado %{state}'
-        invalid_transition: 'não pôde alterar o estado %{value} pelaa transição %{event}'
+        invalid_transition: 'não pôde alterar o estado %{value} pela transição %{event}'
     state_machines:
       states:
-        new:
+        new: 'Novo'
         draft: 'Rascunho'
         review: 'Avaliando'
         done: 'Avaliado'
       events:
         to_draft: 'Devolver ao estudante'
-        to_review: 'Revisar'
-        to_done: 'Avaliar'
+        to_review: 'Enviar para avaliação'
+        to_done: 'Aprovar'
     attributes:
       tcc:
         name: 'Nome'
         title: 'Título'
+        student: 'Estudante'
+        orientador: 'Orientador'
         defense_date: 'Data da defesa'
       abstract:
         content_pt: 'Resumo'
@@ -151,6 +153,10 @@ pt-BR:
         institution: 'Instituição'
         course: 'Curso'
         department: 'Departamento'
+      compound_name:
+        name: 'Nome'
+        edit: 'Editar'
+        remove: 'Remover'
     models:
       general_ref: 'Referência Geral'
       book_ref: 'Referência de Livros'

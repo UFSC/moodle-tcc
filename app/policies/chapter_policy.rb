@@ -44,7 +44,8 @@ class ChapterPolicy < ApplicationPolicy
                                                @record.chapter_definition.coursemodule_id)
       olt_grade = remote.fetch_online_text_grade(@record.tcc.student.moodle_id,
                                                  @record.chapter_definition.coursemodule_id)
-      return ((status == 'submitted') && (olt_grade >= 0))
+      return ((!status.nil? && status == 'submitted') &&
+              (!olt_grade.nil? && olt_grade >= 0))
     end
     false
   end

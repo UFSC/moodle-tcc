@@ -25,7 +25,6 @@ describe ThesisRef do
 
     it { should validate_presence_of(:course) }
 
-
   end
 
   context 'authors' do
@@ -39,7 +38,6 @@ describe ThesisRef do
       end
     end
   end
-
 
   context 'citacoes' do
     let(:thesis_ref) { Fabricate.build(:thesis_ref).decorate }
@@ -66,7 +64,6 @@ describe ThesisRef do
     end
 
   end
-
 
   context 'same_author' do
     describe '#check_equality' do

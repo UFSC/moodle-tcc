@@ -30,11 +30,6 @@ describe ChapterPolicy do
     @tcc_1.destroy
   end
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-
   context 'Na permissão de acesso verifica se na Action' do
     permissions :edit?, :save?, :update?, :create?, :empty? do
       context 'estudante pode editar seus dados do ' do
