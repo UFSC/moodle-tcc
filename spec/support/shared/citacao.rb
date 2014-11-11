@@ -1,76 +1,75 @@
 # encoding: utf-8
 shared_examples_for 'indirect_citation' do
-  before(:each) do
-    @ref = ref.decorate
-    @ref.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
-  end
 
+  let (:decorated_reference) { ref.decorate }
+
+  before(:each) do
+    decorated_reference.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+  end
 
   it 'should include author' do
     lastname = UnicodeUtils.titlecase(ref.first_author.split(' ').last)
-    expect(@ref.indirect_citation).to include(lastname)
+    expect(decorated_reference.indirect_citation).to include(lastname)
   end
 
   it 'should include year' do
-    expect(@ref.indirect_citation).to include(@ref.year.to_s)
+    expect(decorated_reference.indirect_citation).to include(decorated_reference.year.to_s)
   end
 
   it 'should include (' do
-    expect(@ref.indirect_citation).to include('(')
+    expect(decorated_reference.indirect_citation).to include('(')
   end
 
   it 'should include )' do
-    expect(@ref.indirect_citation).to include(')')
+    expect(decorated_reference.indirect_citation).to include(')')
   end
 
   it 'should capitalize correctly' do
-    text = "Gestão (#{@ref.year})"
-    expect(@ref.indirect_citation).to eq(text)
+    text = "Gestão (#{decorated_reference.year})"
+    expect(decorated_reference.indirect_citation).to eq(text)
   end
 
 end
 
 shared_examples_for 'indirect_citation with more than one author' do
 
-  before(:each) do
-    @ref = ref.decorate
-  end
+  let (:decorated_reference) { ref.decorate }
 
   it 'should capitalize correctly with three authors' do
-    @ref.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
-    @ref.second_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
-    @ref.third_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.second_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.third_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
 
-    text = "Gestão, Gestão e Gestão (#{@ref.year})"
-    expect(@ref.indirect_citation).to eq(text)
+    text = "Gestão, Gestão e Gestão (#{decorated_reference.year})"
+    expect(decorated_reference.indirect_citation).to eq(text)
   end
   it 'should capitalize correctly with two authors' do
-    @ref.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
-    @ref.second_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
-    @ref.third_author = ''
+    decorated_reference.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.second_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.third_author = ''
 
-    text = "Gestão e Gestão (#{@ref.year})"
-    expect(@ref.indirect_citation).to eq(text)
+    text = "Gestão e Gestão (#{decorated_reference.year})"
+    expect(decorated_reference.indirect_citation).to eq(text)
   end
   it 'should capitalize correctly with one author' do
-    @ref.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
-    @ref.second_author = ''
-    @ref.third_author = ''
+    decorated_reference.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.second_author = ''
+    decorated_reference.third_author = ''
 
-    text = "Gestão (#{@ref.year})"
-    expect(@ref.indirect_citation).to eq(text)
+    text = "Gestão (#{decorated_reference.year})"
+    expect(decorated_reference.indirect_citation).to eq(text)
   end
 
   it 'should include year' do
-    expect(@ref.indirect_citation).to include(@ref.year.to_s)
+    expect(decorated_reference.indirect_citation).to include(decorated_reference.year.to_s)
   end
 
   it 'should include (' do
-    expect(@ref.indirect_citation).to include('(')
+    expect(decorated_reference.indirect_citation).to include('(')
   end
 
   it 'should include )' do
-    expect(@ref.indirect_citation).to include(')')
+    expect(decorated_reference.indirect_citation).to include(')')
   end
 
 end

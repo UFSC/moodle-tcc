@@ -5,12 +5,12 @@ shared_examples 'a protected controller' do |actions|
       specify "Should be able to access ##{action} via #{verb}" do
         page.set_rack_session(fake_lti_session)
         send(verb, action)
-        expect{ response }.to_not raise_error
+        expect { response }.to_not raise_error
       end
 
       specify "Should not be able to access ##{action} via #{verb}" do
         bypass_rescue
-        expect{ send(verb, action) }.to raise_error(Authentication::UnauthorizedError)
+        expect { send(verb, action) }.to raise_error(Authentication::UnauthorizedError)
       end
     end
   end

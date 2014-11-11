@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103084736) do
+ActiveRecord::Schema.define(version: 20141031210111) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141103084736) do
     t.string  "book_subtitle"
     t.string  "first_part_author"
     t.string  "first_entire_author"
-    t.string  "type_participation",   default: "Autor"
+    t.string  "type_participation"
     t.string  "local"
     t.string  "publisher"
     t.integer "year"
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 20141103084736) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tcc_definition_id"
-    t.integer  "grade"
+    t.float    "grade"
     t.datetime "grade_updated_at"
   end
 

@@ -2,7 +2,7 @@
 class AbstractsController < ApplicationController
   def edit
     set_tab :abstract
-    @abstract = @tcc.abstract || @tcc.abstract = Abstract.new
+    @abstract = @tcc.abstract || @tcc.build_abstract
 
     authorize @abstract
 
