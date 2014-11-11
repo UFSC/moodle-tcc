@@ -18,8 +18,6 @@ class TccsController < ApplicationController
   end
 
   def evaluate
-    @tcc = Tcc.find(params[:tcc_id])
-
     authorize(@tcc, :edit_assign_grade?)
 
     @tcc.grade = params[:tcc][:grade].empty? ? params[:tcc][:grade] : params[:tcc][:grade].to_i

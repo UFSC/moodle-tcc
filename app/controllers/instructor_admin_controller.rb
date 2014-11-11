@@ -31,7 +31,7 @@ class InstructorAdminController < ApplicationController
 
   def check_permission
     unless current_user.view_all? || current_user.instructor?
-      raise Authentication::UnauthorizedError.new(t('cannot_access_page_without_enough_permission'))
+      raise Authentication::UnauthorizedError, t('cannot_access_page_without_enough_permission')
       redirect_user_to_start_page
     end
   end

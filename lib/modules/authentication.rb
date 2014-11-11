@@ -154,7 +154,7 @@ module Authentication
         @tp.lti_msg = "Your consumer didn't use a recognized key."
         @tp.lti_errorlog = 'Invalid OAuth consumer key informed'
 
-        raise Authentication::LTI::CredentialsError.new("'Consumer key' não foi reconhecida")
+        raise Authentication::LTI::CredentialsError, "'Consumer key' não foi reconhecida"
       end
 
       # Verifica se o host está autorizado a realizar a requisição
@@ -167,7 +167,7 @@ module Authentication
         @tp.lti_msg = 'You are not authorized to use this application. (Unauthorized instance guid)'
         @tp.lti_errorlog = 'Unauthorized guid'
 
-        raise Authentication::LTI::CredentialsError.new('Unauthorized instance guid')
+        raise Authentication::LTI::CredentialsError, 'Unauthorized instance guid'
       end
 
       logger.debug 'LTI TP Initialized with valid key/secret'
@@ -184,7 +184,7 @@ module Authentication
         logger.error 'Invalid OAuth signature'
         logger.error 'Should be: ' +signature
 
-        raise Authentication::LTI::CredentialsError.new('Invalid OAuth signature')
+        raise Authentication::LTI::CredentialsError, 'Invalid OAuth signature'
       end
 
       return true
@@ -197,7 +197,7 @@ module Authentication
       if Time.now.utc.to_i - @tp.oauth_timestamp.to_i > 60*60
         logger.error 'OAuth request failed TTL'
 
-        raise CredentialsError.new('Your request is too old')
+        raise CredentialsError, 'Your request is too old'
       end
 
       return true

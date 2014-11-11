@@ -45,7 +45,7 @@ class SyncTcc
   end
 
   def find_or_create_person(moodle_id)
-    raise ArgumentError.new('É necessário passar um moodle_id') if moodle_id.nil?
+    raise ArgumentError, 'É necessário passar um moodle_id' if moodle_id.nil?
 
     person = Person.find_or_initialize_by(moodle_id: moodle_id)
 
