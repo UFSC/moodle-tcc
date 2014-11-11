@@ -30,12 +30,9 @@ module LtiTccFilters
   end
 
   def get_tcc
-    if (!params[:tcc_id].nil? && !params[:tcc_id].empty?)
-      nil
-    else
-      student = Person.where(moodle_id: current_moodle_user).first
-      @tcc = Tcc.includes(chapters: [:chapter_definition]).where(student_id: student.id).first
-      raise TccNotFoundError unless @tcc
-    end
+    student = Person.where(moodle_id: current_moodle_user).first
+    @tcc = Tcc.includes(chapters: [:chapter_definition]).where(student_id: student.id).first
+
+    raise TccNotFoundError unless @tcc
   end
 end
