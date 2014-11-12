@@ -1,8 +1,10 @@
 module TccDocument
   class DocumentProcessor < BaseProcessor
 
+    # @param [Nokogiri::XML::Document] document
+    # @return [String] latex text document
     def execute(document)
-      latex = Nokogiri::XSLT(xslt_template).apply_to(document)
+      latex = Nokogiri::XSLT(xslt_latex_template).apply_to(document)
 
       # Remover begin/end document, pois o mesmo já é inserido no layout
       latex = latex.gsub('\begin{document}', '').gsub('\end{document}', '')
@@ -11,7 +13,9 @@ module TccDocument
       latex.strip
     end
 
-    def xslt_template
+    private
+
+    def xslt_latex_template
       File.read(File.join(self.latex_path, 'xh2latex.xsl'))
     end
   end

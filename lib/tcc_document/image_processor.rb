@@ -1,13 +1,10 @@
 module TccDocument
   class ImageProcessor
 
-    def invalid_image_src
-      "#{Rails.root}/app/assets/images/image-not-found.jpg"
-    end
-
     # Realiza as transformações nas tags de figuras em um documento do Nokogiri
     #
-    # @param [Nokogiri::XML]
+    # @param [Nokogiri::XML::Document] doc
+    # @return [Nokogiri::XML::Document] documento com as alterações do processamento de imagens
     def execute(doc)
 
       # Inserir class figure nas imagens e resolver caminho
@@ -48,6 +45,12 @@ module TccDocument
       doc
     end
 
+    private
+
+    # Obtem os atributos definidos via inline style.
+    #
+    # @param [Nokogiri::XML::Node] img
+    # @return [Hash] atributos da imagem via inline style
     def extract_style_attributes(img)
       style_attributes = {}
 
@@ -60,7 +63,11 @@ module TccDocument
         end
       end
 
-      return style_attributes
+      style_attributes
+    end
+
+    def invalid_image_src
+      "#{Rails.root}/app/assets/images/image-not-found.jpg"
     end
 
   end
