@@ -4,6 +4,10 @@ class BookCapRefsController < ApplicationController
 
   before_action :set_current_tab
 
+  def new
+    @book_cap_ref = BookCapRef.new(type_participation: 'Autor')
+  end
+
   def index
     @book_cap_refs = @tcc.book_cap_refs.decorate
   end

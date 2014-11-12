@@ -61,6 +61,8 @@ class TccPolicy < ApplicationPolicy
       return false unless (!ichapter.nil? && !ichapter.empty? && ichapter.state.eql?('done'))
     end
 
+    #verifica se existe o título definido
+    return false if (!record.nil? && record.title.empty?)
     #verifica se existe ao menos 5 referencias criadas
     record.references.count >= 5
   end
