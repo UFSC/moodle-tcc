@@ -402,6 +402,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   airbrake!
   attribute_normalizer
   better_errors

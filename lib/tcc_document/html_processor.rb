@@ -1,5 +1,5 @@
 module TccDocument
-  class HTMLProcessor
+  class HTMLProcessor < BaseProcessor
 
     # @param [String] content
     # @return [Nokogiri::XML::Document] documento XML do nokogiri
