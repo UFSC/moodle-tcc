@@ -36,6 +36,7 @@ describe BookRef do
     it { should allow_value(1).for(:edition_number) }
     it { should allow_value(5).for(:edition_number) }
   end
+
   context 'normalizations' do
     it { should normalize_attribute(:first_author) }
     it { should normalize_attribute(:first_author).from(' Nome   Completo  ').to('Nome Completo') }

@@ -5,6 +5,8 @@ shared_examples_for 'indirect_citation' do
 
   before(:each) do
     decorated_reference.first_author = 'Alguma coisã qué deve ser ignorada GESTÃO'
+    decorated_reference.second_author = ''
+    decorated_reference.third_author = ''
   end
 
   it 'should include author' do

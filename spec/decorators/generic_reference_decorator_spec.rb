@@ -5,9 +5,10 @@ describe GenericReferenceDecorator do
   let!(:book_cap_ref) { Fabricate(:book_cap_ref) }
   let!(:internet_ref) { Fabricate(:internet_ref) }
   let!(:article_ref) { Fabricate(:article_ref) }
+  let!(:thesis_ref) { Fabricate(:thesis_ref) }
 
   it 'should be properly decorate' do
-    [book_ref, book_cap_ref, internet_ref, article_ref].each{ |ref|
+    [book_ref, book_cap_ref, internet_ref, article_ref, thesis_ref].each{ |ref|
       r = GenericReferenceDecorator.new(ref)
       expect(r.direct_citation).not_to be_nil
       expect(r.indirect_citation).not_to be_nil

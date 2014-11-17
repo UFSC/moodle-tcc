@@ -45,6 +45,10 @@ class BookCapRef < ActiveRecord::Base
 
   private
 
+  def get_all_authors
+    [first_author, second_author, third_author]
+  end
+
   def initial_page_less_than_end_page
     if (!initial_page.nil? && !end_page.nil?) && (initial_page > end_page)
       errors.add(:initial_page, 'Deve ser igual ou anterior a página final')
