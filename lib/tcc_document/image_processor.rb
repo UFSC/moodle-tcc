@@ -18,6 +18,7 @@ module TccDocument
         img['width'] = img_attributes[:width] if img_attributes.has_key? :width
         img['height'] = img_attributes[:height] if img_attributes.has_key? :height
 
+        # Se for uma URL para arquivos locais
         if img['src'] !~ URI::regexp
           next if img['src'].nil?
 

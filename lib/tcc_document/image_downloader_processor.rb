@@ -5,7 +5,7 @@ module TccDocument
 
     def initialize(tcc)
       @tcc = tcc
-      @download_list = []
+      @download_queue = Queue.new
     end
 
     # Realiza as transformações nas tags de figuras em um documento do Nokogiri
@@ -14,30 +14,30 @@ module TccDocument
     # @return [Nokogiri::XML::Document] documento com as alterações do processamento de imagens
     def execute(doc)
 
-      # verifica toda as imagens, verifica o cache e faz o download daquelas que ainda não estão em disco
+      # Este bloco garante que o somente após todos os downloads terminarem, o código seguinte será executado.
       remote_connection.in_parallel do
         doc.css('img').map do |img|
-          remote_url = retrive_url(img)
 
-          if should_fetch_image?(remote_url)
+          # Create RemoteAsset objects
+          remote_asset = RemoteAsset.new(@tcc, img)
 
-            # Verificar se imagem está em cache e se existe no sistema
-            cache = MoodleAsset.find_by(tcc_id: tcc_id, data_file_name: remote_img.basename)
-            if !cache.blank? && File.exist?(File.join(moodle_dir, cache.data_file_name))
-              # Imagem já está em cache, trocar caminho
-              img['src'] = cache.data.content.file
-            else
-              # Imagem não está em cache, recuperar
-              queue_download(img, remote_url)
-            end
+          next unless remote_asset.should_fetch_asset?
 
+          if remote_asset.is_cached?
+            # Imagem já está em cache, trocar caminho
+            img['src'] = remote_asset.cache.data.url
+            img['data-asset-id'] = remote_asset.cache.id
+          else
+            # Imagem não está em cache, fazer download assíncrono.
+            queue_download(remote_asset)
           end
+
         end
       end
 
       # faz o processamento das imagens que foram baixadas, armazena as referências no banco de dados
-      @download_list.each do |item|
-        fetch_image(item)
+      until @download_queue.empty?
+        persist_asset(@download_queue.pop)
       end
 
       doc
@@ -45,94 +45,73 @@ module TccDocument
 
     private
 
-    def retrive_url(img)
-      url = img['src']
+    def handle_request(remote_asset)
+      if remote_asset.request.status == 200
 
-      # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
-      url.gsub!('@@TOKEN@@', Settings.moodle_token) if url =~ /@@TOKEN@@/
+        AssetStringIO.new(remote_asset.filename, remote_asset.request.body)
+      else
 
-      Addressable::URI.parse(url).normalize!
+        # Troca a tag da imagem não carregada pela mensagem no pdf
+        new_node = Nokogiri::XML::Node.new('p', doc)
+        new_node.content = "[ Imagem do Moodle não carregada: #{remote_asset.filename} ]"
+        remote_asset.dom_item.replace new_node
+        Rails.logger.error "[Moodle Asset]: Falhou ao tentar transferir #{remote_asset.filename} (#{remote_asset.remote_url})"
+
+        false
+      end
+    end
+
+    # @param [RemoteAsset] remote_asset
+    def persist_asset(remote_asset)
+
+      asset_io = handle_request(remote_asset)
+      return unless asset_io
+
+      # Salvar
+      asset = MoodleAsset.new
+      asset.tcc_id = @tcc.id
+      asset.data = asset_io
+      asset.etag = remote_asset.request.headers['etag']
+      asset.remote_id = remote_asset.remote_asset_id
+
+      if asset.valid? && asset.save!
+
+        # Mudar caminho da imagem para onde foi salvo
+        remote_asset.dom_item['src'] = asset.data.url
+        remote_asset.dom_item['data-asset-id'] = asset.id
+      else
+        Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{remote_asset.remote_url}) (error: #{asset.errors.messages})"
+        remote_asset.dom_item['src'] = image_url('images/image-not-found.jpg')
+        remote_asset.dom_item['alt'] = "Imagem inválida ou não encontrada. (#{remote_asset.filename})"
+      end
+
+    end
+
+    def queue_download(remote_asset)
+      remote_asset.fetch_async!(remote_connection)
+      @download_queue << remote_asset
     end
 
     def remote_connection
-      @remote_connection ||= Faraday.new(Settings.moodle_url, :ssl => {:verify => false}) do |faraday|
+      @remote_connection ||= Faraday.new(Settings.moodle_url, ssl: {verify: false}) do |faraday|
         faraday.request :url_encoded
         faraday.adapter :typhoeus
       end
     end
 
-    def should_fetch_image?(url)
-      # possui um protocolo válido?
-      %w(http https).include? url.scheme
+  end
+
+  class AssetStringIO < StringIO
+    attr_accessor :filepath
+
+    def initialize(*args)
+      super(*args[1..-1])
+      @filepath = args[0]
     end
 
-    def queue_download(image_dom, remote_url)
-      @download_list << {dom: image_dom, request: remote_connection.get(remote_url)}
-    end
-
-    def fetch_image(item)
-      original_src = item[:dom]['src']
-      original_filename = File.basename(URI.parse(item[:dom]['src']).path)
-      file, filename = create_file_to_upload(item, doc)
-
-      # se houver algum problema com a transferência, vamos ignorar e processar o próximo
-      unless file
-        Rails.logger.error "[Moodle Asset]: Falhou ao tentar transferir #{filename} (#{item[:dom]['src']})"
-        return false
-      end
-
-      begin
-        # Salvar
-        asset = MoodleAsset.new
-        asset.tcc_id = tcc_id
-        asset.data = file
-
-        if asset.valid?
-          asset.save
-
-          # Mudar caminho da imagem para onde foi salvo
-          item[:dom]['src'] = asset.data.current_path
-        else
-          Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{original_src}) (error: #{asset.errors.messages})"
-          item[:dom]['src'] = "#{Rails.root}/app/assets/images/image-not-found.jpg"
-          item[:dom]['alt'] = "Imagem invalida ou nao encontrada. - #{LatexToPdf.escape_latex(original_filename)}"
-        end
-
-        file.close
-      end
-
-    ensure
-      File.delete(filename)
-    end
-
-
-    def create_file_to_upload(item, doc)
-      # Setup temporary directory
-      app_name = Rails.application.class.parent_name.parameterize
-      tmp_dir = File.join(Dir::tmpdir, "#{app_name}_#{Time.now.to_i}_#{SecureRandom.hex(12)}")
-      Dir.mkdir(tmp_dir)
-
-      if item[:request].status == 200
-        # Criar imagem tmp
-        url = URI.parse item[:dom]['src']
-        filename = File.join tmp_dir, File.basename(url.path)
-        file = File.open(filename, 'wb')
-        file.write(item[:request].body)
-      else
-        file = false
-        filename = item[:dom]['src'].split('?')[0].split('/').last
-
-        # Troca a tag da imagem não carregada pela mensagem no pdf
-        new_node = Nokogiri::XML::Node.new('p', doc)
-        new_node.content = "[ Imagem do Moodle não carregada: #{filename} ]"
-        item[:dom].replace new_node
-      end
-
-      return file, filename
-    end
-
-    def download_dir
-      File.join(Rails.public_path, 'uploads', 'moodle', 'pictures', tcc.id.to_s)
+    def original_filename
+      File.basename(@filepath)
     end
   end
+
 end

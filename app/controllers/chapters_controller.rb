@@ -71,24 +71,12 @@ class ChaptersController < ApplicationController
                 alert: t('chapter_import_cannot_proceed') unless policy(@chapter).can_import?
 
     remote = MoodleAPI::MoodleOnlineText.new
-    remote_text = remote.fetch_online_text(current_moodle_user, @chapter.chapter_definition.coursemodule_id)
+    remote_text = remote.fetch_online_text_with_images(current_moodle_user, @chapter.chapter_definition.coursemodule_id)
 
-    @chapter.content = cleanup_and_process_remote_text(remote_text)
+    @chapter.content = TccService.new(@tcc).process_remote_text(remote_text)
     @chapter.save!
 
     redirect_to edit_chapters_path(params[:moodle_user], params[:position]), notice: t('chapter_import_successfully')
   end
 
-  private
-
-  def cleanup_and_process_remote_text(remote_text)
-    # XHTML bem formatado e com as correções necessárias para não atrapalhar o documento final do LaTex
-    xml = TccDocument::HTMLProcessor.new.execute(remote_text)
-    # Realiza transformações nas tags de imagem
-    xml = TccDocument::ImageProcessor.new.execute(xml)
-    # Download das figuras do Moodle e transformação em cópias locais
-    xml = TccDocument::ImageDownloaderProcessor.new(@tcc).execute(xml)
-
-    xml.to_xhtml
-  end
 end

@@ -26,7 +26,7 @@ module MoodleAPI
 
     end
 
-    def fetch_online_text_for_printing(user_id, coursemodule_id)
+    def fetch_online_text_with_images(user_id, coursemodule_id)
       data = remote_json_call('local_wstcc_get_user_text_for_generate_doc',
                               userid: user_id, coursemoduleid: coursemodule_id)
 

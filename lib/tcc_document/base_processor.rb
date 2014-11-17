@@ -5,7 +5,7 @@ module TccDocument
       raise NotImplementedError
     end
 
-    private
+    protected
 
     def latex_path
       File.join(Rails.root, 'latex')
