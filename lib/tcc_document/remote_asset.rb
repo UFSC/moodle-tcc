@@ -12,8 +12,15 @@ module TccDocument
       @cache ||= MoodleAsset.find_by(tcc_id: @tcc.id, remote_id: remote_asset_id)
     end
 
-    def fetch_async!(remote_connection)
-      @request = remote_connection.get(remote_url)
+    # @param [Faraday::Connection] remote_connection
+    # @param [Boolean] revalidate
+    def fetch_async!(remote_connection, revalidate)
+      if revalidate
+        @request = remote_connection.get(remote_url, nil, {:'If-None-Match' =>  cache.etag})
+      else
+        @request = remote_connection.get(remote_url)
+      end
+
     end
 
     def filename

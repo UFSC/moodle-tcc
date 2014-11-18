@@ -3,20 +3,23 @@ require 'typhoeus/adapters/faraday'
 module TccDocument
   class ImageDownloaderProcessor < BaseProcessor
 
-    def initialize(tcc)
+    # @param [Tcc] tcc
+    # @param [Nokogiri::XML::Document] doc
+    def initialize(tcc, doc)
       @tcc = tcc
+      @doc = doc
       @download_queue = Queue.new
     end
 
     # Realiza as transformações nas tags de figuras em um documento do Nokogiri
     #
-    # @param [Nokogiri::XML::Document] doc
+
     # @return [Nokogiri::XML::Document] documento com as alterações do processamento de imagens
-    def execute(doc)
+    def execute
 
       # Este bloco garante que o somente após todos os downloads terminarem, o código seguinte será executado.
       remote_connection.in_parallel do
-        doc.css('img').map do |img|
+        @doc.css('img').map do |img|
 
           # Create RemoteAsset objects
           remote_asset = RemoteAsset.new(@tcc, img)
@@ -24,9 +27,8 @@ module TccDocument
           next unless remote_asset.should_fetch_asset?
 
           if remote_asset.is_cached?
-            # Imagem já está em cache, trocar caminho
-            img['src'] = remote_asset.cache.data.url
-            img['data-asset-id'] = remote_asset.cache.id
+            # Imagem já está em cache, fazer request usando etags para garantir que não houve alteração
+            queue_download(remote_asset, revalidate: true)
           else
             # Imagem não está em cache, fazer download assíncrono.
             queue_download(remote_asset)
@@ -40,19 +42,26 @@ module TccDocument
         persist_asset(@download_queue.pop)
       end
 
-      doc
+      @doc
     end
 
     private
 
     def handle_request(remote_asset)
-      if remote_asset.request.status == 200
+      if remote_asset.request.success?
 
         AssetStringIO.new(remote_asset.filename, remote_asset.request.body)
+      elsif remote_asset.request.status == 304 # Not-Modified
+
+        # Versão em cache não foi alterada remotamente, substituir o item da dom
+        remote_asset.dom_item['src'] = remote_asset.cache.data.url
+        remote_asset.dom_item['data-asset-id'] = remote_asset.cache.id
+
+        false
       else
 
         # Troca a tag da imagem não carregada pela mensagem no pdf
-        new_node = Nokogiri::XML::Node.new('p', doc)
+        new_node = Nokogiri::XML::Node.new('p', @doc)
         new_node.content = "[ Imagem do Moodle não carregada: #{remote_asset.filename} ]"
         remote_asset.dom_item.replace new_node
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar transferir #{remote_asset.filename} (#{remote_asset.remote_url})"
@@ -87,8 +96,8 @@ module TccDocument
 
     end
 
-    def queue_download(remote_asset)
-      remote_asset.fetch_async!(remote_connection)
+    def queue_download(remote_asset, revalidate: false)
+      remote_asset.fetch_async!(remote_connection, revalidate)
       @download_queue << remote_asset
     end
 

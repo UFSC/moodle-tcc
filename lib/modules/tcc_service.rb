@@ -24,7 +24,7 @@ class TccService
     xml = TccDocument::HTMLProcessor.new.execute(text)
 
     # Download das figuras do Moodle e transformação em cópias locais
-    xml = TccDocument::ImageDownloaderProcessor.new(@tcc).execute(xml)
+    xml = TccDocument::ImageDownloaderProcessor.new(@tcc, xml).execute
 
     xml.to_xhtml
   end
