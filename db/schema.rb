@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 20141117201739) do
     t.integer  "data_file_size"
     t.integer  "tcc_id"
     t.string   "etag"
-    t.string   "remote_id"
+    t.string   "remote_filename"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -9,7 +9,7 @@ module TccDocument
     end
 
     def cache
-      @cache ||= MoodleAsset.find_by(tcc_id: @tcc.id, remote_id: remote_asset_id)
+      @cache ||= MoodleAsset.find_by(tcc_id: @tcc.id, remote_filename: filename)
     end
 
     # @param [Faraday::Connection] remote_connection
@@ -36,10 +36,6 @@ module TccDocument
       @remote_url ||= retrieve_url
     end
 
-    def remote_asset_id
-      @remote_asset_id ||= retrieve_asset_id
-    end
-
     def should_fetch_asset?
       # possui um protocolo válido?
       %w(http https).include? remote_url.scheme
@@ -59,15 +55,6 @@ module TccDocument
       url.gsub!('@@TOKEN@@', Settings.moodle_token) if url =~ /@@TOKEN@@/
 
       Addressable::URI.parse(url).normalize!
-    end
-
-    # Will extract asset id from a Moodle URL
-    def retrieve_asset_id
-      # Format: "/webservice/pluginfile.php/000/assignsubmission_onlinetext/submissions_onlinetext/000/file.jpg
-      pattern = /\/assignsubmission_onlinetext\/submissions_onlinetext\/([0-9]+)\//
-      match = pattern.match(remote_url.path)
-
-      match ? match[1] : false
     end
 
   end

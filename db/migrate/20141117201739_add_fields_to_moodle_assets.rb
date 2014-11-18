@@ -1,6 +1,8 @@
 class AddFieldsToMoodleAssets < ActiveRecord::Migration
   def change
-    add_column :moodle_assets, :remote_id, :string, :after => :tcc_id
-    add_column :moodle_assets, :etag, :string, :after => :tcc_id
+    change_table :moodle_assets do |t|
+      t.string :remote_filename, :after => :tcc_id, index: true
+      t.string :etag, :after => :tcc_id
+    end
   end
 end

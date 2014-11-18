@@ -4,22 +4,20 @@ module TccDocument
   class ImageDownloaderProcessor < BaseProcessor
 
     # @param [Tcc] tcc
-    # @param [Nokogiri::XML::Document] doc
-    def initialize(tcc, doc)
+    def initialize(tcc)
       @tcc = tcc
-      @doc = doc
       @download_queue = Queue.new
     end
 
     # Realiza as transformações nas tags de figuras em um documento do Nokogiri
     #
-
+    # @param [Nokogiri::XML::Document] doc documento que sofrerá as importação e as alterações
     # @return [Nokogiri::XML::Document] documento com as alterações do processamento de imagens
-    def execute
+    def execute(doc)
 
       # Este bloco garante que o somente após todos os downloads terminarem, o código seguinte será executado.
       remote_connection.in_parallel do
-        @doc.css('img').map do |img|
+        doc.css('img').map do |img|
 
           # Create RemoteAsset objects
           remote_asset = RemoteAsset.new(@tcc, img)
@@ -39,10 +37,16 @@ module TccDocument
 
       # faz o processamento das imagens que foram baixadas, armazena as referências no banco de dados
       until @download_queue.empty?
-        persist_asset(@download_queue.pop)
+
+        remote_asset = @download_queue.pop
+
+        asset_io = handle_request(remote_asset)
+        next unless asset_io
+
+        persist_asset(remote_asset, asset_io)
       end
 
-      @doc
+      doc
     end
 
     private
@@ -60,10 +64,9 @@ module TccDocument
         false
       else
 
-        # Troca a tag da imagem não carregada pela mensagem no pdf
-        new_node = Nokogiri::XML::Node.new('p', @doc)
-        new_node.content = "[ Imagem do Moodle não carregada: #{remote_asset.filename} ]"
-        remote_asset.dom_item.replace new_node
+        remote_asset.dom_item['src'] = image_url('images/image-not-found.jpg')
+        remote_asset.dom_item['alt'] = "Imagem inválida ou não encontrada. (#{remote_asset.filename})"
+        
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar transferir #{remote_asset.filename} (#{remote_asset.remote_url})"
 
         false
@@ -71,20 +74,24 @@ module TccDocument
     end
 
     # @param [RemoteAsset] remote_asset
-    def persist_asset(remote_asset)
+    # @param [AssetStringIO] asset_io
+    def persist_asset(remote_asset, asset_io)
 
-      asset_io = handle_request(remote_asset)
-      return unless asset_io
+      if remote_asset.cache
+        # Atualizar o asset existente
+        asset = remote_asset.cache
+      else
+        # Criar um novo asset existente
+        asset = MoodleAsset.new
+        asset.tcc_id = @tcc.id
+        asset.remote_filename = remote_asset.filename
+      end
 
-      # Salvar
-      asset = MoodleAsset.new
-      asset.tcc_id = @tcc.id
+      # Arquivo remoto e etag (cache)
       asset.data = asset_io
       asset.etag = remote_asset.request.headers['etag']
-      asset.remote_id = remote_asset.remote_asset_id
 
       if asset.valid? && asset.save!
-
         # Mudar caminho da imagem para onde foi salvo
         remote_asset.dom_item['src'] = asset.data.url
         remote_asset.dom_item['data-asset-id'] = asset.id
