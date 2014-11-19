@@ -1,13 +1,10 @@
 module TccDocument
-  class ImageProcessor
-
-    def invalid_image_src
-      "#{Rails.root}/app/assets/images/image-not-found.jpg"
-    end
+  class ImageProcessor < BaseProcessor
 
     # Realiza as transformações nas tags de figuras em um documento do Nokogiri
     #
-    # @param [Nokogiri::XML]
+    # @param [Nokogiri::XML::Document] doc
+    # @return [Nokogiri::XML::Document] documento com as alterações do processamento de imagens
     def execute(doc)
 
       # Inserir class figure nas imagens e resolver caminho
@@ -21,22 +18,17 @@ module TccDocument
         img['width'] = img_attributes[:width] if img_attributes.has_key? :width
         img['height'] = img_attributes[:height] if img_attributes.has_key? :height
 
-        if img['src'] =~ /@@TOKEN@@/
-          # precisamos substituir @@TOKEN@@ pelo token do usuário do Moodle
-          img['src'] = img['src'].gsub('@@TOKEN@@', Settings.moodle_token)
-          # é feito unescape e depois escape para garantir que a url estará correta
-          # essa maneira é estranha, mas evita problemas :)
-          img['src'] = URI.escape(URI.unescape(img['src']))
-
-        elsif img['src'] !~ URI::regexp
+        # Se for uma URL para arquivos locais
+        if img['src'] !~ URI::regexp
           next if img['src'].nil?
 
           img['src'] = File.join(Rails.public_path, img['src'])
+
           # Se a URL contiver espaços ou caracter especial, deve ser decodificada
           img['src'] = URI.unescape(img['src'])
         else
           # FIXME: Esta linha provavelmente é um erro de digitação, verificar se ela ainda é necessária
-          src = (URI.unescape(img['src']))
+          # src = (URI.unescape(img['src']))
           original_filename = File.basename(URI.parse(img['src']).path.to_s)
 
           img['src'] = invalid_image_src
@@ -48,6 +40,12 @@ module TccDocument
       doc
     end
 
+    private
+
+    # Obtem os atributos definidos via inline style.
+    #
+    # @param [Nokogiri::XML::Node] img
+    # @return [Hash] atributos da imagem via inline style
     def extract_style_attributes(img)
       style_attributes = {}
 
@@ -60,7 +58,11 @@ module TccDocument
         end
       end
 
-      return style_attributes
+      style_attributes
+    end
+
+    def invalid_image_src
+      "#{Rails.root}/app/assets/images/image-not-found.jpg"
     end
 
   end

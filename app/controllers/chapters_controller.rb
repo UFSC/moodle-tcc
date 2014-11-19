@@ -71,9 +71,12 @@ class ChaptersController < ApplicationController
                 alert: t('chapter_import_cannot_proceed') unless policy(@chapter).can_import?
 
     remote = MoodleAPI::MoodleOnlineText.new
-    @chapter.content = remote.fetch_online_text(current_moodle_user, @chapter.chapter_definition.coursemodule_id)
+    remote_text = remote.fetch_online_text_with_images(current_moodle_user, @chapter.chapter_definition.coursemodule_id)
+
+    @chapter.content = TccService.new(@tcc).process_remote_text(remote_text)
     @chapter.save!
 
     redirect_to edit_chapters_path(params[:moodle_user], params[:position]), notice: t('chapter_import_successfully')
   end
+
 end

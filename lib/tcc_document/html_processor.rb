@@ -1,6 +1,8 @@
 module TccDocument
-  class HTMLProcessor
+  class HTMLProcessor < BaseProcessor
 
+    # @param [String] content
+    # @return [Nokogiri::XML::Document] documento XML do nokogiri
     def execute(content)
       content = decode_entities(content)
       content = simplify_tables(content)
@@ -42,8 +44,8 @@ module TccDocument
       content
     end
 
-    # Remove diversas tags que não são válidas dentro de tabelas para o Latex
-    # E retorna o conteúdo em XHTML
+    # Remove diversas tags que não são válidas dentro de tabelas para o Latex e
+    # retorna o conteúdo em XHTML
     #
     # @param [Nokogiri::HTML::Document] nokogiri_html Documento HTML (Nokogiri)
     # @return [Nokogiri::HTML::Document] Documento HTML (Nokogiri) com a remoção dos itens inválidos nas tabelas
@@ -110,8 +112,9 @@ module TccDocument
     end
 
     # Converte um documento manipulado pelo Nokogiri como HTML para XHTML e depois para XML
-    # @return [Nokogiri::XML::Document]
+    #
     # @param [Nokogiri::HTML::Document] nokogiri_html
+    # @return [Nokogiri::XML::Document]
     def convert_to_xml(nokogiri_html)
       Nokogiri::XML(nokogiri_html.to_xhtml)
     end

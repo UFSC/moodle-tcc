@@ -32,6 +32,7 @@ gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
 gem 'htmlentities'
 gem 'faraday', '0.8.9'
 gem 'typhoeus'
+gem 'addressable', require: 'addressable/uri'
 
 # Moodle Web Service
 gem 'rest-client'

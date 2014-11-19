@@ -1,11 +1,12 @@
 module TccDocument
   class ReferencesProcessor < BaseProcessor
+
     def execute(content)
       # Criar arquivo de referência
       doc = Nokogiri::XML(content)
 
       # Aplicar XSLT
-      xslt = Nokogiri::XSLT(xslt_template)
+      xslt = Nokogiri::XSLT(xslt_bibtex_template)
       content = xslt.apply_to(doc)
 
       # Salvar arquivo bib no tmp
@@ -16,7 +17,9 @@ module TccDocument
       input
     end
 
-    def xslt_template
+    private
+
+    def xslt_bibtex_template
       File.read(File.join(self.latex_path, 'xh2bib.xsl'))
     end
 

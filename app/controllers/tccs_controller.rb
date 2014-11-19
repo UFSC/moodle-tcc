@@ -1,6 +1,5 @@
 # encoding: utf-8
 class TccsController < ApplicationController
-  include TccLatex
 
   def show
     set_tab :data
