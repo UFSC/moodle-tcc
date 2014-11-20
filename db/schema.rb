@@ -223,7 +223,7 @@ ActiveRecord::Schema.define(version: 20141117201739) do
   add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree
 
   create_table "thesis_refs", force: true do |t|
-    t.string  "author"
+    t.string  "first_author"
     t.string  "title"
     t.string  "subtitle"
     t.string  "local"
@@ -238,6 +238,9 @@ ActiveRecord::Schema.define(version: 20141117201739) do
     t.string  "course"
     t.string  "department"
     t.string  "subtype"
+    t.string  "second_author"
+    t.string  "third_author"
+    t.boolean "et_all"
   end
 
 end

@@ -30,12 +30,15 @@ class BookRef < ActiveRecord::Base
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :title, :local, :with => [:squish, :blank]
 
-
   def type_quantity_defined?
     !type_quantity.blank?
   end
 
   private
+
+  def get_all_authors
+    [first_author, second_author, third_author]
+  end
 
   def check_equality
     columns =[:first_author, :second_author, :third_author]

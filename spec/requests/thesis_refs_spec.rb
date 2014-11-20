@@ -12,7 +12,7 @@ describe 'ThesisRef' do
   context 'creates an internet reference with success' do
     it '/new' do
       visit new_thesis_ref_path
-      fill_in 'Autor', :with => attributes[:author]
+      fill_in 'Primeiro Autor', :with => attributes[:first_author]
       fill_in 'Título', :with => attributes[:title]
       click_button 'Criar Referência de Tese ou Monografia'
       expect(page).to have_content(:success)

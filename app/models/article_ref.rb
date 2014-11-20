@@ -33,6 +33,10 @@ class ArticleRef < ActiveRecord::Base
 
   private
 
+  def get_all_authors
+    [first_author, second_author, third_author]
+  end
+
   def check_changed
     self.first_author.changed? || self.second_author.changed? || self.third_author.changed?
   end

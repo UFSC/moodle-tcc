@@ -2,28 +2,29 @@
   <div id="data_tab_content">
     <%= ref.inputs do %>
       <div class="span4">
-        <%= ref.input :author, input_html: {:autofocus => true}  %>
-        <%= ref.input :title %>
-        <%= ref.input :subtitle %>
-        <%= ref.input :local %>
-      </div>
-      <div class="span4">
-        <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
-        <%= ref.input :chapter %>
+        <%= ref.input :et_all, :label => false, :input_html => {:id => 'et_all'} %>
+        <%= ref.input :first_author %>
+        <%= ref.input :second_author %>
+        <%= ref.input :third_author%>
         <%= ref.input :type_thesis, :as => :radio, :collection => ThesisRef::THESIS_TYPES %>
-        <%= ref.input :type_number, :as => :radio, :collection => ThesisRef::TYPES %>
-        <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
-      </div>
-      <div class="span4">
+        <input id="degree" type="hidden" name="thesis_ref[degree]"/>
         <%= ref.input :degree, :name => 'degree_options', :collection => ThesisRef::DEGREE_TYPES,
                       :input_html => {:disabled => true} %>
-        <input id="degree" type="hidden" name="thesis_ref[degree]"/>
-
-
+      </div>
+      <div class="span4">
+        <%= ref.input :title %>
+        <%= ref.input :subtitle %>
+        <%= ref.input :chapter %>
+        <%= ref.input :type_number, :as => :radio, :collection => ThesisRef::TYPES %>
+        <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
+        <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
+      </div>
+      <div class="span4">
+        <%= ref.input :local %>
         <%= ref.input :institution %>
-        <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
         <%= ref.input :course %>
         <%= ref.input :department %>
+        <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
       </div>
       </div>
     <% end %>

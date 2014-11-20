@@ -5,13 +5,14 @@ describe ThesisRef do
     before(:all) { @thesis_ref = Fabricate(:thesis_ref) }
     after(:all) { @thesis_ref.destroy }
 
-    it { should respond_to(:author, :chapter, :course, :degree, :department, :institution, :local,
-                           :pages_or_volumes_number, :subtitle, :title, :type_thesis, :type_number, :year) }
+    it { should respond_to(:first_author, :second_author, :third_author, :et_all, :chapter, :course, :degree,
+                           :department, :institution, :local, :pages_or_volumes_number,
+                           :subtitle, :title, :type_thesis, :type_number, :year) }
     it { should have_one(:reference) }
 
     it { should have_one(:tcc).through(:reference) }
 
-    it { should validate_presence_of(:author) }
+    it { should validate_presence_of(:first_author) }
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:local) }
     it { should validate_presence_of(:year) }
@@ -27,13 +28,34 @@ describe ThesisRef do
 
   end
 
+  context 'normalizations' do
+    it { should normalize_attribute(:first_author) }
+    it { should normalize_attribute(:first_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:second_author) }
+    it { should normalize_attribute(:second_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:third_author) }
+    it { should normalize_attribute(:third_author).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:title) }
+    it { should normalize_attribute(:title).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:subtitle) }
+    it { should normalize_attribute(:subtitle).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:local) }
+    it { should normalize_attribute(:local).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:institution) }
+    it { should normalize_attribute(:institution).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:department) }
+    it { should normalize_attribute(:department).from(' Nome   Completo  ').to('Nome Completo') }
+    it { should normalize_attribute(:course) }
+    it { should normalize_attribute(:course).from(' Nome   Completo  ').to('Nome Completo') }
+  end
+
   context 'authors' do
     let(:thesis_ref) { Fabricate.build(:thesis_ref) }
     describe 'author' do
       it 'should have last name' do
-        thesis_ref.author = 'firstname'
+        thesis_ref.first_author = 'firstname'
         expect(thesis_ref).not_to be_valid
-        thesis_ref.author = 'firstname lastname'
+        thesis_ref.first_author = 'firstname lastname'
         expect(thesis_ref).to be_valid
       end
     end
@@ -45,7 +67,7 @@ describe ThesisRef do
     describe '#direct_citation' do
 
       it 'should include author' do
-        last_name = UnicodeUtils.upcase(thesis_ref.author.split(' ').last)
+        last_name = UnicodeUtils.upcase(thesis_ref.first_author.split(' ').last)
         expect(thesis_ref.direct_citation).to include("#{last_name}")
       end
 
@@ -94,7 +116,7 @@ describe ThesisRef do
         @tcc.save!
 
         # changed reference
-        reference.author = 'Autor A100'
+        reference.first_author = 'Autor A100'
         expect(reference).to receive(:check_difference)
 
         reference.save!
@@ -102,7 +124,9 @@ describe ThesisRef do
 
       it 'subtype should be nil' do
         thesis_ref1 = Fabricate.build(:thesis_ref)
-        thesis_ref1.author = 'Autor A1'
+        thesis_ref1.first_author = 'Autor A1'
+        thesis_ref1.second_author = ''
+        thesis_ref1.third_author = ''
 
         thesis_ref1.save!
 
@@ -111,7 +135,9 @@ describe ThesisRef do
 
       it 'subtype should be nil after one update' do
         thesis_ref1 = Fabricate.build(:thesis_ref)
-        thesis_ref1.author = 'Autor A1'
+        thesis_ref1.first_author = 'Autor A1'
+        thesis_ref1.second_author = ''
+        thesis_ref1.third_author = ''
 
         thesis_ref1.save!
         thesis_ref1.save!
@@ -121,12 +147,16 @@ describe ThesisRef do
 
       it 'subtype should be set correctly' do
         thesis_ref1 = Fabricate.build(:thesis_ref)
-        thesis_ref1.author = 'Autor A1'
+        thesis_ref1.first_author = 'Autor A1'
+        thesis_ref1.second_author = ''
+        thesis_ref1.third_author = ''
 
         thesis_ref1.save!
 
         thesis_ref2 = Fabricate.build(:thesis_ref)
-        thesis_ref2.author = 'Autor A1'
+        thesis_ref2.first_author = 'Autor A1'
+        thesis_ref2.second_author = ''
+        thesis_ref2.third_author = ''
 
         thesis_ref2.save!
 
@@ -139,12 +169,16 @@ describe ThesisRef do
 
       it 'should set subtype to nil if object is different' do
         thesis_ref1 = Fabricate.build(:thesis_ref)
-        thesis_ref1.author = 'Autor A1'
+        thesis_ref1.first_author = 'Autor A1'
+        thesis_ref1.second_author = ''
+        thesis_ref1.third_author = ''
 
         thesis_ref1.save!
 
         thesis_ref2 = Fabricate.build(:thesis_ref)
-        thesis_ref2.author = 'Autor A1'
+        thesis_ref2.first_author = 'Autor A1'
+        thesis_ref2.second_author = ''
+        thesis_ref2.third_author = ''
 
         thesis_ref2.save!
 
@@ -154,7 +188,7 @@ describe ThesisRef do
         expect(thesis_ref2.subtype).to eq('b')
 
         thesis_ref2
-        thesis_ref2.author = 'Autor A10'
+        thesis_ref2.first_author = 'Autor A10'
         thesis_ref2.save!
         thesis_ref1.reload
         thesis_ref2.reload
@@ -167,13 +201,20 @@ describe ThesisRef do
     end
   end
 
-  context '#indirect_citation' do
-    it_should_behave_like 'indirect_citation' do
+  it_should_behave_like 'references with citations in the text' do
+    let(:reference) { Fabricate(:thesis_ref) }
+  end
+
+  context 'authors' do
+    it_should_behave_like 'authors with first and lastname' do
       let(:ref) { Fabricate(:thesis_ref) }
     end
   end
 
-  it_should_behave_like 'references with citations in the text' do
-    let(:reference) { Fabricate(:thesis_ref) }
+  context '#indirect_citation' do
+    it_should_behave_like 'indirect_citation with more than one author' do
+      let(:ref) { Fabricate(:thesis_ref) }
+    end
   end
+
 end
