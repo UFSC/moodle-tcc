@@ -1,6 +1,6 @@
 
 <div class="span12" style="margin-left: 0">
-  <h3>Nomes compostos</h3>
+  <h3><%= t(:compound_name)%></h3>
   <div class="span6" style="margin-left: 0">
     <%= render :partial => 'common/search_bar', locals: {
             path: bibliographies_path( moodle_user: params[:moodle_user], anchor: 'compound_names' ),
@@ -15,16 +15,16 @@
     <%= link_to '#',  {:remote => true, 'data-toggle' =>  'modal',
                                          'data-target' => '#modal-window-new-compound-name', class: 'btn btn-success'}  do %>
       <%= display_icon 'icon-plus icon-white' %>
-      <b>Adicionar nome composto ou sufixo</b>
+      <b><%= t(:add_compound_name_or_suffix) %></b>
     <% end %>
   </div>
 </div>
 
 <div class="span12" style="margin-left: 0">
   <% if params[:search] %>
-    <h4>Resultado para: <%= params[:search] %></h4>
+    <h4><%= t(:compound_name_search_result) + ': '%> <%= params[:search] %></h4>
   <% else %>
-    <h4>Lista geral</h4>
+    <h4><%= t(:full_list) %></h4>
   <% end %>
 
   <div class="span6" style="margin-left: 0px;">

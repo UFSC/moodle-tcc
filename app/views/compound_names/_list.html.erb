@@ -2,9 +2,9 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Nome</th>
-      <th>Editar</th>
-      <th>Remover</th>
+      <th><%= t('activerecord.attributes.compound_name.name') %> </th>
+      <th><%= t('activerecord.attributes.compound_name.edit') %></th>
+      <th><%= t('activerecord.attributes.compound_name.remove') %></th>
     </tr>
     </thead>
     <% @compound_names.each_with_index do |element, index| %>
@@ -12,14 +12,14 @@
         <tr>
           <td><%= element.name %></td>
           <td>
-            <%= link_to 'Editar', '#',  {:remote => true, 'data-toggle' =>  'modal',
+            <%= link_to t('activerecord.attributes.compound_name.edit'), '#',  {:remote => true, 'data-toggle' =>  'modal',
                                                           'data-target' => '#'+element.id.to_s, class: 'btn'}  %>
 
           </td>
           <td>
             <%= button_to 'Remover', compound_name_path(element, moodle_user: params[:moodle_user]),
                           class: 'btn btn-danger',
-                          confirm: "Tem certeza que deseja apagar o nome composto: #{element.name}?",
+                          :data => { :confirm => "Tem certeza que deseja apagar o nome composto: #{element.name}?" },
                           method: :delete, title: 'Remover nome composto'%>
           </td>
         </tr>

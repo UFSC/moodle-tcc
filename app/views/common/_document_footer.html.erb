@@ -1,14 +1,14 @@
 <% if can_save || can_send_to_review || can_send_draft_done %>
   <div class="form-actions">
-    <%= object_form.action :submit, :as => :input, label: 'Salvar Texto',
+    <%= object_form.action :submit, :as => :input, label: t(:save_document),
                            button_html: {class: 'btn btn-primary', disabled: !can_save} if can_save
     %>
-    <%= object_form.action :submit, :as => :input, label: 'Devolver para o aluno',
+    <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_draft'),
                            button_html: {class: 'btn',
                                          name: 'draft'
                            } if can_send_draft_done
     %>
-    <%= object_form.action :submit, :as => :input, label: 'Enviar para Avaliação',
+    <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_review'),
                            button_html: {class: 'btn',
                                          name: 'review',
                                          data: {confirm: 'Você não poderá mais editar o texto enquanto o orientador '+
@@ -16,7 +16,7 @@
                                          }
                            } if can_send_to_review
     %>
-    <%= object_form.action :submit, :as => :input, label: 'Aprovar',
+    <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_done'),
                            button_html: {class: 'btn btn-success',
                                          name: 'done',
                                          data: {confirm: 'O texto não poderá mais ser alterado após sua aprovação. '+

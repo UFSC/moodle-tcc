@@ -4,7 +4,7 @@
 
       <%= render partial: 'common/document_header',
                  locals: {object: @abstract,
-                          object_label: 'Resumo'
+                          object_label: t('activerecord.attributes.abstract.content_pt')
                  } %>
 
       <%= h.cktext_area :content,  {ckeditor: {readOnly: !policy(@abstract).edit_content?}} %>

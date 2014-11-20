@@ -1,0 +1,89 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://unasus2.local/webservice/rest/server.php
+    body:
+      encoding: UTF-8
+      string: wstoken=59864ec673b9eadc141ec43d3e634065&wsfunction=local_wstcc_get_students_by_course&moodlewsrestformat=json&courseid=230
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 19 Nov 2014 18:18:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Powered-By:
+      - PHP/5.5.9-1ubuntu4.5
+      Cache-Control:
+      - private, must-revalidate, pre-check=0, post-check=0, max-age=0
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Accept-Ranges:
+      - none
+      Content-Length:
+      - '5077'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '[{"id":1,"id":2}]'
+    http_version: 
+  recorded_at: Wed, 19 Nov 2014 18:18:49 GMT
+- request:
+    method: post
+    uri: http://unasus2.local/webservice/rest/server.php
+    body:
+      encoding: US-ASCII
+      string: wstoken=59864ec673b9eadc141ec43d3e634065&wsfunction=local_wstcc_get_students_by_course&moodlewsrestformat=json&courseid=0
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '121'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 19 Nov 2014 18:25:22 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Powered-By:
+      - PHP/5.5.9-1ubuntu4.5
+      Cache-Control:
+      - private, must-revalidate, pre-check=0, post-check=0, max-age=0
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Accept-Ranges:
+      - none
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '[{"id":1,"id":2}]'
+    http_version:
+  recorded_at: Wed, 19 Nov 2014 18:25:22 GMT
+recorded_with: VCR 2.9.3

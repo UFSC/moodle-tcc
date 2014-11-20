@@ -103,6 +103,8 @@ group :test do
   gem 'fabrication'
   gem 'shoulda-matchers'
   gem 'faker'
+  gem 'vcr'
+  gem 'webmock'
 
   # Request tests
   gem 'capybara'

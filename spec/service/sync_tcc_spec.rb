@@ -69,9 +69,21 @@ describe SyncTcc do
       expect(Tcc.where(student: student).exists?).to be true
     end
 
-    xit 'expects to be updated' do
+    it 'expects to be updated' do
+
       sync.send(:synchronize_tcc, student)
+      attrs = student
+      fake_attributes = OpenStruct.new({id: attrs[:moodle_id],
+                                        name: attrs[:name],
+                                        email: attrs[:email],
+                                        username: attrs[:moodle_username]})
+
       sync.send(:synchronize_tcc, other_student)
+
+      allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [student.id] }
+      allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:find_users_by_field) { fake_attributes }
+
+      sync.send(:get_students)
 
       @tcc = Tcc.find_by_student_id(student.id)
       moodle_id_orientador = @tcc.orientador.moodle_id
@@ -79,22 +91,16 @@ describe SyncTcc do
       moodle_id_other_orientador = @other_tcc.orientador.moodle_id
       @course_id = @tcc.tcc_definition.course_id
       @other_course_id = @other_tcc.tcc_definition.course_id
-      allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [@course_id] }
 
       sync.call
-
-      @tcc.orientador.moodle_id.should == moodle_id_orientador
-
+      expect(@tcc.orientador.moodle_id).to be(moodle_id_orientador)
       allow(other_sync).to receive(:get_tutor) { _tutor_updated }
       @tcc.orientador = @other_tcc.orientador
       @tcc.save!
-
-      @tcc.orientador.moodle_id.should == moodle_id_other_orientador
+      expect(@tcc.orientador.moodle_id).to be(moodle_id_other_orientador)
 
       sync.call
-
-      @tcc.orientador.moodle_id.should == moodle_id_orientador
-
+      expect(@tcc.orientador.moodle_id).to be(moodle_id_orientador)
     end
   end
 end

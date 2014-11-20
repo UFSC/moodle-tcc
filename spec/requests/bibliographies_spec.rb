@@ -80,8 +80,8 @@ describe 'Bibliographies' do
     end
 
     it 'Nomes Compostos' do
-      click_link 'Nomes Compostos'
-      expect(page).to have_content('Nomes compostos')
+      click_link I18n.t(:compound_name)
+      expect(page).to have_content(I18n.t(:compound_name))
     end
   end
 end

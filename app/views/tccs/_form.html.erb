@@ -1,4 +1,4 @@
-<h3>Dados</h3>
+<h3> <%= t(:data) %> </h3>
 <%= semantic_form_for @tcc, url: tcc_path(moodle_user: params[:moodle_user]) do |f| %>
   <%= f.inputs do %>
     <%= f.input :title, input_html: {style: 'width:450px;', :autofocus => true} %>
@@ -20,7 +20,7 @@
   <% end %>
 
   <%= f.actions do %>
-    <%= f.action :submit, :as => :input, label: 'Salvar alterações' %>
+    <%= f.action :submit, :as => :input, label: t(:save_changes_tcc) %>
 
     <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn', target: '_blank' do %>
       <%= display_icon('icon-file') %> Pré-visualizar TCC

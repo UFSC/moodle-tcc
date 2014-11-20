@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 20141117201739) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tcc_definition_id"
-    t.float    "grade"
+    t.integer  "grade"
     t.datetime "grade_updated_at"
   end
 
