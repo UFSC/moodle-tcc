@@ -1,8 +1,10 @@
 # encoding: utf-8
 module Authentication
 
-  class PersonNotFoundError < RuntimeError; end
-  class UnauthorizedError < RuntimeError; end
+  class PersonNotFoundError < RuntimeError;
+  end
+  class UnauthorizedError < RuntimeError;
+  end
 
   def self.included(base)
     base.send(:include, Authentication::LTI)
@@ -18,11 +20,11 @@ module Authentication
   # @return [Integer] ID do Moodle User
   def current_moodle_user
     @moodle_user ||=
-      if (current_user.instructor? || current_user.view_all?) && params['moodle_user']
-        params['moodle_user']
-      else
-        current_user.id
-      end
+        if (current_user.instructor? || current_user.view_all?) && params['moodle_user']
+          params['moodle_user']
+        else
+          current_user.id
+        end
   end
 
   # Redireciona o usuário atual para a página de início relativa as permissões de acesso dele
@@ -55,11 +57,8 @@ module Authentication
     def initialize(lti_tp)
       @lti_tp = lti_tp
       @person = Person.find_by(moodle_id: lti_tp.user_id)
-      # se puder ver todos os usuários
-      # não precisa estar sincronizado/cadastrado no sistema de TCC
-      if !view_all?
-        raise PersonNotFoundError unless @person
-      end
+      
+      raise PersonNotFoundError unless @person
     end
 
     def id
@@ -126,7 +125,8 @@ module Authentication
 
   module LTI
 
-    class CredentialsError < RuntimeError; end
+    class CredentialsError < RuntimeError;
+    end
 
     # Inicializa o Tool Provider e faz todas as checagens necessárias para garantir permissões
     # Caso encontre algum problema, redireciona para uma página de erro
