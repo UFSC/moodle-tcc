@@ -12,7 +12,8 @@
     <% end %>
 
     <% if policy(@tcc).edit_defense_date? %>
-      <%= f.input :defense_date, input_html: {style: 'width:141px;'} %>
+      <%= f.input :defense_date, :as => :date_picker, input_html: {style: 'width:450px;', data: {behaviour:
+                                                                                                     'datepicker'}} %>
     <% else %>
       <%= f.input :defense_date, :as => :string, input_html: {style: 'width:450px;', disabled: true,
                                                               value: @tcc.defense_date} %>
