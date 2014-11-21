@@ -19,7 +19,7 @@ describe 'Chapter content' do
     before :each do
       @tcc_1 = Fabricate(:tcc_with_all)
       lti_user.person = person_session
-      page.set_rack_session(fake_lti_session_by_person(role_context, person_session))
+      page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
       document_test.chapter_definition.coursemodule_id = Fabricate.sequence(:coursemodule_id)
       document_test.chapter_definition.save!
       document_test.content = '';

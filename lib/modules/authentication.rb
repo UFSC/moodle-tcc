@@ -57,8 +57,12 @@ module Authentication
     def initialize(lti_tp)
       @lti_tp = lti_tp
       @person = Person.find_by(moodle_id: lti_tp.user_id)
-      
-      raise PersonNotFoundError unless @person
+
+      # se puder ver todos os usuários
+      # não precisa estar sincronizado/cadastrado no sistema de TCC
+      if !view_all?
+        raise PersonNotFoundError unless @person
+      end
     end
 
     def id

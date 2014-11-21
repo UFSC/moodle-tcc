@@ -27,6 +27,7 @@ module InstructorAdminHelper
       if %w(valued insert_grade).include?(state)
         link_to(content,
                 "##{tcc.id}",
+                id: "##{tcc.id}",
                 #class: 'alert-link',
                 target: '_blank',
                 data: {:toggle => "modal"},

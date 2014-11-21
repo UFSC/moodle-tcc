@@ -63,7 +63,7 @@ pt-BR:
       abstract:
         content_pt: 'Resumo'
         content_en: 'Abstract'
-        keywords: 'Palavras chaves'
+        keywords: 'Palavras chave'
       chapter:
         content: 'Conteúdo'
       chapter_comment:

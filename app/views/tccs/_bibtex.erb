@@ -100,7 +100,12 @@
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= r.local %></span>
-      <span class="author"><%= r.author %></span>
+      <span class="author">
+      <%= r.first_author %>
+              <%= ' and ' << r.second_author if  !r.second_author.blank? %>
+              <%= ' and ' << r.third_author if !r.third_author.blank? %>
+              <%= ' and others ' if r.et_all %>
+      </span>
       <span class="organization"><%= r.institution %></span>
       <span class="title"><%= r.title %></span>
       <span class="subtitle"><%= r.subtitle %></span>
@@ -108,8 +113,8 @@
       <span class="chapter"><%= r.chapter %></span>
       <span class="type"><%= r.type_thesis %></span>
       <span class="number"><%= r.pages_or_volumes_number %></span>
-      <% note = "Curso de #{r.course}, " if !r.course.empty? %>
-      <% note = note+ "Departamento de #{r.department}, " if !r.department.empty? %>
+      <% note = "Curso de #{r.course}, " if (!r.course.nil? && !r.course.empty?) %>
+      <% note = note+ "Departamento de #{r.department}, " if (!r.department.nil? &&!r.department.empty?) %>
       <% note = note+"#{r.institution}. " %>
       <% note = note+"Cap. #{r.chapter}." if !r.chapter.nil? %>
 

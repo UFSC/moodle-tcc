@@ -33,6 +33,12 @@ describe 'Lti' do
         expect(response).to redirect_to(instructor_admin_path)
       end
 
+      it 'should redirect an admin to admin screen' do
+        post root_path, moodle_lti_params('administrator')
+        expect(response.status).to be(302)
+        expect(response).to redirect_to(instructor_admin_path)
+      end
+
       it 'should redirect a AVEA coordenator to admin screen' do
         post root_path, moodle_lti_params('urn:moodle:role/coordavea')
         expect(response.status).to be(302)

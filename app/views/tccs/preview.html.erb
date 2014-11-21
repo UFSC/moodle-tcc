@@ -19,7 +19,14 @@
       <dd><%= @student.name %></dd>
 
       <dt>Orientador:</dt>
-      <dd><%= @tcc.orientador.try(:name) %></dd>
+      <dd><%= @tcc.orientador.nil? ? '(indefinido)' : @tcc.orientador.name %></dd>
+
+      <dt>Dt. Defesa:</dt>
+      <dd><%= @tcc.defense_date.nil? ? '(indefinido)' : @tcc.defense_date.strftime('%d-%m-%Y') %></dd>
+
+      <dt><h3>Título:</h3></dt>
+      <dd><h3><%= @tcc.title.empty? ? '(indefinido)' : @tcc.title %></h3></dd>
+
     </dl>
   </section>
 
@@ -28,6 +35,11 @@
     <h2>Resumo</h2>
 
     <%= @tcc.abstract.content.try(:html_safe) if @tcc.abstract %>
+    <br/>
+    <% if @tcc.abstract %>
+      <b> <%= "#{I18n.t('activerecord.attributes.abstract.keywords')}: " %> </b>
+      <%= @tcc.abstract.keywords.try(:html_safe) %>
+    <% end %>
   </section>
 
 

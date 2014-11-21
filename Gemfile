@@ -105,6 +105,7 @@ group :test do
   gem 'faker'
   gem 'vcr'
   gem 'webmock'
+  gem 'pdf-inspector', :require => "pdf/inspector"
 
   # Request tests
   gem 'capybara'

@@ -31,9 +31,8 @@ shared_context 'view, edit and change state (as Student)' do
   let(:moodle_user_view) { nil }
 
   before :each do
-    #page.set_rack_session(fake_lti_session(role))
     @tcc_1 = Fabricate(:tcc_with_all)
-    page.set_rack_session(fake_lti_session_by_person(role_context, person_session))
+    page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
   end
 
   context 'in Draft state' do
@@ -96,7 +95,7 @@ shared_context 'view, edit and change state (as viewAll)' do
 
   before :each do
     @tcc_1 = Fabricate(:tcc_with_all)
-    page.set_rack_session(fake_lti_session_by_person(role_context, person_session))
+    page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
   end
 
   context 'in draft state' do
@@ -326,7 +325,7 @@ shared_context 'an unauthorized user who cannot view abstract' do
 
   before :each do
     @tcc_1 = Fabricate(:tcc_with_all)
-    page.set_rack_session(fake_lti_session_by_person(role_context, person_session))
+    page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
   end
   it "for role context" do
     visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
