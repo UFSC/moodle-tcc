@@ -1,36 +1,38 @@
 <h5>Referências de Artigos</h5>
+
 <% if @article_refs.count > 0 %>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Autor</th>
-        <th>Título do Artigo</th>
-        <th>Nome do Periódico</th>
-        <th>Data da Publicação</th>
-        <th>Local (Cidade)</th>
-        <th>Ação</th>
-      </tr>
-      </thead>
-      <% @article_refs.each do |element| %>
-          <% if !element.nil? %>
-              <tr>
-                <td><%= element.first_author %></td>
-                <td><%= element.article_title %></td>
-                <td><%= element.journal_name %></td>
-                <td><%= element.year %></td>
-                <td><%= element.local %></td>
-                <td>
-                  <%= link_to 'Editar', edit_article_ref_path(element, :moodle_user => params[:moodle_user]) %>
-                  <%= link_to 'Remover', article_ref_path(element, :moodle_user => params[:moodle_user]),
-                              data: { confirm: t(:label_confirm_message)}, :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Autor</th>
+      <th>Título do Artigo</th>
+      <th>Nome do Periódico</th>
+      <th>Data da Publicação</th>
+      <th>Local (Cidade)</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <% @article_refs.each do |element| %>
+      <% if !element.nil? %>
+        <tr>
+          <td><%= element.first_author %></td>
+          <td><%= element.article_title %></td>
+          <td><%= element.journal_name %></td>
+          <td><%= element.year %></td>
+          <td><%= element.local %></td>
+          <td>
+            <%= link_to 'Editar', edit_article_ref_path(element, moodle_user: params[:moodle_user]) %>
+            <%= link_to 'Remover', article_ref_path(element, moodle_user: params[:moodle_user]),
+                        data: {confirm: t(:label_confirm_message)}, method: :delete %>
+          </td>
+        </tr>
       <% end %>
-    </table>
+    <% end %>
+  </table>
+  <%= link_to t('add_new_reference_button'), new_article_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-default btn-small' %>
 <% else %>
+  <div class="jumbotron">
     <p>Não há referências cadastradas.</p>
+    <%= link_to t('add_new_reference_button'), new_article_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-primary' %>
+  </div>
 <% end %>
-<%= link_to 'Criar', new_article_ref_path(:moodle_user => params[:moodle_user]), :class => 'btn btn-small' %>
-
-

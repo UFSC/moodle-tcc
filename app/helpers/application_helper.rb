@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def display_icon(icon_name)
-    content_tag('i', '', class: icon_name)
+    content_tag('span', '', class: "glyphicon glyphicon-#{icon_name}", :'aria-header' => true)
   end
 
   def lesc(text)

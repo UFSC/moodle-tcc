@@ -7,10 +7,11 @@ gem 'protected_attributes', '~>1.0.1'
 # Asset Pipeline
 gem 'sass-rails', '~> 4.0.2'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'uglifier', '>= 1.3.0'
 
 # Assets
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass', '~> 3.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.1.1'
 gem 'bootstrap-datepicker-rails'
@@ -53,7 +54,7 @@ gem 'oauth-instructure'
 
 # Formulários e views
 gem 'formtastic', '~> 2.3'
-gem 'formtastic-bootstrap', '~> 2.1.3'
+gem 'formtastic-bootstrap', '~> 3.0'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
 gem 'rabl'

@@ -1,38 +1,40 @@
 <h5>Referências da Internet</h5>
+
 <% if @internet_refs.count > 0 %>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Autor</th>
-        <th>Título</th>
-        <th>Subtítulo</th>
-        <th>URL</th>
-        <th>Data da Acesso</th>
-        <th>Data de Publicação</th>
-        <th>Ação</th>
-      </tr>
-      </thead>
-      <% @internet_refs.each do |element| %>
-          <% if !element.nil? %>
-              <tr>
-                <td><%= element.first_author %></td>
-                <td><%= element.title %></td>
-                <td><%= element.subtitle %></td>
-                <td><%= link_to element.url %></td>
-                <td><%= element.access_date %></td>
-                <td><%= element.publication_date %></td>
-                <td>
-                  <%= link_to 'Editar', edit_internet_ref_path(element, :moodle_user => params[:moodle_user]) %>
-                  <%= link_to 'Remover', internet_ref_path(element, :moodle_user => params[:moodle_user]),
-                              data: { confirm: t(:label_confirm_message)}, :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Autor</th>
+      <th>Título</th>
+      <th>Subtítulo</th>
+      <th>URL</th>
+      <th>Data da Acesso</th>
+      <th>Data de Publicação</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <% @internet_refs.each do |element| %>
+      <% if !element.nil? %>
+        <tr>
+          <td><%= element.first_author %></td>
+          <td><%= element.title %></td>
+          <td><%= element.subtitle %></td>
+          <td><%= link_to element.url %></td>
+          <td><%= element.access_date %></td>
+          <td><%= element.publication_date %></td>
+          <td>
+            <%= link_to 'Editar', edit_internet_ref_path(element, moodle_user: params[:moodle_user]) %>
+            <%= link_to 'Remover', internet_ref_path(element, moodle_user: params[:moodle_user]),
+                        data: {confirm: t(:label_confirm_message)}, :method => :delete %>
+          </td>
+        </tr>
       <% end %>
-    </table>
+    <% end %>
+  </table>
+  <%= link_to t('add_new_reference_button'), new_internet_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-default btn-small' %>
 <% else %>
+  <div class="jumbotron">
     <p>Não há referências cadastradas.</p>
+    <%= link_to t('add_new_reference_button'), new_internet_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-primary' %>
+  </div>
 <% end %>
-<%= link_to 'Criar', new_internet_ref_path(:moodle_user => params[:moodle_user]), :class => 'btn btn-small' %>
-
-

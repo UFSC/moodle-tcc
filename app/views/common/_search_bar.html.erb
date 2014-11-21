@@ -1,26 +1,35 @@
-<%= form_tag path, :method => 'get', :html => {class: ''} do %>
-  <!-- para garantir a autenticacão -->
-  <%= hidden_field_tag 'moodle_user', params[:moodle_user] %>
+<div class="row">
+  <%= form_tag path, :method => 'get', :html => {class: ''} do %>
+    <!-- para garantir a autenticacão -->
+    <%= hidden_field_tag 'moodle_user', params[:moodle_user] %>
 
-  <div class="input-append">
-    <%= autocomplete_field_tag :search, params[:search], autocomplete_path, {
-            placeholder: 'Busca', class: 'clearable span5', autofocus: 'autofocus' } %>
+    <div class="col-lg-5">
+      <div class="input-group">
+        <%= autocomplete_field_tag :search, params[:search], autocomplete_path,
+                                   {placeholder: 'Busca', class: 'form-control', autofocus: 'autofocus'} %>
 
-    <%= link_to path, class: 'btn', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
-      <%= display_icon('icon-remove') %>
-    <% end %>
+        <div class="input-group-btn">
+          <%= link_to path, class: 'btn btn-default', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
+            <%= display_icon('remove') %>
+          <% end %>
 
-    <%= button_tag :class => 'btn btn-default', name: nil, title: 'Filtrar lista' do %>
-      <%= display_icon('icon-search') %>
-    <% end %>
-  </div>
 
-  <% unless local_assigns[:simple_search_bar] %>
-    <div class="pull-right">
-      <%= link_to '#', class: 'btn', id: 'refresh-list', title: 'Atualizar a lista abaixo' do %>
-        <%= display_icon('icon-refresh') %>
-        <%= t(:list_refresh) %>
-      <% end %>
+          <%= button_tag :class => 'btn btn-default', name: nil, title: 'Filtrar lista' do %>
+            <%= display_icon('search') %>
+          <% end %>
+        </div>
+      </div>
     </div>
+
+    <% unless local_assigns[:simple_search_bar] %>
+      <div class="col-lg-2 col-lg-offset-5">
+        <div class="pull-right">
+          <%= link_to '#', class: 'btn btn-default', id: 'refresh-list', title: 'Atualizar a lista abaixo' do %>
+            <%= display_icon('refresh') %>
+            <%= t(:list_refresh) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>

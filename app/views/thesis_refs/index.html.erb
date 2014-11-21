@@ -1,39 +1,40 @@
 <h5>Referências de Teses, Dissertações, Monografias E TCCs</h5>
+
 <% if @thesis_refs.count > 0 %>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Autor</th>
-        <th>Título</th>
-        <th>Local (Cidade)</th>
-        <th>Ano</th>
-        <th>Tipo</th>
-        <th>Instituição</th>
-        <th>Ação</th>
-      </tr>
-      </thead>
-      <% @thesis_refs.each do |element| %>
-          <% if !element.nil? %>
-              <tr>
-                <td><%= element.first_author %></td>
-                <td><%= element.title %></td>
-                <td><%= element.local %></td>
-                <td><%= element.year %></td>
-                <td><%= element.type_thesis %></td>
-                <td><%= element.institution %></td>
-                <td>
-                  <%= link_to 'Editar', edit_thesis_ref_path(element.id, :moodle_user => params[:moodle_user]) %>
-                  <%= link_to 'Remover', thesis_ref_path(element, :moodle_user => params[:moodle_user]),
-                              :confirm =>  t(:label_confirm_message), :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Autor</th>
+      <th>Título</th>
+      <th>Local (Cidade)</th>
+      <th>Ano</th>
+      <th>Tipo</th>
+      <th>Instituição</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <% @thesis_refs.each do |element| %>
+      <% if !element.nil? %>
+        <tr>
+          <td><%= element.first_author %></td>
+          <td><%= element.title %></td>
+          <td><%= element.local %></td>
+          <td><%= element.year %></td>
+          <td><%= element.type_thesis %></td>
+          <td><%= element.institution %></td>
+          <td>
+            <%= link_to 'Editar', edit_thesis_ref_path(element.id, moodle_user: params[:moodle_user]) %>
+            <%= link_to 'Remover', thesis_ref_path(element, moodle_user: params[:moodle_user]),
+                        confirm: t(:label_confirm_message), :method => :delete %>
+          </td>
+        </tr>
       <% end %>
-    </table>
+    <% end %>
+  </table>
+  <%= link_to t('add_new_reference_button'), new_thesis_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-default btn-small' %>
 <% else %>
+  <div class="jumbotron">
     <p>Não há referências cadastradas.</p>
+    <%= link_to t('add_new_reference_button'), new_thesis_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-primary' %>
+  </div>
 <% end %>
-<%= link_to 'Criar', new_thesis_ref_path(:moodle_user => params[:moodle_user]),
-            :class => 'btn btn-small' %>
-
-

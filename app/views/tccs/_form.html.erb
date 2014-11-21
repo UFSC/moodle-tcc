@@ -22,12 +22,12 @@
   <%= f.actions do %>
     <%= f.action :submit, :as => :input, label: t(:save_changes_tcc) %>
 
-    <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn', target: '_blank' do %>
-      <%= display_icon('icon-file') %> Pré-visualizar TCC
+    <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn btn-default', target: '_blank' do %>
+      <%= display_icon('file') %> Pré-visualizar TCC
     <% end %>
 
     <%= link_to generate_tcc_path(moodle_user: params[:moodle_user]), class: 'btn btn-info', target: '_blank' do %>
-      <%= display_icon('icon-print') %> Gerar documento do TCC
+      <%= display_icon('print') %> Gerar documento do TCC
     <% end %>
   <% end %>
 <% end %>

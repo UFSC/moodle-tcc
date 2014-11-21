@@ -4,12 +4,12 @@
                            button_html: {class: 'btn btn-primary', disabled: !can_save} if can_save
     %>
     <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_draft'),
-                           button_html: {class: 'btn',
+                           button_html: {class: 'btn btn-default',
                                          name: 'draft'
                            } if can_send_draft_done
     %>
     <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_review'),
-                           button_html: {class: 'btn',
+                           button_html: {class: 'btn btn-default',
                                          name: 'review',
                                          data: {confirm: 'Você não poderá mais editar o texto enquanto o orientador '+
                                                  'estiver realizando a avaliação. </br> Deseja continuar?'

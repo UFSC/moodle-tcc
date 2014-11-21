@@ -1,4 +1,5 @@
   pt-BR:
+    add_new_reference_button: 'Criar nova referência'
     cannot_access_hub_without_grading: 'Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio'
     cannot_access_page_without_enough_permission: 'Você não possui permissão para acessar esta página'
     cannot_change_to_state_without_grade: 'Não é possível alterar para este estado sem ter dado uma nota.'
