@@ -1,7 +1,7 @@
-<div class="hero-unit">
+<div class="alert alert-danger">
   <h2>
-    Acesso não autorizado:
+    <%= display_icon('lock') %> Acesso não autorizado
   </h2>
 
-  <h3><%= @exception %></h3>
+  <p>Você não possui acesso a esta funcionalidade. Detalhes do problema: <strong><%= @exception %></strong>.</p>
 </div>

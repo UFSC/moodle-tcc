@@ -1,7 +1,8 @@
-<div class="hero-unit">
+<div class="alert alert-danger">
   <h2>
-    Usuário não cadastrado no sistema:
+    <%= display_icon('lock') %> Usuário não cadastrado!
   </h2>
 
-  <h3><%= @exception %></h3>
+  <p>O usuário que você está tentando utilizar, não está cadastrado nesse sistema.</p>
+  <p>Detalhes do problema: <strong><%= @exception %></strong>.</p>
 </div>

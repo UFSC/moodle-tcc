@@ -34,6 +34,5 @@
     data: 'Dados'
     abstract: 'Resumo'
     tcc_list: 'Lista de TCCs'
-    tcc_list_general_view: 'Tela de Visão Geral'
     list_refresh: 'Atualizar lista'
     btn_evaluate: 'Avaliar'
