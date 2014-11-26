@@ -173,7 +173,7 @@ shared_context 'can giving grade' do
 end
 
 shared_context 'admin/AVEA user' do
-  it 'not finding the field defense date' do
+  xit 'not finding the field defense date' do
     visit mount_visit_path('tcc_path', moodle_user_view)
     expect(page).to have_content(I18n.t(:data))
     expect(page).to_not have_field(I18n.t('activerecord.attributes.tcc.defense_date'))
@@ -182,21 +182,17 @@ shared_context 'admin/AVEA user' do
   it 'does an edition in the defense date and save' do
     visit mount_visit_path('tcc_path', moodle_user_view)
     expect(page).to have_content(I18n.t(:data))
-    select '31', :from => 'tcc_defense_date_3i'
-    select 'Dezembro', :from => 'tcc_defense_date_2i'
-    select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
+    fill_in I18n.t('activerecord.attributes.tcc.defense_date'), with: I18n.l(Date.today)
 
     click_button I18n.t(:save_changes_tcc)
     expect(page).to have_content(:successfully_saved)
   end
 
   it 'does an edition in the defense date and preview the tcc with that text included' do
-    a_date = '31-12-'+Date.today().year.to_s
+    a_date = '31-12-2014'
     visit mount_visit_path('tcc_path', moodle_user_view)
     expect(page).to have_content(I18n.t(:data))
-    select '31', :from => 'tcc_defense_date_3i'
-    select 'Dezembro', :from => 'tcc_defense_date_2i'
-    select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
+    fill_in I18n.t('activerecord.attributes.tcc.defense_date'), with: '31/12/2014'
 
     click_button I18n.t(:save_changes_tcc)
     expect(page).to have_content(:successfully_saved)
@@ -209,15 +205,13 @@ shared_context 'admin/AVEA user' do
     a_date = 'Dezembro de 2014'
     visit mount_visit_path('tcc_path', moodle_user_view)
     expect(page).to have_content(I18n.t(:data))
-    select '31', :from => 'tcc_defense_date_3i'
-    select 'Dezembro', :from => 'tcc_defense_date_2i'
-    select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
+    fill_in I18n.t('activerecord.attributes.tcc.defense_date'), with: '31/12/2014'
 
     click_button I18n.t(:save_changes_tcc)
     expect(page).to have_content(:successfully_saved)
 
-    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
-    sleep(5)
+    visit mount_visit_path('generate_tcc_path', moodle_user_view, format: 'pdf')
+
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to be_include(a_date.gsub(' ',''))
   end
@@ -248,7 +242,6 @@ shared_context 'for view_all users' do
   it 'viewing tcc list information' do
     visit instructor_admin_path
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(I18n.t(:tcc_list_general_view))
     expect(page).to have_content(I18n.t(:list_refresh))
   end
 
@@ -338,8 +331,8 @@ shared_context 'tcc user data information' do
     click_button I18n.t(:save_changes_tcc)
     expect(page).to have_content(:successfully_saved)
 
-    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
-    sleep(5)
+    visit mount_visit_path('generate_tcc_path', moodle_user_view, format: 'pdf')
+
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to be_include(a_title.gsub(' ',''))
   end
@@ -352,8 +345,8 @@ shared_context 'tcc user data information' do
     click_button I18n.t(:save_changes_tcc)
     expect(page).to have_content(:successfully_saved)
 
-    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
-    sleep(5)
+    visit mount_visit_path('generate_tcc_path', moodle_user_view, format: 'pdf')
+
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to be_include(tcc.student.name.gsub(' ',''))
   end
@@ -404,8 +397,8 @@ shared_context 'does an edition in a document' do
     click_button I18n.t(:save_document)
     expect(page).to have_content(I18n.t(:successfully_saved))
 
-    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
-    sleep(5)
+    visit mount_visit_path('generate_tcc_path', moodle_user_view, format: 'pdf')
+
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ',''))
     expect(text_analysis.strings.join(' ')).to include(a_keywords.gsub(' ',''))
@@ -418,8 +411,8 @@ shared_context 'does an edition in a document' do
     click_button I18n.t(:save_document)
     expect(page).to have_content(I18n.t(:successfully_saved))
 
-    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
-    sleep(5)
+    visit mount_visit_path('generate_tcc_path', moodle_user_view, format: 'pdf')
+
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ',''))
   end

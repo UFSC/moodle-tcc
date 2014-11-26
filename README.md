@@ -25,7 +25,7 @@ juntamente com o Abntex2. A instalação do LaTex é diferente no Ubuntu e no Ma
 
 ### Dependências do Ubuntu: ###
 
-    sudo apt-get install -y qt4-qmake libqt4-dev imagemagick libmagickwand-dev graphviz
+    sudo apt-get install -y phantomjs imagemagick libmagickwand-dev graphviz
 
 
 ### Instalação do Tex Live (Ubuntu)
