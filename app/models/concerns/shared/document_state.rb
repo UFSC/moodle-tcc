@@ -27,6 +27,17 @@ module Shared::DocumentState
         transition :review => :done
       end
 
+      event :to_draft_admin do
+        transition :done => :draft, :review => :draft
+      end
+
+      event :to_review_admin do
+        transition :done => :review, :draft => :review
+      end
+
+      event :to_done_admin do
+        transition :draft => :done, :review => :done
+      end
     end
   end
 end

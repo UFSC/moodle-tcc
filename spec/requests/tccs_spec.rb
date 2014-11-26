@@ -13,7 +13,245 @@ def mount_visit_path(visit_path, moodle_user=nil, position=nil)
   eval(mounted_path)
 end
 
+shared_context 'cannot giving grade' do
+  it 'even if all the chapters are evaluated and five references are included' do
+    tcc.abstract.to_done_admin!
+    tcc.abstract.save!
+    tcc.chapters.each do |chapter|
+      chapter.to_done_admin!
+      chapter.save!
+    end
+    (1..5).each do
+      a_ref = Reference.new
+      a_book = Fabricate(:book_ref)
+      a_ref.tcc = tcc
+      a_ref.element = a_book
+      a_ref.save!
+    end
+    tcc.save!
+    tcc.reload
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{@tcc_1.id}"
+    expect(page).to_not have_link(modal_frame)
+  end
+end
+
+shared_context 'can giving grade' do
+  it 'if all the chapters are evaluated and five references are included' do
+    tcc.abstract.to_done_admin!
+    tcc.abstract.save!
+    tcc.chapters.each do |chapter|
+      chapter.to_done_admin!
+      chapter.save!
+    end
+    (1..5).each do
+      a_ref = Reference.new
+      a_book = Fabricate(:book_ref)
+      a_ref.tcc = tcc
+      a_ref.element = a_book
+      a_ref.save!
+    end
+    tcc.save!
+    tcc.reload
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{@tcc_1.id}"
+    click_link modal_frame
+    modal = page.find(modal_frame)
+    expect(modal).to have_content('Avaliação')
+    expect(modal).to have_field('tcc[grade]')
+    a_grade = 1 + Random.rand(99)
+    within modal_frame do
+      fill_in 'tcc[grade]', :with => a_grade
+      allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
+      click_button I18n.t(:btn_evaluate)
+    end
+    tcc.reload
+    expect(@tcc_1.grade).to eql(a_grade)
+    click_link modal_frame
+    modal = page.find(modal_frame)
+    expect(modal).to have_content('Avaliação')
+    expect(modal).to have_field('tcc[grade]', :with => a_grade)
+    expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
+    expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade},0+")
+  end
+
+  it 'only if all OK' do
+    tcc.abstract.to_done_admin!
+    tcc.abstract.save!
+    tcc.chapters.each do |chapter|
+      chapter.to_done_admin!
+      chapter.save!
+    end
+    (1..5).each do
+      a_ref = Reference.new
+      a_book = Fabricate(:book_ref)
+      a_ref.tcc = tcc
+      a_ref.element = a_book
+      a_ref.save!
+    end
+    tcc.save!
+    tcc.reload
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{@tcc_1.id}"
+    click_link modal_frame
+    modal = page.find(modal_frame)
+    expect(modal).to have_content('Avaliação')
+    expect(modal).to have_field('tcc[grade]')
+    a_grade = 1 + Random.rand(99)
+    within modal_frame do
+      fill_in 'tcc[grade]', :with => a_grade
+      allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
+      click_button I18n.t(:btn_evaluate)
+    end
+    tcc.reload
+    expect(@tcc_1.grade).to eql(a_grade)
+    click_link modal_frame
+    modal = page.find(modal_frame)
+    expect(modal).to have_content('Avaliação')
+    expect(modal).to have_field('tcc[grade]', :with => a_grade)
+    expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
+    expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade},0+")
+
+    # abstract
+    tcc.abstract.to_review_admin
+    tcc.abstract.save!
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{tcc.id}"
+    expect(page).to_not have_link(modal_frame)
+    tcc.abstract.to_done_admin
+    tcc.abstract.save!
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{tcc.id}"
+    expect(page).to have_link(modal_frame)
+
+    # chapter
+    tcc.chapters.first.to_review_admin
+    tcc.chapters.first.save!
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{tcc.id}"
+    expect(page).to_not have_link(modal_frame)
+    tcc.chapters.first.to_done_admin
+    tcc.chapters.first.save!
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{tcc.id}"
+    expect(page).to have_link(modal_frame)
+
+    # reference
+    tcc.references.first.destroy
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{tcc.id}"
+    expect(page).to_not have_link(modal_frame)
+    a_ref = Reference.new
+    a_book = Fabricate(:book_ref)
+    a_ref.tcc = tcc
+    a_ref.element = a_book
+    a_ref.save!
+    tcc.reload
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(@tcc_1.student.name)
+    modal_frame = "##{tcc.id}"
+    expect(page).to have_link(modal_frame)
+
+  end
+end
+
+shared_context 'admin/AVEA user' do
+  it 'not finding the field defense date' do
+    visit mount_visit_path('tcc_path', moodle_user_view)
+    expect(page).to have_content(I18n.t(:data))
+    expect(page).to_not have_field(I18n.t('activerecord.attributes.tcc.defense_date'))
+  end
+
+  it 'does an edition in the defense date and save' do
+    visit mount_visit_path('tcc_path', moodle_user_view)
+    expect(page).to have_content(I18n.t(:data))
+    select '31', :from => 'tcc_defense_date_3i'
+    select 'Dezembro', :from => 'tcc_defense_date_2i'
+    select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
+
+    click_button I18n.t(:save_changes_tcc)
+    expect(page).to have_content(:successfully_saved)
+  end
+
+  it 'does an edition in the defense date and preview the tcc with that text included' do
+    a_date = '31-12-'+Date.today().year.to_s
+    visit mount_visit_path('tcc_path', moodle_user_view)
+    expect(page).to have_content(I18n.t(:data))
+    select '31', :from => 'tcc_defense_date_3i'
+    select 'Dezembro', :from => 'tcc_defense_date_2i'
+    select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
+
+    click_button I18n.t(:save_changes_tcc)
+    expect(page).to have_content(:successfully_saved)
+
+    visit mount_visit_path('preview_tcc_path', moodle_user_view)
+    expect(page).to have_content(a_date)
+  end
+
+  it 'does an edition in the defense date and generate the tcc with that text included' do
+    a_date = 'Dezembro de 2014'
+    visit mount_visit_path('tcc_path', moodle_user_view)
+    expect(page).to have_content(I18n.t(:data))
+    select '31', :from => 'tcc_defense_date_3i'
+    select 'Dezembro', :from => 'tcc_defense_date_2i'
+    select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
+
+    click_button I18n.t(:save_changes_tcc)
+    expect(page).to have_content(:successfully_saved)
+
+    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
+    sleep(5)
+    text_analysis = PDF::Inspector::Text.analyze(page.body)
+    expect(text_analysis.strings.join(' ')).to be_include(a_date.gsub(' ',''))
+  end
+
+  # cannot edit in draft and done
+  it_behaves_like 'for view_all users'
+end
+
 shared_context 'for view_all users' do
+
+  # view and edit tcc data
+  it_behaves_like 'tcc user data information'
+
+  # edit abstract/chapter and preview/generate
+  it_behaves_like 'does an edition in a document' do
+    before :each do
+      tcc.abstract.to_review_admin
+      tcc.abstract.save!
+      tcc.chapters.each do |chapter|
+        chapter.to_review_admin
+        chapter.save!
+      end
+      tcc.save!
+      tcc.reload
+    end
+  end
+
+  it 'viewing tcc list information' do
+    visit instructor_admin_path
+    expect(page).to have_content(I18n.t(:tcc_list))
+    expect(page).to have_content(I18n.t(:tcc_list_general_view))
+    expect(page).to have_content(I18n.t(:list_refresh))
+  end
+
   context 'in draft state' do
     it 'cannot edit abstract form' do
       visit mount_visit_path('edit_abstracts_path', moodle_user_view)
@@ -32,8 +270,7 @@ shared_context 'for view_all users' do
 
   context 'in done state' do
     it 'cannot edit abstract form' do
-      tcc.abstract.to_review
-      tcc.abstract.to_done
+      tcc.abstract.to_done_admin
       tcc.abstract.save!
       visit mount_visit_path('edit_abstracts_path', moodle_user_view)
       expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:done}"))
@@ -42,17 +279,14 @@ shared_context 'for view_all users' do
     end
 
     it 'cannot edit chapter form' do
-      tcc.chapters.first.to_review
-      tcc.chapters.first.to_done
+      tcc.chapters.first.to_done_admin
       tcc.chapters.first.save!
       visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
       expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:done}"))
       expect(page).to_not have_button(I18n.t(:save_document))
       expect(page).to_not have_button(I18n.t('activerecord.state_machines.events.to_review'))
     end
-
   end
-
 end
 
 shared_context 'tcc user data information' do
@@ -93,8 +327,9 @@ shared_context 'tcc user data information' do
     expect(page).to have_content(:successfully_saved)
 
     visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
+    sleep(5)
     text_analysis = PDF::Inspector::Text.analyze(page.body)
-    expect(text_analysis.strings.join(' ').squish).to be_include(a_title.gsub(' ',''))
+    expect(text_analysis.strings.join(' ')).to be_include(a_title.gsub(' ',''))
   end
 
 end
@@ -144,9 +379,10 @@ shared_context 'does an edition in a document' do
     expect(page).to have_content(I18n.t(:successfully_saved))
 
     visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
+    sleep(5)
     text_analysis = PDF::Inspector::Text.analyze(page.body)
-    expect(text_analysis.strings.join('')).to include(a_content.gsub(' ',''))
-    expect(text_analysis.strings.join('')).to include(a_keywords.gsub(' ',''))
+    expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ',''))
+    expect(text_analysis.strings.join(' ')).to include(a_keywords.gsub(' ',''))
   end
 
   it 'chapter and generate the tcc with that text included' do
@@ -157,6 +393,7 @@ shared_context 'does an edition in a document' do
     expect(page).to have_content(I18n.t(:successfully_saved))
 
     visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
+    sleep(5)
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ',''))
   end
@@ -242,11 +479,13 @@ describe 'Tccs' do
       expect(page).to have_field(I18n.t('activerecord.attributes.tcc.defense_date'), :disabled => true)
     end
 
+    # view and edit tcc data
     it_behaves_like 'tcc user data information'
 
+    # edit abstract/chapter and preview/generate
     it_behaves_like 'does an edition in a document'
 
-    it 'cant view list information' do
+    it 'cannot view list information' do
       visit instructor_admin_path
       expect(page).to_not have_content(I18n.t(:tcc_list))
       expect(page).to_not have_content(I18n.t(:tcc_list_general_view))
@@ -255,7 +494,7 @@ describe 'Tccs' do
 
     context 'in review state' do
       it 'abstract form' do
-        tcc.abstract.to_review
+        tcc.abstract.to_review_admin
         tcc.abstract.save!
         visit mount_visit_path('edit_abstracts_path', moodle_user_view)
         expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:review}"))
@@ -264,7 +503,7 @@ describe 'Tccs' do
       end
 
       it 'chapter form' do
-        tcc.chapters.first.to_review
+        tcc.chapters.first.to_review_admin
         tcc.chapters.first.save!
         visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
         expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:review}"))
@@ -275,8 +514,7 @@ describe 'Tccs' do
 
     context 'in done state' do
       it 'cannot edit abstract form' do
-        tcc.abstract.to_review
-        tcc.abstract.to_done
+        tcc.abstract.to_done_admin
         tcc.abstract.save!
         visit mount_visit_path('edit_abstracts_path', moodle_user_view)
         expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:done}"))
@@ -286,8 +524,7 @@ describe 'Tccs' do
       end
 
       it 'cannot edit chapter form' do
-        tcc.chapters.first.to_review
-        tcc.chapters.first.to_done
+        tcc.chapters.first.to_done_admin
         tcc.chapters.first.save!
         visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
         expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:done}"))
@@ -295,14 +532,108 @@ describe 'Tccs' do
         expect(page).to_not have_button(I18n.t('activerecord.state_machines.events.to_review'))
       end
     end
-
   end
 
-  context 'instructor admin view' do
-
-    #before(:all)  do
+  context 'instructor admin view (only one Tcc)' do
     before(:each)  do
-        @tcc_1 = Fabricate(:tcc_with_all)
+      @tcc_1 = Fabricate(:tcc_with_all)
+      @tcc_1_user = Authentication::User.new fake_lti_tp('student')
+      @tcc_1_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
+      @tcc_1_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+
+      @tcc_1_user.person    = @tcc_1.student
+      @tcc_1_leader.person  = @tcc_1.orientador
+      @tcc_1_tutor.person   = @tcc_1.tutor
+      @tcc_1.save!
+      @tcc_1.reload
+    end
+
+    after(:each) do
+      @tcc_1.destroy
+    end
+
+    context 'login as leader user' do
+      let(:role_context) { 'urn:moodle:role/orientador' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:tcc) {@tcc_1}
+      let(:person_session) { tcc.orientador }
+      let(:attributes) { Fabricate.attributes_for(:tcc) }
+      let(:moodle_user_view) { tcc.student.moodle_id }
+
+      before(:each) do
+        page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
+      end
+
+      it 'having field defense date disabled' do
+        visit mount_visit_path('tcc_path', moodle_user_view)
+        expect(page).to have_content(I18n.t(:data))
+        expect(page).to have_field(I18n.t('activerecord.attributes.tcc.defense_date'), :disabled => true)
+      end
+
+      # cannot edit in draft and done
+      it_behaves_like 'for view_all users'
+
+      it_behaves_like 'can giving grade'
+    end
+
+    context 'login as admin user' do
+      let(:role_context) { 'administrator' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:person_session) { lti_user.person }
+      let(:tcc) {@tcc_1}
+      let(:attributes) { Fabricate.attributes_for(:tcc) }
+      let(:moodle_user_view) { tcc.student.moodle_id }
+
+      before(:each) do
+        page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
+      end
+
+      it_behaves_like 'admin/AVEA user'
+
+      it_behaves_like 'can giving grade'
+
+    end
+
+    context 'as AVEA user' do
+      let(:role_context) { 'urn:moodle:role/coordavea' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:tcc) {@tcc_1}
+      let(:person_session) { lti_user.person }
+      let(:attributes) { Fabricate.attributes_for(:tcc) }
+      let(:moodle_user_view) { tcc.student.moodle_id }
+
+      before(:each) do
+        page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
+      end
+
+      it_behaves_like 'admin/AVEA user'
+
+      it_behaves_like 'can giving grade'
+
+    end
+
+    context 'as course coordinator user' do
+      let(:role_context) { 'urn:moodle:role/coordcurso' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:tcc) {@tcc_1}
+      let(:person_session) { lti_user.person }
+      let(:attributes) { Fabricate.attributes_for(:tcc) }
+      let(:moodle_user_view) { tcc.student.moodle_id }
+
+      before(:each) do
+        page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
+      end
+
+      it_behaves_like 'for view_all users'
+
+      it_behaves_like 'cannot giving grade'
+
+    end
+  end
+
+  context 'instructor admin view (many Tccs)' do
+    before(:each)  do
+      @tcc_1 = Fabricate(:tcc_with_all)
       @tcc_1_user = Authentication::User.new fake_lti_tp('student')
       @tcc_1_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
       @tcc_1_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
@@ -351,9 +682,9 @@ describe 'Tccs' do
 
       @other_tcc_2_user = Authentication::User.new fake_lti_tp('student')
       @other_tcc_2_user.person    = @other_tcc_2.student
+      page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
     end
 
-    #after(:all) do
     after(:each) do
       @tcc_1.destroy
       @tcc_2.destroy
@@ -367,42 +698,8 @@ describe 'Tccs' do
       let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
       let(:tcc) {@tcc_1}
       let(:person_session) { tcc.orientador }
-      let(:attributes) { Fabricate.attributes_for(:tcc) }
-      let(:moodle_user_view) { tcc.student.moodle_id }
 
-      before(:each) do
-        page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
-      end
-
-      it 'having field defense date disabled' do
-        visit mount_visit_path('tcc_path', moodle_user_view)
-        expect(page).to have_content(I18n.t(:data))
-        expect(page).to have_field(I18n.t('activerecord.attributes.tcc.defense_date'), :disabled => true)
-      end
-
-      it_behaves_like 'tcc user data information'
-
-      it_behaves_like 'does an edition in a document' do
-        before :each do
-          @tcc_1.abstract.to_review
-          @tcc_1.abstract.save!
-          @tcc_1.chapters.each do |chapter|
-            chapter.to_review
-            chapter.save!
-          end
-          @tcc_1.save!
-          @tcc_1.reload
-        end
-      end
-
-      it 'viewing tcc list information' do
-        visit instructor_admin_path
-        expect(page).to have_content(I18n.t(:tcc_list))
-        expect(page).to have_content(I18n.t(:tcc_list_general_view))
-        expect(page).to have_content(I18n.t(:list_refresh))
-      end
-
-      it 'apresenta lista de orientados' do
+      it 'show Tccs list' do
         visit instructor_admin_path
         expect(page).to have_content(I18n.t(:tcc_list))
         expect(page).to have_content(@tcc_1.student.name)
@@ -410,58 +707,6 @@ describe 'Tccs' do
         expect(page).to_not have_content(@tcc_3.student.name)
         expect(page).to_not have_content(@other_tcc.student.name)
         expect(page).to_not have_content(@other_tcc_2.student.name)
-
-      end
-
-      it_behaves_like 'for view_all users'
-
-      context 'dar nota' do
-        it 'nao pode dar nota com abstract sem estar avaliado'
-        it 'nao pode dar nota com capitulo sem estar avaliado'
-        it 'nao pode dar nota com cinco referencias cadastradas'
-        it 'nao pode dar nota com todos capitulos em avaliado e quatro referencias cadastradas'
-        it 'nao pode dar nota com abstract em avaliação e tudo OK'
-        it 'nao pode dar nota com um capítulo em avaliação e tudo OK'
-        it 'pode dar nota com todos capitulos em avaliado e cinco referencias cadastradas' do
-          tcc.abstract.to_review!
-          tcc.abstract.to_done!
-          tcc.abstract.save!
-          tcc.chapters.each do |chapter|
-            chapter.to_review
-            chapter.to_done
-            chapter.save!
-          end
-          (1..6).each do
-            a_ref = Reference.new
-            a_book = Fabricate(:book_ref)
-            a_ref.tcc = tcc
-            a_ref.element = a_book
-            a_ref.save!
-          end
-          tcc.save!
-          tcc.reload
-          visit instructor_admin_path
-          expect(page).to have_content(I18n.t(:tcc_list))
-          expect(page).to have_content(@tcc_1.student.name)
-          modal_frame = "##{@tcc_1.id}"
-          click_link modal_frame
-          modal = page.find(modal_frame)
-          expect(modal).to have_content('Avaliação')
-          expect(modal).to have_field('tcc[grade]')
-          a_grade = 1 + Random.rand(99)
-          within modal_frame do
-            fill_in 'tcc[grade]', :with => a_grade
-            click_button I18n.t(:btn_evaluate)
-          end
-          tcc.reload
-          expect(@tcc_1.grade).to eql(a_grade)
-          click_link modal_frame
-          modal = page.find(modal_frame)
-          expect(modal).to have_content('Avaliação')
-          expect(modal).to have_field('tcc[grade]', :with => a_grade)
-          expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
-          expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade},0+")
-        end
       end
     end
 
@@ -470,84 +715,8 @@ describe 'Tccs' do
       let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) {@tcc_1}
-      let(:attributes) { Fabricate.attributes_for(:tcc) }
-      let(:moodle_user_view) { tcc.student.moodle_id }
 
-      before(:each) do
-        page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
-      end
-
-      it 'not finding the field defense date' do
-        visit mount_visit_path('tcc_path', moodle_user_view)
-        expect(page).to have_content(I18n.t(:data))
-        expect(page).to_not have_field(I18n.t('activerecord.attributes.tcc.defense_date'))
-      end
-
-      it 'does an edition in the defense date and save' do
-        visit mount_visit_path('tcc_path', moodle_user_view)
-        expect(page).to have_content(I18n.t(:data))
-        select '31', :from => 'tcc_defense_date_3i'
-        select 'Dezembro', :from => 'tcc_defense_date_2i'
-        select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
-
-        click_button I18n.t(:save_changes_tcc)
-        expect(page).to have_content(:successfully_saved)
-      end
-
-      it 'does an edition in the defense date and preview the tcc with that text included' do
-        a_date = '31-12-'+Date.today().year.to_s
-        visit mount_visit_path('tcc_path', moodle_user_view)
-        expect(page).to have_content(I18n.t(:data))
-        select '31', :from => 'tcc_defense_date_3i'
-        select 'Dezembro', :from => 'tcc_defense_date_2i'
-        select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
-
-        click_button I18n.t(:save_changes_tcc)
-        expect(page).to have_content(:successfully_saved)
-
-        visit mount_visit_path('preview_tcc_path', moodle_user_view)
-        expect(page).to have_content(a_date)
-      end
-
-      it 'does an edition in the defense date and generate the tcc with that text included' do
-        a_date = 'Dezembro de 2014'
-        visit mount_visit_path('tcc_path', moodle_user_view)
-        expect(page).to have_content(I18n.t(:data))
-        select '31', :from => 'tcc_defense_date_3i'
-        select 'Dezembro', :from => 'tcc_defense_date_2i'
-        select Date.today().year.to_s, :from => 'tcc_defense_date_1i'
-
-        click_button I18n.t(:save_changes_tcc)
-        expect(page).to have_content(:successfully_saved)
-
-        visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
-        text_analysis = PDF::Inspector::Text.analyze(page.body)
-        expect(text_analysis.strings.join(' ').squish).to be_include(a_date.gsub(' ',''))
-      end
-
-      it_behaves_like 'tcc user data information'
-
-      it_behaves_like 'does an edition in a document' do
-        before :each do
-          @tcc_1.abstract.to_review
-          @tcc_1.abstract.save!
-          @tcc_1.chapters.each do |chapter|
-            chapter.to_review
-            chapter.save!
-          end
-          @tcc_1.save!
-          @tcc_1.reload
-        end
-      end
-
-      it 'viewing tcc list information' do
-        visit instructor_admin_path
-        expect(page).to have_content(I18n.t(:tcc_list))
-        expect(page).to have_content(I18n.t(:tcc_list_general_view))
-        expect(page).to have_content(I18n.t(:list_refresh))
-      end
-
-      it 'apresenta lista de tccs' do
+      it 'show Tccs list' do
         visit instructor_admin_path
         expect(page).to have_content(I18n.t(:tcc_list))
         expect(page).to have_content(@tcc_1.student.name)
@@ -556,17 +725,74 @@ describe 'Tccs' do
         expect(page).to have_content(@other_tcc.student.name)
         expect(page).to_not have_content(@other_tcc_2.student.name)
       end
+    end
 
-      it_behaves_like 'for view_all users'
+    context 'login as AVEA coordinator' do
+      let(:role_context) { 'urn:moodle:role/coordavea' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:person_session) { lti_user.person }
+      let(:tcc) {@tcc_1}
+
+      it 'show Tccs list' do
+        visit instructor_admin_path
+        expect(page).to have_content(I18n.t(:tcc_list))
+        expect(page).to have_content(@tcc_1.student.name)
+        expect(page).to have_content(@tcc_2.student.name)
+        expect(page).to have_content(@tcc_3.student.name)
+        expect(page).to have_content(@other_tcc.student.name)
+        expect(page).to_not have_content(@other_tcc_2.student.name)
+      end
+    end
+
+    context 'login as course coordinator' do
+      let(:role_context) { 'urn:moodle:role/coordcurso' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:person_session) { lti_user.person }
+      let(:tcc) {@tcc_1}
+
+      it 'show Tccs list' do
+        visit instructor_admin_path
+        expect(page).to have_content(I18n.t(:tcc_list))
+        expect(page).to have_content(@tcc_1.student.name)
+        expect(page).to have_content(@tcc_2.student.name)
+        expect(page).to have_content(@tcc_3.student.name)
+        expect(page).to have_content(@other_tcc.student.name)
+        expect(page).to_not have_content(@other_tcc_2.student.name)
+      end
+    end
+
+    context 'login as tutor' do
+      let(:role_context) { 'urn:moodle:role/td' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:person_session) { lti_user.person }
+      let(:tcc) {@tcc_1}
+
+      it 'does not show Tccs list' do
+        visit instructor_admin_path
+        expect(page).to_not have_content(I18n.t(:tcc_list))
+        expect(page).to_not have_content(@tcc_1.student.name)
+        expect(page).to_not have_content(@tcc_2.student.name)
+        expect(page).to_not have_content(@tcc_3.student.name)
+        expect(page).to_not have_content(@other_tcc.student.name)
+        expect(page).to_not have_content(@other_tcc_2.student.name)
+      end
+    end
+
+    context 'login as tutor coordinator' do
+      let(:role_context) { 'urn:moodle:role/tutoria' }
+      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:person_session) { lti_user.person }
+      let(:tcc) {@tcc_1}
+
+      it 'does not show Tccs list' do
+        visit instructor_admin_path
+        expect(page).to_not have_content(I18n.t(:tcc_list))
+        expect(page).to_not have_content(@tcc_1.student.name)
+        expect(page).to_not have_content(@tcc_2.student.name)
+        expect(page).to_not have_content(@tcc_3.student.name)
+        expect(page).to_not have_content(@other_tcc.student.name)
+        expect(page).to_not have_content(@other_tcc_2.student.name)
+      end
     end
   end
-
-  context 'login as admin user' do
-
-  end
-
-  context 'login as AVEA cordinator user' do
-
-  end
-
-  end
+end

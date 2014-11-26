@@ -29,21 +29,6 @@ class SyncTcc
     end
   end
 
-  private
-
-  def synchronize_tcc(student)
-    tcc = Tcc.find_or_initialize_by(student: student)
-
-    tcc.tcc_definition = @tcc_definition
-    tutor = get_tutor(student.moodle_id)
-    tcc.tutor = tutor
-
-    orientador = get_orientador(student.moodle_id)
-    tcc.orientador = orientador
-
-    tcc.save! if tcc.changed? || !tcc.persisted?
-  end
-
   def find_or_create_person(moodle_id)
     raise ArgumentError, 'É necessário passar um moodle_id' if moodle_id.nil?
 
@@ -61,6 +46,21 @@ class SyncTcc
     end
 
     person
+  end
+
+  private
+
+  def synchronize_tcc(student)
+    tcc = Tcc.find_or_initialize_by(student: student)
+
+    tcc.tcc_definition = @tcc_definition
+    tutor = get_tutor(student.moodle_id)
+    tcc.tutor = tutor
+
+    orientador = get_orientador(student.moodle_id)
+    tcc.orientador = orientador
+
+    tcc.save! if tcc.changed? || !tcc.persisted?
   end
 
   def get_students
