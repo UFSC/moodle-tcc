@@ -79,8 +79,7 @@ gem 'state_machine'
 gem 'draper', '~> 1.3'
 
 # Errbit (monitoração de falhas)
-# Usando temporariamgente versão do github pois a 4.0.0 tem conflitos com o Capistrano 3.x (https://github.com/airbrake/airbrake/commit/86cc8c1d54afbd24f45dd3e6e1a9df88653eb123)
-gem 'airbrake', github: 'airbrake/airbrake'
+gem 'airbrake'
 
 group :production do
   gem 'newrelic_rpm'
