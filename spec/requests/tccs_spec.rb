@@ -318,6 +318,18 @@ shared_context 'tcc user data information' do
     expect(page).to have_content(a_title)
   end
 
+  it 'does an edition in the tcc title (nil) and preview the tcc with that text included' do
+    a_title = nil
+    visit mount_visit_path('tcc_path', moodle_user_view)
+    expect(page).to have_content(I18n.t(:data))
+    fill_in I18n.t('activerecord.attributes.tcc.title'), :with => a_title
+    click_button I18n.t(:save_changes_tcc)
+    expect(page).to have_content(:successfully_saved)
+
+    visit mount_visit_path('preview_tcc_path', moodle_user_view)
+    expect(page).to have_content(tcc.student.name)
+  end
+
   it 'does an edition tcc title and generate the tcc with that text included' do
     a_title = attributes[:title]
     visit mount_visit_path('tcc_path', moodle_user_view)
@@ -330,6 +342,20 @@ shared_context 'tcc user data information' do
     sleep(5)
     text_analysis = PDF::Inspector::Text.analyze(page.body)
     expect(text_analysis.strings.join(' ')).to be_include(a_title.gsub(' ',''))
+  end
+
+  it 'does an edition tcc title (nil) and generate the tcc with that text included' do
+    a_title = nil
+    visit mount_visit_path('tcc_path', moodle_user_view)
+    expect(page).to have_content(I18n.t(:data))
+    fill_in I18n.t('activerecord.attributes.tcc.title'), :with => a_title
+    click_button I18n.t(:save_changes_tcc)
+    expect(page).to have_content(:successfully_saved)
+
+    visit "#{mount_visit_path('generate_tcc_path', moodle_user_view)}.pdf"
+    sleep(5)
+    text_analysis = PDF::Inspector::Text.analyze(page.body)
+    expect(text_analysis.strings.join(' ')).to be_include(tcc.student.name.gsub(' ',''))
   end
 
 end

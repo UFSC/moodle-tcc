@@ -25,7 +25,7 @@
       <dd><%= @tcc.defense_date.nil? ? '(indefinido)' : @tcc.defense_date.strftime('%d-%m-%Y') %></dd>
 
       <dt><h3>Título:</h3></dt>
-      <dd><h3><%= @tcc.title.empty? ? '(indefinido)' : @tcc.title %></h3></dd>
+      <dd><h3><%= @tcc.title.nil? || @tcc.title.empty? ? '(indefinido)' : @tcc.title %></h3></dd>
 
     </dl>
   </section>
