@@ -41,7 +41,7 @@ No Ubuntu vamos utilizar a distribuição [Tex Live](http://www.tug.org/texlive/
 
 Após a instalação é necessário incluir o TexLive no PATH (~/.bashrc ou ~/.zshrc):
 
-    PATH=/usr/local/texlive/2013/bin/x86_64-linux:$PATH
+    PATH=/usr/local/texlive/2014/bin/x86_64-linux:$PATH
 
 Para que o PATH também seja incluído pro "sudo", edite o arquivo "/etc/sudoers":
 
@@ -66,7 +66,7 @@ Instalar o Graphviz (opcional): `brew install graphviz`
 A instalação é feita pelo próprio gerenciador de pacotes do LaTex (tlmgr):
 
     sudo tlmgr update --self
-    sudo tlmgr install abntex2
+    sudo tlmgr install abntex2 selnolig
     sudo texhash
 
 Para concluir é preciso alterar uma variavel de configuração do texmf.cnf:
