@@ -13,7 +13,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
 
   it 'create a new compound name' do
     click_link I18n.t(:compound_name)
-    click_link I18n.t(:add_compound_name_or_suffix)
+    click_button I18n.t(:add_compound_name_or_suffix)
     fill_in 'Nome composto:', :with => attributes[:name], :exact => true
     click_button I18n.t(:save)
     expect(page).to have_content(attributes[:name])
@@ -21,7 +21,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
 
   it 'edit a compound name' do
     click_link I18n.t(:compound_name)
-    click_link I18n.t(:add_compound_name_or_suffix)
+    click_button I18n.t(:add_compound_name_or_suffix)
     fill_in 'Nome composto:', :with => attributes[:name], :exact => true
     click_button I18n.t(:save)
     click_link I18n.t('activerecord.attributes.compound_name.edit')
@@ -31,7 +31,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
   it 'remove a compound name' do
     name = attributes[:name]
     click_link I18n.t(:compound_name)
-    click_link I18n.t(:add_compound_name_or_suffix)
+    click_button I18n.t(:add_compound_name_or_suffix)
     fill_in 'Nome composto:', :with => name, :exact => true
     click_button I18n.t(:save)
     click_button I18n.t('activerecord.attributes.compound_name.remove')
