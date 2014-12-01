@@ -27,6 +27,21 @@ module ApplicationHelper
     LatexToPdf.escape_latex(text)
   end
 
+  def bootstrap_class_for(flash_type)
+    case flash_type
+      when :success
+        'alert-success' # Green
+      when :error
+        'alert-danger' # Red
+      when :alert
+        'alert-warning' # Yellow
+      when :notice
+        'alert-info' # Blue
+      else
+        flash_type.to_s
+    end
+  end
+
   def moodle_user_meta_tag
     if @tcc
       tag('meta', :name => 'moodle-user', :content => @tcc.student.moodle_id)
