@@ -1,42 +1,40 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3><%= t(:compound_name) %></h3>
 
-<div class="col-lg-12" style="margin-left: 0">
-  <h3><%= t(:compound_name)%></h3>
-  <div class="col-lg-6" style="margin-left: 0">
-    <%= render :partial => 'common/search_bar', locals: {
-            path: bibliographies_path( moodle_user: params[:moodle_user], anchor: 'compound_names' ),
-            autocomplete_path: compound_names_autocomplete_name_path(
-                    moodle_user: params[:moodle_user],
-                    anchor: 'compound_names',
-                    autofocus: 'autofocus'),
-            simple_search_bar: true } %>
-  </div>
+    <div class="col-lg-6" style="margin-left: 0">
+      <%= render partial: 'compound_names/search_bar' %>
+    </div>
 
-  <div class="col-lg-6">
-    <%= link_to '#',  {:remote => true, 'data-toggle' =>  'modal',
-                                         'data-target' => '#modal-window-new-compound-name', class: 'btn btn-success'}  do %>
-      <%= display_icon 'plus' %>
-      <b><%= t(:add_compound_name_or_suffix) %></b>
-    <% end %>
+    <div class="col-lg-6">
+      <div class="pull-right">
+        <%= link_to '#', {:remote => true, data: {toggle: 'modal', target: '#modal-window-new-compound-name'},
+                          class: 'btn btn-success'} do %>
+          <%= display_icon 'plus' %> <%= t(:add_compound_name_or_suffix) %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="col-lg-12" style="margin-left: 0">
+<div class="row">
   <% if params[:search] %>
-    <h4><%= t(:compound_name_search_result) + ': '%> <%= params[:search] %></h4>
+    <h4><%= t(:compound_name_search_result) + ': ' %> <%= params[:search] %></h4>
   <% else %>
     <h4><%= t(:full_list) %></h4>
   <% end %>
 
-  <div class="col-lg-6" style="margin-left: 0px;">
-    <%= render partial: 'compound_names/list', locals: { type: 'left' } %>
+  <div class="col-lg-6">
+    <%= render partial: 'compound_names/list', locals: {type: 'left'} %>
   </div>
 
-  <div class="col-lg-6" style="margin-right: 0px;">
-    <%= render partial: 'compound_names/list', locals: { type: 'right' } %>
+  <div class="col-lg-6">
+    <%= render partial: 'compound_names/list', locals: {type: 'right'} %>
   </div>
-  <div class="col-lg-12" style="margin-left: 0">
-    <%= paginate @compound_names, :params => { anchor: 'compound_names' } %>
-  </div>
+</div>
+
+<div class="col-lg-12" style="margin-left: 0">
+  <%= paginate @compound_names, :params => {anchor: 'compound_names'} %>
 </div>
 
 <!-- Modal dialog -->

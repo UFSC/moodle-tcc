@@ -1,9 +1,6 @@
 <h3><%= t(:tcc_list) %></h3><br/>
 
-<%= render :partial => 'common/search_bar', locals: {path: instructor_admin_path,
-                                                     autocomplete_path: instructor_admin_autocomplete_tcc_name_path} %>
-
+<%= render :partial => 'search_bar' %>
 <%= render :partial => 'tcc_listing' %>
-
 
 <%= paginate @tccs %>
