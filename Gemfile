@@ -54,8 +54,8 @@ gem 'ims-lti', git: 'https://github.com/instructure/ims-lti'
 gem 'oauth-instructure'
 
 # Formulários e views
-gem 'formtastic', '~> 2.3'
-gem 'formtastic-bootstrap', '~> 3.0'
+gem 'formtastic', '~> 3.0'
+gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
 gem 'rabl'
