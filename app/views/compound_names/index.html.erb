@@ -1,29 +1,34 @@
 <div class="row">
   <div class="col-lg-12">
     <h3><%= t(:compound_name) %></h3>
+  </div>
+</div>
 
-    <div class="col-lg-6" style="margin-left: 0">
-      <%= render partial: 'compound_names/search_bar' %>
-    </div>
+<div class="row">
+  <div class="col-lg-6" style="margin-left: 0">
+    <%= render partial: 'compound_names/search_bar' %>
+  </div>
 
-    <div class="col-lg-6">
-      <div class="pull-right">
-        <%= link_to '#', {:remote => true, data: {toggle: 'modal', target: '#modal-window-new-compound-name'},
-                          class: 'btn btn-success'} do %>
-          <%= display_icon 'plus' %> <%= t(:add_compound_name_or_suffix) %>
-        <% end %>
-      </div>
+  <div class="col-lg-6">
+    <div class="pull-right">
+      <%= button_to '#', remote: true, data: {toggle: 'modal', target: '#modal-window-new-compound-name'}, class: 'btn btn-default' do %>
+        <%= display_icon 'plus' %> <%= t(:add_compound_name_or_suffix) %>
+      <% end %>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <% if params[:search] %>
-    <h4><%= t(:compound_name_search_result) + ': ' %> <%= params[:search] %></h4>
-  <% else %>
-    <h4><%= t(:full_list) %></h4>
-  <% end %>
+  <div class="col-lg-12">
+    <% if params[:search] %>
+      <h4><%= t(:compound_name_search_result, search: params[:search]) %></h4>
+    <% else %>
+      <h4><%= t(:full_list) %></h4>
+    <% end %>
+  </div>
+</div>
 
+<div class="row">
   <div class="col-lg-6">
     <%= render partial: 'compound_names/list', locals: {type: 'left'} %>
   </div>
@@ -33,9 +38,13 @@
   </div>
 </div>
 
-<div class="col-lg-12" style="margin-left: 0">
-  <%= paginate @compound_names, :params => {anchor: 'compound_names'} %>
+<div class="row">
+  <div class="col-lg-12">
+    <%= paginate @compound_names, :params => {anchor: 'compound_names'} %>
+  </div>
 </div>
 
-<!-- Modal dialog -->
-<%= render 'compound_names/new' %>
+<div class="row">
+  <!-- Modal dialog -->
+  <%= render 'compound_names/new' %>
+</div>

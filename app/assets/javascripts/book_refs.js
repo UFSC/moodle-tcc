@@ -29,3 +29,16 @@ $(document).ready(function() {
     change_book_authors_state(et_all_checked, authors);
 
 });
+
+function change_book_authors_state(checked, authors) {
+    if (checked) {
+        $.each(authors, function(index, author) {
+            author.attr('disabled', 'dislabled');
+        });
+    }
+    else {
+        $.each(authors, function(index, author) {
+            author.removeAttr("disabled");
+        });
+    }
+}

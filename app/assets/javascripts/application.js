@@ -34,15 +34,11 @@ $.fn.twitter_bootstrap_confirmbox.defaults = {
     proceed_class: "btn proceed btn-primary"
 };
 
-function change_book_authors_state(checked, authors) {
-    if (checked) {
-        $.each(authors, function(index, author) {
-            author.attr('disabled', 'dislabled');
-        });
-    }
-    else {
-        $.each(authors, function(index, author) {
-            author.removeAttr("disabled");
-        });
-    }
-}
+$(function() {
+    $("[type~='date']").datepicker({
+        format: "dd/mm/yyyy",
+        language: 'pt-BR',
+        autoclose: true,
+        todayHighlight: true
+    });
+});
