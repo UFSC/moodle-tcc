@@ -17,7 +17,6 @@
         <%= ref.input :chapter %>
         <%= ref.input :type_number, :as => :radio, :collection => ThesisRef::TYPES %>
         <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
-        <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
       </div>
       <div class="col-lg-4">
         <%= ref.input :local %>
@@ -25,6 +24,7 @@
         <%= ref.input :course %>
         <%= ref.input :department %>
         <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
+        <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
       </div>
     <% end %>
     <%= required_fields %>
