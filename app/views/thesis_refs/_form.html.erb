@@ -1,17 +1,17 @@
 <%= semantic_form_for @thesis_ref, url: polymorphic_path(@thesis_ref, moodle_user: params[:moodle_user]) do |ref| %>
   <div id="data_tab_content">
     <%= ref.inputs do %>
-      <div class="span4">
+      <div class="col-lg-4">
         <%= ref.input :et_all, :label => false, :input_html => {:id => 'et_all'} %>
         <%= ref.input :first_author %>
         <%= ref.input :second_author %>
-        <%= ref.input :third_author%>
+        <%= ref.input :third_author %>
         <%= ref.input :type_thesis, :as => :radio, :collection => ThesisRef::THESIS_TYPES %>
         <input id="degree" type="hidden" name="thesis_ref[degree]"/>
         <%= ref.input :degree, :name => 'degree_options', :collection => ThesisRef::DEGREE_TYPES,
                       :input_html => {:disabled => true} %>
       </div>
-      <div class="span4">
+      <div class="col-lg-4">
         <%= ref.input :title %>
         <%= ref.input :subtitle %>
         <%= ref.input :chapter %>
@@ -19,16 +19,18 @@
         <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
         <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
       </div>
-      <div class="span4">
+      <div class="col-lg-4">
         <%= ref.input :local %>
         <%= ref.input :institution %>
         <%= ref.input :course %>
         <%= ref.input :department %>
         <%= ref.input :year_of_submission, :input_html => {:min => 0, :max => Date.today.year} %>
       </div>
-      </div>
     <% end %>
     <%= required_fields %>
-    <%= ref.actions :submit %>
-    </div>
+    <%= ref.actions do %>
+      <%= ref.action :submit, button_html: {class: 'btn btn-primary'} %>
+      <%= ref.action :cancel, button_html: {class: 'btn btn-default'}, url: bibliographies_path(params[:moodle_user], anchor: 'thesis') %>
+    <% end %>
+  </div>
 <% end %>

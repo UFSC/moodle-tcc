@@ -1,14 +1,14 @@
 <%= semantic_form_for @book_cap_ref, url: polymorphic_path(@book_cap_ref, moodle_user: params[:moodle_user]) do |ref| %>
   <div id="data_tab_content">
     <%= ref.inputs do %>
-      <div class="span4">
+      <div class="col-lg-4">
         <%= ref.input :type_participation, as: :radio, collection: %w(Autor Organizador Compilador Editor) %>
         <%= ref.input :et_al_entire, label: false, input_html: {id: 'et_al_entire'} %>
         <%= ref.input :first_entire_author, input_html: {autofocus: true} %>
         <%= ref.input :second_entire_author %>
         <%= ref.input :third_entire_author %>
       </div>
-      <div class="span4">
+      <div class="col-lg-4">
         <%= ref.input :et_al_part, label: false, input_html: {id: 'et_al_part'} %>
         <%= ref.input :first_part_author %>
         <%= ref.input :second_part_author %>
@@ -16,21 +16,22 @@
         <%= ref.input :cap_title %>
         <%= ref.input :cap_subtitle %>
       </div>
-      <div class="span3">
+      <div class="col-lg-4">
         <%= ref.input :book_title %>
         <%= ref.input :book_subtitle %>
         <%= ref.input :local %>
         <%= ref.input :publisher %>
         <%= ref.input :year, input_html: {min: 0, max: Date.today.year} %>
-        <div style='width:110px; float:left;'>
-          <%= ref.input :initial_page, input_html: {min: 0, style: 'width:90px;'} %>
-        </div>
-        <div style='width:110px; float:left;'>
-          <%= ref.input :end_page, input_html: {min: 0, style: 'width:90px;'} %>
+        <div class="row">
+          <div class="col-sm-6"><%= ref.input :initial_page, input_html: {min: 0} %></div>
+          <div class="col-sm-6"><%= ref.input :end_page, input_html: {min: 0} %></div>
         </div>
       </div>
     <% end %>
     <%= required_fields %>
-    <%= ref.actions :submit %>
+    <%= ref.actions do %>
+      <%= ref.action :submit, button_html: {class: 'btn btn-primary'} %>
+      <%= ref.action :cancel, button_html: {class: 'btn btn-default'}, url: bibliographies_path(params[:moodle_user], anchor: 'book_cap') %>
+    <% end %>
   </div>
 <% end %>

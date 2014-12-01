@@ -9,7 +9,7 @@
 <% pagination_class ||= "" %>
 
 <%= paginator.render do -%>
-  <nav>
+  <nav class="text-center">
     <ul class="pagination <%= pagination_class %>">
     <%= first_page_tag unless current_page.first? %>
     <%= prev_page_tag unless current_page.first? %>
