@@ -1,5 +1,3 @@
-require 'vcr'
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 
@@ -13,6 +11,7 @@ require 'rake' # Workaround for Fabrication gem bug
 require File.expand_path("../../config/environment", __FILE__)
 
 require 'rspec/rails'
+require 'vcr'
 require 'capybara/rspec'
 require 'rack_session_access/capybara'
 
@@ -29,7 +28,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
-  c.hook_into :webmock
+  c.hook_into :webmock, :faraday
   c.configure_rspec_metadata!
   c.allow_http_connections_when_no_cassette = true
 end
