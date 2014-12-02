@@ -28,8 +28,7 @@ class ServiceController < ApplicationController
 
   def tcc_definition
     if params[:tcc_definition_id]
-      @tcc_definition = TccDefinition.where(id: params[:tcc_definition_id]).includes(chapter_definitions:
-                                                                                         [:diary_definitions]).first
+      @tcc_definition = TccDefinition.where(id: params[:tcc_definition_id]).includes(:chapter_definitions).first
       render 'service/tcc_definition', status: :ok
     else
       render status: :bad_request, json: {error_message: 'Invalid params (missing tcc_definition_id)'}
