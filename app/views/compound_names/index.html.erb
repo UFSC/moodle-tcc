@@ -11,7 +11,7 @@
 
   <div class="col-lg-6">
     <div class="pull-right">
-      <%= button_to '#', remote: true, data: {toggle: 'modal', target: '#modal-window-new-compound-name'}, class: 'btn btn-default' do %>
+      <%= link_to '#', data: {toggle: 'modal', target: '#modal-window-new-compound-name'}, class: 'btn btn-default' do %>
         <%= display_icon 'plus' %> <%= t(:add_compound_name_or_suffix) %>
       <% end %>
     </div>
