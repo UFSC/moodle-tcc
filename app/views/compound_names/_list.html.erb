@@ -12,8 +12,8 @@
         <tr>
           <td><%= element.name %></td>
           <td>
-            <%= link_to t('activerecord.attributes.compound_name.edit'), '#',  {:remote => true, 'data-toggle' =>  'modal',
-                                                          'data-target' => '#'+element.id.to_s, class: 'btn'}  %>
+            <%= link_to t('activerecord.attributes.compound_name.edit'), edit_compound_name_path(element, moodle_user: params[:moodle_user]), remote: true,
+                        data: {target: "##{element.id}"}, class: 'btn btn-default' %>
 
           </td>
           <td>
@@ -23,8 +23,6 @@
                           method: :delete, title: 'Remover nome composto'%>
           </td>
         </tr>
-        <!-- Edit modal -->
-        <%= render partial: 'compound_names/edit', locals: { compound_name: element } %>
       <% end %>
     <% end %>
   </table>
