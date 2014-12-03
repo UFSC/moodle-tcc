@@ -18,8 +18,16 @@ class ServiceController < ApplicationController
   def report_tcc
     # Envia TCCs
     if params[:user_ids]
-      @tccs = Tcc.where(moodle_user: params[:user_ids]).includes([:presentation, :abstract, :final_considerations,
-                                                                  :hubs_tccs])
+      list_tcc = Array.new
+      dataset_tcc = Tcc.find_by_sql(['SELECT *
+                                  FROM tccs t
+                                  JOIN people p
+                                  ON t.student_id = p.id
+                                  WHERE p.moodle_id IN (?)', params[:user_ids]])
+      dataset_tcc.each do |data|
+        list_tcc.push(data[:id])                    
+      end
+        @tccs = Tcc.where(id: list_tcc).includes([:abstract, :chapters, :student])
       render 'service/report_tcc', status: :ok
     else
       render status: :bad_request, json: {error_message: 'Invalid params (missing user_ids)'}

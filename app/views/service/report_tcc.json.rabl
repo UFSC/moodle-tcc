@@ -1,18 +1,15 @@
 collection @tccs
-attributes :moodle_user => :user_id
 attributes :grade, :grade_updated_at
-child(:hubs_tccs => 'hubs_tcc') {
-  attributes :grade, :grade_date, :state, :position
-  attributes :updated_at => :state_date
+
+glue (:student) {
+  attributes :moodle_id => :user_id
 }
+
 child(:abstract) {
-  attributes :content, :key_words, :comentary, :created_at, :update_at, :state
+  attributes :content, :key_words, :created_at, :update_at, :state, :state_date
 }
 
-child(:presentation) {
-  attributes :content, :comentary, :created_at, :update_at, :state
+child(:chapters) {
+  attributes :content, :position, :chapter_definition_id, :created_at, :update_at, :state, :state_date
 }
 
-child(:final_considerations) {
-  attributes :content, :comentary, :created_at, :update_at, :state
-}
