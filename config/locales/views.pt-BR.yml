@@ -1,4 +1,5 @@
   pt-BR:
+    add_new_reference_button: 'Criar nova referência'
     cannot_access_hub_without_grading: 'Para acessar este Eixo, o mesmo deve estar avaliado no Portfolio'
     cannot_access_page_without_enough_permission: 'Você não possui permissão para acessar esta página'
     cannot_change_to_state_without_grade: 'Não é possível alterar para este estado sem ter dado uma nota.'
@@ -22,7 +23,7 @@
     chapter_import_cannot_proceed: 'Não é possível realizar uma importação quando o capítulo já possúi conteúdo'
     chapter_import_successfully: 'Importação concluída com sucesso!'
     save_document: 'Salvar Texto'
-    compound_name_search_result: 'Resultados para'
+    compound_name_search_result: "Resultados para: '%{search}'"
     add_compound_name_or_suffix: 'Adicionar nome composto ou sufixo'
     compound_name: 'Nomes Compostos'
     edit_compound_name: 'Edição de nome composto'
@@ -33,6 +34,5 @@
     data: 'Dados'
     abstract: 'Resumo'
     tcc_list: 'Lista de TCCs'
-    tcc_list_general_view: 'Tela de Visão Geral'
     list_refresh: 'Atualizar lista'
     btn_evaluate: 'Avaliar'

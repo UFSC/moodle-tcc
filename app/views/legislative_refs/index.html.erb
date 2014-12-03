@@ -1,35 +1,37 @@
 <h5>Referências do Legislativo</h5>
+
 <% if @legislative_refs.count > 0 %>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Jurisdição ou Cabeçalho</th>
-        <th>Título</th>
-        <th>Edição</th>
-        <th>Editora</th>
-        <th>Total de páginas</th>
-        <th>Ação</th>
-      </tr>
-      </thead>
-      <% @legislative_refs.each do |element| %>
-          <% if !element.nil? %>
-              <tr>
-                <td><%= element.jurisdiction_or_header %></td>
-                <td><%= element.title %></td>
-                <td><%= element.edition %></td>
-                <td><%= element.publisher %></td>
-                <td><%= element.total_pages %></td>
-                <td>
-                  <%= link_to 'Editar', edit_legislative_ref_path(element.id, :moodle_user => params[:moodle_user]) %>
-                  <%= link_to 'Remover', legislative_ref_path(element, :moodle_user => params[:moodle_user]), :confirm =>  t(:label_confirm_message), :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Jurisdição ou Cabeçalho</th>
+      <th>Título</th>
+      <th>Edição</th>
+      <th>Editora</th>
+      <th>Total de páginas</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <% @legislative_refs.each do |element| %>
+      <% if !element.nil? %>
+        <tr>
+          <td><%= element.jurisdiction_or_header %></td>
+          <td><%= element.title %></td>
+          <td><%= element.edition %></td>
+          <td><%= element.publisher %></td>
+          <td><%= element.total_pages %></td>
+          <td>
+            <%= link_to 'Editar', edit_legislative_ref_path(element.id, moodle_user: params[:moodle_user]) %>
+            <%= link_to 'Remover', legislative_ref_path(element, moodle_user: params[:moodle_user]), confirm: t(:label_confirm_message), :method => :delete %>
+          </td>
+        </tr>
       <% end %>
-    </table>
+    <% end %>
+  </table>
+  <%= link_to t('add_new_reference_button'), new_legislative_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-default btn-small' %>
 <% else %>
+  <div class="jumbotron">
     <p>Não há referências cadastradas.</p>
+    <%= link_to t('add_new_reference_button'), new_legislative_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-primary' %>
+  </div>
 <% end %>
-<%= link_to 'Criar', new_legislative_ref_path(:moodle_user => params[:moodle_user]), :class => 'btn btn-small' %>
-
-

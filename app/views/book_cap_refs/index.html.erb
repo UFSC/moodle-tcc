@@ -1,4 +1,5 @@
 <h5>Referências de Capítulos de Livros</h5>
+
 <% if @book_cap_refs.count > 0 %>
   <table class="table table-striped">
     <thead>
@@ -24,16 +25,17 @@
           <td><%= element.publisher %></td>
           <td><%= element.local %></td>
           <td>
-            <%= link_to 'Editar', edit_book_cap_ref_path(element.id, :moodle_user => params[:moodle_user]) %>
-            <%= link_to 'Remover', book_cap_ref_path(element, :moodle_user => params[:moodle_user]), :confirm => t(:label_confirm_message), :method => :delete %>
+            <%= link_to 'Editar', edit_book_cap_ref_path(element.id, moodle_user: params[:moodle_user]) %>
+            <%= link_to 'Remover', book_cap_ref_path(element, moodle_user: params[:moodle_user]), confirm: t(:label_confirm_message), :method => :delete %>
           </td>
         </tr>
       <% end %>
     <% end %>
   </table>
+  <%= link_to t('add_new_reference_button'), new_book_cap_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-default btn-small' %>
 <% else %>
-  <p>Não há referências cadastradas.</p>
+  <div class="jumbotron">
+    <p>Não há referências cadastradas.</p>
+    <%= link_to t('add_new_reference_button'), new_book_cap_ref_path(moodle_user: params[:moodle_user]), class: 'btn btn-primary' %>
+  </div>
 <% end %>
-<%= link_to 'Criar', new_book_cap_ref_path(:moodle_user => params[:moodle_user]), :class => 'btn btn-small' %>
-
-

@@ -21,7 +21,7 @@ describe 'CompoundName' do
       page.set_rack_session(fake_lti_session('urn:moodle:role/coordavea'))
       visit bibliographies_path(anchor: 'compound_names', search: 'São Paulo')
 
-      expect(page).to have_content(I18n.t(:compound_name_search_result))
+      expect(page).to have_content(I18n.t(:compound_name_search_result, search: 'São Paulo'))
     end
   end
 

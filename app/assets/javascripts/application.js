@@ -14,12 +14,12 @@
 //= require jquery_ujs
 //= require jquery.ui.autocomplete
 //= require autocomplete-rails
-//= require bootstrap-alert
-//= require bootstrap-modal
-//= require bootstrap-tab
-//= require bootstrap-transition
-//= require bootstrap-tooltip
-//= require bootstrap-dropdown
+//= require bootstrap/alert
+//= require bootstrap/dropdown
+//= require bootstrap/tab
+//= require bootstrap/transition
+//= require bootstrap/modal
+//= require bootstrap/tooltip
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR
 //= require ckeditor/init
@@ -34,15 +34,11 @@ $.fn.twitter_bootstrap_confirmbox.defaults = {
     proceed_class: "btn proceed btn-primary"
 };
 
-function change_book_authors_state(checked, authors) {
-    if (checked) {
-        $.each(authors, function(index, author) {
-            author.attr('disabled', 'dislabled');
-        });
-    }
-    else {
-        $.each(authors, function(index, author) {
-            author.removeAttr("disabled");
-        });
-    }
-}
+$(function() {
+    $("[type~='date']").datepicker({
+        format: "dd/mm/yyyy",
+        language: 'pt-BR',
+        autoclose: true,
+        todayHighlight: true
+    });
+});

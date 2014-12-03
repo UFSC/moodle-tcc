@@ -10,10 +10,12 @@
  *
  */
 
+@import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap/theme";
 @import "jquery.ui.autocomplete";
 @import "formtastic-bootstrap";
-@import "bootstrap-datepicker";
+@import "bootstrap-datepicker3";
 @import "base";
 @import "instructor_admin";
 @import "tcc";

@@ -31,30 +31,30 @@
   td.status.insert_grade,
   td.status.for_evaluation,
   {
-    background: $errorBackground;
-    color: $errorText;
+    background: $alert-danger-bg;
+    color: $alert-danger-text;
     a {
-      color: darken($errorText, 10%);
+      color: darken($alert-danger-text, 10%);
       font-weight: 700;
     }
   }
 
   td.status.draft,
   td.status.waiting {
-    background: $warningBackground; //$infoBackground;
-    color: $warningText;
+    background: $alert-warning-bg;
+    color: $alert-warning-text;
     a {
-      color: darken($warningText, 10%);
+      color: darken($alert-warning-text, 10%);
     }
   }
 
   td.status.done,
   td.status.readonly,
   td.status.valued {
-    background: $successBackground;
-    color: $successText;
+    background: $alert-success-bg;
+    color: $alert-success-text;
     a {
-      color: darken($successText, 10%);
+      color: darken($alert-success-text, 10%);
     }
   }
 

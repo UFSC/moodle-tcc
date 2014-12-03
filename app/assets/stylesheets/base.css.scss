@@ -18,13 +18,6 @@ li.input {
     background-color: aliceblue;
 }
 
-body .modal {
-    /* new custom width */
-    width: 350px;
-
-    /* must be half of the width, minus scrollbar on the left (30px) */
-    margin-left: -170px;
-}
 .empty-content {
     background-color: #dddddd;
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
@@ -42,4 +35,8 @@ body .modal {
 
 .underline-text {
     text-decoration: underline;
+}
+
+.row {
+  margin-bottom: 1em;
 }

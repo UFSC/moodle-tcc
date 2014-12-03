@@ -20,11 +20,26 @@ module ApplicationHelper
   end
 
   def display_icon(icon_name)
-    content_tag('i', '', class: icon_name)
+    content_tag('span', '', class: "glyphicon glyphicon-#{icon_name}", :'aria-header' => true)
   end
 
   def lesc(text)
     LatexToPdf.escape_latex(text)
+  end
+
+  def bootstrap_class_for(flash_type)
+    case flash_type
+      when :success
+        'alert-success' # Green
+      when :error
+        'alert-danger' # Red
+      when :alert
+        'alert-warning' # Yellow
+      when :notice
+        'alert-info' # Blue
+      else
+        flash_type.to_s
+    end
   end
 
   def moodle_user_meta_tag

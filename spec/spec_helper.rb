@@ -1,5 +1,3 @@
-require 'vcr'
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 
@@ -13,8 +11,16 @@ require 'rake' # Workaround for Fabrication gem bug
 require File.expand_path("../../config/environment", __FILE__)
 
 require 'rspec/rails'
+require 'vcr'
 require 'capybara/rspec'
 require 'rack_session_access/capybara'
+require 'database_cleaner'
+
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {timeout: 10})
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -22,7 +28,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
-  c.hook_into :webmock
+  c.hook_into :webmock, :faraday
   c.configure_rspec_metadata!
   c.allow_http_connections_when_no_cassette = true
 end
@@ -41,15 +47,9 @@ RSpec.configure do |config|
 
   # Capybara Domain Specific language
   config.include Capybara::DSL
-  Capybara.javascript_driver = :webkit
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -66,4 +66,29 @@ RSpec.configure do |config|
 
   # Json specs helpers
   config.include JsonSpec::Helpers
+
+  # Database cleaner
+  # É essencial usar truncation para testes que usem javascript,
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  # Desligar as transações via RSpec, já que estamos usando elas via DatabaseCleaner
+  config.use_transactional_fixtures = false
 end

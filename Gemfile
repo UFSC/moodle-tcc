@@ -1,16 +1,18 @@
 source 'https://rubygems.org'
+ruby '2.1.3'
 
-gem 'rails', '~> 4.0.8'
+gem 'rails', '~> 4.0.12'
 gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
 
 # Asset Pipeline
 gem 'sass-rails', '~> 4.0.2'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'uglifier', '>= 1.3.0'
 
 # Assets
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass', '~> 3.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.1.1'
 gem 'bootstrap-datepicker-rails'
@@ -52,8 +54,8 @@ gem 'ims-lti', git: 'https://github.com/instructure/ims-lti'
 gem 'oauth-instructure'
 
 # Formulários e views
-gem 'formtastic', '~> 2.3'
-gem 'formtastic-bootstrap', '~> 2.1.3'
+gem 'formtastic', '3.0'
+gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
 gem 'rabl'
@@ -78,8 +80,7 @@ gem 'state_machine'
 gem 'draper', '~> 1.3'
 
 # Errbit (monitoração de falhas)
-# Usando temporariamgente versão do github pois a 4.0.0 tem conflitos com o Capistrano 3.x (https://github.com/airbrake/airbrake/commit/86cc8c1d54afbd24f45dd3e6e1a9df88653eb123)
-gem 'airbrake', github: 'airbrake/airbrake'
+gem 'airbrake'
 
 group :production do
   gem 'newrelic_rpm'
@@ -109,10 +110,11 @@ group :test do
 
   # Request tests
   gem 'capybara'
+  gem 'capybara-puma'
   gem 'rack_session_access'
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'json_spec'
-
+  gem 'database_cleaner'
 end
 
 group :development, :test do

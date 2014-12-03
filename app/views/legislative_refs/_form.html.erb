@@ -1,22 +1,25 @@
 <%= semantic_form_for @legislative_ref, url: polymorphic_path(@legislative_ref, moodle_user: params[:moodle_user]) do |ref| %>
-    <div id="data_tab_content">
-      <%= hidden_field_tag 'moodle_user', j(params[:moodle_user]) unless params[:moodle_user] %>
-      <%= ref.inputs do %>
-          <div class="span12">
-            <div class="span3">
-              <%= ref.input :jurisdiction_or_header, input_html: {:autofocus => true}  %>
-              <%= ref.input :title %>
-              <%= ref.input :edition %>
-              <%= ref.input :local %>
-            </div>
-            <div class="span3">
-              <%= ref.input :publisher %>
-              <%= ref.input :year %>
-              <%= ref.input :total_pages, :input_html => { :min => 0 }%>
-            </div>
-          </div>
-      <% end %>
-      <%= required_fields  %>
-      <%= ref.actions :submit %>
-    </div>
+  <div id="data_tab_content">
+    <%= hidden_field_tag 'moodle_user', j(params[:moodle_user]) unless params[:moodle_user] %>
+    <%= ref.inputs do %>
+
+      <div class="col-lg-4">
+        <%= ref.input :jurisdiction_or_header, input_html: {:autofocus => true} %>
+        <%= ref.input :title %>
+        <%= ref.input :edition %>
+        <%= ref.input :local %>
+      </div>
+      <div class="col-lg-4">
+        <%= ref.input :publisher %>
+        <%= ref.input :year %>
+        <%= ref.input :total_pages, :input_html => {:min => 0} %>
+      </div>
+
+    <% end %>
+    <%= required_fields %>
+    <%= ref.actions do %>
+      <%= ref.action :submit, button_html: {class: 'btn btn-primary'} %>
+      <%= ref.action :cancel, button_html: {class: 'btn btn-default'}, url: bibliographies_path(params[:moodle_user], anchor: 'legs') %>
+    <% end %>
+  </div>
 <% end %>
