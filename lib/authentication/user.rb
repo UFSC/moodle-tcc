@@ -7,10 +7,12 @@ module Authentication
     def initialize(lti_tp)
       @lti_tp = lti_tp
       @person = Person.find_by(moodle_id: lti_tp.user_id)
+
       if !@person && view_all?
         sync = SyncTcc.new(lti_tp.custom_params['tcc_definition'])
         @person = sync.find_or_create_person(lti_tp.user_id)
       end
+
       raise PersonNotFoundError unless @person
     end
 

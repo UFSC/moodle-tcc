@@ -110,10 +110,11 @@ group :test do
 
   # Request tests
   gem 'capybara'
+  gem 'capybara-puma'
   gem 'rack_session_access'
   gem 'poltergeist'
   gem 'json_spec'
-  gem 'capybara-puma'
+  gem 'database_cleaner'
 end
 
 group :development, :test do

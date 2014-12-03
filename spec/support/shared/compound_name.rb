@@ -11,10 +11,11 @@ shared_context 'an authorized user who can edit compound names' do |role|
     expect(page).to have_content(I18n.t(:compound_name))
   end
 
-  it 'create a new compound name' do
+  it 'create a new compound name', js: true do
     click_link I18n.t(:compound_name)
     click_link I18n.t(:add_compound_name_or_suffix)
 
+    expect(page).to have_content('Adição de nome composto') # wait for ajax
     fill_in 'Nome composto:', :with => attributes[:name], :exact => true
 
     click_button I18n.t(:save)
@@ -22,10 +23,12 @@ shared_context 'an authorized user who can edit compound names' do |role|
     expect(page).to have_content(attributes[:name])
   end
 
-  it 'edit a compound name' do
+  it 'edit a compound name', js: true do
+    # TODO: popular via Fabricator os dados e só editar
     click_link I18n.t(:compound_name)
     click_link I18n.t(:add_compound_name_or_suffix)
 
+    expect(page).to have_content('Adição de nome composto') # wait for ajax
     fill_in 'Nome composto:', :with => attributes[:name], :exact => true
 
     click_button I18n.t(:save)
@@ -34,17 +37,22 @@ shared_context 'an authorized user who can edit compound names' do |role|
     expect(page).to have_content(:success)
   end
 
-  it 'remove a compound name' do
-    name = attributes[:name]
+  it 'remove a compound name', js: true do
+    # TODO: popular via Fabricator os dados e só remover
     click_link I18n.t(:compound_name)
     click_link I18n.t(:add_compound_name_or_suffix)
 
-    fill_in 'Nome composto:', :with => name, :exact => true
+    expect(page).to have_content('Adição de nome composto') # wait for ajax
+    fill_in 'Nome composto:', :with => attributes[:name], :exact => true
 
     click_button I18n.t(:save)
     click_button I18n.t('activerecord.attributes.compound_name.remove')
 
-    expect(page).to have_content('Nome composto "' + name + '" removido.')
+    expect(page).to have_content('Tem certeza que deseja apagar o nome composto') # wait for ajax
+
+    click_link 'Sim'
+
+    expect(page).to have_content('Nome composto "' + attributes[:name] + '" removido.')
   end
 end
 
