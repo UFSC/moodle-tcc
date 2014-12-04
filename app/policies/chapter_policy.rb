@@ -36,16 +36,14 @@ class ChapterPolicy < ApplicationPolicy
     # As seguintes condições precisam ser preenchidas para que o texto possa ser importado:
     # - O conteúdo do capítulo precisa estar vazio ou em branco
     # - O chapter_definition precisa ter uma referência para uma atividade remota (coursemodule_id)
-    # - O status do envio dessa atividade remota tem que estar marcada como "submitted"
+    # - O status do envio dessa atividade remota tem que estar marcada como "submitted" (removida essa condição)
+    # Conforme #7530 - Permitir que a importação do texto on-line seja apenas quando tiver nota
     #TODO: --  e com nota
     if must_import?
       remote = MoodleAPI::MoodleOnlineText.new
-      status = remote.fetch_online_text_status(@record.tcc.student.moodle_id,
-                                               @record.chapter_definition.coursemodule_id)
       olt_grade = remote.fetch_online_text_grade(@record.tcc.student.moodle_id,
                                                  @record.chapter_definition.coursemodule_id)
-      return ((!status.nil? && status == 'submitted') &&
-              (!olt_grade.nil? && olt_grade >= 0))
+      return (!olt_grade.nil? && olt_grade >= 0)
     end
     false
   end
@@ -63,8 +61,6 @@ class ChapterPolicy < ApplicationPolicy
     end
     false
   end
-
-
 
   def edit_comment?
     if user.orientador?
