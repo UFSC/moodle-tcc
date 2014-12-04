@@ -3,7 +3,7 @@
     <!-- para garantir a autenticacão -->
     <%= hidden_field_tag 'moodle_user', params[:moodle_user] %>
 
-    <div class="col-lg-5">
+    <div class="col-sm-8 col-md-6 col-lg-5">
       <div class="input-group">
         <%= autocomplete_field_tag :search, params[:search], instructor_admin_autocomplete_tcc_name_path,
                                    {placeholder: 'Busca', class: 'form-control', autofocus: 'autofocus'} %>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="col-lg-2 col-lg-offset-5">
+    <div class="col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-5">
       <div class="pull-right">
         <%= link_to '#', class: 'btn btn-default', id: 'refresh-list', title: 'Atualizar a lista abaixo' do %>
           <%= display_icon('refresh') %> <%= t(:list_refresh) %>
