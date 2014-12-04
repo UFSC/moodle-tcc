@@ -1,7 +1,7 @@
 <div class="row">
   <% if policy(@tcc).show_tabs_header?  %>
     <%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
-      <%= tab.data 'Dados', tcc_path(params[:moodle_user]), :class => 'active' %>
+      <%= tab.tcc_data 'Dados', tcc_path(params[:moodle_user]), :class => 'active' %>
       <%= tab.abstract 'Resumo', edit_abstracts_path(params[:moodle_user]) %>
 
       <% @tcc.chapters.each do |chapter| %>

@@ -1,4 +1,7 @@
-<h3> <%= t(:data) %> </h3>
+<div class="page-header">
+  <h3><%= t(:data) %></h3>
+</div>
+
 <%= semantic_form_for @tcc, url: tcc_path(moodle_user: params[:moodle_user]) do |f| %>
   <%= f.inputs do %>
     <div class="col-lg-5">

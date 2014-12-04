@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h2><%= @chapter.chapter_definition.title %>
+  <h3><%= @chapter.chapter_definition.title %>
     <small>
       <strong>
         <%= "[#{object.human_state_name}]" %>
@@ -7,5 +7,5 @@
       </strong>
       <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
     </small>
-  </h2>
+  </h3>
 </div>
