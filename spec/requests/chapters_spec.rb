@@ -33,7 +33,7 @@ describe 'Chapter content' do
       response.body
     end
 
-    it 'edit empty',
+    it 'edit empty submitted',
        :vcr => {:cassette_name =>  'onlinetextSubmitted',
                 :record => :new_episodes,
                 :match_requests_on => [:query, :method]} do
@@ -43,8 +43,18 @@ describe 'Chapter content' do
       expect(page).to have_content('Não existe conteúdo ainda neste capítulo')
     end
 
-    it 'edit import',
-       :vcr => {:cassette_name =>  'onlinetextGraded',
+    it 'edit empty draft',
+       :vcr => {:cassette_name =>  'onlinetextDraft',
+                :record => :new_episodes,
+                :match_requests_on => [:query, :method]} do
+      #expect(make_http_request_local).to include('onlinetext')
+      visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
+      # deve encontrar
+      expect(page).to have_content('Não existe conteúdo ainda neste capítulo')
+    end
+
+    it 'edit import Graded draft',
+       :vcr => {:cassette_name =>  'onlinetextGradedDraft',
                 :record => :new_episodes,
                 :match_requests_on => [:query, :method]} do
       #expect(make_http_request_local).to include('onlinetext')
@@ -57,6 +67,22 @@ describe 'Chapter content' do
         expect(page).to_not have_button('Importar texto da atividade do Moodle')
       end
     end
+
+    it 'edit import Graded submitted',
+       :vcr => {:cassette_name =>  'onlinetextGradedSubmitted',
+                :record => :new_episodes,
+                :match_requests_on => [:query, :method]} do
+      #expect(make_http_request_local).to include('onlinetext')
+      visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
+      # deve encontrar
+      expect(page).to have_content('Não existe conteúdo ainda neste capítulo')
+      if (Pundit.policy(lti_user, tcc).import_chapters?)
+        expect(page).to have_button('Importar texto da atividade do Moodle')
+      else
+        expect(page).to_not have_button('Importar texto da atividade do Moodle')
+      end
+    end
+
   end
 
   context '@first' do
