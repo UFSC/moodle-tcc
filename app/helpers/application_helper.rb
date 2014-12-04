@@ -48,4 +48,9 @@ module ApplicationHelper
     end
   end
 
+  def reference_page_title(title)
+    content_tag(:div, class: 'page-header') do
+      content_tag(:h4, title)
+    end
+  end
 end
