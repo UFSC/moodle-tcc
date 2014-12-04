@@ -30,6 +30,7 @@ $.fn.twitter_bootstrap_confirmbox.defaults = {
     fade: true,
     title: 'TCC UNA-SUS', // if title equals null window.top.location.origin is used
     cancel: "Não",
+    cancel_class: "btn cancel btn-default",
     proceed: "Sim",
     proceed_class: "btn proceed btn-primary"
 };
