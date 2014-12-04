@@ -1,10 +1,18 @@
-<div class="span12">
+<div class="col-sm-12">
   <%= render 'common/tabs_header' %>
   <% if @chapter.empty? %>
+
+    <% if policy(@tcc).show_student? %>
+      <div class="page-header">
+        <h2><%= @chapter.chapter_definition.title %>
+          <small><%= @tcc.student.name %></small>
+        </h2>
+      </div>
+    <% end %>
+
     <% if @can_import %>
-      <div class="hero-unit">
-        <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
-        <h2>Não existe conteúdo ainda neste capítulo:</h2>
+      <div class="jumbotron">
+        <h2>Não existe conteúdo ainda neste capítulo</h2>
 
         <h4>Para iniciar este capítulo, você deve importar o texto realizado na atividade do Moodle:</h4>
         <br/>
@@ -14,8 +22,7 @@
 
       </div>
     <% else %>
-      <div class="hero-unit">
-        <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
+      <div class="jumbotron">
         <h2>Não existe conteúdo ainda neste capítulo</h2>
 
         <h3>Você deve concluir primeiro a atividade no Moodle. </h3>

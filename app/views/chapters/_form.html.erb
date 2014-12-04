@@ -2,13 +2,8 @@
   <%= h.input :position, :as => :hidden %>
 
   <div class="row">
-    <div class="rounded-border">
-
-      <%= render partial: 'common/document_header',
-                 locals: {object: @chapter,
-                          object_label: @chapter.chapter_definition.title
-                 } %>
-
+    <%= render partial: 'common/document_header', locals: {object: @chapter, object_label: @chapter.chapter_definition.title} %>
+    <div class="panel rounded-border">
       <%= h.cktext_area :content,  {ckeditor: {readOnly: !policy(@chapter).edit_content? }} %>
 
       <br/>

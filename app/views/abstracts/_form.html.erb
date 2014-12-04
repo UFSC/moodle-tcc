@@ -1,13 +1,21 @@
 <%= semantic_form_for @abstract, url: abstracts_path(moodle_user: params[:moodle_user]) do |h| %>
   <div class="row">
-    <div class="rounded-border">
 
-      <%= render partial: 'common/document_header',
-                 locals: {object: @abstract,
-                          object_label: t('activerecord.attributes.abstract.content_pt')
-                 } %>
+    <div class="page-header">
+      <h2><%= t('activerecord.attributes.abstract.content_pt') %>
+        <small>
+          <strong>
+            <%= "[#{@abstract.human_state_name}]" %>
+            <%= " - #{@abstract.state_date.strftime('%d-%m-%Y')}" unless @abstract.state_date.nil? %>
+          </strong>
+          <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
+        </small>
+      </h2>
+    </div>
 
-      <%= h.cktext_area :content,  {ckeditor: {readOnly: !policy(@abstract).edit_content?}} %>
+    <div class="panel rounded-border">
+
+      <%= h.cktext_area :content, {ckeditor: {readOnly: !policy(@abstract).edit_content?}} %>
 
       <br/>
       <%= h.input :keywords, input_html: {class: 'span12', disabled: !policy(@abstract).edit_content?} %>
@@ -18,14 +26,14 @@
                                            style: 'width:98%; max-width:98%;',
                                            disabled: !policy(@abstract).edit_comment?,
                                            maxlength: '5000'
-        } %>
+                            } %>
       <% end %>
       <%= render partial: 'common/document_footer',
-                 locals: { object: @chapter,
-                           object_form: h,
-                           can_save: policy(@abstract).edit_content? || policy(@abstract).edit_comment?,
-                           can_send_to_review: policy(@abstract).can_send_to_review? ,
-                           can_send_draft_done: policy(@abstract).can_send_to_draft_done?
+                 locals: {object: @chapter,
+                          object_form: h,
+                          can_save: policy(@abstract).edit_content? || policy(@abstract).edit_comment?,
+                          can_send_to_review: policy(@abstract).can_send_to_review?,
+                          can_send_draft_done: policy(@abstract).can_send_to_draft_done?
                  } %>
     </div>
   </div>
