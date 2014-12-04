@@ -23,7 +23,7 @@ class ChaptersController < ApplicationController
 
     @chapter.attributes = params[:chapter]
 
-    @comment = @chapter.comment || @chapter.build_chapter_comment
+    @comment = @chapter.chapter_comment || @chapter.build_chapter_comment
     @comment.attributes = params[:chapter_comment]
 
     if params[:done]

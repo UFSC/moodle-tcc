@@ -19,8 +19,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">Feedback do orientador</div>
     <div class="panel-body">
-      <%= semantic_form_for @comment,
-                            url: chapter_comments_path(@comment, moodle_user: params[:moodle_user]) do |t| %>
+      <%= semantic_fields_for @comment do |t| %>
         <%= t.input :comment, input_html: {rows: '3', disabled: !policy(@abstract).edit_comment?, maxlength: '5000'} %>
       <% end %>
     </div>

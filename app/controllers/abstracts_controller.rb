@@ -6,7 +6,7 @@ class AbstractsController < ApplicationController
 
     authorize @abstract
 
-    @comment = @tcc.abstract.chapter_comment || @tcc.abstract.build_chapter_comment
+    @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
   end
 
   def create
@@ -14,7 +14,7 @@ class AbstractsController < ApplicationController
 
     authorize @abstract
 
-    @comment = @tcc.abstract.build_chapter_comment(params[:comment])
+    @comment = @tcc.abstract.build_comment(params[:chapter_comment])
 
     change_state
 
@@ -34,8 +34,8 @@ class AbstractsController < ApplicationController
     authorize @abstract
 
     @abstract.attributes=params[:abstract]
-    @comment = @tcc.abstract.comment || @tcc.abstract.build_chapter_comment
-    @comment.attributes = params[:comment]
+    @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
+    @comment.attributes = params[:chapter_comment]
 
     change_state
 
@@ -53,11 +53,11 @@ class AbstractsController < ApplicationController
 
   def change_state
     if params[:done]
-      @abstract.to_done;
+      @abstract.to_done
     elsif params[:review]
-      @abstract.to_review;
+      @abstract.to_review
     elsif params[:draft]
-      @abstract.to_draft;
+      @abstract.to_draft
     end
   end
 end
