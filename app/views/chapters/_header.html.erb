@@ -1,0 +1,11 @@
+<div class="page-header">
+  <h3><%= @chapter.chapter_definition.title %>
+    <small>
+      <strong>
+        <%= "[#{object.human_state_name}]" %>
+        <%= " - #{object.state_date.strftime('%d-%m-%Y')}" unless object.state_date.nil? %>
+      </strong>
+      <%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %>
+    </small>
+  </h3>
+</div>

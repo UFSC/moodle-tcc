@@ -1,12 +1,20 @@
-<div class="span12">
+<div class="col-sm-12">
   <%= render 'common/tabs_header' %>
   <% if @chapter.empty? %>
-    <% if @can_import %>
-      <div class="hero-unit">
-        <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
-        <h2>Não existe conteúdo ainda neste capítulo:</h2>
 
-        <h4>Para iniciar este capítulo, você deve importar o texto realizado na atividade do Moodle:</h4>
+    <% if policy(@tcc).show_student? %>
+      <div class="page-header">
+        <h2><%= @chapter.chapter_definition.title %>
+          <small><%= @tcc.student.name %></small>
+        </h2>
+      </div>
+    <% end %>
+
+    <% if @can_import %>
+      <div class="jumbotron">
+        <h2>Não existe conteúdo ainda neste capítulo</h2>
+
+        <p>Para iniciar este capítulo, você deve importar o texto realizado na atividade do Moodle:</p>
         <br/>
         <%= form_tag execute_import_chapters_path(moodle_user: @tcc.student.moodle_id) do %>
           <%= submit_tag 'Importar texto da atividade do Moodle', class: 'btn btn-large btn-primary' %>
@@ -14,14 +22,13 @@
 
       </div>
     <% else %>
-      <div class="hero-unit">
-        <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
+      <div class="jumbotron">
         <h2>Não existe conteúdo ainda neste capítulo</h2>
 
-        <h3>Você deve concluir primeiro a atividade no Moodle. </h3>
-        <h4>
+        <p>
+          Você deve concluir primeiro a atividade no Moodle. <br />
           Somente depois de receber a nota, na atividade no Moodle, você poderá iniciar a construção deste capítulo.
-        </h4>
+        </p>
       </div>
     <% end %>
   <% end %>

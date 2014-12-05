@@ -13,8 +13,7 @@ class ChaptersController < ApplicationController
         redirect_to empty_chapters_path(params[:moodle_user], params[:position])
       end
     else
-      @chapter_comment = @chapter.chapter_comment || @chapter.build_chapter_comment
-      @comment = @chapter_comment.comment
+      @comment = @chapter.chapter_comment || @chapter.build_chapter_comment
     end
   end
 
@@ -24,8 +23,8 @@ class ChaptersController < ApplicationController
 
     @chapter.attributes = params[:chapter]
 
-    @chapter_comment = @chapter.chapter_comment || @chapter.build_chapter_comment
-    @chapter_comment.attributes = params[:chapter_comment]
+    @comment = @chapter.chapter_comment || @chapter.build_chapter_comment
+    @comment.attributes = params[:chapter_comment]
 
     if params[:done]
       @chapter.to_done;
@@ -36,7 +35,7 @@ class ChaptersController < ApplicationController
     end
 
     if @chapter.valid? && @chapter.save
-      @chapter_comment.save!
+      @comment.save!
       flash[:success] = t(:successfully_saved)
       return redirect_to edit_chapters_path(position: @chapter.position.to_s)
     end

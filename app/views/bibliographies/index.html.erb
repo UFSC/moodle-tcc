@@ -1,27 +1,30 @@
 <%= render 'common/tabs_header' %>
-<div class='span12'>
-  <h3>Referências Bibliográficas</h3>
-  <h4><%= "#{@tcc.student.name}" if policy(@tcc).show_student? %></h4>
 
-  <ul id='tabs' class='nav nav-pills'>
-    <li id='book' class='bibliographie-tab'><a href='#book'>Livros</a></li>
-    <li id='book_cap' class='bibliographie-tab'><a href='#book_cap'>Capítulos de Livros</a></li>
-    <li id='article' class='bibliographie-tab'><a href='#article'>Artigos</a></li>
-    <li id='internet' class='bibliographie-tab'><a href='#internet'>Internet</a></li>
-    <li id='legs' class='bibliographie-tab'><a href='#legs'>Legislativo</a></li>
-    <li id='thesis' class='bibliographie-tab'><a href='#thesis'>Teses e Monografias</a></li>
+<div class="page-header">
+  <h3>Referências Bibliográficas <small><%= " - #{@tcc.student.name}" if policy(@tcc).show_student? %></small></h3>
+</div>
+
+<div class="col-md-12">
+
+  <ul id="tabs" class="nav nav-pills">
+    <li id="book" class="bibliographie-tab"><a href="#book">Livros</a></li>
+    <li id="book_cap" class="bibliographie-tab"><a href="#book_cap">Capítulos de Livros</a></li>
+    <li id="article" class="bibliographie-tab"><a href="#article">Artigos</a></li>
+    <li id="internet" class="bibliographie-tab"><a href="#internet">Internet</a></li>
+    <li id="legs" class="bibliographie-tab"><a href="#legs">Legislativo</a></li>
+    <li id="thesis" class="bibliographie-tab"><a href="#thesis">Teses e Monografias</a></li>
     <% if policy(@tcc).show_compound_names? %>
-      <li id='compound_names' class='bibliographie-tab'><a href='#compound_names'>Nomes Compostos</a></li>
+      <li id="compound_names" class="bibliographie-tab"><a href="#compound_names">Nomes Compostos</a></li>
     <% end %>
   </ul>
 
-  <div id='content-book' class='tab-content'><%= render :template => 'book_refs/index' %></div>
-  <div id='content-book_cap' class='tab-content'><%= render :template => 'book_cap_refs/index' %></div>
-  <div id='content-article' class='tab-content'><%= render :template => 'article_refs/index' %></div>
-  <div id='content-internet' class='tab-content'><%= render :template => 'internet_refs/index' %></div>
-  <div id='content-legs' class='tab-content'><%= render :template => 'legislative_refs/index' %></div>
-  <div id='content-thesis' class='tab-content'><%= render :template => 'thesis_refs/index' %></div>
+  <div id="content-book" class="tab-content"><%= render :template => 'book_refs/index' %></div>
+  <div id="content-book_cap" class="tab-content"><%= render :template => 'book_cap_refs/index' %></div>
+  <div id="content-article" class="tab-content"><%= render :template => 'article_refs/index' %></div>
+  <div id="content-internet" class="tab-content"><%= render :template => 'internet_refs/index' %></div>
+  <div id="content-legs" class="tab-content"><%= render :template => 'legislative_refs/index' %></div>
+  <div id="content-thesis" class="tab-content"><%= render :template => 'thesis_refs/index' %></div>
   <% if policy(@tcc).show_compound_names? %>
-    <div id='content-compound_names' class='tab-content'><%= render :template => 'compound_names/index' %></div>
+    <div id="content-compound_names" class="tab-content"><%= render :template => 'compound_names/index' %></div>
   <% end %>
 </div>
