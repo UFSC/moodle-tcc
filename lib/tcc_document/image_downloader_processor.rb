@@ -64,7 +64,7 @@ module TccDocument
         false
       else
 
-        remote_asset.dom_item['src'] = image_url('images/image-not-found.jpg')
+        remote_asset.dom_item['src'] = ActionController::Base.helpers.image_url('images/image-not-found.jpg')
         remote_asset.dom_item['alt'] = "Imagem inválida ou não encontrada. (#{remote_asset.filename})"
         
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar transferir #{remote_asset.filename} (#{remote_asset.remote_url})"
@@ -97,7 +97,7 @@ module TccDocument
         remote_asset.dom_item['data-asset-id'] = asset.id
       else
         Rails.logger.error "[Moodle Asset]: Falhou ao tentar salvar a imagem (original: #{remote_asset.remote_url}) (error: #{asset.errors.messages})"
-        remote_asset.dom_item['src'] = image_url('images/image-not-found.jpg')
+        remote_asset.dom_item['src'] = ActionController::Base.helpers.image_url('images/image-not-found.jpg')
         remote_asset.dom_item['alt'] = "Imagem inválida ou não encontrada. (#{remote_asset.filename})"
       end
 
