@@ -59,8 +59,8 @@ class ChaptersController < ApplicationController
     @chapter = @tcc.chapters.find_by(position: params[:position])
     authorize @chapter
 
-    redirect_to edit_chapters_path(params[:moodle_user], params[:position]),
-                alert: t('chapter_import_cannot_proceed') unless policy(@chapter).can_import?
+    return redirect_to edit_chapters_path(params[:moodle_user], params[:position]),
+                       alert: t('chapter_import_cannot_proceed') unless policy(@chapter).can_import?
 
     remote = MoodleAPI::MoodleOnlineText.new
     remote_text = remote.fetch_online_text_with_images(current_moodle_user, @chapter.chapter_definition.coursemodule_id)
