@@ -45,13 +45,6 @@ class ChaptersController < ApplicationController
     render :edit
   end
 
-  def empty
-    set_tab ('chapter'+params[:position]).to_sym
-    @chapter = @tcc.chapters.find_by(position: params[:position])
-
-    authorize @chapter
-  end
-
   def import
     set_tab ('chapter'+params[:position]).to_sym
     @chapter = @tcc.chapters.find_by(position: params[:position])
