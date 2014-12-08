@@ -74,7 +74,7 @@ gem 'enumerize'
 gem 'attribute_normalizer'
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
-gem 'state_machine'
+gem 'state_machine', github: 'seuros/state_machine'
 
 # Decorator pattern
 gem 'draper', '~> 1.3'

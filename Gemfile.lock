@@ -16,6 +16,12 @@ GIT
       formtastic (>= 3.0)
 
 GIT
+  remote: git://github.com/seuros/state_machine.git
+  revision: 1a373b2d23a21037d95cc369a4c5b0a9c551d326
+  specs:
+    state_machine (1.2.0)
+
+GIT
   remote: git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git
   revision: 34d4a29f3460cbf2c2ed27afaa2d602e40fb2f81
   specs:
@@ -419,7 +425,6 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    state_machine (1.2.0)
     systemu (2.6.4)
     tabs_on_rails (2.2.0)
     terminal-table (1.4.5)
@@ -528,7 +533,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
-  state_machine
+  state_machine!
   tabs_on_rails
   terminal-table
   thin
