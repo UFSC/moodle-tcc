@@ -122,6 +122,7 @@ group :development, :test do
   gem 'metric_fu', :require => false
   gem 'pry-rails', '~>0.3.2'
   gem 'simplecov', require: false
+  gem 'spring'
 end
 
 group :doc do

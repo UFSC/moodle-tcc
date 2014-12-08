@@ -405,6 +405,7 @@ GEM
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
     slop (3.6.0)
+    spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -526,6 +527,7 @@ DEPENDENCIES
   settingslogic
   shoulda-matchers
   simplecov
+  spring
   state_machine
   tabs_on_rails
   terminal-table
