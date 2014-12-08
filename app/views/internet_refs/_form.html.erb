@@ -13,9 +13,9 @@
         <%= ref.input :url %>
       </div>
       <div class="col-lg-4">
-        <%= ref.input :publication_date, :as => :date_picker, hint: 'Formato: dd/mm/aaaa',
+        <%= ref.input :publication_date, :as => :date_picker_js, hint: 'Formato: dd/mm/aaaa',
                       input_html: {value: ((I18n.l @internet_ref.publication_date) unless @internet_ref.publication_date.nil?)} %>
-        <%= ref.input :access_date, :as => :date_picker, hint: 'Formato: dd/mm/aaaa',
+        <%= ref.input :access_date, :as => :date_picker_js, hint: 'Formato: dd/mm/aaaa',
                       input_html: {value: ((I18n.l @internet_ref.access_date) unless @internet_ref.access_date.nil?)} %>
         <%= ref.input :complementary_information %>
       </div>

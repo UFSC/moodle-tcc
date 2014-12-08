@@ -36,7 +36,7 @@ $.fn.twitter_bootstrap_confirmbox.defaults = {
 };
 
 $(function() {
-    $("[type~='date']").datepicker({
+    $("[type~='date_picker']").datepicker({
         format: "dd/mm/yyyy",
         language: 'pt-BR',
         autoclose: true,

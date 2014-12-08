@@ -16,7 +16,7 @@
       <% end %>
 
       <% if policy(@tcc).edit_defense_date? %>
-        <%= f.input :defense_date, :as => :date_picker %>
+        <%= f.input :defense_date, :as => :date_picker_js %>
       <% else %>
         <%= f.input :defense_date, :as => :string, input_html: {disabled: true, value: @tcc.defense_date} %>
       <% end %>
