@@ -1,4 +1,4 @@
-SistemaTcc::Application.routes.draw do
+Rails.application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -22,8 +22,6 @@ SistemaTcc::Application.routes.draw do
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
-
-  resources :chapter_comments
 
   # TCC routes
   scope "/(user/:moodle_user)" do

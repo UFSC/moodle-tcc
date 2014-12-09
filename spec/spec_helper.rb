@@ -92,3 +92,5 @@ RSpec.configure do |config|
   # Desligar as transações via RSpec, já que estamos usando elas via DatabaseCleaner
   config.use_transactional_fixtures = false
 end
+
+ActiveRecord::Migration.maintain_test_schema!

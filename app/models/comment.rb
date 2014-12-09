@@ -1,4 +1,4 @@
-class ChapterComment < ActiveRecord::Base
+class Comment < ActiveRecord::Base
   validates_presence_of :chapter_commentable_id
 
   attr_accessible :comment

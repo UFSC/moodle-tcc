@@ -33,14 +33,15 @@ class AbstractsController < ApplicationController
 
     authorize @abstract
 
-    @abstract.attributes=params[:abstract]
+    @abstract.attributes = params[:abstract]
+
     @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
-    @comment.attributes = params[:chapter_comment]
+    @comment.attributes = params[:chapter_comment] if params[:chapter_comment]
 
     change_state
 
     if @abstract.valid? && @abstract.save
-      @comment.save!
+      @comment.save! if params[:chapter_comment]
       flash[:success] = t(:successfully_saved)
       redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     else

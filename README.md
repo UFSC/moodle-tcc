@@ -94,12 +94,29 @@ Instalar gems e executar a migração do banco:
     rake db:migrate
 
 
-Rodar testes
-------------
+Desenvolvimento e testes
+------------------------
 
-1. rake db:test:prepare
-2. rake spec
+Para rodar testes, utilize o comando a seguir, definindo opcionalmente a variavel de ambiente COVERAGE:
 
+```
+COVERAGE=true rake spec
+```
+
+Quando definido COVERAGE=true, será analizado também cobertura de testes da aplicação.
+
+Esta aplicação usa [Rails 4.1](http://guides.rubyonrails.org/) e para tornar o desenvolvimento mais rápido,
+realiza o pré-load da aplicação usando [Spring](https://github.com/rails/spring).
+
+O Spring, apesar de facilitar o desenvolvimento diminuindo o tempo de carregamento da aplicação, pode gerar
+conflitos quando mudanças mais profundas (initializers, mudanças de configuração e gems) forem executadas,
+necessitando ser reiniciado.
+
+Se alguma mudança não refletir no momento de desenvolvimento, basta desligar o mesmo e reiniciar a aplicação:
+
+```
+spring stop
+```
 
 Componentes e Integração
 ------------------------
