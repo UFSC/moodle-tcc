@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.1.5'
 
 gem 'rails', '~> 4.1'
 gem 'mysql2'
@@ -122,7 +121,10 @@ group :development, :test do
   gem 'metric_fu', :require => false
   gem 'pry-rails', '~>0.3.2'
   gem 'simplecov', require: false
+
+  # Application pre-loader:
   gem 'spring'
+  gem 'spring-watcher-listen'
 end
 
 group :doc do
