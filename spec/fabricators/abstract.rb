@@ -4,5 +4,5 @@ Fabricator(:abstract, :class_name => :abstract) do
 end
 
 Fabricator(:abstract_with_comment, :from => :abstract) do
-  comment { Fabricate.build(:chapter_comment) }
+  comment { Fabricate.build(:comment) }
 end

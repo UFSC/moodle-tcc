@@ -3,10 +3,10 @@ class Chapter < ActiveRecord::Base
 
   belongs_to :tcc, :inverse_of => :chapters
   belongs_to :chapter_definition, :inverse_of => :chapters
-  has_one :chapter_comment, as: :chapter_commentable, :dependent => :destroy
+  has_one :comment, :as => :chapter_commentable, class_name: 'Comment', :dependent => :destroy
 
   # Mass-Assignment
-  attr_accessible :position, :content, :chapter_definition, :tcc, :chapter_comment
+  attr_accessible :position, :content, :chapter_definition, :tcc, :comment
 
   # Hubs por tipo (polimórfico)
   scope :reflection_empty, -> { where(content: '') }

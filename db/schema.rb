@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117201739) do
+ActiveRecord::Schema.define(version: 20141209204014) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -80,16 +80,6 @@ ActiveRecord::Schema.define(version: 20141117201739) do
     t.string  "subtype"
   end
 
-  create_table "chapter_comments", force: true do |t|
-    t.text     "comment",                  limit: 16777215
-    t.integer  "chapter_commentable_id"
-    t.string   "chapter_commentable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "chapter_comments", ["chapter_commentable_id"], name: "index_chapter_comments_on_chapter_commentable_id", using: :btree
-
   create_table "chapter_definitions", force: true do |t|
     t.integer  "tcc_definition_id"
     t.string   "title"
@@ -131,6 +121,16 @@ ActiveRecord::Schema.define(version: 20141117201739) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "comments", force: true do |t|
+    t.text     "comment",                  limit: 16777215
+    t.integer  "chapter_commentable_id"
+    t.string   "chapter_commentable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["chapter_commentable_id"], name: "index_comments_on_chapter_commentable_id", using: :btree
 
   create_table "compound_names", force: true do |t|
     t.string   "name"

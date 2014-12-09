@@ -22,7 +22,7 @@ describe 'Chapter content' do
       page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
       document_test.chapter_definition.coursemodule_id = Fabricate.sequence(:coursemodule_id)
       document_test.chapter_definition.save!
-      document_test.content = '';
+      document_test.content = ''
       document_test.save!
     end
 
