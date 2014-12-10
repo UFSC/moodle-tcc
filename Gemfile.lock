@@ -360,6 +360,23 @@ GEM
     rdoc (4.2.0)
       json (~> 1.4)
     redcard (1.1.0)
+    redis (3.1.0)
+    redis-actionpack (4.0.0)
+      actionpack (~> 4)
+      redis-rack (~> 1.5.0)
+      redis-store (~> 1.1.0)
+    redis-activesupport (4.0.0)
+      activesupport (~> 4)
+      redis-store (~> 1.1.0)
+    redis-rack (1.5.0)
+      rack (~> 1.5)
+      redis-store (~> 1.1.0)
+    redis-rails (4.0.0)
+      redis-actionpack (~> 4)
+      redis-activesupport (~> 4)
+      redis-store (~> 1.1.0)
+    redis-store (1.1.4)
+      redis (>= 2.2)
     reek (1.5.1)
       parser (~> 2.2.0.pre.7)
       rainbow (>= 1.99, < 3.0)
@@ -535,6 +552,7 @@ DEPENDENCIES
   rails (~> 4.1)
   rails-latex!
   rails3-jquery-autocomplete
+  redis-rails
   rest-client
   rspec-rails (~> 3.0)
   ruby-graphviz

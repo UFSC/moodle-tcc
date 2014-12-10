@@ -83,6 +83,7 @@ gem 'airbrake'
 
 group :production do
   gem 'newrelic_rpm'
+  gem 'redis-rails'
 end
 
 group :development do
