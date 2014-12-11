@@ -5,16 +5,6 @@ class ServiceController < ApplicationController
   skip_before_action :verify_authenticity_token # Prevents CSRF warning
   before_action :check_consumer_key
 
-  def report
-    # Envia portfolios
-    if params[:user_ids]
-      @tccs = Tcc.where(moodle_user: params[:user_ids]).includes(:hubs_portfolios)
-      render 'service/report', status: :ok
-    else
-      render status: :bad_request, json: {error_message: 'Invalid params (missing user_ids)'}
-    end
-  end
-
   def report_tcc
     # Envia TCCs
     if params[:user_ids]

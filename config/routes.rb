@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   match 'ajax/build' => 'ajax#build', via: [:get, :post]
 
   # Web Service
-  match 'reportingservice' => 'service#report', :defaults => {:format => 'json'}, via: [:get, :post]
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
