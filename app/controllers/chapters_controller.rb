@@ -24,7 +24,7 @@ class ChaptersController < ApplicationController
     @chapter.attributes = params[:chapter]
 
     @comment = @chapter.comment || @chapter.build_comment
-    @comment.attributes = params[:chapter_comment] if params[:chapter_comment]
+    @comment.attributes = params[:comment] if params[:comment]
 
     if params[:done]
       @chapter.to_done
@@ -35,7 +35,7 @@ class ChaptersController < ApplicationController
     end
 
     if @chapter.valid? && @chapter.save
-      @comment.save! if params[:chapter_comment]
+      @comment.save! if params[:comment]
 
       flash[:success] = t(:successfully_saved)
       return redirect_to edit_chapters_path(position: @chapter.position.to_s)

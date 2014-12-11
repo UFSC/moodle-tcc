@@ -14,12 +14,13 @@ class AbstractsController < ApplicationController
 
     authorize @abstract
 
-    @comment = @tcc.abstract.build_comment(params[:chapter_comment])
+    @comment = @tcc.abstract.build_comment()
+    @comment.attributes = params[:comment] if params[:comment]
 
     change_state
 
     if @abstract.valid? && @abstract.save
-      @comment.save!
+      #@comment.save!
       flash[:success] = t(:successfully_saved)
       redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     else
@@ -36,12 +37,12 @@ class AbstractsController < ApplicationController
     @abstract.attributes = params[:abstract]
 
     @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
-    @comment.attributes = params[:chapter_comment] if params[:chapter_comment]
+    @comment.attributes = params[:comment] if params[:comment]
 
     change_state
 
     if @abstract.valid? && @abstract.save
-      @comment.save! if params[:chapter_comment]
+      @comment.save! if params[:comment]
       flash[:success] = t(:successfully_saved)
       redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     else
