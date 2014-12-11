@@ -46,19 +46,19 @@ module Authentication
     end
 
     def admin?
-      self.lti_tp.has_role?('urn:lti:sysrole:ims/lis/administrator') || self.lti_tp.has_role?('administrator')
+      self.lti_tp.has_role?(Roles.administrator) || self.lti_tp.has_role?('administrator')
     end
 
     def coordenador_avea?
-      self.lti_tp.has_role?('urn:moodle:role/coordavea')
+      self.lti_tp.has_role?(Roles.coordenador_avea)
     end
 
     def coordenador_curso?
-      self.lti_tp.has_role?('urn:moodle:role/coordcurso')
+      self.lti_tp.has_role?(Roles.coordenador_curso)
     end
 
     def coordenador_tutoria?
-      self.lti_tp.has_role?('urn:moodle:role/tutoria')
+      self.lti_tp.has_role?(Roles.coordenador_tutoria)
     end
 
     def tutor?
@@ -69,11 +69,11 @@ module Authentication
     end
 
     def orientador?
-      self.lti_tp.has_role?('urn:moodle:role/orientador')
+      self.lti_tp.has_role?(Roles.orientador)
     end
 
     def student?
-      self.lti_tp.has_role?('urn:moodle:role/student') || self.lti_tp.has_role?('urn:lti:role:ims/lis/learner') || self.lti_tp.has_role?('student')
+      self.lti_tp.has_role?(Roles.student) || self.lti_tp.has_role?('urn:lti:role:ims/lis/learner') || self.lti_tp.has_role?('student')
     end
 
   end
