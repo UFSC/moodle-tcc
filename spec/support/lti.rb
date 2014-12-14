@@ -78,14 +78,14 @@ end
 
 def fake_lti_session(roles = 'student')
   lti_params = moodle_lti_params(roles)
-  #@tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
+  @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
 
   {'lti_launch_params' => lti_params}
 end
 
 def fake_lti_session_by_person(roles='student', person, tcc)
   lti_params = moodle_lti_params_by_person(roles, person, tcc)
-  #@tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
+  @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
 
   {'lti_launch_params' => lti_params}
 end
