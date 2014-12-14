@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe ChapterPolicy do
 
-  let (:admin) { Authentication::User.new fake_lti_tp('administrator') }
-  let (:coordenador_AVEA) { Authentication::User.new fake_lti_tp('urn:moodle:role/coordavea') }
-  let (:coordenador_tutoria) { Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria') }
-  let (:coordenador_curso) { Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso') }
+  let (:admin) { Authentication::User.new fake_lti_tool_provider('administrator') }
+  let (:coordenador_AVEA) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/coordavea') }
+  let (:coordenador_tutoria) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/tutoria') }
+  let (:coordenador_curso) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/coordcurso') }
 
-  let (:other_user) { Authentication::User.new fake_lti_tp('student') }
-  let (:other_leader) { Authentication::User.new fake_lti_tp('urn:moodle:role/orientador') }
+  let (:other_user) { Authentication::User.new fake_lti_tool_provider('student') }
+  let (:other_leader) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador') }
 
   subject { ChapterPolicy }
 
   before(:all) do
     @tcc_1 = Fabricate(:tcc_with_all_comments)
-    @tcc_1_user = Authentication::User.new fake_lti_tp('student')
-    @tcc_1_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
-    @tcc_1_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+    @tcc_1_user = Authentication::User.new fake_lti_tool_provider('student')
+    @tcc_1_leader = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador')
+    @tcc_1_tutor = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/td')
 
     @tcc_1_user.person    = @tcc_1.student
     @tcc_1_leader.person  = @tcc_1.orientador

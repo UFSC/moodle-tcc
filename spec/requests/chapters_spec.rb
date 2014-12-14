@@ -80,7 +80,7 @@ describe 'Chapter content' do
 
     describe '#student?' do
       let(:role_context) { 'student' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.student }
       it_behaves_like 'view, edit and change state (as Student)'
       it_behaves_like 'content import from moodle'
@@ -88,7 +88,7 @@ describe 'Chapter content' do
 
     context '#leader?' do
       let(:role_context) { 'urn:moodle:role/orientador' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.orientador }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -96,7 +96,7 @@ describe 'Chapter content' do
 
     context '#admin?' do
       let(:role_context) { 'administrator' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -104,7 +104,7 @@ describe 'Chapter content' do
 
     context '#AVEA_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -112,7 +112,7 @@ describe 'Chapter content' do
 
     context '#course_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -135,7 +135,7 @@ describe 'Chapter content' do
 
     describe '#student?' do
       let(:role_context) { 'student' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.student }
       it_behaves_like 'view, edit and change state (as Student)'
       it_behaves_like 'content import from moodle'
@@ -143,7 +143,7 @@ describe 'Chapter content' do
 
     context '#leader?' do
       let(:role_context) { 'urn:moodle:role/orientador' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.orientador }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -151,7 +151,7 @@ describe 'Chapter content' do
 
     context '#admin?' do
       let(:role_context) { 'administrator' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -159,7 +159,7 @@ describe 'Chapter content' do
 
     context '#AVEA_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
@@ -167,7 +167,7 @@ describe 'Chapter content' do
 
     context '#course_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
