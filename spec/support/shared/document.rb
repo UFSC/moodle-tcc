@@ -318,7 +318,7 @@ shared_context 'edit fields in Review and evaluate with success' do |content, ke
 end
 
 shared_context 'an unauthorized user who cannot view abstract' do
-  let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+  let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
   let(:person_session) { lti_user.person }
   let(:tcc) {@tcc_1}
   let(:moodle_user_view) { tcc.student.moodle_id }

@@ -34,7 +34,7 @@ class AbstractsController < ApplicationController
 
     authorize @abstract
 
-    @abstract.attributes = params[:abstract]
+    @abstract.attributes = params[:abstract] if params[:abstract]
 
     @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
     @comment.attributes = params[:comment] if params[:comment]

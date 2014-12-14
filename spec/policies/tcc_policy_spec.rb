@@ -2,20 +2,20 @@ require 'spec_helper'
 
 describe TccPolicy do
 
-  let (:current_user) { Authentication::User.new fake_lti_tp('student') }
-  let (:other_user) { Authentication::User.new fake_lti_tp('student') }
-  let (:admin) { Authentication::User.new fake_lti_tp('administrator') }
-  let (:coordenador_AVEA) { Authentication::User.new fake_lti_tp('urn:moodle:role/coordavea') }
-  let (:coordenador_tutoria) { Authentication::User.new fake_lti_tp('urn:moodle:role/tutoria') }
-  let (:coordenador_curso) { Authentication::User.new fake_lti_tp('urn:moodle:role/coordcurso') }
+  let (:current_user) { Authentication::User.new fake_lti_tool_provider('student') }
+  let (:other_user) { Authentication::User.new fake_lti_tool_provider('student') }
+  let (:admin) { Authentication::User.new fake_lti_tool_provider('administrator') }
+  let (:coordenador_AVEA) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/coordavea') }
+  let (:coordenador_tutoria) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/tutoria') }
+  let (:coordenador_curso) { Authentication::User.new fake_lti_tool_provider('urn:moodle:role/coordcurso') }
 
   subject { TccPolicy }
 
   before(:all) do
     @tcc_1 = Fabricate(:tcc_with_all)
-    @tcc_1_user = Authentication::User.new fake_lti_tp('student')
-    @tcc_1_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
-    @tcc_1_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+    @tcc_1_user = Authentication::User.new fake_lti_tool_provider('student')
+    @tcc_1_leader = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador')
+    @tcc_1_tutor = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/td')
 
     @tcc_1_user.person    = @tcc_1.student
     @tcc_1_leader.person  = @tcc_1.orientador
@@ -25,8 +25,8 @@ describe TccPolicy do
 
     @tcc_2 = Fabricate(:tcc_with_all)
     @tcc_2.tcc_definition = @tcc_1.tcc_definition
-    @tcc_2_user = Authentication::User.new fake_lti_tp('student')
-    @tcc_2_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+    @tcc_2_user = Authentication::User.new fake_lti_tool_provider('student')
+    @tcc_2_tutor = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/td')
 
     @tcc_2_user.person    = @tcc_2.student
     @tcc_2.orientador     = @tcc_1.orientador
@@ -36,8 +36,8 @@ describe TccPolicy do
 
     @tcc_3 = Fabricate(:tcc_with_all)
     @tcc_3.tcc_definition = @tcc_1.tcc_definition
-    @tcc_3_user = Authentication::User.new fake_lti_tp('student')
-    @tcc_3_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
+    @tcc_3_user = Authentication::User.new fake_lti_tool_provider('student')
+    @tcc_3_leader = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador')
 
     @tcc_3_user.person    = @tcc_3.student
     @tcc_3_leader.person  = @tcc_3.orientador
@@ -409,7 +409,7 @@ describe TccPolicy do
       @other_tcc_2.save!
       @other_tcc_2.reload
 
-      @other_tcc_2_user = Authentication::User.new fake_lti_tp('student')
+      @other_tcc_2_user = Authentication::User.new fake_lti_tool_provider('student')
       @other_tcc_2_user.person    = @other_tcc_2.student
 
     end

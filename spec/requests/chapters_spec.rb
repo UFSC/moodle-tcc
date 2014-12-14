@@ -9,17 +9,16 @@ describe 'Chapter content' do
   let(:edit_path) { 'edit_chapters_path' }
   let(:edit_path_position) { document_test.position }
 
-  shared_context 'import online text' do
+  shared_context 'content import from moodle' do
 
-    let(:tcc) {@tcc_1}
+    let(:tcc) { Fabricate(:tcc_with_all) }
     let(:moodle_user_view) { tcc.student.moodle_id }
     let(:document_test) { tcc.chapters.first }
 
 
     before :each do
-      @tcc_1 = Fabricate(:tcc_with_all)
       lti_user.person = person_session
-      page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
+      page.set_rack_session(fake_lti_session_by_person(role_context, person_session, tcc))
       document_test.chapter_definition.coursemodule_id = Fabricate.sequence(:coursemodule_id)
       document_test.chapter_definition.save!
       document_test.content = ''
@@ -33,30 +32,24 @@ describe 'Chapter content' do
       response.body
     end
 
-    it 'edit empty submitted',
-       :vcr => {:cassette_name =>  'onlinetextSubmitted',
-                :record => :new_episodes,
-                :match_requests_on => [:query, :method]} do
+    it 'edit empty submitted', :vcr => {:cassette_name => 'moodle_submitted_text'} do
+
       #expect(make_http_request_local).to include('onlinetext')
       visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
       # deve encontrar
       expect(page).to have_content('Não existe conteúdo ainda neste capítulo')
     end
 
-    it 'edit empty draft',
-       :vcr => {:cassette_name =>  'onlinetextDraft',
-                :record => :new_episodes,
-                :match_requests_on => [:query, :method]} do
+    it 'edit empty draft', :vcr => {:cassette_name => 'moodle_draft_text'} do
+
       #expect(make_http_request_local).to include('onlinetext')
       visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
       # deve encontrar
       expect(page).to have_content('Não existe conteúdo ainda neste capítulo')
     end
 
-    it 'edit import Graded draft',
-       :vcr => {:cassette_name =>  'onlinetextGradedDraft',
-                :record => :new_episodes,
-                :match_requests_on => [:query, :method]} do
+    it 'edit import Graded draft', :vcr => {:cassette_name => 'moodle_graded_draft_text'} do
+
       #expect(make_http_request_local).to include('onlinetext')
       visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
       # deve encontrar
@@ -68,10 +61,7 @@ describe 'Chapter content' do
       end
     end
 
-    it 'edit import Graded submitted',
-       :vcr => {:cassette_name =>  'onlinetextGradedSubmitted',
-                :record => :new_episodes,
-                :match_requests_on => [:query, :method]} do
+    it 'edit import Graded submitted', :vcr => {:cassette_name => 'moodle_graded_submitted_text'} do
       #expect(make_http_request_local).to include('onlinetext')
       visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
       # deve encontrar
@@ -90,42 +80,42 @@ describe 'Chapter content' do
 
     describe '#student?' do
       let(:role_context) { 'student' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
-      let(:person_session) {tcc.student}
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
+      let(:person_session) { tcc.student }
       it_behaves_like 'view, edit and change state (as Student)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#leader?' do
       let(:role_context) { 'urn:moodle:role/orientador' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context ) }
-      let(:person_session) {tcc.orientador}
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
+      let(:person_session) { tcc.orientador }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#admin?' do
       let(:role_context) { 'administrator' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#AVEA_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#course_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#tutoring_coordinator?' do
@@ -145,42 +135,42 @@ describe 'Chapter content' do
 
     describe '#student?' do
       let(:role_context) { 'student' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
-      let(:person_session) {tcc.student}
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
+      let(:person_session) { tcc.student }
       it_behaves_like 'view, edit and change state (as Student)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#leader?' do
       let(:role_context) { 'urn:moodle:role/orientador' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context ) }
-      let(:person_session) {tcc.orientador}
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
+      let(:person_session) { tcc.orientador }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#admin?' do
       let(:role_context) { 'administrator' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#AVEA_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#course_coordinator?' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       it_behaves_like 'view, edit and change state (as viewAll)'
-      it_behaves_like 'import online text'
+      it_behaves_like 'content import from moodle'
     end
 
     context '#tutoring_coordinator?' do

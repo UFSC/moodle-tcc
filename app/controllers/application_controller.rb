@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   rescue_from Authentication::UnauthorizedError, :with => :unauthorized_error
   rescue_from Authentication::PersonNotFoundError, :with => :person_not_found_error
   rescue_from Authentication::LTI::CredentialsError, :with => :lti_credentials_error
+  rescue_from LtiTccFilters::TccNotFoundError, :with => :tcc_not_found_error
   rescue_from Pundit::NotAuthorizedError, :with => :user_not_authorized
 
   # Set current_user as assetable
@@ -38,6 +39,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render :template => 'errors/person_not_found' }
       format.all  { render :nothing => true, :status => 404 }
+    end
+  end
+
+  def tcc_not_found_error(exception)
+    @exception = exception
+
+    respond_to do |format|
+      format.html { render :template => 'errors/tcc_not_found' }
+      format.all  { render :nothing => true, :status => 403 }
     end
   end
 

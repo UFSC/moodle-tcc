@@ -628,7 +628,7 @@ describe 'Tccs' do
   context 'login as student user' do
 
     let(:role_context) { 'student' }
-    let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+    let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
     let(:person_session) { tcc.student }
     let(:tcc) { @tcc_1 }
     let(:attributes) { Fabricate.attributes_for(:tcc) }
@@ -707,9 +707,9 @@ describe 'Tccs' do
   context 'instructor admin view (only one Tcc)' do
     before(:each) do
       @tcc_1 = Fabricate(:tcc_with_all)
-      @tcc_1_user = Authentication::User.new fake_lti_tp('student')
-      @tcc_1_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
-      @tcc_1_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+      @tcc_1_user = Authentication::User.new fake_lti_tool_provider('student')
+      @tcc_1_leader = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador')
+      @tcc_1_tutor = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/td')
 
       @tcc_1_user.person = @tcc_1.student
       @tcc_1_leader.person = @tcc_1.orientador
@@ -724,7 +724,7 @@ describe 'Tccs' do
 
     context 'login as leader user' do
       let(:role_context) { 'urn:moodle:role/orientador' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:tcc) { @tcc_1 }
       let(:person_session) { tcc.orientador }
       let(:attributes) { Fabricate.attributes_for(:tcc) }
@@ -748,7 +748,7 @@ describe 'Tccs' do
 
     context 'login as admin user' do
       let(:role_context) { 'administrator' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) { @tcc_1 }
       let(:attributes) { Fabricate.attributes_for(:tcc) }
@@ -766,7 +766,7 @@ describe 'Tccs' do
 
     context 'as AVEA user' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:tcc) { @tcc_1 }
       let(:person_session) { lti_user.person }
       let(:attributes) { Fabricate.attributes_for(:tcc) }
@@ -784,7 +784,7 @@ describe 'Tccs' do
 
     context 'as course coordinator user' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:tcc) { @tcc_1 }
       let(:person_session) { lti_user.person }
       let(:attributes) { Fabricate.attributes_for(:tcc) }
@@ -807,9 +807,9 @@ describe 'Tccs' do
       # TODO: está extremamente confuso, por que foi gerado tantos "fake_lti_tp" aqui?
       # TODO: verificar se não vale a pena gerar "receitas" de Fabrication para gerar esse monte de coisas
       @tcc_1 = Fabricate(:tcc_with_all)
-      @tcc_1_user = Authentication::User.new fake_lti_tp('student')
-      @tcc_1_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
-      @tcc_1_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+      @tcc_1_user = Authentication::User.new fake_lti_tool_provider('student')
+      @tcc_1_leader = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador')
+      @tcc_1_tutor = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/td')
 
       @tcc_1_user.person = @tcc_1.student
       @tcc_1_leader.person = @tcc_1.orientador
@@ -819,8 +819,8 @@ describe 'Tccs' do
 
       @tcc_2 = Fabricate(:tcc_with_all)
       @tcc_2.tcc_definition = @tcc_1.tcc_definition
-      @tcc_2_user = Authentication::User.new fake_lti_tp('student')
-      @tcc_2_tutor = Authentication::User.new fake_lti_tp('urn:moodle:role/td')
+      @tcc_2_user = Authentication::User.new fake_lti_tool_provider('student')
+      @tcc_2_tutor = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/td')
 
       @tcc_2_user.person = @tcc_2.student
       @tcc_2.orientador = @tcc_1.orientador
@@ -830,8 +830,8 @@ describe 'Tccs' do
 
       @tcc_3 = Fabricate(:tcc_with_all)
       @tcc_3.tcc_definition = @tcc_1.tcc_definition
-      @tcc_3_user = Authentication::User.new fake_lti_tp('student')
-      @tcc_3_leader = Authentication::User.new fake_lti_tp('urn:moodle:role/orientador')
+      @tcc_3_user = Authentication::User.new fake_lti_tool_provider('student')
+      @tcc_3_leader = Authentication::User.new fake_lti_tool_provider('urn:moodle:role/orientador')
 
       @tcc_3_user.person = @tcc_3.student
       @tcc_3_leader.person = @tcc_3.orientador
@@ -853,7 +853,7 @@ describe 'Tccs' do
       @other_tcc_2.save!
       @other_tcc_2.reload
 
-      @other_tcc_2_user = Authentication::User.new fake_lti_tp('student')
+      @other_tcc_2_user = Authentication::User.new fake_lti_tool_provider('student')
       @other_tcc_2_user.person = @other_tcc_2.student
 
       page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
@@ -871,7 +871,7 @@ describe 'Tccs' do
       # TODO: transformar esse monte de let que é parâmetro para o before em um helper method
       # https://www.relishapp.com/rspec/rspec-core/v/3-1/docs/helper-methods/arbitrary-helper-methods
       let(:role_context) { 'urn:moodle:role/orientador' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:tcc) { @tcc_1 }
       let(:person_session) { tcc.orientador }
 
@@ -891,7 +891,7 @@ describe 'Tccs' do
       # TODO: transformar esse monte de let que é parâmetro para o before em um helper method
       # https://www.relishapp.com/rspec/rspec-core/v/3-1/docs/helper-methods/arbitrary-helper-methods
       let(:role_context) { 'administrator' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) { @tcc_1 }
 
@@ -911,7 +911,7 @@ describe 'Tccs' do
       # TODO: transformar esse monte de let que é parâmetro para o before em um helper method
       # https://www.relishapp.com/rspec/rspec-core/v/3-1/docs/helper-methods/arbitrary-helper-methods
       let(:role_context) { 'urn:moodle:role/coordavea' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) { @tcc_1 }
 
@@ -931,7 +931,7 @@ describe 'Tccs' do
       # TODO: transformar esse monte de let que é parâmetro para o before em um helper method
       # https://www.relishapp.com/rspec/rspec-core/v/3-1/docs/helper-methods/arbitrary-helper-methods
       let(:role_context) { 'urn:moodle:role/coordcurso' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) { @tcc_1 }
 
@@ -951,7 +951,7 @@ describe 'Tccs' do
       # TODO: transformar esse monte de let que é parâmetro para o before em um helper method
       # https://www.relishapp.com/rspec/rspec-core/v/3-1/docs/helper-methods/arbitrary-helper-methods
       let(:role_context) { 'urn:moodle:role/td' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) { @tcc_1 }
 
@@ -971,7 +971,7 @@ describe 'Tccs' do
       # TODO: transformar esse monte de let que é parâmetro para o before em um helper method
       # https://www.relishapp.com/rspec/rspec-core/v/3-1/docs/helper-methods/arbitrary-helper-methods
       let(:role_context) { 'urn:moodle:role/tutoria' }
-      let(:lti_user) { Authentication::User.new fake_lti_tp(role_context) }
+      let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
       let(:tcc) { @tcc_1 }
 

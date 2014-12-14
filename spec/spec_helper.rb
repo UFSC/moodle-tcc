@@ -30,7 +30,11 @@ VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock, :faraday
   c.configure_rspec_metadata!
-  c.allow_http_connections_when_no_cassette = true
+  c.allow_http_connections_when_no_cassette = false
+  c.default_cassette_options = {:record => :new_episodes, :match_requests_on => [:query, :method]}
+
+  # VCR vai ignorar request para 127.0.0.1, para que o #set_rack_session funcione
+  c.ignore_hosts '127.0.0.1'
 end
 
 RSpec.configure do |config|
