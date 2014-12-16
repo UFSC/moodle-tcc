@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       member do
         get 'preview'
         get 'generate', defaults: {format: 'pdf'}
+        get 'edit_grade' => 'tccs#edit_grade', as: 'edit_grade', :defaults => {:format => 'js'}
         match 'evaluate' => 'tccs#evaluate', as: 'evaluate', via: [:post, :patch]
       end
     end

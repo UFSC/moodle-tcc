@@ -12,9 +12,6 @@
   </thead>
   <tbody>
   <% @tccs.each do |tcc| %>
-
-    <%= render :partial => 'instructor_admin/grade_tcc', locals: {tcc: tcc} if policy(tcc).show_assign_grade? %>
-
     <tr>
       <td class="name">
         <%= student_name(tcc) %>
@@ -42,7 +39,7 @@
       <% end %>
       <%= status_cell(tcc.abstract, edit_abstracts_path(moodle_user: tcc.student.moodle_id)) %>
 
-      <% tcc.chapter_definitions.each do |chapter_definition| %>
+      <% @tcc_definition.chapter_definitions.each do |chapter_definition| %>
         <% chapter = tcc.chapters.select { |chapter| chapter.position == chapter_definition.position }.first %>
 
         <%= status_cell(chapter, edit_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
@@ -92,4 +89,9 @@
     </tr>
   <% end %>
   </tbody>
+
+  <!-- Modal dialog -->
+  <div id="ajax_grade">
+
+  </div>
 </table>

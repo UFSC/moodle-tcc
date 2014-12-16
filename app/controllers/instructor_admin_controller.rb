@@ -7,13 +7,13 @@ class InstructorAdminController < ApplicationController
 
   def index
     authorize(Tcc, :show_scope?)
-    tcc_definition = TccDefinition.find(@tp.custom_params['tcc_definition'])
-    tccs = tcc_searchable(tcc_definition)
+    @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
+    tccs = tcc_searchable(@tcc_definition)
 
     search_options = {eager_load: [:abstract, :tcc_definition]}
     @tccs = tccs.search(params[:search], params[:page], search_options)
 
-    @chapters = tcc_definition.chapter_definitions.map { |h| h.title }
+    @chapters = @tcc_definition.chapter_definitions.map { |h| h.title }
   end
 
   def autocomplete_tcc_name
