@@ -18,9 +18,17 @@ def mount_visit_path(visit_path, moodle_user=nil, position=nil)
   eval(mounted_path)
 end
 
-shared_context 'cannot giving grade' do
-  it 'even if all the chapters are evaluated and five references are included' do
+def edit_grade_id
+  "edit-grade-#{tcc.id}"
+end
 
+def grade_modal
+  "#modal-tcc-grade"
+end
+
+shared_context 'cannot giving grade' do
+
+  before(:each) do
     # TODO: utilizar fabrication para gerar isso
     tcc.abstract.to_done_admin!
     tcc.abstract.save!
@@ -40,21 +48,20 @@ shared_context 'cannot giving grade' do
 
     tcc.save!
     tcc.reload
+  end
 
-    modal_frame = "##{@tcc_1.id}"
-
+  it 'even if all the chapters are evaluated and five references are included' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to have_content(tcc.student.name)
+    expect(page).to_not have_link(grade_modal)
   end
 end
 
 shared_context 'can giving grade' do
 
-  it 'if all the chapters are evaluated and five references are included' do
-
+  before(:each) do
     # TODO: utilizar fabrication para gerar isso
     tcc.abstract.to_done_admin!
     tcc.abstract.save!
@@ -74,21 +81,22 @@ shared_context 'can giving grade' do
 
     tcc.save!
     tcc.reload
+  end
 
+  it 'if all the chapters are evaluated and five references are included', js: true do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{@tcc_1.id}"
-    click_link modal_frame
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]')
 
     a_grade = 1 + Random.rand(99)
-    within modal_frame do
+    within grade_modal do
       fill_in 'tcc[grade]', :with => a_grade
       allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
       click_button I18n.t(:btn_evaluate)
@@ -96,63 +104,41 @@ shared_context 'can giving grade' do
 
     tcc.reload
 
-    expect(@tcc_1.grade).to eql(a_grade)
-    click_link modal_frame
+    expect(tcc.grade).to eql(a_grade)
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]', :with => a_grade)
     expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
     expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade},0+")
   end
 
-  it 'only if all OK' do
-
-    # TODO: utilizar fabrication para gerar isso
-    tcc.abstract.to_done_admin!
-    tcc.abstract.save!
-    tcc.chapters.each do |chapter|
-      chapter.to_done_admin!
-      chapter.save!
-    end
-
-    # TODO: utilizar fabrication para gerar isso
-    (1..5).each do
-      a_ref = Reference.new
-      a_book = Fabricate(:book_ref)
-      a_ref.tcc = tcc
-      a_ref.element = a_book
-      a_ref.save!
-    end
-
-    tcc.save!
-    tcc.reload
-
+  it 'only if all OK', js: true do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{@tcc_1.id}"
-    click_link modal_frame
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]')
 
     a_grade = 1 + Random.rand(99)
-    within modal_frame do
+    within grade_modal do
       fill_in 'tcc[grade]', :with => a_grade
       allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
       click_button I18n.t(:btn_evaluate)
     end
 
     tcc.reload
-    expect(@tcc_1.grade).to eql(a_grade)
+    expect(tcc.grade).to eql(a_grade)
 
-    click_link modal_frame
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]', :with => a_grade)
     expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
@@ -172,8 +158,7 @@ shared_context 'can giving grade' do
     expect(page).to have_content(I18n.t(:tcc_list))
     expect(page).to have_content(@tcc_1.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to_not have_link(grade_modal)
 
     tcc.abstract.to_done_admin
     tcc.abstract.save!
@@ -183,8 +168,7 @@ shared_context 'can giving grade' do
     expect(page).to have_content(I18n.t(:tcc_list))
     expect(page).to have_content(@tcc_1.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to have_link(modal_frame)
+    expect(page).to have_link(edit_grade_id)
 
     #
     # chapter
@@ -198,10 +182,9 @@ shared_context 'can giving grade' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to_not have_link(edit_grade_id)
 
     tcc.chapters.first.to_done_admin
     tcc.chapters.first.save!
@@ -211,8 +194,7 @@ shared_context 'can giving grade' do
     expect(page).to have_content(I18n.t(:tcc_list))
     expect(page).to have_content(@tcc_1.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to have_link(modal_frame)
+    expect(page).to have_link(edit_grade_id)
 
     #
     # reference
@@ -225,10 +207,9 @@ shared_context 'can giving grade' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to_not have_link(edit_grade_id)
 
     # TODO: utilizar fabrication para gerar isso
     a_ref = Reference.new
@@ -242,10 +223,9 @@ shared_context 'can giving grade' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to have_link(modal_frame)
+    expect(page).to have_link(edit_grade_id)
   end
 end
 

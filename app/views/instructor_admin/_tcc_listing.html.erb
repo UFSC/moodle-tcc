@@ -12,28 +12,29 @@
   </thead>
   <tbody>
   <% @tccs.each do |tcc| %>
+
     <tr>
       <td class="name">
         <%= student_name(tcc) %>
       </td>
-      <% if tcc.grade.nil? # nao tem nota   %>
-        <% if policy(tcc).can_grade? # verifica se terminou   %>
-          <% if policy(tcc).edit_assign_grade? # pode editar a nota  %>
+      <% if tcc.grade.nil? # nao tem nota      %>
+        <% if policy(tcc).can_grade? # verifica se terminou      %>
+          <% if policy(tcc).edit_assign_grade? # pode editar a nota     %>
             <%= grade_cell(tcc, 'insert_grade', 'Clique para atribuir a nota') %>
-          <% else # nao tem nota, terminou mas não pode editar a nota   %>
+          <% else # nao tem nota, terminou mas não pode editar a nota      %>
             <%= grade_cell(tcc, 'for_evaluation', '') %>
           <% end %>
-        <% else # nao tem nota e não terminou  %>
+        <% else # nao tem nota e não terminou     %>
           <%= grade_cell(tcc, 'waiting', '') %>
         <% end %>
-      <% else # tem nota  %>
-        <% if policy(tcc).can_grade? # verifica se terminou   %>
-          <% if policy(tcc).edit_assign_grade? # pode editar a nota   %>
+      <% else # tem nota     %>
+        <% if policy(tcc).can_grade? # verifica se terminou      %>
+          <% if policy(tcc).edit_assign_grade? # pode editar a nota      %>
             <%= grade_cell(tcc, 'valued', 'Clique para alterar a nota') %>
-          <% else # tem nota mas não pode editá-la   %>
+          <% else # tem nota mas não pode editá-la      %>
             <%= grade_cell(tcc, 'readonly', '') %>
           <% end %>
-        <% else #tem nota e não terminou  %>
+        <% else #tem nota e não terminou     %>
           <%= grade_cell(tcc, 'readonly', '') %>
         <% end %>
       <% end %>
