@@ -18,9 +18,17 @@ def mount_visit_path(visit_path, moodle_user=nil, position=nil)
   eval(mounted_path)
 end
 
-shared_context 'cannot giving grade' do
-  it 'even if all the chapters are evaluated and five references are included' do
+def edit_grade_id
+  "edit-grade-#{tcc.id}"
+end
 
+def grade_modal
+  "#modal-tcc-grade"
+end
+
+shared_context 'cannot giving grade' do
+
+  before(:each) do
     # TODO: utilizar fabrication para gerar isso
     tcc.abstract.to_done_admin!
     tcc.abstract.save!
@@ -40,21 +48,20 @@ shared_context 'cannot giving grade' do
 
     tcc.save!
     tcc.reload
+  end
 
-    modal_frame = "##{@tcc_1.id}"
-
+  it 'even if all the chapters are evaluated and five references are included' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to have_content(tcc.student.name)
+    expect(page).to_not have_link(grade_modal)
   end
 end
 
 shared_context 'can giving grade' do
 
-  it 'if all the chapters are evaluated and five references are included' do
-
+  before(:each) do
     # TODO: utilizar fabrication para gerar isso
     tcc.abstract.to_done_admin!
     tcc.abstract.save!
@@ -74,21 +81,22 @@ shared_context 'can giving grade' do
 
     tcc.save!
     tcc.reload
+  end
 
+  it 'if all the chapters are evaluated and five references are included', js: true do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{@tcc_1.id}"
-    click_link modal_frame
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]')
 
     a_grade = 1 + Random.rand(99)
-    within modal_frame do
+    within grade_modal do
       fill_in 'tcc[grade]', :with => a_grade
       allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
       click_button I18n.t(:btn_evaluate)
@@ -96,63 +104,41 @@ shared_context 'can giving grade' do
 
     tcc.reload
 
-    expect(@tcc_1.grade).to eql(a_grade)
-    click_link modal_frame
+    expect(tcc.grade).to eql(a_grade)
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]', :with => a_grade)
     expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
     expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade},0+")
   end
 
-  it 'only if all OK' do
-
-    # TODO: utilizar fabrication para gerar isso
-    tcc.abstract.to_done_admin!
-    tcc.abstract.save!
-    tcc.chapters.each do |chapter|
-      chapter.to_done_admin!
-      chapter.save!
-    end
-
-    # TODO: utilizar fabrication para gerar isso
-    (1..5).each do
-      a_ref = Reference.new
-      a_book = Fabricate(:book_ref)
-      a_ref.tcc = tcc
-      a_ref.element = a_book
-      a_ref.save!
-    end
-
-    tcc.save!
-    tcc.reload
-
+  it 'only if all OK', js: true do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{@tcc_1.id}"
-    click_link modal_frame
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]')
 
     a_grade = 1 + Random.rand(99)
-    within modal_frame do
+    within grade_modal do
       fill_in 'tcc[grade]', :with => a_grade
       allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
       click_button I18n.t(:btn_evaluate)
     end
 
     tcc.reload
-    expect(@tcc_1.grade).to eql(a_grade)
+    expect(tcc.grade).to eql(a_grade)
 
-    click_link modal_frame
+    click_link edit_grade_id
 
-    modal = page.find(modal_frame)
+    modal = page.find(grade_modal)
     expect(modal).to have_content('Avaliação')
     expect(modal).to have_field('tcc[grade]', :with => a_grade)
     expect(modal).to_not have_field('tcc[grade]', :with => "#{a_grade}.0+")
@@ -172,8 +158,7 @@ shared_context 'can giving grade' do
     expect(page).to have_content(I18n.t(:tcc_list))
     expect(page).to have_content(@tcc_1.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to_not have_link(grade_modal)
 
     tcc.abstract.to_done_admin
     tcc.abstract.save!
@@ -183,8 +168,7 @@ shared_context 'can giving grade' do
     expect(page).to have_content(I18n.t(:tcc_list))
     expect(page).to have_content(@tcc_1.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to have_link(modal_frame)
+    expect(page).to have_link(edit_grade_id)
 
     #
     # chapter
@@ -198,10 +182,9 @@ shared_context 'can giving grade' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to_not have_link(edit_grade_id)
 
     tcc.chapters.first.to_done_admin
     tcc.chapters.first.save!
@@ -211,8 +194,7 @@ shared_context 'can giving grade' do
     expect(page).to have_content(I18n.t(:tcc_list))
     expect(page).to have_content(@tcc_1.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to have_link(modal_frame)
+    expect(page).to have_link(edit_grade_id)
 
     #
     # reference
@@ -225,10 +207,9 @@ shared_context 'can giving grade' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to_not have_link(modal_frame)
+    expect(page).to_not have_link(edit_grade_id)
 
     # TODO: utilizar fabrication para gerar isso
     a_ref = Reference.new
@@ -242,21 +223,20 @@ shared_context 'can giving grade' do
     visit instructor_admin_path
 
     expect(page).to have_content(I18n.t(:tcc_list))
-    expect(page).to have_content(@tcc_1.student.name)
+    expect(page).to have_content(tcc.student.name)
 
-    modal_frame = "##{tcc.id}"
-    expect(page).to have_link(modal_frame)
+    expect(page).to have_link(edit_grade_id)
   end
 end
 
 shared_context 'admin/AVEA user' do
 
   # TODO: precisa mesmo desse teste?
-  xit 'not finding the field defense date' do
+  it 'not finding the field defense date' do
     visit mount_visit_path('tcc_path', moodle_user_view)
 
     expect(page).to have_content(I18n.t(:data))
-    expect(page).to_not have_field(I18n.t('activerecord.attributes.tcc.defense_date'))
+    expect(page).to have_field(I18n.t('activerecord.attributes.tcc.defense_date'), :disabled => false)
   end
 
   it 'does an edition in the defense date and save' do
@@ -433,8 +413,8 @@ shared_context 'tcc user data information' do
   context 'pdf generation' do
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'does an edition tcc title and generate the tcc with that text included' do
-      a_title = attributes[:title]
+    it 'does an edition tcc title and generate the tcc with that text included' do
+      a_title = 'Teste de título'
       visit mount_visit_path('tcc_path', moodle_user_view)
 
       expect(page).to have_content(I18n.t(:data))
@@ -451,7 +431,7 @@ shared_context 'tcc user data information' do
     end
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'does an edition tcc title (nil) and generate the tcc with that text included' do
+    it 'does an edition tcc title (nil) and generate the tcc with that text included' do
       a_title = nil
       visit mount_visit_path('tcc_path', moodle_user_view)
 
@@ -485,47 +465,38 @@ shared_context 'does an edition in a document' do
   it 'abstract and preview the tcc with that text included' do
     visit mount_visit_path('edit_abstracts_path', moodle_user_view)
 
-    a_content = Faker::Lorem.paragraph(3) # TODO: transformar em "let" no shared_context
-    a_keywords = Faker::Lorem.words(3).join(' ') # TODO: transformar em "let" no shared_context
-
-    fill_in 'abstract_content', :with => a_content
-    fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => a_keywords
+    fill_in 'abstract_content', :with => content
+    fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => keywords
     click_button I18n.t(:save_document)
 
     expect(page).to have_content(I18n.t(:successfully_saved))
 
     visit mount_visit_path('preview_tcc_path', moodle_user_view)
 
-    expect(page).to have_content(a_keywords)
-    expect(page).to have_content(a_content)
+    expect(page).to have_content(keywords)
+    expect(page).to have_content(content)
   end
 
   it 'chapter and preview the tcc with that text included' do
-    a_content = Faker::Lorem.paragraph(3) # TODO: transformar em "let" no shared_context
-
     visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
 
-    fill_in 'chapter_content', :with => a_content
+    fill_in 'chapter_content', :with => content
     click_button I18n.t(:save_document)
 
     expect(page).to have_content(I18n.t(:successfully_saved))
 
     visit mount_visit_path('preview_tcc_path', moodle_user_view)
-    expect(page).to have_content(a_content)
+    expect(page).to have_content(content)
   end
 
   context 'pdf generation' do
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'abstract and generate the tcc with that text included' do
+    it 'abstract and generate the tcc with that text included' do
       visit mount_visit_path('edit_abstracts_path', moodle_user_view)
 
-      # TODO: transformar em "let" no shared_context
-      a_content = Faker::Lorem.words(3).join(' ')
-      a_keywords = Faker::Lorem.words(3).join(' ')
-
-      fill_in 'abstract_content', :with => a_content
-      fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => a_keywords
+      fill_in 'abstract_content', :with => content
+      fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => keywords
       click_button I18n.t(:save_document)
 
       expect(page).to have_content(I18n.t(:successfully_saved))
@@ -534,18 +505,15 @@ shared_context 'does an edition in a document' do
 
       # TODO: verificar alternativa a essa gem para não precisar fazer esse monte de concatenação
       text_analysis = PDF::Inspector::Text.analyze(page.body)
-      expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ', ''))
-      expect(text_analysis.strings.join(' ')).to include(a_keywords.gsub(' ', ''))
+      expect(text_analysis.strings.join(' ')).to include(content.gsub(' ', ''))
+      expect(text_analysis.strings.join(' ')).to include(keywords.gsub(' ', ''))
     end
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'chapter and generate the tcc with that text included' do
+    it 'chapter and generate the tcc with that text included' do
       visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
 
-      # TODO: transformar em "let" no shared_context
-      a_content = Faker::Lorem.words(3).join(' ')
-
-      fill_in 'chapter_content', :with => a_content
+      fill_in 'chapter_content', :with => content
       click_button I18n.t(:save_document)
 
       expect(page).to have_content(I18n.t(:successfully_saved))
@@ -554,7 +522,7 @@ shared_context 'does an edition in a document' do
 
       # TODO: verificar alternativa a essa gem para não precisar fazer esse monte de concatenação
       text_analysis = PDF::Inspector::Text.analyze(page.body)
-      expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ', ''))
+      expect(text_analysis.strings.join(' ')).to include(content.gsub(' ', ''))
     end
   end
 end
@@ -563,6 +531,8 @@ describe 'Tccs' do
 
   let(:attributes) { Fabricate.attributes_for(:tcc) }
   let(:tcc) { Fabricate(:tcc) }
+  let(:content) { 'teste1 teste2 teste3' }
+  let(:keywords) { 'keyword1, keyword2, keyword3' }
 
   describe 'GET /tcc' do
     it 'should not work without LTI connection' do

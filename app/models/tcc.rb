@@ -42,11 +42,6 @@ class Tcc < ActiveRecord::Base
     create_or_update_chapters
   end
 
-  def chapter_definitions
-    # FIXME: order já foi migrada para scope, incluir testes
-    self.tcc_definition.chapter_definitions.order(:position)
-  end
-
   # Método responsável por criar os models relacionados ao TCC
   def create_dependencies!
     self.build_abstract if self.abstract.nil?

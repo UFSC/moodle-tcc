@@ -16,6 +16,10 @@ class TccsController < ApplicationController
     redirect_to tcc_path(moodle_user: params[:moodle_user])
   end
 
+  def edit_grade
+
+  end
+
   def evaluate
     authorize(@tcc, :edit_assign_grade?)
 

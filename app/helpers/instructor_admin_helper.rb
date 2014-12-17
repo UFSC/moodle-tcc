@@ -25,13 +25,7 @@ module InstructorAdminHelper
     content = (!tcc.nil? && !tcc.grade.nil?) ? tcc.grade.to_i : label_text(action, state)
     content_tag 'td', class: status_label_class(state) do
       if %w(valued insert_grade).include?(state)
-        link_to(content,
-                "##{tcc.id}",
-                id: "##{tcc.id}",
-                #class: 'alert-link',
-                target: '_blank',
-                data: {:toggle => "modal"},
-                title: "#{title}")
+        link_to(content, edit_grade_tcc_path(moodle_user: tcc.student.moodle_id), id: "edit-grade-#{tcc.id}", target: '_blank', remote: true, title: "#{title}")
       else
         "#{content}"
       end
@@ -57,4 +51,10 @@ module InstructorAdminHelper
   def label_title(type, state)
     t(type+'.'+state.to_s+'Title')
   end
+
+  def moodle_url_message(moodle_id)
+    url = URI.parse(Settings.moodle_url)
+    url.merge!("message/index.php?id=#{moodle_id}").to_s
+  end
+
 end

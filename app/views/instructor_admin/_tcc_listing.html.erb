@@ -13,36 +13,34 @@
   <tbody>
   <% @tccs.each do |tcc| %>
 
-    <%= render :partial => 'instructor_admin/grade_tcc', locals: {tcc: tcc} if policy(tcc).show_assign_grade? %>
-
     <tr>
       <td class="name">
         <%= student_name(tcc) %>
       </td>
-      <% if tcc.grade.nil? # nao tem nota   %>
-        <% if policy(tcc).can_grade? # verifica se terminou   %>
-          <% if policy(tcc).edit_assign_grade? # pode editar a nota  %>
+      <% if tcc.grade.nil? # nao tem nota      %>
+        <% if policy(tcc).can_grade? # verifica se terminou      %>
+          <% if policy(tcc).edit_assign_grade? # pode editar a nota     %>
             <%= grade_cell(tcc, 'insert_grade', 'Clique para atribuir a nota') %>
-          <% else # nao tem nota, terminou mas não pode editar a nota   %>
+          <% else # nao tem nota, terminou mas não pode editar a nota      %>
             <%= grade_cell(tcc, 'for_evaluation', '') %>
           <% end %>
-        <% else # nao tem nota e não terminou  %>
+        <% else # nao tem nota e não terminou     %>
           <%= grade_cell(tcc, 'waiting', '') %>
         <% end %>
-      <% else # tem nota  %>
-        <% if policy(tcc).can_grade? # verifica se terminou   %>
-          <% if policy(tcc).edit_assign_grade? # pode editar a nota   %>
+      <% else # tem nota     %>
+        <% if policy(tcc).can_grade? # verifica se terminou      %>
+          <% if policy(tcc).edit_assign_grade? # pode editar a nota      %>
             <%= grade_cell(tcc, 'valued', 'Clique para alterar a nota') %>
-          <% else # tem nota mas não pode editá-la   %>
+          <% else # tem nota mas não pode editá-la      %>
             <%= grade_cell(tcc, 'readonly', '') %>
           <% end %>
-        <% else #tem nota e não terminou  %>
+        <% else #tem nota e não terminou     %>
           <%= grade_cell(tcc, 'readonly', '') %>
         <% end %>
       <% end %>
       <%= status_cell(tcc.abstract, edit_abstracts_path(moodle_user: tcc.student.moodle_id)) %>
 
-      <% tcc.chapter_definitions.each do |chapter_definition| %>
+      <% @tcc_definition.chapter_definitions.each do |chapter_definition| %>
         <% chapter = tcc.chapters.select { |chapter| chapter.position == chapter_definition.position }.first %>
 
         <%= status_cell(chapter, edit_chapters_path(position: chapter.position, moodle_user: tcc.student.moodle_id)) %>
@@ -55,14 +53,7 @@
           </a>
           <ul class="dropdown-menu pull-right">
             <li>
-              <% url = URI.parse(Settings.moodle_url)
-                 unless url.path.end_with? '/'
-                   url.path += '/'
-                 end
-                 url.merge!("message/index.php?id=#{tcc.student.moodle_id}").to_s
-                 puts(url.to_s)
-              %>
-              <%= link_to url.to_s, target: '_blank' do %>
+              <%= link_to moodle_url_message(tcc.student.moodle_id), target: '_blank' do %>
                 <%= display_icon('envelope') %> Mensagens
               <% end %>
             </li>
@@ -92,4 +83,9 @@
     </tr>
   <% end %>
   </tbody>
+
+  <!-- Modal dialog -->
+  <div id="ajax_grade">
+
+  </div>
 </table>
