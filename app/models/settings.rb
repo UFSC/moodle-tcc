@@ -11,9 +11,6 @@ class Settings < Settingslogic
   # @return endereço do serviço de webservice REST do Moodle
   def moodle_rest_url
     url = URI.parse(Settings.moodle_url)
-    unless url .path.end_with? '/'
-      url.path += '/'
-    end
     url.merge!('webservice/rest/server.php').to_s
   end
 end

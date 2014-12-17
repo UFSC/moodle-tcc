@@ -51,4 +51,10 @@ module InstructorAdminHelper
   def label_title(type, state)
     t(type+'.'+state.to_s+'Title')
   end
+
+  def moodle_url_message(moodle_id)
+    url = URI.parse(Settings.moodle_url)
+    url.merge!("message/index.php?id=#{moodle_id}").to_s
+  end
+
 end

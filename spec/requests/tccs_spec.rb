@@ -232,11 +232,11 @@ end
 shared_context 'admin/AVEA user' do
 
   # TODO: precisa mesmo desse teste?
-  xit 'not finding the field defense date' do
+  it 'not finding the field defense date' do
     visit mount_visit_path('tcc_path', moodle_user_view)
 
     expect(page).to have_content(I18n.t(:data))
-    expect(page).to_not have_field(I18n.t('activerecord.attributes.tcc.defense_date'))
+    expect(page).to have_field(I18n.t('activerecord.attributes.tcc.defense_date'), :disabled => false)
   end
 
   it 'does an edition in the defense date and save' do
@@ -413,8 +413,8 @@ shared_context 'tcc user data information' do
   context 'pdf generation' do
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'does an edition tcc title and generate the tcc with that text included' do
-      a_title = attributes[:title]
+    it 'does an edition tcc title and generate the tcc with that text included' do
+      a_title = 'Teste de título'
       visit mount_visit_path('tcc_path', moodle_user_view)
 
       expect(page).to have_content(I18n.t(:data))
@@ -431,7 +431,7 @@ shared_context 'tcc user data information' do
     end
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'does an edition tcc title (nil) and generate the tcc with that text included' do
+    it 'does an edition tcc title (nil) and generate the tcc with that text included' do
       a_title = nil
       visit mount_visit_path('tcc_path', moodle_user_view)
 
@@ -465,47 +465,38 @@ shared_context 'does an edition in a document' do
   it 'abstract and preview the tcc with that text included' do
     visit mount_visit_path('edit_abstracts_path', moodle_user_view)
 
-    a_content = Faker::Lorem.paragraph(3) # TODO: transformar em "let" no shared_context
-    a_keywords = Faker::Lorem.words(3).join(' ') # TODO: transformar em "let" no shared_context
-
-    fill_in 'abstract_content', :with => a_content
-    fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => a_keywords
+    fill_in 'abstract_content', :with => content
+    fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => keywords
     click_button I18n.t(:save_document)
 
     expect(page).to have_content(I18n.t(:successfully_saved))
 
     visit mount_visit_path('preview_tcc_path', moodle_user_view)
 
-    expect(page).to have_content(a_keywords)
-    expect(page).to have_content(a_content)
+    expect(page).to have_content(keywords)
+    expect(page).to have_content(content)
   end
 
   it 'chapter and preview the tcc with that text included' do
-    a_content = Faker::Lorem.paragraph(3) # TODO: transformar em "let" no shared_context
-
     visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
 
-    fill_in 'chapter_content', :with => a_content
+    fill_in 'chapter_content', :with => content
     click_button I18n.t(:save_document)
 
     expect(page).to have_content(I18n.t(:successfully_saved))
 
     visit mount_visit_path('preview_tcc_path', moodle_user_view)
-    expect(page).to have_content(a_content)
+    expect(page).to have_content(content)
   end
 
   context 'pdf generation' do
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'abstract and generate the tcc with that text included' do
+    it 'abstract and generate the tcc with that text included' do
       visit mount_visit_path('edit_abstracts_path', moodle_user_view)
 
-      # TODO: transformar em "let" no shared_context
-      a_content = Faker::Lorem.words(3).join(' ')
-      a_keywords = Faker::Lorem.words(3).join(' ')
-
-      fill_in 'abstract_content', :with => a_content
-      fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => a_keywords
+      fill_in 'abstract_content', :with => content
+      fill_in I18n.t('activerecord.attributes.abstract.keywords'), :with => keywords
       click_button I18n.t(:save_document)
 
       expect(page).to have_content(I18n.t(:successfully_saved))
@@ -514,18 +505,15 @@ shared_context 'does an edition in a document' do
 
       # TODO: verificar alternativa a essa gem para não precisar fazer esse monte de concatenação
       text_analysis = PDF::Inspector::Text.analyze(page.body)
-      expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ', ''))
-      expect(text_analysis.strings.join(' ')).to include(a_keywords.gsub(' ', ''))
+      expect(text_analysis.strings.join(' ')).to include(content.gsub(' ', ''))
+      expect(text_analysis.strings.join(' ')).to include(keywords.gsub(' ', ''))
     end
 
     # TODO: fixar os testes com palavras fixas para evitar problema com ligaturas
-    xit 'chapter and generate the tcc with that text included' do
+    it 'chapter and generate the tcc with that text included' do
       visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
 
-      # TODO: transformar em "let" no shared_context
-      a_content = Faker::Lorem.words(3).join(' ')
-
-      fill_in 'chapter_content', :with => a_content
+      fill_in 'chapter_content', :with => content
       click_button I18n.t(:save_document)
 
       expect(page).to have_content(I18n.t(:successfully_saved))
@@ -534,7 +522,7 @@ shared_context 'does an edition in a document' do
 
       # TODO: verificar alternativa a essa gem para não precisar fazer esse monte de concatenação
       text_analysis = PDF::Inspector::Text.analyze(page.body)
-      expect(text_analysis.strings.join(' ')).to include(a_content.gsub(' ', ''))
+      expect(text_analysis.strings.join(' ')).to include(content.gsub(' ', ''))
     end
   end
 end
@@ -543,6 +531,8 @@ describe 'Tccs' do
 
   let(:attributes) { Fabricate.attributes_for(:tcc) }
   let(:tcc) { Fabricate(:tcc) }
+  let(:content) { 'teste1 teste2 teste3' }
+  let(:keywords) { 'keyword1, keyword2, keyword3' }
 
   describe 'GET /tcc' do
     it 'should not work without LTI connection' do
