@@ -55,6 +55,18 @@
           </a>
           <ul class="dropdown-menu pull-right">
             <li>
+              <% url = URI.parse(Settings.moodle_url)
+                 unless url.path.end_with? '/'
+                   url.path += '/'
+                 end
+                 url.merge!("message/index.php?id=#{tcc.student.moodle_id}").to_s
+                 puts(url.to_s)
+              %>
+              <%= link_to url.to_s, target: '_blank' do %>
+                <%= display_icon('envelope') %> Mensagens
+              <% end %>
+            </li>
+            <li>
               <%= link_to tcc_path(moodle_user: tcc.student.moodle_id), target: '_blank' do %>
                 <%= display_icon('edit') %> Editar informações
               <% end %>
