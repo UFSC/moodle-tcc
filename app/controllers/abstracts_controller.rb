@@ -58,8 +58,10 @@ class AbstractsController < ApplicationController
       @abstract.to_done
     elsif params[:review]
       @abstract.to_review
-    elsif params[:draft]
+    elsif (params[:draft] || (!@abstract.empty? && @abstract.state.eql?(:empty.to_s)))
       @abstract.to_draft
+    elsif (@abstract.empty? && %w(draft empty).include?(@abstract.state) )
+      @abstract.to_empty_admin
     end
   end
 end

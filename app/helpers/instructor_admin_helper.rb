@@ -2,7 +2,6 @@ module InstructorAdminHelper
 
   def status_cell(object, link_to_path)
     state = object.blank? ? 'new' : object.state
-    #state = object.blank? ? 'new' : 'draft'
 
     content_tag 'td', class: status_label_class(state) do
       link_to(label_text('actions', state),

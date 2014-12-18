@@ -30,8 +30,10 @@ class ChaptersController < ApplicationController
       @chapter.to_done
     elsif params[:review]
       @chapter.to_review
-    elsif params[:draft]
+    elsif (params[:draft] || (!@chapter.empty? && @chapter.state.eql?(:empty.to_s)))
       @chapter.to_draft
+    elsif (@chapter.empty? && %w(draft empty).include?(@chapter.state) )
+      @chapter.to_empty_admin
     end
 
     if @chapter.valid? && @chapter.save
@@ -74,6 +76,7 @@ class ChaptersController < ApplicationController
     remote_text = remote.fetch_online_text_with_images(current_moodle_user, @chapter.chapter_definition.coursemodule_id)
 
     @chapter.content = TccService.new(@tcc).process_remote_text(remote_text)
+    @chapter.to_draft
     @chapter.save!
 
     redirect_to edit_chapters_path(params[:moodle_user], params[:position]), notice: t('chapter_import_successfully')

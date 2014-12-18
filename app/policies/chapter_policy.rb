@@ -54,7 +54,7 @@ class ChapterPolicy < ApplicationPolicy
       if user.orientador?
         return (%w(review).include?(record.state))
       elsif user.student?
-        return (%w(draft).include?(record.state))
+        return (%w(draft empty).include?(record.state))
       elsif user.view_all?
         return (%w(review).include?(record.state))
       end
@@ -71,7 +71,7 @@ class ChapterPolicy < ApplicationPolicy
   def can_send_to_review?
     can_show = Pundit.policy(@user, @record.tcc).show?
     if can_show
-      return user.student? && record.state.eql?(:draft.to_s)
+      return user.student? && (%w(draft empty).include?(record.state))
     end
     false
   end
