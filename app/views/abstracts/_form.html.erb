@@ -20,7 +20,7 @@
     <div class="panel-heading">Feedback do orientador</div>
     <div class="panel-body">
       <%= semantic_fields_for @comment do |cf| %>
-        <%= cf.input :comment, input_html: {rows: '3', disabled: !policy(@abstract).edit_comment?, maxlength: '5000'} %>
+        <%= cf.input :comment, input_html: {rows: '3', disabled: !policy(@abstract).edit_comment?} %>
       <% end %>
     </div>
   </div>
