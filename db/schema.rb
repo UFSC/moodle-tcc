@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209204014) do
+ActiveRecord::Schema.define(version: 20141218192154) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215

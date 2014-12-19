@@ -46,7 +46,7 @@ shared_context 'view, edit and change state (as Student)' do
       it 'empty fields' do
         visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
         # deve encontrar na página
-        expect(page).to have_content(I18n.t('activerecord.state_machines.states.draft'))
+        expect(page).to have_content(I18n.t('activerecord.state_machines.states.empty'))
         expect(page).to have_button(I18n.t(:save_document))
         expect(page).to have_button(I18n.t('activerecord.state_machines.events.to_review'))
         # envia para revisão
@@ -67,6 +67,7 @@ shared_context 'view, edit and change state (as Student)' do
   context 'in Review state' do
 
     before :each do
+      document_test.to_draft
       document_test.to_review
     end
 
@@ -78,6 +79,7 @@ shared_context 'view, edit and change state (as Student)' do
   context 'in Done state' do
 
     before :each do
+      document_test.to_draft
       document_test.to_review
       document_test.to_done
     end
@@ -99,11 +101,16 @@ shared_context 'view, edit and change state (as viewAll)' do
   end
 
   context 'in draft state' do
+    before :each do
+      document_test.to_draft
+    end
+
     it_behaves_like 'view abstract fields', 'draft'
   end
 
   context 'in done state' do
     before :each do
+      document_test.to_draft
       document_test.to_review
       document_test.to_done
     end
@@ -112,6 +119,7 @@ shared_context 'view, edit and change state (as viewAll)' do
 
   context 'in review state' do
     before :each do
+      document_test.to_draft
       document_test.to_review
     end
 
@@ -143,7 +151,7 @@ shared_context 'edit and save abstract fields in Draft with success' do |content
     visit mount_edit_path(edit_path, moodle_user_view, edit_path_position)
     # deve encontrar na página
     expect(page).to have_content(page_title)
-    expect(page).to have_content(I18n.t('activerecord.state_machines.states.draft'))
+    expect(page).to have_content(I18n.t('activerecord.state_machines.states.empty'))
     expect(page).to have_button(I18n.t(:save_document))
     expect(page).to have_button(I18n.t('activerecord.state_machines.events.to_review'))
     if (!content.nil? && !content.empty?)

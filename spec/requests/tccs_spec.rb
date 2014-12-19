@@ -316,6 +316,8 @@ shared_context 'for view_all users' do
 
   context 'in draft state' do
     it 'cannot edit abstract form' do
+      tcc.abstract.to_draft
+      tcc.abstract.save!
       visit mount_visit_path('edit_abstracts_path', moodle_user_view)
 
       expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:draft}"))
@@ -324,6 +326,8 @@ shared_context 'for view_all users' do
     end
 
     it 'cannot edit chapter form' do
+      tcc.chapters.first.to_draft
+      tcc.chapters.first.save!
       visit mount_visit_path('edit_chapters_path', moodle_user_view, '1')
 
       expect(page).to have_content(I18n.t("activerecord.state_machines.states.#{:draft}"))

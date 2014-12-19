@@ -10,6 +10,7 @@ class ServiceController < ApplicationController
     if params[:user_ids]
 
       @tccs = Tcc.joins(:student).where(['people.moodle_id IN(?)', params[:user_ids]]).includes(:abstract, :chapters, :student)
+      @tccs = TccDecorator.decorate_collection(@tccs.all)
       render 'service/report_tcc', status: :ok
     else
       render status: :bad_request, json: {error_message: 'Invalid params (missing user_ids)'}

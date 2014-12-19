@@ -46,6 +46,7 @@ pt-BR:
     state_machines:
       states:
         new: 'Novo'
+        empty: 'Não editado'
         draft: 'Rascunho'
         review: 'Avaliando'
         done: 'Avaliado'
@@ -66,7 +67,7 @@ pt-BR:
         keywords: 'Palavras chave'
       chapter:
         content: 'Conteúdo'
-      chapter_comment:
+      comment:
         comment: 'Comentário'
       general_ref:
         direct_citation: 'Citação Direta'
