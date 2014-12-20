@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218192154) do
+ActiveRecord::Schema.define(version: 20141220032901) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141218192154) do
     t.integer  "tcc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",                       default: "draft"
+    t.string   "state",                       default: "empty"
     t.date     "state_date"
   end
 
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20141218192154) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "chapter_definition_id"
-    t.string   "state",                                  default: "draft"
+    t.string   "state",                                  default: "empty"
     t.date     "state_date"
   end
 
