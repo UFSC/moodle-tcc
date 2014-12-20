@@ -97,9 +97,18 @@ shared_context 'can giving grade' do
 
     a_grade = 1 + Random.rand(99)
     within grade_modal do
+
+      # bug do Poltergeist para o evento onfocus do modal
+      script = %Q{ $(document).ready(function() { if($('#tcc_grade').length) { window.onfocus = function() {};}}); }
+      page.execute_script(script)
+
       fill_in 'tcc[grade]', :with => a_grade
       allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
       click_button I18n.t(:btn_evaluate)
+
+      # bug do Poltergeist para o evento onfocus do modal
+      scripty = %Q{ $(document).ready(function() { if($('#tcc_grade').length) { window.onfocus = function() {location.reload();};}}); }
+      page.execute_script(scripty)
     end
 
     tcc.reload
@@ -128,9 +137,18 @@ shared_context 'can giving grade' do
 
     a_grade = 1 + Random.rand(99)
     within grade_modal do
+
+      # bug do Poltergeist para o evento onfocus do modal
+      script = %Q{ $(document).ready(function() { if($('#tcc_grade').length) { window.onfocus = function() {};}});}
+      page.execute_script(script)
+
       fill_in 'tcc[grade]', :with => a_grade
       allow_any_instance_of(MoodleAPI::MoodleGrade).to receive(:set_grade_lti) { ['empty reponse'] }
       click_button I18n.t(:btn_evaluate)
+
+      # bug do Poltergeist para o evento onfocus do modal
+      scripty = %Q{ $(document).ready(function() { if($('#tcc_grade').length) { window.onfocus = function() {location.reload();};}}); }
+      page.execute_script(scripty)
     end
 
     tcc.reload
