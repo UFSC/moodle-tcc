@@ -51,7 +51,7 @@
             <%= display_icon('tasks') %>
             <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu pull-right">
+          <ul class="dropdown-menu pull-right" id="dropdown-action">
             <li>
               <%= link_to moodle_url_message(tcc.student.moodle_id), target: '_blank' do %>
                 <%= display_icon('envelope') %> Mensagens
