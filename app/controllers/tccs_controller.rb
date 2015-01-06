@@ -39,16 +39,21 @@ class TccsController < ApplicationController
   end
 
   def generate
-    @tcc_document = LatexTccDecorator.new(@tcc)
-
-    # Resumo
-    @abstract = LatexAbstractDecorator.new(@tcc.abstract)
-
-    # Capítulos
-    @chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters)
-
-    # Referencias
-    @bibtex = generete_references(@tcc)
+    # @tcc_document = LatexTccDecorator.new(@tcc)
+    #
+    # # Resumo
+    # @abstract = LatexAbstractDecorator.new(@tcc.abstract)
+    #
+    # # Capítulos
+    # @chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters)
+    #
+    # # Referencias
+    # @bibtex = generete_references(@tcc)
+    render locals: { tcc_document: LatexTccDecorator.new(@tcc),
+                     abstract: LatexAbstractDecorator.new(@tcc.abstract),
+                     chapters: LatexChapterDecorator.decorate_collection(@tcc.chapters),
+                     bibtex: generete_references(@tcc)
+           }
   end
 
   def preview
@@ -58,15 +63,25 @@ class TccsController < ApplicationController
   protected
 
   def generete_references (tcc)
-    @book_refs = tcc.book_refs.decorate
-    @book_cap_refs = tcc.book_cap_refs.decorate
-    @article_refs = tcc.article_refs.decorate
-    @internet_refs = tcc.internet_refs.decorate
-    @legislative_refs = tcc.legislative_refs.decorate
-    @thesis_refs = tcc.thesis_refs.decorate
+    # @book_refs = tcc.book_refs.decorate
+    # @book_cap_refs = tcc.book_cap_refs.decorate
+    # @article_refs = tcc.article_refs.decorate
+    # @internet_refs = tcc.internet_refs.decorate
+    # @legislative_refs = tcc.legislative_refs.decorate
+    # @thesis_refs = tcc.thesis_refs.decorate
 
     #criar arquivo
-    content = render_to_string(:partial => 'bibtex', :layout => false)
+    content = render_to_string(:partial => 'bibtex',
+                               :layout => false,
+                               locals: { book_refs: tcc.book_refs.decorate,
+                                         book_cap_refs: tcc.book_cap_refs.decorate,
+                                         article_refs: tcc.article_refs.decorate,
+                                         internet_refs: tcc.internet_refs.decorate,
+                                         legislative_refs: tcc.legislative_refs.decorate,
+                                         thesis_refs: tcc.thesis_refs.decorate
+
+                               }
+    )
     @bibtex = TccDocument::ReferencesProcessor.new.execute(content)
   end
 

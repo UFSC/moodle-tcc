@@ -85,11 +85,11 @@ brazil,				% o último idioma é o principal do documento
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{<%= @tcc_document.title %>}
-\autor{<%= @tcc_document.student_name %>}
+\titulo{<%= tcc_document.title %>}
+\autor{<%= tcc_document.student_name %>}
 \local{Florianópolis}
-\data{<%= @tcc_document.defense_date %>}
-\orientador{<%= @tcc_document.orientador_name %>}
+\data{<%= tcc_document.defense_date %>}
+\orientador{<%= tcc_document.orientador_name %>}
 \coorientador{Profa Dra Elza Berger Salema Coelho}
 
 \instituicao{%
@@ -294,7 +294,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \end{folhadeaprovacao}
 
 %% Resumo do trabalho
-<%= render partial: 'abstract', locals: {content: @abstract.content, keywords: @abstract.keywords} %>
+<%= render partial: 'abstract', locals: {content: abstract.content, keywords: abstract.keywords} %>
 
 % ---
 % inserir o sumario
@@ -310,7 +310,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \textual
 
 %% Capítulos
-<%= render partial: 'chapters' %>
+<%= render partial: 'chapters', locals: {chapters: chapters} %>
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
@@ -318,6 +318,6 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 \postextual
 
 %% Referencias
-<%= '\bibliography{' + @bibtex + '}' %>
+<%= '\bibliography{' + bibtex + '}' %>
 
 \end{document}

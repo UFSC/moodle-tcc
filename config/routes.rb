@@ -1,3 +1,12 @@
+require 'sidekiq/web'
+
+class AuthConstraint
+  def self.admin?(request)
+    return true
+  end
+end
+
+
 Rails.application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
@@ -54,6 +63,15 @@ Rails.application.routes.draw do
 
     # FIXME: generalizar controller abaixo
     resources :orientador
+
+    # sidekiq monitor
+    #mount Sidekiq::Monitor::Engine => '/sidekiq'
+    # constraints lambda {|request| AuthConstraint.admin?(request) } do
+    #   mount Sidekiq::Monitor::Engine => '/sidekiq'
+    # end
+
+    # sidekiq monitor sinatra
+    mount Sidekiq::Web, at: "/sidekiq"
   end
 
 end

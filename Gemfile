@@ -4,6 +4,9 @@ gem 'rails', '~> 4.1'
 gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
 
+# Teste de geração de pdf no worker
+#gem 'wicked_pdf'
+
 # Asset Pipeline
 gem 'sass-rails', '~> 4.0.5'
 gem 'coffee-rails', '~> 4.1'
@@ -27,6 +30,19 @@ gem 'pundit'
 
 # Unicode Utils
 gem 'unicode_utils'
+
+# geração do tcc em bloco
+gem 'redis', '3.1.0'
+gem 'metalink'
+
+# sidekiq - processamento paralelo
+gem 'sidekiq'
+gem 'sidekiq-superworker'
+#gem 'sidekiq_monitor'
+
+# sidekiq monitor
+gem 'sinatra', require: false
+gem 'slim'
 
 # Latex tcc -> pdf
 gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
@@ -80,6 +96,9 @@ gem 'draper', '~> 1.3'
 
 # Errbit (monitoração de falhas)
 gem 'airbrake'
+
+# OpenStack Swift
+gem 'fog'
 
 group :production do
   gem 'newrelic_rpm'
@@ -141,4 +160,6 @@ group :deploy do
   gem 'capistrano-db-tasks', :require => false
   gem 'capistrano-newrelic'
   gem 'capistrano-git-submodule-strategy', '0.1.3'
+  gem 'capistrano-sidekiq' , require: false
+
 end
