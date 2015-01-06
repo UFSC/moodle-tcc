@@ -62,7 +62,7 @@ class TccPolicy < ApplicationPolicy
     end
 
     #verifica se existe o título definido
-    return false if (!record.nil? && record.title.empty?)
+    return false if (!record.nil? && (record.title.nil? || record.title.empty?))
     #verifica se existe ao menos 5 referencias criadas
     record.references.count >= 5
   end
