@@ -28,7 +28,7 @@ end
 # TCC Definition - Turma A (210000092)
 #
 definition = [
-    {title: 'Introdução', coursemodule_id: 5206, is_numbered_title: false},
+    {title: 'Introdução', coursemodule_id: 5206, is_numbered_title: true},
     {title: 'Objetivo', coursemodule_id: 5207, is_numbered_title: true},
     {title: 'Revisão da Literatura', is_numbered_title: true},
     {title: 'Metodologia', is_numbered_title: true},
@@ -44,7 +44,7 @@ create_or_update_tcc_definitions(internal_name: 'Turma A (210000092)',
 # TCC Definition - Turma B (210000092)
 #
 definition = [
-    {title: 'Introdução', coursemodule_id: 5203, is_numbered_title: false},
+    {title: 'Introdução', coursemodule_id: 5203, is_numbered_title: true},
     {title: 'Objetivo', coursemodule_id: 5204, is_numbered_title: true},
     {title: 'Revisão da Literatura', is_numbered_title: true},
     {title: 'Metodologia', is_numbered_title: true},
