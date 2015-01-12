@@ -15,10 +15,15 @@ class Test2Worker
     @bibtex = TccDocument::ReferencesProcessor.new.execute(content)
   end
 
-  def perform(tcc_id)
+  def filename(filename, extension)
+    "tmp/#{filename}.#{extension}"
+  end
+
+  def perform(moodle_id)
     begin
-      logger.info "Starting the generation of the TCC: #{tcc_id}"
-      @tcc = Tcc.find(tcc_id)
+      student = Person.find_by_moodle_id(moodle_id)
+      @tcc = Tcc.find_by_student_id (student.id)
+      logger.info "Starting the TCC print: #{@tcc.id}"
       puts("Start #{@tcc.student.name}")
 
       # create an instance of ActionView, so we can use the render method outside of a controller
@@ -44,31 +49,22 @@ class Test2Worker
 
       pdfTex = av.render pdf: "TCC ##{ @tcc.id }",
                       file: "#{ Rails.root }/app/views/tccs/generate.pdf.erb",
-                      # page_height: '3.5in',
-                      # page_width: '2in',
-                      # margin: {  top: 2,
-                      #            bottom: 2,
-                      #            left: 3,
-                      #            right: 3 },
-                      # disposition: 'attachment',
-                      # disable_javascript: true,
-                      # enable_plugins: false,
                       locals: { tcc_document: tcc_document,
                                 abstract: abstract,
                                 chapters: chapters,
                                 bibtex: bibtex
                       }
 
-      File.open('tmp/test2.tex', 'w+') do |f|
+      File.open(filename(@tcc.student.name,'tex'), 'w+') do |f|
         f.write(pdfTex)
       end
 
       @latex_config={:command => 'latex',:parse_twice => true}
       result = LatexToPdf.generate_pdf(pdfTex, @latex_config)
-      File.open("tmp/test2.pdf", "w") do |f|
+      File.open(filename(@tcc.student.name, 'pdf'), "w") do |f|
         f.write(result)
       end
-      puts("End #{@tcc.student.name}")
+      puts("Ending the TCC print: #{@tcc.student.name}")
     end
   end
 end
