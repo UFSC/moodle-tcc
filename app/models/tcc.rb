@@ -1,5 +1,5 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :grade, :moodle_user, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
+  attr_accessible :grade, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
                   :abstract_attributes, :chapters_attributes
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
 

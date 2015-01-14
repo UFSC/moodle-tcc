@@ -31,7 +31,20 @@ class ArticleRef < ActiveRecord::Base
 
   alias_attribute :title, :article_title
 
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
   private
+
+  def touch_tcc
+    # se é nil está destruindo
+    if self.tcc.nil?
+      self.reference.tcc.touch
+    else
+      tcc.touch
+      reference.touch
+    end
+  end
 
   def get_all_authors
     [first_author, second_author, third_author]

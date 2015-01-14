@@ -1,5 +1,5 @@
 class ChapterDefinition < ActiveRecord::Base
-  belongs_to :tcc_definition, :inverse_of => :chapter_definitions
+  belongs_to :tcc_definition, :inverse_of => :chapter_definitions, :touch => true
   has_many :chapters, :inverse_of => :chapter_definitions
 
   validates :position, presence: true

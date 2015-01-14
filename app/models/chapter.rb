@@ -1,7 +1,7 @@
 class Chapter < ActiveRecord::Base
   include Shared::DocumentState
 
-  belongs_to :tcc, :inverse_of => :chapters
+  belongs_to :tcc, :inverse_of => :chapters, touch: true
   belongs_to :chapter_definition, :inverse_of => :chapters
   has_one :comment, :as => :chapter_commentable, class_name: 'Comment', :dependent => :destroy
 

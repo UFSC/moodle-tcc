@@ -26,6 +26,9 @@ class BookRef < ActiveRecord::Base
 
   validates :first_author, :second_author, :third_author, complete_name: true
 
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :title, :local, :with => [:squish, :blank]
@@ -35,6 +38,16 @@ class BookRef < ActiveRecord::Base
   end
 
   private
+
+  def touch_tcc
+    # se é nil está destruindo
+    if self.tcc.nil?
+      self.reference.tcc.touch
+    else
+      tcc.touch
+      reference.touch
+    end
+  end
 
   def get_all_authors
     [first_author, second_author, third_author]

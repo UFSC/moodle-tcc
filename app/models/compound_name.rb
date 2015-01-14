@@ -4,4 +4,14 @@ class CompoundName < ActiveRecord::Base
   include Shared::Search
   default_scope -> { order(:name) }
   scoped_search :on => [:name]
+
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
+  private
+
+  def touch_tcc
+    Tcc.update_all(:updated_at => DateTime.now)
+  end
+
 end

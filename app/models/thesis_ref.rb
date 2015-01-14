@@ -36,10 +36,23 @@ class ThesisRef < ActiveRecord::Base
   normalize_attributes :first_author, :second_author, :third_author, :subtitle, :title, :local, :institution,
                        :department, :course, :with => [:squish, :blank]
 
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
   private
 
   def get_all_authors
     [first_author, second_author, third_author]
+  end
+
+  def touch_tcc
+    # se é nil está destruindo
+    if self.tcc.nil?
+      self.reference.tcc.touch
+    else
+      tcc.touch
+      reference.touch
+    end
   end
 
   def check_equality

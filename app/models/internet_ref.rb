@@ -24,12 +24,26 @@ class InternetRef < ActiveRecord::Base
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :title, :with => [:squish, :blank]
 
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
+
   def year
     !publication_date.nil? ? data = self.publication_date.year : data = self.access_date.year
     data
   end
 
   private
+
+  def touch_tcc
+    # se é nil está destruindo
+    if self.tcc.nil?
+      self.reference.tcc.touch
+    else
+      tcc.touch
+      reference.touch
+    end
+  end
 
   def check_equality
     internet_refs = InternetRef.where('(
