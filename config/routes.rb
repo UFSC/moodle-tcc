@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
 
+  get 'batch_prints' => 'batch_prints#index'
+
   # TCC routes
   scope "/(user/:moodle_user)" do
     resource :tcc, only: [:show, :update] do

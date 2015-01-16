@@ -5,6 +5,7 @@ class Tcc < ActiveRecord::Base
 
   has_many :chapters, :inverse_of => :tcc
   has_one :abstract, :inverse_of => :tcc
+  has_many :batch_prints, :inverse_of => :tcc
 
   belongs_to :tcc_definition, :inverse_of => :tccs
 

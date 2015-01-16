@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114031719) do
+ActiveRecord::Schema.define(version: 20150116174502) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 20150114031719) do
     t.integer "end_page"
     t.string  "subtype"
   end
+
+  create_table "batch_prints", force: true do |t|
+    t.integer  "moodle_id"
+    t.integer  "tcc_id"
+    t.boolean  "must_print"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "batch_prints", ["moodle_id", "tcc_id"], name: "index_batch_prints_on_moodle_id_and_tcc_id", unique: true, using: :btree
 
   create_table "book_cap_refs", force: true do |t|
     t.string   "cap_title"
