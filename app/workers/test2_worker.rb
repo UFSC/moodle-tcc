@@ -6,7 +6,7 @@ class Test2Worker
     "tmp/#{filename}.#{extension}"
   end
 
-  def perform(moodle_id)
+  def perform_old(moodle_id)
     begin
       pdf_service = PDFService.new(moodle_id)
       puts("Starting the TCC print: #{moodle_id} - #{pdf_service.tcc.student.name}")
@@ -22,5 +22,10 @@ class Test2Worker
       end
       puts("Ending the TCC print: #{moodle_id} - #{pdf_service.tcc.student.name}")
     end
+  end
+
+  def perform(moodle_ids, user_name, user_email)
+    batch = BatchTccs.new
+    batch.generate_email(moodle_ids, user_name, user_email)
   end
 end

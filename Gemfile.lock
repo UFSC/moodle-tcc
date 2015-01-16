@@ -16,6 +16,13 @@ GIT
       formtastic (>= 3.0)
 
 GIT
+  remote: git://github.com/robertosilvino/metalink-ruby.git
+  revision: a352c86c1d2ec41ab8a5de3838c6e0ad10321610
+  branch: add-binary-structure
+  specs:
+    metalink (0.0.2)
+
+GIT
   remote: git://github.com/seuros/state_machine.git
   revision: 1a373b2d23a21037d95cc369a4c5b0a9c551d326
   specs:
@@ -326,7 +333,6 @@ GEM
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
       railties (>= 3.0.0, < 5.0.0)
-    metalink (0.0.1)
     method_source (0.8.2)
     metric_fu (4.11.1)
       cane (~> 2.5, >= 2.5.2)
@@ -640,7 +646,7 @@ DEPENDENCIES
   json_spec
   kaminari
   meta_request
-  metalink
+  metalink!
   metric_fu
   mini_magick
   mysql2
