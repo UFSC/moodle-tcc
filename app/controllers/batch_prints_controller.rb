@@ -3,6 +3,7 @@ class BatchPrintsController < ApplicationController
   before_action :check_permission
 
   def index
+
     authorize(Tcc, :show_scope?)
     @current_moodle_user = current_moodle_user
     @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
@@ -11,7 +12,7 @@ class BatchPrintsController < ApplicationController
                   joins(:orientador).
                   where(tcc_definition_id: @tcc_definition.id).
                   where.not(orientador: nil).
-                  #where.not(grade: nil).
+                  where.not(grade: nil).
                   order('orientadors_tccs.name, people.name')
     tccs = policy_scope(tccList)
     @tccs = tccs
@@ -27,7 +28,7 @@ class BatchPrintsController < ApplicationController
     else
       flash[:alert] = "Deve haver ao menos um TCC slecionado para a impressão!"
     end
-    redirect_to batch_select_path
+    redirect_to instructor_admin_navbar_path
 
   end
 

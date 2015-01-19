@@ -1,6 +1,8 @@
+<%= render 'instructor_admin/navbar' %>
+
 <h3><%= t(:tcc_list) %></h3><br/>
 
-<%= render :partial => 'search_bar' %>
-<%= render :partial => 'tcc_listing' %>
+<%= render :partial => 'instructor_admin/search_bar' %>
+<%= render :partial => 'instructor_admin/tcc_listing' %>
 
 <%= paginate @tccs %>

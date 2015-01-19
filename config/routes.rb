@@ -16,6 +16,24 @@ Rails.application.routes.draw do
   get 'access_denied' => 'lti#access_denied'
 
   get 'instructor_admin' => 'instructor_admin#index'
+  get 'instructor_admin_navbar' => 'instructor_admin#navbar'
+
+  get 'compound_names' => 'compound_names#index'
+  match 'compound_names' => 'compound_names#create',via: [:post]
+  get 'new_compound_name' => 'compound_names#new',:defaults => {:format => 'js'}
+  match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name',:defaults => {:format => 'js'}
+  get '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
+  match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
+  match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
+
+  # compound_names GET            (/user/:moodle_user)/compound_names(.:format)            compound_names#index
+  # POST           (/user/:moodle_user)/compound_names(.:format)            compound_names#create
+  # new_compound_name GET            (/user/:moodle_user)/compound_names/new(.:format)        compound_names#new
+  # edit_compound_name GET            (/user/:moodle_user)/compound_names/:id/edit(.:format)   compound_names#edit
+  # compound_name GET            (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#show
+  # PATCH          (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#update
+  # PUT            (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#update
+  # DELETE         (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#destroy
 
   # Autocomplete routes
   get 'instructor_admin/autocomplete_tcc_name'
@@ -62,7 +80,7 @@ Rails.application.routes.draw do
     resources :internet_refs
     resources :legislative_refs
     resources :thesis_refs
-    resources :compound_names
+    #resources :compound_names
 
     # FIXME: generalizar controller abaixo
     resources :orientador

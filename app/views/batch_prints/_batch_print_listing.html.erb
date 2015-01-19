@@ -31,7 +31,7 @@
           <input type="checkbox" <%= tcc.grade.nil? ? '' : "class=grade" %> name="must_print" value="<%= "#{tcc.student.moodle_id}" %>">
         </td>
         <td class="name">
-          <strong><%= "#{tcc.orientador.name}" %></strong>
+          <strong><%= "#{(tcc.orientador.nil?) ? 'Indefinido' : tcc.orientador.name}" %></strong>
         </td>
         <td class="name">
           <%= bp_student_name(tcc) %>
