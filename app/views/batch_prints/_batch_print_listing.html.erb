@@ -1,41 +1,57 @@
-<table class="table table-bordered col-lg-12" id="tcc-table">
-  <thead>
-  <tr class="blue-header-table">
-    <th class="status">Imprimir</th>
-    <th class="status">Orientador</th>
-    <th class="status">Estudante</th>
-    <th class="status">Título</th>
-    <th class="status">Nota</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @batch_prints.each do |batch_print| %>
+<%= form_tag batch_print_path do %>
+  <%= hidden_field_tag :moodle_ids, "" %>
+  <div class="row">
+    <div class="col-sm-8 col-md-6 col-lg-4">
+      <%= button_tag 'Todos', :type => 'button', :id => 'bt_todos', :class => 'btn btn-default'%>
+      <%= button_tag 'Nenhum', :type => 'button', :id => 'bt_nenhum', :class => 'btn btn-default'%>
+      <%= button_tag 'Inverter', :type => 'button', :id => 'bt_inverter', :class => 'btn btn-default'%>
+      <%= button_tag 'Com nota', :type => 'button', :id => 'bt_comNota', :class => 'btn btn-default'%>
+    </div>
 
-    <tr>
-      <td class="name">
-        <input type="checkbox" name="must_print" value="<%= "#{@current_moodle_user}-#{batch_print.tcc_id}" %>">
-      </td>
-      <td class="name">
-        <strong><%= "#{batch_print.tcc.orientador.name}" %></strong>
-      </td>
-      <td class="name">
-        <%= bp_student_name(batch_print.tcc) %>
-      </td>
-      <td class="status">
-        <%= "#{batch_print.tcc.title}" %>
-      </td>
-      <% if batch_print.tcc.grade.nil? # nao tem nota      %>
-        <% if policy(batch_print.tcc).can_grade? # verifica se terminou      %>
-          <%= grade_cell(batch_print.tcc, 'for_evaluation', '') %>
-        <% else # nao tem nota e não terminou     %>
-          <%= grade_cell(batch_print.tcc, 'waiting', '') %>
-        <% end %>
-      <% else # tem nota     %>
-        <%= grade_cell(batch_print.tcc, 'readonly', '') %>
-      <% end %>
-    </tr>
-  <% end %>
-  </tbody>
-
+    <div class="col-sm-2 col-sm-offset-2 col-md-3 col-md-offset-3 col-lg-4 col-lg-offset-4">
+      <div class="pull-right">
+        <%= submit_tag 'Imprimir', :class => 'btn btn-success', :id => 'bt_imprimir'%>
+     </div>
+    </div>
   </div>
-</table>
+  <table class="table table-bordered col-lg-12" id="tcc-table">
+    <thead>
+    <tr class="blue-header-table">
+      <th class="status">Imprimir</th>
+      <th class="status">Orientador</th>
+      <th class="status">Estudante</th>
+      <th class="status">Título</th>
+      <th class="status">Nota</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @tccs.each do |tcc| %>
+      <tr>
+        <td class="name">
+          <input type="checkbox" <%= tcc.grade.nil? ? '' : "class=grade" %> name="must_print" value="<%= "#{tcc.student.moodle_id}" %>">
+        </td>
+        <td class="name">
+          <strong><%= "#{tcc.orientador.name}" %></strong>
+        </td>
+        <td class="name">
+          <%= bp_student_name(tcc) %>
+        </td>
+        <td class="status">
+          <%= "#{tcc.title}" %>
+        </td>
+        <% if tcc.grade.nil? # nao tem nota      %>
+          <% if policy(tcc).can_grade? # verifica se terminou      %>
+            <%= grade_cell(tcc, 'for_evaluation', '') %>
+          <% else # nao tem nota e não terminou     %>
+            <%= grade_cell(tcc, 'waiting', '') %>
+          <% end %>
+        <% else # tem nota     %>
+          <%= grade_cell(tcc, 'readonly', '') %>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+
+    </div>
+  </table>
+<% end %>

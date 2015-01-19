@@ -51,7 +51,7 @@ class BookCapRef < ActiveRecord::Base
   def touch_tcc
     # se é nil está destruindo
     if self.tcc.nil?
-      self.reference.tcc.touch
+      self.reference.tcc.touch unless self.reference.nil?
     else
       tcc.touch
       reference.touch
