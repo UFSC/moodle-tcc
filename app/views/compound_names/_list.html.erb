@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <% @compound_names.each_with_index do |element, index| %>
-      <% if !element.nil? && ((index < 30 && type == 'left') || (index >= 30 && type == 'right')) %>
+      <% if !element.nil? && ((index < 6 && type == 'left') || (index >= 6 && type == 'right')) %>
         <tr>
           <td><%= element.name %></td>
           <td>

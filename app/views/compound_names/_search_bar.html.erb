@@ -1,4 +1,4 @@
-<%= form_tag bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names'), method: 'get', html: {class: ''} do %>
+<%= form_tag compound_names_path(moodle_user: params[:moodle_user], anchor: 'compound_names'), method: 'get', html: {class: ''} do %>
   <!-- para garantir a autenticacão -->
   <%= hidden_field_tag 'moodle_user', params[:moodle_user] %>
 
@@ -8,7 +8,7 @@
                                {placeholder: 'Busca', class: 'form-control', autofocus: 'autofocus'} %>
 
     <div class="input-group-btn">
-      <%= link_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names'), class: 'btn btn-default', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
+      <%= link_to compound_names_path(moodle_user: params[:moodle_user], anchor: 'compound_names'), class: 'btn btn-default', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
         <%= display_icon('remove') %>
       <% end %>
 

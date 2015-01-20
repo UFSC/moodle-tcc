@@ -18,35 +18,35 @@
     <thead>
     <tr class="blue-header-table">
       <th class="status">Imprimir</th>
-      <th class="status">Orientador</th>
-      <th class="status">Estudante</th>
-      <th class="status">Título</th>
+      <th class="leadername">Orientador</th>
+      <th class="studentname">Estudante</th>
+      <th class="title">Título</th>
       <th class="status">Nota</th>
     </tr>
     </thead>
     <tbody>
     <% @tccs.each do |tcc| %>
       <tr>
-        <td class="name">
+        <td class="status">
           <input type="checkbox" <%= tcc.grade.nil? ? '' : "class=grade" %> name="must_print" value="<%= "#{tcc.student.moodle_id}" %>">
         </td>
-        <td class="name">
+        <td class="leadername">
           <strong><%= "#{(tcc.orientador.nil?) ? 'Indefinido' : tcc.orientador.name}" %></strong>
         </td>
-        <td class="name">
+        <td class="studentname">
           <%= bp_student_name(tcc) %>
         </td>
-        <td class="status">
+        <td class="title">
           <%= "#{tcc.title}" %>
         </td>
         <% if tcc.grade.nil? # nao tem nota      %>
           <% if policy(tcc).can_grade? # verifica se terminou      %>
-            <%= grade_cell(tcc, 'for_evaluation', '') %>
+            <%= bp_grade_cell(tcc, 'for_evaluation', '') %>
           <% else # nao tem nota e não terminou     %>
-            <%= grade_cell(tcc, 'waiting', '') %>
+            <%= bp_grade_cell(tcc, 'waiting', '') %>
           <% end %>
         <% else # tem nota     %>
-          <%= grade_cell(tcc, 'readonly', '') %>
+          <%= bp_grade_cell(tcc, 'readonly', '') %>
         <% end %>
       </tr>
     <% end %>

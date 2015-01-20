@@ -3,19 +3,18 @@ class CompoundNamesController < ApplicationController
 
   autocomplete :compound_name, :name
 
-  before_filter :set_current_tab
   skip_before_action :get_tcc
-  #before_action :check_permission
+  before_action :check_permission
 
   def index
-    @compound_names = CompoundName.search(params[:search], params[:page], { per: 60 })
+    @compound_names = CompoundName.search(params[:search], params[:page], { per: 12 })
   end
 
   def new
     authorize(Tcc, :show_compound_names?)
 
     @modal_title = t(:add_compound_name)
-    @compound_name = CompoundName.new(type_name: 'simple')
+    @compound_name = CompoundName.new(type_name: 'suffix')
 
     respond_to do |format|
       format.js
@@ -39,7 +38,7 @@ class CompoundNamesController < ApplicationController
       flash[:success] = t(:successfully_saved)
     end
 
-    redirect_to bibliographies_path(moodle_user: params[:moodle_user], anchor: 'compound_names')
+    redirect_to compound_names_path(moodle_user: params[:moodle_user], anchor: 'compound_names')
   end
 
   def update
@@ -50,7 +49,7 @@ class CompoundNamesController < ApplicationController
       flash[:success] = t(:successfully_saved)
     end
 
-    redirect_to compound_names_path(moodle_user: params[:moodle_user], anchor: 'compound_names')
+    redirect_to compound_names_path(moodle_user: params[:moodle_user])
   end
 
   def destroy
@@ -61,9 +60,13 @@ class CompoundNamesController < ApplicationController
                 success: "Nome composto \"#{@compound_name.name}\" removido."
   end
 
-  private
+  protected
 
-  def set_current_tab
-    #set_tab :compound_names
+  def check_permission
+    unless current_user.view_all? || current_user.instructor?
+      raise Authentication::UnauthorizedError, t('cannot_access_page_without_enough_permission')
+      redirect_user_to_start_page
+    end
   end
+
 end

@@ -9,10 +9,18 @@ module BatchPrintsHelper
 
     action = 'grade_label'
 
-    content = (!tcc.nil? && !tcc.grade.nil?) ? tcc.grade.to_i : label_text(action, state)
-    content_tag 'td', class: status_label_class(state) do
+    content = (!tcc.nil? && !tcc.grade.nil?) ? tcc.grade.to_i : bp_label_text(action, state)
+    content_tag 'td', class: bp_status_label_class(state) do
       "#{content}"
     end
+  end
+
+  def bp_status_label_class(state)
+    "status #{state}"
+  end
+
+  def bp_label_text(type, state)
+    t(type+'.'+state.to_s)
   end
 
   def bp_student_name(tcc)
@@ -21,6 +29,6 @@ module BatchPrintsHelper
     end
     student = tcc.student.decorate
 
-    "<strong>#{student.name}</strong> <i>#{student.matricula}</i>".html_safe
+    "<strong>#{student.name}</strong><br/> <i>#{student.matricula}</i>".html_safe
   end
 end

@@ -1,11 +1,39 @@
 require 'sidekiq/web'
 
 class AuthConstraint
-  def self.admin?(request)
-    return true
-  end
-end
 
+  def self.admin?(request)
+    message = CGI.unescape(request.cookies['_sistema-tcc_session'])
+
+    config = Rails.application.config
+
+    secret_key_base = SECRET_FILE['secret_key_base']
+
+    key_generator = ActiveSupport::KeyGenerator.new(
+        secret_key_base, iterations: 1000
+    )
+
+    secret = key_generator.generate_key(
+        config.action_dispatch.encrypted_cookie_salt
+    )
+
+    sign_secret = key_generator.generate_key(
+        config.action_dispatch.encrypted_signed_cookie_salt
+    )
+
+    encryptor = ActiveSupport::MessageEncryptor.new(
+        secret, sign_secret
+    )
+
+    obj = encryptor.decrypt_and_verify(message)
+
+    ( obj['lti_launch_params']['roles'].include?(Authentication::Roles.administrator) ||
+      obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_avea)
+    )
+
+  end
+
+end
 
 Rails.application.routes.draw do
 
@@ -20,8 +48,8 @@ Rails.application.routes.draw do
 
   get 'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
-  get 'new_compound_name' => 'compound_names#new',:defaults => {:format => 'js'}
-  match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name',:defaults => {:format => 'js'}
+  get 'new_compound_name' => 'compound_names#new'
+  match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name'
   get '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
   match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
   match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
@@ -51,6 +79,20 @@ Rails.application.routes.draw do
 
   get 'batch_select' => 'batch_prints#index'
   match 'batch_print' => 'batch_prints#print', via: [:post]
+
+  # sidekiq monitor
+  #mount Sidekiq::Monitor::Engine => '/sidekiq'
+  # constraints lambda {|request| AuthConstraint.admin?(request) } do
+  #   mount Sidekiq::Monitor::Engine => '/sidekiq'
+  # end
+
+  # sidekiq monitor sinatra
+  #mount Sidekiq::Web, at: '/sidekiq'
+
+  constraints lambda {|request| AuthConstraint.admin?(request) } do
+    #mount Sidekiq::Web, at: '/sidekiq'
+    mount Sidekiq::Web => '/admin/sidekiq'
+  end
 
   # TCC routes
   scope "/(user/:moodle_user)" do
@@ -85,14 +127,6 @@ Rails.application.routes.draw do
     # FIXME: generalizar controller abaixo
     resources :orientador
 
-    # sidekiq monitor
-    #mount Sidekiq::Monitor::Engine => '/sidekiq'
-    # constraints lambda {|request| AuthConstraint.admin?(request) } do
-    #   mount Sidekiq::Monitor::Engine => '/sidekiq'
-    # end
-
-    # sidekiq monitor sinatra
-    mount Sidekiq::Web, at: "/sidekiq"
   end
 
 end

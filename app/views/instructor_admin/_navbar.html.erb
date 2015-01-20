@@ -1,28 +1,29 @@
-<div class="col-md-12">
+<table class="table table-bordered col-lg-12" id="nav-table">
     <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
+      <!--navbar-fixed-top-->
+      <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
+            <!--<div class="navbar-header">-->
+                <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
+                    <!--<span class="sr-only">Toggle navigation</span>-->
+                    <!--<span class="icon-bar"></span>-->
+                    <!--<span class="icon-bar"></span>-->
+                    <!--<span class="icon-bar"></span>-->
+                <!--</button>-->
+            <!--</div>-->
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li class="<%= 'active' if current_page?(instructor_admin_path) %>"><%= link_to "Lista de TCCs", instructor_admin_path %></li>
                   <li class="<%= 'active' if current_page?(batch_select_path) %>"><%= link_to "Impressão", batch_select_path %></li>
-                  <li class="<%= 'active' if current_page?(sidekiq_web_path) %>"><%= link_to "Sidekiq", sidekiq_web_path, target: "_blank" %></li>
                   <% if policy(Tcc).show_compound_names? %>
                     <li class="<%= 'active' if current_page?(compound_names_path) %>"><%= link_to "Nomes Compostos", compound_names_path %></li>
                   <% end %>
+                  <!--<li class="%= 'active' if current_page?(sidekiq_monitor_path) %>">%= link_to "Sidekiq", sidekiq_monitor_path, target: "_blank" %></li>-->
+                  <li class="<%= 'active' if current_page?(sidekiq_web_path ) %>"><%= link_to "Sidekiq", sidekiq_web_path, target: "_blank" %></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <!--<div id="content-instructor_admin" class="tab-content">%= render :template => 'instructor_admin/index' %></div>&ndash;&gt;-->
-    <!--<div id="content-batch_prints" class="tab-content">%= render :template => 'batch_prints/index' %></div>-->
 </div>
+</table>

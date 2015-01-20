@@ -1,13 +1,18 @@
-<%= render 'instructor_admin/navbar' %>
+<% if policy(Tcc).show_compound_names? %>
+  <%= render 'instructor_admin/navbar' %>
+  <!--<p><br/></p>-->
+<% else %>
+  <h3><%= t(:compound_name) %></h3><br/>
+  <!--%= reference_page_title t(:compound_name) %>-->
+<% end %>
 
-<%= reference_page_title t(:compound_name) %>
 
 <div class="row">
-  <div class="col-lg-6" style="margin-left: 0">
+  <div class="col-xs-5 col-md-6 col-lg-6" style="margin-left: 0">
     <%= render partial: 'compound_names/search_bar' %>
   </div>
 
-  <div class="col-lg-6">
+  <div class="col-xs-5 col-md-6 col-lg-6">
     <div class="pull-right">
       <%= link_to new_compound_name_path(moodle_user: params[:moodle_user]), remote: true, class: 'btn btn-default' do %>
         <%= display_icon 'plus' %> <%= t(:add_compound_name_or_suffix) %>
@@ -17,7 +22,7 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-xs-10 col-md-12 col-lg-12">
     <% if params[:search] %>
       <h4><%= t(:compound_name_search_result, search: params[:search]) %></h4>
     <% else %>
@@ -27,17 +32,17 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-xs-5 col-md-6 col-lg-6">
     <%= render partial: 'compound_names/list', locals: {type: 'left'} %>
   </div>
 
-  <div class="col-lg-6">
+  <div class="col-xs-5 col-md-6 col-lg-6">
     <%= render partial: 'compound_names/list', locals: {type: 'right'} %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-xs-10 col-md-12 col-lg-12">
     <%= paginate @compound_names, :params => {anchor: 'compound_names'} %>
   </div>
 </div>

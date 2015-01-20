@@ -33,7 +33,6 @@ gem 'unicode_utils'
 
 # geração do tcc em bloco
 gem 'redis', '3.1.0'
-#gem 'metalink'
 gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
 
 # sidekiq - processamento paralelo

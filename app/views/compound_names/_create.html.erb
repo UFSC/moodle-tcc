@@ -1,4 +1,4 @@
-<%= semantic_form_for @compound_name, url: update_compound_name_path(@compound_name, moodle_user: params[:moodle_user]) do |f| %>
+<%= semantic_form_for @compound_name, url: compound_names_path(@compound_name, moodle_user: params[:moodle_user]) do |f| %>
 
   <div class="modal-body">
     <p><%= f.input :name, label: 'Nome composto:' %></p>
