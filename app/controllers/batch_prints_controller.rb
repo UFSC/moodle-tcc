@@ -12,7 +12,7 @@ class BatchPrintsController < ApplicationController
                   joins(:orientador).
                   where(tcc_definition_id: @tcc_definition.id).
                   where.not(orientador: nil).
-                  where.not(grade: nil).
+                  #where.not(grade: nil).
                   order('orientadors_tccs.name, people.name')
     tccs = policy_scope(tccList)
     @tccs = tccs

@@ -28,7 +28,8 @@ class AuthConstraint
     obj = encryptor.decrypt_and_verify(message)
 
     ( obj['lti_launch_params']['roles'].include?(Authentication::Roles.administrator) ||
-      obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_avea)
+      obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_avea) ||
+        obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_curso)
     )
 
   end

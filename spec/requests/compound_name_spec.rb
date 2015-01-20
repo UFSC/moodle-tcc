@@ -6,7 +6,7 @@ describe 'CompoundName' do
   context 'GET /compound_names' do
     it 'should render page with coordavea' do
       page.set_rack_session(fake_lti_session(Authentication::Roles.coordenador_avea))
-      visit bibliographies_path(anchor: 'compound_names')
+      visit compound_names_path(anchor: 'compound_names')
 
       expect(page.current_path).not_to eq(access_denied_path)
       expect(page).to have_content(I18n.t('activerecord.attributes.compound_name.name'))
@@ -19,7 +19,7 @@ describe 'CompoundName' do
 
     it 'should work with search term' do
       page.set_rack_session(fake_lti_session(Authentication::Roles.coordenador_avea))
-      visit bibliographies_path(anchor: 'compound_names', search: 'São Paulo')
+      visit compound_names_path(anchor: 'compound_names', search: 'São Paulo')
 
       expect(page).to have_content(I18n.t(:compound_name_search_result, search: 'São Paulo'))
     end
@@ -28,10 +28,6 @@ describe 'CompoundName' do
   context 'logged as unauthorized user' do
     context 'as a student' do
       it_behaves_like 'an unauthorized user who cannot edit compound names', Authentication::Roles.student
-    end
-
-    context 'as a coordenador de curso' do
-      it_behaves_like 'an unauthorized user who cannot edit compound names', Authentication::Roles.coordenador_curso
     end
 
     context 'as a coordenador de tutoria' do
@@ -45,7 +41,11 @@ describe 'CompoundName' do
     end
 
     context 'as a coordenador avea' do
-      it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_avea
+    it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_avea
     end
+
+    # context 'as a coordenador de curso' do
+    #   it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_curso
+    # end
   end
 end

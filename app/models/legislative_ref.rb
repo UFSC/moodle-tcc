@@ -32,14 +32,7 @@ class LegislativeRef < ActiveRecord::Base
   private
 
   def touch_tcc
-    # se é nil está destruindo
-
-    if self.tcc.nil?
-      self.reference.tcc.touch unless self.reference.nil?
-    else
-      tcc.touch
-      reference.touch
-    end
+    reference.tcc.touch unless (reference.nil? || reference.tcc.nil? || reference.tcc.new_record?)
   end
 
   def check_equality

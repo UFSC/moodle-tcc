@@ -11,12 +11,12 @@ class Tcc < ActiveRecord::Base
 
   # Referencias
   has_many :references, :dependent => :destroy
-  has_many :book_refs, :through => :references, :source => :element, :source_type => 'BookRef'
-  has_many :book_cap_refs, :through => :references, :source => :element, :source_type => 'BookCapRef'
-  has_many :article_refs, :through => :references, :source => :element, :source_type => 'ArticleRef'
-  has_many :internet_refs, :through => :references, :source => :element, :source_type => 'InternetRef'
+  has_many :book_refs,        :through => :references, :source => :element, :source_type => 'BookRef'
+  has_many :book_cap_refs,    :through => :references, :source => :element, :source_type => 'BookCapRef'
+  has_many :article_refs,     :through => :references, :source => :element, :source_type => 'ArticleRef'
+  has_many :internet_refs,    :through => :references, :source => :element, :source_type => 'InternetRef'
   has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
-  has_many :thesis_refs, :through => :references, :source => :element, :source_type => 'ThesisRef'
+  has_many :thesis_refs,      :through => :references, :source => :element, :source_type => 'ThesisRef'
 
   # Pessoas / papeis envolvidos:
   belongs_to :student, class_name: 'Person'

@@ -15,7 +15,7 @@ class TccDefinition < ActiveRecord::Base
 
   def touch_tcc
     tccs.each  { |tcc |
-      tcc.touch
+      tcc.touch unless tcc.nil?
     }
   end
 end

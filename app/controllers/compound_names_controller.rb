@@ -56,8 +56,8 @@ class CompoundNamesController < ApplicationController
     authorize(Tcc, :show_compound_names?)
     @compound_name = CompoundName.find(params[:id])
     @compound_name.destroy
-    redirect_to compound_names_path(moodle_user: params[:moodle_user], anchor: 'compound_names'),
-                success: "Nome composto \"#{@compound_name.name}\" removido."
+    flash[:success] = "Nome composto \"#{@compound_name.name}\" removido."
+    redirect_to compound_names_path(moodle_user: params[:moodle_user], anchor: 'compound_names')
   end
 
   protected

@@ -38,9 +38,6 @@ describe 'Bibliographies' do
       expect(page).to have_content('Teses e Monografias')
     end
 
-    it 'Nomes Compostos' do
-      expect(page).to_not have_content('Nomes compostos')
-    end
   end
 
   context 'Logado como coordenador' do
@@ -79,9 +76,5 @@ describe 'Bibliographies' do
       expect(page).to have_content('Teses e Monografias')
     end
 
-    it 'Nomes Compostos' do
-      click_link I18n.t(:compound_name)
-      expect(page).to have_content(I18n.t(:compound_name))
-    end
   end
 end
