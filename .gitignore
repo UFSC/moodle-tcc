@@ -40,3 +40,4 @@ config/database.yml
 config/moodle.yml
 config/errbit.yml
 config/email.yml
+config/sidekiq.yml

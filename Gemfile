@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1'
+gem 'rails', '~> 4.1.9'
 gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
 
@@ -108,6 +108,7 @@ end
 group :development do
   gem 'thin'
   gem 'ruby-graphviz', :require => 'graphviz' # usado pela state_machine
+  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 
   # Auxilia depuração da aplicação: http://railscasts.com/episodes/402-better-errors-railspanel
   gem 'better_errors'
@@ -154,12 +155,10 @@ end
 
 # Deploy with Capistrano
 group :deploy do
-  gem 'capistrano', '~> 3.2'
+  gem 'capistrano', '~> 3.3'
   gem 'capistrano-rails'
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
   gem 'capistrano-newrelic'
   gem 'capistrano-git-submodule-strategy', '0.1.3'
-  gem 'capistrano-sidekiq' , require: false
-
 end

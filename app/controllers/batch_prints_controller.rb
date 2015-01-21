@@ -22,7 +22,7 @@ class BatchPrintsController < ApplicationController
     authorize(Tcc, :show_scope?)
     arr_moodle_ids = params[:moodle_ids].split(';')
     if arr_moodle_ids.size > 0
-      Test2Worker.perform_async(arr_moodle_ids, @tp.lis_person_name_full, @tp.lis_person_contact_email_primary)
+      BatchTccsWorker.perform_async(arr_moodle_ids, @tp.lis_person_name_full, @tp.lis_person_contact_email_primary)
       flash[:success] = "A impressão será enviada por e-mail para: #{@tp.lis_person_name_full} - #{@tp.lis_person_contact_email_primary}"
     else
       flash[:alert] = "Deve haver ao menos um TCC slecionado para a impressão!"

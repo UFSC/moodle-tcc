@@ -20,3 +20,7 @@ set :rails_env, 'production'
 server 'tcc.teste-moodle.ufsc.br', user: 'deploy', roles: %w{web app db}
 
 # fetch(:default_env).merge!(rails_env: :staging)
+
+# Sidekiq
+# =======
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }

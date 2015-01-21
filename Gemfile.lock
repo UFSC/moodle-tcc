@@ -23,6 +23,14 @@ GIT
     metalink (0.0.2)
 
 GIT
+  remote: git://github.com/seuros/capistrano-sidekiq.git
+  revision: 77573c4ba99272226bff35a15d1126321106396f
+  specs:
+    capistrano-sidekiq (0.4.1)
+      capistrano
+      sidekiq
+
+GIT
   remote: git://github.com/seuros/state_machine.git
   revision: 1a373b2d23a21037d95cc369a4c5b0a9c551d326
   specs:
@@ -50,27 +58,27 @@ GEM
     Ascii85 (1.0.2)
     CFPropertyList (2.2.8)
     abstract_type (0.0.7)
-    actionmailer (4.1.8)
-      actionpack (= 4.1.8)
-      actionview (= 4.1.8)
+    actionmailer (4.1.9)
+      actionpack (= 4.1.9)
+      actionview (= 4.1.9)
       mail (~> 2.5, >= 2.5.4)
-    actionpack (4.1.8)
-      actionview (= 4.1.8)
-      activesupport (= 4.1.8)
+    actionpack (4.1.9)
+      actionview (= 4.1.9)
+      activesupport (= 4.1.9)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionview (4.1.8)
-      activesupport (= 4.1.8)
+    actionview (4.1.9)
+      activesupport (= 4.1.9)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    activemodel (4.1.8)
-      activesupport (= 4.1.8)
+    activemodel (4.1.9)
+      activesupport (= 4.1.9)
       builder (~> 3.1)
-    activerecord (4.1.8)
-      activemodel (= 4.1.8)
-      activesupport (= 4.1.8)
+    activerecord (4.1.9)
+      activemodel (= 4.1.9)
+      activesupport (= 4.1.9)
       arel (~> 5.0.0)
-    activesupport (4.1.8)
+    activesupport (4.1.9)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -126,9 +134,6 @@ GEM
     capistrano-rails (1.1.2)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
-    capistrano-sidekiq (0.4.0)
-      capistrano
-      sidekiq
     capistrano-stats (1.0.3)
     capistrano-upload-config (0.5.0)
       capistrano (>= 3.0)
@@ -289,7 +294,7 @@ GEM
     hirb (0.7.2)
     hitimes (1.2.2)
     htmlentities (4.3.2)
-    i18n (0.6.11)
+    i18n (0.7.0)
     ice_nine (0.11.1)
     inflecto (0.0.2)
     inherited_resources (1.5.1)
@@ -303,7 +308,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.1.2)
       railties (>= 3.1.0)
-    json (1.8.1)
+    json (1.8.2)
     json_pure (1.8.1)
     json_spec (1.1.4)
       multi_json (~> 1.0)
@@ -352,7 +357,7 @@ GEM
     mime-types (2.4.3)
     mini_magick (4.0.1)
     mini_portile (0.6.1)
-    minitest (5.4.3)
+    minitest (5.5.1)
     multi_json (1.10.1)
     multipart-post (1.2.0)
     mysql2 (0.3.17)
@@ -406,20 +411,20 @@ GEM
       rack (>= 0.9.1)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
     rack_session_access (0.1.1)
       builder (>= 2.0.0)
       rack (>= 1.0.0)
-    rails (4.1.8)
-      actionmailer (= 4.1.8)
-      actionpack (= 4.1.8)
-      actionview (= 4.1.8)
-      activemodel (= 4.1.8)
-      activerecord (= 4.1.8)
-      activesupport (= 4.1.8)
+    rails (4.1.9)
+      actionmailer (= 4.1.9)
+      actionpack (= 4.1.9)
+      actionview (= 4.1.9)
+      activemodel (= 4.1.9)
+      activerecord (= 4.1.9)
+      activesupport (= 4.1.9)
       bundler (>= 1.3.0, < 2.0)
-      railties (= 4.1.8)
+      railties (= 4.1.9)
       sprockets-rails (~> 2.0)
     rails3-jquery-autocomplete (1.0.14)
       rails (>= 3.0)
@@ -433,9 +438,9 @@ GEM
       json
       require_all
       ruby-progressbar
-    railties (4.1.8)
-      actionpack (= 4.1.8)
-      activesupport (= 4.1.8)
+    railties (4.1.9)
+      actionpack (= 4.1.9)
+      activesupport (= 4.1.9)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
@@ -617,12 +622,12 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass (~> 3.3.1)
   bullet
-  capistrano (~> 3.2)
+  capistrano (~> 3.3)
   capistrano-db-tasks
   capistrano-git-submodule-strategy (= 0.1.3)
   capistrano-newrelic
   capistrano-rails
-  capistrano-sidekiq
+  capistrano-sidekiq!
   capistrano-upload-config
   capybara
   capybara-puma
@@ -662,7 +667,7 @@ DEPENDENCIES
   quiet_assets
   rabl
   rack_session_access
-  rails (~> 4.1)
+  rails (~> 4.1.9)
   rails-latex!
   rails3-jquery-autocomplete
   redis (= 3.1.0)

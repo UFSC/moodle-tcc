@@ -28,5 +28,8 @@ require 'capistrano-db-tasks'
 require 'whenever/capistrano'
 require 'airbrake/capistrano3'
 
+require 'capistrano/sidekiq'
+#require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
+
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }

@@ -6,6 +6,7 @@ require 'redis-namespace'
 class BatchTccs
 
   def initialize
+    puts('>>> inicializando Worker')
     @auth_url     = 'https://swift.setic.ufsc.br:8080/auth/v1.0/'
     @user         = 'unasus:readwrite'
     @password     = 'TccUnasus_2'
@@ -16,17 +17,22 @@ class BatchTccs
 
     # 24 horas = 86400
     # 1 hora = 3600
-    @seconds_URL_lives = 86400
+    @seconds_URL_lives = 3600
 
     Excon.defaults[:ssl_verify_peer] = false
 
+    print('>>> Conectnado ao Redis: ')
     @redis_connection = Redis.new
+    puts('OK <<<')
 
+    puts('>>> Inicializando Worker: ')
     @service = Fog::Storage.new(:provider => 'OpenStack',
                                 :openstack_auth_url => @auth_url,
                                 :openstack_username => @user,
                                 :openstack_api_key  => @password)
+    puts('OK <<<')
 
+    puts('Inicialização do worker finalizada <<<')
   end
 
   def temp_url_key
@@ -39,40 +45,44 @@ class BatchTccs
   # bt.generate_email([12140, 12141, 12142], 'Alexandra Crispim', 'acboing@gmail.com')
   # bt.generate_email([12140, 12141, 12142], 'Luiz Henrique Salazar', 'luizhsalazar@gmail.com')
   def generate_email(moodle_ids, name, mail_to)
+    puts('>>> inicializando Gerador de email')
+
     moodle_id = moodle_ids[0].to_s
     # pega o estudante para poder procurar o tcc
+    print('>>> Procurando url da atividade para colocar no e-mail: ')
     student = Person.find_by_moodle_id(moodle_id)
     tcc = Tcc.find_by_student_id (student.id)
 
     # informa o link para a atividade do TCC no moodle
     activity_url = tcc.tcc_definition.activity_url
+    puts('OK <<<')
 
     # gera o arquivo metalink para ser anexado ao e-mail
     metalink_file = generate_metalink(moodle_ids)
 
     Mailer.tccs_batch_print(name, mail_to, metalink_file, activity_url).deliver unless mail_to.blank? || mail_to.nil?
 
+    puts('Geração de email encerrada <<<')
   end
 
   #@param moodle_ids lista com os tccs (moodle_id) que deverão ser baixados
   #@return
   def generate_metalink(moodle_ids)
+    puts(">>> inicializando gerador de metalink para: #{moodle_ids}")
 
+    print('>>> Criando objeto de metalink: ')
     metalilnk = Metalink::Metalink.new
+    puts('OK <<<')
 
     moodle_ids.each { | moodle_id_each |
+      puts(">>> Procurando dados de moodle_id=#{moodle_id} / #{student.name}: ")
       moodle_id = moodle_id_each.to_s
       # pega o estudante para poder procurar o tcc
       student = Person.find_by_moodle_id(moodle_id)
       tcc = Tcc.find_by_student_id(student.id)
-      puts(">>> Gerando metalink de moodle_id=#{moodle_id} / #{student.name}")
+      puts('>>> Tcc encontrado')
 
-      puts(">>> Abrindo tcc de moodle_id=#{moodle_id} / #{student.name}")
       remote_file = open_last_pdf_tcc(tcc)
-
-      # grava o arquivo remoto localmente para poder pegar os hashes
-      #input = File.join(temp_dir, "#{tcc.student.name}.pdf")
-      #File.open(input, 'wb') { |io| io.write(remote_file.body) }
 
       filename = "#{tcc.student.name}.pdf"
       url_remote_file = CGI.escapeHTML(generate_url(remote_file)+'&filename='+filename)
@@ -104,7 +114,7 @@ class BatchTccs
   #
   #
   def open_last_pdf_tcc(tcc)
-    #verifica os objetos de trabalho
+    #puts('>>> Verifica objetos para geração do pdf')
     if tcc.nil?
       puts('>>> Tcc solicitado do usuário não disponível')
       return false
@@ -114,45 +124,48 @@ class BatchTccs
     end
     moodle_id = tcc.student.moodle_id.to_s
 
-    # inicializa o namespace do redis
+    puts('>>> Inicializa o namespace do redis')
     @namespaced_redis = Redis::Namespace.new(name_space(tcc), :redis => @redis_connection)
 
-    #verifica os objetos de trabalho
+    #puts('>>> Verifica o Serviço de cache Redis')
     if @namespaced_redis.nil?
       puts('>>> Serviço de cache local não disponível')
       return false
     end
 
-    # verifica o cache do pdf
+    puts('>>> Vverifica o cache do pdf')
     tcc_updated_at = tcc.updated_at.to_s
 
-    puts('>>> 1 - ')
-    # se existir
     if @namespaced_redis.exists(moodle_id)
+      puts('>>> Encontrados dados no cache de data')
       cache_updated_at = @namespaced_redis.get(moodle_id)
-      puts('>>> 2 - ')
 
-      # entao deve verificar se a data da impressão é igual a data de update do TCC
       if cache_updated_at.eql?(tcc_updated_at)
-        # então deve retornar o objeto salvo em cache
-        puts('>>> 3 - ')
+        puts('>>> data da impressão é igual a data de update do TCC')
+
         remote_file = open_remote_file(moodle_id, name_space(tcc))
+        puts('>>> retornado o objeto salvo em cache')
 
         # se o remote_file for nil (não encontrou objeto remoto) então gera novo PDF,
         # atualizando a data de update com a do Tcc
-        puts('>>> 4 - ')
-        remote_file = save_pdf_tcc(tcc) if remote_file.nil?
+        if remote_file.nil?
+          print('>>> Se o remote_file for nil (não encontrou objeto remoto) então gera novo PDF, ')
+          puts('atualizando a data de update com a do Tcc')
+          remote_file = save_pdf_tcc(tcc)
+        end
       else
+        puts('>>> data da impressão é diferente da data de update do TCC')
         # senão deve salvar o objeto, atualizando a data de update com a do Tcc
-        puts('>>> 5 - ')
+        puts('>>> gera pdf')
         remote_file = save_pdf_tcc(tcc)
       end
     else
+      puts('>>> Não encontrados dados no cache de data')
       # senão deve salvar o objeto, atualizando a data de update com a do Tcc
-      puts('>>> 6 - ')
+      puts('>>> gera pdf')
       remote_file = save_pdf_tcc(tcc)
     end
-    puts(">>> 999 - #{remote_file}")
+    puts(">>> pdf gerado/recuperado - #{remote_file}")
     remote_file
   end
 
@@ -187,28 +200,36 @@ class BatchTccs
     end
 
     # gera o pdf
+    print('>>> gera o pdf: ')
     pdf_service = PDFService.new(moodle_id)
     pdf_stream = pdf_service.generate_pdf
+    puts('OK <<<')
 
     # salva arquivo remoto
     remote_file = save_remote_file(moodle_id, name_space(tcc), pdf_stream)
 
     # salva o objeto atualizando a data de update com a do Tcc
+    print('>>> salva o cahce da data de update com a do Tcc: ')
     @namespaced_redis.set(moodle_id, "#{tcc.updated_at}")
+    puts('OK <<<')
 
     remote_file
   end
 
   def open_remote_file(moodle_id, name_space)
+    print('>>> Retorna arquivo remoto: ')
     directory = open_directory(name_space)
     remote_file = directory.files.get(moodle_id.to_s)
+    puts('OK <<<')
     remote_file
   end
 
   def save_remote_file(moodle_id, name_space, pdf_stream)
+    print('>>> Salva arquivo remoto: ')
     # grava pdf remotamente
     directory = open_directory(name_space)
     remote_file = directory.files.create( :key  => moodle_id.to_s, :body => pdf_stream)
+    puts('OK <<<')
     remote_file
   end
 

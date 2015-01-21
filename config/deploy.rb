@@ -14,6 +14,7 @@ set :bundle_binstubs, nil # não gerar binstubs via bundler, por causa do Rails 
 
 # set :format, :pretty
 set :log_level, :info
+#set :log_level, :debug
 # set :pty, true
 
 # Capistrano Db Tasks:
@@ -22,7 +23,7 @@ set :db_local_clean, true
 
 # Capistrano Upload Config:
 set :config_files, %w{config/database.yml config/email.yml config/errbit.yml config/moodle.yml config/newrelic.yml
-                      config/tcc_config.yml}
+                      config/tcc_config.yml config/sidekiq.yml}
 set :config_example_prefix, '.example'
 
 set :linked_files, fetch(:config_files)
@@ -33,8 +34,10 @@ set :keep_releases, 10
 
 set :ssh_options, {
     forward_agent: true,
-    port: 2200
+    port: 2200,
+#    verbose: :debug
 }
+set :pty, true
 
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
@@ -49,7 +52,8 @@ namespace :deploy do
       strategy.deploy!
       linka_dependencias
       bundle.install
-      run "cd #{release_path} && #{rake} db:create RAILS_ENV=#{rails_env}"
+      #run "cd #{release_path} && #{rake} db:create RAILS_ENV=#{rails_env}"
+      execute :cd, "#{release_path} && #{rake} db:create RAILS_ENV=#{rails_env}"
     end
   end
 
@@ -62,3 +66,18 @@ namespace :deploy do
   after :publishing, 'deploy:restart'
   after :published, 'airbrake:deploy'
 end
+
+# namespace :sidekiq do
+#   task :quiet do
+#     # Horrible hack to get PID without having to use terrible PID files
+#     puts capture("kill -USR1 $(sudo initctl status workers | grep /running | awk '{print $NF}') || :")
+#   end
+#   task :restart do
+#     execute :sudo, :initctl, :restart, :workers
+#   end
+# end
+
+# after 'deploy:starting', 'sidekiq:quiet'
+# after 'deploy:reverted', 'sidekiq:restart'
+# after 'deploy:published', 'sidekiq:restart'
+
