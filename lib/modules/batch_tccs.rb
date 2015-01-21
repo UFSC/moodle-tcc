@@ -1,35 +1,49 @@
 require 'fog'
-require 'openssl'
+#require 'openssl' #adicionar essa linha para usar o https
 require 'redis'
 require 'redis-namespace'
 
 class BatchTccs
 
   def initialize
+    #Rails.logger = Logger.new(STDOUT)
+    #Rails.logger.debug "Person attributes hash: #{@person.attributes.inspect}"
+    #Rails.logger.info "Processing the request..."
+    #Rails.logger.fatal "Terminating application, raised unrecoverable error!!!"
+
     puts('>>> inicializando Worker')
-    @auth_url     = 'https://swift.setic.ufsc.br:8080/auth/v1.0/'
+    @auth_url     = 'http://swift.setic.ufsc.br:80/auth/v1.0/'
+    @auth_manager = 'http://swift.setic.ufsc.br:80/v1.0/AUTH_unasus'
+    @store_url    = 'http://swift.setic.ufsc.br:80'
+
     @user         = 'unasus:readwrite'
     @password     = 'TccUnasus_2'
 
-    # @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
+# NÃO APAGAR LINHA ABAIXO. ela server para setar no servidor a chave de assinatura para URLs temporárias
+# Se necessário apemnas renovar a chave
+# @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
     @temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
-    @auth_token   = 'AUTH_tkd2fb252ad93940b981b62865f4f8f8b8'
+    @auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
 
     # 24 horas = 86400
     # 1 hora = 3600
     @seconds_URL_lives = 3600
 
     Excon.defaults[:ssl_verify_peer] = false
+#    Excon.defaults[:port] = 80
+#    Excon.defaults[:scheme] = 'http'
 
-    print('>>> Conectnado ao Redis: ')
+    print('>>> Conectandoao Redis: ')
     @redis_connection = Redis.new
     puts('OK <<<')
 
-    puts('>>> Inicializando Worker: ')
+    print('>>> Inicializando Worker: ')
     @service = Fog::Storage.new(:provider => 'OpenStack',
                                 :openstack_auth_url => @auth_url,
                                 :openstack_username => @user,
-                                :openstack_api_key  => @password)
+                                :openstack_api_key  => @password
+#                                :connection_options  => {:port => 80, :scheme =>  'http'}
+    )
     puts('OK <<<')
 
     puts('Inicialização do worker finalizada <<<')
@@ -75,12 +89,12 @@ class BatchTccs
     puts('OK <<<')
 
     moodle_ids.each { | moodle_id_each |
-      puts(">>> Procurando dados de moodle_id=#{moodle_id} / #{student.name}: ")
+      print('>>> Procurando dados do estudante: ')
       moodle_id = moodle_id_each.to_s
       # pega o estudante para poder procurar o tcc
       student = Person.find_by_moodle_id(moodle_id)
       tcc = Tcc.find_by_student_id(student.id)
-      puts('>>> Tcc encontrado')
+      puts("(encontrado) #{moodle_id} / #{student.name}")
 
       remote_file = open_last_pdf_tcc(tcc)
 
@@ -90,13 +104,7 @@ class BatchTccs
       urls = [{ :type => 'http', :url => url_remote_file }]
 
       metalilnk.add_binary(filename, remote_file.body, urls)
-
-      # puts metalilnk.to_s
     }
-
-    # grava metalink em disco para visualização
-    #output = File.join(temp_dir, "tccs.metalink")
-    #File.open(output, 'wb') { |io| io.write(metalilnk.to_s) }
 
     metalilnk.to_s
   end
@@ -111,7 +119,6 @@ class BatchTccs
   end
 
   # Abre o pdf mais atual do estudante. Se estiver desatualizado gera novamente, salva e retorna o novo
-  #
   #
   def open_last_pdf_tcc(tcc)
     #puts('>>> Verifica objetos para geração do pdf')
@@ -133,7 +140,7 @@ class BatchTccs
       return false
     end
 
-    puts('>>> Vverifica o cache do pdf')
+    puts('>>> Verifica o cache do pdf')
     tcc_updated_at = tcc.updated_at.to_s
 
     if @namespaced_redis.exists(moodle_id)
@@ -156,13 +163,11 @@ class BatchTccs
       else
         puts('>>> data da impressão é diferente da data de update do TCC')
         # senão deve salvar o objeto, atualizando a data de update com a do Tcc
-        puts('>>> gera pdf')
         remote_file = save_pdf_tcc(tcc)
       end
     else
       puts('>>> Não encontrados dados no cache de data')
       # senão deve salvar o objeto, atualizando a data de update com a do Tcc
-      puts('>>> gera pdf')
       remote_file = save_pdf_tcc(tcc)
     end
     puts(">>> pdf gerado/recuperado - #{remote_file}")
@@ -170,6 +175,7 @@ class BatchTccs
   end
 
   def generate_url(remote_file)
+    #generate_temp_url('GET', remote_file.public_url.sub!('https:', 'http:').sub!(':443',':80'), @seconds_URL_lives, @temp_url_key )
     generate_temp_url('GET', remote_file.public_url, @seconds_URL_lives, @temp_url_key )
   end
 
@@ -286,7 +292,7 @@ class BatchTccs
 end
 
 # To retrieve a list of directories:
-# service.directories
+# @service.directories
 
 #response = service.head_containers
 #response.status
@@ -338,7 +344,7 @@ end
 #
 # http://docs.openstack.org/trunk/config-reference/content/object-storage-tempurl.html
 
-# curl -i -k https://swift.setic.ufsc.br:8080/auth/v1.0/  -H "X-Auth-User: unasus:readwrite" -H "X-Auth-Key: TccUnasus_2"
+# curl -i -k http://swift.setic.ufsc.br:80/auth/v1.0/  -H "X-Auth-User: unasus:readwrite" -H "X-Auth-Key: TccUnasus_2"
 # AUTH_tkd2fb252ad93940b981b62865f4f8f8b8
 # curl -i -k https://swift.setic.ufsc.br:8080/v1/AUTH_unasus/tcc92_1/Acir%20Henrique%20Truppel%20%28201405050%29 -X GET -H "X-Auth-Token: AUTH_tkd2fb252ad93940b981b62865f4f8f8b8" > /tmp/xxx.pdf
 
@@ -365,27 +371,29 @@ end
 
 include ApplicationHelper
 require 'fog'
-require 'openssl'
+#require 'openssl'
 require 'redis'
 require 'redis-namespace'
 
 Excon.defaults[:ssl_verify_peer] = false
-@auth_url     = 'https://swift.setic.ufsc.br:8080/auth/v1.0/'
+#Excon.defaults[:port] = 80
+#Excon.defaults[:scheme] = 'http'
+
+@auth_url     = 'http://swift.setic.ufsc.br:80/auth/v1.0/'
 @user         = 'unasus:readwrite'
 @password     = 'TccUnasus_2'
 
 # @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
 @temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
-@auth_token   = 'AUTH_tkd2fb252ad93940b981b62865f4f8f8b8'
+#@auth_token   = 'AUTH_tkd2fb252ad93940b981b62865f4f8f8b8' old
+@auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
 
 # 24 horas = 86400
 # 1 hora = 3600
 @seconds_URL_lives = 3600
 
-@service = Fog::Storage.new :provider => 'OpenStack',
-                            :openstack_auth_url => @auth_url,
-                            :openstack_username => @user,
-                            :openstack_api_key  => @password
+@service = Fog::Storage.new :provider => 'OpenStack',:openstack_auth_url => @auth_url,:openstack_username => @user,:openstack_api_key  => @password}
+
 #                            :openstack_auth_token => auth_token,
 #                            :openstack_temp_url_key => @temp_url_key
 @redis_connection = Redis.new
@@ -394,6 +402,8 @@ moodle_id = '12140'
 tcc = Tcc.find_by_student_id(439)
 
 bt = BatchTccs.new;
+remote_file = bt.open_last_pdf_tcc(tcc)
+w_url = bt.generate_url(remote_file)
 
 @namespaced_redis = Redis::Namespace.new(bt.name_space(tcc), :redis => @redis_connection)
 
@@ -442,6 +452,9 @@ bundle config local.metalink ~/metalink-ruby
 gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
 
 bundle config disable_local_branch_check true
+
+    Excon.defaults[:ssl_verify_peer] = false
+Excon.defaults[:port] = 80
 
 =end
 

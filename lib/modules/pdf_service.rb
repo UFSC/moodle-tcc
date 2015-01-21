@@ -58,9 +58,7 @@ class PDFService
     pdf
   end
 
-  private
-
-  def generete_references (actionview, tcc)
+  def generete_bibtex(actionview, tcc)
     content = actionview.render :file => "#{ Rails.root }/app/views/tccs/_bibtex.erb",
                                 :layout => false,
                                 locals: { book_refs: tcc.book_refs.decorate,
@@ -70,6 +68,11 @@ class PDFService
                                           legislative_refs: tcc.legislative_refs.decorate,
                                           thesis_refs: tcc.thesis_refs.decorate
                                 }
+    content
+  end
+
+  def generete_references(actionview, tcc)
+    content = generete_bibtex(actionview, tcc)
     bibtex = TccDocument::ReferencesProcessor.new.execute(content)
     bibtex
   end
