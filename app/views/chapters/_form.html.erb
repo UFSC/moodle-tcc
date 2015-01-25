@@ -20,7 +20,9 @@
                         object_form: form,
                         can_save: policy(@chapter).edit_content? || policy(@chapter).edit_comment?,
                         can_send_to_review: policy(@chapter).can_send_to_review?,
-                        can_send_draft_done: policy(@chapter).can_send_to_draft_done?
+                        can_send_draft_done: policy(@chapter).can_send_to_draft_done?,
+                        can_send_review_admin: policy(@chapter).can_send_to_review_admin?,
+                        can_send_draft_admin: policy(@chapter).can_send_to_draft_admin?
                } %>
   </div>
 

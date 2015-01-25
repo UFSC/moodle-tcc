@@ -62,6 +62,10 @@ class AbstractsController < ApplicationController
       @abstract.to_draft
     elsif (@abstract.empty? && %w(draft empty).include?(@abstract.state) )
       @abstract.to_empty_admin
+    elsif (params[:review_admin])
+      @abstract.to_review_admin if policy(@abstract).can_send_to_review_admin?
+    elsif (params[:draft_admin] || (!@abstract.empty? && @abstract.state.eql?(:empty.to_s)))
+      @abstract.to_draft_admin if policy(@abstract).can_send_to_draft_admin?
     end
   end
 end
