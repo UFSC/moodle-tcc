@@ -26,15 +26,7 @@ class ChaptersController < ApplicationController
     @comment = @chapter.comment || @chapter.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    if params[:done]
-      @chapter.to_done
-    elsif params[:review]
-      @chapter.to_review
-    elsif (params[:draft] || (!@chapter.empty? && @chapter.state.eql?(:empty.to_s)))
-      @chapter.to_draft
-    elsif (@chapter.empty? && %w(draft empty).include?(@chapter.state) )
-      @chapter.to_empty_admin
-    end
+    change_state
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]
@@ -82,4 +74,21 @@ class ChaptersController < ApplicationController
     redirect_to edit_chapters_path(params[:moodle_user], params[:position]), notice: t('chapter_import_successfully')
   end
 
+  private
+
+  def change_state
+    if params[:done]
+      @chapter.to_done
+    elsif params[:review]
+      @chapter.to_review
+    elsif (params[:draft] || (!@chapter.empty? && @chapter.state.eql?(:empty.to_s)))
+      @chapter.to_draft
+    elsif (@chapter.empty? && %w(draft empty).include?(@chapter.state) )
+      @chapter.to_empty_admin
+    elsif (params[:review_admin])
+      @chapter.to_review_admin if policy(@chapter).can_send_to_review_admin?
+    elsif (params[:draft_admin] || (!@chapter.empty? && @chapter.state.eql?(:empty.to_s)))
+      @chapter.to_draft_admin if policy(@chapter).can_send_to_draft_admin?
+    end
+  end
 end

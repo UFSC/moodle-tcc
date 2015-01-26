@@ -54,6 +54,8 @@ pt-BR:
         to_draft: 'Devolver ao estudante'
         to_review: 'Enviar para avaliação'
         to_done: 'Aprovar'
+        to_draft_admin: 'ADMIN: para edição do estudante'
+        to_review_admin: 'ADMIN: para avaliação do orientador'
     attributes:
       tcc:
         name: 'Nome'

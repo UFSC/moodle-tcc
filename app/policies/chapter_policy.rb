@@ -38,7 +38,6 @@ class ChapterPolicy < ApplicationPolicy
     # - O chapter_definition precisa ter uma referência para uma atividade remota (coursemodule_id)
     # - O status do envio dessa atividade remota tem que estar marcada como "submitted" (removida essa condição)
     # Conforme #7530 - Permitir que a importação do texto on-line seja apenas quando tiver nota
-    #TODO: --  e com nota
     if must_import?
       remote = MoodleAPI::MoodleOnlineText.new
       olt_grade = remote.fetch_online_text_grade(@record.tcc.student.moodle_id,
@@ -82,6 +81,18 @@ class ChapterPolicy < ApplicationPolicy
       return (user.orientador? || user.view_all?) && record.state.eql?(:review.to_s)
     end
     false
+  end
+
+  def can_send_to_review_admin?
+    can_show = Pundit.policy(@user, @record.tcc).show_compound_names? &&
+        (%w(draft empty done).include?(record.state))
+    can_show
+  end
+
+  def can_send_to_draft_admin?
+    can_show = Pundit.policy(@user, @record.tcc).show_compound_names? &&
+        (%w(done).include?(record.state))
+    can_show
   end
 
   class Scope < Scope
