@@ -11,7 +11,7 @@ class InstructorAdminController < ApplicationController
     tccs = tcc_searchable(@tcc_definition)
 
     search_options = {eager_load: [:abstract, :tcc_definition]}
-    @tccs = tccs.search(params[:search], params[:page], search_options)
+    @tccs = tccs.search(params[:search], params[:page], search_options).includes(:orientador)
 
     @chapters = @tcc_definition.chapter_definitions.map { |h| h.title }
   end
