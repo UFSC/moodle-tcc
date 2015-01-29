@@ -5,6 +5,7 @@ describe 'Chapter content' do
 
   let(:page_title) { document_test.chapter_definition.title }
   let(:content_field) { 'chapter_content' }
+  let(:check_tcc_title) { false }
   let(:check_keyword) { false }
   let(:edit_path) { 'edit_chapters_path' }
   let(:edit_path_position) { document_test.position }

@@ -5,6 +5,7 @@ describe 'Abstract content' do
 
   let(:page_title) { I18n.t('activerecord.attributes.abstract.content_pt') }
   let(:content_field) { 'abstract_content' }
+  let(:check_tcc_title) { true }
   let(:check_keyword) { true }
   let(:document_test) { tcc.abstract }
   let(:edit_path) { 'edit_abstracts_path' }

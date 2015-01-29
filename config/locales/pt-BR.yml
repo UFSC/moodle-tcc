@@ -69,6 +69,8 @@ pt-BR:
         keywords: 'Palavras chave'
       chapter:
         content: 'Conteúdo'
+      title:
+        title: 'Título'
       comment:
         comment: 'Comentário'
       general_ref:

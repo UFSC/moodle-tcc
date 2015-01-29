@@ -19,6 +19,8 @@ class AbstractsController < ApplicationController
 
     change_state
 
+    save_title
+
     if @abstract.valid? && @abstract.save
       #@comment.save!
       flash[:success] = t(:successfully_saved)
@@ -40,6 +42,8 @@ class AbstractsController < ApplicationController
     @comment.attributes = params[:comment] if params[:comment]
 
     change_state
+
+    save_title
 
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]
@@ -66,6 +70,20 @@ class AbstractsController < ApplicationController
       @abstract.to_review_admin if policy(@abstract).can_send_to_review_admin?
     elsif (params[:draft_admin] || (!@abstract.empty? && @abstract.state.eql?(:empty.to_s)))
       @abstract.to_draft_admin if policy(@abstract).can_send_to_draft_admin?
+    end
+  end
+
+  def save_title
+    # verifica se o título foi alterado
+    unless (!params[:tcc] || @tcc.title.eql?(params[:tcc][:title]))
+      @tcc.title = params[:tcc][:title]
+
+      # se foi alterado, verifica se é valido
+      if !@tcc.valid? || !@tcc.save
+        flash[:error] = 'Título do TCC inválido'
+        set_tab :abstract
+        render :edit
+      end
     end
   end
 end
