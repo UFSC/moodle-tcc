@@ -17,18 +17,18 @@ class AbstractsController < ApplicationController
     @comment = @tcc.abstract.build_comment()
     @comment.attributes = params[:comment] if params[:comment]
 
-    change_state
+    cg_state = change_state
 
     save_title
 
     if @abstract.valid? && @abstract.save
       #@comment.save!
       flash[:success] = t(:successfully_saved)
-      redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
-    else
-      set_tab :abstract
-      render :edit
+      return redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     end
+    # falhou, precisamos re-exibir as informações
+    set_tab :abstract
+    render :edit
   end
 
   def update
@@ -41,25 +41,31 @@ class AbstractsController < ApplicationController
     @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    change_state
+    cg_state = change_state
 
     save_title
 
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]
-      flash[:success] = t(:successfully_saved)
-      redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
-    else
-      set_tab :abstract
-      render :edit
+      flash[:success] = t(:successfully_saved) if cg_state
+      return redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     end
+    # falhou, precisamos re-exibir as informações
+    set_tab :abstract
+    render :edit
+
   end
 
   private
 
   def change_state
     if params[:done]
-      @abstract.to_done
+      if policy(@abstract).can_send_to_done?
+        @abstract.to_done
+      else
+        flash[:alert] = 'O capítulo não pôde ser aprovado! <br/> Verifique se o título do TCC não está vazio e se há referências citadas no texto!'.html_safe
+        return false
+      end
     elsif params[:review]
       @abstract.to_review
     elsif (params[:draft] || (!@abstract.empty? && @abstract.state.eql?(:empty.to_s)))
@@ -71,6 +77,7 @@ class AbstractsController < ApplicationController
     elsif (params[:draft_admin] || (!@abstract.empty? && @abstract.state.eql?(:empty.to_s)))
       @abstract.to_draft_admin if policy(@abstract).can_send_to_draft_admin?
     end
+    true
   end
 
   def save_title

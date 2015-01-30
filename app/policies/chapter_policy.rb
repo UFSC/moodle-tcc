@@ -95,6 +95,11 @@ class ChapterPolicy < ApplicationPolicy
     can_show
   end
 
+  def can_send_to_done?
+    # verifica se há condições mínimas para a aprovação do capítulo
+    true
+  end
+
   class Scope < Scope
     def resolve
       scope
