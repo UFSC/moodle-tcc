@@ -11,6 +11,15 @@
 </div>
 
 <%= semantic_form_for @abstract, url: abstracts_path(moodle_user: params[:moodle_user]) do |form| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">Título do TCC</div>
+    <div class="panel-body">
+      <%= semantic_fields_for @tcc do |tcc| %>
+        <%= tcc.input :title, input_html: {rows: '1',disabled: !policy(@abstract).edit_content?} %>
+      <% end %>
+    </div>
+  </div>
+
   <div class="panel rounded-border">
     <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@abstract).edit_content?}} %><br/>
     <%= form.input :keywords, input_html: {class: 'span12', disabled: !policy(@abstract).edit_content?} %>

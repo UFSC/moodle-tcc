@@ -5,7 +5,7 @@
 <%= semantic_form_for @tcc, url: tcc_path(moodle_user: params[:moodle_user]) do |f| %>
   <%= f.inputs do %>
     <div class="col-lg-5">
-      <%= f.input :title, input_html: {:autofocus => true} %>
+      <%= f.input :title, input_html: {:autofocus => true, disabled: !policy(@tcc).edit_defense_date?} %>
 
       <%= f.inputs :for => :student do |s| %>
         <%= s.input :name, input_html: {disabled: true, value: @student.name} %>
@@ -24,7 +24,9 @@
   <% end %>
 
   <%= f.actions do %>
-    <%= f.action :submit, label: t(:save_changes_tcc), button_html: {class: 'btn btn-primary'} %>
+    <% if policy(@tcc).edit_defense_date? %>
+      <%= f.action :submit, label: t(:save_changes_tcc), button_html: {class: 'btn btn-primary', } %>
+    <% end %>
 
     <%= link_to preview_tcc_path(moodle_user: params[:moodle_user]), class: 'btn btn-default', target: '_blank' do %>
       <%= display_icon('file') %> Pré-visualizar TCC

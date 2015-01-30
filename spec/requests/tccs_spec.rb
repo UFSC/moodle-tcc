@@ -303,12 +303,12 @@ shared_context 'admin/AVEA user' do
 
   # cannot edit in draft and done
   it_behaves_like 'for view_all users'
+
+  it_behaves_like 'allow to edit tcc user data information'
+
 end
 
 shared_context 'for view_all users' do
-
-  # view and edit tcc data
-  it_behaves_like 'tcc user data information'
 
   # edit abstract/chapter and preview/generate
   it_behaves_like 'does an edition in a document' do
@@ -379,11 +379,12 @@ shared_context 'for view_all users' do
   end
 end
 
-shared_context 'tcc user data information' do
+shared_context 'allow to edit tcc user data information' do
   it 'viewing form with user information' do
     visit mount_visit_path('tcc_path', moodle_user_view)
 
     expect(page).to have_content(I18n.t(:data))
+    #expect(page).to have_field(I18n.t('activerecord.attributes.tcc.title'), :disabled => !Pundit.policy(lti_user, tcc).edit_defense_date?)
     expect(page).to have_field(I18n.t('activerecord.attributes.tcc.title'), :disabled => false)
     expect(page).to have_field(I18n.t('activerecord.attributes.tcc.student'), :disabled => true)
     expect(page).to have_field(I18n.t('activerecord.attributes.tcc.orientador'), :disabled => true)
@@ -470,6 +471,27 @@ shared_context 'tcc user data information' do
       expect(text_analysis.strings.join(' ')).to be_include(tcc.student.name.gsub(' ', ''))
     end
   end
+end
+
+shared_context 'does not allow editing tcc user data information' do
+  it 'viewing form with user information' do
+    visit mount_visit_path('tcc_path', moodle_user_view)
+
+    expect(page).to have_content(I18n.t(:data))
+    expect(page).to have_field(I18n.t('activerecord.attributes.tcc.title'), :disabled => true)
+    expect(page).to have_field(I18n.t('activerecord.attributes.tcc.student'), :disabled => true)
+    expect(page).to have_field(I18n.t('activerecord.attributes.tcc.orientador'), :disabled => true)
+  end
+
+  it 'does not allow editing form with user information' do
+    visit mount_visit_path('tcc_path', moodle_user_view)
+
+    expect(page).to have_content(I18n.t(:data))
+
+    expect(page).to have_field(I18n.t('activerecord.attributes.tcc.title'), :disabled => true)
+    expect(page).to_not have_button(I18n.t(:save_changes_tcc))
+  end
+
 end
 
 shared_context 'viewing tcc list' do
@@ -638,8 +660,8 @@ describe 'Tccs' do
       expect(page).to have_field(I18n.t('activerecord.attributes.tcc.defense_date'), :disabled => true)
     end
 
-    # view and edit tcc data
-    it_behaves_like 'tcc user data information'
+    # view and don't edit tcc data
+    it_behaves_like 'does not allow editing tcc user data information'
 
     # edit abstract/chapter and preview/generate
     it_behaves_like 'does an edition in a document'
@@ -735,6 +757,8 @@ describe 'Tccs' do
       # cannot edit in draft and done
       it_behaves_like 'for view_all users'
 
+      it_behaves_like 'does not allow editing tcc user data information'
+
       it_behaves_like 'can giving grade'
     end
 
@@ -787,6 +811,8 @@ describe 'Tccs' do
       end
 
       it_behaves_like 'for view_all users'
+
+      it_behaves_like 'does not allow editing tcc user data information'
 
       it_behaves_like 'cannot giving grade'
 
