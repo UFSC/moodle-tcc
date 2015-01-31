@@ -26,12 +26,12 @@ class ChaptersController < ApplicationController
     @comment = @chapter.comment || @chapter.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    cg_state = change_state
+    b_change_state = change_state
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]
 
-      flash[:success] = t(:successfully_saved)  if cg_state
+      flash[:success] = t(:successfully_saved)  if b_change_state
       return redirect_to edit_chapters_path(position: @chapter.position.to_s)
     end
     # falhou, precisamos re-exibir as informações

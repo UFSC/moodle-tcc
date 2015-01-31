@@ -58,6 +58,18 @@ class Tcc < ActiveRecord::Base
     end
   end
 
+  def count_references
+    ref_ids = []
+    ref_ids |= self.abstract.citations if !self.abstract.nil?
+
+    if (!self.chapters.nil?)
+      self.chapters.each { | chapter |
+        ref_ids |= chapter.citations
+      }
+    end
+    ref_ids.count
+  end
+
   private
 
   def create_or_update_chapters

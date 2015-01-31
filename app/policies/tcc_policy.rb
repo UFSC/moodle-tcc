@@ -63,8 +63,8 @@ class TccPolicy < ApplicationPolicy
 
     #verifica se existe o título definido
     return false if (!record.nil? && (record.title.nil? || record.title.empty?))
-    #verifica se existe ao menos 5 referencias criadas
-    record.references.count >= 5
+    #verifica se existe ao menos 6 referencias vinculadas ao texto
+    record.count_references >= 6
   end
 
   # Verifica se pode editar a data de defesa

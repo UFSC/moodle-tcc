@@ -38,7 +38,7 @@ shared_context 'cannot giving grade' do
     end
 
     # TODO: utilizar fabrication para gerar isso
-    (1..5).each do
+    (1..6).each do
       a_ref = Reference.new
       a_book = Fabricate(:book_ref)
       a_ref.tcc = tcc
@@ -71,7 +71,7 @@ shared_context 'can giving grade' do
     end
 
     # TODO: utilizar fabrication para gerar isso
-    (1..5).each do
+    (1..6).each do
       a_ref = Reference.new
       a_book = Fabricate(:book_ref)
       a_ref.tcc = tcc

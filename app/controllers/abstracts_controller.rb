@@ -17,13 +17,13 @@ class AbstractsController < ApplicationController
     @comment = @tcc.abstract.build_comment()
     @comment.attributes = params[:comment] if params[:comment]
 
-    cg_state = change_state
+    b_save_title = save_title
 
-    save_title
+    b_change_state = change_state
 
     if @abstract.valid? && @abstract.save
       #@comment.save!
-      flash[:success] = t(:successfully_saved)
+      flash[:success] = t(:successfully_saved) if b_save_title && b_change_state
       return redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     end
     # falhou, precisamos re-exibir as informações
@@ -41,13 +41,13 @@ class AbstractsController < ApplicationController
     @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    cg_state = change_state
+    b_save_title = save_title
 
-    save_title
+    b_change_state = change_state
 
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]
-      flash[:success] = t(:successfully_saved) if cg_state
+      flash[:success] = t(:successfully_saved) if b_save_title && b_change_state
       return redirect_to edit_abstracts_path(moodle_user: params[:moodle_user])
     end
     # falhou, precisamos re-exibir as informações

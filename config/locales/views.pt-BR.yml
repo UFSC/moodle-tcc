@@ -21,6 +21,7 @@
     unsuccessfully_saved: 'Mudanças não foram salvas'
     unsuccessfully_deleted: 'Não pode ser removido'
     warn_message_sent_to_done_html: 'Todo o texto contido nesta tela não poderá mais ser alterado após sua aprovação. </br> Deseja continuar?'
+    warn_message_without_citation_html: 'Não foi encontrada qualquer citação de referência bibliográfica no texto. </br> Certifique-se de que realmente não são necessárias referências nesse capítulo. </br> Todo o texto contido nesta tela não poderá mais ser alterado após sua aprovação. </br> Deseja continuar?'
     warn_message_send_to_review_html: 'Você não poderá mais editar o texto enquanto o orientador estiver realizando a avaliação. </br> Deseja continuar?'
 
     # Telas de conteúdo
