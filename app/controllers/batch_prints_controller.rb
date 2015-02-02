@@ -7,7 +7,7 @@ class BatchPrintsController < ApplicationController
     authorize(Tcc, :show_scope?)
     @current_moodle_user = current_moodle_user
     @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
-    tccList = Tcc.includes(:student,:orientador).
+    tccList = Tcc.includes(:student, :orientador, :abstract, :chapters).
                   joins(:student).
                   joins(:orientador).
                   where(tcc_definition_id: @tcc_definition.id).
@@ -35,7 +35,6 @@ class BatchPrintsController < ApplicationController
 
   def check_permission
     unless current_user.view_all? || current_user.instructor?
-      true
       raise Authentication::UnauthorizedError, t('cannot_access_page_without_enough_permission')
       redirect_user_to_start_page
     end

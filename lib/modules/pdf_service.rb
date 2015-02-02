@@ -29,7 +29,7 @@ class PDFService
     chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters)
 
     # Referencias
-    bibtex = generete_references(av, @tcc)
+    bibtex = generate_references(av, @tcc)
 
     pdfTex = av.render pdf: "TCC ##{ @tcc.id }",
                        file: "#{ Rails.root }/app/views/tccs/generate.pdf.erb",
@@ -58,7 +58,7 @@ class PDFService
     pdf
   end
 
-  def generete_bibtex(actionview, tcc)
+  def generate_bibtex(actionview, tcc)
     content = actionview.render :file => "#{ Rails.root }/app/views/tccs/_bibtex.erb",
                                 :layout => false,
                                 locals: { book_refs: tcc.book_refs.decorate,
@@ -71,8 +71,8 @@ class PDFService
     content
   end
 
-  def generete_references(actionview, tcc)
-    content = generete_bibtex(actionview, tcc)
+  def generate_references(actionview, tcc)
+    content = generate_bibtex(actionview, tcc)
     bibtex = TccDocument::ReferencesProcessor.new.execute(content)
     bibtex
   end
