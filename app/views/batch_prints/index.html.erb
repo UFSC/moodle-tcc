@@ -1,0 +1,10 @@
+<% if (policy(Tcc).show_compound_names?) %>
+  <%= render :partial => 'instructor_admin/navbar' %>
+  <!--<p><br/></p>-->
+  <!--<br/>-->
+<%  else %>
+  <h3><%= t(:tcc_list)  %> a imprimir</h3><br/>
+<% end %>
+
+<%= render :partial => 'batch_prints/batch_print_list' %>
+

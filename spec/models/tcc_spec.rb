@@ -26,8 +26,8 @@ describe Tcc do
     end
 
     after(:each) do
-      @tcc.destroy
-      @ref.destroy
+        @tcc.destroy
+        @ref.destroy
     end
 
     it 'should return references' do

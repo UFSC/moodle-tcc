@@ -1,21 +1,22 @@
 class Tcc < ActiveRecord::Base
-  attr_accessible :grade, :moodle_user, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
+  attr_accessible :grade, :student, :tutor, :orientador, :title, :tcc_definition, :defense_date,
                   :abstract_attributes, :chapters_attributes
   validates :grade, :numericality => {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}, allow_nil: true
 
   has_many :chapters, :inverse_of => :tcc
   has_one :abstract, :inverse_of => :tcc
+  has_many :batch_prints, :inverse_of => :tcc
 
   belongs_to :tcc_definition, :inverse_of => :tccs
 
   # Referencias
   has_many :references, :dependent => :destroy
-  has_many :book_refs, :through => :references, :source => :element, :source_type => 'BookRef'
-  has_many :book_cap_refs, :through => :references, :source => :element, :source_type => 'BookCapRef'
-  has_many :article_refs, :through => :references, :source => :element, :source_type => 'ArticleRef'
-  has_many :internet_refs, :through => :references, :source => :element, :source_type => 'InternetRef'
+  has_many :book_refs,        :through => :references, :source => :element, :source_type => 'BookRef'
+  has_many :book_cap_refs,    :through => :references, :source => :element, :source_type => 'BookCapRef'
+  has_many :article_refs,     :through => :references, :source => :element, :source_type => 'ArticleRef'
+  has_many :internet_refs,    :through => :references, :source => :element, :source_type => 'InternetRef'
   has_many :legislative_refs, :through => :references, :source => :element, :source_type => 'LegislativeRef'
-  has_many :thesis_refs, :through => :references, :source => :element, :source_type => 'ThesisRef'
+  has_many :thesis_refs,      :through => :references, :source => :element, :source_type => 'ThesisRef'
 
   # Pessoas / papeis envolvidos:
   belongs_to :student, class_name: 'Person'

@@ -1,0 +1,13 @@
+<%= semantic_form_for @compound_name, url: compound_names_path(@compound_name, moodle_user: params[:moodle_user]) do |f| %>
+
+  <div class="modal-body">
+    <p><%= f.input :name, label: 'Nome composto:' %></p>
+    <%= f.input :type_name, as: :radio, collection: [['Normal', 'simple'], ['Sufixo', 'suffix']] %>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Fechar</button>
+    <%= submit_tag t(:save), class: 'btn btn-success' %>
+  </div>
+
+<% end %>

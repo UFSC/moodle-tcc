@@ -16,6 +16,21 @@ GIT
       formtastic (>= 3.0)
 
 GIT
+  remote: git://github.com/robertosilvino/metalink-ruby.git
+  revision: a352c86c1d2ec41ab8a5de3838c6e0ad10321610
+  branch: add-binary-structure
+  specs:
+    metalink (0.0.2)
+
+GIT
+  remote: git://github.com/seuros/capistrano-sidekiq.git
+  revision: 77573c4ba99272226bff35a15d1126321106396f
+  specs:
+    capistrano-sidekiq (0.4.1)
+      capistrano
+      sidekiq
+
+GIT
   remote: git://github.com/seuros/state_machine.git
   revision: 1a373b2d23a21037d95cc369a4c5b0a9c551d326
   specs:
@@ -41,28 +56,29 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.2)
+    CFPropertyList (2.2.8)
     abstract_type (0.0.7)
-    actionmailer (4.1.8)
-      actionpack (= 4.1.8)
-      actionview (= 4.1.8)
+    actionmailer (4.1.9)
+      actionpack (= 4.1.9)
+      actionview (= 4.1.9)
       mail (~> 2.5, >= 2.5.4)
-    actionpack (4.1.8)
-      actionview (= 4.1.8)
-      activesupport (= 4.1.8)
+    actionpack (4.1.9)
+      actionview (= 4.1.9)
+      activesupport (= 4.1.9)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionview (4.1.8)
-      activesupport (= 4.1.8)
+    actionview (4.1.9)
+      activesupport (= 4.1.9)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    activemodel (4.1.8)
-      activesupport (= 4.1.8)
+    activemodel (4.1.9)
+      activesupport (= 4.1.9)
       builder (~> 3.1)
-    activerecord (4.1.8)
-      activemodel (= 4.1.8)
-      activesupport (= 4.1.8)
+    activerecord (4.1.9)
+      activemodel (= 4.1.9)
+      activesupport (= 4.1.9)
       arel (~> 5.0.0)
-    activesupport (4.1.8)
+    activesupport (4.1.9)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -130,6 +146,8 @@ GEM
     capybara-puma (1.0.1)
       capybara
       puma
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
     chronic (0.10.2)
     churn (0.0.35)
       chronic (>= 0.2.3)
@@ -163,6 +181,7 @@ GEM
     concord (0.1.5)
       adamantium (~> 0.2.0)
       equalizer (~> 0.0.9)
+    connection_pool (2.1.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
@@ -182,6 +201,7 @@ GEM
     ethon (0.7.1)
       ffi (>= 1.3.0)
     eventmachine (1.0.3)
+    excon (0.42.1)
     execjs (2.2.2)
     fabrication (2.11.3)
     faker (1.4.3)
@@ -190,12 +210,80 @@ GEM
       multipart-post (~> 1.2.0)
     fattr (2.2.2)
     ffi (1.9.6)
+    fission (0.5.0)
+      CFPropertyList (~> 2.2)
     flay (2.5.0)
       ruby_parser (~> 3.0)
       sexp_processor (~> 4.0)
     flog (4.3.0)
       ruby_parser (~> 3.1, > 3.1.0)
       sexp_processor (~> 4.4)
+    fog (1.26.0)
+      fog-atmos
+      fog-brightbox (~> 0.4)
+      fog-core (~> 1.27, >= 1.27.1)
+      fog-ecloud
+      fog-json
+      fog-profitbricks
+      fog-radosgw (>= 0.0.2)
+      fog-sakuracloud (>= 0.0.4)
+      fog-softlayer
+      fog-storm_on_demand
+      fog-terremark
+      fog-vmfusion
+      fog-voxel
+      fog-xml (~> 0.1.1)
+      ipaddress (~> 0.5)
+      nokogiri (~> 1.5, >= 1.5.11)
+    fog-atmos (0.1.0)
+      fog-core
+      fog-xml
+    fog-brightbox (0.7.1)
+      fog-core (~> 1.22)
+      fog-json
+      inflecto (~> 0.0.2)
+    fog-core (1.27.2)
+      builder
+      excon (~> 0.38)
+      formatador (~> 0.2)
+      mime-types
+      net-scp (~> 1.1)
+      net-ssh (>= 2.1.3)
+    fog-ecloud (0.0.2)
+      fog-core
+      fog-xml
+    fog-json (1.0.0)
+      multi_json (~> 1.0)
+    fog-profitbricks (0.0.1)
+      fog-core
+      fog-xml
+      nokogiri
+    fog-radosgw (0.0.3)
+      fog-core (>= 1.21.0)
+      fog-json
+      fog-xml (>= 0.0.1)
+    fog-sakuracloud (0.1.1)
+      fog-core
+      fog-json
+    fog-softlayer (0.3.26)
+      fog-core
+      fog-json
+    fog-storm_on_demand (0.1.0)
+      fog-core
+      fog-json
+    fog-terremark (0.0.3)
+      fog-core
+      fog-xml
+    fog-vmfusion (0.0.1)
+      fission
+      fog-core
+    fog-voxel (0.0.2)
+      fog-core
+      fog-xml
+    fog-xml (0.1.1)
+      fog-core
+      nokogiri (~> 1.5, >= 1.5.11)
+    formatador (0.2.5)
     formtastic (3.0.0)
       actionpack (>= 3.2.13)
     has_scope (0.6.0.rc)
@@ -204,20 +292,23 @@ GEM
     hashery (2.1.1)
     hike (1.2.3)
     hirb (0.7.2)
+    hitimes (1.2.2)
     htmlentities (4.3.2)
-    i18n (0.6.11)
+    i18n (0.7.0)
     ice_nine (0.11.1)
+    inflecto (0.0.2)
     inherited_resources (1.5.1)
       actionpack (>= 3.2, < 4.2)
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 4.2)
       responders (~> 1.0)
+    ipaddress (0.8.0)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.1.2)
       railties (>= 3.1.0)
-    json (1.8.1)
+    json (1.8.2)
     json_pure (1.8.1)
     json_spec (1.1.4)
       multi_json (~> 1.0)
@@ -266,7 +357,7 @@ GEM
     mime-types (2.4.3)
     mini_magick (4.0.1)
     mini_portile (0.6.1)
-    minitest (5.4.3)
+    minitest (5.5.1)
     multi_json (1.10.1)
     multipart-post (1.2.0)
     mysql2 (0.3.17)
@@ -318,20 +409,22 @@ GEM
     rack (1.5.2)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
-    rack-test (0.6.2)
+    rack-protection (1.5.3)
+      rack
+    rack-test (0.6.3)
       rack (>= 1.0)
     rack_session_access (0.1.1)
       builder (>= 2.0.0)
       rack (>= 1.0.0)
-    rails (4.1.8)
-      actionmailer (= 4.1.8)
-      actionpack (= 4.1.8)
-      actionview (= 4.1.8)
-      activemodel (= 4.1.8)
-      activerecord (= 4.1.8)
-      activesupport (= 4.1.8)
+    rails (4.1.9)
+      actionmailer (= 4.1.9)
+      actionpack (= 4.1.9)
+      actionview (= 4.1.9)
+      activemodel (= 4.1.9)
+      activerecord (= 4.1.9)
+      activesupport (= 4.1.9)
       bundler (>= 1.3.0, < 2.0)
-      railties (= 4.1.8)
+      railties (= 4.1.9)
       sprockets-rails (~> 2.0)
     rails3-jquery-autocomplete (1.0.14)
       rails (>= 3.0)
@@ -345,9 +438,9 @@ GEM
       json
       require_all
       ruby-progressbar
-    railties (4.1.8)
-      actionpack (= 4.1.8)
-      activesupport (= 4.1.8)
+    railties (4.1.9)
+      actionpack (= 4.1.9)
+      activesupport (= 4.1.9)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
@@ -368,6 +461,8 @@ GEM
     redis-activesupport (4.0.0)
       activesupport (~> 4)
       redis-store (~> 1.1.0)
+    redis-namespace (1.5.1)
+      redis (~> 3.0, >= 3.0.4)
     redis-rack (1.5.0)
       rack (~> 1.5)
       redis-store (~> 1.1.0)
@@ -431,11 +526,28 @@ GEM
     sexp_processor (4.4.4)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    sidekiq (3.3.0)
+      celluloid (>= 0.16.0)
+      connection_pool (>= 2.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
+    sidekiq-superworker (1.0.0)
+      activemodel (>= 3.2)
+      activesupport (>= 3.2)
+      sidekiq (>= 2.1.0)
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    slim (3.0.1)
+      temple (~> 0.7.3)
+      tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
     spring (1.2.0)
     spring-watcher-listen (1.0.0)
@@ -456,6 +568,7 @@ GEM
       net-ssh (>= 2.8.0)
     systemu (2.6.4)
     tabs_on_rails (2.2.0)
+    temple (0.7.4)
     terminal-table (1.4.5)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
@@ -464,6 +577,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    timers (4.0.1)
+      hitimes
     ttfunk (1.4.0)
     twitter-bootstrap-rails-confirm (1.0.4)
     typhoeus (0.6.9)
@@ -507,11 +622,12 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass (~> 3.3.1)
   bullet
-  capistrano (~> 3.2)
+  capistrano (~> 3.3)
   capistrano-db-tasks
   capistrano-git-submodule-strategy (= 0.1.3)
   capistrano-newrelic
   capistrano-rails
+  capistrano-sidekiq!
   capistrano-upload-config
   capybara
   capybara-puma
@@ -524,6 +640,7 @@ DEPENDENCIES
   fabrication
   faker
   faraday (= 0.8.9)
+  fog
   formtastic (= 3.0)
   formtastic-bootstrap!
   htmlentities
@@ -534,6 +651,7 @@ DEPENDENCIES
   json_spec
   kaminari
   meta_request
+  metalink!
   metric_fu
   mini_magick
   mysql2
@@ -549,9 +667,10 @@ DEPENDENCIES
   quiet_assets
   rabl
   rack_session_access
-  rails (~> 4.1)
+  rails (~> 4.1.9)
   rails-latex!
   rails3-jquery-autocomplete
+  redis (= 3.1.0)
   redis-rails
   rest-client
   rspec-rails (~> 3.0)
@@ -561,7 +680,11 @@ DEPENDENCIES
   sdoc
   settingslogic
   shoulda-matchers
+  sidekiq
+  sidekiq-superworker
   simplecov
+  sinatra
+  slim
   spring
   spring-watcher-listen
   state_machine!

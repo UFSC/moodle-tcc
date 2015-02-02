@@ -12,7 +12,6 @@ class BibliographiesController < ApplicationController
     @internet_refs = @tcc.internet_refs.decorate
     @legislative_refs = @tcc.legislative_refs.decorate
     @thesis_refs = @tcc.thesis_refs.decorate
-    @compound_names = CompoundName.search(params[:search], params[:page], { per: 60 })
 
   end
 end

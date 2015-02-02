@@ -36,7 +36,7 @@
 
 
   <%= render partial: 'common/document_footer',
-             locals: {object: @chapter,
+             locals: {object: @abstract,
                       object_form: form,
                       can_save: policy(@abstract).edit_content? || policy(@abstract).edit_comment?,
                       can_send_to_review: policy(@abstract).can_send_to_review?,

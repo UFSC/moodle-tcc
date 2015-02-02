@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <% @compound_names.each_with_index do |element, index| %>
-      <% if !element.nil? && ((index < 30 && type == 'left') || (index >= 30 && type == 'right')) %>
+      <% if !element.nil? && ((index < 6 && type == 'left') || (index >= 6 && type == 'right')) %>
         <tr>
           <td><%= element.name %></td>
           <td>
@@ -17,7 +17,7 @@
 
           </td>
           <td>
-            <%= button_to 'Remover', compound_name_path(element, moodle_user: params[:moodle_user]),
+            <%= button_to 'Remover', delete_compound_name_path(element, moodle_user: params[:moodle_user]),
                           class: 'btn btn-danger',
                           :data => { :confirm => "Tem certeza que deseja apagar o nome composto: #{element.name}?" },
                           method: :delete, title: 'Remover nome composto'%>

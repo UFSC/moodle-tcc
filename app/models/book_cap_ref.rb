@@ -43,7 +43,14 @@ class BookCapRef < ActiveRecord::Base
   alias_attribute :second_author, :second_part_author
   alias_attribute :third_author, :third_part_author
 
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
   private
+
+  def touch_tcc
+    reference.tcc.touch unless (reference.nil? || reference.tcc.nil? || reference.tcc.new_record?)
+  end
 
   def get_all_authors
     [first_author, second_author, third_author]

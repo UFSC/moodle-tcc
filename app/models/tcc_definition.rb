@@ -8,4 +8,14 @@ class TccDefinition < ActiveRecord::Base
   validates :course_id, uniqueness: true, presence: true
 
   attr_accessible :internal_name, :activity_url, :course_id, :defense_date, :moodle_instance_id
+
+  after_commit :touch_tcc, on: [:create, :update]
+
+  private
+
+  def touch_tcc
+    tccs.each  { |tcc |
+      tcc.touch unless tcc.nil?
+    }
+  end
 end

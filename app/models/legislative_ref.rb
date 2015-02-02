@@ -26,8 +26,14 @@ class LegislativeRef < ActiveRecord::Base
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :jurisdiction_or_header, :title, :local, :with => [:squish, :blank]
 
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
 
   private
+
+  def touch_tcc
+    reference.tcc.touch unless (reference.nil? || reference.tcc.nil? || reference.tcc.new_record?)
+  end
 
   def check_equality
     legislative_refs = LegislativeRef.where('(publisher = ? ) AND (year = ?)', publisher, year)

@@ -6,7 +6,7 @@ shared_examples 'a protected controller' do |actions|
 
     actions.each_pair do |action, verb|
       specify "expects the access ##{action} via #{verb} be allowed" do
-        request.session = fake_lti_session
+        request.session = fake_lti_session(Authentication::Roles.coordenador_avea)
 
         send(verb, action)
         expect { response }.to_not raise_error

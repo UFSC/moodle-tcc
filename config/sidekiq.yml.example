@@ -1,0 +1,9 @@
+:pidfile: /tmp/pids/sidekiq.pid
+:queues:
+  - UnASUS
+development:
+  :concurrency: 5
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 25

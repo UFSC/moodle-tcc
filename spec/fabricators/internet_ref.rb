@@ -6,6 +6,6 @@ Fabricator(:internet_ref) do
   subtitle    { Faker::Lorem.sentence(4) }
   url         { Faker::Internet.url }
   et_al       false
-  access_date '2013-05-27'
-  publication_date '2013-05-27'
+  access_date Date.today
+  publication_date Date.today
 end

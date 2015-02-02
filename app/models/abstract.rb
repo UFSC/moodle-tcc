@@ -1,7 +1,7 @@
 class Abstract < ActiveRecord::Base
   include Shared::DocumentState
 
-  belongs_to :tcc
+  belongs_to :tcc, touch: true
   has_one :comment, :as => :chapter_commentable, :dependent => :destroy
 
   attr_accessible :content, :keywords, :comment

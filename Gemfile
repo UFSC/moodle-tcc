@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1'
+gem 'rails', '~> 4.1.9'
 gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
+
+# Teste de geração de pdf no worker
+#gem 'wicked_pdf'
 
 # Asset Pipeline
 gem 'sass-rails', '~> 4.0.5'
@@ -27,6 +30,19 @@ gem 'pundit'
 
 # Unicode Utils
 gem 'unicode_utils'
+
+# geração do tcc em bloco
+gem 'redis', '3.1.0'
+gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
+
+# sidekiq - processamento paralelo
+gem 'sidekiq'
+gem 'sidekiq-superworker'
+#gem 'sidekiq_monitor'
+
+# sidekiq monitor
+gem 'sinatra', require: false
+gem 'slim'
 
 # Latex tcc -> pdf
 gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
@@ -81,6 +97,9 @@ gem 'draper', '~> 1.3'
 # Errbit (monitoração de falhas)
 gem 'airbrake'
 
+# OpenStack Swift
+gem 'fog'
+
 group :production do
   gem 'newrelic_rpm'
   gem 'redis-rails'
@@ -89,6 +108,7 @@ end
 group :development do
   gem 'thin'
   gem 'ruby-graphviz', :require => 'graphviz' # usado pela state_machine
+  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 
   # Auxilia depuração da aplicação: http://railscasts.com/episodes/402-better-errors-railspanel
   gem 'better_errors'
@@ -135,7 +155,7 @@ end
 
 # Deploy with Capistrano
 group :deploy do
-  gem 'capistrano', '~> 3.2'
+  gem 'capistrano', '~> 3.3'
   gem 'capistrano-rails'
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false

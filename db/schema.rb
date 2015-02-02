@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141220032901) do
+ActiveRecord::Schema.define(version: 20150114031719) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -43,41 +43,45 @@ ActiveRecord::Schema.define(version: 20141220032901) do
   end
 
   create_table "book_cap_refs", force: true do |t|
-    t.string  "cap_title"
-    t.string  "cap_subtitle"
-    t.string  "book_title"
-    t.string  "book_subtitle"
-    t.string  "first_part_author"
-    t.string  "first_entire_author"
-    t.string  "type_participation"
-    t.string  "local"
-    t.string  "publisher"
-    t.integer "year"
-    t.integer "initial_page"
-    t.integer "end_page"
-    t.string  "subtype"
-    t.string  "second_entire_author"
-    t.string  "third_entire_author"
-    t.string  "second_part_author"
-    t.string  "third_part_author"
-    t.boolean "et_al_part"
-    t.boolean "et_al_entire"
+    t.string   "cap_title"
+    t.string   "cap_subtitle"
+    t.string   "book_title"
+    t.string   "book_subtitle"
+    t.string   "first_part_author"
+    t.string   "first_entire_author"
+    t.string   "type_participation"
+    t.string   "local"
+    t.string   "publisher"
+    t.integer  "year"
+    t.integer  "initial_page"
+    t.integer  "end_page"
+    t.string   "subtype"
+    t.string   "second_entire_author"
+    t.string   "third_entire_author"
+    t.string   "second_part_author"
+    t.string   "third_part_author"
+    t.boolean  "et_al_part"
+    t.boolean  "et_al_entire"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "book_refs", force: true do |t|
-    t.string  "first_author"
-    t.string  "second_author"
-    t.string  "third_author"
-    t.boolean "et_all"
-    t.string  "title"
-    t.string  "subtitle"
-    t.integer "edition_number"
-    t.string  "local"
-    t.string  "publisher"
-    t.integer "year"
-    t.string  "type_quantity"
-    t.integer "num_quantity"
-    t.string  "subtype"
+    t.string   "first_author"
+    t.string   "second_author"
+    t.string   "third_author"
+    t.boolean  "et_all"
+    t.string   "title"
+    t.string   "subtitle"
+    t.integer  "edition_number"
+    t.string   "local"
+    t.string   "publisher"
+    t.integer  "year"
+    t.string   "type_quantity"
+    t.integer  "num_quantity"
+    t.string   "subtype"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "chapter_definitions", force: true do |t|
@@ -140,28 +144,32 @@ ActiveRecord::Schema.define(version: 20141220032901) do
   end
 
   create_table "internet_refs", force: true do |t|
-    t.string  "first_author"
-    t.string  "title"
-    t.string  "subtitle"
-    t.string  "url"
-    t.date    "access_date"
-    t.string  "subtype"
-    t.string  "second_author"
-    t.string  "third_author"
-    t.date    "publication_date"
-    t.boolean "et_al"
-    t.string  "complementary_information"
+    t.string   "first_author"
+    t.string   "title"
+    t.string   "subtitle"
+    t.string   "url"
+    t.date     "access_date"
+    t.string   "subtype"
+    t.string   "second_author"
+    t.string   "third_author"
+    t.date     "publication_date"
+    t.boolean  "et_al"
+    t.string   "complementary_information"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "legislative_refs", force: true do |t|
-    t.string  "jurisdiction_or_header"
-    t.string  "title"
-    t.string  "edition"
-    t.string  "local"
-    t.string  "publisher"
-    t.integer "year"
-    t.integer "total_pages"
-    t.string  "subtype"
+    t.string   "jurisdiction_or_header"
+    t.string   "title"
+    t.string   "edition"
+    t.string   "local"
+    t.string   "publisher"
+    t.integer  "year"
+    t.integer  "total_pages"
+    t.string   "subtype"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "moodle_assets", force: true do |t|
@@ -223,24 +231,26 @@ ActiveRecord::Schema.define(version: 20141220032901) do
   add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree
 
   create_table "thesis_refs", force: true do |t|
-    t.string  "first_author"
-    t.string  "title"
-    t.string  "subtitle"
-    t.string  "local"
-    t.integer "year"
-    t.integer "year_of_submission"
-    t.integer "chapter"
-    t.string  "type_thesis"
-    t.integer "pages_or_volumes_number"
-    t.string  "type_number"
-    t.string  "degree"
-    t.string  "institution"
-    t.string  "course"
-    t.string  "department"
-    t.string  "subtype"
-    t.string  "second_author"
-    t.string  "third_author"
-    t.boolean "et_all"
+    t.string   "first_author"
+    t.string   "title"
+    t.string   "subtitle"
+    t.string   "local"
+    t.integer  "year"
+    t.integer  "year_of_submission"
+    t.integer  "chapter"
+    t.string   "type_thesis"
+    t.integer  "pages_or_volumes_number"
+    t.string   "type_number"
+    t.string   "degree"
+    t.string   "institution"
+    t.string   "course"
+    t.string   "department"
+    t.string   "subtype"
+    t.string   "second_author"
+    t.string   "third_author"
+    t.boolean  "et_all"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

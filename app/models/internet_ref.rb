@@ -15,14 +15,17 @@ class InternetRef < ActiveRecord::Base
   validates_presence_of :access_date, :first_author, :title, :url
 
   attr_accessible :access_date, :first_author, :second_author, :third_author, :et_al, :complementary_information,
-                  :subtitle, :title, :url,
-                  :publication_date
+                  :subtitle, :title, :url, :publication_date
 
   validates_format_of :url, :with => VALID_URL_EXPRESSION
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :title, :with => [:squish, :blank]
+
+  after_commit :touch_tcc, on: [:create, :update]
+  before_destroy :touch_tcc
+
 
   def year
     !publication_date.nil? ? data = self.publication_date.year : data = self.access_date.year
@@ -31,61 +34,23 @@ class InternetRef < ActiveRecord::Base
 
   private
 
+  def touch_tcc
+    reference.tcc.touch unless (reference.nil? || reference.tcc.nil? || reference.tcc.new_record?)
+  end
+
   def check_equality
-    internet_refs = InternetRef.where('(
-                               (first_author = ? AND second_author = ? AND third_author = ?) OR
-                               (first_author = ? AND second_author = ? AND third_author = ?) OR
-                               (first_author = ? AND second_author = ? AND third_author = ?) OR
-                               (first_author = ? AND second_author = ? AND third_author = ?) OR
-                               (first_author = ? AND second_author = ? AND third_author = ?) OR
-                               (first_author = ? AND second_author = ? AND third_author = ?)                                 )
-                                AND publication_date = ?',
-                                      first_author, second_author, third_author,
-                                      first_author, third_author, second_author,
-                                      second_author, first_author, third_author,
-                                      second_author, third_author, first_author,
-                                      third_author, first_author, second_author,
-                                      third_author, second_author, first_author,
-                                      publication_date)
+   columns =[:first_author, :second_author, :third_author, :publication_date]
+   internet_refs = get_records(InternetRef, columns, first_author, second_author, third_author, publication_date)
 
     update_subtype_field(self, internet_refs)
   end
 
   def check_difference
-    internet_refs = InternetRef.where('(
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?)
-                                    )
-                                    AND publication_date = ?',
-                                      first_author, second_author, third_author,
-                                      first_author, third_author, second_author,
-                                      second_author, first_author, third_author,
-                                      second_author, third_author, first_author,
-                                      third_author, first_author, second_author,
-                                      third_author, second_author, first_author,
-                                      publication_date)
+    columns =[:first_author, :second_author, :third_author, :publication_date]
+    internet_refs = get_records(InternetRef, columns, first_author, second_author, third_author, publication_date)
     update_refs(internet_refs)
-    internet_refs = InternetRef.where('(
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?) OR
-                                    (first_author = ? AND second_author = ? AND third_author = ?)
-                                    )
-                                    AND publication_date = ?',
-                                      first_author_was, second_author_was, third_author_was,
-                                      first_author_was, third_author_was, second_author_was,
-                                      second_author_was, first_author_was, third_author_was,
-                                      second_author_was, third_author_was, first_author_was,
-                                      third_author_was, first_author_was, second_author_was,
-                                      third_author_was, second_author_was, first_author_was,
-                                      publication_date)
 
+    internet_refs = get_records(InternetRef, columns, first_author_was, second_author_was, third_author_was, publication_date)
     update_refs(internet_refs)
   end
 end

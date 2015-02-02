@@ -37,6 +37,7 @@ shared_examples_for 'references with citations in the text' do
 
     it 'should allow to delete reference if there is not a citation in the text' do
       count = reference.class.all.size
+
       reference.destroy
       expect(reference.class.all.size).to eq(count-1)
     end

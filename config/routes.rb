@@ -1,3 +1,41 @@
+require 'sidekiq/web'
+
+class AuthConstraint
+
+  def self.admin?(request)
+    message = CGI.unescape(request.cookies['_sistema-tcc_session'])
+
+    config = Rails.application.config
+
+    secret_key_base = SECRET_FILE['secret_key_base']
+
+    key_generator = ActiveSupport::KeyGenerator.new(
+        secret_key_base, iterations: 1000
+    )
+
+    secret = key_generator.generate_key(
+        config.action_dispatch.encrypted_cookie_salt
+    )
+
+    sign_secret = key_generator.generate_key(
+        config.action_dispatch.encrypted_signed_cookie_salt
+    )
+
+    encryptor = ActiveSupport::MessageEncryptor.new(
+        secret, sign_secret
+    )
+
+    obj = encryptor.decrypt_and_verify(message)
+
+    ( obj['lti_launch_params']['roles'].include?(Authentication::Roles.administrator) ||
+      obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_avea) ||
+        obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_curso)
+    )
+
+  end
+
+end
+
 Rails.application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
@@ -7,6 +45,24 @@ Rails.application.routes.draw do
   get 'access_denied' => 'lti#access_denied'
 
   get 'instructor_admin' => 'instructor_admin#index'
+  get 'instructor_admin_navbar' => 'instructor_admin#navbar'
+
+  get 'compound_names' => 'compound_names#index'
+  match 'compound_names' => 'compound_names#create',via: [:post]
+  get 'new_compound_name' => 'compound_names#new'
+  match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name'
+  get '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
+  match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
+  match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
+
+  # compound_names GET            (/user/:moodle_user)/compound_names(.:format)            compound_names#index
+  # POST           (/user/:moodle_user)/compound_names(.:format)            compound_names#create
+  # new_compound_name GET            (/user/:moodle_user)/compound_names/new(.:format)        compound_names#new
+  # edit_compound_name GET            (/user/:moodle_user)/compound_names/:id/edit(.:format)   compound_names#edit
+  # compound_name GET            (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#show
+  # PATCH          (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#update
+  # PUT            (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#update
+  # DELETE         (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#destroy
 
   # Autocomplete routes
   get 'instructor_admin/autocomplete_tcc_name'
@@ -21,6 +77,23 @@ Rails.application.routes.draw do
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
   match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
+
+  get 'batch_select' => 'batch_prints#index'
+  match 'batch_print' => 'batch_prints#print', via: [:post]
+
+  # sidekiq monitor
+  #mount Sidekiq::Monitor::Engine => '/sidekiq'
+  # constraints lambda {|request| AuthConstraint.admin?(request) } do
+  #   mount Sidekiq::Monitor::Engine => '/sidekiq'
+  # end
+
+  # sidekiq monitor sinatra
+  #mount Sidekiq::Web, at: '/sidekiq'
+
+  constraints lambda {|request| AuthConstraint.admin?(request) } do
+    #mount Sidekiq::Web, at: '/sidekiq'
+    mount Sidekiq::Web => '/admin/sidekiq'
+  end
 
   # TCC routes
   scope "/(user/:moodle_user)" do
@@ -37,7 +110,7 @@ Rails.application.routes.draw do
 
     # Chapters
     get 'chapters/:position' => 'chapters#edit', as: 'edit_chapters'
-    match 'chapters/:position' => 'chapters#save', as: 'save_chapters', via: [:pos, :patch, :put]
+    match 'chapters/:position' => 'chapters#save', as: 'save_chapters', via: [:post, :patch, :put]
     match 'chapters/:position/import' => 'chapters#import', as: 'import_chapters', via: [:get]
     match 'chapters/:position/import' => 'chapters#execute_import', as: 'execute_import_chapters', via: [:post]
     match 'chapters/:position/empty' => 'chapters#empty', as: 'empty_chapters', via: [:get]
@@ -50,10 +123,11 @@ Rails.application.routes.draw do
     resources :internet_refs
     resources :legislative_refs
     resources :thesis_refs
-    resources :compound_names
+    #resources :compound_names
 
     # FIXME: generalizar controller abaixo
     resources :orientador
+
   end
 
 end

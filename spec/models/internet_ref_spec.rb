@@ -1,16 +1,23 @@
 require 'spec_helper'
 
 describe InternetRef do
-
   context 'validations' do
-    before(:all) { @internet_ref = Fabricate(:internet_ref) }
-    after(:all) { @internet_ref.destroy }
+
+    before(:all) do
+      @internet_ref = Fabricate(:internet_ref)
+    end
+
+    after(:all) do
+      @internet_ref.destroy
+    end
+
 
     it { should respond_to(:access_date, :first_author, :second_author, :third_author, :publication_date, :et_al,
                            :complementary_information, :subtitle,
                            :title,
                            :url) }
     it { should have_one(:reference) }
+
 
     it { should validate_presence_of(:first_author) }
     it { should validate_presence_of(:title) }

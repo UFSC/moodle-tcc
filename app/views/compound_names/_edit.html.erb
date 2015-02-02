@@ -6,7 +6,7 @@
   </div>
 
   <div class="modal-body">
-    <%= semantic_form_for compound_name, url: compound_name_path(compound_name, moodle_user: params[:moodle_user]) do |t| %>
+    <%= semantic_form_for compound_name, url: edit_compound_name_path(compound_name, moodle_user: params[:moodle_user]) do |t| %>
       <p><%= t.input :name %></p>
       <%= t.input :type_name, as: :radio, collection: [['Normal', 'simple'], ['Sufixo', 'suffix']] %>
 

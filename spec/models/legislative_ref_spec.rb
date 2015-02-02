@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe LegislativeRef do
   context 'validations' do
+    before(:all) { @legislative_ref = Fabricate(:legislative_ref) }
+    after(:all) { @legislative_ref.destroy }
 
     it { should respond_to(:edition, :jurisdiction_or_header, :local, :publisher, :title, :total_pages, :year) }
     it { should have_one(:reference) }

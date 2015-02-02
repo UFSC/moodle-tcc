@@ -3,7 +3,7 @@
 <dl class="bib">
 
   <!--Book references-->
-  <% @book_refs.each do |r| %>
+  <% book_refs.each do |r| %>
     <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= lesc r.local %></span>
@@ -22,7 +22,7 @@
   <% end %>
 
   <!--Book Cap_refs references-->
-  <% @book_cap_refs.each do |r| %>
+  <% book_cap_refs.each do |r| %>
     <dt class="inbook">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= r.local %></span>
@@ -43,7 +43,7 @@
   <% end %>
 
   <!--Article references-->
-  <% @article_refs.each do |r| %>
+  <% article_refs.each do |r| %>
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
         <span class="author">
@@ -63,7 +63,7 @@
   <% end %>
 
   <!--Internet references-->
-  <% @internet_refs.each do |r| %>
+  <% internet_refs.each do |r| %>
     <dt class="misc">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="author">
@@ -82,7 +82,7 @@
   <% end %>
 
   <!--Legislative refs references-->
-  <% @legislative_refs.each do |r| %>
+  <% legislative_refs.each do |r| %>
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= r.local %></span>
@@ -96,7 +96,7 @@
   <% end %>
 
   <!--Thesis refs references-->
-  <% @thesis_refs.each do |r| %>
+  <% thesis_refs.each do |r| %>
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= r.local %></span>
