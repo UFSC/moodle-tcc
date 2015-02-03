@@ -49,3 +49,18 @@ Fabricator(:tcc_with_all_comments, :class_name => :tcc, :from => :tcc_with_comme
     tcc.reload
   end
 end
+
+# Valid TCC with all chapters in done state
+Fabricator(:tcc_with_all_done, :class_name => :tcc, :from => :tcc_with_all) do
+  # Após a criação, vamos alterar o estados dos capítulos
+  after_create do |tcc, transients|
+    tcc.abstract.to_done_admin!
+    tcc.abstract.save!
+    tcc.chapters.each do |chapter|
+      chapter.to_done_admin!
+      chapter.save!
+    end
+    tcc.save!
+    tcc.reload
+  end
+end

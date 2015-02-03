@@ -82,6 +82,7 @@ class AbstractsController < ApplicationController
 
   def save_title
     # verifica se o título foi alterado
+    saved = true
     unless (!params[:tcc] || @tcc.title.eql?(params[:tcc][:title]))
       @tcc.title = params[:tcc][:title]
 
@@ -90,7 +91,9 @@ class AbstractsController < ApplicationController
         flash[:error] = 'Título do TCC inválido'
         set_tab :abstract
         render :edit
+        saved = false
       end
     end
+    saved
   end
 end
