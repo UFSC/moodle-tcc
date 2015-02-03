@@ -6,5 +6,4 @@ class AbstractPolicy < ChapterPolicy
     (!@record.tcc.title.nil? && !@record.tcc.title.empty?)
   end
 
-
 end

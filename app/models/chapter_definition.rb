@@ -6,11 +6,12 @@ class ChapterDefinition < ActiveRecord::Base
   validates :tcc_definition, presence: true
   validates :title, presence: true
 
-  attr_accessible :position, :title, :tcc_definition, :tcc_definition_id
+  attr_accessible :position, :title, :tcc_definition, :tcc_definition_id, :coursemodule_id, :is_numbered_title, :verify_references
 
   default_scope -> { order(:position) }
 
-  after_commit :touch_tcc, on: [:create, :update]
+  after_create :touch_tcc
+  after_update :touch_tcc
   before_destroy :touch_tcc
 
   def remote_text?
@@ -20,7 +21,13 @@ class ChapterDefinition < ActiveRecord::Base
   private
 
   def touch_tcc
-    Tcc.update_all(:updated_at => DateTime.now)
+    # atualiza os tccs apenas se os campos abaixo forem alterados
+    if (!title_was.eql?(title) ||
+        !position_was.eql?(position) ||
+        !is_numbered_title_was.eql?(is_numbered_title)
+    )
+      Tcc.where(tcc_definition_id: tcc_definition_id).update_all(:updated_at => DateTime.now)
+    end
   end
 
 end

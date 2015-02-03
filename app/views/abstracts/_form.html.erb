@@ -42,7 +42,8 @@
                       can_send_to_review: policy(@abstract).can_send_to_review?,
                       can_send_draft_done: policy(@abstract).can_send_to_draft_done?,
                       can_send_review_admin: policy(@abstract).can_send_to_review_admin?,
-                      can_send_draft_admin: policy(@abstract).can_send_to_draft_admin?
+                      can_send_draft_admin: policy(@abstract).can_send_to_draft_admin?,
+                      must_verify_references: policy(@abstract).must_verify_references?
              } %>
 </div>
 <% end %>

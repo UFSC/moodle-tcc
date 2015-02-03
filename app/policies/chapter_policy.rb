@@ -100,6 +100,15 @@ class ChapterPolicy < ApplicationPolicy
     true
   end
 
+  def must_verify_references?
+    begin
+      must_verify = @record.chapter_definition.verify_references
+    rescue
+      must_verify = false
+    end
+    must_verify
+  end
+
   class Scope < Scope
     def resolve
       scope

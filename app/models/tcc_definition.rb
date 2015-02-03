@@ -9,7 +9,8 @@ class TccDefinition < ActiveRecord::Base
 
   attr_accessible :internal_name, :activity_url, :course_id, :defense_date, :moodle_instance_id
 
-  after_commit :touch_tcc, on: [:create, :update]
+  after_create :touch_tcc
+  after_update :touch_tcc
 
   private
 

@@ -16,8 +16,16 @@ def create_or_update_tcc_definitions(internal_name: internal_name, course_id: co
     Progress.step
 
     definitions.each_with_index do |chapter_definitions, chapter_index|
-      ChapterDefinition.create_with(chapter_definitions).find_or_create_by(position: chapter_index+1,
-                                                                           tcc_definition_id: tcc_def.id)
+      cd = ChapterDefinition.where(position: chapter_index+1,
+                              tcc_definition_id: tcc_def.id)
+      if (cd.nil? || cd.empty?)
+        # deve criar
+        ChapterDefinition.create_with(chapter_definitions).find_or_create_by(position: chapter_index+1,
+                                                                             tcc_definition_id: tcc_def.id)
+      else
+        # deve atualizar
+        cd.first.update_attributes(chapter_definitions)
+      end
       Progress.step
     end
 
@@ -28,27 +36,26 @@ end
 # TCC Definition - Turma A (210000092)
 #
 definition = [
-    {title: 'Introdução', coursemodule_id: 5206, is_numbered_title: true},
-    {title: 'Objetivos', coursemodule_id: 5207, is_numbered_title: true},
-    {title: 'Revisão da Literatura', is_numbered_title: true},
-    {title: 'Metodologia', is_numbered_title: true},
-    {title: 'Resultados Esperados', is_numbered_title: true},
+    {title: 'Introdução', coursemodule_id: 5206, is_numbered_title: true, verify_references: true},
+    {title: 'Objetivos',  coursemodule_id: 5207, is_numbered_title: true, verify_references: false},
+    {title: 'Revisão da Literatura',             is_numbered_title: true, verify_references: true},
+    {title: 'Metodologia',                       is_numbered_title: true, verify_references: false},
+    {title: 'Resultados Esperados',              is_numbered_title: true, verify_references: false}
 ]
 create_or_update_tcc_definitions(internal_name: 'Turma A (210000092)',
                                  definitions: definition,
                                  course_id: 230,
                                  moodle_instance_id: 8,
                                  activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322')
-
 #
 # TCC Definition - Turma B (210000092)
 #
 definition = [
-    {title: 'Introdução', coursemodule_id: 5203, is_numbered_title: true},
-    {title: 'Objetivos', coursemodule_id: 5204, is_numbered_title: true},
-    {title: 'Revisão da Literatura', is_numbered_title: true},
-    {title: 'Metodologia', is_numbered_title: true},
-    {title: 'Resultados Esperados', is_numbered_title: true},
+    {title: 'Introdução', coursemodule_id: 5203, is_numbered_title: true,  verify_references: true},
+    {title: 'Objetivos',  coursemodule_id: 5204, is_numbered_title: true,  verify_references: false},
+    {title: 'Revisão da Literatura',             is_numbered_title: true,  verify_references: true},
+    {title: 'Metodologia',                       is_numbered_title: true,  verify_references: false},
+    {title: 'Resultados Esperados',              is_numbered_title: true,  verify_references: false}
 ]
 create_or_update_tcc_definitions(internal_name: 'Turma B (210000092)',
                                  definitions: definition,

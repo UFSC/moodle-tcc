@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114031719) do
+ActiveRecord::Schema.define(version: 20150203165732) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -84,12 +84,23 @@ ActiveRecord::Schema.define(version: 20150114031719) do
     t.datetime "updated_at"
   end
 
+  create_table "chapter_comments", force: true do |t|
+    t.text     "comment",                  limit: 16777215
+    t.integer  "chapter_commentable_id"
+    t.string   "chapter_commentable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chapter_comments", ["chapter_commentable_id"], name: "index_chapter_comments_on_chapter_commentable_id", using: :btree
+
   create_table "chapter_definitions", force: true do |t|
     t.integer  "tcc_definition_id"
     t.string   "title"
     t.integer  "coursemodule_id"
     t.integer  "position"
     t.boolean  "is_numbered_title", default: true
+    t.boolean  "verify_references", default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
