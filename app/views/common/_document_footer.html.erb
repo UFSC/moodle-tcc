@@ -12,9 +12,9 @@
     %>
     <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_done'),
                            button_html: {class: 'btn btn-success', name: 'done',
-                                         data: {confirm: t(:warn_message_sent_to_done_html),
-                                                done: t(:warn_message_sent_to_done_html),
-                                                citation: must_verify_references ? t(:warn_message_without_citation_html) : t(:warn_message_sent_to_done_html)}} if can_send_draft_done
+                                         data: {confirm: done_message(false),
+                                                with_citation: with_citation_message(object),
+                                                without_citation:  without_citation_message(object)}} if can_send_draft_done
     %>
     <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_draft_admin'),
                            button_html: {class: 'btn btn-warning', name: 'draft_admin'} if can_send_draft_admin

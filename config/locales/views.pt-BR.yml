@@ -20,9 +20,10 @@
     successfully_deleted: 'Removido com sucesso'
     unsuccessfully_saved: 'Mudanças não foram salvas'
     unsuccessfully_deleted: 'Não pode ser removido'
-    warn_message_sent_to_done_html: 'Todo o texto contido nesta tela não poderá mais ser alterado após sua aprovação. </br> Deseja continuar?'
-    warn_message_without_citation_html: 'Não foi encontrada qualquer citação de referência bibliográfica no texto do capítulo atual. Para a aprovação final e avaliação do TCC deve haver ao menos seis (6) referências citadas no documento. </br></br> Certifique-se de que realmente não são necessárias referências nesse capítulo. </br></br> Todo o texto contido nesta tela não poderá mais ser alterado após sua aprovação. </br></br> Deseja continuar?'
     warn_message_send_to_review_html: 'Você não poderá mais editar o texto enquanto o orientador estiver realizando a avaliação. </br> Deseja continuar?'
+    warn_message_sent_to_done_html: 'Todo o texto contido nesta tela não poderá mais ser alterado após sua aprovação. </br></br> Deseja continuar?'
+    warn_message_without_citation_html: 'Não foi encontrada qualquer citação de referência bibliográfica no texto do capítulo atual. </br></br>'
+    warn_message_necessary_references_html: 'Certifique-se de que realmente não são necessárias referências nesse capítulo. </br></br>'
 
     # Telas de conteúdo
     empty_diaries: '[ ainda não existe nada postado para esta atividade ]'

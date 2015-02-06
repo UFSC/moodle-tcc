@@ -7,7 +7,7 @@ class TccDefinition < ActiveRecord::Base
   validates :activity_url, presence: true
   validates :course_id, uniqueness: true, presence: true
 
-  attr_accessible :internal_name, :activity_url, :course_id, :defense_date, :moodle_instance_id
+  attr_accessible :internal_name, :activity_url, :course_id, :defense_date, :moodle_instance_id, :minimum_references
 
   after_create :touch_tcc
   after_update :touch_tcc

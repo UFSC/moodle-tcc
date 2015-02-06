@@ -1,8 +1,9 @@
 <%= render partial: 'header', locals: {object: @chapter, object_label: @chapter.chapter_definition.title} %>
 
 <%= semantic_form_for @chapter, url: save_chapters_path(position: @chapter.position) do |form| %>
-  <%= form.input :position, :as => :hidden %>
-
+  <!--%= form.input :position, :as => :hidden %>-->
+  <!--%= hidden_field_tag 'position', '' %>-->
+  <!--%= hidden_field_tag 'tcc_count_refs', @chapter.tcc.nil? ?  '0' : @chapter.tcc.count_references %>-->
   <div class="panel rounded-border">
     <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@chapter).edit_content?}} %>
   </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203165732) do
+ActiveRecord::Schema.define(version: 20150206175303) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -221,9 +221,10 @@ ActiveRecord::Schema.define(version: 20150203165732) do
     t.string   "activity_url"
     t.integer  "course_id"
     t.date     "defense_date"
+    t.integer  "moodle_instance_id"
+    t.integer  "minimum_references"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "moodle_instance_id"
   end
 
   create_table "tccs", force: true do |t|

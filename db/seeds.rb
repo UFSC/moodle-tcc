@@ -2,17 +2,31 @@
 
 # Helper para realizar a criação e popular TccDefinitions, HubDefinitions, DiaryDefinitions
 def create_or_update_tcc_definitions(internal_name: internal_name, course_id: course_id, activity_url: activity_url,
-                                     moodle_instance_id: moodle_instance_id, definitions: definitions)
+                                     moodle_instance_id: moodle_instance_id, minimum_references: minimum_references, definitions: definitions)
 
   # Numero de operações para criação de Capítulos + 1 (Tcc)
   operations_count = definitions.flatten.flatten.count+1
 
   # Inicia o processo de criação das definições de TCC e Capítulos
   Progress.start("TCC Definition: #{internal_name}", operations_count) do
+    td = TccDefinition.where(moodle_instance_id: moodle_instance_id)
+    if (td.nil? || td.empty?)
+      # deve criar
+      tcc_def = TccDefinition.create_with(internal_name: internal_name,
+                                          activity_url: activity_url,
+                                          course_id: course_id,
+                                          minimum_references: minimum_references).find_or_create_by(moodle_instance_id: moodle_instance_id)
+    else
+      # deve atualizar
+      td.first.update_attributes({internal_name: internal_name,
+                                            activity_url: activity_url,
+                                            course_id: course_id,
+                                            moodle_instance_id: moodle_instance_id,
+                                            minimum_references: minimum_references
+                                           })
+      tcc_def = td.first
+    end
 
-    tcc_def = TccDefinition.create_with(internal_name: internal_name,
-                                        activity_url: activity_url,
-                                        moodle_instance_id: moodle_instance_id).find_or_create_by(course_id: course_id)
     Progress.step
 
     definitions.each_with_index do |chapter_definitions, chapter_index|
@@ -46,6 +60,7 @@ create_or_update_tcc_definitions(internal_name: 'Turma A (210000092)',
                                  definitions: definition,
                                  course_id: 230,
                                  moodle_instance_id: 8,
+                                 minimum_references: 6,
                                  activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322')
 #
 # TCC Definition - Turma B (210000092)
@@ -61,4 +76,5 @@ create_or_update_tcc_definitions(internal_name: 'Turma B (210000092)',
                                  definitions: definition,
                                  course_id: 258,
                                  moodle_instance_id: 9,
+                                 minimum_references: 6,
                                  activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=5300')
