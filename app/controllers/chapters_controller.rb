@@ -26,15 +26,14 @@ class ChaptersController < ApplicationController
     @comment = @chapter.comment || @chapter.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    change_state
+    b_change_state = change_state
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]
 
-      flash[:success] = t(:successfully_saved)
+      flash[:success] = t(:successfully_saved)  if b_change_state
       return redirect_to edit_chapters_path(position: @chapter.position.to_s)
     end
-
     # falhou, precisamos re-exibir as informações
     set_tab ('chapter'+params[:position]).to_sym
     render :edit
@@ -78,7 +77,12 @@ class ChaptersController < ApplicationController
 
   def change_state
     if params[:done]
-      @chapter.to_done
+      if policy(@chapter).can_send_to_done?
+        @chapter.to_done
+      else
+        flash[:error] = 'O capítulo não pôde ser aprovado! <br/> Verifique se há referências citadas no texto!'.html_safe
+        return false
+      end
     elsif params[:review]
       @chapter.to_review
     elsif (params[:draft] || (!@chapter.empty? && @chapter.state.eql?(:empty.to_s)))
@@ -90,5 +94,6 @@ class ChaptersController < ApplicationController
     elsif (params[:draft_admin] || (!@chapter.empty? && @chapter.state.eql?(:empty.to_s)))
       @chapter.to_draft_admin if policy(@chapter).can_send_to_draft_admin?
     end
+    true
   end
 end

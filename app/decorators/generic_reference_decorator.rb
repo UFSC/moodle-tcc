@@ -77,5 +77,29 @@ class GenericReferenceDecorator < Draper::Decorator
     return name
   end
 
+  # puts(reference.element.decorate.mount_citation_tag(reference, 'cd'))
+  # @param [Reference] reference Referência da citação
+  # @param [String] ctype ['cd','ci'] respectivamente citacao direta e indireta
+  # @param [Integer] pagina citada
+  # @return [String] Tag html contedo as informações da citação
+  def mount_citation_tag(reference, ctype, pagina = 'undefined')
+    def get_reference_type (ref_type)
+      Conversor::REFERENCES_TYPE.each {| x, y|
+        return x if ref_type.eql?(y)
+      }
+      false
+    end
+    text = reference.element.decorate.send( Conversor::CITACAO_TYPE[ctype])
+    citation = 'citacao-text='.concat(%Q["#{text}"])
+    citation += ' citacao_type='.concat(%Q["#{ctype}"])
+    citation += ' class='.concat(%Q["citacao-class"])
+    citation += ' contenteditable='.concat(%Q["false"])
+    citation += ' id='.concat(%Q["#{reference.element_id}"])
+    citation += ' pagina='.concat(%Q["#{ pagina }"])
+    citation += ' ref-type='.concat(%Q["#{get_reference_type(reference.element_type)}"])
+    citation += ' reference_id='.concat(%Q["#{reference.id}"])
+    citation += ' title='.concat(%Q["#{text}"])
+    "<citacao #{citation}>#{text}</citacao>"
+  end
 
 end

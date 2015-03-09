@@ -55,15 +55,6 @@ Rails.application.routes.draw do
   match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
   match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
 
-  # compound_names GET            (/user/:moodle_user)/compound_names(.:format)            compound_names#index
-  # POST           (/user/:moodle_user)/compound_names(.:format)            compound_names#create
-  # new_compound_name GET            (/user/:moodle_user)/compound_names/new(.:format)        compound_names#new
-  # edit_compound_name GET            (/user/:moodle_user)/compound_names/:id/edit(.:format)   compound_names#edit
-  # compound_name GET            (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#show
-  # PATCH          (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#update
-  # PUT            (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#update
-  # DELETE         (/user/:moodle_user)/compound_names/:id(.:format)        compound_names#destroy
-
   # Autocomplete routes
   get 'instructor_admin/autocomplete_tcc_name'
   get 'tutor/autocomplete_tcc_name'

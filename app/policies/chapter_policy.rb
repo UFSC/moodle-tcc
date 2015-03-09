@@ -95,6 +95,20 @@ class ChapterPolicy < ApplicationPolicy
     can_show
   end
 
+  def can_send_to_done?
+    # verifica se há condições mínimas para a aprovação do capítulo
+    true
+  end
+
+  def must_verify_references?
+    begin
+      must_verify = @record.chapter_definition.verify_references
+    rescue
+      must_verify = false
+    end
+    must_verify
+  end
+
   class Scope < Scope
     def resolve
       scope

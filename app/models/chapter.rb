@@ -15,4 +15,20 @@ class Chapter < ActiveRecord::Base
     (self.content.nil? || self.content.empty?)
   end
 
+  def citations
+    doc = Nokogiri::HTML(self.content)
+    block = doc.xpath("//citacao")
+    chld_name = block.map { |node|
+      [node['id']] if node.key?('id') }.compact
+    chld_name.uniq
+  end
+
+  def count_citation
+    self.citations.count
+  end
+
+  def has_citation?
+    return (self.count_citation > 0)
+  end
+
 end
