@@ -25,7 +25,7 @@ juntamente com o Abntex2. A instalação do LaTex é diferente no Ubuntu e no Ma
 
 ### Dependências do Ubuntu: ###
 
-    sudo apt-get install -y phantomjs imagemagick libmagickwand-dev graphviz
+    sudo apt-get install -y phantomjs imagemagick libmagickwand-dev graphviz redis-server
 
 
 ### Instalação do Tex Live (Ubuntu)
