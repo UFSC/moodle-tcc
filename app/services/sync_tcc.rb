@@ -34,15 +34,13 @@ class SyncTcc
 
     person = Person.find_or_initialize_by(moodle_id: moodle_id)
 
-    # Só busca os dados do usuário se ele ainda foi criado
-    unless person.persisted?
-      attributes = @remote_service.find_users_by_field('id', moodle_id)
-      person.attributes = {moodle_username: attributes.username, email: attributes.email, name: attributes.name}
+    # sempre atualiza os dados da pessoa
+    attributes = @remote_service.find_users_by_field('id', moodle_id)
+    person.attributes = {moodle_username: attributes.username, email: attributes.email, name: attributes.name}
 
-      unless person.valid? && person.save
-        register_error(:person, person.attributes, person.error.messages)
-        return nil
-      end
+    unless person.valid? && person.save
+      register_error(:person, person.attributes, person.error.messages)
+      return nil
     end
 
     person
