@@ -13,6 +13,8 @@ server 'tcc.unasus.ufsc.br', user: 'deploy', roles: %w{web app db}
 
 # fetch(:default_env).merge!(rails_env: :production)
 
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+
 namespace :deploy do
   before :finished, 'newrelic:notice_deployment'
 end

@@ -161,4 +161,5 @@ group :deploy do
   gem 'capistrano-db-tasks', :require => false
   gem 'capistrano-newrelic'
   gem 'capistrano-git-submodule-strategy', '0.1.3'
+  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end
