@@ -16,6 +16,15 @@ GIT
       formtastic (>= 3.0)
 
 GIT
+  remote: git://github.com/rails/activerecord-session_store.git
+  revision: 2d9517d0f26281e76e80e63ca202fb7dafbe27cb
+  specs:
+    activerecord-session_store (0.1.1)
+      actionpack (>= 4.0.0, < 5)
+      activerecord (>= 4.0.0, < 5)
+      railties (>= 4.0.0, < 5)
+
+GIT
   remote: git://github.com/robertosilvino/metalink-ruby.git
   revision: a352c86c1d2ec41ab8a5de3838c6e0ad10321610
   branch: add-binary-structure
@@ -128,7 +137,7 @@ GEM
       capistrano (>= 3.0.0)
     capistrano-git-submodule-strategy (0.1.3)
       capistrano (~> 3.1)
-    capistrano-newrelic (0.0.8)
+    capistrano-newrelic (0.0.9)
       capistrano (~> 3.0)
       newrelic_rpm
     capistrano-rails (1.1.2)
@@ -613,6 +622,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-session_store!
   addressable
   airbrake
   attribute_normalizer
