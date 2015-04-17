@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.1.9'
 gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 # Teste de geração de pdf no worker
 #gem 'wicked_pdf'
