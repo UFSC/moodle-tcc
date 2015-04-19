@@ -11,16 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150206175303) do
+ActiveRecord::Schema.define(version: 20150417182709) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
     t.string   "keywords"
     t.integer  "tcc_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "state",                       default: "empty"
     t.date     "state_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "abstracts", ["tcc_id"], name: "index_abstracts_on_tcc_id", using: :btree
@@ -84,16 +84,6 @@ ActiveRecord::Schema.define(version: 20150206175303) do
     t.datetime "updated_at"
   end
 
-  create_table "chapter_comments", force: true do |t|
-    t.text     "comment",                  limit: 16777215
-    t.integer  "chapter_commentable_id"
-    t.string   "chapter_commentable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "chapter_comments", ["chapter_commentable_id"], name: "index_chapter_comments_on_chapter_commentable_id", using: :btree
-
   create_table "chapter_definitions", force: true do |t|
     t.integer  "tcc_definition_id"
     t.string   "title"
@@ -111,11 +101,11 @@ ActiveRecord::Schema.define(version: 20150206175303) do
     t.text     "content",               limit: 16777215
     t.integer  "position"
     t.integer  "tcc_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "chapter_definition_id"
     t.string   "state",                                  default: "empty"
     t.date     "state_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "chapters", ["chapter_definition_id"], name: "index_chapters_on_chapter_definition_id", using: :btree
@@ -216,6 +206,16 @@ ActiveRecord::Schema.define(version: 20150206175303) do
   add_index "references", ["element_id"], name: "index_references_on_element_id", using: :btree
   add_index "references", ["tcc_id"], name: "index_references_on_tcc_id", using: :btree
 
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
   create_table "tcc_definitions", force: true do |t|
     t.string   "internal_name"
     t.string   "activity_url"
@@ -233,11 +233,11 @@ ActiveRecord::Schema.define(version: 20150206175303) do
     t.integer  "orientador_id"
     t.integer  "student_id"
     t.integer  "tutor_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "tcc_definition_id"
     t.integer  "grade"
     t.datetime "grade_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "tccs", ["tcc_definition_id"], name: "index_tccs_on_tcc_definition_id", using: :btree

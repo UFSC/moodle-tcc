@@ -1,8 +1,15 @@
+# Figure out the name of the current local branch
+def current_git_branch
+  branch = `git symbolic-ref HEAD 2> /dev/null`.strip.gsub(/^refs\/heads\//, '')
+  puts "* Using branch: #{branch}"
+  branch
+end
+
 set :stage, :vmlocal
 
 set :application, 'tcc.vmlocal'
 set :deploy_to, '/home/deploy/tcc'
-set :branch, 'master'
+set :branch, current_git_branch
 set :rails_env, 'production'
 
 set :ssh_options, {
