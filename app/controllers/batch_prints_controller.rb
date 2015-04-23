@@ -7,13 +7,36 @@ class BatchPrintsController < ApplicationController
     authorize(Tcc, :show_scope?)
     @current_moodle_user = current_moodle_user
     @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
+
     tccList = Tcc.includes(:student, :orientador, :abstract, :chapters).
                   joins(:student).
                   joins(:orientador).
                   where(tcc_definition_id: @tcc_definition.id).
                   where.not(orientador: nil).
-                  #where.not(grade: nil).
                   order('orientadors_tccs.name, people.name')
+
+    show_graded_before = @tp.custom_params['show_graded_before']
+    show_graded_before = show_graded_before.nil? ? '' : show_graded_before.gsub('\'', '')
+
+    show_graded_after = @tp.custom_params['show_graded_after']
+    show_graded_after = show_graded_after.nil? ? '': show_graded_after.gsub('\'', '')
+    where = ''
+    if  (!show_graded_before.empty? and !show_graded_after.empty? )
+      where = "( grade_updated_at between ? and ? )"
+      where = "grade_updated_at is null or #{where}"
+      tccList = tccList.where(where, show_graded_after, show_graded_before)
+    else
+      if ( !show_graded_after.empty? )
+        where += '( grade_updated_at > ?)'
+        where = "grade_updated_at is null or #{where}"
+        tccList = tccList.where(where, show_graded_after)
+      elsif ( !show_graded_before.empty? )#or show_graded_after.empty?
+        where += '( grade_updated_at < ? )'
+        where = "grade_updated_at is null or #{where}"
+        tccList = tccList.where(where, show_graded_before)
+      end
+    end
+
     tccs = policy_scope(tccList)
     @tccs = tccs
   end
