@@ -73,16 +73,19 @@ class Tcc < ActiveRecord::Base
   private
 
   def create_or_update_chapters
-    self.tcc_definition.chapter_definitions.each do |chapter_definition|
+    unless self.tcc_definition.nil?
 
-      if self.chapters.empty?
-        self.chapters.build(tcc: self, chapter_definition: chapter_definition, position: chapter_definition.position)
-      else
-        chapter_tcc = self.chapters.find_or_initialize_by(position: chapter_definition.position)
-        chapter_tcc.chapter_definition = chapter_definition
-        chapter_tcc.save!
+      self.tcc_definition.chapter_definitions.each do |chapter_definition|
+
+        if self.chapters.empty?
+          self.chapters.build(tcc: self, chapter_definition: chapter_definition, position: chapter_definition.position)
+        else
+          chapter_tcc = self.chapters.find_or_initialize_by(position: chapter_definition.position)
+          chapter_tcc.chapter_definition = chapter_definition
+          chapter_tcc.save!
+        end
+
       end
-
     end
   end
 
