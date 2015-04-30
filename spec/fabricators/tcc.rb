@@ -64,3 +64,21 @@ Fabricator(:tcc_with_all_done, :class_name => :tcc, :from => :tcc_with_all) do
     tcc.reload
   end
 end
+
+# Valid TCC with all chapters in done state and grade
+Fabricator(:tcc_with_grade, :class_name => :tcc, :from => :tcc_with_all_done) do
+  # Após a criação, vamos alterar o estados dos capítulos
+  after_create do |tcc|
+    tcc_definition_aux = tcc.tcc_definition
+    # tcc_definition = nil para não entrar no tcc.post_moodle_grade e chamar o webservice de atualização de nota
+    tcc.tcc_definition = nil
+    tcc.grade = 100
+    #tcc.grade_updated_at = Date.today #.strftime("%Y-%m-%d")
+    tcc.save!
+    tcc.reload
+    # restaura o tcc_definition salvo
+    tcc.tcc_definition = tcc_definition_aux
+    tcc.save!
+    tcc.reload
+  end
+end

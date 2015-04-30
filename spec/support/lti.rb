@@ -6,8 +6,10 @@ class FakeLTI
   attr_writer :tool_provider
   attr_writer :user_id
 
-  def initialize(roles: Authentication::Roles.student)
+  def initialize(roles: Authentication::Roles.student, show_graded_after: nil, show_graded_before: nil)
     @roles = roles
+    @show_graded_after = show_graded_after
+    @show_graded_before = show_graded_before
   end
 
   def lti_launch_data
@@ -37,7 +39,9 @@ class FakeLTI
   private
 
   def default_params
-    {
+
+
+    params = {
         'launch_url' => 'http://www.example.com/',
         'lis_outcome_service_url' => outcome_service_url,
         'resource_link_id' => 1,
@@ -46,8 +50,13 @@ class FakeLTI
         'user_id' => user_id,
 
         # custom params start with custom_:
-        'custom_tcc_definition' => tcc.tcc_definition.id
+        'custom_tcc_definition'     => tcc.tcc_definition.id
     }
+
+    params.merge!({'custom_show_graded_after'  => @show_graded_after}) unless @show_graded_after.nil?
+    params.merge!({'custom_show_graded_before' => @show_graded_before}) unless @show_graded_before.nil?
+
+    params
   end
 
   def fake_tool_consumer
@@ -63,33 +72,47 @@ class FakeLTI
   end
 end
 
-def moodle_lti_params_by_person(roles = 'student', person, tcc)
-  fakelti = FakeLTI.new(roles: roles)
+# def moodle_lti_params_by_person(roles = 'student', person, tcc)
+#   fakelti = FakeLTI.new(roles: roles)
+#   fakelti.tcc = tcc
+#   fakelti.user_id = person.moodle_id
+#   fakelti.lti_launch_data
+# end
+
+def moodle_lti_params_by_person(roles = 'student', person, tcc, show_graded_after, show_graded_before)
+  fakelti = FakeLTI.new(roles: roles, show_graded_after: show_graded_after, show_graded_before: show_graded_before)
   fakelti.tcc = tcc
   fakelti.user_id = person.moodle_id
 
   fakelti.lti_launch_data
 end
 
-def moodle_lti_params(roles = 'student')
-  fakelti = FakeLTI.new(roles: roles)
+def moodle_lti_params(roles = 'student', show_graded_after = nil, show_graded_before = nil)
+  fakelti = FakeLTI.new(roles: roles, show_graded_after: show_graded_after, show_graded_before: show_graded_before)
   fakelti.lti_launch_data
 end
 
-def fake_lti_session(roles = 'student')
-  lti_params = moodle_lti_params(roles)
+def fake_lti_session(roles = 'student', show_graded_after = nil, show_graded_before = nil)
+  lti_params = moodle_lti_params(roles, show_graded_after, show_graded_before)
   @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
 
   {'lti_launch_params' => lti_params}
 end
 
 def fake_lti_session_by_person(roles='student', person, tcc)
-  lti_params = moodle_lti_params_by_person(roles, person, tcc)
+  lti_params = moodle_lti_params_by_person(roles, person, tcc, nil, nil)
   @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
 
   {'lti_launch_params' => lti_params}
 end
 
-def fake_lti_tool_provider(roles = 'student')
-  FakeLTI.new(roles: roles).tool_provider
+def fake_lti_session_by_person_graded(roles='student', person, tcc, show_graded_after, show_graded_before)
+  lti_params = moodle_lti_params_by_person(roles, person, tcc, show_graded_after, show_graded_before)
+  @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)
+
+  {'lti_launch_params' => lti_params}
+end
+
+def fake_lti_tool_provider(roles = 'student', show_graded_after = nil, show_graded_before = nil)
+  FakeLTI.new(roles: roles, show_graded_after: show_graded_after, show_graded_before: show_graded_before).tool_provider
 end
