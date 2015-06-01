@@ -3,29 +3,39 @@ require 'sidekiq/web'
 class AuthConstraint
 
   def self.admin?(request)
-    message = CGI.unescape(request.cookies['_sistema-tcc_session'])
+    session = ActiveRecord::SessionStore::Session.find_by_session_id(request.cookies['_session_id'])
 
-    config = Rails.application.config
+    message = session['data']
 
-    secret_key_base = SECRET_FILE['secret_key_base']
+    obj = Marshal.load(Base64.decode64(message))
 
-    key_generator = ActiveSupport::KeyGenerator.new(
-        secret_key_base, iterations: 1000
-    )
-
-    secret = key_generator.generate_key(
-        config.action_dispatch.encrypted_cookie_salt
-    )
-
-    sign_secret = key_generator.generate_key(
-        config.action_dispatch.encrypted_signed_cookie_salt
-    )
-
-    encryptor = ActiveSupport::MessageEncryptor.new(
-        secret, sign_secret
-    )
-
-    obj = encryptor.decrypt_and_verify(message)
+    # message = CGI.unescape(request.cookies['_sistema-tcc_session'])
+    #
+    # config = Rails.application.config
+    #
+    # secret_key_base = SECRET_FILE['secret_key_base']
+    #
+    # key_generator = ActiveSupport::KeyGenerator.new(
+    #     secret_key_base, iterations: 1000
+    # )
+    #
+    # secret = key_generator.generate_key(
+    #     config.action_dispatch.encrypted_cookie_salt
+    # )
+    #
+    # sign_secret = key_generator.generate_key(
+    #     config.action_dispatch.encrypted_signed_cookie_salt
+    # )
+    #
+    # encryptor = ActiveSupport::MessageEncryptor.new(
+    #     secret, sign_secret
+    # )
+    # #
+    # # encryptor = ActiveSupport::MessageEncryptor.new(
+    # #     secret, sign_secret, serializer: ActiveSupport::MessageEncryptor::NullSerializer)
+    # # )
+    #
+    # obj = encryptor.decrypt_and_verify(message)
 
     ( obj['lti_launch_params']['roles'].include?(Authentication::Roles.administrator) ||
       obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_avea) ||
