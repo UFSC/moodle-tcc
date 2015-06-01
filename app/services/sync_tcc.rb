@@ -11,8 +11,10 @@ class SyncTcc
   def call
     students = get_students
 
-    students.with_progress "Sincronizando #{students.size} TCCs para #{@tcc_definition.internal_name}" do |student|
-      synchronize_tcc(student)
+    unless students.nil?
+      students.with_progress "Sincronizando #{students.size} TCCs para #{@tcc_definition.internal_name}" do |student|
+        synchronize_tcc(student)
+      end
     end
   end
 
