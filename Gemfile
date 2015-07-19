@@ -5,6 +5,9 @@ gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'eventmachine', '~>1.0.7'
+gem 'passenger'
+gem 'execjs'
+gem 'therubyracer'
 
 # Teste de geração de pdf no worker
 #gem 'wicked_pdf'
@@ -157,7 +160,7 @@ end
 
 # Deploy with Capistrano
 group :deploy do
-  gem 'capistrano', '~> 3.3'
+  gem 'capistrano', '~> 3.4'
   gem 'capistrano-rails'
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
