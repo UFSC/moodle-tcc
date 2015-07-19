@@ -4,6 +4,7 @@ gem 'rails', '~> 4.1.9'
 gem 'mysql2'
 gem 'protected_attributes', '~>1.0.1'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'eventmachine', '~>1.0.7'
 
 # Teste de geração de pdf no worker
 #gem 'wicked_pdf'
@@ -47,7 +48,7 @@ gem 'slim'
 
 # Latex tcc -> pdf
 gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
-gem 'htmlentities'
+gem 'htmlentities', '~> 4.3.3'
 gem 'faraday', '0.8.9'
 gem 'typhoeus'
 gem 'addressable', require: 'addressable/uri'
@@ -108,7 +109,7 @@ end
 
 group :development do
   gem 'thin'
-  gem 'ruby-graphviz', :require => 'graphviz' # usado pela state_machine
+  # gem 'ruby-graphviz', '~> 1.2.2', :require => 'graphviz' # usado pela state_machine
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 
   # Auxilia depuração da aplicação: http://railscasts.com/episodes/402-better-errors-railspanel
