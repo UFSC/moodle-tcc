@@ -9,7 +9,6 @@ Sistema de controle e criação de TCCs dos estudantes da UNA-SUS curso Saúde d
 Esta ferramenta permite que os estudantes acessem via Moodle (LTI) esta ferramenta e
 desenvolvam o TCC em duas atividades: **portfólio** e **tcc**.
 
-
 Instalação
 ----------
 
@@ -22,11 +21,9 @@ utilizado para rodar os testes de interface.
 Para geração correta do TCC em PDF é necessário instalar uma distribuição do LaTex
 juntamente com o Abntex2. A instalação do LaTex é diferente no Ubuntu e no Mac OS X.
 
-
 ### Dependências do Ubuntu: ###
 
     sudo apt-get install -y phantomjs imagemagick libmagickwand-dev graphviz redis-server
-
 
 ### Instalação do Tex Live (Ubuntu)
 
