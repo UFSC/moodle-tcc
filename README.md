@@ -9,7 +9,6 @@ Sistema de controle e criação de TCCs dos estudantes da UNA-SUS curso Saúde d
 Esta ferramenta permite que os estudantes acessem via Moodle (LTI) esta ferramenta e
 desenvolvam o TCC em duas atividades: **portfólio** e **tcc**.
 
-
 Instalação
 ----------
 
