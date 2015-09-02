@@ -78,3 +78,20 @@ create_or_update_tcc_definitions(internal_name: 'Turma B (210000092)',
                                  moodle_instance_id: 9,
                                  minimum_references: 6,
                                  activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=5300')
+
+#
+# TCC Definition - Curso de Especialização Multiprofissional Na Atenção Básica 2015 (21000110) - Metodologia TCC
+#
+definition = [
+    {title: 'Introdução', coursemodule_id: 7178, is_numbered_title: true, verify_references: true},
+    {title: 'Objetivos',  coursemodule_id: 7179, is_numbered_title: true, verify_references: false},
+    {title: 'Revisão da Literatura',             is_numbered_title: true, verify_references: true},
+    {title: 'Metodologia',                       is_numbered_title: true, verify_references: false},
+    {title: 'Resultados Esperados',              is_numbered_title: true, verify_references: false}
+]
+create_or_update_tcc_definitions(internal_name: 'Metodologia (210000110)',
+                                 definitions: definition,
+                                 course_id: 329,
+                                 moodle_instance_id: 8,
+                                 minimum_references: 6,
+                                 activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=7265')
