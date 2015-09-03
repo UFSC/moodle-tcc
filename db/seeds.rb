@@ -1,8 +1,9 @@
 # encoding: utf-8
 
-# Helper para realizar a criação e popular TccDefinitions, HubDefinitions, DiaryDefinitions
-def create_or_update_tcc_definitions(internal_name: internal_name, course_id: course_id, activity_url: activity_url,
-                                     moodle_instance_id: moodle_instance_id, minimum_references: minimum_references, definitions: definitions)
+# Helper para realizar a criação e popular TccDefinitions, ChapterDefinitions
+def create_or_update_tcc_definitions(internal_name: internal_name(), course_id: course_id(), 
+                                     activity_url: activity_url(), moodle_instance_id: moodle_instance_id(), 
+                                     minimum_references: minimum_references(), definitions: definitions() )
 
   # Numero de operações para criação de Capítulos + 1 (Tcc)
   operations_count = definitions.flatten.flatten.count+1
