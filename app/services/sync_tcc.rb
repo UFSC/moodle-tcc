@@ -38,6 +38,16 @@ class SyncTcc
 
     # sempre atualiza os dados da pessoa
     attributes = @remote_service.find_users_by_field('id', moodle_id)
+    if !@remote_service.success?
+      register_error(:person, moodle_id, @remote_service.error_message)
+
+      return nil
+    elsif attributes.nil? # pessoa não encontrada no Moodle
+      register_error(:person, moodle_id, 'pessoa não encontrada no Moodle')
+
+      return nil
+    end
+
     person.attributes = {moodle_username: attributes.username, email: attributes.email, name: attributes.name}
 
     unless person.valid? && person.save
