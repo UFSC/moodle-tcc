@@ -89,9 +89,21 @@ definition = [
     {title: 'Metodologia',                       is_numbered_title: true, verify_references: false},
     {title: 'Resultados Esperados',              is_numbered_title: true, verify_references: false}
 ]
+
+# How to find moodle_instance_id value.
+#
+# select id AS moodle_instance_id
+#   from moodle_unasus2.lti
+#  where course = 329
+#
+# or
+#
+# production log = "resource_link_id=15"
+#
+
 create_or_update_tcc_definitions(internal_name: 'Metodologia (210000110)',
                                  definitions: definition,
                                  course_id: 329,
-                                 moodle_instance_id: 8,
+                                 moodle_instance_id: 15,
                                  minimum_references: 6,
                                  activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=7265')
