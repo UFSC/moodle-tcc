@@ -12,22 +12,29 @@ class BatchTccs
     #Rails.logger.fatal "Terminating application, raised unrecoverable error!!!"
 
     puts('>>> inicializando Worker')
-    @auth_url     = 'http://swift.setic.ufsc.br:80/auth/v1.0/'
-    @auth_manager = 'http://swift.setic.ufsc.br:80/v1.0/AUTH_unasus'
-    @store_url    = 'http://swift.setic.ufsc.br:80'
+    # @auth_url     = 'http://swift.setic.ufsc.br:80/auth/v1.0/'
+    @auth_url     = Settings.swift_auth_url
+    # @auth_manager = 'http://swift.setic.ufsc.br:80/v1.0/AUTH_unasus'
+    # @store_url    = 'http://swift.setic.ufsc.br:80'
 
-    @user         = 'unasus:readwrite'
-    @password     = 'TccUnasus_2'
+    # @user     = 'unasus:readwrite'
+    # @password = 'TccUnasus_2'
+    @user     = Settings.swift_user
+    @password = Settings.swift_password
+
 
 # NÃO APAGAR LINHA ABAIXO. ela server para setar no servidor a chave de assinatura para URLs temporárias
-# Se necessário apemnas renovar a chave
+# Se necessário apenas renovar a chave
 # @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
-    @temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
-    @auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
+#     @temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
+#     @auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
+    @temp_url_key = Settings.swift_temp_url_key
+    @auth_token   = Settings.swift_auth_token
 
     # 24 horas = 86400
     # 1 hora = 3600
-    @seconds_URL_lives = 3600
+    # @seconds_URL_lives = 3600
+    @seconds_URL_lives = Settings.swift_seconds_URL_lives
 
     Excon.defaults[:ssl_verify_peer] = false
 #    Excon.defaults[:port] = 80
@@ -110,7 +117,7 @@ class BatchTccs
   end
 
   def name_space(tcc)
-    "#{tcc.tcc_definition.course_id}_#{tcc.tcc_definition.moodle_instance_id}"
+    "#{Settings.instance_guid};#{tcc.tcc_definition.course_id}_#{tcc.tcc_definition.moodle_instance_id}"
   end
 
   def generate_pdf_url(tcc)
@@ -392,10 +399,11 @@ Excon.defaults[:ssl_verify_peer] = false
 # 1 hora = 3600
 @seconds_URL_lives = 3600
 
-@service = Fog::Storage.new :provider => 'OpenStack',:openstack_auth_url => @auth_url,:openstack_username => @user,:openstack_api_key  => @password}
-
 #                            :openstack_auth_token => auth_token,
 #                            :openstack_temp_url_key => @temp_url_key
+
+@service = Fog::Storage.new(:provider => 'OpenStack', :openstack_auth_url => @auth_url, :openstack_username => @user, :openstack_api_key  => @password)
+
 @redis_connection = Redis.new
 
 moodle_id = '12140'
@@ -428,6 +436,13 @@ bt.generate_metalink(tcc)
 rf = bt.save_pdf_tcc(tcc)
 
 url = bt.generate_pdf_url(tcc)
+
+########################
+moodle_id = '12140'
+tcc = Tcc.find_by_student_id(439)
+
+bt = BatchTccs.new;
+bt.name_space(tcc)
 
 
 t = Metalink::Metalink.new
