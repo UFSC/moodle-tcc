@@ -1,4 +1,7 @@
-:pidfile: /tmp/pids/sidekiq.pid
+# to run on development environment
+# bundle exec sidekiq -C config/sidekiq.yml
+
+:pidfile: ./tmp/pids/sidekiq.pid
 :queues:
   - UnASUS
 development:
