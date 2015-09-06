@@ -9,6 +9,17 @@ development:
 
   notification_email: notification@example.org
 
+  swift_auth_url     : http://swift.server.ifes.br:80/auth/v1.0/
+  swift_user         : username:readwrite
+  swift_password     : password
+  swift_temp_url_key : value_from_swift_server
+  swift_auth_token   : AUTH_value_from_swift_server
+  swift_seconds_URL_lives: 7200
+
+# 24 horas = 86400
+# 1 hora   = 3600
+# 2 horas  = 7200
+
 test:
   # Integração com Moodle
   moodle_url: http://localhost
