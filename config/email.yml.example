@@ -5,12 +5,12 @@ test:
   delivery_method: :test
 
 production:
-#  delivery_method: :smpt
-#  smtp_settings:
-#    address:              smtp.example.com
-#    port:                 587
-#    domain:               example.com
-#    user_name:            example@example.com
-#    password:             MY_PASSWORD
-#    authentication:       plain
-#    enable_starttls_auto: true
+#  delivery_method: :smtp
+#    smtp_settings:
+#      address:              smtp.example.com
+#      port:                 587
+#      domain:               example.com
+#      user_name:            example@example.com
+#      password:             MY_PASSWORD
+#      authentication:       plain
+#      enable_starttls_auto: true
