@@ -45,6 +45,16 @@ class AbstractsController < ApplicationController
 
     b_change_state = change_state
 
+    ## O CKEditor está realizando a limpeza de linhas em branco
+    # config.autoParagraph = false; # no config.sj do editor
+
+    ## Tira espacos em branco, quando a linha possui espacos e nada mais.
+    @abstract.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
+    ## outra forma de tirar linhas em branco
+    # lines = @abstract.content.split('\r\n\r\n').map { | x | x if !x.gsub(/<p(.*)>([  ]*)<\/p>/, '').empty? }.compact.join('\r\n\r\n')
+    @abstract.content.chomp!
+
+
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]
       flash[:success] = t(:successfully_saved) if b_save_title && b_change_state
