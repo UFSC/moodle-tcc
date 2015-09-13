@@ -40,7 +40,10 @@ CKEDITOR.editorConfig = function(config) {
     config.entities_greek = false;
     config.entities_latin = false;
     config.entities_additional = '';
-    config.fillEmptyBlocks = false;
+    config.autoParagraph = false;
+    // Foi deixado o padrão true, pois antes de salvar está limpando linhas em branco
+    config.fillEmptyBlocks = true;
+    // config.fillEmptyBlocks = false;
 
     // Remover botoes que nao vao ser utilizados
     config.removeButtons = 'HorizontalRule,Styles,Font,FontSize';
