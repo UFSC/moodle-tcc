@@ -31,7 +31,7 @@ module LtiTccFilters
 
   def get_tcc
     student = Person.where(moodle_id: current_moodle_user).first
-    @tcc = Tcc.includes(chapters: [:chapter_definition]).where(student_id: student.id).first
+    @tcc = Tcc.includes(chapters: [:chapter_definition]).where(student_id: student.id, tcc_definition_id: @tp.custom_params['tcc_definition']).first
 
     raise TccNotFoundError, 'Você não possui um TCC atribuído como estudante' unless @tcc
   end
