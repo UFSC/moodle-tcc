@@ -29,7 +29,7 @@ module MoodleAPI
       end
     end
 
-    # Seta nota do usuário especificado no item especificado por 'itemname'
+    # Seta nota do usuário especificado no item especificado por 'instanceid'
     def set_grade_lti(userid, courseid, instanceid, grade)
       remote_call('local_wstcc_set_grade_lti',
                   courseid: courseid,
