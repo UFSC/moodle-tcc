@@ -24,9 +24,14 @@ job_type :rake, 'cd :path && PATH=/usr/local/bin:$PATH RAILS_ENV=:environment bi
 
 # CRONTAB da produção
 if @stage == 'production'
-  every 1.hour do
+  every '5 * * * *' do
+    rake 'clear_expired_sessions'
+  end
+  #every 1.hour do
+  every '15 * * * *' do
     rake 'tcc:sync'
   end
+
 end
 
 # CRONTAB do staging
@@ -34,4 +39,9 @@ if @stage == 'staging'
   every 6.hour do
     rake 'tcc:sync'
   end
+
+  every 1.hour do
+    rake 'clear_expired_sessions'
+  end
+
 end

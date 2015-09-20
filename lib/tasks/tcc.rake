@@ -22,3 +22,11 @@ namespace :tcc do
 
   end
 end
+
+desc 'Clear expired sessions'
+task :clear_expired_sessions => :environment do
+  puts "=== Cleaning the expired sessions: Starting ==="
+  sql = 'DELETE FROM sessions WHERE updated_at < (CURRENT_TIMESTAMP() - INTERVAL 1 DAY + INTERVAL 3 HOUR);' # (GMT)
+  ActiveRecord::Base.connection.execute(sql)
+  puts "=== Cleaning the expired sessions: Finished ==="
+end
