@@ -1,0 +1,43 @@
+<% if policy(Tcc).show_internal_institutions? %>
+  <%= render 'instructor_admin/navbar' %>
+  <!--<p><br/></p>-->
+<% else %>
+  <h3><%= t(:internal_institution) %></h3><br/>
+  <!--%= reference_page_title t(:compound_name) %>-->
+<% end %>
+
+<!-- para garantir a autenticacão -->
+<%= hidden_field_tag 'moodle_user', params[:moodle_user] %>
+
+<!--<h3>Lista de Instituições</h3>-->
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('activerecord.attributes.internal_institution.institution_name') %> </th>
+      <th colspan="2" align="center">Ação</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @internal_institutions.each do |internal_institution| %>
+      <tr>
+        <td><%= internal_institution.institution_name %></td>
+        <td><%= link_to 'Editar', edit_internal_institution_path(internal_institution), remote: true,
+                        data: {target: "##{internal_institution.id}"} %></td>
+        <td><%= link_to 'Remover',
+                        delete_internal_institution_path(internal_institution, moodle_user: params[:moodle_user]),
+                        method: :delete,
+                        :data => { :confirm => "Tem certeza que deseja apagar a Instituição: #{internal_institution.institution_name}?" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'Incluir Instituição', new_internal_institution_path(moodle_user: params[:moodle_user]), remote: true %>
+
+<!-- Modal dialog -->
+<div id="ajax_content">
+
+</div>

@@ -80,6 +80,9 @@ gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
 gem 'rabl'
 
+# image on database
+gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
+
 # Carrierwave (uploads)
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick'

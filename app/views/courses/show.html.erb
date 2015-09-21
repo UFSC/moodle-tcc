@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Course name:</strong>
+  <%= @course.course_name %>
+</p>
+
+<p>
+  <strong>Department name:</strong>
+  <%= @course.department_name %>
+</p>
+
+<p>
+  <strong>Center name:</strong>
+  <%= @course.center_name %>
+</p>
+
+<p>
+  <strong>Coordinator name:</strong>
+  <%= @course.coordinator_name %>
+</p>
+
+<p>
+  <strong>Presentation data:</strong>
+  <%= @course.presentation_data %>
+</p>
+
+<p>
+  <strong>Approval data:</strong>
+  <%= @course.approval_data %>
+</p>
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

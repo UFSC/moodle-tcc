@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417182709) do
+ActiveRecord::Schema.define(version: 20150921002035) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -144,6 +144,38 @@ ActiveRecord::Schema.define(version: 20150417182709) do
     t.string   "type_name"
   end
 
+  create_table "courses", force: true do |t|
+    t.string   "course_name"
+    t.string   "department_name"
+    t.string   "center_name"
+    t.string   "coordinator_name"
+    t.string   "presentation_data"
+    t.string   "approval_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "internal_courses", force: true do |t|
+    t.string   "course_name"
+    t.string   "department_name"
+    t.string   "center_name"
+    t.string   "coordinator_name"
+    t.string   "presentation_data"
+    t.string   "approval_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "internal_institutions", force: true do |t|
+    t.string   "institution_name"
+    t.datetime "institution_logo_updated_at"
+    t.integer  "institution_logo_file_size"
+    t.string   "institution_logo_content_type"
+    t.string   "institution_logo_file_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "internet_refs", force: true do |t|
     t.string   "first_author"
     t.string   "title"
@@ -220,12 +252,15 @@ ActiveRecord::Schema.define(version: 20150417182709) do
     t.string   "internal_name"
     t.string   "activity_url"
     t.integer  "course_id"
+    t.integer  "internal_course_id"
     t.date     "defense_date"
     t.integer  "moodle_instance_id"
     t.integer  "minimum_references"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tcc_definitions", ["internal_course_id"], name: "index_tcc_definitions_on_internal_course_id", using: :btree
 
   create_table "tccs", force: true do |t|
     t.string   "title"

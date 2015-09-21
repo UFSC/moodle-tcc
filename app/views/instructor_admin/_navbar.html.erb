@@ -19,6 +19,7 @@
                   <% if policy(Tcc).show_compound_names? %>
                     <li class="<%= 'active' if current_page?(compound_names_path) %>"><%= link_to "Nomes Compostos", compound_names_path %></li>
                   <% end %>
+                  <li class="<%= 'active' if current_page?(internal_institutions_path) %>"><%= link_to "Instituições", internal_institutions_path %></li>
                   <!--<li class="%= 'active' if current_page?(sidekiq_monitor_path) %>">%= link_to "Sidekiq", sidekiq_monitor_path, target: "_blank" %></li>-->
                   <li class="<%= 'active' if current_page?(sidekiq_web_path ) %>"><%= link_to "Sidekiq", sidekiq_web_path, target: "_blank" %></li>
                 </ul>

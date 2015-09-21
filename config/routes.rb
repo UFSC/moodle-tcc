@@ -25,11 +25,19 @@ Rails.application.routes.draw do
   get 'instructor_admin' => 'instructor_admin#index'
   get 'instructor_admin_navbar' => 'instructor_admin#navbar'
 
-  get 'compound_names' => 'compound_names#index'
+  get   'internal_institutions' => 'internal_institutions#index'
+  match 'internal_institutions' => 'internal_institutions#create',via: [:post]
+  get   'new_internal_institution' => 'internal_institutions#new'
+  match '/internal_institutions/:id/edit' => 'internal_institutions#edit',via: [:get, :post, :patch], as: 'edit_internal_institution'
+  get   '/internal_institutions/:id' => 'internal_institutions#edit',as: 'show_internal_institution'
+  match '/internal_institutions/:id' => 'internal_institutions#update',via: [:put, :patch],as: 'update_internal_institution'
+  match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete],as: 'delete_internal_institution'
+
+  get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
-  get 'new_compound_name' => 'compound_names#new'
+  get   'new_compound_name' => 'compound_names#new'
   match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name'
-  get '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
+  get   '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
   match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
   match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
 
@@ -93,6 +101,8 @@ Rails.application.routes.draw do
     resources :legislative_refs
     resources :thesis_refs
     #resources :compound_names
+    resources :internal_courses
+
 
     # FIXME: generalizar controller abaixo
     resources :orientador
