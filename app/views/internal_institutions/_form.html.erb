@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%= semantic_form_for @internal_institution, :html => {:multipart => true}, url: update_internal_institution_path(@internal_institution, moodle_user: params[:moodle_user]) do |f| %>
 
   <% if @internal_institution.errors.any? %>
@@ -23,11 +22,7 @@
       <p><%= f.file_field :image %></p>
       <span class="help-block"></span>
     </div>
-=======
-<%= semantic_form_for @internal_institution, url: update_internal_institution_path(@internal_institution, moodle_user: params[:moodle_user]) do |f| %>
-  <div class="modal-body">
-    <p><%= f.input :institution_name, label: 'Nome da Instituição:' %></p>
->>>>>>> criação da instituição
+
   </div>
 
   <div class="modal-footer">
