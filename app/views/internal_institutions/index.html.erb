@@ -14,6 +14,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th><%= 'Logo' %> </th>
       <th><%= t('activerecord.attributes.internal_institution.institution_name') %> </th>
       <th colspan="2" align="center">Ação</th>
     </tr>
@@ -22,6 +23,11 @@
   <tbody>
     <% @internal_institutions.each do |internal_institution| %>
       <tr>
+        <!--# blob-->
+        <!--<td>< %= image_tag url_for(:controller => "internal_institutions", :action => "show_avatar", :id => internal_institution.id), :height => 60 %></td>-->
+
+        <!-- CarrierWave-->
+        <td><%= image_tag internal_institution.image_url(:thumb).to_s %></td>
         <td><%= internal_institution.institution_name %></td>
         <td><%= link_to 'Editar', edit_internal_institution_path(internal_institution), remote: true,
                         data: {target: "##{internal_institution.id}"} %></td>

@@ -1,6 +1,9 @@
+require 'mini_magick'
+
 class InternalInstitutionsController < InheritedResources::Base
   skip_before_action :get_tcc
   before_action :check_permission
+
 
   # validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
@@ -49,6 +52,13 @@ class InternalInstitutionsController < InheritedResources::Base
 
     redirect_to internal_institutions_path(moodle_user: params[:moodle_user])
   end
+
+  # BLOB
+  # def show_avatar
+  #   @internal_institution = InternalInstitution.find(params[:id])
+  #   logo = @internal_institution.institution_logo
+  #   send_data logo, :type => 'image/png',:disposition => 'inline'
+  # end
 
   private
 

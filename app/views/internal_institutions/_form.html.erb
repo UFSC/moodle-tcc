@@ -1,6 +1,27 @@
-<%= semantic_form_for @internal_institution, url: update_internal_institution_path(@internal_institution, moodle_user: params[:moodle_user]) do |f| %>
+<%= semantic_form_for @internal_institution, :html => {:multipart => true}, url: update_internal_institution_path(@internal_institution, moodle_user: params[:moodle_user]) do |f| %>
+
+  <% if @internal_institution.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@internal_institution.errors.count, "erro") %> impede o salvamento da Instituição:</h2>
+
+      <ul>
+        <% @internal_institution.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="modal-body">
-    <p><%= f.input :institution_name, label: 'Nome da Instituição:' %></p>
+    <div class="form-group">
+      <p><%= f.input :institution_name, label: 'Nome da Instituição:' %></p>
+      <span class="help-block"></span>
+    </div>
+
+    <div class="form-group">
+      <p><%= f.file_field :image %></p>
+      <span class="help-block"></span>
+    </div>
   </div>
 
   <div class="modal-footer">

@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get   '/internal_institutions/:id' => 'internal_institutions#edit',as: 'show_internal_institution'
   match '/internal_institutions/:id' => 'internal_institutions#update',via: [:put, :patch],as: 'update_internal_institution'
   match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete],as: 'delete_internal_institution'
+  # BLOB
+  # match '/internal_institutions/:id/show_avatar' => 'internal_institutions#show_avatar',via: [:get], as: 'show_avatar_internal_institution'
 
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]

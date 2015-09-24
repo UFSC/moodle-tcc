@@ -168,10 +168,9 @@ ActiveRecord::Schema.define(version: 20150921002035) do
 
   create_table "internal_institutions", force: true do |t|
     t.string   "institution_name"
-    t.datetime "institution_logo_updated_at"
-    t.integer  "institution_logo_file_size"
-    t.string   "institution_logo_content_type"
-    t.string   "institution_logo_file_name"
+    t.string   "data_file_name",    null: false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
