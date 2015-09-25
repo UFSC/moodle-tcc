@@ -30,10 +30,28 @@ class ChaptersController < ApplicationController
     # config.autoParagraph = false; # no config.sj do editor
 
     ## Tira espacos em branco, quando a linha possui espacos e nada mais.
-    @chapter.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
+    #@chapter.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
+    #@chapter.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
     ## outra forma de tirar linhas em branco
-    # lines = @chapter.content.split('\r\n\r\n').map { | x | x if !x.gsub(/<p(.*)>([  ]*)<\/p>/, '').empty? }.compact.join('\r\n\r\n')
-    @chapter.content.chomp!
+
+    lines = @chapter.content.split("\r\n\r\n")
+    newLines = lines.map { | x |
+      # se não encontrar parágrafo com "imagem" e texto com espaços
+      if /<p(.*)><(.*)>([^a-zA-Z0-9]*)<\/p>/.match(x).nil?
+        # se não encontrar parágrafo e texto com espaços
+        if /<p(.*)>([^a-zA-Z0-9]*)<\/p>/.match(x).nil?
+          # então adiciona o texto em newLines
+          x
+        # senão, se encontrar parágrafo e texto com espaços
+        # então abandona o texto e não adiciona em newLines
+        end
+      else
+        # se encontrar parágrafo com "imagem" e texto com espaços
+        # então adiciona o texto em newLines
+        x
+      end
+    }.compact.join("\r\n\r\n")
+    @chapter.content = newLines.chomp!
 
     b_change_state = change_state
 

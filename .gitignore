@@ -18,6 +18,7 @@
 /log/*.log
 /tmp
 .idea
+public/system/*
 public/assets
 public/uploads
 app/assets/javascripts/ckeditor/plugins/placeholder
