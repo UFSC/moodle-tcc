@@ -1,5 +1,5 @@
-# encoding: utf-8
 class ChaptersController < ApplicationController
+  include ControllersUtils
 
   def edit
     set_tab ('chapter'+params[:position]).to_sym
@@ -26,16 +26,9 @@ class ChaptersController < ApplicationController
     @comment = @chapter.comment || @chapter.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    ## O CKEditor está realizando a limpeza de linhas em branco
-    # config.autoParagraph = false; # no config.sj do editor
-
-    ## Tira espacos em branco, quando a linha possui espacos e nada mais.
-    @chapter.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
-    ## outra forma de tirar linhas em branco
-    # lines = @chapter.content.split('\r\n\r\n').map { | x | x if !x.gsub(/<p(.*)>([  ]*)<\/p>/, '').empty? }.compact.join('\r\n\r\n')
-    @chapter.content.chomp!
-
     b_change_state = change_state
+
+    @chapter.content = remove_blank_lines( @chapter.content)
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]
