@@ -1,4 +1,5 @@
 class ChaptersController < ApplicationController
+  include ControllersUtils
 
   def edit
     set_tab ('chapter'+params[:position]).to_sym
@@ -25,36 +26,9 @@ class ChaptersController < ApplicationController
     @comment = @chapter.comment || @chapter.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
-    ## O CKEditor está realizando a limpeza de linhas em branco
-    # config.autoParagraph = false; # no config.sj do editor
-
-    ## tira linhas em branco
-    # U+00A0	/	194 160	/ NO-BREAK SPACE
-    space2 = 194.chr("UTF-8")+160.chr("UTF-8")
-    @chapter.content.gsub!(/#{space2}/) {" "}
-    space1 = 160.chr("UTF-8")
-    @chapter.content.gsub!(/#{space1}/) {" "}
-
-    lines = @chapter.content.split("\r\n\r\n")
-    newLines = lines.map { | x |
-      # se não encontrar parágrafo com "imagem" e texto com espaços
-      if /^<p(.*)><(.*)>(\s*)<\/p>$/.match(x).nil?
-        # se não encontrar parágrafo e texto com espaços
-        if /^<p(.*)>(\s*)<\/p>$/.match(x).nil?
-          # então adiciona o texto em newLines
-          x
-        # senão, se encontrar parágrafo e texto com espaços
-        # então abandona o texto e não adiciona em newLines
-        end
-      else
-        # se encontrar parágrafo com "imagem" e texto com espaços
-        # então adiciona o texto em newLines
-        x
-      end
-    }.compact.join("\r\n\r\n")
-    @chapter.content = newLines.chomp!
-
     b_change_state = change_state
+
+    @chapter.content = remove_blank_lines( @chapter.content)
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]
