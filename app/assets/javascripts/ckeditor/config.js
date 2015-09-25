@@ -40,6 +40,7 @@ CKEDITOR.editorConfig = function(config) {
     config.entities_greek = false;
     config.entities_latin = false;
     config.entities_additional = '';
+    // config.autoParagraph = true;
     config.autoParagraph = false;
     // Foi deixado o padrão true, pois antes de salvar está limpando linhas em branco
     config.fillEmptyBlocks = true;

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class ChaptersController < ApplicationController
 
   def edit
@@ -29,17 +28,19 @@ class ChaptersController < ApplicationController
     ## O CKEditor está realizando a limpeza de linhas em branco
     # config.autoParagraph = false; # no config.sj do editor
 
-    ## Tira espacos em branco, quando a linha possui espacos e nada mais.
-    #@chapter.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
-    #@chapter.content.gsub!(/\r\n\r\n<p(.*)>([  ]*)<\/p>/) {""}
-    ## outra forma de tirar linhas em branco
+    ## tira linhas em branco
+    # U+00A0	/	194 160	/ NO-BREAK SPACE
+    space2 = 194.chr("UTF-8")+160.chr("UTF-8")
+    @chapter.content.gsub!(/#{space2}/) {" "}
+    space1 = 160.chr("UTF-8")
+    @chapter.content.gsub!(/#{space1}/) {" "}
 
     lines = @chapter.content.split("\r\n\r\n")
     newLines = lines.map { | x |
       # se não encontrar parágrafo com "imagem" e texto com espaços
-      if /<p(.*)><(.*)>([^a-zA-Z0-9]*)<\/p>/.match(x).nil?
+      if /^<p(.*)><(.*)>(\s*)<\/p>$/.match(x).nil?
         # se não encontrar parágrafo e texto com espaços
-        if /<p(.*)>([^a-zA-Z0-9]*)<\/p>/.match(x).nil?
+        if /^<p(.*)>(\s*)<\/p>$/.match(x).nil?
           # então adiciona o texto em newLines
           x
         # senão, se encontrar parágrafo e texto com espaços
