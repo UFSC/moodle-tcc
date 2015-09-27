@@ -81,7 +81,7 @@ gem 'ckeditor'
 gem 'rabl'
 
 # image on database
-gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
+# gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 
 # Carrierwave (uploads)
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
