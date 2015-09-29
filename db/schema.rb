@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(version: 20150921002035) do
   end
 
   create_table "internal_courses", force: true do |t|
+    t.integer  "internal_institution_id"
     t.string   "course_name"
     t.string   "department_name"
     t.string   "center_name"

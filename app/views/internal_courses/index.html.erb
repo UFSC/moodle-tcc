@@ -1,35 +1,54 @@
-<h1>Listing internal_courses</h1>
+<% if policy(Tcc).show_config? %>
+  <%= render 'instructor_admin/navbar' %>
+<% else %>
+  <h3><%= t('activerecord.models.internal_course') %></h3><br/>
+<% end %>
 
-<table>
-  <thead>
+<!--<h1>Listing internal_courses</h1>-->
+<% labelAdicionar = "#{t(:add)} #{t(:internal_course)}" %>
+<% if @internal_courses.count > 0 %>
+  <%= link_to labelAdicionar, new_internal_course_path(),
+              class: 'btn btn-default' %>
+
+  <table class="table table-striped" style="width:100%">
+    <thead>
     <tr>
-      <th>Course name</th>
-      <th>Department name</th>
-      <th>Center name</th>
-      <th>Coordinator name</th>
-      <th>Presentation data</th>
-      <th>Approval data</th>
+      <th><%= t('activerecord.attributes.internal_institution.institution_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.course_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.department_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.center_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.coordinator_name') %></th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
-    <% @internal_courses.each do |internal_course| %>
+    <tbody>
+    <% @internal_courses.includes(:internal_institution).each do |internal_course| %>
       <tr>
+        <td><%= internal_course.internal_institution.institution_name %></td>
         <td><%= internal_course.course_name %></td>
         <td><%= internal_course.department_name %></td>
         <td><%= internal_course.center_name %></td>
         <td><%= internal_course.coordinator_name %></td>
-        <td><%= internal_course.presentation_data %></td>
-        <td><%= internal_course.approval_data %></td>
-        <td><%= link_to 'Show', internal_course %></td>
-        <td><%= link_to 'Edit', edit_internal_course_path(internal_course) %></td>
-        <td><%= link_to 'Destroy', internal_course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <!--<td>< %= link_to 'Show', internal_course %></td>-->
+        <td><%= link_to t(:edit), edit_internal_course_path(internal_course),
+                        class: 'btn btn-default' %></td>
+        <td><%= link_to t(:remove),
+                        internal_course,
+                        class: 'btn btn-danger',
+                        method: :delete,
+                        data: { confirm: t(:label_confirm_message) } %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Internal course', new_internal_course_path %>
+    </tbody>
+  </table>
+  <br>
+  <%= link_to labelAdicionar, new_internal_course_path(),
+              class: 'btn btn-default' %>
+<% else %>
+  <div class="jumbotron">
+    <p>Não há qualquer <%= t(:internal_course) %> cadastrado.</p>
+    <%= link_to labelAdicionar, new_internal_course_path(),
+                class: 'btn btn-primary' %>
+  </div>
+<% end %>

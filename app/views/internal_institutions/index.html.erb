@@ -1,49 +1,54 @@
 <% if policy(Tcc).show_internal_institutions? %>
   <%= render 'instructor_admin/navbar' %>
-  <!--<p><br/></p>-->
 <% else %>
-  <h3><%= t(:internal_institution) %></h3><br/>
-  <!--%= reference_page_title t(:compound_name) %>-->
+  <h3><%= t('activerecord.models.internal_institution') %></h3><br/>
 <% end %>
 
-<!-- para garantir a autenticacão -->
-<%= hidden_field_tag 'moodle_user', params[:moodle_user] %>
-
 <!--<h3>Lista de Instituições</h3>-->
-
-<table class="table table-striped">
-  <thead>
+<% labelAdicionar = "#{t(:add)} #{t(:internal_institution)}" %>
+<% if @internal_institutions.count > 0 %>
+  <%= link_to labelAdicionar, new_internal_institution_path(),
+              class: 'btn btn-default' %>
+  <table class="table table-striped" style="width:100%">
+    <thead>
     <tr>
-      <th><%= 'Logo' %> </th>
-      <th><%= t('activerecord.attributes.internal_institution.institution_name') %> </th>
-      <th colspan="2" align="center">Ação</th>
+      <th align="center"><%= 'Logo' %> </th>
+      <th style="width:60%" ><%= t('activerecord.attributes.internal_institution.institution_name') %> </th>
+      <th colspan="2">Ação</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @internal_institutions.each do |internal_institution| %>
       <tr>
-        <!--# blob-->
-        <!--<td>< %= image_tag url_for(:controller => "internal_institutions", :action => "show_avatar", :id => internal_institution.id), :height => 60 %></td>-->
-
-        <!-- CarrierWave-->
-        <td><%= image_tag internal_institution.image_url(:thumb).to_s %></td>
+        <td align="center"><%= image_tag internal_institution.image_url(:small_thumb).to_s %></td>
         <td><%= internal_institution.institution_name %></td>
-        <td><%= link_to 'Editar', edit_internal_institution_path(internal_institution), remote: true,
-                        data: {target: "##{internal_institution.id}"} %></td>
-        <td><%= link_to 'Remover',
-                        delete_internal_institution_path(internal_institution, moodle_user: params[:moodle_user]),
+        <td><%= link_to t(:edit), edit_internal_institution_path(internal_institution),
+                        class: 'btn btn-default' %></td>
+        <td><%= link_to t(:remove),
+                        internal_institution, #internal_institution_path(internal_institution),
+                        class: 'btn btn-danger',
                         method: :delete,
-                        :data => { :confirm => "Tem certeza que deseja apagar a Instituição: #{internal_institution.institution_name}?" } %></td>
+                        data: { confirm: t(:label_confirm_message) }
+        %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<br>
-<%= link_to 'Incluir Instituição', new_internal_institution_path(moodle_user: params[:moodle_user]), remote: true %>
+  <!--<div class="row">-->
+  <!--<div class="col-xs-10 col-md-12 col-lg-12">-->
+  <!--< %= paginate @internal_institution, :params => {anchor: 'internal_institutions'} %>-->
+  <!--</div>-->
+  <!--</div>-->
 
-<!-- Modal dialog -->
-<div id="ajax_content">
-
-</div>
+  <br>
+  <%= link_to labelAdicionar,  new_internal_institution_path(),
+              class: 'btn btn-default' %>
+<% else %>
+  <div class="jumbotron">
+    <p>Não há qualquer <%= t(:internal_institution) %> cadastrada.</p>
+    <%= link_to labelAdicionar, new_internal_institution_path(),
+                class: 'btn btn-primary' %>
+  </div>
+<% end %>

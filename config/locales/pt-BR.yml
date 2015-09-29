@@ -39,10 +39,14 @@ pt-BR:
       <<: *estados
   activerecord:
     errors:
+      format: ! '%{attribute} %{message}'
       messages:
         invalid: 'desconhecido'
         invalid_event: 'não pôde transicionar do estado %{state}'
         invalid_transition: 'não pôde alterar o estado %{value} pela transição %{event}'
+        restrict_dependent_destroy:
+                one: "Não é possível excluir o registro pois existe um %{record} dependente"
+                many: "Não é possível excluir o registro pois existem %{record} dependentes"
     state_machines:
       states:
         new: 'Novo'
@@ -167,8 +171,17 @@ pt-BR:
         remove: 'Remover'
       internal_institution:
         institution_name: 'Nome da Instituição'
+        image: 'Logotipo'
+        data_file_name: 'Logotipo'
         edit: 'Editar'
         remove: 'Remover'
+      internal_course:
+        course_name:       'Curso'
+        department_name:   'Departamento'
+        center_name:       'Centro'
+        coordinator_name:  'Coordenador(a)'
+        presentation_data: 'Texto de apresentação'
+        approval_data:     'Texto de aprovação'
     models:
       general_ref: 'Referência Geral'
       book_ref: 'Referência de Livros'
@@ -177,6 +190,8 @@ pt-BR:
       internet_ref: 'Referência da Internet'
       legislative_ref: 'Referência do Legislativo'
       thesis_ref: 'Referência de Tese ou Monografia'
+      internal_institution: 'Instituição'
+      internal_course: 'Curso'
   formtastic:
     labels:
       tcc:

@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   # BLOB
   # match '/internal_institutions/:id/show_avatar' => 'internal_institutions#show_avatar',via: [:get], as: 'show_avatar_internal_institution'
 
+  resources :internal_courses#, path: 'internal_courses'
+
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
   get   'new_compound_name' => 'compound_names#new'
@@ -103,8 +105,6 @@ Rails.application.routes.draw do
     resources :legislative_refs
     resources :thesis_refs
     #resources :compound_names
-    resources :internal_courses
-
 
     # FIXME: generalizar controller abaixo
     resources :orientador

@@ -14,12 +14,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                  <li class="<%= 'active' if current_page?(instructor_admin_path) %>"><%= link_to "Lista de TCCs", instructor_admin_path %></li>
-                  <li class="<%= 'active' if current_page?(batch_select_path) %>"><%= link_to "Impressão", batch_select_path %></li>
+                  <li class="<%= 'active' if controller.controller_name == 'instructor_admin' %>"><%= link_to "Lista de TCCs", instructor_admin_path %></li>
+                  <li class="<%= 'active' if controller.controller_name == 'batch_prints' %>"><%= link_to "Impressão", batch_select_path %></li>
                   <% if policy(Tcc).show_compound_names? %>
-                    <li class="<%= 'active' if current_page?(compound_names_path) %>"><%= link_to "Nomes Compostos", compound_names_path %></li>
+                    <li class="<%= 'active' if controller.controller_name == 'compound_names' %>"><%= link_to "Nomes Compostos", compound_names_path %></li>
                   <% end %>
-                  <li class="<%= 'active' if current_page?(internal_institutions_path) %>"><%= link_to "Instituições", internal_institutions_path %></li>
+                  <% if policy(Tcc).show_internal_institutions? %>
+                    <li class="<%= 'active' if controller.controller_name == 'internal_institutions' %>"><%= link_to "Instituições", internal_institutions_path %></li>
+                  <% end %>
+                  <% if policy(Tcc).show_config? %>
+                    <li class="<%= 'active' if controller.controller_name == 'internal_courses' %>"><%= link_to "Cursos", internal_courses_path %></li>
+                  <% end %>
+
                   <!--<li class="%= 'active' if current_page?(sidekiq_monitor_path) %>">%= link_to "Sidekiq", sidekiq_monitor_path, target: "_blank" %></li>-->
                   <li class="<%= 'active' if current_page?(sidekiq_web_path ) %>"><%= link_to "Sidekiq", sidekiq_web_path, target: "_blank" %></li>
                 </ul>

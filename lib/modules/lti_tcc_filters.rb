@@ -15,7 +15,6 @@ module LtiTccFilters
 
     if lti_params.nil?
       logger.error 'Access Denied: LTI not initialized'
-Nome da Instituição
       raise Authentication::UnauthorizedError, 'Você precisa acessar essa aplicação a partir do Moodle'
     else
       @tp = IMS::LTI::ToolProvider.new(Settings.consumer_key, Settings.consumer_secret, lti_params)

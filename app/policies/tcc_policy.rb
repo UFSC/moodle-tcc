@@ -87,8 +87,13 @@ class TccPolicy < ApplicationPolicy
     (user.coordenador_avea? || user.admin?)
   end
 
-  # Verifica se pode apresentar as configurações
+  # Verifica se pode apresentar o cadastro de instituições
   def show_internal_institutions?
+    (user.coordenador_avea? || user.admin?)
+  end
+
+  # Verifica se pode apresentar as configurações
+  def show_config?
     (user.coordenador_avea? || user.admin?)
   end
 
