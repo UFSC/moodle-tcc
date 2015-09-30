@@ -5,6 +5,7 @@ class InternalInstitutionsController < ApplicationController
   before_action :check_permission
 
   def index
+    set_tab :internal_institutions
     @internal_institutions = InternalInstitution.all
   end
 
@@ -56,27 +57,14 @@ class InternalInstitutionsController < ApplicationController
     if @internal_institution.errors.any?
       flash[:error] = @internal_institution.errors.full_messages.join("\n")
       @internal_institutions = InternalInstitution.all
-      render 'internal_institutions/index'
     else
       flash[:success] = t(:successfully_saved)
-      redirect_to internal_institutions_path()
-
     end
 
-
-
-    # begin
-    #   @internal_institution.destroy
-    #   #flash[:success] = t(:successfully_saved)
-    # rescue ActiveRecord::DeleteRestrictionError => e
-    #   @internal_institution.errors.add(:base, e)
-    #   flash[:error] = "#{e}"
-    # end
-    #
-    # respond_to do |format|
-    #   format.html { redirect_to(:back) }
-    #   format.xml  { head :ok }
-    # end
+    respond_to do |format|
+      format.html { redirect_to(:back) }
+      format.xml  { head :ok }
+    end
   end
 
   private

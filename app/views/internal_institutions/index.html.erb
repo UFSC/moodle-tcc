@@ -4,6 +4,9 @@
   <h3><%= t('activerecord.models.internal_institution') %></h3><br/>
 <% end %>
 
+<%= render 'common/tabs_header_config' %>
+
+<br/>
 <!--<h3>Lista de Instituições</h3>-->
 <% labelAdicionar = "#{t(:add)} #{t(:internal_institution)}" %>
 <% if @internal_institutions.count > 0 %>
@@ -35,12 +38,6 @@
     <% end %>
     </tbody>
   </table>
-
-  <!--<div class="row">-->
-  <!--<div class="col-xs-10 col-md-12 col-lg-12">-->
-  <!--< %= paginate @internal_institution, :params => {anchor: 'internal_institutions'} %>-->
-  <!--</div>-->
-  <!--</div>-->
 
   <br>
   <%= link_to labelAdicionar,  new_internal_institution_path(),

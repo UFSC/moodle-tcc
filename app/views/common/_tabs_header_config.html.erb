@@ -1,0 +1,5 @@
+<%= tabs_tag(:builder => ApplicationHelper::MenuTabBuilder) do |tab| %>
+  <%= tab.internal_institutions 'Instituição', internal_institutions_path, :class => 'active' %>
+  <%= tab.internal_courses 'Curso', internal_courses_path%>
+  <%= tab.compound_names 'Nome Composto', compound_names_path%>
+<% end %>

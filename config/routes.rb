@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   match 'lti' => 'lti#establish_connection', via: [:get, :post]
   get 'access_denied' => 'lti#access_denied'
 
+  get 'config' => 'config#index', as: 'config'
+
   get 'instructor_admin' => 'instructor_admin#index'
   get 'instructor_admin_navbar' => 'instructor_admin#navbar'
 

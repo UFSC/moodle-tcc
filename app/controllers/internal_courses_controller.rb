@@ -5,6 +5,7 @@ class InternalCoursesController < ApplicationController
   before_action :check_permission
 
   def index
+    set_tab :internal_courses
     @internal_courses = InternalCourse.all
   end
 

@@ -4,6 +4,9 @@
   <h3><%= t('activerecord.models.internal_course') %></h3><br/>
 <% end %>
 
+<%= render 'common/tabs_header_config' %>
+
+<br/>
 <!--<h1>Listing internal_courses</h1>-->
 <% labelAdicionar = "#{t(:add)} #{t(:internal_course)}" %>
 <% if @internal_courses.count > 0 %>
