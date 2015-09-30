@@ -1,3 +1,5 @@
+#br:
+#pt:
 pt-BR:
   states: &estados
     blank: 'Não editado'
@@ -170,12 +172,14 @@ pt-BR:
         edit: 'Editar'
         remove: 'Remover'
       internal_institution:
+        internal_institutions: 'instituições'
         institution_name: 'Nome da Instituição'
         image: 'Logotipo'
         data_file_name: 'Logotipo'
         edit: 'Editar'
         remove: 'Remover'
       internal_course:
+        internal_courses: 'cursos'
         course_name:       'Curso'
         department_name:   'Departamento'
         center_name:       'Centro'
