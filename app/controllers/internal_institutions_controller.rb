@@ -1,7 +1,7 @@
 class InternalInstitutionsController < ApplicationController
   inherit_resources
 
-  autocomplete :internal_institution, :institution_name
+  autocomplete :internal_institution, :institution_name, :full => true
 
   skip_before_action :get_tcc
   before_action :check_permission

@@ -1,7 +1,7 @@
 class InternalCoursesController < ApplicationController
   inherit_resources
 
-  autocomplete :internal_course, :course_name
+  autocomplete :internal_course, :course_name, :full => true
 
   skip_before_action :get_tcc
   before_action :check_permission

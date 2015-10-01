@@ -1,7 +1,7 @@
 # encoding: utf-8
 class CompoundNamesController < ApplicationController
 
-  autocomplete :compound_name, :name
+  autocomplete :compound_name, :name, :full => true
 
   skip_before_action :get_tcc
   before_action :check_permission
