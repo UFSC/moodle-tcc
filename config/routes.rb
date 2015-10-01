@@ -36,6 +36,8 @@ Rails.application.routes.draw do
 
   resources :internal_courses
 
+  get   'config_tcc' => 'config_tcc#index'
+
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
   get   'new_compound_name' => 'compound_names#new'

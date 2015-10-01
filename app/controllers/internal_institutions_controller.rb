@@ -77,7 +77,7 @@ class InternalInstitutionsController < ApplicationController
   protected
 
   def check_permission
-    unless authorize(Tcc, :show_internal_institutions?)
+    unless authorize(Tcc, :show_config?)
       raise Authentication::UnauthorizedError, t('cannot_access_page_without_enough_permission')
       redirect_user_to_start_page
     end
