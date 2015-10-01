@@ -27,17 +27,14 @@ Rails.application.routes.draw do
   get 'instructor_admin' => 'instructor_admin#index'
   get 'instructor_admin_navbar' => 'instructor_admin#navbar'
 
-  get   'internal_institutions' => 'internal_institutions#index'
-  match 'internal_institutions' => 'internal_institutions#create',via: [:post]
-  get   'new_internal_institution' => 'internal_institutions#new'
+  match '/internal_institutions' => 'internal_institutions#index', via: [:get], as: 'internal_institutions'
+  match '/internal_institutions' => 'internal_institutions#create',via: [:post]
+  match '/internal_institutions/new' => 'internal_institutions#new', via: [:get], as: 'new_internal_institution'
   match '/internal_institutions/:id/edit' => 'internal_institutions#edit',via: [:get, :post, :patch], as: 'edit_internal_institution'
-  get   '/internal_institutions/:id' => 'internal_institutions#edit',as: 'show_internal_institution'
   match '/internal_institutions/:id' => 'internal_institutions#update',via: [:put, :patch],as: 'update_internal_institution'
-  match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete],as: 'delete_internal_institution'
-  # BLOB
-  # match '/internal_institutions/:id/show_avatar' => 'internal_institutions#show_avatar',via: [:get], as: 'show_avatar_internal_institution'
+  match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete], as: 'internal_institution'
 
-  resources :internal_courses#, path: 'internal_courses'
+  resources :internal_courses
 
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
@@ -49,9 +46,9 @@ Rails.application.routes.draw do
 
   # Autocomplete routes
   get 'instructor_admin/autocomplete_tcc_name'
-  get 'tutor/autocomplete_tcc_name'
-  get 'orientador/autocomplete_tcc_name'
   get 'compound_names_autocomplete_name' => 'compound_names#autocomplete_compound_name_name'
+  get 'internal_courses_autocomplete_name' => 'internal_courses#autocomplete_internal_course_course_name'
+  get 'internal_institutions_autocomplete_name' => 'internal_institutions#autocomplete_internal_intitution_institution_name'
 
   # Ajax
   match 'ajax/build' => 'ajax#build', via: [:get, :post]

@@ -17,12 +17,25 @@
                   <li class="<%= 'active' if controller.controller_name == 'instructor_admin' %>"><%= link_to "Lista de TCCs", instructor_admin_path %></li>
                   <li class="<%= 'active' if controller.controller_name == 'batch_prints' %>"><%= link_to "Impressão", batch_select_path %></li>
                   <% if policy(Tcc).show_config? %>
-                    <li class="<%= 'active' if ( (controller.controller_name == 'config') ||
+                    <% configActive = ( (controller.controller_name == 'config') ||
                             (controller.controller_name == 'internal_institutions') ||
                             (controller.controller_name == 'internal_courses') ||
-                            (controller.controller_name == 'compound_names')
-                                   ) %>"><%= link_to "Configuração", config_path %></li>
+                            (controller.controller_name == 'compound_names') )
+                    %>
+                    <li class="dropdown <%= 'active' if configActive %>">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuração <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="<%= internal_institutions_path %>">Instituição</a></li>
+                        <li><a href="<%= internal_courses_path %>">Curso</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="<%= compound_names_path %>">Nome Composto</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                      </ul>
+                    </li>
                   <% end %>
+
+
                   <!--< % if policy(Tcc).show_compound_names? %>-->
                     <!--<li class="< %= 'active' if controller.controller_name == 'compound_names' %>">< %= link_to "Nomes Compostos", compound_names_path %></li>-->
                   <!--< % end %>-->

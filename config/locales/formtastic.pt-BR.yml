@@ -1,7 +1,7 @@
   pt-BR:
     formtastic:
       actions:
-        create: "Criar %{model}"
+        create: "Adicionar %{model}"
         update: 'Salvar mudanças'
         reset: 'Resetar formulário'
         cancel: 'Cancelar e voltar'

@@ -1,4 +1,6 @@
 class InternalCourse < ActiveRecord::Base
+  include Shared::Search
+
   attr_accessible :internal_institution_id, :course_name, :department_name, :center_name, :coordinator_name,
                   :presentation_data, :approval_data, :internal_institution_attributes
 
@@ -13,4 +15,8 @@ class InternalCourse < ActiveRecord::Base
                    message: 'O conjunto de dados para <b>Instituição/Curso/Departamento/Centro</b> já está cadastrado.'}
 
   accepts_nested_attributes_for :internal_institution
+
+  default_scope -> { order(:course_name) }
+  scoped_search :on => [:course_name]
+
 end

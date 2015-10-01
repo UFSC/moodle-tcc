@@ -7,7 +7,6 @@ class CompoundNamesController < ApplicationController
   before_action :check_permission
 
   def index
-    set_tab :compound_names
     @compound_names = CompoundName.search(params[:search], params[:page], { per: 12 })
   end
 

@@ -1,12 +1,13 @@
 class InternalCoursesController < ApplicationController
   inherit_resources
 
+  autocomplete :internal_course, :course_name
+
   skip_before_action :get_tcc
   before_action :check_permission
 
   def index
-    set_tab :internal_courses
-    @internal_courses = InternalCourse.all
+    @internal_courses = InternalCourse.search(params[:search], params[:page], { per: 7 })
   end
 
   def new

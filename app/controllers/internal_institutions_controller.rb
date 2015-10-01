@@ -1,12 +1,13 @@
 class InternalInstitutionsController < ApplicationController
   inherit_resources
 
+  autocomplete :internal_institution, :institution_name
+
   skip_before_action :get_tcc
   before_action :check_permission
 
   def index
-    set_tab :internal_institutions
-    @internal_institutions = InternalInstitution.all
+    @internal_institutions = InternalInstitution.search(params[:search], params[:page], { per: 7 })
   end
 
   def new

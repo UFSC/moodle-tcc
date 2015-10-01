@@ -1,4 +1,6 @@
 class InternalInstitution < ActiveRecord::Base
+  include Shared::Search
+
   attr_accessible :institution_name, :data_file_name, :image, :image_cache
 
   has_many :internal_courses, inverse_of: :internal_institution,
@@ -12,6 +14,10 @@ class InternalInstitution < ActiveRecord::Base
 
   validates :institution_name, uniqueness: true
   validate :image
+
+  default_scope -> { order(:institution_name) }
+  scoped_search :on => [:institution_name]
+
 
   def data_file_size
     if (!image.nil?) && (!image.file.nil?) && (image.file.size.to_f > 1.megabytes.to_f)

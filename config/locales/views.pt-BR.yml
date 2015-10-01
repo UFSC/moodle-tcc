@@ -26,6 +26,7 @@
     warn_message_necessary_references_html: 'Certifique-se de que realmente não são necessárias referências nesse capítulo. </br></br>'
 
     # Telas de conteúdo
+    search_filter: "Filtro: '%{search}'"
     empty_diaries: '[ ainda não existe nada postado para esta atividade ]'
     hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
     online_text_error: "<p style='color:red'>Erro ao buscar</p>"
@@ -52,3 +53,6 @@
     data: 'Dados'
     abstract: 'Resumo'
     tcc_list: 'Lista de TCCs'
+    clear_filter: 'Apagar critério de pesquisa'
+    apply_filter: 'Filtrar lista'
+    empty_data: "Não foram encontrados dados de %{model}."

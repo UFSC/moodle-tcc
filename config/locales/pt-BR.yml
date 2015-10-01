@@ -196,6 +196,7 @@ pt-BR:
       thesis_ref: 'Referência de Tese ou Monografia'
       internal_institution: 'Instituição'
       internal_course: 'Curso'
+      compund_name: 'Nome Composto'
   formtastic:
     labels:
       tcc:

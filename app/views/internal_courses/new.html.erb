@@ -1,8 +1,7 @@
 <% if policy(Tcc).show_config? %>
   <%= render 'instructor_admin/navbar' %>
-<% else %>
-  <h3><%= t('activerecord.models.internal_course') %></h3><br/>
 <% end %>
+
 <fieldset>
   <legend><%= "#{@modal_title}: " %> <!-- #if policy(@tcc).show_student? %>-->
     </br>
