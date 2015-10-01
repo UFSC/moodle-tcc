@@ -1,4 +1,6 @@
 development:
+  pdf_link_hours    : 2
+  auto_save_minutes : 0
   # Integração com Moodle
   moodle_url: http://localhost
   moodle_token: 59864ec673b9eadc141ec43d3e634065
@@ -21,6 +23,9 @@ development:
 # 2 horas  = 7200
 
 test:
+  pdf_link_hours    : 2
+  auto_save_minutes : 0
+
   # Integração com Moodle
   moodle_url: http://localhost
   moodle_token: 59864ec673b9eadc141ec43d3e634065
@@ -31,6 +36,9 @@ test:
 
   notification_email: notification@example.org
 production:
+  pdf_link_hours    : 2
+  auto_save_minutes : 0
+
 #  moodle_url:
 #  moodle_token:
 

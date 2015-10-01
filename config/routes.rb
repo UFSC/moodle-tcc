@@ -36,7 +36,13 @@ Rails.application.routes.draw do
 
   resources :internal_courses
 
-  get   'config_tcc' => 'config_tcc#index'
+  resources :tcc_definitions
+
+  # get   'tcc_definitions' => 'tcc_definitions#index'
+  # match '/tcc_definitions' => 'tcc_definitions#create',via: [:post]
+  # match '/tcc_definitions/:id/edit' => 'tcc_definitions#edit',via: [:get, :post, :patch], as: 'edit_tcc_definition'
+  # get   '/tcc_definitions/:id' => 'tcc_definition#edit',as: 'show_tcc_definitions'
+  # match '/tcc_definitions/:id' => 'tcc_definitions#update',via: [:put, :patch],as: 'update_tcc_definitions'
 
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
@@ -57,7 +63,7 @@ Rails.application.routes.draw do
 
   # Web Service
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
-  match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
+  match 'tcc_definitions_service' => 'service#tcc_definitions', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
 
   get 'batch_select' => 'batch_prints#index'

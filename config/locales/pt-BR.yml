@@ -186,6 +186,16 @@ pt-BR:
         coordinator_name:  'Coordenador(a)'
         presentation_data: 'Texto de apresentação'
         approval_data:     'Texto de aprovação'
+      tcc_definition:
+        internal_name:      'Nome da Turma'
+        activity_url:       'URL da atividade no Moodle'
+        course_id:          'Curso no Moodle'
+        internal_course_id: 'Curso na Instituição'
+        defense_date:       'Data de Defesa'
+        moodle_instance_id: 'Instância no Moodle'
+        minimum_references: 'Mínimo de Referências'
+        auto_save_minutes:  'Auto salvamento do texto (min.)'
+        pdf_link_hours:     'Tempo de acesso so PDF (hr.)'
     models:
       general_ref: 'Referência Geral'
       book_ref: 'Referência de Livros'
@@ -197,6 +207,7 @@ pt-BR:
       internal_institution: 'Instituição'
       internal_course: 'Curso'
       compund_name: 'Nome Composto'
+      tcc_definition: 'Configuração da Atividade de TCC'
   formtastic:
     labels:
       tcc:

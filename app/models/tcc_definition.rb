@@ -1,4 +1,7 @@
 class TccDefinition < ActiveRecord::Base
+  attr_accessible :internal_name, :activity_url, :course_id, :internal_course_id, :defense_date,
+                  :moodle_instance_id, :minimum_references, :auto_save_minutes, :pdf_link_hours
+
   has_many :chapter_definitions, :inverse_of => :tcc_definition, :dependent => :destroy
   has_many :tccs, :inverse_of => :tcc_definition
 
@@ -6,8 +9,6 @@ class TccDefinition < ActiveRecord::Base
   validates :moodle_instance_id, presence: true
   validates :activity_url, presence: true
   validates :course_id, uniqueness: true, presence: true
-
-  attr_accessible :internal_name, :activity_url, :course_id, :defense_date, :moodle_instance_id, :minimum_references
 
   after_create :touch_tcc
   after_update :touch_tcc

@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921002035) do
+ActiveRecord::Schema.define(version: 20151001212109) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
     t.string   "keywords"
     t.integer  "tcc_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state",                       default: "empty"
     t.date     "state_date"
     t.datetime "created_at"
@@ -144,17 +146,6 @@ ActiveRecord::Schema.define(version: 20150921002035) do
     t.string   "type_name"
   end
 
-  create_table "courses", force: true do |t|
-    t.string   "course_name"
-    t.string   "department_name"
-    t.string   "center_name"
-    t.string   "coordinator_name"
-    t.string   "presentation_data"
-    t.string   "approval_data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "internal_courses", force: true do |t|
     t.integer  "internal_institution_id"
     t.string   "course_name"
@@ -169,9 +160,7 @@ ActiveRecord::Schema.define(version: 20150921002035) do
 
   create_table "internal_institutions", force: true do |t|
     t.string   "institution_name"
-    t.string   "data_file_name",    null: false
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
+    t.string   "data_file_name",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -256,6 +245,8 @@ ActiveRecord::Schema.define(version: 20150921002035) do
     t.date     "defense_date"
     t.integer  "moodle_instance_id"
     t.integer  "minimum_references"
+    t.integer  "pdf_link_hours"
+    t.integer  "auto_save_minutes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,45 @@
+<%= semantic_form_for @tcc_definition do |f| %>
+  <div id="data_tab_content">
+    <%= f.inputs do %>
+      <div class="col-sm-12">
+        <%= f.input :internal_course_id,
+                    as: :select, collection: InternalCourse.pluck(:course_name, :id),
+                    label: t('activerecord.attributes.internal_course.course_name'),
+                    input_html: {autofocus: true}, required: true
+        %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :internal_name %>
+        <%= f.input :defense_date %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :activity_url %>
+        <%= f.input :auto_save_minutes %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :moodle_instance_id %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :course_id %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :minimum_references %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :pdf_link_hours %>
+      </div>
+
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-8 col-md-6 col-lg-6">
+        <%= f.actions do %>
+          <%= f.action :submit, button_html: {class: 'btn btn-primary'} do %>
+            <%= labelAdicionar %>
+          <% end %>
+          <%= f.action :cancel, button_html: {class: 'btn btn-default'}, url: tcc_definitions_path %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
