@@ -14,7 +14,7 @@ describe 'BookRef' do
       visit new_book_ref_path
       fill_in 'Segundo Autor', :with => attributes[:second_author]
       fill_in 'Título', :with => attributes[:title]
-      click_button 'Criar Referência de Livros'
+      click_button I18n.t(:'formtastic.actions.create', model: I18n.t(:'activerecord.models.book_ref'))
       expect(page).to have_content(:success)
     end
   end

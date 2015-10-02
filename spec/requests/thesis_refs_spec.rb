@@ -14,7 +14,7 @@ describe 'ThesisRef' do
       visit new_thesis_ref_path
       fill_in 'Primeiro Autor', :with => attributes[:first_author]
       fill_in 'Título', :with => attributes[:title]
-      click_button 'Criar Referência de Tese ou Monografia'
+      click_button I18n.t(:'formtastic.actions.create', model: I18n.t(:'activerecord.models.thesis_ref'))
       expect(page).to have_content(:success)
     end
   end

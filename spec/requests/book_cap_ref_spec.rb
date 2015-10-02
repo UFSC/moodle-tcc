@@ -14,7 +14,7 @@ describe 'BookCapRefs' do
       visit new_book_cap_ref_path
       fill_in 'Título do Livro', :with => attributes[:book_title]
       fill_in 'Título do Capítulo', :with => attributes[:cap_title]
-      click_button 'Criar'
+      click_button I18n.t(:'formtastic.actions.create', model: I18n.t(:'activerecord.models.book_cap_ref'))
       expect(page).to have_content(:success)
     end
   end

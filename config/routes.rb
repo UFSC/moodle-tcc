@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
   # Web Service
   match 'reportingservice_tcc' => 'service#report_tcc', :defaults => {:format => 'json'}, via: [:get, :post]
-  match 'tcc_definitions_service' => 'service#tcc_definitions', :defaults => {:format => 'json'}, via: [:get, :post]
+  match 'tcc_definition_service' => 'service#tcc_definition', :defaults => {:format => 'json'}, via: [:get, :post]
   get 'ping' => 'service#ping'
 
   get 'batch_select' => 'batch_prints#index'

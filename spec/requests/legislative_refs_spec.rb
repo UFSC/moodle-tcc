@@ -14,7 +14,7 @@ describe 'LegislativetRef' do
       visit new_legislative_ref_path
       fill_in 'Jurisdição ou Cabeçalho', :with => attributes[:jurisdiction_or_header]
       fill_in 'Título', :with => attributes[:title]
-      click_button 'Criar Referência do Legislativo'
+      click_button I18n.t(:'formtastic.actions.create', model: I18n.t(:'activerecord.models.legislative_ref'))
       expect(page).to have_content(:success)
     end
   end

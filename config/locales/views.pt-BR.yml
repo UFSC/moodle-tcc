@@ -1,7 +1,7 @@
   pt-BR:
 
     # Botões
-    add_new_reference_button: 'Criar nova referência'
+    add_new_reference_button: 'Adicionar nova referência'
     btn_evaluate: 'Avaliar'
     list_refresh: 'Atualizar lista'
     save: 'Salvar'
