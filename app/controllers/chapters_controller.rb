@@ -28,7 +28,7 @@ class ChaptersController < ApplicationController
 
     b_change_state = change_state
 
-    @chapter.content = remove_blank_lines( @chapter.content)
+    @chapter.content = ControllersUtils::remove_blank_lines( @chapter.content)
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]

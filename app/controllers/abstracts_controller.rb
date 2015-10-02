@@ -23,7 +23,7 @@ class AbstractsController < ApplicationController
 
     b_change_state = change_state
 
-    @abstract.content = remove_blank_lines(@abstract.content)
+    @abstract.content = ControllersUtils::remove_blank_lines(@abstract.content)
 
     if @abstract.valid? && @abstract.save
       #@comment.save!
@@ -49,7 +49,7 @@ class AbstractsController < ApplicationController
 
     b_change_state = change_state
 
-    @abstract.content = remove_blank_lines(@abstract.content)
+    @abstract.content = ControllersUtils::remove_blank_lines(@abstract.content)
 
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]

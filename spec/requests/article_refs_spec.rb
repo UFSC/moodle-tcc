@@ -14,6 +14,7 @@ describe 'ArticleRef' do
       visit new_article_ref_path
       fill_in 'Segundo Autor', :with => attributes[:second_author]
       fill_in 'Título do Artigo', :with => attributes[:article_title]
+      # click_button I18n.t('add_new_reference_button')
       click_button 'Criar Referência de Artigo'
       expect(page).to have_content(:success)
     end
