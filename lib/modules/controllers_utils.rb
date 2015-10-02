@@ -1,9 +1,10 @@
 module ControllersUtils
 
-  def remove_blank_lines(content)
+  def self.remove_blank_lines(content)
     ## O CKEditor está realizando a limpeza de linhas em branco
     # config.autoParagraph = false; # no config.sj do editor
 
+    return nil if content.nil?
     newContent = content
     ## tira linhas em branco
     # U+00A0	/	194 160	/ NO-BREAK SPACE
@@ -19,17 +20,18 @@ module ControllersUtils
         # se não encontrar parágrafo e texto com espaços
         if /^<p(.*)>(\s*)<\/p>$/.match(x).nil?
           # então adiciona o texto em newLines
-          x
+          x unless x.empty?
           # senão, se encontrar parágrafo e texto com espaços
           # então abandona o texto e não adiciona em newLines
         end
       else
         # se encontrar parágrafo com "imagem" e texto com espaços
         # então adiciona o texto em newLines
-        x
+        x unless x.empty?
       end
     }.compact.join("\r\n\r\n")
-    newContent = newLines.chomp!
+    newLines.chomp!
+    newContent = newLines
     newContent
   end
 
