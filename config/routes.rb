@@ -36,13 +36,7 @@ Rails.application.routes.draw do
 
   resources :internal_courses
 
-  resources :tcc_definitions
-
-  # get   'tcc_definitions' => 'tcc_definitions#index'
-  # match '/tcc_definitions' => 'tcc_definitions#create',via: [:post]
-  # match '/tcc_definitions/:id/edit' => 'tcc_definitions#edit',via: [:get, :post, :patch], as: 'edit_tcc_definition'
-  # get   '/tcc_definitions/:id' => 'tcc_definition#edit',as: 'show_tcc_definitions'
-  # match '/tcc_definitions/:id' => 'tcc_definitions#update',via: [:put, :patch],as: 'update_tcc_definitions'
+  resources :tcc_definitions, only: [:index, :edit, :update]
 
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]

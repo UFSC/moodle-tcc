@@ -5,16 +5,18 @@ class TccDefinitionsController < ApplicationController
   before_action :check_permission
 
   def index
+    set_title
     @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
+    render :edit
   end
 
   def edit
-    @modal_title = t(:'activerecord.models.tcc_definition')
+    set_title
     @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
   end
 
   def update
-    @modal_title = t(:'activerecord.models.tcc_definition')
+    set_title
     @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
 
     if @tcc_definition.update_attributes(params[:tcc_definition])
@@ -22,9 +24,14 @@ class TccDefinitionsController < ApplicationController
       redirect_to tcc_definitions_path
     else
       flash[:error] = t(:please_fix_invalid_data)
-      @modal_title = t(:edit_internal_institution)
       render :edit
     end
+  end
+
+  private
+
+  def set_title
+    @modal_title = t(:'activerecord.models.tcc_definition')
   end
 
   protected

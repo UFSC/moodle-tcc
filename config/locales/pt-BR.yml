@@ -195,7 +195,7 @@ pt-BR:
         moodle_instance_id: 'Instância no Moodle'
         minimum_references: 'Mínimo de Referências'
         auto_save_minutes:  'Auto salvamento do texto (min.)'
-        pdf_link_hours:     'Tempo de acesso so PDF (hr.)'
+        pdf_link_hours:     'Tempo de acesso ao PDF (hr.)'
     models:
       general_ref: 'Referência Geral'
       book_ref: 'Referência de Livros'
@@ -209,6 +209,17 @@ pt-BR:
       compund_name: 'Nome Composto'
       tcc_definition: 'Configuração da Atividade de TCC'
   formtastic:
+    hints:
+      tcc_definition:
+        internal_name:      'Nome da Turma do Moodle, para facilitar a busca de informações no sistema de XTCC. asdasd asd asd asd asd asd asd as'
+        activity_url:       'URL da atividade no Moodle, asdasd asd asd as s cccc'
+        course_id:          'Curso no Moodle'
+        internal_course_id: 'Curso na Instituição'
+        defense_date:       'Data de Defesa da turma como um todo, que será apresentada na capa do TCC'
+        moodle_instance_id: 'Instância no Moodle, utilizada para '
+        minimum_references: 'Define a quantidade mínima de referências que será necessário para permitir o professor definir a nota, isto é, aprovar o TCC. Caso'
+        auto_save_minutes:  'Auto salvamento do texto dos capítulos do TCC, em minutos. Se ficar em 0 (zero) o auto salvamento será desabilitado.'
+        pdf_link_hours:     'Tempo que o acesso ao download do PDF gerado na impressão em lote ficará disponível para download, em horas'
     labels:
       tcc:
         student:
