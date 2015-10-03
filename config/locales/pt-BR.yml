@@ -211,15 +211,15 @@ pt-BR:
   formtastic:
     hints:
       tcc_definition:
-        internal_name:      'Nome da Turma do Moodle, para facilitar a busca de informações no sistema de XTCC. asdasd asd asd asd asd asd asd as'
-        activity_url:       'URL da atividade no Moodle, asdasd asd asd as s cccc'
+        internal_name:      'Nome da Turma do Moodle, para facilitar a busca de informações no sistema de TCC.'
+        activity_url:       'URL da atividade no Moodle'
         course_id:          'Curso no Moodle'
-        internal_course_id: 'Curso na Instituição'
-        defense_date:       'Data de Defesa da turma como um todo, que será apresentada na capa do TCC'
-        moodle_instance_id: 'Instância no Moodle, utilizada para '
-        minimum_references: 'Define a quantidade mínima de referências que será necessário para permitir o professor definir a nota, isto é, aprovar o TCC. Caso'
+        internal_course_id: 'Curso cadastrado na ferramenta de TCC'
+        defense_date:       'Data de Defesa da turma como um todo, que será apresentada na capa do TCC.'
+        moodle_instance_id: 'Instância no Moodle, utilizada para transposição de notas para o Moodle.'
+        minimum_references: 'Define a quantidade mínima de referências que será exigida no TCC para o professor poder definir a nota, isto é, aprovar o TCC.'
         auto_save_minutes:  'Auto salvamento do texto dos capítulos do TCC, em minutos. Se ficar em 0 (zero) o auto salvamento será desabilitado.'
-        pdf_link_hours:     'Tempo que o acesso ao download do PDF gerado na impressão em lote ficará disponível para download, em horas'
+        pdf_link_hours:     'Tempo que o arquivo de TCC, gerado na impressão em lote, ficará disponível para download. Em horas.'
     labels:
       tcc:
         student:
