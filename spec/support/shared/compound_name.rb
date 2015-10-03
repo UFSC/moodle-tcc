@@ -17,8 +17,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
     click_link I18n.t(:add_compound_name_or_suffix)
 
     expect(page).to have_content('Adição de nome composto') # wait for ajax
-    #fill_in I18n.t('activerecord.attributes.compound_name.name'), :with => compound_name_attrs[:name], :exact => true
-    fill_in I18n.t(:compound_name), :with => compound_name_attrs[:name], :exact => true
+    fill_in 'compound_name[name]', :with => compound_name_attrs[:name], :exact => true
 
     click_button I18n.t(:save)
 
@@ -34,8 +33,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
     click_link I18n.t('activerecord.attributes.compound_name.edit')
 
     expect(page).to have_content('Edição de nome composto') # wait for ajax
-    #fill_in I18n.t('activerecord.attributes.compound_name.name'), :with => compound_name_attrs[:name], :exact => true
-    fill_in I18n.t(:compound_name), :with => compound_name_attrs[:name], :exact => true
+    fill_in 'compound_name[name]', :with => compound_name_attrs[:name], :exact => true
 
 
     click_button I18n.t(:save)
