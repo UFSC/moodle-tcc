@@ -1,4 +1,12 @@
 <%= semantic_form_for @internal_course do |f| %>
+  <!--<button type="button" id="test" class="btn btn-primary">-->
+    <!--test-->
+    <!--<span class="fa fa-spinner fa-spin fa-2x fa-fw margin-bottom"></span>-->
+  <!--</button>-->
+  <!--<i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>-->
+  <!--<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"></i>-->
+  <!--<i class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>-->
+  <!--<i class="fa fa-cog fa-spin fa-2x fa-fw margin-bottom"></i>-->
   <%= f.inputs do %>
     <%= f.input :internal_institution_id,
                 as: :select, collection: InternalInstitution.pluck(:institution_name, :id),
@@ -16,10 +24,10 @@
   <div class="row">
     <div class="col-xs-8 col-md-6 col-lg-6">
       <%= f.actions do %>
-        <%= f.action :submit, button_html: {class: 'btn btn-primary'} do %>
+        <%= f.action :submit, button_html: {class: 'btn btn-primary loading'} do %>
           <%= labelAdicionar %>
         <% end %>
-        <%= f.action :cancel, button_html: {class: 'btn btn-default'}, url: internal_courses_path %>
+        <%= f.action :cancel, button_html: {class: 'btn btn-default loading'}, url: internal_courses_path %>
       <% end %>
 
     </div>

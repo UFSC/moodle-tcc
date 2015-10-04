@@ -7,7 +7,7 @@ class Tcc < ActiveRecord::Base
   has_one :abstract, :inverse_of => :tcc
   has_many :batch_prints, :inverse_of => :tcc
 
-  belongs_to :tcc_definition, :inverse_of => :tccs
+  belongs_to :tcc_definition, -> { includes :internal_course }, :inverse_of => :tccs
 
   # Referencias
   has_many :references, :dependent => :destroy

@@ -7,7 +7,7 @@ class InternalInstitutionsController < ApplicationController
   before_action :check_permission
 
   def index
-    @internal_institutions = InternalInstitution.search(params[:search], params[:page], { per: 7 })
+    @internal_institutions = InternalInstitution.includes(:internal_courses).search(params[:search], params[:page], { per: 7 })
   end
 
   def new
@@ -34,11 +34,11 @@ class InternalInstitutionsController < ApplicationController
 
   def edit
     @modal_title = t(:edit_internal_institution)
-    @internal_institution = InternalInstitution.find(params[:id])
+    @internal_institution = InternalInstitution.includes(:internal_courses).find(params[:id])
   end
 
   def update
-    @internal_institution = InternalInstitution.find(params[:id])
+    @internal_institution = InternalInstitution.includes(:internal_courses).find(params[:id])
 
     if @internal_institution.update_attributes(params[:internal_institution])
       flash[:success] = t(:successfully_saved)
@@ -51,13 +51,13 @@ class InternalInstitutionsController < ApplicationController
   end
 
   def destroy
-    @internal_institution = InternalInstitution.find(params[:id])
+    @internal_institution = InternalInstitution.includes(:internal_courses).find(params[:id])
 
     @internal_institution.destroy
 
     if @internal_institution.errors.any?
       flash[:error] = @internal_institution.errors.full_messages.join("\n")
-      @internal_institutions = InternalInstitution.all
+      @internal_institutions = InternalInstitution.includes(:internal_courses).find(params[:id])
     else
       flash[:success] = t(:successfully_saved)
     end

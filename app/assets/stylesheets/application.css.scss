@@ -5,10 +5,13 @@ $headings-color: #004E95;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 @import "bootstrap/theme";
 @import "jquery.ui.autocomplete";
 @import "formtastic-bootstrap";
 @import "bootstrap-datepicker3";
+@import "bootstrap/variables";
 @import "base";
 @import "instructor_admin";
 @import "tcc";

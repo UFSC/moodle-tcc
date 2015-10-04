@@ -8,12 +8,12 @@
                                {placeholder: 'Busca', class: 'form-control', autofocus: 'autofocus'} %>
 
     <div class="input-group-btn">
-      <%= link_to internal_institutions_path, class: 'btn btn-default', id: 'clean-search', title: t('clear_filter') do %>
+      <%= link_to internal_institutions_path, class: 'btn btn-default loading', id: 'clean-search', title: t('clear_filter') do %>
         <%= display_icon('remove') %>
       <% end %>
 
 
-      <%= button_tag class: 'btn btn-default', name: nil, title: t('apply_filter') do %>
+      <%= button_tag class: 'btn btn-default loading', name: nil, title: t('apply_filter') do %>
         <%= display_icon('search') %>
       <% end %>
     </div>

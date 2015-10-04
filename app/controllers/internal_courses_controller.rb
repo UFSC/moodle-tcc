@@ -7,7 +7,7 @@ class InternalCoursesController < ApplicationController
   before_action :check_permission
 
   def index
-    @internal_courses = InternalCourse.search(params[:search], params[:page], { per: 7 })
+    @internal_courses = InternalCourse.includes(:tcc_definitions).search(params[:search], params[:page], { per: 7 })
   end
 
   def new
@@ -30,11 +30,11 @@ class InternalCoursesController < ApplicationController
 
   def edit
     @modal_title = t(:edit_internal_course)
-    @internal_course = InternalCourse.find(params[:id])
+    @internal_course = InternalCourse.includes(:tcc_definitions).find(params[:id])
   end
 
   def update
-    @internal_course = InternalCourse.find(params[:id])
+    @internal_course = InternalCourse.includes(:tcc_definitions).find(params[:id])
 
     if @internal_course.update_attributes(params[:internal_course])
       flash[:success] = t(:successfully_saved)

@@ -14,7 +14,7 @@
 
   <div class="col-xs-5 col-md-6 col-lg-6">
     <div class="pull-right">
-      <%= link_to new_internal_institution_path, class: 'btn btn-default' do %>
+      <%= link_to new_internal_institution_path, class: 'btn btn-default loading' do %>
         <%= display_icon 'plus' %> <%= labelAdicionar %>
       <% end %>
     </div>
@@ -37,12 +37,13 @@
         <td align="center"><%= image_tag internal_institution.image_url(:small_thumb).to_s %></td>
         <td><%= internal_institution.institution_name %></td>
         <td><%= link_to t(:edit), edit_internal_institution_path(internal_institution),
-                        class: 'btn btn-default' %></td>
+                        class: 'btn btn-default loading' %></td>
         <td><%= link_to t(:remove),
                         internal_institution, #internal_institution_path(internal_institution),
                         class: 'btn btn-danger',
                         method: :delete,
-                        data: { confirm: t(:label_confirm_message) }
+                        data: { confirm: t(:label_confirm_message) ,
+                                disable_with: '<span class="fa fa-spinner fa-spin fa-2x fa-fw margin-bottom"></span>' }
         %></td>
       </tr>
     <% end %>
@@ -50,7 +51,7 @@
   </table>
 
   <br>
-  <%= link_to new_internal_institution_path, class: 'btn btn-default' do %>
+  <%= link_to new_internal_institution_path, class: 'btn btn-default loading' do %>
     <%= display_icon 'plus' %> <%= labelAdicionar %>
   <% end %>
 <% else %>
@@ -61,7 +62,7 @@
       <p><%= t('search_filter', search: params[:search]) %></p>
 
     <% else %>
-      <%= link_to new_internal_institution_path, class: 'btn btn-primary' do %>
+      <%= link_to new_internal_institution_path, class: 'btn btn-primary loading' do %>
         <%= display_icon 'plus' %> <%= labelAdicionar %>
       <% end %>
     <% end %>

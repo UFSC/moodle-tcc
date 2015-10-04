@@ -6,18 +6,18 @@ class TccDefinitionsController < ApplicationController
 
   def index
     set_title
-    @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
+    @tcc_definition = TccDefinition.includes(:chapter_definitions, :tccs).find(@tp.custom_params['tcc_definition'])
     render :edit
   end
 
   def edit
     set_title
-    @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
+    @tcc_definition = TccDefinition.includes(:chapter_definitions, :tccs).find(@tp.custom_params['tcc_definition'])
   end
 
   def update
     set_title
-    @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
+    @tcc_definition = TccDefinition.includes(:chapter_definitions, :tccs).find(@tp.custom_params['tcc_definition'])
 
     if @tcc_definition.update_attributes(params[:tcc_definition])
       flash[:success] = t(:successfully_saved)
