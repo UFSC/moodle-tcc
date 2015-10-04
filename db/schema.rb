@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001212109) do
+ActiveRecord::Schema.define(version: 20151004072825) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
     t.string   "keywords"
     t.integer  "tcc_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "state",                       default: "empty"
     t.date     "state_date"
     t.datetime "created_at"
@@ -160,6 +158,7 @@ ActiveRecord::Schema.define(version: 20151001212109) do
 
   create_table "internal_institutions", force: true do |t|
     t.string   "institution_name"
+    t.string   "city"
     t.string   "data_file_name",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"

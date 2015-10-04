@@ -27,6 +27,7 @@
     <tr>
       <th align="center"><%= 'Logo' %> </th>
       <th style="width:60%" ><%= t('activerecord.attributes.internal_institution.institution_name') %> </th>
+      <th><%= t('activerecord.attributes.internal_institution.city') %> </th>
       <th colspan="2">Ação</th>
     </tr>
     </thead>
@@ -36,6 +37,7 @@
       <tr>
         <td align="center"><%= image_tag internal_institution.image_url(:small_thumb).to_s %></td>
         <td><%= internal_institution.institution_name %></td>
+        <td><%= internal_institution.city %></td>
         <td><%= link_to t(:edit), edit_internal_institution_path(internal_institution),
                         class: 'btn btn-default loading' %></td>
         <td><%= link_to t(:remove),

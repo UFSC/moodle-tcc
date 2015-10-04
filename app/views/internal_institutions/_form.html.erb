@@ -22,6 +22,13 @@
   </div>
   <div class="row">
     <div class="col-xs-10 col-md-8 col-lg-6">
+      <p><%= f.input :city %></p>
+      <span class="help-block"></span>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-10 col-md-8 col-lg-6">
       <!-- :label => "URL Title", :hint => "Created automatically if left blank", :required => false -->
       <p><%= f.label :image %>* <%= f.input :data_file_name, label: false, input_html:  { readonly: true } %>
          <%= f.file_field :image %></p>

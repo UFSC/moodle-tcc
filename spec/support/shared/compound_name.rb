@@ -30,7 +30,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
 
     expect(page).to have_content(compound_name.name)
 
-    click_link I18n.t('activerecord.attributes.compound_name.edit')
+    click_link I18n.t('edit')
 
     expect(page).to have_content('Edição de nome composto') # wait for ajax
     fill_in 'compound_name[name]', :with => compound_name_attrs[:name], :exact => true
@@ -44,7 +44,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
     compound_name # cria o nome composto
     visit compound_names_path(anchor: 'compound_names')
 
-    click_button I18n.t('activerecord.attributes.compound_name.remove')
+    click_button I18n.t('remove')
 
     expect(page).to have_content('Tem certeza que deseja apagar o nome composto') # wait for ajax
 

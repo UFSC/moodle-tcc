@@ -174,6 +174,7 @@ pt-BR:
       internal_institution:
         internal_institutions: 'instituições'
         institution_name: 'Nome da Instituição'
+        city: 'Local da Instituição'
         image: 'Logotipo'
         data_file_name: 'Logotipo'
       internal_course:
@@ -218,6 +219,8 @@ pt-BR:
         minimum_references: 'Define a quantidade mínima de referências que será exigida para a finalização do TCC, para o professor poder definir a nota final. O valor deve ser maior ou igual a 1 (um).'
         auto_save_minutes:  'Auto salvamento do texto dos capítulos do TCC, em minutos. Se ficar em 0 (zero) o auto salvamento será desabilitado. O valor deve ser maior ou igual a 0 (zero).'
         pdf_link_hours:     "Tempo que o arquivo de TCC, gerado na impressão em lote, ficará disponível para download, em horas. O valor deve ser maior ou igual a 1 (um)."
+      internal_institution:
+        city: 'Local da Instituição. Será apresentado no rodapé das capas dos TCCs'
     labels:
       tcc:
         student:
