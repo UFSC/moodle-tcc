@@ -27,13 +27,14 @@ Rails.application.routes.draw do
   get 'instructor_admin' => 'instructor_admin#index'
   get 'instructor_admin_navbar' => 'instructor_admin#navbar'
 
-  match '/internal_institutions' => 'internal_institutions#index', via: [:get], as: 'internal_institutions'
-  match '/internal_institutions' => 'internal_institutions#create',via: [:post]
-  match '/internal_institutions/new' => 'internal_institutions#new', via: [:get], as: 'new_internal_institution'
-  match '/internal_institutions/:id/edit' => 'internal_institutions#edit',via: [:get, :post, :patch], as: 'edit_internal_institution'
-  match '/internal_institutions/:id' => 'internal_institutions#update',via: [:put, :patch],as: 'update_internal_institution'
-  match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete], as: 'internal_institution'
+  # match '/internal_institutions' => 'internal_institutions#index', via: [:get], as: 'internal_institutions'
+  # match '/internal_institutions' => 'internal_institutions#create',via: [:post]
+  # match '/internal_institutions/new' => 'internal_institutions#new', via: [:get], as: 'new_internal_institution'
+  # match '/internal_institutions/:id/edit' => 'internal_institutions#edit',via: [:get, :post, :patch], as: 'edit_internal_institution'
+  # match '/internal_institutions/:id' => 'internal_institutions#update',via: [:put, :patch],as: 'update_internal_institution'
+  # match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete], as: 'internal_institution'
 
+  resources :internal_institutions
   resources :internal_courses
 
   resources :tcc_definitions, only: [:index, :edit, :update]
