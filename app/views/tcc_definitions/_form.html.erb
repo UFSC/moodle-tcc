@@ -28,10 +28,11 @@
         <%= f.input :pdf_link_hours, :hint => false, input_html: { style: 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.pdf_link_hours') } %>
       </div>
       <div class="col-sm-6">
-        <%= f.input :auto_save_minutes, :hint => false, input_html: { :style => 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
+        <%= f.input :defense_date, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.defense_date') } %>
       </div>
       <div class="col-sm-6">
-        <%= f.input :defense_date, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.defense_date') } %>
+        <%= f.input :auto_save_minutes, :hint => false, input_html: { :style => 'width:7em', :disabled => true,
+                tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
       </div>
 
     <% end %>

@@ -43,9 +43,11 @@ class BatchPrintsController < ApplicationController
 
   def print
     authorize(Tcc, :show_scope?)
+    @tcc_definition = TccDefinition.includes(:chapter_definitions).find(@tp.custom_params['tcc_definition'])
     arr_moodle_ids = params[:moodle_ids].split(';')
     if arr_moodle_ids.size > 0
-      BatchTccsWorker.perform_async(arr_moodle_ids, @tp.lis_person_name_full, @tp.lis_person_contact_email_primary)
+      BatchTccsWorker.perform_async(arr_moodle_ids, @tp.lis_person_name_full, @tp.lis_person_contact_email_primary,
+                                    @tcc_definition.pdf_link_hours)
       flash[:success] = "A impressão será enviada por e-mail para: #{@tp.lis_person_name_full} - #{@tp.lis_person_contact_email_primary}"
     else
       flash[:alert] = "Deve haver ao menos um TCC slecionado para a impressão!"

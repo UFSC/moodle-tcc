@@ -6,7 +6,7 @@ require 'redis-namespace'
 class BatchTccs
   include Sidekiq::Worker
 
-  def initialize
+  def initialize(link_hours)
     logger.debug('>>> inicializando Worker')
     # @auth_url     = 'http://swift.setic.ufsc.br:80/auth/v1.0/'
     begin
@@ -44,10 +44,14 @@ class BatchTccs
     # 1 hora = 3600
     # @seconds_URL_lives = 3600
     begin
-      @seconds_URL_lives = Settings.swift_seconds_URL_lives
+      logger.debug('>>> @seconds_URL_lives ')
+      logger.debug(">>> Settings.swift_seconds_URL_lives=#{Settings.swift_seconds_URL_lives}")
+      logger.debug(">>> link_hours=#{link_hours}")
+      @seconds_URL_lives = (link_hours < 0) ? Settings.swift_seconds_URL_lives : link_hours*3600
     rescue
-      @seconds_URL_lives = ''
+      @seconds_URL_lives = 7200
     end
+    logger.debug(">>> @seconds_URL_lives=#{@seconds_URL_lives}")
 
 
     Excon.defaults[:ssl_verify_peer] = false
