@@ -1,4 +1,6 @@
   pt-BR:
+    # Geral
+    not_registered: '[NÃO CADASTRADO]'
 
     # Botões
     add_new_reference_button: 'Adicionar nova referência'

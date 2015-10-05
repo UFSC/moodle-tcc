@@ -185,7 +185,7 @@ brazil,				% o último idioma é o principal do documento
   \begin{capa}%
     \center
 
-      \includegraphics[width=70pt]{<%= tcc_document.logo_path %>}
+      \includegraphics[width=<%= tcc_document.logo_width %>pt]{<%= tcc_document.logo_path %>}
 
     \ABNTEXchapterfont\small
       <%= tcc_document.institution %> \\
@@ -237,7 +237,7 @@ brazil,				% o último idioma é o principal do documento
 {\large\imprimirorientadorRotulo~\imprimirorientador\par}
 
 \abntex@ifnotempty{\imprimircoorientador}{%
-{\large\\Coordenadora do Curso: ~\imprimircoorientador}%
+{\large\\Coordenador<%= tcc_document.coordinator_gender == 'f' ? 'a' : '' %> do Curso: ~\imprimircoorientador}%
 }%
 
 \vspace*{\fill}

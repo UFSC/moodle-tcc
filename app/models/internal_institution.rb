@@ -1,7 +1,7 @@
 class InternalInstitution < ActiveRecord::Base
   include Shared::Search
 
-  attr_accessible :institution_name, :city, :data_file_name, :image, :image_cache
+  attr_accessible :institution_name, :city, :logo_width, :data_file_name, :image, :image_cache
 
   has_many :internal_courses, inverse_of: :internal_institution,
            dependent: :restrict_with_error
@@ -10,10 +10,13 @@ class InternalInstitution < ActiveRecord::Base
 
   normalize_attributes :institution_name, :with => [:squish, :blank]
 
-  validates_presence_of :institution_name, :city, :image
+  validates_presence_of :institution_name, :city, :image, :logo_width
 
   validates :institution_name, uniqueness: true
   validate :image
+  # largura da folha a4
+  validates :logo_width, numericality: { only_integer: true, greater_than_or_equal_to: 70, less_than_or_equal_to: 500 }
+
 
   default_scope -> { order(:institution_name) }
   scoped_search :on => [:institution_name]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004072825) do
+ActiveRecord::Schema.define(version: 20151005022645) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20151004072825) do
     t.string   "department_name"
     t.string   "center_name"
     t.string   "coordinator_name"
+    t.string   "coordinator_gender",      limit: 1
     t.string   "presentation_data"
     t.string   "approval_data"
     t.datetime "created_at"
@@ -158,6 +159,7 @@ ActiveRecord::Schema.define(version: 20151004072825) do
 
   create_table "internal_institutions", force: true do |t|
     t.string   "institution_name"
+    t.integer  "logo_width"
     t.string   "city"
     t.string   "data_file_name",   null: false
     t.datetime "created_at"

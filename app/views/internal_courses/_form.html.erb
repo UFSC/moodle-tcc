@@ -1,12 +1,4 @@
 <%= semantic_form_for @internal_course do |f| %>
-  <!--<button type="button" id="test" class="btn btn-primary">-->
-    <!--test-->
-    <!--<span class="fa fa-spinner fa-spin fa-2x fa-fw margin-bottom"></span>-->
-  <!--</button>-->
-  <!--<i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>-->
-  <!--<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"></i>-->
-  <!--<i class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>-->
-  <!--<i class="fa fa-cog fa-spin fa-2x fa-fw margin-bottom"></i>-->
   <%= f.inputs do %>
     <%= f.input :internal_institution_id,
                 as: :select, collection: InternalInstitution.pluck(:institution_name, :id),
@@ -16,7 +8,16 @@
     <%= f.input :course_name %>
     <%= f.input :department_name %>
     <%= f.input :center_name %>
-    <%= f.input :coordinator_name %>
+    <div class="row">
+      <div class="col-xs-8 col-md-9 col-lg-9">
+        <%= f.input :coordinator_name %>
+      </div>
+      <div class="col-xs-4 col-md-3 col-lg-3">
+        <%= f.input :coordinator_gender, :as => :select,
+                    collection:  Hash[{'m' => 'Masculino', 'f' => 'Feminino' }.map{|key,value| [value, key]}]
+        %>
+      </div>
+    </div>
     <%= f.input :presentation_data %>
     <%= f.input :approval_data %>
   <% end %>
