@@ -39,6 +39,7 @@ config/*.save
 config/tcc_config.yml
 config/database.yml
 config/moodle.yml
+config/newrelic.yml
 config/errbit.yml
 config/email.yml
 config/sidekiq.yml
