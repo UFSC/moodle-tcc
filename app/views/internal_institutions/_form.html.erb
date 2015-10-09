@@ -1,0 +1,60 @@
+<%= semantic_form_for @internal_institution, :html => {multipart: true}, url: polymorphic_path(@internal_institution) do |f| %>
+  <!--, class: 'form-horizontal'-->
+  <% if @internal_institution.errors.any? %>
+    <div id="error_explanation">
+      <% error_count = @internal_institution.errors.count %>
+      <h2><%= "#{pluralize(error_count, "erro impede", 'erros impedem')}" %>
+        o salvamento da <%= t(:internal_institution) %>:</h2>
+      <ul>
+        <% @internal_institution.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-xs-10 col-md-8 col-lg-6">
+      <p><%= f.input :institution_name, input_html: {:autofocus => true} %></p>
+      <span class="help-block"></span>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-7 col-md-6 col-lg-4">
+      <p><%= f.input :city %></p>
+      <span class="help-block"></span>
+    </div>
+    <div class="col-xs-3 col-md-2 col-lg-2">
+      <p><%= f.input :logo_width %></p>
+      <span class="help-block"></span>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-10 col-md-8 col-lg-6">
+      <!-- :label => "URL Title", :hint => "Created automatically if left blank", :required => false -->
+      <p><%= f.label :image %>* <%= f.input :data_file_name, label: false, input_html:  { readonly: true } %>
+         <%= f.file_field :image %></p>
+      <%= f.hidden_field :image_cache %>
+      <p><%= image_tag @internal_institution.image_url(:thumb).to_s if @internal_institution.image_url.present? %></p>
+      <span class="help-block"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-10 col-md-8 col-lg-6">
+      <%= required_fields %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-8 col-md-6 col-lg-6">
+      <%= f.actions do %>
+        <%= f.action :submit, button_html: {class: 'btn btn-primary loading'} %>
+        <%= f.action :cancel, button_html: {class: 'btn btn-default loading'}, url: internal_institutions_path() %>
+      <% end %>
+
+    </div>
+  </div>
+
+<% end %>
+

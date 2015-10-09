@@ -1,0 +1,21 @@
+<%= form_tag internal_institutions_path, method: 'get', html: {class: ''} do %>
+  <!-- para garantir a autenticacão -->
+  <!--< %= hidden_field_tag 'moodle_user', params[:moodle_user] %>-->
+
+  <div class="input-group">
+    <%= autocomplete_field_tag :search, params[:search],
+                               internal_institutions_autocomplete_name_path(autofocus: 'autofocus'),
+                               {placeholder: 'Busca', class: 'form-control', autofocus: 'autofocus'} %>
+
+    <div class="input-group-btn">
+      <%= link_to internal_institutions_path, class: 'btn btn-default loading', id: 'clean-search', title: t('clear_filter') do %>
+        <%= display_icon('remove') %>
+      <% end %>
+
+
+      <%= button_tag class: 'btn btn-default loading', name: nil, title: t('apply_filter') do %>
+        <%= display_icon('search') %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,51 @@
+<%= semantic_form_for @tcc_definition do |f| %>
+  <div id="data_tab_content">
+    <%= f.inputs do %>
+      <div class="col-sm-12">
+        <%= f.input :internal_course_id,
+                    as: :select, collection: InternalCourse.pluck(:course_name, :id),
+                    label: t('activerecord.attributes.internal_course.course_name'),
+                    :hint => false,
+                    input_html: {autofocus: true, tooltip: t('formtastic.tooltip.tcc_definition.internal_course_id')}, required: true
+        %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :internal_name, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.internal_name') } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :activity_url, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.activity_url') } %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :moodle_instance_id, :hint => false, input_html: { min: '1', step: '1', :style => 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.moodle_instance_id') } %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :course_id, :hint => false, input_html: { min: '1', step: '1', :style => 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.course_id') }  %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :minimum_references, :hint => false, input_html: { :style => 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.minimum_references') } %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :pdf_link_hours, :hint => false, input_html: { style: 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.pdf_link_hours') } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :defense_date, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.defense_date') } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :auto_save_minutes, :hint => false, input_html: { :style => 'width:7em', :disabled => true,
+                tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
+      </div>
+
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-8 col-md-6 col-lg-6">
+        <%= f.actions do %>
+          <%= f.action :submit, button_html: {class: 'btn btn-primary loading'} do %>
+            <%= labelAdicionar %>
+          <% end %>
+          <%= f.action :cancel, button_html: {class: 'btn btn-default loading'}, url: tcc_definitions_path %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,7 +1,9 @@
   pt-BR:
+    # Geral
+    not_registered: '[NÃO CADASTRADO]'
 
     # Botões
-    add_new_reference_button: 'Criar nova referência'
+    add_new_reference_button: 'Adicionar nova referência'
     btn_evaluate: 'Avaliar'
     list_refresh: 'Atualizar lista'
     save: 'Salvar'
@@ -26,6 +28,7 @@
     warn_message_necessary_references_html: 'Certifique-se de que realmente não são necessárias referências nesse capítulo. </br></br>'
 
     # Telas de conteúdo
+    search_filter: "Filtro: '%{search}'"
     empty_diaries: '[ ainda não existe nada postado para esta atividade ]'
     hub_undefined: "<p style='color:red'>Eixo inexistente</p>"
     online_text_error: "<p style='color:red'>Erro ao buscar</p>"
@@ -41,8 +44,17 @@
     compound_name: 'Nomes Compostos'
     edit_compound_name: 'Edição de nome composto'
     add_compound_name: 'Adição de nome composto'
+    internal_institution: 'Instituição'
+    edit_internal_institution: 'Edição de dados da Instituição'
+    add_internal_institution: 'Adição de dados da Instituição'
+    internal_course: 'Curso'
+    edit_internal_course: 'Edição de dados do Curso'
+    add_internal_course: 'Adição de dados do Curso'
     full_list: 'Lista Geral'
     save_changes_tcc: 'Salvar alterações'
     data: 'Dados'
     abstract: 'Resumo'
     tcc_list: 'Lista de TCCs'
+    clear_filter: 'Apagar critério de pesquisa'
+    apply_filter: 'Filtrar lista'
+    empty_data: "Não foram encontrados dados de %{model}."

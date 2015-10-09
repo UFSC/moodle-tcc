@@ -5,8 +5,11 @@ class CompoundName < ActiveRecord::Base
   default_scope -> { order(:name) }
   scoped_search :on => [:name]
 
+  validates_presence_of :name, :type_name
+
   after_commit :touch_tcc, on: [:create, :update]
   before_destroy :touch_tcc
+
 
   private
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417182709) do
+ActiveRecord::Schema.define(version: 20151005022645) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -144,6 +144,28 @@ ActiveRecord::Schema.define(version: 20150417182709) do
     t.string   "type_name"
   end
 
+  create_table "internal_courses", force: true do |t|
+    t.integer  "internal_institution_id"
+    t.string   "course_name"
+    t.string   "department_name"
+    t.string   "center_name"
+    t.string   "coordinator_name"
+    t.string   "coordinator_gender",      limit: 1
+    t.string   "presentation_data"
+    t.string   "approval_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "internal_institutions", force: true do |t|
+    t.string   "institution_name"
+    t.integer  "logo_width"
+    t.string   "city"
+    t.string   "data_file_name",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "internet_refs", force: true do |t|
     t.string   "first_author"
     t.string   "title"
@@ -220,12 +242,17 @@ ActiveRecord::Schema.define(version: 20150417182709) do
     t.string   "internal_name"
     t.string   "activity_url"
     t.integer  "course_id"
+    t.integer  "internal_course_id"
     t.date     "defense_date"
     t.integer  "moodle_instance_id"
     t.integer  "minimum_references"
+    t.integer  "pdf_link_hours"
+    t.integer  "auto_save_minutes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tcc_definitions", ["internal_course_id"], name: "index_tcc_definitions_on_internal_course_id", using: :btree
 
   create_table "tccs", force: true do |t|
     t.string   "title"

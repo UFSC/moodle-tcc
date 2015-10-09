@@ -3,25 +3,55 @@
       <!--navbar-fixed-top-->
       <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <!--<div class="navbar-header">-->
+            <div class="navbar-header">
                 <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
                     <!--<span class="sr-only">Toggle navigation</span>-->
                     <!--<span class="icon-bar"></span>-->
                     <!--<span class="icon-bar"></span>-->
                     <!--<span class="icon-bar"></span>-->
                 <!--</button>-->
-            <!--</div>-->
+
+            </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                  <li class="<%= 'active' if current_page?(instructor_admin_path) %>"><%= link_to "Lista de TCCs", instructor_admin_path %></li>
-                  <li class="<%= 'active' if current_page?(batch_select_path) %>"><%= link_to "Impressão", batch_select_path %></li>
-                  <% if policy(Tcc).show_compound_names? %>
-                    <li class="<%= 'active' if current_page?(compound_names_path) %>"><%= link_to "Nomes Compostos", compound_names_path %></li>
+                  <li class="<%= 'active' if controller.controller_name == 'instructor_admin' %>"><%= link_to "Lista de TCCs", instructor_admin_path %></li>
+                  <li class="<%= 'active' if controller.controller_name == 'batch_prints' %>"><%= link_to "Impressão", batch_select_path %></li>
+                  <% if policy(Tcc).show_config? %>
+                    <% configActive = ( (controller.controller_name == 'config') ||
+                            (controller.controller_name == 'internal_institutions') ||
+                            (controller.controller_name == 'internal_courses') ||
+                            (controller.controller_name == 'compound_names') )
+                    %>
+                    <li class="dropdown <%= 'active' if configActive %>">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuração <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="<%= tcc_definitions_path %>">Geral</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="<%= internal_institutions_path %>">Instituição</a></li>
+                        <li><a href="<%= internal_courses_path %>">Curso</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="<%= compound_names_path %>">Nome Composto</a></li>
+                      </ul>
+                    </li>
                   <% end %>
+
+
+                  <!--< % if policy(Tcc).show_compound_names? %>-->
+                    <!--<li class="< %= 'active' if controller.controller_name == 'compound_names' %>">< %= link_to "Nomes Compostos", compound_names_path %></li>-->
+                  <!--< % end %>-->
+                  <!--< % if policy(Tcc).show_internal_institutions? %>-->
+                    <!--<li class="< %= 'active' if controller.controller_name == 'internal_institutions' %>">< %= link_to "Instituições", internal_institutions_path %></li>-->
+                  <!--< % end %>-->
+                  <!--< % if policy(Tcc).show_config? %>-->
+                    <!--<li class="< %= 'active' if controller.controller_name == 'internal_courses' %>">< %= link_to "Cursos", internal_courses_path %></li>-->
+                  <!--< % end %>-->
+
                   <!--<li class="%= 'active' if current_page?(sidekiq_monitor_path) %>">%= link_to "Sidekiq", sidekiq_monitor_path, target: "_blank" %></li>-->
                   <li class="<%= 'active' if current_page?(sidekiq_web_path ) %>"><%= link_to "Sidekiq", sidekiq_web_path, target: "_blank" %></li>
                 </ul>
+                <span class="navbar-right fa fa-spinner fa-spin fa-3x fa-fw margin-bottom" style="display: none;"></span>
+                <!--<p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>-->
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

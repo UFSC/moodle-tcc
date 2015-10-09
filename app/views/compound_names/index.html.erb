@@ -1,11 +1,12 @@
 <% if policy(Tcc).show_compound_names? %>
   <%= render 'instructor_admin/navbar' %>
-  <!--<p><br/></p>-->
-<% else %>
-  <h3><%= t(:compound_name) %></h3><br/>
-  <!--%= reference_page_title t(:compound_name) %>-->
 <% end %>
 
+<% labelModel = t('activerecord.models.compund_name') %>
+
+<h3><%= labelModel %></h3>
+
+<% labelAdicionar = t('formtastic.actions.create', model: labelModel) %>
 
 <div class="row">
   <div class="col-xs-5 col-md-6 col-lg-6" style="margin-left: 0">
@@ -23,7 +24,7 @@
 
 <div class="row">
   <div class="col-xs-10 col-md-12 col-lg-12">
-    <% if params[:search] %>
+    <% if (params[:search]) && (!params[:search].empty?)%>
       <h4><%= t(:compound_name_search_result, search: params[:search]) %></h4>
     <% else %>
       <h4><%= t(:full_list) %></h4>

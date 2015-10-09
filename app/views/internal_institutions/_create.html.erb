@@ -1,0 +1,13 @@
+<%= semantic_form_for @internal_institution, :html => {:multipart => true}, url: internal_institutions_path(@internal_institution, moodle_user: params[:moodle_user]) do |f| %>
+
+  <div class="modal-body">
+    <p><%= f.input :institution_name, label: 'Nome da Instituição:' %></p>
+    <p><%= f.file_field :image %></p>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Fechar</button>
+    <%= submit_tag t(:save), class: 'btn btn-success' %>
+  </div>
+
+<% end %>

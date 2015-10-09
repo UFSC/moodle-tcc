@@ -1,0 +1,2 @@
+module InternalCoursesHelper
+end

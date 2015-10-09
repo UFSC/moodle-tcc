@@ -1,0 +1,11 @@
+<% if policy(Tcc).show_config? %>
+  <%= render 'instructor_admin/navbar' %>
+<% end %>
+
+<fieldset>
+  <legend><%= "#{@modal_title}: " %> <!-- #if policy(@tcc).show_student? %>-->
+    </br>
+    <%= @internal_institution.institution_name %>
+  </legend>
+  <%= render :partial => 'form' %>
+</fieldset>

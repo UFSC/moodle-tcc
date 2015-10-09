@@ -1,0 +1,41 @@
+<% if policy(Tcc).show_config? %>
+  <%= render 'instructor_admin/navbar' %>
+<% end %>
+
+<% labelModel = 'Configuração geral' %>
+
+<h3><%= labelModel %></h3>
+
+<div class="row">
+  <div class="col-xs-2 col-md-2 col-lg-2" style="margin-left: 0">
+    <p>Curso</p>
+  </div>
+
+  <div class="col-xs-10 col-md-10 col-lg-10">
+    <p>Combo</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2 col-md-2 col-lg-2" style="margin-left: 0">
+    <p>Tempo de duração dos links de download dos TCCs</p>
+  </div>
+
+  <div class="col-xs-10 col-md-10 col-lg-10">
+    <p>Spin (html5) em horas, mínimo 1 hora</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2 col-md-2 col-lg-2" style="margin-left: 0">
+    <p>Tempo Salvamento automatico texto</p>
+  </div>
+
+  <div class="col-xs-10 col-md-10 col-lg-10">
+    <p>0 para desabilitar</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2 col-md-2 col-lg-2" style="margin-left: 0">
+    <%= link_to t(:edit), edit_tcc_definition_path(@tcc_definition),
+                class: 'btn btn-default' %>
+  </div>
+</div>

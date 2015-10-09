@@ -6,10 +6,16 @@ class BatchTccsWorker
     "tmp/#{filename}.#{extension}"
   end
 
-  def perform(moodle_ids, user_name, user_email)
+  def perform(moodle_ids, user_name, user_email, pdf_link_hours)
     begin
       logger.debug('>>> perform: Starting ')
-      batch = BatchTccs.new
+      # batch = BatchTccs.new
+      begin
+        pdf_link_hours = pdf_link_hours
+      rescue
+        pdf_link_hours = -1
+      end
+      batch = BatchTccs.new(pdf_link_hours)
       logger.debug(">>> perform: BatchTccs.new = #{batch} ")
       batch.generate_email(moodle_ids, user_name, user_email)
       logger.debug('>>> perform: Ending ')

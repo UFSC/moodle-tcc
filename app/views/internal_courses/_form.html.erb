@@ -1,0 +1,36 @@
+<%= semantic_form_for @internal_course do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :internal_institution_id,
+                as: :select, collection: InternalInstitution.pluck(:institution_name, :id),
+                label: t('activerecord.attributes.internal_institution.institution_name'),
+                input_html: {autofocus: true}, required: true
+    %>
+    <%= f.input :course_name %>
+    <%= f.input :department_name %>
+    <%= f.input :center_name %>
+    <div class="row">
+      <div class="col-xs-8 col-md-9 col-lg-9">
+        <%= f.input :coordinator_name %>
+      </div>
+      <div class="col-xs-4 col-md-3 col-lg-3">
+        <%= f.input :coordinator_gender, :as => :select,
+                    collection:  Hash[{'m' => 'Masculino', 'f' => 'Feminino' }.map{|key,value| [value, key]}]
+        %>
+      </div>
+    </div>
+    <%= f.input :presentation_data %>
+    <%= f.input :approval_data %>
+  <% end %>
+
+  <div class="row">
+    <div class="col-xs-8 col-md-6 col-lg-6">
+      <%= f.actions do %>
+        <%= f.action :submit, button_html: {class: 'btn btn-primary loading'} do %>
+          <%= labelAdicionar %>
+        <% end %>
+        <%= f.action :cancel, button_html: {class: 'btn btn-default loading'}, url: internal_courses_path %>
+      <% end %>
+
+    </div>
+  </div>
+<% end %>

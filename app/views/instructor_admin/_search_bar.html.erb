@@ -12,11 +12,11 @@
         <input type="hidden" id="tcc-focus">
 
         <div class="input-group-btn">
-          <%= link_to instructor_admin_path, class: 'btn btn-default', id: 'clean-search', title: 'Eliminar critérios de pesquisa' do %>
+          <%= link_to instructor_admin_path, class: 'btn btn-default', id: 'clean-search', title: t('clear_filter') do %>
             <%= display_icon('remove') %>
           <% end %>
 
-          <%= button_tag class: 'btn btn-default', name: nil, title: 'Filtrar lista' do %>
+          <%= button_tag class: 'btn btn-default', name: nil, title: t('apply_filter') do %>
             <%= display_icon('search') %>
           <% end %>
         </div>

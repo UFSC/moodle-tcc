@@ -87,25 +87,25 @@ brazil,				% o último idioma é o principal do documento
 % ---
 \titulo{<%= tcc_document.title %>}
 \autor{<%= tcc_document.student_name %>}
-\local{Florianópolis}
+\local{<%= tcc_document.city %>}
 \data{<%= tcc_document.defense_date %>}
 \orientador{<%= tcc_document.orientador_name %>}
-\coorientador{Profa Dra Elza Berger Salema Coelho}
+\coorientador{<%= tcc_document.coordinator %>}
 
-\instituicao{%
-Universidade Federal de Santa Catarina
-\par
-CENTRO DE CIÊNCIAS DA SAÚDE
-\par
-DEPARTAMENTO DE SAÚDE PÚBLICA
-}
+% \instituicao{%
+% Universidade Federal de Santa Catarina
+% \par
+% CENTRO DE CIÊNCIAS DA SAÚDE
+% \par
+% DEPARTAMENTO DE SAÚDE PÚBLICA
+% }
 \tipotrabalho{Tese (Monografia)}
 
 % O preambulo deve conter o tipo do trabalho, o objetivo,
 % o nome da instituição e a área de concentração
-\preambulo{Monografia apresentada ao Curso de Especialização Multiprofissional na Atenção Básica da
-Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista na Atenção Básica.}
-
+% \preambulo{Monografia apresentada ao Curso de Especialização Multiprofissional na Atenção Básica da
+% Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista na Atenção Básica.}
+\preambulo{<%= tcc_document.presentation %>}
 
 % ---
 % Configurações de aparência do PDF final
@@ -185,13 +185,13 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
   \begin{capa}%
     \center
 
-    \includegraphics[width=70pt]{<%="#{Rails.root}/app/assets/images/logo"%>}
+      \includegraphics[width=<%= tcc_document.logo_width %>pt]{<%= tcc_document.logo_path %>}
 
     \ABNTEXchapterfont\small
-      UNIVERSIDADE FEDERAL DE SANTA CATARINA \\
-      CENTRO DE CIÊNCIAS DA SAÚDE \\
-      DEPARTAMENTO DE SAÚDE PÚBLICA \\
-      CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL NA ATENÇÃO BÁSICA \\
+      <%= tcc_document.institution %> \\
+      <%= tcc_document.center %> \\
+      <%= tcc_document.department %> \\
+      <%= tcc_document.course %> \\
 
     \vspace*{2cm}
 
@@ -237,7 +237,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
 {\large\imprimirorientadorRotulo~\imprimirorientador\par}
 
 \abntex@ifnotempty{\imprimircoorientador}{%
-{\large\\Coordenadora do Curso: ~\imprimircoorientador}%
+{\large\\Coordenador<%= tcc_document.coordinator_gender == 'f' ? 'a' : '' %> do Curso: ~\imprimircoorientador}%
 }%
 
 \vspace*{\fill}
@@ -271,10 +271,7 @@ Universidade Federal de Santa Catarina, como requisito para obtenção do títul
     \hspace{.45\textwidth}
     \begin{minipage}{.5\textwidth}
 
-    Essa monografia foi julgada adequada para obtenção do título de
-    “Especialista na atenção básica”, e aprovada em sua forma final pelo
-    Departamento de Saúde Pública da Universidade Federal de Santa
-    Catarina.
+    <%= tcc_document.approval %>
 
     \end{minipage}%
     \vspace*{\fill}

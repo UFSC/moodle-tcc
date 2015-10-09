@@ -1,4 +1,8 @@
+#br:
+#pt:
 pt-BR:
+  edit: 'Editar'
+  remove: 'Remover'
   states: &estados
     blank: 'Não editado'
     draft: 'Rascunho'
@@ -39,10 +43,14 @@ pt-BR:
       <<: *estados
   activerecord:
     errors:
+      format: ! '%{attribute} %{message}'
       messages:
         invalid: 'desconhecido'
         invalid_event: 'não pôde transicionar do estado %{state}'
         invalid_transition: 'não pôde alterar o estado %{value} pela transição %{event}'
+        restrict_dependent_destroy:
+                one: "Não é possível excluir o registro pois existe um %{record} dependente"
+                many: "Não é possível excluir o registro pois existem %{record} dependentes"
     state_machines:
       states:
         new: 'Novo'
@@ -163,8 +171,32 @@ pt-BR:
         department: 'Departamento'
       compound_name:
         name: 'Nome'
-        edit: 'Editar'
-        remove: 'Remover'
+      internal_institution:
+        internal_institutions: 'instituições'
+        institution_name: 'Nome da Instituição'
+        city: 'Cidade da Instituição'
+        image: 'Logotipo'
+        logo_width: 'Largura do logotipo'
+        data_file_name: 'Logotipo'
+      internal_course:
+        internal_courses:   'cursos'
+        course_name:        'Curso'
+        department_name:    'Departamento'
+        center_name:        'Centro'
+        coordinator_name:   'Coordenador(a)'
+        coordinator_gender: 'Gênero do(a) Coordenador(a)'
+        presentation_data:  'Texto de apresentação'
+        approval_data:      'Texto de aprovação'
+      tcc_definition:
+        internal_name:      'Nome da Turma'
+        activity_url:       'URL da atividade no Moodle'
+        course_id:          'Curso no Moodle'
+        internal_course_id: 'Curso na Instituição'
+        defense_date:       'Data de Defesa'
+        moodle_instance_id: 'Instância no Moodle'
+        minimum_references: 'Mínimo de Referências'
+        auto_save_minutes:  'Auto salvamento do texto (min.)'
+        pdf_link_hours:     'Tempo de acesso ao PDF (hr.)'
     models:
       general_ref: 'Referência Geral'
       book_ref: 'Referência de Livros'
@@ -173,7 +205,24 @@ pt-BR:
       internet_ref: 'Referência da Internet'
       legislative_ref: 'Referência do Legislativo'
       thesis_ref: 'Referência de Tese ou Monografia'
+      internal_institution: 'Instituição'
+      internal_course: 'Curso'
+      compund_name: 'Nome Composto'
+      tcc_definition: 'Configuração da Atividade de TCC'
   formtastic:
+    tooltip:
+      tcc_definition:
+        internal_name:      'Nome da Turma do Moodle, para facilitar a busca de informações no sistema de TCC.'
+        activity_url:       'URL da atividade de LTI no Moodle que chama a ferramenta de TCC.'
+        course_id:          'Código da categoria do Moodle que indica qual o curso representa esta atividde de TCC.'
+        internal_course_id: 'Curso cadastrado na ferramenta de TCC'
+        defense_date:       'Data de Defesa da turma, que será apresentada na capa do TCC.'
+        moodle_instance_id: 'A instância da atividade no Moodle será utilizada para transposição de notas para o Moodle.'
+        minimum_references: 'Define a quantidade mínima de referências que será exigida para a finalização do TCC, para o professor poder definir a nota final. O valor deve ser maior ou igual a 1 (um).'
+        auto_save_minutes:  'Auto salvamento do texto dos capítulos do TCC, em minutos. Se ficar em 0 (zero) o auto salvamento será desabilitado. O valor deve ser maior ou igual a 0 (zero).'
+        pdf_link_hours:     "Tempo que o arquivo de TCC, gerado na impressão em lote, ficará disponível para download, em horas. O valor deve ser maior ou igual a 1 (um)."
+      internal_institution:
+        city: 'Local da Instituição. Será apresentado no rodapé das capas dos TCCs'
     labels:
       tcc:
         student:

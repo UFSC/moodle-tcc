@@ -24,6 +24,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.1.1'
 gem 'bootstrap-datepicker-rails'
 gem 'twitter-bootstrap-rails-confirm'
+gem 'font-awesome-sass'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
@@ -79,6 +80,9 @@ gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
 gem 'rabl'
+
+# image on database
+# gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 
 # Carrierwave (uploads)
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'

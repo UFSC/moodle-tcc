@@ -1,5 +1,24 @@
 # encoding: utf-8
 
+# Helper para realizar a criação e popular Instituições
+def create_or_update_internal_institutions(internal_name: internal_name(), course_id: course_id())
+  # Numero de operações para criação de Capítulos + 1 (Tcc)
+  operations_count = definitions.flatten.flatten.count+1
+
+  # Inicia o processo de criação das definições de TCC e Capítulos
+  Progress.start("TCC Definition: #{internal_name}", operations_count) do
+  end
+# Universidade Federal de Santa Catarina
+
+# CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL NA ATENÇÃO BÁSICA
+# DEPARTAMENTO DE SAÚDE PÚBLICA
+  # CENTRO DE CIÊNCIAS DA SAÚDE
+  # Profa Dra Elza Berger Salema Coelho
+  # Monografia apresentada ao Curso de Especialização Multiprofissional na Atenção Básica da Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista na Atenção Básica.
+  # Essa monografia foi julgada adequada para obtenção do título de “Especialista na atenção básica”, e aprovada em sua forma final pelo Departamento de Saúde Pública da Universidade Federal de Santa Catarina.
+
+end
+
 # Helper para realizar a criação e popular TccDefinitions, ChapterDefinitions
 def create_or_update_tcc_definitions(internal_name: internal_name(), course_id: course_id(), 
                                      activity_url: activity_url(), moodle_instance_id: moodle_instance_id(), 

@@ -1,0 +1,86 @@
+<% if policy(Tcc).show_config? %>
+  <%= render 'instructor_admin/navbar' %>
+<% end %>
+
+<% labelModel = t('activerecord.models.internal_course') %>
+
+<!--< % if (params[:search]) && (!params[:search].empty?)%>-->
+  <!--<h3>< %= t('activerecord.models.internal_course')+': ('+t(:search_filter, search: params[:search])+')' %></h3>-->
+<!--< % else %>-->
+  <h3><%= labelModel %></h3>
+<!--< % end %>-->
+
+<% labelAdicionar = t('formtastic.actions.create', model: labelModel) %>
+<div class="row">
+  <div class="col-xs-5 col-md-6 col-lg-6" style="margin-left: 0">
+    <%= render partial: 'internal_courses/search_bar' %>
+  </div>
+
+  <div class="col-xs-5 col-md-6 col-lg-6">
+    <div class="pull-right">
+      <%= link_to new_internal_course_path, class: 'btn btn-default loading' do %>
+        <%= display_icon 'plus' %> <%= labelAdicionar %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @internal_courses.count > 0 %>
+
+  <table class="table table-striped" style="width:100%">
+    <thead>
+    <tr>
+      <th><%= t('activerecord.attributes.internal_institution.institution_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.course_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.department_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.center_name') %></th>
+      <th><%= t('activerecord.attributes.internal_course.coordinator_name') %></th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @internal_courses.includes(:internal_institution).each do |internal_course| %>
+      <tr>
+        <td><%= internal_course.internal_institution.institution_name %></td>
+        <td><%= internal_course.course_name %></td>
+        <td><%= internal_course.department_name %></td>
+        <td><%= internal_course.center_name %></td>
+        <td><%= internal_course.coordinator_name %></td>
+        <!--<td>< %= link_to 'Show', internal_course %></td>-->
+        <td><%= link_to t(:edit), edit_internal_course_path(internal_course),
+                        class: 'btn btn-default loading' %></td>
+        <td><%= link_to t(:remove),
+                        internal_course,
+                        class: 'btn btn-danger',
+                        method: :delete,
+                        data: { confirm: t(:label_confirm_message),
+                                disable_with: '<span class="fa fa-spinner fa-spin fa-2x fa-fw margin-bottom"></span>' }
+        %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <br>
+  <div class="row">
+    <div class="col-xs-10 col-md-12 col-lg-12">
+      <%= paginate @internal_courses %>
+    </div>
+  </div>
+  <%= link_to new_internal_course_path, class: 'btn btn-default loading' do %>
+    <%= display_icon 'plus' %> <%= labelAdicionar %>
+  <% end %>
+<% else %>
+  <div class="jumbotron">
+    <p><%= t('empty_data', model: labelModel) %></p>
+    <% filtering = (params[:search]) && (!params[:search].empty?) %>
+    <% if filtering %>
+      <p><%= t('search_filter', search: params[:search]) %></p>
+
+    <% else %>
+      <%= link_to new_internal_course_path, class: 'btn btn-primary loading' do %>
+        <%= display_icon 'plus' %> <%= labelAdicionar %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

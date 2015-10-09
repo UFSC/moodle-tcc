@@ -1,0 +1,72 @@
+<% if policy(Tcc).show_config? %>
+  <%= render 'instructor_admin/navbar' %>
+<% end %>
+
+<% labelModel = t('activerecord.models.internal_institution') %>
+
+<h3><%= labelModel %></h3>
+
+<% labelAdicionar = t('formtastic.actions.create', model: labelModel) %>
+<div class="row">
+  <div class="col-xs-5 col-md-6 col-lg-6" style="margin-left: 0">
+    <%= render partial: 'internal_institutions/search_bar' %>
+  </div>
+
+  <div class="col-xs-5 col-md-6 col-lg-6">
+    <div class="pull-right">
+      <%= link_to new_internal_institution_path, class: 'btn btn-default loading' do %>
+        <%= display_icon 'plus' %> <%= labelAdicionar %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @internal_institutions.count > 0 %>
+  <table class="table table-striped" style="width:100%">
+    <thead>
+    <tr>
+      <th align="center"><%= 'Logo' %> </th>
+      <th style="width:60%" ><%= t('activerecord.attributes.internal_institution.institution_name') %> </th>
+      <th><%= t('activerecord.attributes.internal_institution.city') %> </th>
+      <th colspan="2">Ação</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @internal_institutions.each do |internal_institution| %>
+      <tr>
+        <td align="center"><%= image_tag internal_institution.image_url(:small_thumb).to_s %></td>
+        <td><%= internal_institution.institution_name %></td>
+        <td><%= internal_institution.city %></td>
+        <td><%= link_to t(:edit), edit_internal_institution_path(internal_institution),
+                        class: 'btn btn-default loading' %></td>
+        <td><%= link_to t(:remove),
+                        internal_institution, #internal_institution_path(internal_institution),
+                        class: 'btn btn-danger',
+                        method: :delete,
+                        data: { confirm: t(:label_confirm_message) ,
+                                disable_with: '<span class="fa fa-spinner fa-spin fa-2x fa-fw margin-bottom"></span>' }
+        %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <br>
+  <%= link_to new_internal_institution_path, class: 'btn btn-default loading' do %>
+    <%= display_icon 'plus' %> <%= labelAdicionar %>
+  <% end %>
+<% else %>
+  <div class="jumbotron">
+    <p><%= t('empty_data', model: labelModel) %></p>
+    <% filtering = (params[:search]) && (!params[:search].empty?) %>
+    <% if filtering %>
+      <p><%= t('search_filter', search: params[:search]) %></p>
+
+    <% else %>
+      <%= link_to new_internal_institution_path, class: 'btn btn-primary loading' do %>
+        <%= display_icon 'plus' %> <%= labelAdicionar %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

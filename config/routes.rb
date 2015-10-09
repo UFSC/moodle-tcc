@@ -22,22 +22,36 @@ Rails.application.routes.draw do
   match 'lti' => 'lti#establish_connection', via: [:get, :post]
   get 'access_denied' => 'lti#access_denied'
 
+  get 'config' => 'config#index', as: 'config'
+
   get 'instructor_admin' => 'instructor_admin#index'
   get 'instructor_admin_navbar' => 'instructor_admin#navbar'
 
-  get 'compound_names' => 'compound_names#index'
+  # match '/internal_institutions' => 'internal_institutions#index', via: [:get], as: 'internal_institutions'
+  # match '/internal_institutions' => 'internal_institutions#create',via: [:post]
+  # match '/internal_institutions/new' => 'internal_institutions#new', via: [:get], as: 'new_internal_institution'
+  # match '/internal_institutions/:id/edit' => 'internal_institutions#edit',via: [:get, :post, :patch], as: 'edit_internal_institution'
+  # match '/internal_institutions/:id' => 'internal_institutions#update',via: [:put, :patch],as: 'update_internal_institution'
+  # match '/internal_institutions/:id' => 'internal_institutions#destroy',via: [:delete], as: 'internal_institution'
+
+  resources :internal_institutions
+  resources :internal_courses
+
+  resources :tcc_definitions, only: [:index, :edit, :update]
+
+  get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
-  get 'new_compound_name' => 'compound_names#new'
+  get   'new_compound_name' => 'compound_names#new'
   match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name'
-  get '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
+  get   '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
   match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
   match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
 
   # Autocomplete routes
   get 'instructor_admin/autocomplete_tcc_name'
-  get 'tutor/autocomplete_tcc_name'
-  get 'orientador/autocomplete_tcc_name'
   get 'compound_names_autocomplete_name' => 'compound_names#autocomplete_compound_name_name'
+  get 'internal_courses_autocomplete_name' => 'internal_courses#autocomplete_internal_course_course_name'
+  get 'internal_institutions_autocomplete_name' => 'internal_institutions#autocomplete_internal_intitution_institution_name'
 
   # Ajax
   match 'ajax/build' => 'ajax#build', via: [:get, :post]

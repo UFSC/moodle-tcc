@@ -9,7 +9,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
 
   it 'page should has compound names tab' do
     visit compound_names_path(anchor: 'compound_names')
-    expect(page).to have_content(I18n.t(:compound_name))
+    expect(page).to have_content(I18n.t('activerecord.models.compund_name'))
   end
 
   it 'create a new compound name', js: true do
@@ -17,7 +17,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
     click_link I18n.t(:add_compound_name_or_suffix)
 
     expect(page).to have_content('Adição de nome composto') # wait for ajax
-    fill_in 'Nome composto:', :with => compound_name_attrs[:name], :exact => true
+    fill_in 'compound_name[name]', :with => compound_name_attrs[:name], :exact => true
 
     click_button I18n.t(:save)
 
@@ -30,10 +30,11 @@ shared_context 'an authorized user who can edit compound names' do |role|
 
     expect(page).to have_content(compound_name.name)
 
-    click_link I18n.t('activerecord.attributes.compound_name.edit')
+    click_link I18n.t('edit')
 
     expect(page).to have_content('Edição de nome composto') # wait for ajax
-    fill_in 'Nome composto:', :with => compound_name_attrs[:name], :exact => true
+    fill_in 'compound_name[name]', :with => compound_name_attrs[:name], :exact => true
+
 
     click_button I18n.t(:save)
     expect(page).to have_content(:success)
@@ -43,7 +44,7 @@ shared_context 'an authorized user who can edit compound names' do |role|
     compound_name # cria o nome composto
     visit compound_names_path(anchor: 'compound_names')
 
-    click_button I18n.t('activerecord.attributes.compound_name.remove')
+    click_button I18n.t('remove')
 
     expect(page).to have_content('Tem certeza que deseja apagar o nome composto') # wait for ajax
 
@@ -61,7 +62,7 @@ shared_context 'an unauthorized user who cannot edit compound names' do |role|
   end
 
   it 'page should not has compound names tab' do
-    expect(page).to_not have_content(I18n.t(:compound_name))
+    expect(page).to_not have_content(I18n.t('activerecord.models.compund_name'))
   end
 
 end
