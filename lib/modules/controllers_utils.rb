@@ -15,10 +15,10 @@ module ControllersUtils
 
     lines = newContent.split("\r\n\r\n")
     newLines = lines.map { | x |
-      # se não encontrar parágrafo com "imagem" e texto com espaços
-      if /^<p(.*)><(.*)>(\s*)<\/p>$/.match(x).nil?
+      # se não encontrar parágrafo com "tag" e texto com espaços
+      if /^<p(.*)>(.*)<(.*)\/(.*)>(\s*)<\/p>$/.match(x).blank?
         # se não encontrar parágrafo e texto com espaços
-        if /^<p(.*)>(\s*)<\/p>$/.match(x).nil?
+        if (/^<p(.*)>(\s*)<\/p>$/.match(x).blank? )
           # então adiciona o texto em newLines
           x unless x.empty?
           # senão, se encontrar parágrafo e texto com espaços
@@ -27,7 +27,7 @@ module ControllersUtils
       else
         # se encontrar parágrafo com "imagem" e texto com espaços
         # então adiciona o texto em newLines
-        x unless x.empty?
+        x unless x. empty?
       end
     }.compact.join("\r\n\r\n")
     newLines.chomp!
