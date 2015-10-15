@@ -4,10 +4,12 @@ Sistema de TCCs
 [![build
 status](https://gitlabci.setic.ufsc.br/projects/3/status.png?ref=master)](https://gitlabci.setic.ufsc.br/projects/3?ref=master)
 
-Sistema de controle e criação de TCCs dos estudantes da UNA-SUS curso Saúde da Família.
+É um sistema de controle e auxílio à criação de TCCs pelos estudantes. Irá auxiliar também os orientadores, na correção e troca de informações com seus orientados.
 
-Esta ferramenta permite que os estudantes acessem via Moodle (LTI) esta ferramenta e
-desenvolvam o TCC em duas atividades: **portfólio** e **tcc**.
+Esta ferramenta permite que os estudantes acessem via Moodle (LTI) esta ferramenta, e
+desenvolvam o TCC importando o material previamente produzidos por eles mesmos, em atividades de "texto online".
+
+O texto será formatado no padrão ABNT, inclusive as referências, que serão cadastradas na própria ferramenta de TCC.  
 
 Instalação
 ----------
@@ -15,11 +17,18 @@ Instalação
 Esta aplicação depende da instalação de algumas dependências externas
 para seu completo funcionamento.
 
-Os pacotes do QT4 são necessários para a instalação do Capybara, que é
+Os pacotes do "phantomjs" são necessários para a instalação do Capybara, que é
 utilizado para rodar os testes de interface.
 
 Para geração correta do TCC em PDF é necessário instalar uma distribuição do LaTex
 juntamente com o Abntex2. A instalação do LaTex é diferente no Ubuntu e no Mac OS X.
+
+### Instalação automatizada
+
+**Em breve será disponibilizada instalação automatizada via [Chef](https://www.chef.io/chef/) utilizando a 
+instalação local, por intermédio do chef-solo.**
+ 
+Esta automação servirá tanto para o servidor quanto para a máquina de desenvolvimento e testes. 
 
 ### Dependências do Ubuntu: ###
 
@@ -81,9 +90,11 @@ Para concluir é preciso alterar uma variavel de configuração do texmf.cnf:
 Criar arquivos yml baseados nos arquivos: 
  
 * database.yml.example
-* moodle.yml.example 
-* tcc_config.yml.example (Verifique o endereço da sua instalação do Moodle na variavel **moodle_url**)
 * email.yml.example
+* errbit.yml.example
+* moodle.yml.example
+* newrelic.yml.example 
+* tcc_config.yml.example (Verifique o endereço da sua instalação do Moodle na variavel **moodle_url**)
 
 Instalar gems e executar a migração do banco:
 
@@ -143,13 +154,17 @@ possui alguns caveats:
   barra independente dela existir ou não na URL original, e caso isso
   não seja seguido, teremos uma assinatura inválida
   
-Gerar documentação
-------------------
+Contribuições
 
-### State Machine
+    Bruno Freitas Alves dos Santos (brunoufsc@gmail.com)
+    Bruno Saibro Silveira (djbrunosilveira@gmail.com)
+    Fábio César Ariati (fabiocariati@gmail.com)
+    Jorge Almeida Bastos Júnior (jorgealmeidajunior@gmail.com)
+    Luiz Henrique Américo Salazar (lhenriquesalazar@yahoo.com.br) 
+    Osmar Floriano Guimarães de Oliveira (caca.ufsc@gmail.com)
+    Wagner Daufenbach do Amaral (wagnerdamaral@gmail.com)
 
-Para gerar a imagem da máquina de estados definida, use o comando abaixo:
+Autores
 
-    rake state_machine:draw CLASS=Abstract
-    
-Será gerada a imagem chamada **Abstract_state.png**
+    Roberto Silvino da Cunha (roberto.silvino@ufsc.br)
+    Gabriel Mazzeto (brodock@gmail.com)
