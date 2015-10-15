@@ -1,6 +1,4 @@
-moodle:  pdf_link_hours    : 2
-  auto_save_minutes : 0
-
+moodle:
   adapter: mysql2
   database: moodle_unasus2
   username: root
