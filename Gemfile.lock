@@ -164,7 +164,7 @@ GEM
       rest-client (>= 1.6.0)
       ruby_parser (~> 3.0)
       sexp_processor (~> 4.1)
-    ckeditor (4.1.1)
+    ckeditor (4.1.4)
       cocaine
       orm_adapter (~> 0.5.0)
     climate_control (0.0.3)
@@ -367,7 +367,7 @@ GEM
     mime-types (2.4.3)
     mini_magick (4.0.1)
     mini_portile (0.6.1)
-    minitest (5.8.0)
+    minitest (5.8.2)
     multi_json (1.10.1)
     multipart-post (1.2.0)
     mysql2 (0.3.17)

@@ -19,7 +19,14 @@ class ApplicationController < ActionController::Base
   end
 
   def allow_iframe
-    response.headers['X-Frame-Options'] = "ALLOW-FROM #{Settings.moodle_url}"
+    response.headers.delete('X-Frame-Options')
+
+    # Opção para utilizar X-Frame-Options no Firefox
+    # response.headers['X-Frame-Options'] = "ALLOWALL"
+
+    # X-Frame-Options no firefox não funciona para "InstructorAdmin"
+    # response.headers['X-Frame-Options'] = "ALLOW-FROM #{Settings.moodle_url}"
+
   end
 
   protected
