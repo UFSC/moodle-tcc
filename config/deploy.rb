@@ -23,7 +23,7 @@ set :db_local_clean, true
 
 # Capistrano Upload Config:
 set :config_files, %w{config/database.yml config/email.yml config/errbit.yml config/moodle.yml config/newrelic.yml
-                      config/tcc_config.yml config/sidekiq.yml}
+                      config/tcc_config.yml config/sidekiq.yml config/secrets.yml}
 set :config_example_prefix, '.example'
 
 set :linked_files, fetch(:config_files)

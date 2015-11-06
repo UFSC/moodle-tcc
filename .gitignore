@@ -43,6 +43,7 @@ config/newrelic.yml
 config/errbit.yml
 config/email.yml
 config/sidekiq.yml
+config/secrets.yml
 config/*.26
 config/*.28
 config/*.29
