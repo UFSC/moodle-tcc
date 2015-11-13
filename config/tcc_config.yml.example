@@ -3,8 +3,7 @@ development:
   auto_save_minutes : 0
   # Integração com Moodle
   moodle_url: http://localhost
-  moodle_token: 59864ec673b9eadc141ec43d3e634065
-
+  moodle_token: 634d513626c5948def95809ae1bc8e5g
   # Integração OAUTH
   consumer_key: consumer_key
   consumer_secret: consumer_secret
@@ -26,7 +25,7 @@ test:
 
   # Integração com Moodle
   moodle_url: http://localhost
-  moodle_token: 59864ec673b9eadc141ec43d3e634065
+  moodle_token: 634d513626c5948def95809ae1bc8e5g
 
   # Integração OAUTH
   consumer_key: consumer_key
