@@ -2,6 +2,8 @@ require 'fog'
 #require 'openssl' #adicionar essa linha para usar o https
 require 'redis'
 require 'redis-namespace'
+require 'net/http'
+require 'uri'
 
 class BatchTccs
   include Sidekiq::Worker
@@ -28,14 +30,15 @@ class BatchTccs
       @password = ''
     end
 
-# NÃO APAGAR LINHA ABAIXO. ela server para setar no servidor a chave de assinatura para URLs temporárias
-# Se necessário apenas renovar a chave
-# @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
-#     @temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
-#     @auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
+
+    # NÃO APAGAR LINHA ABAIXO. ela server para setar no servidor a chave de assinatura para URLs temporárias
+    # Se necessário apenas renovar a chave
+    # @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
+    #     @temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
+    #     @auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
     begin
       @temp_url_key = Settings.swift_temp_url_key
-      @auth_token   = Settings.swift_auth_token
+      @auth_token   = get_auth_token  # Settings.swift_auth_token
     rescue
       @temp_url_key = ''
       @auth_token   = ''
@@ -55,8 +58,8 @@ class BatchTccs
 
 
     Excon.defaults[:ssl_verify_peer] = false
-#    Excon.defaults[:port] = 80
-#    Excon.defaults[:scheme] = 'http'
+    #    Excon.defaults[:port] = 80
+    #    Excon.defaults[:scheme] = 'http'
 
     logger.debug('>>> Conectando ao Redis: ')
     @redis_connection = Redis.new
@@ -154,7 +157,7 @@ class BatchTccs
   end
 
   def name_space(tcc)
-    "#{Settings.instance_guid};#{tcc.tcc_definition.course_id}_#{tcc.tcc_definition.moodle_instance_id}"
+    "#{Settings.instance_guid}_.._#{tcc.tcc_definition.course_id}.__.#{tcc.tcc_definition.moodle_instance_id}"
   end
 
   def generate_pdf_url(tcc)
@@ -288,6 +291,28 @@ class BatchTccs
 
   private
 
+  def get_auth_token
+    url = URI.parse(@auth_url)
+
+    req = Net::HTTP::Get.new(url.path)
+    req.add_field('X-Auth-User', @user)
+    req.add_field('X-Auth-Key', @password)
+
+    res = Net::HTTP.new(url.host, url.port).start do |http|
+      http.request(req)
+    end
+
+    # puts res.header
+    # res.each_header do |key, value|
+    #   puts "#{key} => #{value}"
+    # end
+    begin
+      res.header['x-auth-token']
+    rescue
+      ''
+    end
+  end
+
   def generate_temp_url(method, url, seconds, key)
 
     # OpenStack DocumentationTemporary URL middleware
@@ -309,6 +334,8 @@ class BatchTccs
     #   puts ("Example: GET https://storage101.dfw1.clouddrive.com/v1/" +
     #            "MossoCloudFS_12345678-9abc-def0-1234-56789abcdef0/" +
     #            "container/path/to/object.file 60 my_shared_secret_key")
+
+    # GET http://swift.setic.ufsc.br:80/v1/AUTH_unasus/unasus2.yoda%3B258_9/12814 7200 f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935
     method = method.upcase
     base_url, object_path = url.split(/\/v1\//)
     object_path = '/v1/' + object_path
@@ -341,7 +368,7 @@ end
 # To retrieve a list of directories:
 # @service.directories
 
-#response = service.head_containers
+#response = @
 #response.status
 
 # pdfTex = pdf_service.generate_tex
@@ -370,7 +397,7 @@ end
 # SecureRandom.hex(32)
 
 # Gerar metalink
-#
+#curl -i -k http://swift.setic.ufsc.br:80/v1/AUTH_unasus -X GET -H "X-Auth-Token: AUTH_tkb39487498dad4ad1a792c261a64931ed" -H "X-Account-Meta-Temp-Url-Key: 2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d"
 # t = Metalink::Metalink.new
 # t.add_file("/path/to/some/file.txt", [{ :type => "http", :url => "http://example.com/some/file.txt" }]
 # puts t.to_s
@@ -382,7 +409,25 @@ end
 
 #http://docs.rackspace.com/files/api/v1/cf-devguide/content/Create_TempURL-d1a444.html
 # Create TempURL (in Ruby)
-
+# require "openssl"
+#
+# unless ARGV.length == 4
+#   puts "Syntax: <method> <url> <seconds> <key>"
+#   puts ("Example: GET https://storage101.dfw1.clouddrive.com/v1/" +
+#            "MossoCloudFS_12345678-9abc-def0-1234-56789abcdef0/" +
+#            "container/path/to/object.file 60 my_shared_secret_key")
+# else
+#   method, url, seconds, key = ARGV
+#   method = method.upcase
+#   base_url, object_path = url.split(/\/v1\//)
+#   object_path = '/v1/' + object_path
+#   seconds = seconds.to_i
+#   expires = (Time.now + seconds).to_i
+#   hmac_body = "#{method}\n#{expires}\n#{object_path}"
+#   sig = OpenSSL::HMAC.hexdigest("sha1", key, hmac_body)
+#   puts ("#{base_url}#{object_path}?" +
+#            "temp_url_sig=#{sig}&temp_url_expires=#{expires}")
+# end
 # http://docs.rackspace.com/files/api/v1/cf-devguide/content/Create_TempURL-d1a444.html
 #
 # http://docs.rackspace.com/files/api/v1/cf-devguide/content/TempURL-d1a4450.html
@@ -391,12 +436,22 @@ end
 #
 # http://docs.openstack.org/trunk/config-reference/content/object-storage-tempurl.html
 
-# curl -i -k http://swift.setic.ufsc.br:80/auth/v1.0/  -H "X-Auth-User: unasus:readwrite" -H "X-Auth-Key: TccUnasus_2"
-# AUTH_tkd2fb252ad93940b981b62865f4f8f8b8
+# curl -i -k http://swift.setic.ufsc.br:80/auth/v1.0/  -H "X-Auth-User: zzzzzz" -H "X-Auth-Key: xxxxx"
+
 # curl -i -k https://swift.setic.ufsc.br:8080/v1/AUTH_unasus/tcc92_1/Acir%20Henrique%20Truppel%20%28201405050%29 -X GET -H "X-Auth-Token: AUTH_tkd2fb252ad93940b981b62865f4f8f8b8" > /tmp/xxx.pdf
 
+# curl -i -k http://swift.setic.ufsc.br:80/v1/AUTH_unasus/unasus2.yoda%3B258_9/12814  -X GET -H "X-Auth-Token: AUTH_tkb39487498dad4ad1a792c261a64931ed" > /tmp/xxx.pdf
 
+# http://swift.setic.ufsc.br:80/v1/AUTH_unasus/unasus2.yoda%3B258_9/12814?temp_url_sig=2ddfa7ef4c1f2c7b5eb92d84786a88f954c1d25b&temp_url_expires=1448509999&filename=My+Test+File.pdf
 
+# curl -i -k http://swift.setic.ufsc.br:80/v1/AUTH_unasus/unasus2.yoda%3B258_9/12814?temp_url_sig=ddd275f23a329688490d942dc46a3fea983115a6&temp_url_expires=1448555313
+
+# curl -i -k http://swift.setic.ufsc.br:80/auth/v1.0/ POST -H "X-Auth-Token: AUTH_tkd2fb252ad93940b981b62865f4f8f8b8" -H "X-Account-Meta-Temp-Url-Key: 2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d"
+
+# curl -i -k http://swift.setic.ufsc.br:80/v1/AUTH_unasus -X GET -H "X-Auth-Token: AUTH_tkb39487498dad4ad1a792c261a64931ed"
+
+# curl -i -k http://swift.setic.ufsc.br:80/v1/AUTH_unasus -X GET -H "X-Auth-Token: AUTH_tkc9742d7a20e8444c93eb47d53164d527" -H "X-Account-Meta-Temp-Url-Key: 2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d"
+# curl -i -k http://swift.setic.ufsc.br:80/v1/AUTH_unasus/unasus2.yoda%3B258_9/12814?temp_url_sig=0022345ada45dac6124b4aee034400efa999b7ae&temp_url_expires=1448557819 -X GET -H "X-Auth-Token: AUTH_tkb39487498dad4ad1a792c261a64931ed" -H "X-Account-Meta-Temp-Url-Key: 2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d"
 
 # MessageEncryptor
 #
@@ -431,9 +486,14 @@ Excon.defaults[:ssl_verify_peer] = false
 @password     = 'TccUnasus_2'
 
 # @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935' }
-@temp_url_key = 'f8ad7c9118a28d9a7e6413435620b9208149d0996a9831823ea3f2739e82e935'
-#@auth_token   = 'AUTH_tkd2fb252ad93940b981b62865f4f8f8b8' old
-@auth_token   = 'AUTH_tk847d7560d70f4892ba4a331552f2501d'
+# @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => '2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d' }
+# @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key-2' => '2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d' }
+
+# @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => '' }
+@temp_url_key = '2cac0c77cc67a1ca4c264a90790fc033becc4465071c08f7eb818d6c5735722d'
+@auth_token   = 'AUTH_tkb39487498dad4ad1a792c261a64931ed'
+
+# swift_auth_url     : http://swift.setic.ufsc.br:80/auth/v1.0/
 
 # 24 horas = 86400
 # 1 hora = 3600
@@ -446,10 +506,10 @@ Excon.defaults[:ssl_verify_peer] = false
 
 @redis_connection = Redis.new
 
-moodle_id = '12140'
-tcc = Tcc.find_by_student_id(439)
+moodle_id = '12814'
+tcc = Tcc.find_by_student_id(438)
 
-bt = BatchTccs.new;
+bt = BatchTccs.new(6);
 remote_file = bt.open_last_pdf_tcc(tcc)
 w_url = bt.generate_url(remote_file)
 
