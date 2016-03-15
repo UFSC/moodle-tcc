@@ -51,7 +51,7 @@ gem 'sinatra', require: false
 gem 'slim'
 
 # Latex tcc -> pdf
-gem 'rails-latex', git: 'git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git'
+gem 'rails-latex',:github => 'UFSC/moodle-tcc-rails-latex'
 gem 'htmlentities', '~> 4.3.3'
 gem 'faraday', '0.8.9'
 gem 'typhoeus'

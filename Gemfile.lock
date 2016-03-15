@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/UFSC/moodle-tcc-rails-latex.git
+  revision: 34d4a29f3460cbf2c2ed27afaa2d602e40fb2f81
+  specs:
+    rails-latex (1.0.11)
+      rails (>= 3.0.0)
+
+GIT
   remote: git://github.com/carrierwaveuploader/carrierwave.git
   revision: 88894032319588bb910884fa6b6a67d7b0b0beb1
   specs:
@@ -44,13 +51,6 @@ GIT
   revision: 1a373b2d23a21037d95cc369a4c5b0a9c551d326
   specs:
     state_machine (1.2.0)
-
-GIT
-  remote: git@gitlab.setic.ufsc.br:tcc-unasus/rails-latex.git
-  revision: 34d4a29f3460cbf2c2ed27afaa2d602e40fb2f81
-  specs:
-    rails-latex (1.0.11)
-      rails (>= 3.0.0)
 
 GIT
   remote: https://github.com/instructure/ims-lti
