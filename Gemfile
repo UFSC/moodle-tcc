@@ -163,7 +163,7 @@ group :doc do
 end
 
 # Deploy with Capistrano
-group :deploy do
+group :deploy, :development do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-rails'
   gem 'capistrano-upload-config'

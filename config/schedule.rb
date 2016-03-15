@@ -36,7 +36,7 @@ end
 
 # CRONTAB do staging
 if @stage == 'staging'
-  every 6.hour do
+  every 1.day, :at => '4:30 am' do
     rake 'tcc:sync'
   end
 
