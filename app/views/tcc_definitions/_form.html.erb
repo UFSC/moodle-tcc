@@ -30,9 +30,13 @@
       <div class="col-sm-6">
         <%= f.input :defense_date, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.defense_date') } %>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <%= f.input :auto_save_minutes, :hint => false, input_html: { :style => 'width:7em', :disabled => true,
-                tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
+                                                                      tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :enabled_sync, as: :radio, :hint => false, input_html: { :style => 'width:7em',
+                                                         tooltip: t('formtastic.tooltip.tcc_definition.enabled_sync') } %>
       </div>
 
     <% end %>
