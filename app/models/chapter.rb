@@ -19,7 +19,7 @@ class Chapter < ActiveRecord::Base
     doc = Nokogiri::HTML(self.content)
     block = doc.xpath("//citacao")
     chld_name = block.map { |node|
-      [node['id']] if node.key?('id') }.compact
+      [node['reference_id']] if node.key?('reference_id') }.compact
     chld_name.uniq
   end
 
