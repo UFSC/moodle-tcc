@@ -109,10 +109,10 @@ gem 'airbrake'
 # OpenStack Swift
 gem 'fog'
 
-group :production do
+# group :production do
   gem 'newrelic_rpm'
   gem 'redis-rails'
-end
+# end
 
 group :development do
   gem 'thin'
@@ -165,6 +165,7 @@ end
 # Deploy with Capistrano
 group :deploy, :development do
   gem 'capistrano', '~> 3.4'
+  gem 'capistrano-passenger'
   gem 'capistrano-rails'
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
