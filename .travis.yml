@@ -1,0 +1,61 @@
+#language: ruby
+#
+#cache: bundler
+#
+#before_install:
+#   - sudo apt-get -qq update
+#   - sudo apt-get install -y libxml2-dev
+#
+#rvm:
+#  - 2.2.1
+sudo: required
+
+language: ruby
+
+services:
+  - docker
+
+before_install:
+  - docker pull robertosilvino/tcc-ci:01.10
+  - docker run -d -p 127.0.0.1:80:4567 robertosilvino/tcc-ci:01.10 /bin/bash -c "service mysql start; source /etc/profile;"
+  - docker ps -a
+  - docker run robertosilvino/tcc-ci:01.10 /bin/bash -c "service mysql start; source /etc/profile;"
+#  - git submodule update --init --recursive
+
+script:
+  - bundle exec rake test
+
+
+#addons:
+#  apt:
+#    packages:
+
+#  before_script:
+#   #- apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
+#   - service mysql start
+#   - source /etc/profile
+#   - ruby -v
+#   - which ruby
+#   - gem install bundler --no-ri --no-rdoc
+#
+#   - git submodule init
+#   - git submodule update
+#
+#   - rm -f config/tcc_config.yml
+#   - rm -f config/email.yml
+#   - rm -f config/moodle.yml
+#   - ln -s tcc_config.yml.example config/tcc_config.yml
+#   - ln -s email.yml.example config/email.yml
+#   - ln -s database.yml.example config/database.yml
+#   - ln -s moodle.yml.example config/moodle.yml
+#   - ln -s secrets.yml.example config/secrets.yml
+#
+#   - RAILS_ENV=test rvm 2.2.1@sistema-tcc do bundle install --jobs $(nproc)  "${FLAGS[@]}" --without production
+#   - RAILS_ENV=test rvm 2.2.1@sistema-tcc do bundle exec rake db:drop
+#   - RAILS_ENV=test rvm 2.2.1@sistema-tcc do bundle exec rake db:create
+#   - RAILS_ENV=test rvm 2.2.1@sistema-tcc do bundle exec rake db:migrate
+#
+#
+#  rspec:
+#    script:
+#      - COVERAGE=true RAILS_ENV=test rvm 2.2.1@sistema-tcc do bundle exec rake spec
