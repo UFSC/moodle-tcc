@@ -14,7 +14,6 @@ development:
   swift_user         : username:readwrite
   swift_password     : password
   swift_temp_url_key : value_from_swift_server
-  swift_auth_token   : AUTH_value_from_swift_server
   swift_seconds_URL_lives: 7200
 
 # 24 horas = 86400
