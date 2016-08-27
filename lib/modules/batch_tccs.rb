@@ -56,6 +56,7 @@ class BatchTccs
       @service = Fog::Storage.new(:provider => 'OpenStack',
                                   :openstack_auth_url => @auth_url,
                                   :openstack_username => @user,
+#                                  :headers => { 'X-Account-Meta-Temp-URL-Key' => self.temp_url_key },
                                   :openstack_api_key  => @password
 #                                  :connection_options  => {:port => 80, :scheme =>  'http'}
       )
@@ -64,7 +65,8 @@ class BatchTccs
       raise '>>> OpenStack não pode ser aberto! Verifique a configuração: tcc_config.yml(auth_url, user, password).'
     end
     # seta a chave de URL temporária!
-    @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => self.temp_url_key }
+    # @service.request :method => 'POST', :headers => { 'X-Account-Meta-Temp-URL-Key' => self.temp_url_key }
+    @service.post_set_meta_temp_url_key self.temp_url_key
 
     logger.debug('OK <<<')
 

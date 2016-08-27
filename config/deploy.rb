@@ -67,6 +67,9 @@ namespace :deploy do
   after :published, 'airbrake:deploy'
 end
 
+# local test
+# bundle exec sidekiq -d -L log/sidekiq.log -C config/sidekiq.yml
+
 # namespace :sidekiq do
 #   task :quiet do
 #     # Horrible hack to get PID without having to use terrible PID files

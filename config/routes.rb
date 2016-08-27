@@ -1,16 +1,20 @@
 require 'sidekiq/web'
 
+Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+
 class AuthConstraint
 
   def self.admin?(request)
     session = ActiveRecord::SessionStore::Session.find_by_session_id(request.cookies['_session_id'])
+    return false if session.blank?
     message = session['data']
     obj = Marshal.load(Base64.decode64(message))
 
-    ( obj['lti_launch_params']['roles'].include?(Authentication::Roles.administrator) ||
+    ret_isAdmin = ( obj['lti_launch_params']['roles'].include?(Authentication::Roles.administrator) ||
       obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_avea) ||
         obj['lti_launch_params']['roles'].include?(Authentication::Roles.coordenador_curso)
     )
+    return ret_isAdmin
   end
 end
 
@@ -51,7 +55,7 @@ Rails.application.routes.draw do
   get 'instructor_admin/autocomplete_tcc_name'
   get 'compound_names_autocomplete_name' => 'compound_names#autocomplete_compound_name_name'
   get 'internal_courses_autocomplete_name' => 'internal_courses#autocomplete_internal_course_course_name'
-  get 'internal_institutions_autocomplete_name' => 'internal_institutions#autocomplete_internal_intitution_institution_name'
+  get 'internal_institutions_autocomplete_name' => 'internal_institutions#autocomplete_internal_institution_institution_name'
 
   # Ajax
   match 'ajax/build' => 'ajax#build', via: [:get, :post]

@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.1.9'
-gem 'mysql2'
-gem 'protected_attributes', '~>1.0.1'
+#gem 'rails', '~> 4.2.7'
+
+gem 'mysql2', '~> 0.3.18'
+gem 'protected_attributes'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
-gem 'eventmachine', '~>1.0.7'
+gem 'eventmachine'#, '~>1.0.7'
 gem 'passenger'
 gem 'execjs'
 gem 'therubyracer'
@@ -13,15 +15,15 @@ gem 'therubyracer'
 #gem 'wicked_pdf'
 
 # Asset Pipeline
-gem 'sass-rails', '~> 4.0.5'
-gem 'coffee-rails', '~> 4.1'
-gem 'uglifier', '>= 1.3.0'
+gem 'sass-rails', '~> 5.0.6'
+gem 'coffee-rails', '~> 4.2.1'
+gem 'uglifier'
 
 # Assets
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass', '~> 3.3.1'
+gem 'bootstrap-sass'#, '~> 3.3.1'
 gem 'jquery-rails'
-gem 'jquery-ui-rails', '~> 4.1.1'
+gem 'jquery-ui-rails', '< 5.0.0'#, '~> 4.1.1'
 gem 'bootstrap-datepicker-rails'
 gem 'twitter-bootstrap-rails-confirm'
 gem 'font-awesome-sass'
@@ -38,11 +40,12 @@ gem 'pundit'
 gem 'unicode_utils'
 
 # geração do tcc em bloco
-gem 'redis', '3.1.0'
+gem 'redis'#, '3.1.0'
+gem 'redis-namespace'
 gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
 
 # sidekiq - processamento paralelo
-gem 'sidekiq'
+gem 'sidekiq'#, '~> 4.1.4'
 gem 'sidekiq-superworker'
 #gem 'sidekiq_monitor'
 
@@ -53,7 +56,7 @@ gem 'slim'
 # Latex tcc -> pdf
 gem 'rails-latex',:github => 'UFSC/moodle-tcc-rails-latex'
 gem 'htmlentities', '~> 4.3.3'
-gem 'faraday', '0.8.9'
+gem 'faraday'#, '0.8.9'
 gem 'typhoeus'
 gem 'addressable', require: 'addressable/uri'
 
@@ -75,7 +78,7 @@ gem 'ims-lti', git: 'https://github.com/instructure/ims-lti'
 gem 'oauth-instructure'
 
 # Formulários e views
-gem 'formtastic', '3.0'
+gem 'formtastic'#, '3.0'
 gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 gem 'ckeditor'
@@ -101,7 +104,7 @@ gem 'scoped_search'
 gem 'state_machine', github: 'seuros/state_machine'
 
 # Decorator pattern
-gem 'draper', '~> 1.3'
+gem 'draper'#, '~> 1.3'
 
 # Errbit (monitoração de falhas)
 gem 'airbrake'
@@ -131,7 +134,7 @@ end
 
 group :test do
   gem 'fabrication'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', :require => false
   gem 'faker'
   gem 'vcr'
   gem 'webmock'
@@ -147,7 +150,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails'# , '~> 3.0'
   gem 'metric_fu', :require => false
   gem 'pry-rails', '~>0.3.2'
   gem 'simplecov', require: false
@@ -170,6 +173,6 @@ group :deploy, :development do
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
   gem 'capistrano-newrelic'
-  gem 'capistrano-git-submodule-strategy', '0.1.3'
+  gem 'capistrano-git-submodule-strategy'#, '0.1.3'
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end

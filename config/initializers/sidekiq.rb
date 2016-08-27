@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 module Configuration
   def self.load!
     filename = File.join(Rails.root, 'config', 'sidekiq.yml')
@@ -19,10 +21,14 @@ end
 
 Configuration.load!
 
+# https://github.com/mperham/sidekiq/issues/2730
+# Rails + Sidekiq::Web + wildcard domain session = confliciting cookies
+Sidekiq::Web.set :sessions, domain: 'all'
+
 Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://localhost:6379/0', namespace: 'unasus-tcc-production' }
+  config.redis = { url: 'redis://localhost:6379/0', namespace: 'tcc' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://localhost:6379/0', namespace: 'unasus-tcc-production' }
+  config.redis = { url: 'redis://localhost:6379/0', namespace: 'tcc' }
 end

@@ -45,3 +45,79 @@ fieldset {
 .row {
   margin-bottom: 1em;
 }
+
+//////// Autocomplete //////////
+
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.ui-menu .ui-menu-item {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  // list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+}
+
+/////////////////////
+
+.ui-autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+}
+.ui-menu {
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  outline: none;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+  border-bottom-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+  border-bottom-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+  border-top-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+  border-top-left-radius: 4px;
+}
+.ui-widget-content {
+  border: 1px solid #aaa;
+  background: #fff;
+  color: #222;
+}
+.ui-widget {
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 1.1em;
+}
+.ui-front {
+  z-index: 100;
+}
+
+//////// Item do autocomplete //////////
+
+.ui-menu .ui-menu-item a {
+  color: #222;
+  text-decoration: none;
+  display: block;
+  padding: 2px .4em;
+  line-height: 1.5;
+  min-height: 0;
+  font-weight: normal;
+}
+
+.ui-widget-content a {
+  color: #222;
+}
