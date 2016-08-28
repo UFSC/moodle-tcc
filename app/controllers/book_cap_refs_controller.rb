@@ -1,6 +1,6 @@
 # encoding: utf-8
 class BookCapRefsController < ApplicationController
-  inherit_resources
+  #inherit_resources
 
   before_action :set_current_tab
 
@@ -53,7 +53,7 @@ class BookCapRefsController < ApplicationController
     else
       flash[:error] = @book_cap_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'book_cap', :moodle_user => params[:moodle_user])
   end
 
   private

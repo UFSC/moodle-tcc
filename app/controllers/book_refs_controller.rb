@@ -1,8 +1,12 @@
 # encoding: utf-8
 class BookRefsController < ApplicationController
-  inherit_resources
+  #inherit_resources
 
   before_action :set_current_tab
+
+  def new
+    @book_ref = BookRef.new()
+  end
 
   def index
     @book_refs = @tcc.book_refs.decorate
@@ -53,7 +57,7 @@ class BookRefsController < ApplicationController
     else
       flash[:error] = @book_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'book', :moodle_user => params[:moodle_user])
   end
 
   private

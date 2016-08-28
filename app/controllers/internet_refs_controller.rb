@@ -1,11 +1,15 @@
 # encoding: utf-8
 class InternetRefsController < ApplicationController
-  inherit_resources
+  #inherit_resources
 
   before_action :set_current_tab
 
   def index
     @internet_refs = @tcc.internet_refs.decorate
+  end
+
+  def new
+    @internet_ref = InternetRef.new()
   end
 
   def edit
@@ -49,7 +53,7 @@ class InternetRefsController < ApplicationController
     else
       flash[:error] = @internet_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'internet', :moodle_user => params[:moodle_user])
   end
 
 

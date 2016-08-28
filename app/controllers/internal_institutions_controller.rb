@@ -1,5 +1,4 @@
 class InternalInstitutionsController < ApplicationController
-  inherit_resources
 
   autocomplete :internal_institution, :institution_name, :full => true
 

@@ -1,5 +1,5 @@
 class InternalCoursesController < ApplicationController
-  inherit_resources
+  #inherit_resources
 
   autocomplete :internal_course, :course_name, :full => true
 
@@ -43,6 +43,24 @@ class InternalCoursesController < ApplicationController
       flash[:error] = t(:please_fix_invalid_data)
       @modal_title = t(:edit_internal_course)
       render :edit
+    end
+  end
+
+  def destroy
+    @internal_course = InternalCourse.includes(:tcc_definitions).find(params[:id])
+
+    @internal_course.destroy
+
+    if @internal_course.errors.any?
+      flash[:error] = @internal_course.errors.full_messages.join("\n")
+      @internal_course = InternalCourse.includes(:tcc_definitions).find(params[:id])
+    else
+      flash[:success] = t(:successfully_saved)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to(:back) }
+      format.xml  { head :ok }
     end
   end
 
