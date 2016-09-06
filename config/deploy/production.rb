@@ -15,6 +15,6 @@ server 'tcc.unasus.ufsc.br', user: 'deploy', roles: %w{web app db}, port: 2200
 
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
 
-namespace :deploy do
-  before :finished, 'newrelic:notice_deployment'
-end
+# namespace :deploy do
+#   before :finished, 'newrelic:notice_deployment'
+# end
