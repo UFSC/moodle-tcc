@@ -1,6 +1,6 @@
 # encoding: utf-8
 class LegislativeRefsController < ApplicationController
-  #inherit_resources
+  inherit_resources
 
   before_action :set_current_tab
 

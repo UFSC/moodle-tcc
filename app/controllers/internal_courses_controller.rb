@@ -1,5 +1,5 @@
 class InternalCoursesController < ApplicationController
-  #inherit_resources
+  inherit_resources
 
   autocomplete :internal_course, :course_name, :full => true
 
