@@ -8,5 +8,5 @@ ActiveRecord::SessionStore::Session.attr_accessible :data, :session_id
 # https://github.com/mperham/sidekiq/issues/2730
 # Rails + Sidekiq::Web + wildcard domain session = confliciting cookies
 
-#Rails.application.config.session_store :active_record_store, :key => '_session_id', domain: :all
-Rails.application.config.session_store :active_record_store, domain: :all
+Rails.application.config.session_store :active_record_store, :key => '_moodle_tcc', domain: :all
+#Rails.application.config.session_store :active_record_store, domain: :all

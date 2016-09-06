@@ -5,7 +5,7 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 class AuthConstraint
 
   def self.admin?(request)
-    session = ActiveRecord::SessionStore::Session.find_by_session_id(request.cookies['_session_id'])
+    session = ActiveRecord::SessionStore::Session.find_by_session_id(request.cookies['_moodle_tcc'])
     return false if session.blank?
     message = session['data']
     obj = Marshal.load(Base64.decode64(message))
