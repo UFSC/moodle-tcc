@@ -24,7 +24,7 @@ before_install:
 #  - git submodule update --init --recursive
 
 script:
-  - bundle exec rake test
+  - COVERAGE=true bundle exec rake spec
 
 
 #addons:
