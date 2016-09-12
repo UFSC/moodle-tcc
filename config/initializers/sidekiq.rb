@@ -26,9 +26,9 @@ Configuration.load!
 Sidekiq::Web.set :sessions, domain: 'all'
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://localhost:6379/0', namespace: 'tcc' }
+  config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0", namespace: 'tcc' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://localhost:6379/0', namespace: 'tcc' }
+  config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0", namespace: 'tcc' }
 end

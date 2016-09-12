@@ -10,6 +10,9 @@ development:
 
   notification_email: notification@example.org
 
+  redis_host: 192.168.25.41
+  redis_port: 16379
+
   swift_auth_url     : http://swift.server.ifes.br:80/auth/v1.0/
   swift_user         : username:readwrite
   swift_password     : password
