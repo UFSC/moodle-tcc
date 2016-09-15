@@ -1,6 +1,6 @@
 set :stage, :production
 
-set :deploy_to, '/home/deploy/tcc.unasus.ufsc.br'
+set :deploy_to, '/home/deploy/homologacao-github-tcc.moodle.ufsc.br'
 set :branch, 'master'
 
 # Extended Server Syntax
@@ -9,7 +9,7 @@ set :branch, 'master'
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server 'tcc.unasus.ufsc.br', user: 'deploy', roles: %w{web app db}, port: 2200
+server 'homologacao-github-tcc.moodle.ufsc.br', user: 'deploy', roles: %w{web app db}, port: 2200
 
 # fetch(:default_env).merge!(rails_env: :production)
 

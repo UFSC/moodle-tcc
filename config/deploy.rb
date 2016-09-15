@@ -5,8 +5,8 @@ set :whenever_variables, -> { "stage=#{fetch(:stage)}" }
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Configurações do deploy padrão Capistrano:
-set :application, 'tcc.unasus.ufsc.br'
-set :repo_url, 'git@gitlab.setic.ufsc.br:tcc-unasus/sistema-tcc.git'
+set :application, 'homologacao.github.tcc.moodle.ufsc.br'
+set :repo_url, 'https://github.com/UFSC/moodle-tcc.git'
 set :scm, :git
 set :git_strategy, Capistrano::Git::SubmoduleStrategy
 

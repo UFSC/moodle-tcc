@@ -98,9 +98,9 @@ GEM
       memoizable (~> 0.4.0)
     addressable (2.4.0)
     afm (0.2.2)
-    airbrake (5.4.5)
-      airbrake-ruby (~> 1.4)
-    airbrake-ruby (1.4.6)
+    airbrake (4.3.8)
+      builder
+      multi_json
     airbrussh (1.1.0)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (5.0.1.20140414130214)
@@ -711,7 +711,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-session_store!
   addressable
-  airbrake
+  airbrake (~> 4.3.8)
   attribute_normalizer
   autoprefixer-rails
   better_errors

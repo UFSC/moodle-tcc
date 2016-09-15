@@ -107,7 +107,7 @@ gem 'state_machine', github: 'seuros/state_machine'
 gem 'draper'#, '~> 1.3'
 
 # Errbit (monitoração de falhas)
-gem 'airbrake'
+gem 'airbrake', '~> 4.3.8'
 
 # OpenStack Swift
 gem 'fog'

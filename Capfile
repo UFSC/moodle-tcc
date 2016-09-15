@@ -27,6 +27,7 @@ require 'capistrano/git-submodule-strategy'
 require 'capistrano-db-tasks'
 require 'whenever/capistrano'
 require 'airbrake/capistrano3'
+# require 'airbrake/capistrano/tasks'
 
 require 'capistrano/sidekiq'
 #require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
