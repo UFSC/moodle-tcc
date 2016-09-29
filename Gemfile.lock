@@ -120,6 +120,7 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    brakeman (3.4.0)
     builder (3.2.2)
     bullet (5.3.0)
       activesupport (>= 3.0.0)
@@ -718,6 +719,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-datepicker-rails
   bootstrap-sass
+  brakeman
   bullet
   capistrano (~> 3.4)
   capistrano-db-tasks
@@ -801,6 +803,3 @@ DEPENDENCIES
   vcr
   webmock
   whenever
-
-BUNDLED WITH
-   1.12.5
