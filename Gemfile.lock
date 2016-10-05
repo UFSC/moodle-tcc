@@ -15,6 +15,15 @@ GIT
       mime-types (>= 1.16)
 
 GIT
+  remote: git://github.com/galetahub/ckeditor.git
+  revision: 2dfb02f29fd85b30d826a43cec523b4f86b687db
+  branch: master
+  specs:
+    ckeditor (4.2.0)
+      cocaine
+      orm_adapter (~> 0.5.0)
+
+GIT
   remote: git://github.com/mjbellantoni/formtastic-bootstrap.git
   revision: cececb84e631b08e5b7ff8504d612f7941afcdd3
   specs:
@@ -180,9 +189,6 @@ GEM
       rest-client (>= 1.6.0)
       ruby_parser (~> 3.0)
       sexp_processor (~> 4.1)
-    ckeditor (4.2.0)
-      cocaine
-      orm_adapter (~> 0.5.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.3.2)
@@ -756,7 +762,7 @@ DEPENDENCIES
   capybara
   capybara-puma
   carrierwave!
-  ckeditor
+  ckeditor!
   coffee-rails (~> 4.2.1)
   database_cleaner
   draper
@@ -831,4 +837,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.12.5
+   1.13.2

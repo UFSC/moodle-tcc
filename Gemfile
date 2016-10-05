@@ -87,7 +87,7 @@ gem 'oauth-instructure'
 gem 'formtastic'#, '3.0'
 gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
-gem 'ckeditor'
+gem 'ckeditor', github: 'galetahub/ckeditor', :branch => 'master'
 gem 'rabl'
 
 # image on database
