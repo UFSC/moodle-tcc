@@ -45,9 +45,11 @@ gem 'redis-namespace'
 gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
 
 # sidekiq - processamento paralelo
-gem 'sidekiq'#, '~> 4.1.4'
+# gem 'sidekiq', '~> 4.2.2'
+gem 'sidekiq', '~> 4.1.4'
 gem 'sidekiq-superworker'
-#gem 'sidekiq_monitor'
+# gem 'sidekiq_monitor'
+# gem 'rack-protection'
 
 # sidekiq monitor
 gem 'sinatra', require: false

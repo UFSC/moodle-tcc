@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 
-Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+Sidekiq::Web.session_secret = Rails.application.secrets[:secret_key_base]
 
 class AuthConstraint
 
@@ -78,8 +78,8 @@ Rails.application.routes.draw do
   #mount Sidekiq::Web, at: '/sidekiq'
 
   constraints lambda {|request| AuthConstraint.admin?(request) } do
-    #mount Sidekiq::Web, at: '/sidekiq'
-    mount Sidekiq::Web => '/admin/sidekiq'
+    mount Sidekiq::Web, at: '/admin/sidekiq', as: :sidekiq_web
+    # mount Sidekiq::Web => '/admin/sidekiq'
   end
 
   # TCC routes

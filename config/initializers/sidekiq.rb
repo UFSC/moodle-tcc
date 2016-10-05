@@ -24,6 +24,8 @@ Configuration.load!
 # https://github.com/mperham/sidekiq/issues/2730
 # Rails + Sidekiq::Web + wildcard domain session = confliciting cookies
 Sidekiq::Web.set :sessions, domain: 'all'
+# Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+# Sidekiq::Web.session_secret = Rails.application.secrets[:secret_key_base]
 
 Sidekiq.configure_server do |config|
   config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0", namespace: 'tcc' }
