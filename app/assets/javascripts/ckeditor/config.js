@@ -19,7 +19,7 @@ CKEDITOR.editorConfig = function(config) {
 
     // Plugin de Citacao
     config.removePlugins = 'about,colordialog,div,flash,forms,iframe,pagebreak,preview,smiley,specialchar,templates,scayt,wsc';
-    config.extraPlugins = 'citacao,autogrow';
+    config.extraPlugins = 'citacao,autogrow,lite';
     config.allowedContent = true;
 
     // Configuracao de auto-resize
