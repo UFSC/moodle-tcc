@@ -93,7 +93,7 @@ class BatchTccs
     # gera o arquivo metalink para ser anexado ao e-mail
     metalink_file = generate_metalink(moodle_ids)
 
-    Mailer.tccs_batch_print(name, mail_to, metalink_file, activity_url).deliver unless mail_to.blank? || mail_to.nil?
+    Mailer.tccs_batch_print(name, mail_to, metalink_file, activity_url).deliver_now unless mail_to.blank? || mail_to.nil?
 
     logger.info('+++ Geração de email encerrada <<<')
   end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.9'
+gem 'rails', '~> 4.2'
 #gem 'rails', '~> 4.2.7'
 
 gem 'mysql2', '~> 0.3.18'
@@ -10,6 +10,9 @@ gem 'eventmachine'#, '~>1.0.7'
 gem 'passenger'
 gem 'execjs'
 gem 'therubyracer'
+
+# Rails 4.2
+gem 'responders', '~> 2.0'
 
 # Teste de geração de pdf no worker
 #gem 'wicked_pdf'
@@ -22,7 +25,8 @@ gem 'uglifier'
 # Assets
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'#, '~> 3.3.1'
-gem 'jquery-rails'
+# gem 'jquery-rails', '~> 4.2.1'
+gem 'jquery-rails', '~> 3.1.4'
 gem 'jquery-ui-rails', '< 5.0.0'#, '~> 4.1.1'
 gem 'bootstrap-datepicker-rails'
 gem 'twitter-bootstrap-rails-confirm'
@@ -120,6 +124,7 @@ gem 'fog'
 # end
 
 group :development do
+  gem 'web-console', '~> 2.0'
   gem 'thin'
   # gem 'ruby-graphviz', '~> 1.2.2', :require => 'graphviz' # usado pela state_machine
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
