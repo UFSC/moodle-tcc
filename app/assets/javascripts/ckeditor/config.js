@@ -63,7 +63,8 @@ CKEDITOR.editorConfig = function(config) {
         '/',
         { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
         { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
-        { name: 'tools' }
+        { name: 'tools' }//,
+        // { name: 'lite' }
     ];
 
     config.toolbar_mini = [
@@ -76,6 +77,11 @@ CKEDITOR.editorConfig = function(config) {
     ];
 
     config.language = 'pt-br';
+
+    // linhas para teste
+    config.enterMode = CKEDITOR.ENTER_BR;
+    config.autoParagraph = false;
+    config.title = false;
 };
 
 CKEDITOR.on('dialogDefinition', function(event) {

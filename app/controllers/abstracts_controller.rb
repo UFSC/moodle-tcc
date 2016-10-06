@@ -8,6 +8,7 @@ class AbstractsController < ApplicationController
 
     authorize @abstract
 
+    @current_user_abstract = current_user;
     @comment = @tcc.abstract.comment || @tcc.abstract.build_comment
   end
 

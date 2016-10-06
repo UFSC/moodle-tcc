@@ -21,7 +21,18 @@
   </div>
 
   <div class="panel rounded-border">
-    <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@abstract).edit_content?}} %><br/>
+      <%  #TODO: colocar este código num helper %>
+      <%    # Se o susario corrente for estudante style = 2 %>
+      <%  role = 1 %>
+      <%  role = 2 if @current_user_abstract.person.moodle_id.eql?(@tcc.student.moodle_id) %>
+      <%  role = 3 if @current_user_abstract.person.moodle_id.eql?(@tcc.orientador.moodle_id) %>
+      <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@abstract).edit_content? \
+             , lite_users: [{name: @current_user_abstract.person.name, id: @current_user_abstract.person.moodle_id}, \
+                            {name: @tcc.student.name+'/Estudante', id: @tcc.student.moodle_id}, \
+                            {name: @tcc.orientador.name+'/Orientador' , id: @tcc.orientador.moodle_id} ],\
+               lite: {userStyles: {@current_user_abstract.person.moodle_id => role}, \
+                      isTracking: true ,\
+                      contextMenu: policy(@abstract).edit_content? } } } %><br/>
     <%= form.input :keywords, input_html: {class: 'span12', disabled: !policy(@abstract).edit_content?} %>
   </div>
 

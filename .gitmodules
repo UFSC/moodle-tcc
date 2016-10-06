@@ -6,4 +6,4 @@
 	url = https://github.com/UFSC/moodle-tcc-ckeditor-citacao.git
 [submodule "app/assets/javascripts/ckeditor/plugins/lite"]
 	path = app/assets/javascripts/ckeditor/plugins/lite
-	url = https://github.com/loopindex/ckeditor-track-changes.git
+	url = https://github.com/UFSC/moodle-tcc-ckeditor-lite.git
