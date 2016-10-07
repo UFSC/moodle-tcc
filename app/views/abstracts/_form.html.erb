@@ -27,13 +27,11 @@
       <%  role = 2 if @current_user_abstract.person.moodle_id.eql?(@tcc.student.moodle_id) %>
       <%  role = 3 if @current_user_abstract.person.moodle_id.eql?(@tcc.orientador.moodle_id) %>
       <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@abstract).edit_content? \
-             , lite_users: [{name: @current_user_abstract.person.name, id: @current_user_abstract.person.moodle_id}, \
-                            {name: @tcc.student.name+'/Estudante', id: @tcc.student.moodle_id}, \
-                            {name: @tcc.orientador.name+'/Orientador' , id: @tcc.orientador.moodle_id} ],\
-               lite: {userStyles: {@current_user_abstract.person.moodle_id => role}, \
-                      isTracking: true ,\
-                      contextMenu: policy(@abstract).edit_content? } } } %><br/>
+             , lite_users: [{name: @current_user_abstract.person.name, id: @current_user_abstract.person.moodle_id} ], \
+                } } %><br/>
     <%= form.input :keywords, input_html: {class: 'span12', disabled: !policy(@abstract).edit_content?} %>
+    <!--{name: @tcc.student.name+'/Estudante/'+@tcc.student.moodle_id.to_s, id: @tcc.student.moodle_id}, \-->
+    <!--{name: @tcc.orientador.name+'/Orientador/'+@tcc.orientador.moodle_id.to_s , id: @tcc.orientador.moodle_id} ],\-->
   </div>
 
   <div class="panel panel-default">
