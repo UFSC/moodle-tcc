@@ -12,4 +12,4 @@ end
 
 ENV['PATH']="#{texlive_bin_dir}:#{ENV['PATH']}"
 LatexToPdf.config[:arguments].delete('-halt-on-error')
-LatexToPdf.config.merge! :distro => :xelatex, bibtex: true
+LatexToPdf.config.merge! :distro => :xelatex, bibtex: true, :dockerImage => Settings.docker_image
