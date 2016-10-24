@@ -1,17 +1,14 @@
-development:
-  pdf_link_hours    : 2
-  auto_save_minutes : 0
-  # Integração com Moodle
+common: &common
   moodle_url: http://localhost
   moodle_token: 634d513626c5948def95809ae1bc8e5g
-  # Integração OAUTH
+
   consumer_key: consumer_key
   consumer_secret: consumer_secret
 
-  notification_email: notification@example.org
+  notification_email: unasus@sistemas.ufsc.br
 
-  redis_host: 192.168.25.41
-  redis_port: 16379
+  redis_host: localhost
+  redis_port: 6379
 
   docker_image: ufsc/latex-tcc
 
@@ -21,28 +18,14 @@ development:
   swift_temp_url_key : value_from_swift_server
   swift_seconds_URL_lives: 7200
 
-# 24 horas = 86400
-# 1 hora   = 3600
-# 2 horas  = 7200
+development:
+  <<: *common
+  database: homologacao_github_tcc
+
+production:
+  <<: *common
+  database: homologacao_github_tcc
 
 test:
-
-  # Integração com Moodle
-  moodle_url: http://localhost
-  moodle_token: 634d513626c5948def95809ae1bc8e5g
-
-  # Integração OAUTH
-  consumer_key: consumer_key
-  consumer_secret: consumer_secret
-
-  notification_email: notification@example.org
-production:
-
-#  moodle_url:
-#  moodle_token:
-
-#  consumer_key:
-#  consumer_secret:
-
-#  notification_email:
-
+  <<: *common
+  database: homologacao_github_tcc_teste

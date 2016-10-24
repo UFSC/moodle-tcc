@@ -5,7 +5,9 @@
   <!--%= hidden_field_tag 'position', '' %>-->
   <!--%= hidden_field_tag 'tcc_count_refs', @chapter.tcc.nil? ?  '0' : @chapter.tcc.count_references %>-->
   <div class="panel rounded-border">
-    <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@chapter).edit_content?}} %>
+    <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@chapter).edit_content? \
+             , lite_users: [{name: @current_user_chapter.person.name, id: @current_user_chapter.person.moodle_id} ], \
+                } }%>
   </div>
 
   <div class="panel panel-default">

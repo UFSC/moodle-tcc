@@ -6,6 +6,7 @@ class ChaptersController < ApplicationController
     @chapter = @tcc.chapters.find_by(position: params[:position])
     authorize @chapter
 
+    @current_user_chapter = current_user
     if policy(@chapter).must_import?
       if policy(@tcc).import_chapters?
         redirect_to import_chapters_path(params[:moodle_user], params[:position])
