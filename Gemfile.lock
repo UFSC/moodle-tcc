@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/UFSC/moodle-tcc-rails-latex.git
-  revision: 34d4a29f3460cbf2c2ed27afaa2d602e40fb2f81
+  revision: 80c82b79325d4e43fc88c54856552ddd5a1fd843
   specs:
     rails-latex (1.0.11)
       rails (>= 3.0.0)
