@@ -17,6 +17,10 @@ class LatexTccDecorator < Draper::Decorator
     h.lesc object.orientador.name unless object.orientador.nil?
   end
 
+  def advisor_nomenclature
+    h.lesc object.tcc_definition.advisor_nomenclature unless object.tcc_definition.nil?
+  end
+
   def student_name
     h.lesc student.name
   end

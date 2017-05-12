@@ -12,7 +12,7 @@
       <% end %>
 
       <%= f.inputs :for => :orientador do |s| %>
-        <%= s.input :name, input_html: {disabled: true, value: @tcc.orientador.try(:name)} %>
+        <%= s.input @tcc.tcc_definition.advisor_nomenclature.capitalize, input_html: {disabled: true, value: @tcc.orientador.try(:name)} %>
       <% end %>
 
       <% if policy(@tcc).edit_defense_date? %>

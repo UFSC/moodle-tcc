@@ -152,7 +152,8 @@ brazil,				% o último idioma é o principal do documento
 \vspace*{\fill}
 }%
 
-{\large\imprimirorientadorRotulo~\imprimirorientador\par}
+%{\large\imprimirorientadorRotulo~\imprimirorientador\par}
+{\large\\<%= tcc_document.advisor_nomenclature.capitalize %>: ~\imprimirorientador\par}
 
 
 \vspace*{\fill}
@@ -234,7 +235,8 @@ brazil,				% o último idioma é o principal do documento
 \vspace*{\fill}
 }%
 
-{\large\imprimirorientadorRotulo~\imprimirorientador\par}
+%{\large\imprimirorientadorRotulo~\imprimirorientador\par}
+{\large\\<%= tcc_document.advisor_nomenclature.capitalize %>: ~\imprimirorientador\par}
 
 \abntex@ifnotempty{\imprimircoorientador}{%
 {\large\\Coordenador<%= tcc_document.coordinator_gender == 'f' ? 'a' : '' %> do Curso: ~\imprimircoorientador}%
@@ -276,9 +278,8 @@ brazil,				% o último idioma é o principal do documento
     \end{minipage}%
     \vspace*{\fill}
     \end{center}
-
     \assinatura{\textbf{\imprimircoorientador} \\ Coordenador<%= tcc_document.coordinator_gender == 'f' ? 'a' : '' %> do Curso}
-    \assinatura{\textbf{\imprimirorientador} \\ Orientador(a) do trabalho}
+    \assinatura{\textbf{\imprimirorientador} \\ <%= tcc_document.advisor_nomenclature.capitalize %> do trabalho}
 
     \begin{center}
         \vspace*{0.5cm}

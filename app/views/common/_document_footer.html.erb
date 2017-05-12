@@ -19,7 +19,8 @@
     <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_draft_admin'),
                            button_html: {class: 'btn btn-warning', name: 'draft_admin'} if can_send_draft_admin
     %>
-    <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_review_admin'),
+    <%= object_form.action :submit, :as => :input, label: t('activerecord.state_machines.events.to_review_admin',
+                advisor_nomenclature: object.tcc.tcc_definition.advisor_nomenclature.downcase),
                            button_html: {class: 'btn btn-warning', name: 'review_admin'} if can_send_review_admin
     %>
   </div>
