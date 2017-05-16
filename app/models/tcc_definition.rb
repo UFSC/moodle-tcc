@@ -1,7 +1,7 @@
 class TccDefinition < ActiveRecord::Base
   attr_accessible :internal_name, :activity_url, :course_id, :internal_course_id, :defense_date,
                   :moodle_instance_id, :minimum_references, :auto_save_minutes, :pdf_link_hours,
-                  :enabled_sync
+                  :enabled_sync, :advisor_nomenclature
 
   has_many :chapter_definitions, :inverse_of => :tcc_definition, :dependent => :destroy
   has_many :tccs, :inverse_of => :tcc_definition

@@ -11,7 +11,7 @@
   </div>
 
   <div class="panel panel-default">
-    <div class="panel-heading">Feedback do orientador</div>
+    <div class="panel-heading">Feedback do <%= @tcc.tcc_definition.advisor_nomenclature.downcase %></div>
     <div class="panel-body">
       <%= semantic_fields_for @comment do |cf| %>
         <%= cf.input :comment, input_html: {rows: '3', disabled: !policy(@chapter).edit_comment?} %>

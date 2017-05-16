@@ -18,7 +18,7 @@
       <dt>Nome:</dt>
       <dd><%= @student.name %></dd>
 
-      <dt>Orientador:</dt>
+      <dt><%= @tcc.tcc_definition.advisor_nomenclature.capitalize %>:</dt>
       <dd><%= @tcc.orientador.nil? ? '(indefinido)' : @tcc.orientador.name %></dd>
 
       <dt>Dt. Defesa:</dt>
