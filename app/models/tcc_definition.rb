@@ -10,6 +10,7 @@ class TccDefinition < ActiveRecord::Base
 
   validates :internal_name, presence: true
   validates :activity_url, presence: true
+  validates :advisor_nomenclature, presence: true
 
   validates :moodle_instance_id, numericality: { only_integer: true, greater_than_or_equal_to: 1}#, presence: true
   validates :course_id, numericality: { only_integer: true, greater_than_or_equal_to: 1}, uniqueness: true#, presence: true
