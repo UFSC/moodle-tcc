@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 class ThesisRefsController < ApplicationController
   inherit_resources
 
@@ -7,6 +6,10 @@ class ThesisRefsController < ApplicationController
 
   def index
     @thesis_refs = @tcc.thesis_refs.decorate
+  end
+
+  def new
+    @thesis_ref = ThesisRef.new()
   end
 
   def edit
@@ -51,7 +54,7 @@ class ThesisRefsController < ApplicationController
     else
       flash[:error] = @thesis_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'thesis', :moodle_user => params[:moodle_user])
   end
 
   private

@@ -50,7 +50,7 @@ class BatchPrintsController < ApplicationController
                                     @tcc_definition.pdf_link_hours)
       flash[:success] = "A impressão será enviada por e-mail para: #{@tp.lis_person_name_full} - #{@tp.lis_person_contact_email_primary}"
     else
-      flash[:alert] = "Deve haver ao menos um TCC slecionado para a impressão!"
+      flash[:alert] = "Deve haver ao menos um TCC selecionado para a impressão!"
     end
     redirect_to batch_select_path
 

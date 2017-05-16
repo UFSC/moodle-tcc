@@ -8,6 +8,10 @@ class LegislativeRefsController < ApplicationController
     @legislative_refs = @tcc.legislative_refs.decorate
   end
 
+  def new
+    @legislative_ref = LegislativeRef.new()
+  end
+
   def edit
     @legislative_ref = @tcc.legislative_refs.find(params[:id])
   end
@@ -49,7 +53,7 @@ class LegislativeRefsController < ApplicationController
     else
       flash[:error] = @legislative_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'legs', :moodle_user => params[:moodle_user])
   end
 
 

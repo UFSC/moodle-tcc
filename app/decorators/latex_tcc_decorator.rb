@@ -17,6 +17,10 @@ class LatexTccDecorator < Draper::Decorator
     h.lesc object.orientador.name unless object.orientador.nil?
   end
 
+  def advisor_nomenclature
+    h.lesc object.tcc_definition.advisor_nomenclature unless object.tcc_definition.nil?
+  end
+
   def student_name
     h.lesc student.name
   end
@@ -35,12 +39,12 @@ class LatexTccDecorator < Draper::Decorator
   end
 
   def logo_path
-    logo_path = "#{Rails.root}/app/assets/images/image-not-found.jpg"
+    logo_path = "#{Rails.root}/app/assets/images/image-not-found.jpg".squeeze("/")
     unless ( object.tcc_definition.nil? ||
         object.tcc_definition.internal_course.nil? ||
         object.tcc_definition.internal_course.internal_institution.nil? )
       inst = object.tcc_definition.internal_course.internal_institution
-      logo_path = "#{Rails.root}/public/#{inst.image_url().to_s}"
+      logo_path = "#{Rails.root}/public/#{inst.image_url().to_s}".squeeze("/")
     end
     h.lesc File.exists?(logo_path)? logo_path : I18n.t('not_registered')
   end

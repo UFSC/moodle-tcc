@@ -159,110 +159,56 @@ def create_or_update_tcc_definitions(internal_name: internal_name(),
   end
 end
 
-int_institution = create_or_update_internal_institutions(institution_name: 'Universidade Federal de Santa Catarina',
+int_institution = create_or_update_internal_institutions(institution_name: 'Universidade Federal de Duis Posuere',
                                                          city: 'Florianopolis',
                                                          logo_width: 70,
                                                          local_image_file_name: Rails.root.join('app/assets/images/logo.png') )
 
 
 int_course = create_or_update_internal_courses(internal_institution_id: int_institution.id,
-                                               course_name: 'CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL NA ATENÇÃO BÁSICA',
-                                               department_name: 'DEPARTAMENTO DE SAÚDE PÚBLICA',
-                                               center_name: 'CENTRO DE CIÊNCIAS DA SAÚDE',
-                                               coordinator_name: 'Profa Dra Elza Berger Salema Coelho',
-                                               presentation_data: 'Monografia apresentada ao Curso de Especialização Multiprofissional na Atenção Básica da Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista na Atenção Básica.',
-                                               approval_data: 'Essa monografia foi julgada adequada para obtenção do título de “Especialista na atenção básica”, e aprovada em sua forma final pelo Departamento de Saúde Pública da Universidade Federal de Santa Catarina.',
+                                               course_name: 'CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL NA VESTIBULUM',
+                                               department_name: 'DEPARTAMENTO PELLENTESQUE',
+                                               center_name: 'CENTRO DE CIÊNCIAS DA CONDIMENTUM',
+                                               coordinator_name: 'Profa Dra Suspendisse Ultrices Vehicula Diam',
+                                               presentation_data: 'Monografia apresentada ao Curso de Especialização Multiprofissional na Vestibulum da Universidade Federal de Duis Posuere, como requisito para obtenção do título de Especialista na Vestibulum.',
+                                               approval_data: 'Essa monografia foi julgada adequada para obtenção do título de “Especialista na vestibulum”, e aprovada em sua forma final pelo Departamento Pellentesque da Universidade Federal de Duis Posuere.',
                                                coordinator_gender: 'f')
 
 #
-# TCC Definition - Turma A (210000092)
+# Edição 20161 (Ferramentas UFSC)
 #
 definition = [
-    {title: 'Introdução', coursemodule_id: 5206, is_numbered_title: true, verify_references: true},
-    {title: 'Objetivos',  coursemodule_id: 5207, is_numbered_title: true, verify_references: false},
-    {title: 'Revisão da Literatura',             is_numbered_title: true, verify_references: true},
-    {title: 'Metodologia',                       is_numbered_title: true, verify_references: false},
-    {title: 'Resultados Esperados',              is_numbered_title: true, verify_references: false}
+    {title: 'Introdução', coursemodule_id: 2, is_numbered_title: true, verify_references: true},
+    {title: 'Objetivos',                      is_numbered_title: true, verify_references: false},
+    {title: 'Revisão da Literatura',          is_numbered_title: true, verify_references: true},
+    {title: 'Metodologia',                    is_numbered_title: true, verify_references: false},
+    {title: 'Resultados Esperados',           is_numbered_title: true, verify_references: false}
 ]
-create_or_update_tcc_definitions(internal_name: 'Turma A (210000092)',
+create_or_update_tcc_definitions(internal_name: 'Edição 20161 (Ferramentas UFSC)',
                                  definitions: definition,
-                                 course_id: 230,
+                                 course_id: 9,
                                  internal_course_id: int_course.id,
-                                 moodle_instance_id: 8,
+                                 moodle_instance_id: 1,
                                  minimum_references: 6,
-                                 activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=3322',
+                                 activity_url: 'https://homologacao-ferramentas.moodle.ufsc.br/mod/lti/view.php?id=4',
                                  pdf_link_hours: 2,
                                  auto_save_minutes: 0 )
 #
-# TCC Definition - Turma B (210000092)
+# Edição 20162 (Ferramentas UFSC)
 #
-definition = [
-    {title: 'Introdução', coursemodule_id: 5203, is_numbered_title: true,  verify_references: true},
-    {title: 'Objetivos',  coursemodule_id: 5204, is_numbered_title: true,  verify_references: false},
-    {title: 'Revisão da Literatura',             is_numbered_title: true,  verify_references: true},
-    {title: 'Metodologia',                       is_numbered_title: true,  verify_references: false},
-    {title: 'Resultados Esperados',              is_numbered_title: true,  verify_references: false}
-]
-create_or_update_tcc_definitions(internal_name: 'Turma B (210000092)',
-                                 definitions: definition,
-                                 course_id: 258,
-                                 internal_course_id: int_course.id,
-                                 moodle_instance_id: 9,
-                                 minimum_references: 6,
-                                 activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=5300',
-                                 pdf_link_hours: 2,
-                                 auto_save_minutes: 0)
-
-#
-# TCC Definition - Curso de Especialização Multiprofissional Na Atenção Básica 2015 (21000110) - Metodologia TCC
-#
-definition = [
-    {title: 'Introdução', coursemodule_id: 7178, is_numbered_title: true, verify_references: true},
-    {title: 'Objetivos',  coursemodule_id: 7179, is_numbered_title: true, verify_references: false},
-    {title: 'Revisão da Literatura',             is_numbered_title: true, verify_references: true},
-    {title: 'Metodologia',                       is_numbered_title: true, verify_references: false},
-    {title: 'Resultados Esperados',              is_numbered_title: true, verify_references: false}
-]
-
-create_or_update_tcc_definitions(internal_name: 'Metodologia (210000110)',
-                                 definitions: definition,
-                                 course_id: 329,
-                                 internal_course_id: int_course.id,
-                                 moodle_instance_id: 15,
-                                 minimum_references: 6,
-                                 activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=7265',
-                                 pdf_link_hours: 2,
-                                 auto_save_minutes: 0)
-
-definition = [
-    {title: 'Introdução', coursemodule_id: 6910, is_numbered_title: true, verify_references: true},
-    {title: 'Objetivos',  coursemodule_id: 7331, is_numbered_title: true, verify_references: false},
-    {title: 'Revisão da Literatura',             is_numbered_title: true, verify_references: true},
-    {title: 'Metodologia',                       is_numbered_title: true, verify_references: false},
-    {title: 'Resultados Esperados',              is_numbered_title: true, verify_references: false}
-]
-
-# How to find moodle_instance_id value.
-#
-# select id AS moodle_instance_id
-#   from moodle_unasus2.lti
-#  where course = 325
-
-int_course = create_or_update_internal_courses(internal_institution_id: int_institution.id,
-                                               course_name: 'CURSO DE ESPECIALIZAÇÃO MULTIPROFISSIONAL NA ATENÇÃO DOMICILIAR',
-                                               department_name: 'DEPARTAMENTO DE SAÚDE PÚBLICA',
-                                               center_name: 'CENTRO DE CIÊNCIAS DA SAÚDE',
-                                               coordinator_name: 'Profa Dra Elza Berger Salema Coelho',
-                                               presentation_data: 'Monografia apresentada ao Curso de Especialização Multiprofissional na Atenção Domiciliar da Universidade Federal de Santa Catarina, como requisito para obtenção do título de Especialista na Atenção Domiciliar.',
-                                               approval_data: 'Essa monografia foi julgada adequada para obtenção do título de “Especialista na atenção domiciliar”, e aprovada em sua forma final pelo Departamento de Saúde Pública da Universidade Federal de Santa Catarina.',
-                                               coordinator_gender: 'f')
-
-create_or_update_tcc_definitions(internal_name: 'Atenção Domiciliar (210000096)',
-                                 definitions: definition,
-                                 course_id: 325,
-                                 internal_course_id: int_course.id,
-                                 moodle_instance_id: 17,
-                                 minimum_references: 6,
-                                 activity_url: 'https://unasus2.moodle.ufsc.br/mod/lti/view.php?id=7295',
-                                 pdf_link_hours: 2,
-                                 auto_save_minutes: 0)
+# definition = [
+#     {title: 'Introdução', coursemodule_id: 2, is_numbered_title: true, verify_references: true},
+#     {title: 'Objetivos',                      is_numbered_title: true, verify_references: false},
+#     {title: 'Revisão da Literatura',          is_numbered_title: true, verify_references: true},
+#     {title: 'Metodologia',                    is_numbered_title: true, verify_references: false},
+#     {title: 'Resultados Esperados',           is_numbered_title: true, verify_references: false}
+# ]
+# create_or_update_tcc_definitions(internal_name: 'Edição 20161 (Ferramentas UFSC)',
+#                                  definitions: definition,
+#                                  course_id: 9,
+#                                  internal_course_id: int_course.id,
+#                                  moodle_instance_id: 1,
+#                                  minimum_references: 6,
+#                                  activity_url: 'https://homologacao-ferramentas.moodle.ufsc.br/mod/lti/view.php?id=4',
+#                                  pdf_link_hours: 2,
+#                                  auto_save_minutes: 0 )

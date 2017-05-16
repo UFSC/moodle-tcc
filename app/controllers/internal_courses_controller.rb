@@ -46,6 +46,24 @@ class InternalCoursesController < ApplicationController
     end
   end
 
+  def destroy
+    @internal_course = InternalCourse.includes(:tcc_definitions).find(params[:id])
+
+    @internal_course.destroy
+
+    if @internal_course.errors.any?
+      flash[:error] = @internal_course.errors.full_messages.join("\n")
+      @internal_course = InternalCourse.includes(:tcc_definitions).find(params[:id])
+    else
+      flash[:success] = t(:successfully_saved)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to(:back) }
+      format.xml  { head :ok }
+    end
+  end
+
   private
 
   def internal_course_params

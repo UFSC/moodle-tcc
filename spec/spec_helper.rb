@@ -15,6 +15,7 @@ require 'vcr'
 require 'capybara/rspec'
 require 'rack_session_access/capybara'
 require 'database_cleaner'
+require 'shoulda/matchers'
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
@@ -95,6 +96,13 @@ RSpec.configure do |config|
 
   # Desligar as transações via RSpec, já que estamos usando elas via DatabaseCleaner
   config.use_transactional_fixtures = false
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end
 
 ActiveRecord::Migration.maintain_test_schema!

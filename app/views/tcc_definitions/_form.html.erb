@@ -28,11 +28,18 @@
         <%= f.input :pdf_link_hours, :hint => false, input_html: { style: 'width:7em', tooltip: t('formtastic.tooltip.tcc_definition.pdf_link_hours') } %>
       </div>
       <div class="col-sm-6">
-        <%= f.input :defense_date, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.defense_date') } %>
+        <%= f.input :advisor_nomenclature, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.advisor_nomenclature') } %>
       </div>
       <div class="col-sm-6">
+        <%= f.input :defense_date, :hint => false, input_html: { tooltip: t('formtastic.tooltip.tcc_definition.defense_date') } %>
+      </div>
+      <div class="col-sm-3">
         <%= f.input :auto_save_minutes, :hint => false, input_html: { :style => 'width:7em', :disabled => true,
-                tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
+                                                                      tooltip: t('formtastic.tooltip.tcc_definition.auto_save_minutes') } %>
+      </div>
+      <div class="col-sm-3">
+        <%= f.input :enabled_sync, as: :radio, :hint => false, input_html: { :style => 'width:7em',
+                                                         tooltip: t('formtastic.tooltip.tcc_definition.enabled_sync') } %>
       </div>
 
     <% end %>

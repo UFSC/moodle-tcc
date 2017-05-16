@@ -2,6 +2,9 @@ module TccDocument
   class ReferencesProcessor < BaseProcessor
 
     def execute(content)
+      # nome do arquivo bib
+      inputFileName = 'input.bib'
+      
       # Criar arquivo de referência
       doc = Nokogiri::XML(content)
 
@@ -10,11 +13,13 @@ module TccDocument
       content = xslt.apply_to(doc)
 
       # Salvar arquivo bib no tmp
-      input = File.join(temp_dir, 'input.bib')
+      input = File.join(temp_dir, inputFileName)
       File.open(input, 'wb') { |io| io.write(content) }
 
-      # retorna "Rails-root/tmp/rails-latex/xxx/input.bib"
-      input
+      # retorna
+      # "input.bib" se usa docker
+      # senão "Rails-root/tmp/rails-latex/xxx/input.bib"
+      Settings.docker_image.present? ? inputFileName : input
     end
 
     private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005022645) do
+ActiveRecord::Schema.define(version: 20160330142545) do
 
   create_table "abstracts", force: true do |t|
     t.text     "content",    limit: 16777215
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 20151005022645) do
     t.integer  "moodle_instance_id"
     t.integer  "minimum_references"
     t.integer  "pdf_link_hours"
+    t.boolean  "enabled_sync",       default: true
     t.integer  "auto_save_minutes"
     t.datetime "created_at"
     t.datetime "updated_at"

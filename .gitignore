@@ -7,6 +7,7 @@
 
 # Ignore bundler config
 /.bundle
+vendor/bundle
 
 # Ignore images on root dir
 /*.png
@@ -44,6 +45,8 @@ config/errbit.yml
 config/email.yml
 config/sidekiq.yml
 config/secrets.yml
+config/*.staging.yml
+config/*.production.yml
 config/*.26
 config/*.28
 config/*.29

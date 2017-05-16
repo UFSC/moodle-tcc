@@ -8,6 +8,10 @@ class ArticleRefsController < ApplicationController
     @article_refs = @tcc.article_refs.decorate
   end
 
+  def new
+    @article_ref = ArticleRef.new()
+  end
+
   def edit
     @article_ref = @tcc.article_refs.find(params[:id])
   end
@@ -49,7 +53,7 @@ class ArticleRefsController < ApplicationController
     else
       flash[:error] = @article_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'article', :moodle_user => params[:moodle_user])
   end
 
 

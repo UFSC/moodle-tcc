@@ -3,6 +3,8 @@ Sistema de TCCs
 
 [![build
 status](https://gitlabci.setic.ufsc.br/projects/3/status.png?ref=master)](https://gitlabci.setic.ufsc.br/projects/3?ref=master)
+[![Dependency Status](https://gemnasium.com/badges/github.com/UFSC/moodle-tcc.svg)](https://gemnasium.com/github.com/UFSC/moodle-tcc)
+
 
 É um sistema de controle e auxílio à criação de TCCs pelos estudantes. Irá auxiliar também os orientadores, na correção e troca de informações com seus orientados.
 

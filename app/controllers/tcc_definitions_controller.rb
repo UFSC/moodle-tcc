@@ -1,5 +1,4 @@
 class TccDefinitionsController < ApplicationController
-  inherit_resources
 
   skip_before_action :get_tcc
   before_action :check_permission

@@ -25,6 +25,6 @@ server 'tcc-sandbox.teste-moodle.ufsc.br', user: 'deploy', roles: %w{web app db}
 # =======
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
 
-namespace :deploy do
-  before :finished, 'newrelic:notice_deployment'
-end
+# namespace :deploy do
+#   before :finished, 'newrelic:notice_deployment'
+# end

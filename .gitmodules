@@ -1,6 +1,9 @@
-[submodule "app/assets/javascripts/ckeditor/plugins/citacao"]
-	path = app/assets/javascripts/ckeditor/plugins/citacao
-	url = git@github.com:UFSC/moodle-tcc-ckeditor-citacao.git
 [submodule "app/assets/javascripts/ckeditor/plugins/autogrow"]
 	path = app/assets/javascripts/ckeditor/plugins/autogrow
-	url = git@github.com:UFSC/moodle-tcc-ckeditor-autogrow.git
+	url = https://github.com/UFSC/moodle-tcc-ckeditor-autogrow.git
+[submodule "app/assets/javascripts/ckeditor/plugins/citacao"]
+	path = app/assets/javascripts/ckeditor/plugins/citacao
+	url = https://github.com/UFSC/moodle-tcc-ckeditor-citacao.git
+[submodule "app/assets/javascripts/ckeditor/plugins/lite"]
+	path = app/assets/javascripts/ckeditor/plugins/lite
+	url = https://github.com/UFSC/moodle-tcc-ckeditor-lite.git

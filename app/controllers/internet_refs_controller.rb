@@ -8,6 +8,10 @@ class InternetRefsController < ApplicationController
     @internet_refs = @tcc.internet_refs.decorate
   end
 
+  def new
+    @internet_ref = InternetRef.new()
+  end
+
   def edit
     @internet_ref = @tcc.internet_refs.find(params[:id])
   end
@@ -49,7 +53,7 @@ class InternetRefsController < ApplicationController
     else
       flash[:error] = @internet_ref.errors.full_messages.to_sentence
     end
-    redirect_to bibliographies_path(:moodle_user => params[:moodle_user])
+    redirect_to bibliographies_path(:anchor => 'internet', :moodle_user => params[:moodle_user])
   end
 
 

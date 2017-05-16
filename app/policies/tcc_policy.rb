@@ -61,10 +61,10 @@ class TccPolicy < ApplicationPolicy
       return false unless (!ichapter.nil? && !ichapter.empty? && ichapter.state.eql?('done'))
     end
 
-    #verifica se existe o título definido
+    # verifica se existe o título definido
     return false if (!record.nil? && (record.title.nil? || record.title.empty?))
-    #verifica se existe ao menos 6 referencias vinculadas ao texto
-    record.count_references >= 6
+    # verifica se existe o mínimo de referencias vinculadas ao texto, conforme definido no tcc_definition
+    record.count_references >= record.tcc_definition.minimum_references
   end
 
   # Verifica se pode editar a data de defesa
