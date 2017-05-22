@@ -97,7 +97,8 @@ class ChapterPolicy < ApplicationPolicy
 
   def can_send_to_done?
     # verifica se há condições mínimas para a aprovação do capítulo
-    true
+    result = !@record.has_pending_versioning?
+    result
   end
 
   def must_verify_references?

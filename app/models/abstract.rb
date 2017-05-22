@@ -26,4 +26,14 @@ class Abstract < ActiveRecord::Base
     return (self.count_citation > 0)
   end
 
+  def pending_versioning_count
+    doc = Nokogiri::HTML(self.content)
+    blockIns = doc.xpath("//ins").count
+    blockDel = doc.xpath("//del").count
+    blockIns+blockDel
+  end
+
+  def has_pending_versioning?
+    return (self.pending_versioning_count > 0)
+  end
 end

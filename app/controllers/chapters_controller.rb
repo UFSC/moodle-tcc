@@ -83,7 +83,7 @@ class ChaptersController < ApplicationController
       if policy(@chapter).can_send_to_done?
         @chapter.to_done
       else
-        flash[:error] = 'O capítulo não pôde ser aprovado! <br/> Verifique se há referências citadas no texto!'.html_safe
+        flash[:alert] = 'O capítulo não pôde ser aprovado! <br/> Verifique se há referências citadas no texto ou se há pendências de versionamento!'.html_safe
         return false
       end
     elsif params[:review]
