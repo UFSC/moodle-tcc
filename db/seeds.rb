@@ -23,7 +23,6 @@ def create_or_update_internal_institutions(institution_name: institution_name(),
                                                  image: image_memory
       ).find_or_create_by({institution_name: institution_name,
                            city: city})
-      #int_inst.save!
     else
       # deve atualizar
       ii.first.update_attributes({institution_name: institution_name,
@@ -31,7 +30,6 @@ def create_or_update_internal_institutions(institution_name: institution_name(),
                                   logo_width: logo_width,
                                   image: image_memory})
       int_inst = ii.first
-      #int_inst.save!
     end
     Progress.step
   end
@@ -69,7 +67,6 @@ def create_or_update_internal_courses(internal_institution_id: internal_institut
       ).find_or_create_by({course_name: course_name,
                            department_name: department_name,
                            center_name: center_name})
-      # int_course.save!
     else
       # deve atualizar
       ic.first.update_attributes({internal_institution_id: internal_institution_id,
@@ -81,7 +78,6 @@ def create_or_update_internal_courses(internal_institution_id: internal_institut
                                   approval_data: approval_data,
                                   coordinator_gender: coordinator_gender})
       int_course = ic.first
-      # int_course.save!
     end
     Progress.step
   end
@@ -105,6 +101,7 @@ def create_or_update_tcc_definitions(internal_name: internal_name(),
                                      minimum_references: minimum_references(),
                                      pdf_link_hours: pdf_link_hours(),
                                      auto_save_minutes: auto_save_minutes(),
+                                     advisor_nomenclature: advisor_nomenclature(),
                                      definitions: definitions()
 )
 
@@ -122,9 +119,9 @@ def create_or_update_tcc_definitions(internal_name: internal_name(),
                                           internal_course_id: internal_course_id,
                                           minimum_references: minimum_references,
                                           pdf_link_hours: pdf_link_hours,
+                                          advisor_nomenclature: advisor_nomenclature,
                                           auto_save_minutes: auto_save_minutes
       ).find_or_create_by(moodle_instance_id: moodle_instance_id)
-      # tcc_def.save!
     else
       # deve atualizar
       td.first.update_attributes({internal_name: internal_name,
@@ -134,10 +131,10 @@ def create_or_update_tcc_definitions(internal_name: internal_name(),
                                   moodle_instance_id: moodle_instance_id,
                                   minimum_references: minimum_references,
                                   pdf_link_hours: pdf_link_hours,
+                                  advisor_nomenclature: advisor_nomenclature,
                                   auto_save_minutes: auto_save_minutes
                                  })
       tcc_def = td.first
-      # tcc_def.save!
     end
 
     Progress.step
@@ -192,6 +189,7 @@ create_or_update_tcc_definitions(internal_name: 'Edição 20161 (Ferramentas UFS
                                  minimum_references: 6,
                                  activity_url: 'https://homologacao-ferramentas.moodle.ufsc.br/mod/lti/view.php?id=4',
                                  pdf_link_hours: 2,
+                                 advisor_nomenclature: 'orientador',
                                  auto_save_minutes: 0 )
 #
 # Edição 20162 (Ferramentas UFSC)

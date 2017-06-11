@@ -14,7 +14,7 @@ class TccDefinition < ActiveRecord::Base
 
   validates :moodle_instance_id, numericality: { only_integer: true, greater_than_or_equal_to: 1}#, presence: true
   validates :course_id, numericality: { only_integer: true, greater_than_or_equal_to: 1}, uniqueness: true#, presence: true
-  validates :minimum_references, numericality: { only_integer: true, greater_than_or_equal_to: 1}
+  validates :minimum_references, numericality: { only_integer: true, greater_than_or_equal_to: 0}
   validates :auto_save_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :pdf_link_hours, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 72 }
 
