@@ -16,10 +16,10 @@ GIT
 
 GIT
   remote: git://github.com/galetahub/ckeditor.git
-  revision: 2dfb02f29fd85b30d826a43cec523b4f86b687db
+  revision: 752bca97f78e5c5df3fbd876e51a06918da804e2
   branch: master
   specs:
-    ckeditor (4.2.0)
+    ckeditor (4.2.4)
       cocaine
       orm_adapter (~> 0.5.0)
 
@@ -189,8 +189,7 @@ GEM
       rest-client (>= 1.6.0)
       ruby_parser (~> 3.0)
       sexp_processor (~> 4.1)
-    climate_control (0.0.3)
-      activesupport (>= 3.0)
+    climate_control (0.2.0)
     cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -393,7 +392,7 @@ GEM
     htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.7.0)
+    i18n (0.8.6)
     ice_nine (0.11.2)
     inflecto (0.0.2)
     inherited_resources (1.6.0)
@@ -407,7 +406,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
-    json (1.8.3)
+    json (1.8.6)
     json_pure (2.0.2)
     json_spec (1.1.4)
       multi_json (~> 1.0)
@@ -459,7 +458,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_magick (4.5.1)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.2)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
@@ -692,14 +691,14 @@ GEM
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
     thor (0.19.1)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     tilt (2.0.5)
     trollop (2.1.2)
     ttfunk (1.4.0)
     twitter-bootstrap-rails-confirm (1.0.6)
     typhoeus (1.1.0)
       ethon (>= 0.9.0)
-    tzinfo (1.2.2)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
@@ -837,4 +836,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.13.2
+   1.13.6
