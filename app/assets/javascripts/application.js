@@ -22,9 +22,9 @@
 //= require bootstrap/tooltip
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR
+//= require twitter/bootstrap/rails/confirm
 //= require ckeditor/init
 //= require_tree .
-//= require twitter/bootstrap/rails/confirm
 
 $.fn.twitter_bootstrap_confirmbox.defaults = {
     fade: true,
