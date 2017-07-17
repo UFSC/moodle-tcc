@@ -87,7 +87,9 @@ gem 'oauth-instructure'
 gem 'formtastic'#, '3.0'
 gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
-gem 'ckeditor', github: 'galetahub/ckeditor', :branch => 'master'
+gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.0' # inteface antiga
+# gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.1' # inteface nova
+# gem 'ckeditor', github: 'galetahub/ckeditor', :branch => 'master'
     # :commit_id => 'd0194ccd3f181be603f419c233ca....'
 gem 'rabl'
 
