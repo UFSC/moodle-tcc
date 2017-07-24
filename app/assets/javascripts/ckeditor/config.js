@@ -83,7 +83,6 @@ CKEDITOR.editorConfig = function(config) {
     config.enterMode = CKEDITOR.ENTER_BR;
     config.autoParagraph = false;
     config.title = false;
-    config.skin = 'moono';
 };
 
 CKEDITOR.on('dialogDefinition', function(event) {
