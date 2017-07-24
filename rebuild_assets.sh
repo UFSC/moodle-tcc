@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #### Install production
-# RAILS_ENV=production bundle install --without test development --with production
+# RAILS_ENV=production bundle install --without test development --deployment
 
 #### Install development
 # RAILS_ENV=development bundle install --without production --with test development
