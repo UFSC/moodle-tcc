@@ -65,6 +65,13 @@ module SistemaTcc
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :fabrication
     end
+
+    # config/application.rb
+    # => Markdown (for CKEditor)
+    # => https://github.com/rails/sprockets/blob/99444c0a280cc93e33ddf7acfe961522dec3dcf5/guides/extending_sprockets.md#register-mime-types
+    config.before_initialize do |app|
+      Sprockets.register_mime_type 'text/markdown', extensions: ['.md']
+    end
   end
 end
 

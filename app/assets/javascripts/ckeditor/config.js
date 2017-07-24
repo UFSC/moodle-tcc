@@ -1,4 +1,5 @@
 CKEDITOR.editorConfig = function(config) {
+    config.skin = 'moono';
     // Url para upload
     config.filebrowserImageUploadUrl = "/ckeditor/pictures";
     //config.filebrowserImageBrowseUrl = "/ckeditor/pictures";
@@ -82,7 +83,6 @@ CKEDITOR.editorConfig = function(config) {
     config.enterMode = CKEDITOR.ENTER_BR;
     config.autoParagraph = false;
     config.title = false;
-    config.skin = 'moono';
 };
 
 CKEDITOR.on('dialogDefinition', function(event) {
