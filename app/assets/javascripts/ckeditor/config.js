@@ -1,4 +1,5 @@
 CKEDITOR.editorConfig = function(config) {
+    config.skin = 'moono';
     // Url para upload
     config.filebrowserImageUploadUrl = "/ckeditor/pictures";
     //config.filebrowserImageBrowseUrl = "/ckeditor/pictures";

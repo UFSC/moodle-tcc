@@ -16,10 +16,10 @@ GIT
 
 GIT
   remote: git://github.com/galetahub/ckeditor.git
-  revision: 189d3c2bc9ec177947aec6932da03eb5a03f6879
-  tag: v4.2.0
+  revision: 7c682568cdcca2f4072eb8e5146535e1d0784f63
+  tag: v4.2.1
   specs:
-    ckeditor (4.2.0)
+    ckeditor (4.2.1)
       cocaine
       orm_adapter (~> 0.5.0)
 
@@ -469,6 +469,8 @@ GEM
     newrelic_rpm (3.16.3.323)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    non-stupid-digest-assets (1.0.9)
+      sprockets (>= 2.0)
     oauth (0.4.7)
     oauth-instructure (0.4.10)
     orm_adapter (0.5.0)
@@ -789,6 +791,7 @@ DEPENDENCIES
   mysql2 (~> 0.3.18)
   newrelic_rpm
   nokogiri
+  non-stupid-digest-assets (~> 1.0, >= 1.0.9)
   oauth-instructure
   passenger
   pdf-inspector
