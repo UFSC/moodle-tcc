@@ -24,7 +24,7 @@
       <%= form.cktext_area :content, {ckeditor: {readOnly: !policy(@abstract).edit_content? \
              , lite_users: [{name: @current_user_abstract.person.name, id: @current_user_abstract.person.moodle_id} ], \
                 } } %><br/>
-    <%= form.input :keywords, input_html: {class: 'span12', disabled: !policy(@abstract).edit_content?} %>
+    <%= form.input :keywords, input_html: {class: 'span12', disabled: !policy(@abstract).edit_content?, rows: 1} %>
   </div>
 
   <div class="panel panel-default">

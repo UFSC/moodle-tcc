@@ -70,7 +70,7 @@ class AbstractsController < ApplicationController
       if policy(@abstract).can_send_to_done?
         @abstract.to_done
       else
-        flash[:alert] = 'O capítulo não pôde ser aprovado! <br/> Verifique se o título não está vazio, se há referências citadas no texto ou se há pendências de versionamento!'.html_safe
+        flash[:alert] = 'O capítulo não pôde ser aprovado! <br/> Verifique se o título ou o campo de palavras-chave não está vazio, se há referências citadas no texto ou se há pendências de versionamento!'.html_safe
         return false
       end
     elsif params[:review]
