@@ -32,6 +32,19 @@ module ControllersUtils
     }.compact.join("\r\n\r\n")
     newLines.chomp!
     newContent = newLines
+
+    nokogiri_html = Nokogiri::HTML.fragment(newContent)
+
+    # Teste
+    nokogiri_html.search('p').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<p\s[^>]*>/, '<p>')
+    end
+
+    nokogiri_html.search('font').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<font\s[^>]*>/, '').gsub('</font>', '')
+    end
+
+    newContent = nokogiri_html.to_html
     newContent
   end
 
