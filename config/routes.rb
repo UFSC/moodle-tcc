@@ -90,6 +90,7 @@ Rails.application.routes.draw do
         get 'generate', defaults: {format: 'pdf'}
         get 'edit_grade' => 'tccs#edit_grade', as: 'edit_grade', :defaults => {:format => 'js'}
         match 'evaluate' => 'tccs#evaluate', as: 'evaluate', via: [:post, :patch]
+        get 'open_pdf', defaults: {format: 'pdf'}
       end
     end
 

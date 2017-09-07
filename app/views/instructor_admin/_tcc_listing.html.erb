@@ -73,7 +73,7 @@
               <% end %>
             </li>
             <li>
-              <%= link_to generate_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
+              <%= link_to open_pdf_tcc_path(tcc.student.moodle_id), target: '_blank' do %>
                 <%= display_icon('print') %> Gerar documento do TCC
               <% end %>
             </li>

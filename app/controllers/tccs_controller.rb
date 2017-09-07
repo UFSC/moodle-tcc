@@ -39,21 +39,23 @@ class TccsController < ApplicationController
   end
 
   def generate
-    # @tcc_document = LatexTccDecorator.new(@tcc)
-    #
-    # # Resumo
-    # @abstract = LatexAbstractDecorator.new(@tcc.abstract)
-    #
-    # # Capítulos
-    # @chapters = LatexChapterDecorator.decorate_collection(@tcc.chapters)
-    #
-    # # Referencias
-    # @bibtex = generete_references(@tcc)
     render locals: { tcc_document: LatexTccDecorator.new(@tcc),
                      abstract: LatexAbstractDecorator.new(@tcc.abstract),
                      chapters: LatexChapterDecorator.decorate_collection(@tcc.chapters),
                      bibtex: generete_references(@tcc)
            }
+  end
+
+  def open_pdf
+    batch = BatchTccs.new( @tcc.tcc_definition.pdf_link_hours ) # verificar menor tempo possível
+    pdf_file = batch.open_last_pdf_tcc(@tcc)
+    if pdf_file.present?
+      @pdf = pdf_file.body
+      send_data pdf_file.body, disposition: :inline, filename: "generate.pdf", type: :pdf
+    else
+      redirect_to generate_tcc_path(moodle_user: params[:moodle_user])
+    end
+
   end
 
   def preview

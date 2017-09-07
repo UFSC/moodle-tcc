@@ -4,30 +4,30 @@
 
 function addMoodle_id(originString, moodle_id) {
 
-    var arr = (originString.trim() == "") ? [] : originString.split(";");
+    var arr = (originString.trim() == "") ? [] : originString.split(",");
     var pos = arr.indexOf(moodle_id);
     if (pos < 0) {
         arr.push(moodle_id);
     }
-    return (arr.length >= 2) ? arr.join(";") : arr.toString();
+    return (arr.length >= 2) ? arr.join(",") : arr.toString();
 }
 
 function removeMoodle_id(originString, moodle_id) {
     var aux_str = originString;
-    var arr = originString.split(";");
+    var arr = originString.split(",");
     var pos = arr.indexOf(moodle_id);
     if (pos >= 0) {
         aux_str = aux_str.replace(moodle_id, "");
-        if (aux_str.indexOf(";") == 0) {
+        if (aux_str.indexOf(",") == 0) {
             aux_str = aux_str.substr(1, aux_str.length-1)
-        } else if ((aux_str.lastIndexOf(";") == (aux_str.length-1))) {
+        } else if ((aux_str.lastIndexOf(",") == (aux_str.length-1))) {
             aux_str = aux_str.substr(0, aux_str.length-1)
         } else {
-            aux_str = aux_str.replace(";;", ";");
+            aux_str = aux_str.replace(",,", ",");
         }
-        arr = (aux_str.trim() == "") ? [] : aux_str.split(";");
+        arr = (aux_str.trim() == "") ? [] : aux_str.split(",");
     }
-    return (arr.length >= 2) ? arr.join(";") : arr.toString();
+    return (arr.length >= 2) ? arr.join(",") : arr.toString();
 }
 
 

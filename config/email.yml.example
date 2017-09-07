@@ -1,11 +1,16 @@
 development:
   delivery_method: :file
-
+# file path
+# ActionMailer::Base.file_settings = { :location => Rails.root.join('tmp/mail') }
+#
 test:
   delivery_method: :test
 
 production:
   delivery_method: :file
+# file path
+# ActionMailer::Base.file_settings = { :location => Rails.root.join('tmp/mail') }
+#
 #  delivery_method: :smtp
 #    smtp_settings:
 #      address:              smtp.example.com
