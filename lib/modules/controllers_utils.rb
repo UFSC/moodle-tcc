@@ -44,6 +44,19 @@ module ControllersUtils
       paragraph.replace  paragraph.to_s.gsub(/<font\s[^>]*>/, '').gsub('</font>', '')
     end
 
+    nokogiri_html.search('li').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<li\s[^>]*>/, '<li>')
+    end
+
+    nokogiri_html.search('div').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<div\s[^>]*>/, '').gsub('</div>', '')
+    end
+
+    nokogiri_html.search('span').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<span\s[^>]*>/, '').gsub('</span>', '')
+    end
+
+
     newContent = nokogiri_html.to_html
     newContent
   end
