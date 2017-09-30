@@ -41,8 +41,7 @@ CKEDITOR.editorConfig = function(config) {
     config.entities_greek = false;
     config.entities_latin = false;
     config.entities_additional = '';
-    // config.autoParagraph = true;
-    config.autoParagraph = false;
+
     // Foi deixado o padrão true, pois antes de salvar está limpando linhas em branco
     config.fillEmptyBlocks = true;
     // config.fillEmptyBlocks = false;
@@ -80,7 +79,13 @@ CKEDITOR.editorConfig = function(config) {
     config.language = 'pt-br';
 
     // linhas para teste
+
+    // CKEDITOR.ENTER_P (1) – new <p> paragraphs are created;
+    // CKEDITOR.ENTER_BR (2) – lines are broken with <br> elements;
+    // CKEDITOR.ENTER_DIV (3) – new <div> blocks are created.
+
     config.enterMode = CKEDITOR.ENTER_BR;
+    config.shiftEnterMode = CKEDITOR.ENTER_BR;
     config.autoParagraph = false;
     config.title = false;
 };

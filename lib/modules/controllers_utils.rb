@@ -2,7 +2,7 @@ module ControllersUtils
 
   def self.remove_blank_lines(content)
     ## O CKEditor está realizando a limpeza de linhas em branco
-    # config.autoParagraph = false; # no config.sj do editor
+    # config.autoParagraph = false; # no config.js do editor
 
     return nil if content.nil?
     newContent = content
@@ -43,7 +43,7 @@ module ControllersUtils
 
     # Teste
     nokogiri_html.search('p').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<p(\s+[^<>]*|)>/, '<p>')
+      paragraph.replace  paragraph.to_s.gsub(/<p(\s+[^<>]*|)>/, '').gsub('</p>', '<br>')
     end
 
     nokogiri_html.search('font').each do | paragraph |
@@ -63,6 +63,40 @@ module ControllersUtils
     end
 
     newContent = nokogiri_html.to_html
+
+    lines = newContent.split("\r\n")
+    countBlankLines = 0
+    newLines = lines.map { | x |
+
+      if /^\s*<br\s?\/?>\s*$/.match(x).blank?
+        # se não encontrar uma linha apenas com <br>
+        new_x = x
+        if /^.*<br\s?\/?>\s*$/.match(x).present?
+          # se encontrar uma linha com br no final
+
+          # if /^[^\t].*<br\s?\/?>\s*$/.match(x).present?
+          if /^[^\t].*/.match(x).present?
+            # se não estiver dentro de uma tabela ( [^\t] não pode iniciar com tab)
+
+            new_x = new_x + '<br>'
+          end
+
+           countBlankLines = 2
+        else
+          # se não encontrar uma linha com br no final
+          countBlankLines = 0
+        end
+        new_x unless new_x.empty?
+      else
+        # se encontrar uma linha apenas com <br>
+        countBlankLines += 1
+        x if countBlankLines <= 1
+      end
+
+    }.compact.join("\r\n\r\n")
+    newLines.chomp!
+
+    newContent = newLines
     newContent
   end
 
