@@ -64,7 +64,7 @@ namespace :deploy do
   end
 
   after :publishing, 'deploy:restart'
-  after :published, 'airbrake:deploy'
+  after :finished, 'airbrake:deploy'
 end
 
 # local test
@@ -84,3 +84,6 @@ end
 # after 'deploy:reverted', 'sidekiq:restart'
 # after 'deploy:published', 'sidekiq:restart'
 
+
+# require 'airbrake/capistrano3' # Capifile
+# after "deploy:finished", "airbrake:deploy"

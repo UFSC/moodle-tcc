@@ -19,6 +19,7 @@ module Errbit
     return if errbit_config.nil? # Não existe configurações definidas para este environment, então não vamos continuar
 
     Airbrake.configure do |config|
+      config.development_environments = ''
       errbit_config.each do |k, v|
         v.symbolize_keys! if v.respond_to?(:symbolize_keys!)
         config.send("#{k}=", v)

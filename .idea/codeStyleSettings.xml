@@ -36,10 +36,7 @@
           </indentOptions>
         </codeStyleSettings>
         <codeStyleSettings language="ruby">
-          <indentOptions>
-            <option name="INDENT_SIZE" value="4" />
-            <option name="TAB_SIZE" value="4" />
-          </indentOptions>
+          <option name="ALIGN_GROUP_FIELD_DECLARATIONS" value="true" />
         </codeStyleSettings>
       </value>
     </option>

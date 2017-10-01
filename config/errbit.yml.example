@@ -1,4 +1,10 @@
-production:
-  api_key: # registre a aplicação em errbit.ifes.br e obtenha a api_key
+common: &common
+  api_key: only_numbers # registre a aplicação em errbit.ifes.br e obtenha a api_key
   host: errbit.ifes.br
-  port: 80
+  port: 443
+
+development:
+  <<: *common
+
+production:
+  <<: *common

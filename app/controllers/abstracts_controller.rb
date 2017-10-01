@@ -1,6 +1,6 @@
 # encoding: utf-8
 class AbstractsController < ApplicationController
-  include ControllersUtils
+  include TccContent
 
   def edit
     set_tab :abstract
@@ -24,7 +24,7 @@ class AbstractsController < ApplicationController
 
     b_change_state = change_state
 
-    @abstract.content = ControllersUtils::remove_blank_lines(@abstract.content)
+    @abstract.content = TccContent::remove_blank_lines(@abstract.content)
 
     if @abstract.valid? && @abstract.save
       #@comment.save!
@@ -50,7 +50,7 @@ class AbstractsController < ApplicationController
 
     b_change_state = change_state
 
-    @abstract.content = ControllersUtils::remove_blank_lines(@abstract.content)
+    @abstract.content = TccContent::remove_blank_lines(@abstract.content)
 
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]

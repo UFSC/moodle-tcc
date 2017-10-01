@@ -1,6 +1,8 @@
 require 'spec_helper'
 
-describe ControllersUtils do
+describe TccContent do
+  include TccContent
+
   new_line               = ["\r\n", "\r\n"]
   emptyParagraph         = ["<p></p>", "<p></p>"]
   emptyParagraphCKEditor = ["<p style=\"text-align: justify;\"></p>", "<p></p>"]
@@ -50,27 +52,27 @@ describe ControllersUtils do
     end
 
     it 'only the content' do
-      content_converted = ControllersUtils::remove_blank_lines(@content)
+      content_converted = TccContent::remove_blank_lines(@content)
       expect(content_converted).to eq(@expected)
     end
 
     it 'the content and new line' do
-      content_converted = ControllersUtils::remove_blank_lines(@content+new_line[0])
+      content_converted = TccContent::remove_blank_lines(@content+new_line[0])
       expect(content_converted).to eq(@expected)
     end
 
     it 'new line and content' do
-      content_converted = ControllersUtils::remove_blank_lines(new_line[0]+@content)
+      content_converted = TccContent::remove_blank_lines(new_line[0]+@content)
       expect(content_converted).to eq(@expected)
     end
 
     it 'newline, content and new line' do
-      content_converted = ControllersUtils::remove_blank_lines(new_line[0]+@content+new_line[0])
+      content_converted = TccContent::remove_blank_lines(new_line[0]+@content+new_line[0])
       expect(content_converted).to eq(@expected)
     end
 
     it 'newline, content, new line, content and new line' do
-      content_converted = ControllersUtils::remove_blank_lines(new_line[0]+@content+new_line[0]+@content+new_line[0])
+      content_converted = TccContent::remove_blank_lines(new_line[0]+@content+new_line[0]+@content+new_line[0])
       expect(content_converted).to eq(@expected+new_line[0]+@expected)
     end
 
@@ -90,7 +92,7 @@ describe ControllersUtils do
       @content_result = content_result
     end
     it 'from one line content' do
-      content_converted = ControllersUtils::remove_blank_lines(@content)
+      content_converted = TccContent::remove_blank_lines(@content)
       expect(content_converted).to eq(@content_result)
     end
   end

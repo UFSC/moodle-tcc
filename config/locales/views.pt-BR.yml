@@ -26,6 +26,7 @@
     warn_message_sent_to_done_html: 'Todo o texto contido nesta tela não poderá mais ser alterado após sua aprovação. </br></br> Deseja continuar?'
     warn_message_without_citation_html: 'Não foi encontrada qualquer citação de referência bibliográfica no texto do capítulo atual. </br></br>'
     warn_message_necessary_references_html: 'Certifique-se de que realmente não são necessárias referências nesse capítulo. </br></br>'
+    error_tcc_content_cleaning_blank_lines: 'Problema ao salvar o texto no servidor'
 
     # Telas de conteúdo
     search_filter: "Filtro: '%{search}'"

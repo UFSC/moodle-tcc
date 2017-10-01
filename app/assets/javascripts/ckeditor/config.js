@@ -84,9 +84,9 @@ CKEDITOR.editorConfig = function(config) {
     // CKEDITOR.ENTER_BR (2) – lines are broken with <br> elements;
     // CKEDITOR.ENTER_DIV (3) – new <div> blocks are created.
 
-    config.enterMode = CKEDITOR.ENTER_BR;
+    config.enterMode = CKEDITOR.ENTER_P;
     config.shiftEnterMode = CKEDITOR.ENTER_BR;
-    config.autoParagraph = false;
+    config.autoParagraph = true;
     config.title = false;
 };
 
