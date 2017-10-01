@@ -41,11 +41,11 @@ describe 'CompoundName' do
     end
 
     context 'as a coordenador avea' do
-    it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_avea
+      it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_avea
     end
 
-    # context 'as a coordenador de curso' do
-    #   it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_curso
-    # end
+    ## context 'as a coordenador de curso' do
+    ##   it_behaves_like 'an authorized user who can edit compound names', Authentication::Roles.coordenador_curso
+    ## end
   end
 end

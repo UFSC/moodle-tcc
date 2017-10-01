@@ -159,6 +159,7 @@ group :test do
   gem 'poltergeist'
   gem 'json_spec'
   gem 'database_cleaner'
+  gem 'rspec-wait'
 end
 
 group :development, :test do
@@ -168,8 +169,8 @@ group :development, :test do
   gem 'simplecov', require: false
 
   # Application pre-loader:
-  gem 'spring'
-  gem 'spring-watcher-listen'
+  # gem 'spring'
+  # gem 'spring-watcher-listen'
 end
 
 group :doc do

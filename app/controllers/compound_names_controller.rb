@@ -1,5 +1,7 @@
 # encoding: utf-8
 class CompoundNamesController < ApplicationController
+  # protect_from_forgery :except => :create
+  # protect_from_forgery except: :create
 
   autocomplete :compound_name, :name, :full => true
 

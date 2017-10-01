@@ -96,6 +96,8 @@ RSpec.configure do |config|
 
   # Desligar as transações via RSpec, já que estamos usando elas via DatabaseCleaner
   config.use_transactional_fixtures = false
+
+  config.wait_timeout = 3 # seconds
 end
 
 Shoulda::Matchers.configure do |config|

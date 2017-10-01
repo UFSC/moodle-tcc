@@ -45,8 +45,8 @@ Rails.application.routes.draw do
 
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
-  get   'new_compound_name' => 'compound_names#new'
-  match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name'
+  get   'new_compound_name' => 'compound_names#new', defaults: { format: 'js' }, as: 'new_compound_name'
+  match '/compound_names/:id/edit' => 'compound_names#edit',via: [:get, :post, :patch], as: 'edit_compound_name', defaults: { format: 'js' }
   get   '/compound_names/:id' => 'compound_names#edit',as: 'show_compound_name'
   match '/compound_names/:id' => 'compound_names#update',via: [:put, :patch],as: 'update_compound_name'
   match '/compound_names/:id' => 'compound_names#destroy',via: [:delete],as: 'delete_compound_name'
