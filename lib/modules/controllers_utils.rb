@@ -13,23 +13,29 @@ module ControllersUtils
     space1 = 160.chr("UTF-8")
     newContent.gsub!(/#{space1}/) {" "}
 
-    lines = newContent.split("\r\n\r\n")
+    # lines = newContent.split("\r\n")
+    # newLines = lines.map { | x |
+    #   x unless x.empty?
+    # }.compact.join("\r\n")
+
+    lines = newContent.split("\r\n")
     newLines = lines.map { | x |
-      # se não encontrar parágrafo com "tag" e texto com espaços
-      if /^<p(.*)>(.*)<(.*)\/(.*)>(\s*)<\/p>$/.match(x).blank?
+      if (/^(<p(\s[^<]*|)>(\s*(<br(\s*\/?|)>|))*(\s)*<\/p\s*>|)(\s*(<br(\s*\/?|)>|))*(\s)*$/.match(x).blank? )
+        #
         # se não encontrar parágrafo e texto com espaços
-        if (/^<p(.*)>(\s*)<\/p>$/.match(x).blank? )
-          # então adiciona o texto em newLines
-          x unless x.empty?
-          # senão, se encontrar parágrafo e texto com espaços
-          # então abandona o texto e não adiciona em newLines
-        end
-      else
-        # se encontrar parágrafo com "imagem" e texto com espaços
         # então adiciona o texto em newLines
-        x unless x. empty?
+        x unless x.empty?
+        # senão, se encontrar parágrafo e texto com espaços
+        # então abandona o texto e não adiciona em newLines
+      # else
+        # "<p sdfsdfsdf   >  <br    /> </p   > <br   >  <br />"
+        # "<p sdfsdfsdf   >  <br    /> </p   > <br   >  "
+        # "<p></p>"
+        # "<br>"
+        # "<p></p><br>"
+        # "<p><br></p><br>"
       end
-    }.compact.join("\r\n\r\n")
+    }.compact.join("\r\n")
     newLines.chomp!
     newContent = newLines
 
@@ -37,25 +43,24 @@ module ControllersUtils
 
     # Teste
     nokogiri_html.search('p').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<p\s[^>]*>/, '<p>')
+      paragraph.replace  paragraph.to_s.gsub(/<p(\s+[^<>]*|)>/, '<p>')
     end
 
     nokogiri_html.search('font').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<font\s[^>]*>/, '').gsub('</font>', '')
+      paragraph.replace  paragraph.to_s.gsub(/<font(\s+[^<>]*|)>/, '').gsub('</font>', '')
     end
 
     nokogiri_html.search('li').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<li\s[^>]*>/, '<li>')
+      paragraph.replace  paragraph.to_s.gsub(/<li(\s+[^<>]*|)>/, '<li>')
     end
 
     nokogiri_html.search('div').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<div\s[^>]*>/, '').gsub('</div>', '')
+      paragraph.replace  paragraph.to_s.gsub(/<div(\s+[^<>]*|)>/, '').gsub('</div>', '')
     end
 
     nokogiri_html.search('span').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<span\s[^>]*>/, '').gsub('</span>', '')
+      paragraph.replace  paragraph.to_s.gsub(/<span(\s+[^<>]*|)>/, '').gsub('</span>', '')
     end
-
 
     newContent = nokogiri_html.to_html
     newContent
