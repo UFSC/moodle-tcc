@@ -22,7 +22,8 @@ class LatexTccDecorator < Draper::Decorator
   end
 
   def student_name
-    h.lesc student.name
+    student_without_enrollment = object.student.name.gsub(/\([^()\s]*\)$/, '').strip
+    lescDec student_without_enrollment
   end
 
   def title
