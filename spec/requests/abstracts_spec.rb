@@ -15,6 +15,7 @@ describe 'Abstract content' do
     let(:role_context) { 'student' }
     let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
     let(:person_session) {tcc.student}
+    it_behaves_like 'calling a CleaningBlankLinesError'
     it_behaves_like 'view, edit and change state (as Student)'
   end
 
@@ -22,6 +23,7 @@ describe 'Abstract content' do
     let(:role_context) { 'urn:moodle:role/orientador' }
     let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
     let(:person_session) {tcc.orientador}
+    it_behaves_like 'calling a CleaningBlankLinesError'
     it_behaves_like 'view, edit and change state (as viewAll)'
   end
 
@@ -29,6 +31,7 @@ describe 'Abstract content' do
     let(:role_context) { 'administrator' }
     let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
     let(:person_session) { lti_user.person }
+    it_behaves_like 'calling a CleaningBlankLinesError'
     it_behaves_like 'view, edit and change state (as viewAll)'
   end
 
@@ -43,6 +46,7 @@ describe 'Abstract content' do
     let(:role_context) { 'urn:moodle:role/coordcurso' }
     let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
     let(:person_session) { lti_user.person }
+    it_behaves_like 'calling a CleaningBlankLinesError'
     it_behaves_like 'view, edit and change state (as viewAll)'
   end
 

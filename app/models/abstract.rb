@@ -6,6 +6,8 @@ class Abstract < ActiveRecord::Base
 
   attr_accessible :content, :keywords, :comment
 
+  before_validation :clean_blank_lines
+
   def empty?
     self.content.blank? && self.keywords.blank?
   end
@@ -35,5 +37,11 @@ class Abstract < ActiveRecord::Base
 
   def has_pending_versioning?
     return (self.pending_versioning_count > 0)
+  end
+
+  def clean_blank_lines
+    new_content = TccContent::removeBlankLinesFromContent( self.content_was, self.content)
+    self.content = new_content
+    true
   end
 end

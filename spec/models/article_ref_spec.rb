@@ -142,11 +142,8 @@ describe ArticleRef do
         @tcc = Fabricate(:tcc_with_all)
         @tcc.references.create!(element: reference)
         reference.reload
-        @tcc.abstract.content = "<p>#{Faker::Lorem.paragraph(1)}
-                                    #{ReferencesUtils::build_tag_citacao(reference.decorate,
-                                                        'ci',
-                                                        reference.decorate.indirect_citation)}
-                                    #{Faker::Lorem.paragraph(1)}</p>"
+        @tcc.abstract.content = "<p>#{Faker::Lorem.paragraph(1)}#{ReferencesUtils::build_tag_citacao(reference.decorate,'ci',
+                                        reference.decorate.indirect_citation)}#{Faker::Lorem.paragraph(1)}</p>"
         @tcc.abstract.save!
         @tcc.save!
 

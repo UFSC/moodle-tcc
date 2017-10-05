@@ -16,7 +16,6 @@ describe 'Chapter content' do
     let(:moodle_user_view) { tcc.student.moodle_id }
     let(:document_test) { tcc.chapters.first }
 
-
     before :each do
       lti_user.person = person_session
       page.set_rack_session(fake_lti_session_by_person(role_context, person_session, tcc))
@@ -83,6 +82,7 @@ describe 'Chapter content' do
       let(:role_context) { 'student' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.student }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as Student)'
       it_behaves_like 'content import from moodle'
     end
@@ -91,6 +91,7 @@ describe 'Chapter content' do
       let(:role_context) { 'urn:moodle:role/orientador' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.orientador }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -99,6 +100,7 @@ describe 'Chapter content' do
       let(:role_context) { 'administrator' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -107,6 +109,7 @@ describe 'Chapter content' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -115,6 +118,7 @@ describe 'Chapter content' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -138,6 +142,7 @@ describe 'Chapter content' do
       let(:role_context) { 'student' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.student }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as Student)'
       it_behaves_like 'content import from moodle'
     end
@@ -146,6 +151,7 @@ describe 'Chapter content' do
       let(:role_context) { 'urn:moodle:role/orientador' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { tcc.orientador }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -154,6 +160,7 @@ describe 'Chapter content' do
       let(:role_context) { 'administrator' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -162,6 +169,7 @@ describe 'Chapter content' do
       let(:role_context) { 'urn:moodle:role/coordavea' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end
@@ -170,6 +178,7 @@ describe 'Chapter content' do
       let(:role_context) { 'urn:moodle:role/coordcurso' }
       let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
       let(:person_session) { lti_user.person }
+      it_behaves_like 'calling a CleaningBlankLinesError'
       it_behaves_like 'view, edit and change state (as viewAll)'
       it_behaves_like 'content import from moodle'
     end

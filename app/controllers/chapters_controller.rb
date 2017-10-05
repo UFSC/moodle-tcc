@@ -1,5 +1,4 @@
 class ChaptersController < ApplicationController
-  include TccContent
 
   def edit
     set_tab ('chapter'+params[:position]).to_sym
@@ -19,54 +18,15 @@ class ChaptersController < ApplicationController
   end
 
   def save
-    count_typed, count_new = 0 # duplicate, independent variable
-
     @chapter = @tcc.chapters.find_by(position: params[:position])
     authorize @chapter
 
-    chapter_server = @chapter.dup
-
     @chapter.attributes = params[:chapter]
-
-    chapter_typed = @chapter.dup
 
     @comment = @chapter.comment || @chapter.build_comment
     @comment.attributes = params[:comment] if params[:comment]
 
     b_change_state = change_state
-
-    new_content = TccContent::remove_blank_lines( @chapter.content)
-
-    if chapter_server.content.eql?(new_content)
-      # o texto não foi alterado
-      # content_changed = false # ToDo: variável para ser usada quando for gravar o histórico
-    else
-      # o texto foi alterado
-      # content_changed = true
-
-      array_typed = Rails::Html::FullSanitizer.new.sanitize(chapter_typed.content).
-          split("\r\n").join(' ').split(' ').select(&:presence)
-      count_typed = array_typed.count
-      if array_typed.present? &&
-          array_typed.last.present? &&
-          array_typed.last.eql?(Rails.application.secrets.error_key)
-        # chave para gerar o erro
-        # força gerar o erro para o servidor
-        count_new = -1
-      else
-        count_new = Rails::Html::FullSanitizer.new.sanitize(new_content).
-            split("\r\n").join(' ').split(' ').select(&:presence).count
-      end
-    end
-
-    if !(count_typed.eql?(count_new))
-      # se o texto digitado for diferente do texto com as linhas em branco removidas,
-      #   então gera o erro
-      msg_error = t('error_tcc_content_cleaning_blank_lines')
-      flash.now[:error] = msg_error if b_change_state
-      raise TccContent::CleaningBlankLinesError.new, msg_error
-    end
-    @chapter.content = new_content
 
     if @chapter.valid? && @chapter.save
       @comment.save! if params[:comment]

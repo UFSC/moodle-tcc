@@ -78,6 +78,44 @@ module TccContent
     newContent
   end
 
+  def TccContent.changedContent?(content_server, content_typed)
 
+    new_content = TccContent::remove_blank_lines( content_typed)
+
+    content_server.eql?(new_content)
+
+  end
+
+  def TccContent.removeBlankLinesFromContent(content_server, content_typed)
+    count_typed = 0
+    count_new = 0
+
+    new_content = TccContent::remove_blank_lines( content_typed )
+
+    if !content_server.eql?(new_content)
+      array_typed = Rails::Html::FullSanitizer.new.sanitize(content_typed).
+          split("\r\n").join(' ').split(' ').select(&:presence)
+      count_typed = array_typed.count
+      if array_typed.present? &&
+          array_typed.last.present? &&
+          array_typed.last.eql?(Rails.application.secrets.error_key)
+        # chave para gerar o erro
+        # força gerar o erro para o servidor
+        count_new = -1
+      else
+        count_new = Rails::Html::FullSanitizer.new.sanitize(new_content).
+            split("\r\n").join(' ').split(' ').select(&:presence).count
+      end
+    end
+
+    if !(count_typed.eql?(count_new))
+      # se o texto digitado for diferente do texto com as linhas em branco removidas,
+      #   então gera o erro
+      msg_error = I18n.t('error_tcc_content_cleaning_blank_lines')
+      raise TccContent::CleaningBlankLinesError.new, msg_error
+    end
+
+    new_content
+  end
 
 end

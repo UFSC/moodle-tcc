@@ -1,6 +1,5 @@
 # encoding: utf-8
 class AbstractsController < ApplicationController
-  include TccContent
 
   def edit
     set_tab :abstract
@@ -14,7 +13,6 @@ class AbstractsController < ApplicationController
 
   def create
     @abstract = @tcc.build_abstract(params[:abstract])
-
     authorize @abstract
 
     @comment = @tcc.abstract.build_comment()
@@ -23,8 +21,6 @@ class AbstractsController < ApplicationController
     b_save_title = save_title
 
     b_change_state = change_state
-
-    @abstract.content = TccContent::remove_blank_lines(@abstract.content)
 
     if @abstract.valid? && @abstract.save
       #@comment.save!
@@ -38,7 +34,6 @@ class AbstractsController < ApplicationController
 
   def update
     @abstract = @tcc.abstract
-
     authorize @abstract
 
     @abstract.attributes = params[:abstract] if params[:abstract]
@@ -49,8 +44,6 @@ class AbstractsController < ApplicationController
     b_save_title = save_title
 
     b_change_state = change_state
-
-    @abstract.content = TccContent::remove_blank_lines(@abstract.content)
 
     if @abstract.valid? && @abstract.save
       @comment.save! if params[:comment]

@@ -8,6 +8,8 @@ class Chapter < ActiveRecord::Base
   # Mass-Assignment
   attr_accessible :position, :content, :chapter_definition, :tcc, :comment
 
+  before_validation :clean_blank_lines
+
   # Hubs por tipo (polimórfico)
   scope :reflection_empty, -> { where(content: '') }
 
@@ -42,4 +44,9 @@ class Chapter < ActiveRecord::Base
     return (self.pending_versioning_count > 0)
   end
 
+  def clean_blank_lines
+    new_content = TccContent::removeBlankLinesFromContent( self.content_was, self.content)
+    self.content = new_content
+    true
+  end
 end

@@ -26,6 +26,32 @@ shared_context 'view abstract fields' do |state|
   end
 end
 
+shared_context 'calling a CleaningBlankLinesError' do
+  # required
+  # document_test
+  # Ex.: let(:document_test) { tcc.chapters.first }
+  # Ex.: let(:document_test) { tcc.abstract }
+
+  let(:tcc) {@tcc_1}
+  let(:moodle_user_view) { nil }
+  let(:role_context) { 'student' }
+  let(:lti_user) { Authentication::User.new fake_lti_tool_provider(role_context) }
+  let(:person_session) {tcc.student}
+
+  before :each do
+    @tcc_1 = Fabricate(:tcc_with_all)
+    page.set_rack_session(fake_lti_session_by_person(role_context, person_session, @tcc_1))
+  end
+
+  it 'raises CleaningBlankLinesError' do
+    error_key = Rails.application.secrets.error_key
+    expect(error_key.present?).to be true
+
+    document_test.content = "#{document_test.content}\r\n"+error_key
+    expect { document_test.save! }.to raise_error(TccContent::CleaningBlankLinesError)
+  end
+end
+
 shared_context 'view, edit and change state (as Student)' do
 
   let(:tcc) {@tcc_1}
