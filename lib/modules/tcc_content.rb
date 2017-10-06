@@ -9,13 +9,13 @@ module TccContent
     # containing the keys you want to modify.
     def to_airbrake
       { params:
-          { http_code: @http_code,
-            test: '123'
-            # user: ,
-            # session:
-          },
+                 { http_code: @http_code,
+                   test: '123'
+                   # user: ,
+                   # session:
+                 },
         session: {
-          content: '321'
+            content: '321'
         }
       }
     end
@@ -36,6 +36,11 @@ module TccContent
     return nil if content.nil?
     newContent = content
     ## tira linhas em branco
+
+    # LF: Line Feed, U+000A (UTF-8 in hex: 0A)
+    # CR: Carriage Return, U+000D (UTF-8 in hex: 0D)
+    # CR+LF: CR (U+000D) followed by LF (U+000A) (UTF-8 in hex: 0D0A)
+
     # U+00A0	/	194 160	/ NO-BREAK SPACE
     space2 = 194.chr("UTF-8")+160.chr("UTF-8")
     newContent.gsub!(/#{space2}/) {" "}
@@ -66,12 +71,18 @@ module TccContent
 
     newContent = nokogiri_html.to_html
     lines = newContent.split("\r\n")
-    newLines = lines.map { | x |
-      if (/^(\t)*(<p(\s[^<]*|)>(\s*(<br(\s*\/?|)>|))*(\s)*<\/p\s*>|)(\s*(<br(\s*\/?|)>|))*(\s)*$/.match(x).blank? )
-        # se não encontrar uma linha apenas com <br>
-        x unless x.empty?
-      end
-    }.compact.join("\r\n")
+    newLines = lines.map { | main_line |
+      secondary_lines = main_line.split("\n")
+      newSecondaryLines = secondary_lines.map { | sec_line |
+        if (/^(\t)*(<p(\s[^<]*|)>(\s*(<br(\s*\/?|)>|))*(\s)*<\/p\s*>|)(\s*(<br(\s*\/?|)>|))*(\s)*$/.match(sec_line).blank? )
+          # se não encontrar uma linha apenas com <br>
+          sec_line unless sec_line.empty?
+        end
+      }.select(&:presence).join(" ")
+      newSecondaryLines.chomp!
+      main_line = newSecondaryLines
+      main_line
+    }.select(&:presence).join("\r\n")
     newLines.chomp!
 
     newContent = newLines
