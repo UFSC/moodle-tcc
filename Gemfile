@@ -92,6 +92,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.1' # inteface nova
 # gem 'ckeditor', github: 'galetahub/ckeditor', :branch => 'master'
     # :commit_id => 'd0194ccd3f181be603f419c233ca....'
 gem 'rabl'
+gem 'active_hash', github: 'zilkey/active_hash'
 
 # image on database
 # gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'

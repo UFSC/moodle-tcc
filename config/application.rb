@@ -72,6 +72,10 @@ module SistemaTcc
     config.before_initialize do |app|
       Sprockets.register_mime_type 'text/markdown', extensions: ['.md']
     end
+
+    config.after_initialize do
+      Rails.application.config.version=Version.read_version_hash(7)
+    end
   end
 end
 

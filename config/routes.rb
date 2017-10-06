@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 
   resources :tcc_definitions, only: [:index, :edit, :update]
 
+  get   'about' => 'abouts#index'
   get   'compound_names' => 'compound_names#index'
   match 'compound_names' => 'compound_names#create',via: [:post]
   get   'new_compound_name' => 'compound_names#new', defaults: { format: 'js' }, as: 'new_compound_name'

@@ -63,6 +63,13 @@ GIT
     state_machine (1.2.0)
 
 GIT
+  remote: git://github.com/zilkey/active_hash.git
+  revision: 1d8502f4b3ffdf1953005ed86abbc79f8286e75c
+  specs:
+    active_hash (1.5.2)
+      activesupport (>= 2.2.2)
+
+GIT
   remote: https://github.com/instructure/ims-lti
   revision: e48967ed288513d4de7c96e0e4d1a5f72badb10f
   specs:
@@ -733,6 +740,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_hash!
   activerecord-session_store!
   addressable
   airbrake (~> 4.3.8)
@@ -830,4 +838,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.13.6
+   1.15.4

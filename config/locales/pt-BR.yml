@@ -71,6 +71,17 @@ pt-BR:
         student: 'Estudante'
         orientador: 'Orientador'
         defense_date: 'Data da defesa'
+      about:
+        name: 'Nome'
+        version: 'Versão (reduzida)'
+        version_full: 'Versão (completa)'
+        branch: 'Nome do branch em uso'
+        swift_auth_url: 'URL de autenticação do swift'
+        docker_image: 'Nome da imagem de docker para o Latex'
+        moodle_url: 'URL do Moodle'
+        moodle_token: 'Token do Moodle'
+        consumer_key: 'Chave de conexão pelo Moodle (LTI)'
+        consumer_secret: 'Token de conexão pelo Moodle (LTI)'
       abstract:
         content_pt: 'Resumo'
         content_en: 'Abstract'
@@ -200,6 +211,7 @@ pt-BR:
         enabled_sync:         'Habilita Sincronização com Moodle'
         advisor_nomenclature: 'Nomenclatura do orientador do trabalho'
     models:
+      about:                'Sobre a ferramenta'
       general_ref:          'Referência Geral'
       book_ref:             'Referência de Livros'
       book_cap_ref:         'Referência de Capítulo de Livro'

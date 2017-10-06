@@ -1,0 +1,9 @@
+<% if policy(Tcc).show_config? %>
+  <%= render 'instructor_admin/navbar' %>
+<% end %>
+
+<% labelModel = t('activerecord.models.about') %>
+
+<h3><%= labelModel %></h3>
+
+<%= render :partial => 'form' %>

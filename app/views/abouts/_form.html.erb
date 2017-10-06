@@ -1,0 +1,56 @@
+<%= semantic_form_for @about do |f| %>
+  <div id="data_tab_content">
+    <%= f.inputs do %>
+      <div class="col-sm-6">
+        <%= f.input :version, label: t('activerecord.attributes.about.version'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :version_full, label: t('activerecord.attributes.about.version_full'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+
+      <div class="col-sm-12">
+        <%= f.input :branch, label: t('activerecord.attributes.about.branch'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+
+      <div class="col-sm-6">
+        <%= f.input :swift_auth_url, label: t('activerecord.attributes.about.swift_auth_url'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :docker_image, label: t('activerecord.attributes.about.docker_image'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+
+      <div class="col-sm-6">
+        <%= f.input :moodle_url, label: t('activerecord.attributes.about.moodle_url'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :moodle_token, label: t('activerecord.attributes.about.moodle_token'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+
+      <div class="col-sm-6">
+        <%= f.input :consumer_key, label: t('activerecord.attributes.about.consumer_key'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :consumer_secret, label: t('activerecord.attributes.about.consumer_secret'),
+                    :hint => false, input_html: { disabled: true } %>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-8 col-md-6 col-lg-6">
+        <%= f.actions do %>
+          <%= f.action :cancel, :label => 'Voltar', button_html: {class: 'btn btn-primary loading'}, url: instructor_admin_path do %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

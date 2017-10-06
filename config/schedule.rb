@@ -31,7 +31,6 @@ if @stage == 'production'
   every '15 * * * *' do
     rake 'tcc:sync'
   end
-
 end
 
 # CRONTAB do staging
@@ -43,5 +42,4 @@ if @stage == 'staging'
   every 1.hour do
     rake 'clear_expired_sessions'
   end
-
 end
