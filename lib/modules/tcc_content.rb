@@ -1,3 +1,5 @@
+require 'timeout'
+
 module TccContent
 
   class CleaningBlankLinesError < RuntimeError;
@@ -80,8 +82,31 @@ module TccContent
     newLines = lines.map { | main_line |
       secondary_lines = main_line.split("\n")
       newSecondaryLines = secondary_lines.map { | sec_line |
-        if (/^(\t)*(<p(\s[^<]*|)>(\s*(<br(\s*\/?|)>|))*(\s)*<\/p\s*>|)(\s*(<br(\s*\/?|)>|))*(\s)*$/.match(sec_line).blank? )
-          # se não encontrar uma linha apenas com <br>
+
+        begin
+          bol = '^'
+          eol = '$'
+          # tabs = '\t*'
+          spaces = '\s*'
+          br = '<br\s*\/?>'
+          br_optional = spaces+'('+br+'|)'
+          br_optional_multi = '('+br_optional+')*'
+
+          begin_paragraph = '<p\s*[^<]*>'
+          end_paragraph = '<\/p\s*>'
+          paragraph = begin_paragraph+br_optional_multi+end_paragraph
+          paragraph_optional = spaces+'('+paragraph+'|)'
+          paragraph_optional_multi = '('+paragraph_optional+')*'
+
+          regexpr = Regexp.new(bol+br_optional_multi+paragraph_optional_multi+br_optional_multi+spaces+eol)
+
+          status = Timeout::timeout(3) {
+            if (regexpr.match(sec_line).blank? )
+              # se não encontrar uma linha vazia
+              sec_line unless sec_line.empty?
+            end
+          }
+        rescue Timeout::Error
           sec_line unless sec_line.empty?
         end
       }.select(&:presence).join(" ")
@@ -109,10 +134,17 @@ module TccContent
 
     new_content = TccContent::remove_blank_lines( content_typed )
 
-    if !content_server.eql?(new_content)
-      array_typed = Rails::Html::FullSanitizer.new.sanitize(content_typed).
+    if ((content_server.blank?) || !content_server.eql?(new_content))
+      # Se não houver conteúdo do servidor (import do Moodle)
+      # ou
+      # Conteúdo do servidor diferente
+
+      # então conta palavras para verificar se não perdeu texto na limpeza de linhas em branco
+      if content_typed.present?
+        array_typed = Rails::Html::FullSanitizer.new.sanitize(content_typed).
           split("\r\n").join(' ').split(' ').select(&:presence)
-      count_typed = array_typed.count
+        count_typed = array_typed.count
+      end
       if array_typed.present? &&
           array_typed.last.present? &&
           array_typed.last.eql?(Rails.application.secrets.error_key)

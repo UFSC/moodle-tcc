@@ -40,8 +40,10 @@ class Abstract < ActiveRecord::Base
   end
 
   def clean_blank_lines
-    new_content = TccContent::removeBlankLinesFromContent( self.content_was, self.content)
-    self.content = new_content
+    if self.content.present?
+      new_content = TccContent::removeBlankLinesFromContent( self.content_was, self.content)
+      self.content = new_content
+    end
     true
   end
 end
