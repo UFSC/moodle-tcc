@@ -47,7 +47,13 @@ describe TccContent do
       ["Inicio do texto\r<p>linha3</p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
       "Inicio do texto\r<p>linha3</p>"],
       ["Inicio do texto\n<p>linha3</p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-      "Inicio do texto <p>linha3</p>"]
+      "Inicio do texto <p>linha3</p>"],
+      ["Inicio do texto\r<p>linha3<citacao></citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
+      "Inicio do texto\r<p>linha3</p>"],
+      ["Inicio do texto\r<p>linha3<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\"></citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
+       "Inicio do texto\r<p>linha3</p>"],
+      ["Inicio do texto\r<p>linha3<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
+       "Inicio do texto\r<p>linha3<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"]
   ]
 
   shared_examples_for 'remove blank lines with content' do

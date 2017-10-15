@@ -53,6 +53,12 @@ module TccContent
       paragraph.replace  paragraph.to_s.gsub(/<p(\s+[^<>]*|)>/, '<p>')
     end
 
+    # <citacao citacao-text="(SANTOS, 2017)" citacao_type="cd" class="citacao-class" contenteditable="false" id="8999" pagina="undefined" ref-type="internet" reference_id="39643" title="(SANTOS, 2017)"></citacao>
+    # <citacao></citacao>
+    nokogiri_html.search('p').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<citacao\s?[^>]*>(\s)*<\/citacao>/, '')
+    end
+
     nokogiri_html.search('font').each do | paragraph |
       paragraph.replace  paragraph.to_s.gsub(/<font(\s+[^<>]*|)>/, '').gsub('</font>', '')
     end
