@@ -4,6 +4,19 @@ module TccDocument
     # @param [String] content
     # @return [Nokogiri::XML::Document] documento XML do nokogiri
     def execute(content)
+      # Início da limpeza do que não for html
+      space2 = 194.chr("UTF-8")+160.chr("UTF-8")
+      space1 = 160.chr("UTF-8")
+
+      new_content_typed = content
+      new_content_typed.gsub!(/#{space2}/) {" "}
+      new_content_typed.gsub!(/#{space1}/) {" "}
+
+      new_content_typed = Nokogiri::HTML.fragment(new_content_typed)
+
+      content = new_content_typed.to_html
+      # Fim da limpeza do que não for html
+
       content = decode_entities(content)
       content = simplify_tables(content)
 

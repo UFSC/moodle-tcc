@@ -45,8 +45,9 @@ module TccContent
 
     # U+00A0	/	194 160	/ NO-BREAK SPACE
     space2 = 194.chr("UTF-8")+160.chr("UTF-8")
-    newContent.gsub!(/#{space2}/) {" "}
     space1 = 160.chr("UTF-8")
+
+    newContent.gsub!(/#{space2}/) {" "}
     newContent.gsub!(/#{space1}/) {" "}
 
     nokogiri_html = Nokogiri::HTML.fragment(newContent)
@@ -65,8 +66,16 @@ module TccContent
       paragraph.replace  paragraph.to_s.gsub(/<font(\s+[^<>]*|)>/, '').gsub('</font>', '')
     end
 
+    nokogiri_html.search('a').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<a(\s+[^<>]*|)>/, '').gsub('</a>', '')
+    end
+
     nokogiri_html.search('li').each do | paragraph |
       paragraph.replace  paragraph.to_s.gsub(/<li(\s+[^<>]*|)>/, '<li>')
+    end
+
+    nokogiri_html.search('br').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<br(\s+[^<>]*|)>/, '<br>')
     end
 
     nokogiri_html.search('div').each do | paragraph |
