@@ -152,8 +152,10 @@ module TccContent
         # força gerar o erro para o servidor
         count_new = -1
       else
-        count_new = Rails::Html::FullSanitizer.new.sanitize(new_content).
-            split("\r\n").join(' ').split(' ').select(&:presence).count
+        if new_content.present?
+          count_new = Rails::Html::FullSanitizer.new.sanitize(new_content).
+              split("\r\n").join(' ').split(' ').select(&:presence).count
+        end
       end
     end
 

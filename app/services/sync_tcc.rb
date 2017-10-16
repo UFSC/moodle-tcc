@@ -63,14 +63,16 @@ class SyncTcc
   def synchronize_tcc(student)
     tcc = Tcc.find_or_initialize_by(student: student)
 
-    tcc.tcc_definition = @tcc_definition
+    tcc.tcc_definition = @tcc_definition unless tcc.tcc_definition.eql?(@tcc_definition)
     tutor = get_tutor(student.moodle_id)
-    tcc.tutor = tutor
+    tcc.tutor = tutor unless tcc.tutor.eql?(tutor)
 
     orientador = get_orientador(student.moodle_id)
-    tcc.orientador = orientador
+    tcc.orientador = orientador unless tcc.orientador.eql?(orientador)
 
-    tcc.save! if tcc.changed? || !tcc.persisted?
+    if tcc.changed? || !tcc.persisted?
+      tcc.save!
+    end
   end
 
   def get_students
