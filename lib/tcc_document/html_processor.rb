@@ -88,6 +88,23 @@ module TccDocument
         table.replace table.to_s.gsub('<ul>', '').gsub('</ul>', '').gsub('<li>', '').gsub('</li>', '')
       end
 
+      nokogiri_html.search('table').each do |table|
+        begin
+          Timeout::timeout(3) {
+            if (/<table\s*[^<>]*>/.match(table.to_s).to_s.include?('summary="landscape') ||
+                /<table\s*[^<>]*>/.match(table.to_s).to_s.include?('summary="paisagem')
+            )
+              table.replace table.to_s.gsub(/<table\s*[^<>]*>/, "<landscape>#{/<table\s*[^<>]*>/.match(table.to_s).to_s}").gsub('</table>', '</table></landscape>')
+
+            end
+          }
+        rescue Timeout::Error
+          #
+          puts("Timeout::Error => nokogiri_html.search('table') -> summary=\"paisagem")
+        end
+
+      end
+
       nokogiri_html
     end
 

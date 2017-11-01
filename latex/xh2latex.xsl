@@ -332,6 +332,14 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
   </xsl:text>
 </xsl:template>
 
+<!-- landscape -->
+<xsl:template match="xhtml:landscape">
+  <xsl:text>\begin{landscape}</xsl:text>
+  <xsl:apply-templates />
+  <xsl:text>\end{landscape}</xsl:text>
+
+</xsl:template>
+
 <!-- tables -->
 <xsl:template match="xhtml:table">
   <xsl:text>\begin{table}</xsl:text>
