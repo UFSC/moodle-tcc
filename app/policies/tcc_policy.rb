@@ -46,7 +46,9 @@ class TccPolicy < ApplicationPolicy
   # Verifica se pode alterar a nota na tela de edição de notas
   def edit_assign_grade?
     if user.orientador?
-      can_edit = record.orientador.id == user.person.id
+      can_edit = (record.orientador.present? &&
+          user.person.present? &&
+          record.orientador.id == user.person.id)
     else
       can_edit = edit_defense_date?
     end
