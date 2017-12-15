@@ -3,11 +3,17 @@ class TccPolicy < ApplicationPolicy
     if user.view_all?
       return true
     elsif user.orientador?
-      return record.orientador.id == user.person.id
+      return (record.orientador.present? &&
+          user.person.present? &&
+          record.orientador.id == user.person.id)
     elsif user.tutor?
-      return record.tutor.id == user.person.id
+      return (record.tutor.present? &&
+          user.person.present? &&
+          record.tutor.id == user.person.id)
     elsif user.student?
-      return record.student.id == user.person.id
+      return (record.student.present? &&
+          user.person.present? &&
+          record.student.id == user.person.id)
     end
 
     false
@@ -71,7 +77,7 @@ class TccPolicy < ApplicationPolicy
 
   # Verifica se pode editar a data de defesa
   def edit_defense_date?
-    user.coordenador_avea? || user.admin?
+    user.view_all?
   end
 
   # Apresenta as tabs somente para o estudante, pois para os outros o acesso aos itens do TCC será pela lista
