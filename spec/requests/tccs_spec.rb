@@ -779,9 +779,9 @@ describe 'Tccs' do
 
       it_behaves_like 'for view_all users cannot edit in draft and done'
 
-      it_behaves_like 'does not allow editing tcc user data information'
+      it_behaves_like 'admin/AVEA user'
 
-      it_behaves_like 'cannot giving grade'
+      it_behaves_like 'can giving grade'
 
     end
   end

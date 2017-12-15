@@ -193,8 +193,8 @@ describe TccPolicy do
         expect(TccPolicy).not_to permit(coordenador_tutoria)
       end
 
-      it 'coordenador de curso não pode editar a data de defesa' do
-        expect(TccPolicy).not_to permit(coordenador_curso)
+      it 'coordenador de curso pode editar a data de defesa' do
+        expect(TccPolicy).to permit(coordenador_curso)
       end
 
       it 'orientador não pode editar a data de defesa' do
