@@ -8,9 +8,9 @@
     <dd>
       <span class="address"><%= lesc r.local %></span>
         <span class="author">
-          <%= r.first_author %>
-          <%= ' and ' << r.second_author if  !r.second_author.blank? %>
-          <%= ' and ' << r.third_author if !r.third_author.blank? %>
+          <%= r.bibtex_translate(r.first_author) %>
+          <%= ' and ' << r.bibtex_translate(r.second_author) if  !r.second_author.blank? %>
+          <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
           <%= ' and others ' if r.et_all %>
         </span>
       <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
@@ -27,9 +27,9 @@
     <dd>
       <span class="address"><%= r.local %></span>
       <span class="author">
-        <%= r.first_part_author %>
-        <%= ' and ' << r.second_part_author if !r.second_part_author.blank? %>
-        <%= ' and ' << r.third_part_author if !r.third_part_author.blank? %>
+        <%= r.bibtex_translate(r.first_part_author) %>
+        <%= ' and ' << r.bibtex_translate(r.second_part_author) if !r.second_part_author.blank? %>
+        <%= ' and ' << r.bibtex_translate(r.third_part_author) if !r.third_part_author.blank? %>
         <%= ' and others ' if r.et_al_part %>
       </span>
       <span class="booktitle"><%= r.book_title %></span>
@@ -47,9 +47,9 @@
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
         <span class="author">
-          <%= r.first_author %>
-          <%= ' and ' << r.second_author if  !r.second_author.blank? %>
-          <%= ' and ' << r.third_author if !r.third_author.blank? %>
+          <%= r.bibtex_translate(r.first_author) %>
+          <%= ' and ' << r.bibtex_translate(r.second_author) if  !r.second_author.blank? %>
+          <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
           <%= ' and others ' if r.et_all %>
         </span>
       <span class="journal"><%= r.journal_name %></span>
@@ -67,9 +67,9 @@
     <dt class="misc">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="author">
-      <%= r.first_author %>
-      <%= ' and ' << r.second_author if  !r.second_author.blank? %>
-      <%= ' and ' << r.third_author if !r.third_author.blank? %>
+      <%= r.bibtex_translate(r.first_author) %>
+      <%= ' and ' << r.bibtex_translate(r.second_author) if  !r.second_author.blank? %>
+      <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
       <%= ' and others ' if r.et_al %>
       </span>
       <span class="title"><%= r.title %></span>
@@ -101,9 +101,9 @@
     <dd>
       <span class="address"><%= r.local %></span>
       <span class="author">
-      <%= r.first_author %>
-              <%= ' and ' << r.second_author if  !r.second_author.blank? %>
-              <%= ' and ' << r.third_author if !r.third_author.blank? %>
+      <%= r.bibtex_translate(r.first_author) %>
+              <%= ' and ' << r.bibtex_translate(r.second_author) if  !r.second_author.blank? %>
+              <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
               <%= ' and others ' if r.et_all %>
       </span>
       <span class="organization"><%= r.institution %></span>

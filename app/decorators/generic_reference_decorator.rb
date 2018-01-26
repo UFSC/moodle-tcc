@@ -32,6 +32,48 @@ class GenericReferenceDecorator < Draper::Decorator
     "#{citation_author(first_author)} et al. (#{year})"
   end
 
+  def bibtex_translate(text)
+    text = text.gsub(/[á]/, "{\\ 'a}")
+    text = text.gsub(/[é]/, "{\\ 'e}")
+    text = text.gsub(/[í]/, "{\\ 'i}")
+    text = text.gsub(/[ó]/, "{\\ 'o}")
+    text = text.gsub(/[ú]/, "{\\ 'u}")
+
+    text = text.gsub(/[à]/, "{\\ `a}")
+    text = text.gsub(/[è]/, "{\\ `e}")
+    text = text.gsub(/[ì]/, "{\\ `i}")
+    text = text.gsub(/[ò]/, "{\\ `o}")
+    text = text.gsub(/[ù]/, "{\\ `u}")
+
+    text = text.gsub(/[ã]/, "{\\ ~a}")
+    text = text.gsub(/[ẽ]/, "{\\ ~e}")
+    text = text.gsub(/[ĩ]/, "{\\ ~i}")
+    text = text.gsub(/[õ]/, "{\\ ~o}")
+    text = text.gsub(/[ũ]/, "{\\ ~u}")
+
+    text = text.gsub(/[â]/, "{\\ ^a}")
+    text = text.gsub(/[ê]/, "{\\ ^e}")
+    text = text.gsub(/[î]/, "{\\ ^i}")
+    text = text.gsub(/[ô]/, "{\\ ^o}")
+    text = text.gsub(/[û]/, "{\\ ^u}")
+
+    text = text.gsub(/[ä]/, "{\\\"a}")
+    text = text.gsub(/[ë]/, "{\\\"e}")
+    text = text.gsub(/[ï]/, "{\\\"i}")
+    text = text.gsub(/[ö]/, "{\\\"o}")
+    text = text.gsub(/[ü]/, "{\\\"u}")
+
+    text = text.gsub(/[ç]/, "{\\ c c}")
+    text = text.gsub(" c c", "c c")
+
+    text = text.gsub(" '", "'")
+    text = text.gsub(" ^", "^")
+    text = text.gsub(" ~", "~")
+    text = text.gsub(" `", "`")
+
+    text
+  end
+
   def indirect_citation
     if object.respond_to? :et_all
       return indirect_et_al if et_all
