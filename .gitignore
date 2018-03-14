@@ -46,6 +46,7 @@ config/errbit.yml
 config/email.yml
 config/sidekiq.yml
 config/secrets.yml
+config/*.local.yml
 config/*.staging.yml
 config/*.production.yml
 config/*.26

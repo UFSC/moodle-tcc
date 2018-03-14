@@ -1,12 +1,18 @@
 # encoding: utf-8
 
 # Descobre o diretório do texlive no linux e mac
+# Diretório usado pelo instalador manual
 texlive_bin_dir = Dir.glob('/usr/local/texlive*/20*/bin/x86_64-*').first
 if texlive_bin_dir.nil?
-  system("#{Rails.root}/latex/latex-docker-installed.sh")
-  if $? != 0
-    $stderr.puts 'Texlive não está instalado corretamente, nem como docker (docker pull blang/latex)'
-    exit 1
+  # Diretório usado pelo instalador do ubuntu
+  texlive_bin_dir = Dir.glob('/usr/bin/latex').first
+  if texlive_bin_dir.nil?
+    # testa se o docker do latex está instalado
+    system("#{Rails.root}/latex/latex-docker-installed.sh")
+    if $? != 0
+      $stderr.puts 'Texlive não está instalado corretamente, nem como docker (docker pull blang/latex)'
+      exit 1
+    end
   end
 end
 
