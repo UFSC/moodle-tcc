@@ -86,12 +86,14 @@ module TccContent
       paragraph.replace  paragraph.to_s.gsub(/<span(\s+[^<>]*|)>/, '').gsub('</span>', '')
     end
 
+    # remove blank lines
     newContent = nokogiri_html.to_html
     lines = newContent.split("\r\n")
     newLines = lines.map { | main_line |
       secondary_lines = main_line.split("\n")
       newSecondaryLines = secondary_lines.map { | sec_line |
 
+        # remove blank lines
         begin
           bol = '^'
           eol = '$'
@@ -113,6 +115,117 @@ module TccContent
             if (regexpr.match(sec_line).blank? )
               # se não encontrar uma linha vazia
               sec_line unless sec_line.empty?
+            end
+          }
+        rescue Timeout::Error
+          sec_line unless sec_line.empty?
+        end
+      }.select(&:presence).join(" ")
+      newSecondaryLines.chomp!
+      main_line = newSecondaryLines
+      main_line
+    }.select(&:presence).join("\r\n")
+    newLines.chomp!
+
+    # !! ordem importa !!
+    #
+    # (.*)<p\s*[^<]*>(.*)<\/p\s*>
+    # 			<p>5</p>
+    # => nothing
+    #
+    # (.*)<p\s*[^<]*>(.*)<br\s*\/?>
+    # 			<p>1<br>
+    # => [1]+<p>+[2]+</p>
+    #
+    # (.*)<br\s*\/?>
+    # 			4<br>
+    # => <p>+[1]+</p>
+    #
+    # (.*)<\/p\s*>
+    # 			5</p>
+    # => <p>+[1]+</p>
+    #
+    lines = newLines.split("\r\n")
+    newLines = lines.map { | main_line |
+      secondary_lines = main_line.split("\n")
+      newSecondaryLines = secondary_lines.map { | sec_line |
+
+        # change <br> by <p></p>
+        begin
+          any_single_character = '(.*)'
+          begin_paragraph = '<p\s*[^<]*>'
+          end_paragraph = '<\/p\s*>'
+          br = '<br\s*\/?>'
+
+          # (.*)<p\s*[^<]*>(.*)<\/p\s*>
+          # 			<p>5</p>
+          # => nothing
+          test_complete_paragraph = any_single_character+
+              begin_paragraph+
+              any_single_character+
+              end_paragraph
+
+          # (.*)<p\s*[^<]*>(.*)<br\s*\/?>
+          # 			<p>1<br>
+          # => [1]+<p>+[2]+</p>
+          test_begin_paragraph_end_br = any_single_character+
+              begin_paragraph+
+              any_single_character+
+              br
+
+          # (.*)<br\s*\/?>
+          # 			4<br>
+          # => <p>+[1]+</p>
+          test_end_br = any_single_character+
+              br
+
+          # (.*)<\/p\s*>
+          # 			5</p>
+          # => <p>+[1]+</p>
+          test_end_paragraph = any_single_character+
+              end_paragraph
+
+          regexpr_complete_paragraph     = Regexp.new(test_complete_paragraph)
+          regexpr_begin_paragraph_end_br = Regexp.new(test_begin_paragraph_end_br)
+          regexpr_end_br                 = Regexp.new(test_end_br )
+          regexpr_end_paragraph          = Regexp.new(test_end_paragraph)
+
+          status = Timeout::timeout(3) {
+            if (regexpr_complete_paragraph.match(sec_line).present? )
+              # (.*)<p\s*[^<]*>(.*)<\/p\s*>
+              # 			<p>5</p>
+              # => nothing
+              sec_line
+            elsif (regexpr_begin_paragraph_end_br.match(sec_line).present? )
+              # (.*)<p\s*[^<]*>(.*)<br\s*\/?>
+              # 			<p>1<br>
+              # => [1]+<p>+[2]+</p>
+              sec_line = regexpr_begin_paragraph_end_br.match(sec_line)[1]+
+                  '<p>'+
+                  regexpr_begin_paragraph_end_br.match(sec_line)[2]+
+                  '</p>'
+              sec_line
+            elsif (regexpr_end_br.match(sec_line).present?)
+
+              # (.*)<br\s*\/?>
+              # 			4<br>
+              # => <p>+[1]+</p>
+              sec_line = '<p>'+
+                  regexpr_end_br.match(sec_line)[1]+
+                  '</p>'
+              sec_line
+            elsif (regexpr_end_paragraph.match(sec_line).present?)
+
+              # (.*)<\/p\s*>
+              # 			5</p>
+              # => <p>+[1]+</p>
+
+              sec_line = '<p>'+
+                  regexpr_end_paragraph.match(sec_line)[1]+
+                  '</p>'
+              sec_line
+            else
+              sec_line
             end
           }
         rescue Timeout::Error
