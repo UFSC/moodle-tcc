@@ -120,7 +120,7 @@ module TccContent
         rescue Timeout::Error
           sec_line unless sec_line.empty?
         end
-      }.select(&:presence).join(" ")
+      }.select(&:presence).join("\n")
       newSecondaryLines.chomp!
       main_line = newSecondaryLines
       main_line
@@ -156,6 +156,7 @@ module TccContent
           begin_paragraph = '<p\s*[^<]*>'
           end_paragraph = '<\/p\s*>'
           br = '<br\s*\/?>'
+          not_tag = '[^<.*>]*'
 
           # (.*)<p\s*[^<]*>(.*)<\/p\s*>
           # 			<p>5</p>
@@ -185,10 +186,14 @@ module TccContent
           test_end_paragraph = any_single_character+
               end_paragraph
 
+          # test_html_tag = '(.*)<([\/a-z]+)>(.*)'
+          test_html_tag = '<(.*)>'
+
           regexpr_complete_paragraph     = Regexp.new(test_complete_paragraph)
           regexpr_begin_paragraph_end_br = Regexp.new(test_begin_paragraph_end_br)
           regexpr_end_br                 = Regexp.new(test_end_br )
           regexpr_end_paragraph          = Regexp.new(test_end_paragraph)
+          regexpr_html_tag               = Regexp.new(test_html_tag)
 
           status = Timeout::timeout(3) {
             if (regexpr_complete_paragraph.match(sec_line).present? )
@@ -222,6 +227,16 @@ module TccContent
 
               sec_line = '<p>'+
                   regexpr_end_paragraph.match(sec_line)[1]+
+                  '</p>'
+              sec_line
+            elsif (regexpr_html_tag.match(sec_line).blank?)
+
+              # <(.*)>
+              # \t\ttexto
+              # => <p>\t\ttexto</p>
+
+             sec_line = '<p>'+
+                  sec_line+
                   '</p>'
               sec_line
             else

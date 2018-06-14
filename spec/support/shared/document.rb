@@ -64,14 +64,14 @@ shared_context 'view, edit and change state (as Student)' do
 
   context 'in Draft state' do
 
-    it_behaves_like 'edit and save abstract fields in Draft with success', ''   , ''   , ''
-    it_behaves_like 'edit and save abstract fields in Draft with success', 'qqq', ''   , ''
-    it_behaves_like 'edit and save abstract fields in Draft with success', ''   , 'eee', ''
-    it_behaves_like 'edit and save abstract fields in Draft with success', 'rrr', 'ttt', ''
-    it_behaves_like 'edit and save abstract fields in Draft with success', ''   , ''   , 'yyy'
-    it_behaves_like 'edit and save abstract fields in Draft with success', 'uuu', ''   , 'iii'
-    it_behaves_like 'edit and save abstract fields in Draft with success', ''   , 'ooo', 'ppp'
-    it_behaves_like 'edit and save abstract fields in Draft with success', 'aaa', 'sss', 'ddd'
+    it_behaves_like 'edit and save abstract fields in Draft with success', ''           , ''          , ''
+    it_behaves_like 'edit and save abstract fields in Draft with success', '<p>qqq</p>' , ''          , ''
+    it_behaves_like 'edit and save abstract fields in Draft with success', ''           , '<p>eee</p>', ''
+    it_behaves_like 'edit and save abstract fields in Draft with success', '<p>rrr</p>' , '<p>ttt</p>', ''
+    it_behaves_like 'edit and save abstract fields in Draft with success', ''           , ''          , '<p>yyy</p>'
+    it_behaves_like 'edit and save abstract fields in Draft with success', '<p>uuu</p>' , ''          , '<p>iii</p>'
+    it_behaves_like 'edit and save abstract fields in Draft with success', ''           , '<p>ooo</p>', '<p>ppp</p>'
+    it_behaves_like 'edit and save abstract fields in Draft with success', '<p>aaa</p>' , '<p>sss</p>', '<p>ddd</p>'
 
     context 'send do review with sucess' do
       it 'empty fields' do
@@ -155,32 +155,32 @@ shared_context 'view, edit and change state (as viewAll)' do
       document_test.to_review
     end
 
-    it_behaves_like 'edit and save abstract fields in Review with success', ''   , ''   , ''
-    it_behaves_like 'edit and save abstract fields in Review with success', 'qqq', ''   , ''
-    it_behaves_like 'edit and save abstract fields in Review with success', ''   , 'eee', ''
-    it_behaves_like 'edit and save abstract fields in Review with success', 'rrr', 'ttt', ''
-    it_behaves_like 'edit and save abstract fields in Review with success', ''   , ''   , 'yyy'
-    it_behaves_like 'edit and save abstract fields in Review with success', 'uuu', ''   , 'iii'
-    it_behaves_like 'edit and save abstract fields in Review with success', ''   , 'ooo', 'ppp'
-    it_behaves_like 'edit and save abstract fields in Review with success', 'aaa', 'sss', 'ddd'
+    it_behaves_like 'edit and save abstract fields in Review with success', ''          , ''          , ''
+    it_behaves_like 'edit and save abstract fields in Review with success', '<p>qqq</p>', ''          , ''
+    it_behaves_like 'edit and save abstract fields in Review with success', ''          , '<p>eee</p>', ''
+    it_behaves_like 'edit and save abstract fields in Review with success', '<p>rrr</p>', '<p>ttt</p>', ''
+    it_behaves_like 'edit and save abstract fields in Review with success', ''          , ''          , '<p>yyy</p>'
+    it_behaves_like 'edit and save abstract fields in Review with success', '<p>uuu</p>', ''          , '<p>iii</p>'
+    it_behaves_like 'edit and save abstract fields in Review with success', ''          , '<p>ooo</p>', '<p>ppp</p>'
+    it_behaves_like 'edit and save abstract fields in Review with success', '<p>aaa</p>', '<p>sss</p>', '<p>ddd</p>'
 
-    it_behaves_like 'edit fields in Review and send back to student with success', ''   , ''   , ''
-    it_behaves_like 'edit fields in Review and send back to student with success', 'qqq', ''   , ''
-    it_behaves_like 'edit fields in Review and send back to student with success', ''   , 'eee', ''
-    it_behaves_like 'edit fields in Review and send back to student with success', 'rrr', 'ttt', ''
-    it_behaves_like 'edit fields in Review and send back to student with success', ''   , ''   , 'yyy'
-    it_behaves_like 'edit fields in Review and send back to student with success', 'uuu', ''   , 'iii'
-    it_behaves_like 'edit fields in Review and send back to student with success', ''   , 'ooo', 'ppp'
-    it_behaves_like 'edit fields in Review and send back to student with success', 'aaa', 'sss', 'ddd'
+    it_behaves_like 'edit fields in Review and send back to student with success', ''           , ''          , ''
+    it_behaves_like 'edit fields in Review and send back to student with success', '<p>qqq</p>' , ''          , ''
+    it_behaves_like 'edit fields in Review and send back to student with success', ''           , '<p>eee</p>', ''
+    it_behaves_like 'edit fields in Review and send back to student with success', '<p>rrr</p>' , '<p>ttt</p>', ''
+    it_behaves_like 'edit fields in Review and send back to student with success', ''           , ''          , '<p>yyy</p>'
+    it_behaves_like 'edit fields in Review and send back to student with success', '<p>uuu</p>' , ''          , '<p>iii</p>'
+    it_behaves_like 'edit fields in Review and send back to student with success', ''           , '<p>ooo</p>', '<p>ppp</p>'
+    it_behaves_like 'edit fields in Review and send back to student with success', '<p>aaa</p>' , '<p>sss</p>', '<p>ddd</p>'
 
-    it_behaves_like 'edit fields in Review and evaluate with success', ''   , ''   , ''
-    it_behaves_like 'edit fields in Review and evaluate with success', 'qqq', ''   , ''
-    it_behaves_like 'edit fields in Review and evaluate with success', ''   , 'eee', ''
-    it_behaves_like 'edit fields in Review and evaluate with success', 'rrr', 'ttt', ''
-    it_behaves_like 'edit fields in Review and evaluate with success', ''   , ''   , 'yyy'
-    it_behaves_like 'edit fields in Review and evaluate with success', 'uuu', ''   , 'iii'
-    it_behaves_like 'edit fields in Review and evaluate with success', ''   , 'ooo', 'ppp'
-    it_behaves_like 'edit fields in Review and evaluate with success', 'aaa', 'sss', 'ddd'
+    it_behaves_like 'edit fields in Review and evaluate with success', ''           , ''          , ''
+    it_behaves_like 'edit fields in Review and evaluate with success', '<p>qqq</p>' , ''          , ''
+    it_behaves_like 'edit fields in Review and evaluate with success', ''           , '<p>eee</p>', ''
+    it_behaves_like 'edit fields in Review and evaluate with success', '<p>rrr</p>' , '<p>ttt</p>', ''
+    it_behaves_like 'edit fields in Review and evaluate with success', ''           , ''          , '<p>yyy</p>'
+    it_behaves_like 'edit fields in Review and evaluate with success', '<p>uuu</p>' , ''          , '<p>iii</p>'
+    it_behaves_like 'edit fields in Review and evaluate with success', ''           , '<p>ooo</p>', '<p>ppp</p>'
+    it_behaves_like 'edit fields in Review and evaluate with success', '<p>aaa</p>' , '<p>sss</p>', '<p>ddd</p>'
 
   end
 end
