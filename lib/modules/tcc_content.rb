@@ -189,11 +189,15 @@ module TccContent
           # test_html_tag = '(.*)<([\/a-z]+)>(.*)'
           test_html_tag = '<(.*)>'
 
+          # test_html_tag_especial = '<(\/?citacao|\/?ins|\/?del)>'
+          test_html_tag_especial = '<(\/?citacao|\/?ins|\/?del)>'
+
           regexpr_complete_paragraph     = Regexp.new(test_complete_paragraph)
           regexpr_begin_paragraph_end_br = Regexp.new(test_begin_paragraph_end_br)
           regexpr_end_br                 = Regexp.new(test_end_br )
           regexpr_end_paragraph          = Regexp.new(test_end_paragraph)
           regexpr_html_tag               = Regexp.new(test_html_tag)
+          regexpr_html_tag_especial      = Regexp.new(test_html_tag_especial)
 
           status = Timeout::timeout(3) {
             if (regexpr_complete_paragraph.match(sec_line).present? )
@@ -236,6 +240,16 @@ module TccContent
               # => <p>\t\ttexto</p>
 
              sec_line = '<p>'+
+                  sec_line+
+                  '</p>'
+              sec_line
+            elsif (regexpr_html_tag_especial.match(sec_line).present?)
+
+              # <(\/?citacao|\/?ins|\/?del)>
+              # \t\ttexto<citacao ...>...</citacao>
+              # => <p>\t\ttexto<citacao ...>...</citacao></p>
+
+              sec_line = '<p>'+
                   sec_line+
                   '</p>'
               sec_line

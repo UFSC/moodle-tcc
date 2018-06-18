@@ -53,7 +53,10 @@ describe TccContent do
       ["Inicio do texto11\r<p>linha11<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\"></citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
        "Inicio do texto11\r<p>linha11</p>"],
       ["Inicio do texto12\r<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "Inicio do texto12\r<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"]
+       "Inicio do texto12\r<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
+      ["linha13<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
+       "<p>linha13<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
+
   ]
 
   shared_examples_for 'remove blank lines with content' do
