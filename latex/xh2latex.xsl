@@ -401,6 +401,14 @@ http://www.csclub.uwaterloo.ca/u/sjbmann/tutorial.html
 
   <xsl:text>\\&#10;\bottomrule</xsl:text>
   <xsl:text>&#10;\end{tabulary}&#10;</xsl:text>
+
+  <xsl:choose>
+    <xsl:when test="xhtml:font">
+      <xsl:text>\begin{center}</xsl:text>
+      <xsl:value-of select="xhtml:font"/>
+      <xsl:text>\end{center}</xsl:text>
+    </xsl:when>
+  </xsl:choose>
   <xsl:text>\end{table}</xsl:text>
 
 </xsl:template>
