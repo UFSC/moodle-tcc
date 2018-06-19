@@ -74,9 +74,9 @@ module TccDocument
       end
 
       # Remove parágrafos dentro das tabelas, se tiver parágrafo não renderiza corretamente
-      nokogiri_html.search('table').each do |table|
-        table.replace table.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '')
-      end
+      # nokogiri_html.search('table').each do |table|
+      #   table.replace table.to_s.gsub(/<p\b[^>]*>/, '').gsub('</p>', '<br>')
+      # end
 
       # Remove espaço extra no inicio e final da celula da tabela
       nokogiri_html.search('td').each do |cell|
@@ -96,11 +96,9 @@ module TccDocument
                 /<table\s*[^<>]*>/.match(table.to_s).to_s.include?('summary="paisagem')
             )
               table.replace table.to_s.gsub(/<table\s*[^<>]*>/, "<landscape>#{/<table\s*[^<>]*>/.match(table.to_s).to_s}").gsub('</table>', '</table></landscape>')
-
             end
           }
         rescue Timeout::Error
-          #
           puts("Timeout::Error => nokogiri_html.search('table') -> summary=\"paisagem")
         end
 
@@ -119,8 +117,7 @@ module TccDocument
             end
           }
         rescue Timeout::Error
-          #
-          puts("Timeout::Error => nokogiri_html.search('table') -> summary=\"paisagem")
+          puts("Timeout::Error => nokogiri_html.search('table') -> summary=\"...Fonte: ...")
         end
       end
 
