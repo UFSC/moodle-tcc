@@ -75,7 +75,9 @@ module TccContent
     end
 
     nokogiri_html.search('br').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<br(\s+[^<>]*|)>/, '<br>')
+      # paragraph.replace  paragraph.to_s.gsub(/<br(\s+[^<>]*|)>/, '<br>')
+      paragraph.replace  paragraph.to_s.gsub(/<br(\s+[^<>]*|)>/, "\r\n")
+
     end
 
     nokogiri_html.search('div').each do | paragraph |
@@ -283,6 +285,9 @@ module TccContent
     count_typed = 0
     count_new = 0
 
+    #troca <br /> por \r\n
+    content_typed = content_typed.gsub(/<br(\s+[^<>]*|)>/, "\r\n")
+
     new_content = TccContent::remove_blank_lines( content_typed )
 
     if ((content_server.blank?) || !content_server.eql?(new_content))
@@ -293,7 +298,7 @@ module TccContent
       # então conta palavras para verificar se não perdeu texto na limpeza de linhas em branco
       if content_typed.present?
         array_typed = Rails::Html::FullSanitizer.new.sanitize(content_typed).
-          split("\r\n").join(' ').split(' ').select(&:presence)
+          split("\r\n").join(' ').split("<br>").join(' ').split(' ').select(&:presence)
         count_typed = array_typed.count
       end
       if array_typed.present? &&

@@ -79,8 +79,7 @@ Rails.application.routes.draw do
   #mount Sidekiq::Web, at: '/sidekiq'
 
   constraints lambda {|request| AuthConstraint.admin?(request) } do
-    mount Sidekiq::Web, at: '/admin/sidekiq', as: :sidekiq_web
-    # mount Sidekiq::Web => '/admin/sidekiq'
+    mount Sidekiq::Web, at: '/sidekiq', as: :sidekiq_web
   end
 
   # TCC routes
