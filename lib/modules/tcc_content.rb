@@ -31,6 +31,16 @@ module TccContent
   #   super
   # end
 
+  def TccContent.mount_paragraph(content)
+    result_content = '';
+    if (content.present?)
+      result_content = '<p>'+
+                        content+
+                        '</p>'
+    end
+    result_content
+  end
+
   def TccContent.remove_blank_lines(content)
     ## O CKEditor está realizando a limpeza de linhas em branco
     # config.autoParagraph = false; # no config.js do editor
@@ -135,8 +145,9 @@ module TccContent
     # 			<p>5</p>
     # => nothing
     #
-    # (.*)<p\s*[^<]*>(.*)<br\s*\/?>
-    # 			<p>1<br>
+    # (.*)<p\s*[^<]*>(.*)(<br\s*\/?>)?
+    #  	  <p>1<br>
+    #  aaa<p>bbb
     # => [1]+<p>+[2]+</p>
     #
     # (.*)<br\s*\/?>
@@ -168,13 +179,13 @@ module TccContent
               any_single_character+
               end_paragraph
 
-          # (.*)<p\s*[^<]*>(.*)<br\s*\/?>
+          # (.*)<p\s*[^<]*>(.*)(<br\s*\/?>)?
           # 			<p>1<br>
           # => [1]+<p>+[2]+</p>
           test_begin_paragraph_end_br = any_single_character+
               begin_paragraph+
               any_single_character+
-              br
+              "("+br+")?"
 
           # (.*)<br\s*\/?>
           # 			4<br>
@@ -212,48 +223,51 @@ module TccContent
               # 			<p>1<br>
               # => [1]+<p>+[2]+</p>
               sec_line = regexpr_begin_paragraph_end_br.match(sec_line)[1]+
-                  '<p>'+
-                  regexpr_begin_paragraph_end_br.match(sec_line)[2]+
-                  '</p>'
+                  TccContent::mount_paragraph(regexpr_begin_paragraph_end_br.match(sec_line)[2])
+              # sec_line = regexpr_begin_paragraph_end_br.match(sec_line)[1]+
+              #     '<p>'+
+              #     regexpr_begin_paragraph_end_br.match(sec_line)[2]+
+              #     '</p>'
               sec_line
             elsif (regexpr_end_br.match(sec_line).present?)
 
               # (.*)<br\s*\/?>
               # 			4<br>
               # => <p>+[1]+</p>
-              sec_line = '<p>'+
-                  regexpr_end_br.match(sec_line)[1]+
-                  '</p>'
+              sec_line = TccContent::mount_paragraph(regexpr_end_br.match(sec_line)[1])
+              # sec_line = '<p>'+
+              #     regexpr_end_br.match(sec_line)[1]+
+              #     '</p>'
               sec_line
             elsif (regexpr_end_paragraph.match(sec_line).present?)
 
               # (.*)<\/p\s*>
               # 			5</p>
               # => <p>+[1]+</p>
-
-              sec_line = '<p>'+
-                  regexpr_end_paragraph.match(sec_line)[1]+
-                  '</p>'
+              sec_line = TccContent::mount_paragraph(regexpr_end_paragraph.match(sec_line)[1]);
+              # sec_line = '<p>'+
+              #     regexpr_end_paragraph.match(sec_line)[1]+
+              #     '</p>'
               sec_line
             elsif (regexpr_html_tag.match(sec_line).blank?)
 
               # <(.*)>
               # \t\ttexto
               # => <p>\t\ttexto</p>
-
-             sec_line = '<p>'+
-                  sec_line+
-                  '</p>'
+              sec_line = TccContent::mount_paragraph(sec_line)
+              # sec_line = '<p>'+
+              #     sec_line+
+              #     '</p>'
               sec_line
             elsif (regexpr_html_tag_especial.match(sec_line).present?)
 
               # <(\/?citacao|\/?ins|\/?del)>
               # \t\ttexto<citacao ...>...</citacao>
               # => <p>\t\ttexto<citacao ...>...</citacao></p>
-
-              sec_line = '<p>'+
-                  sec_line+
-                  '</p>'
+              sec_line = TccContent::mount_paragraph(sec_line)
+              # sec_line = '<p>'+
+              #     sec_line+
+              #     '</p>'
               sec_line
             else
               sec_line
@@ -298,7 +312,7 @@ module TccContent
       # então conta palavras para verificar se não perdeu texto na limpeza de linhas em branco
       if content_typed.present?
         array_typed = Rails::Html::FullSanitizer.new.sanitize(content_typed).
-          split("\r\n").join(' ').split("<br>").join(' ').split(' ').select(&:presence)
+          split("\r\n").join(' ').split(' ').select(&:presence)
         count_typed = array_typed.count
       end
       if array_typed.present? &&

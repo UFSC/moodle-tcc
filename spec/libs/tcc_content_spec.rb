@@ -33,7 +33,7 @@ describe TccContent do
       ["<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>teste</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>",
        "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>teste</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>"],
       ["Inicio do texto1<br>\r\nlinha1<br>\r\n<p>linha2</p>\r\n<p>Ultima linha qwert<br></p>",
-       "<p>Inicio do texto1</p>\r\n<p>linha1</p>\r\n<p>linha2</p>\r\n<p>Ultima linha qwert<br></p>"],
+       "<p>Inicio do texto1</p>\r\n<p>linha1</p>\r\n<p>linha2</p>\r\n<p>Ultima linha qwert</p>"],
       ["Inicio do texto3<br>\r\n<br>\r\n<p>linha3</p>\r\n<p><br></p>",
        "<p>Inicio do texto3</p>\r\n<p>linha3</p>"],
       ["Inicio do texto4<br>\r\n<br>\r\n<p>linha4</p>\r\n<p><br></p><br>",
@@ -56,6 +56,9 @@ describe TccContent do
        "Inicio do texto12\r<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
       ["linha13<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
        "<p>linha13<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
+      ["Inicio do texto14<br>\r\n<br>\r\n<p>linha14-1<br>linha14-2</p>\r\n<p><br></p>",
+       "<p>Inicio do texto14</p>\r\n<p>linha14-1</p>\r\n<p>linha14-2</p>"],
+
 
   ]
 
