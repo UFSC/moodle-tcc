@@ -30,8 +30,8 @@ describe TccContent do
        "<p>a</p>"],
       ["<p style=\"text-align: justify;\">a <citacao citacao-text=\"(SINTES, 2001)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"2981\" pagina=\"\" ref-type=\"livros\" reference_id=\"10910\" title=\"(SINTES, 2001)\">(SINTES, 2001)</citacao></p>",
        "<p>a <citacao citacao-text=\"(SINTES, 2001)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"2981\" pagina=\"\" ref-type=\"livros\" reference_id=\"10910\" title=\"(SINTES, 2001)\">(SINTES, 2001)</citacao></p>"],
-      ["<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>teste</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>",
-       "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t<p>qwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>teste</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>"],
+      ["<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n<p>\t\t\tqwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n<p>\t\t\tqwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n<p>\t\t\tqwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>teste</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>",
+       "<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n<p>\t\t\tqwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n<p>\t\t\tqwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>qwe</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n<p>\t\t\tqwe</p>\r\n\t\t\t</td>\r\n\t\t\t<td>teste</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>"],
       ["Inicio do texto1<br>\r\nlinha1<br>\r\n<p>linha2</p>\r\n<p>Ultima linha qwert<br></p>",
        "<p>Inicio do texto1</p>\r\n<p>linha1</p>\r\n<p>linha2</p>\r\n<p>Ultima linha qwert</p>"],
       ["Inicio do texto3<br>\r\n<br>\r\n<p>linha3</p>\r\n<p><br></p>",
@@ -43,22 +43,27 @@ describe TccContent do
       ["Inicio do texto6<br>\r\n<br>\r\n<p>linha6</p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
        "<p>Inicio do texto6</p>\r\n<p>linha6</p>"],
       ["Inicio do texto7\n<p>linha7</p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "<p>Inicio do texto7</p> <p>linha7</p>"],
+       "<p>Inicio do texto7</p>\r\n<p>linha7</p>"],
       ["   Inicio do texto8\n<p>linha8</p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "<p>   Inicio do texto8</p> <p>linha8</p>"],
+       "<p>   Inicio do texto8</p>\r\n<p>linha8</p>"],
       [" \t  Inicio do texto9\n<p>linha9</p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "<p> \t  Inicio do texto9</p> <p>linha9</p>"],
+       "<p> \t  Inicio do texto9</p>\r\n<p>linha9</p>"],
       ["Inicio do texto10\r<p>linha10<citacao></citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "Inicio do texto10\r<p>linha10</p>"],
+       "<p>Inicio do texto10</p>\r\n<p>linha10</p>"],
       ["Inicio do texto11\r<p>linha11<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\"></citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "Inicio do texto11\r<p>linha11</p>"],
+       "<p>Inicio do texto11</p>\r\n<p>linha11</p>"],
       ["Inicio do texto12\r<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
-       "Inicio do texto12\r<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
+       "<p>Inicio do texto12</p>\r\n<p>linha12<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
       ["linha13<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao>\r\n<p qwer> <br /> <br> </p> <br> <br /> ",
        "<p>linha13<citacao citacao-text=\"(SANTOS, 2017)\" citacao_type=\"cd\" class=\"citacao-class\" contenteditable=\"false\" id=\"8999\" pagina=\"undefined\" ref-type=\"internet\" reference_id=\"39643\" title=\"(SANTOS, 2017)\">(SANTOS, 2017)</citacao></p>"],
       ["Inicio do texto14<br>\r\n<br>\r\n<p>linha14-1<br>linha14-2</p>\r\n<p><br></p>",
        "<p>Inicio do texto14</p>\r\n<p>linha14-1</p>\r\n<p>linha14-2</p>"],
-
+      ["linha15. </span></p>linha15.1\r\nlinha15.2\r\nlinha15.3",
+       "<p>linha15. </p>\r\n<p>linha15.1</p>\r\n<p>linha15.2</p>\r\n<p>linha15.3</p>"],
+      ["linha16.</p><p>linha16.1</p>linha16.2\r\nlinha16.3",
+       "<p>linha16.</p>\r\n<p>linha16.1</p>\r\n<p>linha16.2</p>\r\n<p>linha16.3</p>"],
+      ["linha17.</p><p>linha17.1</p>linha17.2<p>linha17.3",
+       "<p>linha17.</p>\r\n<p>linha17.1</p>\r\n<p>linha17.2</p>\r\n<p>linha17.3</p>"],
 
   ]
 
@@ -190,7 +195,5 @@ describe TccContent do
       let(:reserved_world) { emptyParagraphCKEditor }
     end
   end
-
-
 
 end

@@ -60,6 +60,9 @@ module TccContent
     newContent.gsub!(/#{space2}/) {" "}
     newContent.gsub!(/#{space1}/) {" "}
 
+    newContent.gsub!(/(<\/p>)/, "</p>\r\n")
+    newContent.gsub!(/<p(\s+[^<>]*|)>/, "\r\n<p>")
+
     nokogiri_html = Nokogiri::HTML.fragment(newContent)
 
     nokogiri_html.search('p').each do | paragraph |
