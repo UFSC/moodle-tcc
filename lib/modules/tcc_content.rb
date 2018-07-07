@@ -34,6 +34,7 @@ module TccContent
   def TccContent.mount_paragraph(content)
     result_content = '';
     if (content.present?)
+      content.gsub!(/^[\ ]*|[\ ]*$/, "")
       result_content = '<p>'+
                         content+
                         '</p>'
@@ -59,6 +60,13 @@ module TccContent
 
     newContent.gsub!(/#{space2}/) {" "}
     newContent.gsub!(/#{space1}/) {" "}
+
+    # newContent.gsub!(/^(.*\.)(\s*)$/, "\r\n<p>")
+    newContent.gsub!(/(\.\s*((\n|\r)|$))/, ".<||>")
+    newContent.gsub!(/\r\n/, " ")
+    newContent.gsub!(/\r/, "")
+    newContent.gsub!(/\n/, "")
+    newContent.gsub!(/\<\|\|\>/, "</p>\r\n")
 
     newContent.gsub!(/(<\/p>)/, "</p>\r\n")
     newContent.gsub!(/<p(\s+[^<>]*|)>/, "\r\n<p>")
@@ -161,6 +169,7 @@ module TccContent
     # 			5</p>
     # => <p>+[1]+</p>
     #
+
     lines = newLines.split("\r\n")
     newLines = lines.map { | main_line |
       secondary_lines = main_line.split("\n")
@@ -257,7 +266,9 @@ module TccContent
               # <(.*)>
               # \t\ttexto
               # => <p>\t\ttexto</p>
+
               sec_line = TccContent::mount_paragraph(sec_line)
+
               # sec_line = '<p>'+
               #     sec_line+
               #     '</p>'
