@@ -61,15 +61,20 @@ module TccContent
     newContent.gsub!(/#{space2}/) {" "}
     newContent.gsub!(/#{space1}/) {" "}
 
-    # newContent.gsub!(/^(.*\.)(\s*)$/, "\r\n<p>")
+    # . \r\n (OU) . \r (OU) . (FIM do paragrafo)
     newContent.gsub!(/(\.\s*((\n|\r)|$))/, ".<||>")
+    newContent.gsub!(/(<\/p>)(\r\n)*/, "<|/p|>")
+    newContent.gsub!(/(\r\n)*<p(\s+[^<>]*|)>/, "<|p|>")
+
     newContent.gsub!(/\r\n/, " ")
     newContent.gsub!(/\r/, "")
     newContent.gsub!(/\n/, "")
     newContent.gsub!(/\<\|\|\>/, "</p>\r\n")
 
     newContent.gsub!(/(<\/p>)/, "</p>\r\n")
+    newContent.gsub!(/\<\|\/p\|\>/, "</p>\r\n")
     newContent.gsub!(/<p(\s+[^<>]*|)>/, "\r\n<p>")
+    newContent.gsub!(/\<\|p\|\>/, "\r\n<p>")
 
     nokogiri_html = Nokogiri::HTML.fragment(newContent)
 
@@ -93,6 +98,14 @@ module TccContent
 
     nokogiri_html.search('li').each do | paragraph |
       paragraph.replace  paragraph.to_s.gsub(/<li(\s+[^<>]*|)>/, '<li>')
+    end
+
+    nokogiri_html.search('ul').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<ul(\s+[^<>]*|)>/, '<ul>')
+    end
+
+    nokogiri_html.search('ol').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<ol(\s+[^<>]*|)>/, '<ol>')
     end
 
     nokogiri_html.search('br').each do | paragraph |
@@ -229,7 +242,10 @@ module TccContent
               # (.*)<p\s*[^<]*>(.*)<\/p\s*>
               # 			<p>5</p>
               # => nothing
-              sec_line
+
+              # sec_line
+              sec_line = regexpr_complete_paragraph.match(sec_line)[1]+
+                  TccContent::mount_paragraph(regexpr_complete_paragraph.match(sec_line)[2])
             elsif (regexpr_begin_paragraph_end_br.match(sec_line).present? )
               # (.*)<p\s*[^<]*>(.*)<br\s*\/?>
               # 			<p>1<br>
@@ -297,7 +313,7 @@ module TccContent
     }.select(&:presence).join("\r\n")
     newLines.chomp!
 
-    newContent = newLines
+    newContent = newLines.gsub!(/^[\ ]*|[\ ]*$/, "")
     newContent
   end
 
@@ -315,6 +331,25 @@ module TccContent
 
     #troca <br /> por \r\n
     content_typed = content_typed.gsub(/<br(\s+[^<>]*|)>/, "\r\n")
+    begin
+      content_typed = content_typed.gsub(/<li(\s+[^<>]*|)>/, "\r\n<li#{Regexp.last_match[1]}>" )
+    rescue
+    end
+
+    begin
+      content_typed = content_typed.gsub(/<p(\s+[^<>]*|)>/, "\r\n<p#{Regexp.last_match[1]}>" )
+    rescue
+    end
+
+    begin
+      content_typed = content_typed.gsub(/<\/p(\s*)>/, "</p#{Regexp.last_match[1]}>\r\n" )
+    rescue
+    end
+
+    begin
+      content_typed = content_typed.gsub(/<\/div(\s*)>/, "</div#{Regexp.last_match[1]}>\r\n" )
+    rescue
+    end
 
     new_content = TccContent::remove_blank_lines( content_typed )
 
@@ -337,8 +372,9 @@ module TccContent
         count_new = -1
       else
         if new_content.present?
-          count_new = Rails::Html::FullSanitizer.new.sanitize(new_content).
-              split("\r\n").join(' ').split(' ').select(&:presence).count
+          array_content_new = Rails::Html::FullSanitizer.new.sanitize(new_content).
+              split("\r\n").join(' ').split(' ').select(&:presence)
+          count_new = array_content_new.count
         end
       end
     end
