@@ -10,6 +10,12 @@ describe TccContent do
   contentTestNewLine     = [contentTest[0]+new_line[0], contentTest[1]+new_line[1]]
 
   contents = [
+      ["<h3>Objetivo1</h3>",
+       "<h3>Objetivo1</h3>"],
+      ["<h3>Objetivo2</h3>\r\n<h3>Objetivo2-1</h3>",
+       "<h3>Objetivo2</h3>\r\n<h3>Objetivo2-1</h3>"],
+      ["<h3>Objetivo3</h3>o3",
+       "<h3>Objetivo3</h3>\r\n<p>o3</p>"],
       ["<p style=\"text-align: justify;\">a.</p>",
        "<p>a.</p>"],
       ["<p style=\"text-align: justify;\">qwert<img alt=\"\" src=\"/uploads/ckeditor/pictures/499/content_logo.png\" style=\"width: 452px; height: 623px;\" /></p>",

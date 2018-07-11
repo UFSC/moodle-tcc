@@ -75,6 +75,7 @@ module TccContent
     newContent.gsub!(/\<\|\/p\|\>/, "</p>\r\n")
     newContent.gsub!(/<p(\s+[^<>]*|)>/, "\r\n<p>")
     newContent.gsub!(/\<\|p\|\>/, "\r\n<p>")
+    newContent = newContent.gsub(/(<\/h\d*>)/) {"#{Regexp.last_match[1]}\r\n"}
 
     nokogiri_html = Nokogiri::HTML.fragment(newContent)
 
@@ -195,7 +196,12 @@ module TccContent
           end_paragraph = '<\/p\s*>'
           br = '<br\s*\/?>'
           not_tag = '[^<.*>]*'
+          title_begin = '(<(h\d*)(\s+[^<>]*|)>)'
+          title_end   = '(<\/h\d*>)'
 
+          test_title_paragraph = title_begin+
+              any_single_character+
+              title_end
           # (.*)<p\s*[^<]*>(.*)<\/p\s*>
           # 			<p>5</p>
           # => nothing
@@ -230,6 +236,7 @@ module TccContent
           # test_html_tag_especial = '<(\/?citacao|\/?ins|\/?del)>'
           test_html_tag_especial = '<(\/?citacao|\/?ins|\/?del)>'
 
+          regexpr_title_paragraph        = Regexp.new(test_title_paragraph)
           regexpr_complete_paragraph     = Regexp.new(test_complete_paragraph)
           regexpr_begin_paragraph_end_br = Regexp.new(test_begin_paragraph_end_br)
           regexpr_end_br                 = Regexp.new(test_end_br )
@@ -238,7 +245,9 @@ module TccContent
           regexpr_html_tag_especial      = Regexp.new(test_html_tag_especial)
 
           status = Timeout::timeout(3) {
-            if (regexpr_complete_paragraph.match(sec_line).present? )
+            if (regexpr_title_paragraph.match(sec_line).present? )
+              sec_line
+            elsif (regexpr_complete_paragraph.match(sec_line).present? )
               # (.*)<p\s*[^<]*>(.*)<\/p\s*>
               # 			<p>5</p>
               # => nothing
@@ -331,33 +340,21 @@ module TccContent
 
     #troca <br /> por \r\n
     content_typed = content_typed.gsub(/<br(\s+[^<>]*|)>/, "\r\n")
-    begin
-      content_typed = content_typed.gsub(/<li(\s+[^<>]*|)>/, "\r\n<li#{Regexp.last_match[1]}>\r\n" ).gsub('</li>', "\r\n</li>\r\n")
-    rescue
-    end
-    begin
-      content_typed = content_typed.gsub(/<ul(\s+[^<>]*|)>/, "\r\n<ul#{Regexp.last_match[1]}>" ).gsub('</ul>', "\r\n</ul>\r\n")
-    rescue
-    end
-    begin
-      content_typed = content_typed.gsub(/<ol(\s+[^<>]*|)>/, "\r\n<ol#{Regexp.last_match[1]}>" ).gsub('</ol>', "\r\n</ol>\r\n")
-    rescue
-    end
 
-    begin
-      content_typed = content_typed.gsub(/<p(\s+[^<>]*|)>/, "\r\n<p#{Regexp.last_match[1]}>" )
-    rescue
-    end
+    content_typed = content_typed.gsub(/<li(\s+[^<>]*|)>/) {"\r\n<li#{Regexp.last_match[1]}>\r\n"}
+    content_typed = content_typed.gsub('</li>', "\r\n</li>\r\n")
 
-    begin
-      content_typed = content_typed.gsub(/<\/p(\s*)>/, "</p#{Regexp.last_match[1]}>\r\n" )
-    rescue
-    end
+    content_typed = content_typed.gsub(/<ul(\s+[^<>]*|)>/) {"\r\n<ul#{Regexp.last_match[1]}>"}
+    content_typed = content_typed.gsub('</ul>', "\r\n</ul>\r\n")
 
-    begin
-      content_typed = content_typed.gsub(/<\/div(\s*)>/, "</div#{Regexp.last_match[1]}>\r\n" )
-    rescue
-    end
+    content_typed = content_typed.gsub(/<ol(\s+[^<>]*|)>/) {"\r\n<ol#{Regexp.last_match[1]}>"}
+    content_typed = content_typed.gsub('</ol>', "\r\n</ol>\r\n")
+
+    content_typed = content_typed.gsub(/<p(\s+[^<>]*|)>/) {"\r\n<p#{Regexp.last_match[1]}>"}
+
+    content_typed = content_typed.gsub(/<\/p(\s*)>/) {"</p#{Regexp.last_match[1]}>\r\n"}
+
+    content_typed = content_typed.gsub(/<\/div(\s*)>/) {"</div#{Regexp.last_match[1]}>\r\n"}
 
     new_content = TccContent::remove_blank_lines( content_typed )
 
