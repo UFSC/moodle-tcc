@@ -97,15 +97,15 @@ module TccContent
     end
 
     nokogiri_html.search('li').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<li(\s+[^<>]*|)>/, '<li>')
+      paragraph.replace  paragraph.to_s.gsub(/<li(\s+[^<>]*|)>/, "\r\n<li>\r\n").gsub('</li>', "\r\n</li>\r\n")
     end
 
     nokogiri_html.search('ul').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<ul(\s+[^<>]*|)>/, '<ul>')
+      paragraph.replace  paragraph.to_s.gsub(/<ul(\s+[^<>]*|)>/, "\r\n<ul>\r\n").gsub('</ul>', "\r\n</ul>\r\n")
     end
 
     nokogiri_html.search('ol').each do | paragraph |
-      paragraph.replace  paragraph.to_s.gsub(/<ol(\s+[^<>]*|)>/, '<ol>')
+      paragraph.replace  paragraph.to_s.gsub(/<ol(\s+[^<>]*|)>/, "\r\n<ol>\r\n").gsub('</ol>', "\r\n</ol>\r\n")
     end
 
     nokogiri_html.search('br').each do | paragraph |
@@ -332,7 +332,15 @@ module TccContent
     #troca <br /> por \r\n
     content_typed = content_typed.gsub(/<br(\s+[^<>]*|)>/, "\r\n")
     begin
-      content_typed = content_typed.gsub(/<li(\s+[^<>]*|)>/, "\r\n<li#{Regexp.last_match[1]}>" )
+      content_typed = content_typed.gsub(/<li(\s+[^<>]*|)>/, "\r\n<li#{Regexp.last_match[1]}>\r\n" ).gsub('</li>', "\r\n</li>\r\n")
+    rescue
+    end
+    begin
+      content_typed = content_typed.gsub(/<ul(\s+[^<>]*|)>/, "\r\n<ul#{Regexp.last_match[1]}>" ).gsub('</ul>', "\r\n</ul>\r\n")
+    rescue
+    end
+    begin
+      content_typed = content_typed.gsub(/<ol(\s+[^<>]*|)>/, "\r\n<ol#{Regexp.last_match[1]}>" ).gsub('</ol>', "\r\n</ol>\r\n")
     rescue
     end
 
