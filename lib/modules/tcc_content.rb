@@ -125,6 +125,8 @@ module TccContent
 
     # remove blank lines
     newContent = nokogiri_html.to_html
+    newContent = newContent.gsub(/((\n)*(<\/h\d*>))/) {"#{Regexp.last_match[3]}\r\n"}
+
     lines = newContent.split("\r\n")
     newLines = lines.map { | main_line |
       secondary_lines = main_line.split("\n")

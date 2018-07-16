@@ -16,6 +16,8 @@ describe TccContent do
        "<h3>Objetivo2</h3>\r\n<h3>Objetivo2-1</h3>"],
       ["<h3>Objetivo3</h3>o3",
        "<h3>Objetivo3</h3>\r\n<p>o3</p>"],
+      ["<h3>Objetivo4<ins class=\"ice-ins ice-cts-1\" data-changedata=\"\" data-cid=\"440\" data-last-change-time=\"1531757662541\" data-time=\"1531757662256\" data-userid=\"1\" data-username=\"Fulano Tal\">: </ins></h3>o4",
+       "<h3>Objetivo4<ins class=\"ice-ins ice-cts-1\" data-changedata=\"\" data-cid=\"440\" data-last-change-time=\"1531757662541\" data-time=\"1531757662256\" data-userid=\"1\" data-username=\"Fulano Tal\">: </ins></h3>\r\n<p>o4</p>"],
       ["<p style=\"text-align: justify;\">a.</p>",
        "<p>a.</p>"],
       ["<p style=\"text-align: justify;\">qwert<img alt=\"\" src=\"/uploads/ckeditor/pictures/499/content_logo.png\" style=\"width: 452px; height: 623px;\" /></p>",
