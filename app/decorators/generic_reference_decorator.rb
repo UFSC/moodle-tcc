@@ -71,6 +71,23 @@ class GenericReferenceDecorator < Draper::Decorator
     text = text.gsub(" ~", "~")
     text = text.gsub(" `", "`")
 
+    # %$€©µΩ℃™®
+
+    # %$
+    text = text.gsub("%", "{\\textpercent}")
+    text = text.gsub("$", "{\\textdollar}")
+
+    # €©µΩ℃™®
+    text = text.gsub("€", "{\\texteuro}")
+    text = text.gsub("©", "{\\textcopyright}")
+    text = text.gsub("µ", "{\\textmu}")
+    text = text.gsub("Ω", "{\\textohm}")
+    # α
+    # text = text.gsub("α", "{\\textalpha}")
+    text = text.gsub("℃", "{\\textcelsius}")
+    text = text.gsub("™", "{\\texttrademark}")
+    text = text.gsub("®", "{\\textregistered}")
+
     text
   end
 

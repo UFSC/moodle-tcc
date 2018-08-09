@@ -14,9 +14,9 @@
           <%= ' and others ' if r.et_all %>
         </span>
       <span class="number"><%= r.edition_number unless r.edition_number.nil? %></span>
-      <span class="publisher"><%= r.publisher %></span>
-      <span class="title"><%= r.title %></span>
-      <span class="subtitle"><%= r.subtitle %></span>
+      <span class="publisher"><%= r.bibtex_translate(r.publisher) %></span>
+      <span class="title"><%= r.bibtex_translate(r.title) %></span>
+      <span class="subtitle"><%= r.bibtex_translate(r.subtitle) %></span>
       <span class="year"><%= r.year %></span>
     </dd>
   <% end %>
@@ -32,11 +32,11 @@
         <%= ' and ' << r.bibtex_translate(r.third_part_author) if !r.third_part_author.blank? %>
         <%= ' and others ' if r.et_al_part %>
       </span>
-      <span class="booktitle"><%= r.book_title %></span>
+      <span class="booktitle"><%= r.bibtex_translate(r.book_title) %></span>
       <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
-      <span class="publisher"><%= r.publisher %></span>
-      <span class="title"><%= r.cap_title %></span>
-      <span class="subtitle"><%= r.cap_subtitle %></span>
+      <span class="publisher"><%= r.bibtex_translate(r.publisher) %></span>
+      <span class="title"><%= r.bibtex_translate(r.cap_title) %></span>
+      <span class="subtitle"><%= r.bibtex_translate(r.cap_subtitle) %></span>
       <span class="month"><%= l(r.reference.created_at, :format => "%b.") %></span>
       <span class="year"><%= r.year %></span>
     </dd>
@@ -52,11 +52,11 @@
           <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
           <%= ' and others ' if r.et_all %>
         </span>
-      <span class="journal"><%= r.journal_name %></span>
+      <span class="journal"><%= r.bibtex_translate(r.journal_name) %></span>
       <span class="number"><%= r.number_or_fascicle unless r.number_or_fascicle.nil? %></span>
       <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
-      <span class="title"><%= r.article_title %></span>
-      <span class="subtitle"><%= r.article_subtitle %></span>
+      <span class="title"><%= r.bibtex_translate(r.article_title) %></span>
+      <span class="subtitle"><%= r.bibtex_translate(r.article_subtitle) %></span>
       <span class="volume"><%= r.volume_number unless r.volume_number.nil? %></span>
       <span class="year"><%= r.year %></span>
     </dd>
@@ -72,12 +72,12 @@
       <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
       <%= ' and others ' if r.et_al %>
       </span>
-      <span class="title"><%= r.title %></span>
-      <span class="subtitle"><%= r.subtitle %></span>
+      <span class="title"><%= r.bibtex_translate(r.title) %></span>
+      <span class="subtitle"><%= r.bibtex_translate(r.subtitle) %></span>
       <span class="year"><%= r.publication_date.nil? ? r.access_date.year : r.publication_date.year %></span>
-      <span class="url"><%= r.url %></span>
+      <span class="url"><%= r.bibtex_translate(r.url) %></span>
       <span class="urlaccessdate"><%= l(r.access_date, :format => "%d %b. %Y.") unless r.access_date.nil? %></span>
-      <span class="note"><%= r.complementary_information %></span>
+      <span class="note"><%= r.bibtex_translate(r.complementary_information) %></span>
     </dd>
   <% end %>
 
@@ -85,12 +85,12 @@
   <% legislative_refs.each do |r| %>
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
-      <span class="address"><%= r.local %></span>
+      <span class="address"><%= r.bibtex_translate(r.local) %></span>
       <!--<span class="journal"><%#= r.type_legislative %></span>-->
       <span class="number"><%= r.edition %></span>
-      <span class="organization"><%= r.jurisdiction_or_header %></span>
-      <span class="publisher"><%= r.publisher %></span>
-      <span class="title"><%= r.title %></span>
+      <span class="organization"><%= r.bibtex_translate(r.jurisdiction_or_header) %></span>
+      <span class="publisher"><%= r.bibtex_translate(r.publisher) %></span>
+      <span class="title"><%= r.bibtex_translate(r.title) %></span>
       <span class="year"><%= r.year %></span>
     </dd>
   <% end %>
@@ -99,24 +99,24 @@
   <% thesis_refs.each do |r| %>
     <dt class="article">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
-      <span class="address"><%= r.local %></span>
+      <span class="address"><%= r.bibtex_translate(r.local) %></span>
       <span class="author">
       <%= r.bibtex_translate(r.first_author) %>
               <%= ' and ' << r.bibtex_translate(r.second_author) if  !r.second_author.blank? %>
               <%= ' and ' << r.bibtex_translate(r.third_author) if !r.third_author.blank? %>
               <%= ' and others ' if r.et_all %>
       </span>
-      <span class="organization"><%= r.institution %></span>
-      <span class="title"><%= r.title %></span>
-      <span class="subtitle"><%= r.subtitle %></span>
+      <span class="organization"><%= r.bibtex_translate(r.institution) %></span>
+      <span class="title"><%= r.bibtex_translate(r.title) %></span>
+      <span class="subtitle"><%= r.bibtex_translate(r.subtitle) %></span>
       <span class="year"><%= r.year %></span>
-      <span class="chapter"><%= r.chapter %></span>
-      <span class="type"><%= r.type_thesis %></span>
+      <span class="chapter"><%= r.bibtex_translate(r.chapter) %></span>
+      <span class="type"><%= r.bibtex_translate(r.type_thesis) %></span>
       <span class="number"><%= r.pages_or_volumes_number %></span>
-      <% note = "Curso de #{r.course}, " if (!r.course.nil? && !r.course.empty?) %>
-      <% note = note+ "Departamento de #{r.department}, " if (!r.department.nil? &&!r.department.empty?) %>
-      <% note = note+"#{r.institution}. " %>
-      <% note = note+"Cap. #{r.chapter}." if !r.chapter.nil? %>
+      <% note = "Curso de #{r.bibtex_translate(r.course)}, " if (!r.course.nil? && !r.course.empty?) %>
+      <% note = note+ "Departamento de #{r.bibtex_translate(r.department)}, " if (!r.department.nil? &&!r.department.empty?) %>
+      <% note = note+"#{r.bibtex_translate(r.institution)}. " %>
+      <% note = note+"Cap. #{r.bibtex_translate(r.chapter)}." if !r.chapter.nil? %>
 
       <span class="note"><%= note %></span>
     </dd>

@@ -83,6 +83,10 @@ module TccContent
       paragraph.replace  paragraph.to_s.gsub(/<p(\s+[^<>]*|)>/, '<p>')
     end
 
+    nokogiri_html.search('p').each do | paragraph |
+      paragraph.replace  paragraph.to_s.gsub(/<p><\/p>/, "\r\n")
+    end
+
     # <citacao citacao-text="(SANTOS, 2017)" citacao_type="cd" class="citacao-class" contenteditable="false" id="8999" pagina="undefined" ref-type="internet" reference_id="39643" title="(SANTOS, 2017)"></citacao>
     # <citacao></citacao>
     nokogiri_html.search('p').each do | paragraph |
@@ -201,6 +205,13 @@ module TccContent
           title_begin = '(<(h\d*)(\s+[^<>]*|)>)'
           title_end   = '(<\/h\d*>)'
 
+          begin_table = '<table\s*[^<]*>'
+          end_table = '<\/table\s*>'
+
+          test_table_paragraph = begin_table+
+              any_single_character+
+              end_table
+
           test_title_paragraph = title_begin+
               any_single_character+
               title_end
@@ -238,6 +249,7 @@ module TccContent
           # test_html_tag_especial = '<(\/?citacao|\/?ins|\/?del)>'
           test_html_tag_especial = '<(\/?citacao|\/?ins|\/?del)>'
 
+          regexpr_table_paragraph        = Regexp.new(test_table_paragraph)
           regexpr_title_paragraph        = Regexp.new(test_title_paragraph)
           regexpr_complete_paragraph     = Regexp.new(test_complete_paragraph)
           regexpr_begin_paragraph_end_br = Regexp.new(test_begin_paragraph_end_br)
@@ -247,7 +259,10 @@ module TccContent
           regexpr_html_tag_especial      = Regexp.new(test_html_tag_especial)
 
           status = Timeout::timeout(3) {
-            if (regexpr_title_paragraph.match(sec_line).present? )
+            regexpr_table_paragraph        = Regexp.new(test_table_paragraph)
+            if (regexpr_table_paragraph.match(sec_line).present? )
+              sec_line
+            elsif (regexpr_title_paragraph.match(sec_line).present? )
               sec_line
             elsif (regexpr_complete_paragraph.match(sec_line).present? )
               # (.*)<p\s*[^<]*>(.*)<\/p\s*>
