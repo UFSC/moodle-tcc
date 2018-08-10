@@ -1,4 +1,4 @@
-class LegislativeRefDecorator < Draper::Decorator
+class LegislativeRefDecorator < GenericReferenceDecorator
   delegate_all
 
   def direct_citation
