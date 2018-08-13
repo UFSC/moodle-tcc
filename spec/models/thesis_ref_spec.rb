@@ -26,6 +26,29 @@ describe ThesisRef do
 
     it { should validate_presence_of(:course) }
 
+    it { should_not allow_value(-1).for(:chapter) }
+    it { should_not allow_value(-1.1).for(:chapter) }
+    it { should_not allow_value(0).for(:chapter) }
+    it { should allow_value(1).for(:chapter) }
+    it { should allow_value(4611686018427387903).for(:chapter) }
+
+    it { should_not allow_value(-1).for(:pages_or_volumes_number) }
+    it { should_not allow_value(-1.1).for(:pages_or_volumes_number) }
+    it { should_not allow_value(0).for(:pages_or_volumes_number) }
+    it { should allow_value(1).for(:pages_or_volumes_number) }
+    it { should allow_value(4611686018427387903).for(:pages_or_volumes_number) }
+
+    it { should_not allow_value(-1).for(:year) }
+    it { should_not allow_value(0).for(:year) }
+    it { should allow_value(Date.today.year-1).for(:year) }
+    it { should allow_value(Date.today.year).for(:year) }
+    it { should_not allow_value(Date.today.year+1).for(:year) }
+
+    it { should_not allow_value(-1).for(:year_of_submission) }
+    it { should_not allow_value(0).for(:year_of_submission) }
+    it { should allow_value(Date.today.year-1).for(:year_of_submission) }
+    it { should allow_value(Date.today.year).for(:year_of_submission) }
+    it { should_not allow_value(Date.today.year+1).for(:year_of_submission) }
   end
 
   context 'normalizations' do

@@ -27,9 +27,11 @@ class ThesisRef < ActiveRecord::Base
   validates :type_thesis, :inclusion => {:in => THESIS_TYPES}
   validates :degree, :inclusion => {:in => DEGREE_TYPES}
 
-  validates :year, :year_of_submission, :pages_or_volumes_number, :numericality => {:only_integer => true}
+  validates :year, :year_of_submission, :numericality => {:only_integer => true,:greater_than => 0, :less_than_or_equal_to => (Date.today.year)}
 
   validates :first_author, :second_author, :third_author, complete_name: true
+
+  validates :chapter, :pages_or_volumes_number, :numericality => {only_integer: true, :greater_than => 0}
 
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos

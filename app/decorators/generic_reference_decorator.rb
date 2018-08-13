@@ -34,8 +34,8 @@ class GenericReferenceDecorator < Draper::Decorator
 
   def bibtex_translate(text)
 
-    if text.present?
-    # begin
+    if text.present? &&
+        text.is_a?(String)
       text = text.gsub(/[á]/, "{\\ 'a}")
       text = text.gsub(/[é]/, "{\\ 'e}")
       text = text.gsub(/[í]/, "{\\ 'i}")

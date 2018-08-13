@@ -23,6 +23,9 @@ describe InternetRef do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:access_date) }
 
+    it { should allow_value(Date.yesterday).for(:access_date) }
+    it { should allow_value(Date.today).for(:access_date) }
+    it { should_not allow_value(Date.tomorrow).for(:access_date) }
 
     describe '#url' do
       it { should validate_presence_of(:url) }

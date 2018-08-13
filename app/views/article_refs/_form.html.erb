@@ -18,8 +18,8 @@
         <%= ref.input :number_or_fascicle %>
         <%= ref.input :year, :input_html => {:min => 0, :max => Date.today.year} %>
         <div class="row">
-          <div class="col-sm-6"><%= ref.input :initial_page, input_html: {min: 0} %></div>
-          <div class="col-sm-6"><%= ref.input :end_page, input_html: {min: 0} %></div>
+          <div class="col-sm-6"><%= ref.input :initial_page, input_html: {min: 1} %></div>
+          <div class="col-sm-6"><%= ref.input :end_page, input_html: {min: 1} %></div>
         </div>
       </div>
     <% end %>

@@ -22,7 +22,7 @@ class BookRef < ActiveRecord::Base
   validates :type_quantity, :inclusion => {:in => QUANTITY_TYPES}, :allow_blank => true
   validates :year, :numericality => {:only_integer => true}
   validates :year, :inclusion => {:in => lambda { |book| 0..Date.today.year }}
-  validates :edition_number, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
+  validates :edition_number, :num_quantity, :numericality => {:only_integer => true, :greater_than => 0}, :allow_blank => true
 
   validates :first_author, :second_author, :third_author, complete_name: true
 

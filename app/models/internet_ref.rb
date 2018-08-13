@@ -1,5 +1,14 @@
 class InternetRef < ActiveRecord::Base
 
+  class AccessDateValidator < ActiveModel::Validator
+    def validate(record)
+      if record.access_date.present? &&
+          record.access_date > Date.today.to_date
+        record.errors.add(:access_date, "A data deve ser menor ou igual a data de hoje.")
+      end
+    end
+  end
+
   include ModelsUtils
   include Shared::Citacao
 
@@ -19,6 +28,7 @@ class InternetRef < ActiveRecord::Base
 
   validates_format_of :url, :with => VALID_URL_EXPRESSION
 
+  validates_with AccessDateValidator
   # Garante que os atributos principais estarão dentro de um padrão mínimo:
   # sem espaços no inicio e final e espaços duplos
   normalize_attributes :first_author, :second_author, :third_author, :title, :with => [:squish, :blank]

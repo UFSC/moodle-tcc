@@ -28,6 +28,15 @@ describe BookRef do
     it { should validate_presence_of(:publisher) }
   end
 
+  describe '#num_quantity' do
+    it { should validate_numericality_of(:num_quantity).only_integer }
+    it { should_not allow_value(-1).for(:num_quantity) }
+    it { should_not allow_value(-5).for(:num_quantity) }
+    it { should_not allow_value(0).for(:num_quantity) }
+    it { should allow_value(1).for(:num_quantity) }
+    it { should allow_value(5).for(:num_quantity) }
+  end
+
   describe '#edition_number' do
     it { should validate_numericality_of(:edition_number).only_integer }
     it { should_not allow_value(-1).for(:edition_number) }

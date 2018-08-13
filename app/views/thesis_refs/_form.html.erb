@@ -14,7 +14,7 @@
       <div class="col-lg-4">
         <%= ref.input :title %>
         <%= ref.input :subtitle %>
-        <%= ref.input :chapter %>
+        <%= ref.input :chapter, :input_html => {:min => 1} %>
         <%= ref.input :type_number, :as => :radio, :collection => ThesisRef::TYPES %>
         <%= ref.input :pages_or_volumes_number, :input_html => {:min => 1}, :label => false %>
       </div>

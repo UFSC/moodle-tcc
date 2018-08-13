@@ -110,7 +110,7 @@
       <span class="title"><%= r.bibtex_translate(r.title) %></span>
       <span class="subtitle"><%= r.bibtex_translate(r.subtitle) %></span>
       <span class="year"><%= r.year %></span>
-      <span class="chapter"><%= r.bibtex_translate(r.chapter) %></span>
+      <span class="chapter"><%= r.chapter %></span>
       <span class="type"><%= r.bibtex_translate(r.type_thesis) %></span>
       <span class="number"><%= r.pages_or_volumes_number %></span>
       <% note = "Curso de #{r.bibtex_translate(r.course)}, " if (!r.course.nil? && !r.course.empty?) %>
