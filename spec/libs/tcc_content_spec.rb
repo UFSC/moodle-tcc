@@ -80,6 +80,18 @@ describe TccContent do
        "<p>linha101 linha101-1. linha101-2.</p>"],
       ["linha102\r\nlinha102-1.\r\nlinha102-2.",
        "<p>linha102 linha102-1.</p>\r\n<p>linha102-2.</p>"],
+      ["linha200<ins class=\"ice-ins ice-cts-1\" data-changedata=\"\" data-cid=\"2\" data-last-change-time=\"1536204022472\" data-time=\"1536204021049\" data-userid=\"3827\" data-username=\"Fulano\"> ZZZ</ins>",
+       "<p>linha200<ins class=\"ice-ins ice-cts-1\" data-changedata=\"\" data-cid=\"2\" data-last-change-time=\"1536204022472\" data-time=\"1536204021049\" data-userid=\"3827\" data-username=\"Fulano\"> ZZZ</ins></p>"],
+      ["linha201<del class=\"ice-del ice-cts-1\" data-changedata=\"\" data-cid=\"2\" data-last-change-time=\"1536204022472\" data-time=\"1536204021049\" data-userid=\"3827\" data-username=\"Fulano\"> ZZZ</del>",
+       "<p>linha201<del class=\"ice-del ice-cts-1\" data-changedata=\"\" data-cid=\"2\" data-last-change-time=\"1536204022472\" data-time=\"1536204021049\" data-userid=\"3827\" data-username=\"Fulano\"> ZZZ</del></p>"],
+      ["linha202<ins cite=\"mailto:Fulano\"> ZZZ</ins>",
+       "<p>linha202<ins class=\"ice-ins ice-cts-1\" data-username=\"Recuperado pelo Sistema\"> ZZZ</ins></p>"],
+      ["linha203<ins> ZZZ</ins>",
+       "<p>linha203<ins class=\"ice-ins ice-cts-1\" data-username=\"Recuperado pelo Sistema\"> ZZZ</ins></p>"],
+      ["linha204<del cite=\"mailto:Fulano\"> ZZZ</del>",
+       "<p>linha204<del class=\"ice-del ice-cts-1\" data-username=\"Recuperado pelo Sistema\"> ZZZ</del></p>"],
+      ["linha205<del> ZZZ</del>",
+       "<p>linha205<del class=\"ice-del ice-cts-1\" data-username=\"Recuperado pelo Sistema\"> ZZZ</del></p>"],
   ]
 
   shared_examples_for 'remove blank lines with content' do
@@ -110,10 +122,10 @@ describe TccContent do
       expect(content_converted).to eq(@expected)
     end
 
-    # it 'newline, content, new line, content and new line' do
-    #   content_converted = TccContent::remove_blank_lines(new_line[0]+@content+new_line[0]+@content+new_line[0])
-    #   expect(content_converted).to eq(@expected+new_line[0]+@expected)
-    # end
+    ### it 'newline, content, new line, content and new line' do
+    ###   content_converted = TccContent::remove_blank_lines(new_line[0]+@content+new_line[0]+@content+new_line[0])
+    ###   expect(content_converted).to eq(@expected+new_line[0]+@expected)
+    ### end
 
   end
 

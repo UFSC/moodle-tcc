@@ -93,6 +93,31 @@ module TccContent
       paragraph.replace  paragraph.to_s.gsub(/<citacao\s?[^>]*>(\s)*<\/citacao>/, '')
     end
 
+    # ins cite=
+    # <ins cite=\"mailto:Fulano\"> ZZZ</ins>
+
+    nokogiri_html.search('ins').each do | paragraph |
+      match = paragraph.to_s.gsub(/<ins cite=?[^>]*>(.*)<\/ins>/) {"<ins class=\"ice-ins ice-cts-1\" data-username=\"Recuperado pelo Sistema\">#{Regexp.last_match[1]}</ins>"}
+      paragraph.replace match
+    end
+
+    nokogiri_html.search('ins').each do | paragraph |
+      match = paragraph.to_s.gsub(/<ins\s*>(.*)<\/ins>/)  {"<ins class=\"ice-ins ice-cts-1\" data-username=\"Recuperado pelo Sistema\">#{Regexp.last_match[1]}</ins"}
+      paragraph.replace match
+    end
+
+    nokogiri_html.search('del').each do | paragraph |
+      match = paragraph.to_s.gsub(/<del cite=?[^>]*>(.*)<\/del>/) {"<del class=\"ice-del ice-cts-1\" data-username=\"Recuperado pelo Sistema\">#{Regexp.last_match[1]}</del>"}
+      paragraph.replace match
+    end
+
+    nokogiri_html.search('del').each do | paragraph |
+      match = paragraph.to_s.gsub(/<del\s*>(.*)<\/del>/) {"<del class=\"ice-del ice-cts-1\" data-username=\"Recuperado pelo Sistema\">#{Regexp.last_match[1]}</del>"}
+      paragraph.replace match
+    end
+
+    # =====
+
     nokogiri_html.search('font').each do | paragraph |
       paragraph.replace  paragraph.to_s.gsub(/<font(\s+[^<>]*|)>/, '').gsub('</font>', '')
     end
