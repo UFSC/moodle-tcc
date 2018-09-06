@@ -7,7 +7,7 @@ gem 'mysql2', '~> 0.3.18'
 gem 'protected_attributes'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'eventmachine'#, '~>1.0.7'
-gem 'passenger'
+gem 'passenger', '~> 5.1.0'
 gem 'execjs'
 gem 'therubyracer'
 
@@ -56,8 +56,8 @@ gem 'sidekiq-superworker'
 # gem 'rack-protection'
 
 # sidekiq monitor
-gem 'sinatra', require: false
-gem 'slim'
+# gem 'sinatra', require: false
+# gem 'slim'
 
 # Latex tcc -> pdf
 gem 'rails-latex',:github => 'UFSC/moodle-tcc-rails-latex'
@@ -125,7 +125,7 @@ gem 'fog'
 # group :production do
   gem'non-stupid-digest-assets', '~> 1.0', '>= 1.0.9'
   gem 'newrelic_rpm'
-  gem 'redis-rails'
+  gem 'redis-rails', '~>5.0'
 # end
 
 group :development do
@@ -190,3 +190,6 @@ group :deploy, :development do
   gem 'capistrano-git-submodule-strategy'#, '0.1.3'
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end
+
+gem 'rack-protection',  '~> 1.5.5'
+gem 'ffi', '~> 1.9.24'
