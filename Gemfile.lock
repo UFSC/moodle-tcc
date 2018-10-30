@@ -114,6 +114,7 @@ GEM
       arel (~> 6.0)
     activesupport (4.2.11.1)
       i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
@@ -221,6 +222,9 @@ GEM
     crass (1.0.4)
     daemons (1.2.4)
     database_cleaner (1.5.3)
+    debase (0.2.2)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.3)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -629,6 +633,8 @@ GEM
     rspec-support (3.5.0)
     rspec-wait (0.0.9)
       rspec (>= 3, < 4)
+    ruby-debug-ide (0.6.1)
+      rake (>= 0.8.1)
     ruby-progressbar (1.8.1)
     ruby-rc4 (0.1.5)
     ruby_parser (3.8.2)
@@ -764,6 +770,7 @@ DEPENDENCIES
   ckeditor!
   coffee-rails (~> 4.2.1)
   database_cleaner
+  debase
   draper
   enumerize
   eventmachine
@@ -814,6 +821,7 @@ DEPENDENCIES
   rest-client
   rspec-rails
   rspec-wait
+  ruby-debug-ide
   sass-rails (~> 5.0.6)
   scoped_search
   sdoc

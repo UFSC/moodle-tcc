@@ -15,12 +15,12 @@ ActiveRecord::Schema.define(version: 20181016025758) do
 
   create_table "abstracts", force: :cascade do |t|
     t.text     "content",    limit: 16777215
-    t.string   "keywords",   limit: 255
+    t.text     "keywords",   limit: 16777215
     t.integer  "tcc_id",     limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "state",      limit: 255,      default: "empty"
     t.date     "state_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "abstracts", ["tcc_id"], name: "index_abstracts_on_tcc_id", using: :btree
@@ -101,11 +101,11 @@ ActiveRecord::Schema.define(version: 20181016025758) do
     t.text     "content",               limit: 16777215
     t.integer  "position",              limit: 4
     t.integer  "tcc_id",                limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "chapter_definition_id", limit: 4
     t.string   "state",                 limit: 255,      default: "empty"
     t.date     "state_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "chapters", ["chapter_definition_id"], name: "index_chapters_on_chapter_definition_id", using: :btree
@@ -143,6 +143,16 @@ ActiveRecord::Schema.define(version: 20181016025758) do
     t.datetime "updated_at"
     t.string   "type_name",  limit: 255
   end
+
+  create_table "decs", force: :cascade do |t|
+    t.string   "dec_id",     limit: 255
+    t.string   "dec_ds",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "decs", ["dec_ds"], name: "idx_decs_dec_ds", using: :btree
+  add_index "decs", ["dec_id"], name: "idx_decs_dec_id", using: :btree
 
   create_table "internal_courses", force: :cascade do |t|
     t.integer  "internal_institution_id", limit: 4
@@ -250,6 +260,8 @@ ActiveRecord::Schema.define(version: 20181016025758) do
     t.integer  "pdf_link_hours",       limit: 4
     t.boolean  "enabled_sync",                     default: true
     t.string   "advisor_nomenclature", limit: 255, default: "orientador"
+    t.string   "subject_area",         limit: 255, default: ""
+    t.boolean  "ares_sync",                        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -262,11 +274,11 @@ ActiveRecord::Schema.define(version: 20181016025758) do
     t.integer  "orientador_id",     limit: 4
     t.integer  "student_id",        limit: 4
     t.integer  "tutor_id",          limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "tcc_definition_id", limit: 4
     t.integer  "grade",             limit: 4
     t.datetime "grade_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "tccs", ["orientador_id"], name: "index_tcc_on_orientador_id", using: :btree

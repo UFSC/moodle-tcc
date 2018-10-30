@@ -1,0 +1,11 @@
+.env
+.bundle
+# /config/*.yml
+#.git
+log
+public/assets
+public/uploads
+tmp
+vendor
+shared
+**/volumes/**

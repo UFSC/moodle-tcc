@@ -53,3 +53,5 @@ config/*.26
 config/*.28
 config/*.29
 config/*.30
+
+.env

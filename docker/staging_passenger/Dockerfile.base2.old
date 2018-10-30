@@ -1,0 +1,31 @@
+FROM robertosilvino/latex_passenger-ruby-base:latest
+
+# Set correct environment variables.
+ARG RUBY_VERSION="2.2"
+ARG RAILS_ENV="development"
+
+COPY . ${REPO_DIR}/
+
+RUN mkdir -p ${APP_DIR}/public/uploads && \
+    mkdir -p ${APP_DIR}/log && \
+    mkdir -p ${APP_DIR}/shared && \
+    ln -s ${APP_DIR}/log ${APP_DIR}/shared/. && \
+    ln -s ${APP_DIR}/public/uploads ${APP_DIR}/shared/. && \
+    ln -s ${GEM_PATH} ${APP_DIR}/shared/.
+
+VOLUME [ "${APP_DIR}/shared/log"]
+VOLUME [ "${APP_DIR}/shared/uploads"]
+VOLUME [ "${APP_DIR}/shared/bundle"]
+
+WORKDIR ${APP_DIR}
+
+RUN gem install --no-rdoc --no-ri bundler rake && \
+    bundle config --global jobs "$(($(getconf _NPROCESSORS_ONLN)*2))" && \
+    bundle config --global retry 2
+
+#RUN apt-get update && apt-get -y upgrade
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Expose Nginx HTTP service
+EXPOSE $RACK_PORT

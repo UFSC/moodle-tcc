@@ -1,0 +1,40 @@
+FROM robertosilvino/latex_passenger:latest
+# example: https://gist.github.com/zentetsukenz/5e330b801f983e3d39757686dcb41cc2
+
+## Set correct environment variables.
+ARG RUBY_VERSION="2.2"
+ARG RAILS_ENV="production"
+
+ENV APP_HOME /home/app
+ENV APP_NAME repo
+ENV APP_DIR "${APP_HOME}/${APP_NAME}"
+
+ENV REPO_DIR "${APP_DIR}"
+ENV GEM_HOME="${REPO_DIR}/vendor/bundle" \
+    GEM_PATH="${REPO_DIR}/vendor/bundle"
+
+ENV BUNDLE_PATH="$GEM_HOME" \
+	  BUNDLE_SILENCE_ROOT_WARNING=1 \
+	  BUNDLE_APP_CONFIG="$GEM_HOME"
+
+ENV PATH $GEM_HOME/bin:$BUNDLE_PATH/gems/bin:$PATH
+
+RUN mkdir -p $REPO_DIR $GEM_HOME && chmod 777 $GEM_HOME
+
+# Define versão do Rails e variáveis de ambiente
+ENV RAILS_VERSION="4.2.7.1"
+#ENV RAILS_ENV
+ENV RAILS_ENV=${RAILS_ENV}
+ENV RUBY_VERSION=${RUBY_VERSION}
+ENV RACK_PORT=3000
+ENV TZ=America/Sao_Paulo
+
+RUN apt-get update \
+    && apt-get install -y build-essential mysql-client \
+     libmysqlclient-dev nodejs imagemagick software-properties-common libcurl4-openssl-dev
+
+RUN apt-get update && apt-get -y upgrade
+
+WORKDIR $REPO_DIR
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

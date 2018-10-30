@@ -142,7 +142,11 @@ group :development do
   gem 'brakeman', :require => false
 
   # previne N+1 queries
-  gem 'bullet'
+  gem 'bullet', :require => true
+
+  # docker compose debug
+  gem 'ruby-debug-ide'
+  gem 'debase'
 end
 
 group :test do

@@ -1,0 +1,66 @@
+version: '3'
+services:
+  web_stg_passenger_base:
+    build:
+      context: ../.
+      dockerfile: docker/staging_passenger/Dockerfile.base
+      args:
+        RUBY_VERSION: "2.2"
+    image: robertosilvino/passenger_ufsc-tcc_base:latest
+    environment:
+      - DOCKERIZED
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOST_IP
+      - DB_PORT
+      - DB_DATABASENAME
+      - RAILS_ENV
+
+  web_stg_passenger:
+    build:
+      context: ../.
+      dockerfile: docker/staging_passenger/Dockerfile
+      args:
+        RUBY_VERSION: "2.2"
+    image: robertosilvino/passenger_ufsc-tcc:latest
+    ports:
+      - 8080:80
+      - 1443:443
+      - 3002:3000
+    environment:
+      - DOCKERIZED
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOST_IP
+      - DB_PORT
+      - DB_DATABASENAME
+      - RAILS_ENV
+    volumes:
+      - assets_stg:/home/app/repo/shared/assets
+      - upload_stg:/home/app/repo/shared/uploads
+      - log_stg:/home/app/repo/shared/log
+      - bundle_stg:/home/app/repo/shared/bundle
+#    links:
+#      - mysql
+    depends_on:
+      - redis
+      - cache
+#    command: "./docker/init_dev_with_sidekiq.sh"
+    command: "/sbin/my_init"
+
+  redis:
+    image: redis:3.0-alpine
+  cache:
+    image: memcached:alpine
+
+volumes:
+  bundle_stg:
+    driver: local
+  upload_stg:
+    driver: local
+  assets_stg:
+    driver: local
+  log_stg:
+    driver: local
+#  db_test:
+#    driver: local

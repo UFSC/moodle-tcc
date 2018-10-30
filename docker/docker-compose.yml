@@ -1,0 +1,86 @@
+version: '3'
+services:
+  mysql:
+    image: mysql/mysql-server:5.6
+    volumes:
+      - db_test:/var/lib/mysql
+    environment:
+##       - MYSQL_ROOT_PASSWORD: root
+       - MYSQL_ROOT_HOST=%
+       - MYSQL_ALLOW_EMPTY_PASSWORD=1
+##       - MYSQL_USER=travis
+##       - MYSQL_PASSWORD=
+    ports:
+      - 3307:3306
+
+  latex_ubuntu_base:
+    build:
+      context: ../.
+      dockerfile: docker/latex_ubuntu/Dockerfile
+    image: robertosilvino/latex_ubuntu:latest
+
+  latex_passenger_base:
+    build:
+      context: ../.
+      dockerfile: docker/latex_passenger/Dockerfile
+    image: robertosilvino/latex_passenger:latest
+
+  ruby_base:
+    build:
+      context: ../.
+      dockerfile: docker/development/Dockerfile.base
+      args:
+        RUBY_VERSION: "2.2"
+    image: robertosilvino/latex_ubuntu-ruby-base:latest
+    environment:
+      - DOCKERIZED
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOST_IP
+      - DB_PORT
+      - DB_DATABASENAME
+      - RAILS_ENV
+
+  web:
+    build:
+      context: ../.
+      dockerfile: docker/development/Dockerfile
+      args:
+        RUBY_VERSION: "2.2"
+    image: robertosilvino/latex_ubuntu-ruby:latest
+    ports:
+      - 3002:3000
+    environment:
+      - DOCKERIZED
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOST_IP
+      - DB_PORT
+      - DB_DATABASENAME
+      - RAILS_ENV
+    volumes:
+      - ../.:/home/app/repo
+      - upload_dev:/home/app/repo/shared/uploads
+      - log_dev:/home/app/repo/shared/log
+      - bundle_dev:/home/app/repo/shared/bundle
+#    links:
+#      - mysql
+    depends_on:
+      - redis
+      - cache
+    command: "./docker/init_dev_with_sidekiq.sh"
+
+  redis:
+    image: redis:3.0-alpine
+  cache:
+    image: memcached:alpine
+
+volumes:
+  bundle_dev:
+    driver: local
+  upload_dev:
+    driver: local
+  log_dev:
+    driver: local
+  db_test:
+    driver: local

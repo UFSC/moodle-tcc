@@ -1,0 +1,25 @@
+common: &common
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+  username: root
+  password: root
+  host: 150.162.9.144
+
+development:
+  <<: *common
+#  database: sistema_tcc_github
+  database: sistema_tcc_unasus
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *common
+  database: sistema_tcc_github_test
+
+production:
+  <<: *common
+#  database: sistema_tcc_github
+  database: sistema_tcc_unasus
+
