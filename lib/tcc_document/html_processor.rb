@@ -108,11 +108,11 @@ module TccDocument
       nokogiri_html.search('table').each do |table|
         begin
           Timeout::timeout(3) {
-            summary_match = /<table\s*.*(summary=.*).*>/.match(table.to_s)
+            summary_match = /<table\s*.*(summary="[^"]*")>/.match(table.to_s)
             if (summary_match.present?)
-              font_match = /summary="(landscape(\W?)|paisagem(\W?))?(.*)"/.match(summary_match[1])
+              font_match = /summary="((landscape(\W?)|paisagem(\W?))?(.*))"/.match(summary_match[1])
               if font_match.present?
-                table.replace table.to_s.gsub('</table>', "<font>#{font_match[4]}</font></table>")
+                table.replace table.to_s.gsub('</table>', "<font>#{font_match[5]}</font></table>")
               end
             end
           }
