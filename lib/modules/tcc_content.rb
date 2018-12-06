@@ -9,18 +9,18 @@ module TccContent
 
     # The library expects you to define this method. You must return a Hash,
     # containing the keys you want to modify.
-    def to_airbrake
-      { params:
-                 { http_code: @http_code,
-                   test: '123'
-                   # user: ,
-                   # session:
-                 },
-        session: {
-            content: '321'
-        }
-      }
-    end
+    # def to_airbrake
+    #   { params:
+    #              { http_code: @http_code,
+    #                test: '123'
+    #                # user: ,
+    #                # session:
+    #              },
+    #     session: {
+    #         content: '321'
+    #     }
+    #   }
+    # end
     # The `{ http_code: 404 }` Hash will transported to the Airbrake dashboard via
     # the `#to_airbrake` method.
     #
