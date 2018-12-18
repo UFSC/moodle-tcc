@@ -42,6 +42,67 @@ module TccContent
     result_content
   end
 
+  def TccContent.change_cyrillic_chars(content)
+    return nil if content.nil?
+    newContent = content
+
+    # т = 209 130
+    newContent.gsub!(/т/) {"t"}
+    # у = 209 131
+    newContent.gsub!(/у/) {"y"}
+    # х = 209 133
+    newContent.gsub!(/х/) {"x"}
+    # н = 208 189
+    newContent.gsub!(/н/) {"n"}
+    # м = 208 188
+    newContent.gsub!(/м/) {"m"}
+    # к = 208 186
+    newContent.gsub!(/к/) {"k"}
+    # в = 208 178
+    newContent.gsub!(/в/) {"b"}
+    # Ѕ	= 208 133
+    newContent.gsub!(/Ѕ/) {"S"}
+    # І	= 208 134
+    newContent.gsub!(/І/) {"I"}
+    # Ј	= 208 136
+    newContent.gsub!(/Ј/) {"J"}
+    # А	= 208 144
+    newContent.gsub!(/А/) {"A"}
+    # В	= 208 146
+    newContent.gsub!(/В/) {"B"}
+    # Е	= 208 149
+    newContent.gsub!(/Е/) {"E"}
+    # К	= 208 154
+    newContent.gsub!(/К/) {"K"}
+    # М	= 208 156
+    newContent.gsub!(/М/) {"M"}
+    # Н	= 208 157
+    newContent.gsub!(/Н/) {"H"}
+    # О = 208 158
+    newContent.gsub!(/О/) {"O"}
+
+    # с = 209 129
+    newContent.gsub!(/с/) {"c"}
+    # ј = 209 152
+    newContent.gsub!(/ј/) {"j"}
+    # р = 209 128
+    newContent.gsub!(/р/) {"p"}
+    # ѕ = 209 149
+    newContent.gsub!(/ѕ/) {"s"}
+    # ԛ = 212 155
+    newContent.gsub!(/ԛ/) {"q"}
+    # а = 208 176
+    newContent.gsub!(/а/) {"a"}
+    # е = 208 181
+    newContent.gsub!(/е/) {"e"}
+    # і = 209 150
+    newContent.gsub!(/і/) {"i"}
+    # о = 208 190
+    newContent.gsub!(/о/) {"o"}
+
+    newContent
+  end
+
   def TccContent.remove_blank_lines(content)
     ## O CKEditor está realizando a limpeza de linhas em branco
     # config.autoParagraph = false; # no config.js do editor
@@ -60,6 +121,8 @@ module TccContent
 
     newContent.gsub!(/#{space2}/) {" "}
     newContent.gsub!(/#{space1}/) {" "}
+
+    newContent = TccContent.change_cyrillic_chars(newContent)
 
     # . \r\n (OU) . \r (OU) . (FIM do paragrafo)
     newContent.gsub!(/(\.\s*((\n|\r)|$))/, ".<||>")

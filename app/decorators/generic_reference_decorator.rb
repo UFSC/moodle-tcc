@@ -92,6 +92,8 @@ class GenericReferenceDecorator < Draper::Decorator
       text = text.gsub("®", "{\\textregistered}")
     end
 
+    text = TccContent.change_cyrillic_chars(text)
+
     text
   end
 
