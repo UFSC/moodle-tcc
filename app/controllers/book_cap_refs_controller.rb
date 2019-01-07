@@ -5,7 +5,7 @@ class BookCapRefsController < ApplicationController
   before_action :set_current_tab
 
   def new
-    @book_cap_ref = BookCapRef.new(type_participation: 'Autor')
+    @book_cap_ref = BookCapRef.new(type_participation: 'Editor')
   end
 
   def index
