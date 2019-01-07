@@ -44,7 +44,7 @@ module TccContent
 
   def TccContent.change_cyrillic_chars(content)
     return nil if content.nil?
-    newContent = content
+    newContent = content.to_s
 
     # т = 209 130
     newContent.gsub!(/т/) {"t"}
