@@ -23,7 +23,7 @@
 
   <!--Book Cap_refs references-->
   <% book_cap_refs.each do |r| %>
-    <dt class="inbook">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
+    <dt class="incollection">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
       <span class="address"><%= r.local %></span>
       <span class="author">
@@ -33,6 +33,12 @@
         <%= ' and others ' if r.et_al_part %>
       </span>
       <span class="booktitle"><%= r.bibtex_translate(r.book_title) %></span>
+      <span class="editor">
+        <%= r.bibtex_translate(r.first_entire_author) %>
+        <%= ' and ' << r.bibtex_translate(r.second_entire_author) if !r.second_entire_author.blank? %>
+        <%= ' and ' << r.bibtex_translate(r.third_entire_author) if !r.third_entire_author.blank? %>
+        <%= ' and others ' if r.et_al_entire %>
+      </span>
       <span class="pages"><%= r.initial_page.to_s << '-' << r.end_page.to_s %></span>
       <span class="publisher"><%= r.bibtex_translate(r.publisher) %></span>
       <span class="title"><%= r.bibtex_translate(r.cap_title) %></span>
