@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export RAILS_ENV=production
+
 /bin/bash -l -c "source /usr/local/rvm/scripts/rvm"
 
 ./docker/setup_dev.sh
@@ -36,4 +38,6 @@ bundle exec sidekiq -d \
 
 ###vim
 ###irb
-vim
+#vim
+
+/sbin/my_init

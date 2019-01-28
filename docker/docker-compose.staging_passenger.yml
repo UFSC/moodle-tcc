@@ -24,7 +24,7 @@ services:
         RUBY_VERSION: "2.2"
     image: robertosilvino/passenger_ufsc-tcc:latest
     ports:
-      - 8080:80
+      - 1081:80
       - 1443:443
       - 3002:3000
     environment:
@@ -36,10 +36,11 @@ services:
       - DB_DATABASENAME
       - RAILS_ENV
     volumes:
-      - assets_stg:/home/app/repo/shared/assets
-      - upload_stg:/home/app/repo/shared/uploads
-      - log_stg:/home/app/repo/shared/log
-      - bundle_stg:/home/app/repo/shared/bundle
+#      - assets_stg:/home/app/repo/shared/assets
+#      - upload_stg:/home/app/repo/shared/uploads
+#      - log_stg:/home/app/repo/shared/log
+#      - bundle_stg:/home/app/repo/shared/bundle
+      - config_stg:/home/app/repo/config
 #    links:
 #      - mysql
     depends_on:
@@ -54,13 +55,15 @@ services:
     image: memcached:alpine
 
 volumes:
-  bundle_stg:
-    driver: local
-  upload_stg:
-    driver: local
-  assets_stg:
-    driver: local
-  log_stg:
+#  bundle_stg:
+#    driver: local
+#  upload_stg:
+#    driver: local
+#  assets_stg:
+#    driver: local
+#  log_stg:
+#    driver: local
+  config_stg:
     driver: local
 #  db_test:
 #    driver: local

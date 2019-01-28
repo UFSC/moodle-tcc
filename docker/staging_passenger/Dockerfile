@@ -13,6 +13,12 @@ WORKDIR ${APP_DIR}
 
 USER root
 
+# Habilita Nginx
+RUN rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
+
+RUN cp docker/staging_passenger/config/nginx-app.conf /etc/nginx/sites-enabled/default
+
+# TODO: rever shared para produção
 RUN mkdir -p ${APP_DIR}/public/assets && \
     mkdir -p ${APP_DIR}/public/uploads && \
     mkdir -p ${APP_DIR}/log && \
@@ -34,17 +40,35 @@ RUN /bin/bash -l -c 'chown -R app:app  ${APP_HOME}'
 
 USER app
 
+WORKDIR $APP_DIR
+
 RUN bash -l -c "rvm install 2.2.10"
-RUN bash -l -c 'rvm --default use ruby-2.2.10' && \
-    bash -l -c 'gem install bundler --no-rdoc --no-ri' && \
-    bash -l -c 'bundle config --global jobs "$(($(getconf _NPROCESSORS_ONLN)*2))"' && \
-    bash -l -c 'bundle config --global retry 2' && \
-    bash -l -c "RAILS_ENV=${RAILS_ENV} bundle install --without development test --with production"
+
+# bundler --version 1.17.1 compatível com ruby 2.2.x
+
+#RUN bash -l -c 'rvm --default use ruby-2.2.10' && \
+#    bash -l -c 'gem install bundler --version 1.17.1 --no-rdoc --no-ri' && \
+#    bash -l -c 'bundle config --global jobs "$(($(getconf _NPROCESSORS_ONLN)*2))"' && \
+#    bash -l -c 'bundle config --global retry 2' && \
+#    bash -l -c "RAILS_ENV=${RAILS_ENV} bundle install --without development test --with production"
+
+RUN bash -l -c 'rvm --default use ruby-2.2.10'
+RUN bash -l -c 'RAILS_ENV=${RAILS_ENV} gem install bundler --version 1.17.1 --no-rdoc --no-ri'
+RUN bash -l -c 'RAILS_ENV=${RAILS_ENV} bundle config --global jobs "$(($(getconf _NPROCESSORS_ONLN)*2))"'
+RUN bash -l -c 'RAILS_ENV=${RAILS_ENV} bundle config --global retry 2'
+#RUN bash -l -c "RAILS_ENV=${RAILS_ENV} bundle install --without development test --with production"
+RUN bash -l -c "RAILS_ENV=${RAILS_ENV} bundle install"
+RUN bash -l -c "RAILS_ENV=${RAILS_ENV} bundle install --without development test --with production"
 RUN bash -l -c "RAILS_ENV=${RAILS_ENV} bundle exec rake assets:precompile"
 
-#    bash -l -c 'bundle install' && \
+# RAILS_ENV=${RAILS_ENV} bundle exec rails s -p 3000 -b 0.0.0.0
 
-#VOLUME [ "${APP_DIR}/shared/log"]
+# which passenger-config
+# /usr/bin/passenger-config
+# --ruby-command
+# /usr/bin/passenger-config --ruby-command
+
+VOLUME [ "${APP_DIR}/config"]
 #VOLUME [ "${APP_DIR}/shared/uploads"]
 #VOLUME [ "${APP_DIR}/shared/bundle"]
 #VOLUME [ "${APP_DIR}/shared/assets"]
