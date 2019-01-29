@@ -2,13 +2,6 @@ server {
     listen 80;
     server_name homologacao-tcc-docker.ifes.br;
 
-    rewrite ^/(.*) https://homologacao-tcc-docker.ifes.br/$1 permanent;
-}
-
-server {
-    listen 443 ssl;
-    server_name homologacao-tcc-docker.ifes.br;
-
     root /home/app/repo/public;
 
     passenger_enabled on;
@@ -18,15 +11,6 @@ server {
     passenger_min_instances 8;
     client_max_body_size 100m;
     client_body_buffer_size 128k;
-
-    ssl_certificate /etc/ssl/certs_app/cert.crt;
-    ssl_certificate_key /etc/ssl/certs_app/cert.key;
-
-    ssl_session_timeout 5m;
-
-    ssl_protocols SSLv3 TLSv1;
-    ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
-    ssl_prefer_server_ciphers on;
 
     location ~ ^/assets/ {
         gzip_static on; # to serve pre-gzipped version
@@ -45,4 +29,4 @@ server {
 
 }
 
-passenger_pre_start https://homologacao-tcc-docker.ifes.br;
+passenger_pre_start http://homologacao-tcc-docker.ifes.br;

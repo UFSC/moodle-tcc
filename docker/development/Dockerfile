@@ -1,4 +1,4 @@
-FROM robertosilvino/latex_ubuntu-ruby-base:latest
+FROM ufsc/latex_ubuntu-ruby-base:latest
 
 # Set correct environment variables.
 ARG RUBY_VERSION="2.2"

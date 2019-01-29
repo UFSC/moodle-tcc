@@ -17,13 +17,13 @@ services:
     build:
       context: ../.
       dockerfile: docker/latex_ubuntu/Dockerfile
-    image: robertosilvino/latex_ubuntu:latest
+    image: ufsc/latex_ubuntu:latest
 
   latex_passenger_base:
     build:
       context: ../.
       dockerfile: docker/latex_passenger/Dockerfile
-    image: robertosilvino/latex_passenger:latest
+    image: ufsc/latex_passenger:latest
 
   ruby_base:
     build:
@@ -31,7 +31,7 @@ services:
       dockerfile: docker/development/Dockerfile.base
       args:
         RUBY_VERSION: "2.2"
-    image: robertosilvino/latex_ubuntu-ruby-base:latest
+    image: ufsc/latex_ubuntu-ruby-base:latest
     environment:
       - DOCKERIZED
       - DB_USERNAME
@@ -47,7 +47,7 @@ services:
       dockerfile: docker/development/Dockerfile
       args:
         RUBY_VERSION: "2.2"
-    image: robertosilvino/latex_ubuntu-ruby:latest
+    image: ufsc/latex_ubuntu-ruby:latest
     ports:
       - 3002:3000
     environment:

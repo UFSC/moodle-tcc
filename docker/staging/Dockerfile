@@ -1,4 +1,4 @@
-FROM robertosilvino/latex_ubuntu-ruby-base:latest
+FROM ufsc/latex_ubuntu-ruby-base:latest
 
 RUN addgroup --gid 9999 app \
     && adduser --uid 9999 --gid 9999 --disabled-password --gecos "Application" app \

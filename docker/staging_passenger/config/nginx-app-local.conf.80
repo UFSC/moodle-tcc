@@ -1,0 +1,15 @@
+server {
+    listen       80;
+    server_name  homologacao-tcc-docker.ifes.br;
+
+    access_log  /var/log/nginx/homologacao-tcc-docker.http.access.log;
+    error_log   /var/log/nginx/homologacao-tcc-docker.http.error.log;
+
+    location / {
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   Host      $http_host;
+        proxy_pass         http://homologacao-tcc-docker.ifes.br:1081;
+    }
+}

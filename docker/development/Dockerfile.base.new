@@ -1,4 +1,4 @@
-FROM robertosilvino/ubuntu-latex:latest
+FROM ufsc/ubuntu-latex:latest
 # example: https://gist.github.com/zentetsukenz/5e330b801f983e3d39757686dcb41cc2
 
 ## Set correct environment variables.

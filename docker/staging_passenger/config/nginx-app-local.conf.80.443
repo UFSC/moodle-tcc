@@ -1,0 +1,39 @@
+server {
+    listen       80;
+    server_name  homologacao-tcc-docker.ifes.br;
+
+    rewrite ^/(.*) https://homologacao-tcc-docker.ifes.br/$1 permanent;
+}
+
+server {
+    listen       443 ssl;
+    server_name  homologacao-tcc-docker.ifes.br;
+
+    access_log  /var/log/nginx/homologacao-tcc-docker.https.access.log;
+    error_log   /var/log/nginx/homologacao-tcc-docker.https.error.log;
+
+    # ssl on;
+    ssl_certificate /etc/ssl/certs_app/cert.crt;
+    ssl_certificate_key /etc/ssl/certs_app/cert.key;
+
+    ssl_session_timeout 5m;
+
+    ssl_protocols SSLv3 TLSv1;
+    ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   Host      $http_host;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_pass_request_headers      on;
+
+        proxy_pass         http://homologacao-tcc-docker.ifes.br:1081;
+    }
+}

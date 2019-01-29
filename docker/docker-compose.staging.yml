@@ -6,7 +6,7 @@ services:
       dockerfile: docker/staging/Dockerfile
       args:
         RUBY_VERSION: "2.2"
-    image: robertosilvino/ufsc-tcc:latest
+    image: ufsc/ufsc-tcc:latest
 #    user: "app:app"
     ports:
       - 3002:3000
