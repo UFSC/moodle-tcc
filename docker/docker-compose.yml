@@ -33,7 +33,6 @@ services:
         RUBY_VERSION: "2.2"
     image: ufsc/latex_ubuntu-ruby-base:latest
     environment:
-      - DOCKERIZED
       - DB_USERNAME
       - DB_PASSWORD
       - DB_HOST_IP
@@ -51,7 +50,6 @@ services:
     ports:
       - 3002:3000
     environment:
-      - DOCKERIZED
       - DB_USERNAME
       - DB_PASSWORD
       - DB_HOST_IP
