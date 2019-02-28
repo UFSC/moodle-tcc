@@ -1,5 +1,5 @@
 common: &common
-  moodle_url: http://homologacao-moodle35.ifes.br
+  moodle_url: http://homologacao-moodle35.ifes.br/
   moodle_token: fca9cefae846329c86bb8b7a64eff97f
 
   consumer_key: consumer_key

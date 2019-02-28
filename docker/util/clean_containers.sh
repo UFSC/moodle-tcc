@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo docker rm $(docker ps -qa --no-trunc --filter "status=exited")
+sudo docker rm $(sudo docker ps -qa --no-trunc --filter "status=exited")
 

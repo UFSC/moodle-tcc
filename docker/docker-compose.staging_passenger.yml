@@ -16,6 +16,7 @@ services:
       - RAILS_ENV
 
   web_stg_passenger:
+    restart: unless-stopped
     build:
       context: ../.
       dockerfile: docker/staging_passenger/Dockerfile

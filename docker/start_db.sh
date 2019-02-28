@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Testing database connection...(Host:${DB_HOST_IP} - IP:${DB_PORT})"
+echo "Testing database connection...(Host:${DB_HOST_IP} - Port:${DB_PORT})"
 # Wait for the database
 
 ./docker/wait-for-it.sh $DB_HOST_IP:$DB_PORT --timeout=30 --strict -- echo "Database is up!"
@@ -65,5 +65,5 @@ bundle exec rake tcc:sync";
   fi
 fi
 
-unset $MYSQL_PWD
+unset MYSQL_PWD
 
