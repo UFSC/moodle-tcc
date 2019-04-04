@@ -63,7 +63,9 @@ class ChapterPolicy < ApplicationPolicy
 
   def edit_comment?
     if user.orientador?
-      return (record.tcc.orientador.id == user.person.id) && edit_content?
+      return record.tcc.orientador.present? &&
+          (record.tcc.orientador.id == user.person.id) &&
+          edit_content?
     end
   end
 
