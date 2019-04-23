@@ -16,7 +16,7 @@ module MoodleAPI
     # @param [String] value
     # @return Dados do usuário do Moodle (id, name, email, username)
     def find_users_by_field(field, value)
-      data = remote_json_call('local_wstcc_get_users_by_field', field: field, values: [value])
+      data = remote_json_call('local_wstcc_get_users_by_field', field: field, values: value)
 
       return success? ? OpenStruct.new(data.first) : false
     end

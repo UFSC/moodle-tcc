@@ -16,8 +16,8 @@ describe SyncTcc do
 
     context 'when a student is already present' do
       before do
-        allow(sync).to receive(:get_tutor) { tutor }
-        allow(sync).to receive(:get_orientador) { orientador }
+        allow(sync).to receive(:get_tcc_tutor) { tutor }
+        allow(sync).to receive(:get_tcc_orientador) { orientador }
       end
 
       it 'expects tutor to be created' do
@@ -42,10 +42,10 @@ describe SyncTcc do
 
       allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [attrs[:moodle_id]] }
       allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:find_users_by_field) { fake_attributes }
-      allow(sync).to receive(:get_tutor) { tutor }
-      allow(sync).to receive(:get_orientador) { orientador }
+      allow(sync).to receive(:get_tcc_tutor) { tutor }
+      allow(sync).to receive(:get_tcc_orientador) { orientador }
 
-      sync.send(:get_students)
+      sync.send(:get_tcc_students)
 
       expect(Person.where(moodle_id: attrs[:moodle_id]).exists?).to be true
     end
@@ -59,8 +59,8 @@ describe SyncTcc do
     let(:student_attributes) { Fabricate.attributes_for(:person) }
 
     before do
-      allow(sync).to receive(:get_tutor) { tutor }
-      allow(sync).to receive(:get_orientador) { orientador }
+      allow(sync).to receive(:get_tcc_tutor) { tutor }
+      allow(sync).to receive(:get_tcc_orientador) { orientador }
     end
 
     it 'expects to be created' do
@@ -83,7 +83,7 @@ describe SyncTcc do
       allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:get_students_by_course) { [student.id] }
       allow_any_instance_of(MoodleAPI::MoodleUser).to receive(:find_users_by_field) { fake_attributes }
 
-      sync.send(:get_students)
+      sync.send(:get_tcc_students)
 
       @tcc = Tcc.find_by_student_id(student.id)
       moodle_id_orientador = @tcc.orientador.moodle_id
