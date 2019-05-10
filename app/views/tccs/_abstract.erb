@@ -5,5 +5,5 @@
 <%= content unless content.nil? %>
 
 
-\textbf{Palavras-chave}: <%= lesc keywords unless keywords.nil? %>
+\textbf{Palavras-chave}: <%= LatexToPdf.escape_latex(keywords) unless keywords.nil? %>
 \end{resumo}

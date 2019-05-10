@@ -23,10 +23,6 @@ module ApplicationHelper
     content_tag('span', '', class: "glyphicon glyphicon-#{icon_name}", :'aria-header' => true)
   end
 
-  def lesc(text)
-    LatexToPdf.escape_latex(text)
-  end
-
   def bootstrap_class_for(flash_type)
     case flash_type
       when 'success'

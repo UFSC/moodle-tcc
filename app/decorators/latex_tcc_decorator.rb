@@ -1,5 +1,9 @@
 class LatexTccDecorator < Draper::Decorator
-  decorates_association :student
+  #decorates_association :student
+
+  def lescDec(text)
+    LatexToPdf.escape_latex(text)
+  end
 
   def defense_date
     defense_date = Date.today
@@ -10,29 +14,29 @@ class LatexTccDecorator < Draper::Decorator
       defense_date = object.tcc_definition.defense_date
     end
 
-    h.lesc h.l(defense_date, format: :abnt)
+    lescDec h.l(defense_date, format: :abnt)
   end
 
   def orientador_name
-    h.lesc object.orientador.name unless object.orientador.nil?
+    lescDec object.orientador.name unless object.orientador.nil?
   end
 
   def advisor_nomenclature
-    h.lesc object.tcc_definition.advisor_nomenclature unless object.tcc_definition.nil?
+    lescDec object.tcc_definition.advisor_nomenclature unless object.tcc_definition.nil?
   end
 
   def student_name
     student_without_enrollment = object.student.name.gsub(/\([^()\s]*\)$/, '').strip
-    h.lesc student_without_enrollment
+    lescDec student_without_enrollment
   end
 
   def title
-    h.lesc object.title unless object.title.nil?
+    lescDec object.title unless object.title.nil?
   end
 
   def coordinator_gender
     dec_result = 'm'
-    dec_result = h.lesc object.tcc_definition.internal_course.coordinator_gender unless
+    dec_result = lescDec object.tcc_definition.internal_course.coordinator_gender unless
         ( object.tcc_definition.nil? ||
             object.tcc_definition.internal_course.nil? ||
             object.tcc_definition.internal_course.coordinator_gender.nil? )
@@ -47,12 +51,12 @@ class LatexTccDecorator < Draper::Decorator
       inst = object.tcc_definition.internal_course.internal_institution
       logo_path = "#{Rails.root}/public/#{inst.image_url().to_s}".squeeze("/")
     end
-    h.lesc File.exists?(logo_path)? logo_path : I18n.t('not_registered')
+    lescDec File.exists?(logo_path)? logo_path : I18n.t('not_registered')
   end
 
   def logo_width
     dec_result = 70
-    dec_result = h.lesc object.tcc_definition.internal_course.internal_institution.logo_width unless
+    dec_result = lescDec object.tcc_definition.internal_course.internal_institution.logo_width unless
         ( object.tcc_definition.nil? ||
             object.tcc_definition.internal_course.nil? ||
             object.tcc_definition.internal_course.internal_institution.nil? ||
@@ -62,7 +66,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def city
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.internal_institution.city unless
+    dec_result = lescDec object.tcc_definition.internal_course.internal_institution.city unless
         ( object.tcc_definition.nil? ||
             object.tcc_definition.internal_course.nil? ||
             object.tcc_definition.internal_course.internal_institution.nil? ||
@@ -72,7 +76,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def institution
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.internal_institution.institution_name unless
+    dec_result = lescDec object.tcc_definition.internal_course.internal_institution.institution_name unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.internal_institution.nil? ||
@@ -82,7 +86,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def coordinator
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.coordinator_name unless
+    dec_result = lescDec object.tcc_definition.internal_course.coordinator_name unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.coordinator_name.nil? )
@@ -91,7 +95,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def course
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.course_name unless
+    dec_result = lescDec object.tcc_definition.internal_course.course_name unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.course_name.nil? )
@@ -100,7 +104,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def department
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.department_name unless
+    dec_result = lescDec object.tcc_definition.internal_course.department_name unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.department_name.nil? )
@@ -109,7 +113,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def center
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.center_name unless
+    dec_result = lescDec object.tcc_definition.internal_course.center_name unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.center_name.nil? )
@@ -118,7 +122,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def presentation
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.presentation_data unless
+    dec_result = lescDec object.tcc_definition.internal_course.presentation_data unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.presentation_data.nil?)
@@ -127,7 +131,7 @@ class LatexTccDecorator < Draper::Decorator
 
   def approval
     dec_result = I18n.t('not_registered')# '[NÃO CADASTRADO]'
-    dec_result = h.lesc object.tcc_definition.internal_course.approval_data unless
+    dec_result = lescDec object.tcc_definition.internal_course.approval_data unless
         ( object.tcc_definition.nil? ||
           object.tcc_definition.internal_course.nil? ||
           object.tcc_definition.internal_course.approval_data.nil?)

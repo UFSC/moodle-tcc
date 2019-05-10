@@ -6,7 +6,7 @@
   <% book_refs.each do |r| %>
     <dt class="book">[<a name="<%= r.reference.id %>"><%= r.reference.id %></a>]</dt>
     <dd>
-      <span class="address"><%= lesc r.local %></span>
+      <span class="address"><%= LatexToPdf.escape_latex( r.local )%></span>
         <span class="author">
           <%= r.bibtex_translate(r.first_author) %>
           <%= ' and ' << r.bibtex_translate(r.second_author) if  !r.second_author.blank? %>

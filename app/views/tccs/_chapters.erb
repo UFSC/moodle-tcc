@@ -3,10 +3,10 @@
 
   %% Título de cada capítulo está no chapter_definition
   <% if chapter.is_numbered_title %>
-    \chapter{<%= lesc chapter.title %>}
+    \chapter{<%= LatexToPdf.escape_latex( chapter.title )%>}
   <% else %>
-    \chapter*{<%= lesc chapter.title %>}
-    \addcontentsline{toc}{chapter}{<%= lesc chapter.title %>}
+    \chapter*{<%= LatexToPdf.escape_latex( chapter.title )%>}
+    \addcontentsline{toc}{chapter}{<%= LatexToPdf.escape_latex( chapter.title )%>}
   <% end %>
   %% Conteudo do diário
   <%= chapter.content.try(:html_safe) %>
