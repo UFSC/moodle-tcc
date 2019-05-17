@@ -24,7 +24,7 @@ gem 'uglifier'
 
 # Assets
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass'#, '~> 3.3.1'
+gem 'bootstrap-sass'#, ">= 3.4.1" #, '~> 3.3.1'
 # gem 'jquery-rails', '~> 4.2.1'
 gem 'jquery-rails', '~> 3.1.4'
 gem 'jquery-ui-rails', '< 5.0.0'#, '~> 4.1.1'
@@ -68,7 +68,7 @@ gem 'addressable', require: 'addressable/uri'
 
 # Moodle Web Service
 gem 'rest-client'
-gem 'nokogiri'
+gem 'nokogiri', ">= 1.8.5"
 
 # Inherited Resources
 gem 'inherited_resources'
@@ -193,3 +193,4 @@ end
 
 gem 'rack-protection',  '~> 1.5.5'
 gem 'ffi', '~> 1.9.24'
+gem "rack", ">= 1.6.11"
