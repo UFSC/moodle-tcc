@@ -22,7 +22,9 @@ class SyncPerson
       rows << %w(type, attributes, errors)
 
       @errors.each do |type, error_data|
-        rows << [type, error_data[0][:context], error_data[0][:message]]
+        error_data.each do |datum|
+          rows << [type, datum[:context], datum[:message]]
+        end
       end
 
       puts Terminal::Table.new rows: rows
