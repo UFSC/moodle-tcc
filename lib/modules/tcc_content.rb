@@ -140,6 +140,10 @@ module TccContent
     newContent.gsub!(/\<\|p\|\>/, "\r\n<p>")
     newContent = newContent.gsub(/(<\/h\d*>)/) {"#{Regexp.last_match[1]}\r\n"}
 
+    # caracteres entre aspas duplas para as tag html, texto normal mantém
+    # newContent.gsub!(/'/, '"')
+    newContent.gsub!(/<([^<>]*)>/) {"<#{(Regexp.last_match[1]).gsub(/'/, '"')}>"}
+
     nokogiri_html = Nokogiri::HTML.fragment(newContent)
 
     nokogiri_html.search('p').each do | paragraph |
