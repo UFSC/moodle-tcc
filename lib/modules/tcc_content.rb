@@ -459,6 +459,12 @@ module TccContent
     content_typed = content_typed.gsub(/<ol(\s+[^<>]*|)>/) {"\r\n<ol#{Regexp.last_match[1]}>"}
     content_typed = content_typed.gsub('</ol>', "\r\n</ol>\r\n")
 
+    content_typed = content_typed.gsub(/<tr(\s+[^<>]*|)>/) {"\r\n<tr#{Regexp.last_match[1]}>"}
+    content_typed = content_typed.gsub('</tr>', "\r\n</tr>\r\n")
+
+    content_typed = content_typed.gsub(/<td(\s+[^<>]*|)>/) {"\r\n<td#{Regexp.last_match[1]}>"}
+    content_typed = content_typed.gsub('</td>', "\r\n</td>\r\n")
+
     content_typed = content_typed.gsub(/<p(\s+[^<>]*|)>/) {"\r\n<p#{Regexp.last_match[1]}>"}
 
     content_typed = content_typed.gsub(/<\/p(\s*)>/) {"</p#{Regexp.last_match[1]}>\r\n"}
