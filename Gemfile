@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2'
 #gem 'rails', '~> 4.2.7'
 
-gem 'mysql2', '~> 0.3.18'
+#gem 'mysql2', '~> 0.3.18'
+gem 'mysql2', '~> 0.4'
 gem 'protected_attributes'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 gem 'eventmachine'#, '~>1.0.7'
@@ -24,7 +25,8 @@ gem 'uglifier'
 
 # Assets
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass'#, ">= 3.4.1" #, '~> 3.3.1'
+# gem 'bootstrap-sass'
+gem 'bootstrap-sass', ">= 3.4.1"
 # gem 'jquery-rails', '~> 4.2.1'
 gem 'jquery-rails', '~> 3.1.4'
 gem 'jquery-ui-rails', '< 5.0.0'#, '~> 4.1.1'
@@ -68,13 +70,15 @@ gem 'addressable', require: 'addressable/uri'
 
 # Moodle Web Service
 gem 'rest-client'
-gem 'nokogiri', ">= 1.8.5"
+# gem 'nokogiri', ">= 1.8.5"
+gem 'nokogiri'
+# gem "nokogiri", ">= 1.11.0.rc4"
 
 # Inherited Resources
 gem 'inherited_resources'
 
 # Pagination
-gem 'kaminari'
+gem "kaminari", ">= 1.2.1"
 
 # Tabs
 gem 'tabs_on_rails'
@@ -117,7 +121,7 @@ gem 'state_machine', github: 'seuros/state_machine'
 gem 'draper'#, '~> 1.3'
 
 # Errbit (monitoração de falhas)
-gem 'airbrake', '~> 4.3.8'
+# gem 'airbrake', '~> 4.3.8'
 
 # OpenStack Swift
 gem 'fog'
@@ -191,6 +195,13 @@ group :deploy, :development do
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end
 
+# security updates
 gem 'rack-protection',  '~> 1.5.5'
 gem 'ffi', '~> 1.9.24'
 gem "rack", ">= 1.6.11"
+# gem "rack", ">= 2.1.4"
+# gem "puma", ">= 3.12.6"
+gem "json", ">= 2.3.0"
+gem "websocket-extensions", ">= 0.1.5"
+# gem "actionview", ">= 5.2.4.4"
+gem "rake", ">= 12.3.3"
