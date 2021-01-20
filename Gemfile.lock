@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/UFSC/moodle-tcc-rails-latex.git
   revision: 80c82b79325d4e43fc88c54856552ddd5a1fd843
+  branch: master
   specs:
     rails-latex (1.0.11)
       rails (>= 3.0.0)
@@ -160,8 +161,10 @@ GEM
       sshkit (~> 1.2)
     capistrano-db-tasks (0.4)
       capistrano (>= 3.0.0)
-    capistrano-git-submodule-strategy (0.1.22)
-      capistrano (~> 3.1)
+    capistrano-git (0.0.2)
+      capistrano_colors (= 0.5.5)
+    capistrano-git-with-submodules (2.0.4)
+      capistrano (~> 3.7)
     capistrano-newrelic (0.10.1)
       capistrano (~> 3.0)
       newrelic_rpm
@@ -170,8 +173,12 @@ GEM
     capistrano-rails (1.1.8)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     capistrano-upload-config (0.7.0)
       capistrano (>= 3.0)
+    capistrano_colors (0.5.5)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -655,6 +662,8 @@ GEM
       activerecord (>= 3.2.0)
     sdoc (2.0.3)
       rdoc (>= 5.0)
+    sentry-raven (2.13.0)
+      faraday (>= 0.7.6, < 1.0)
     settingslogic (2.0.9)
     sexp_processor (4.7.0)
     shoulda-matchers (3.1.1)
@@ -761,10 +770,12 @@ DEPENDENCIES
   bullet
   capistrano (~> 3.4)
   capistrano-db-tasks
-  capistrano-git-submodule-strategy
+  capistrano-git
+  capistrano-git-with-submodules (~> 2.0)
   capistrano-newrelic
   capistrano-passenger
   capistrano-rails
+  capistrano-rvm
   capistrano-sidekiq!
   capistrano-upload-config
   capybara
@@ -773,7 +784,7 @@ DEPENDENCIES
   ckeditor!
   coffee-rails (~> 4.2.1)
   database_cleaner
-  draper
+  draper (~> 2.1.0)
   enumerize
   eventmachine
   execjs
@@ -790,7 +801,6 @@ DEPENDENCIES
   inherited_resources
   jquery-rails (~> 3.1.4)
   jquery-ui-rails (< 5.0.0)
-  json (>= 2.3.0)
   json_spec
   kaminari (>= 1.2.1)
   meta_request
@@ -828,6 +838,7 @@ DEPENDENCIES
   sass-rails (~> 5.0.6)
   scoped_search
   sdoc
+  sentry-raven
   settingslogic
   shoulda-matchers
   sidekiq (~> 4.1.4)

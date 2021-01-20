@@ -9,8 +9,10 @@ common: &common
 
   redis_host: localhost
   redis_port: 6379
+  redis_pass: 'none'
 
-  docker_image: ufsc/latex-tcc
+  #docker_image: ufsc/latex-tcc
+  docker_image: ""
 
   swift_auth_url     : http://swift.server.ifes.br:80/auth/v1.0/
   swift_user         : username:readwrite

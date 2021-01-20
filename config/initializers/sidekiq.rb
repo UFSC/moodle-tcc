@@ -6,15 +6,15 @@ module Configuration
 
     if File.file?(filename)
 
-    begin
-      sidekiq_config = YAML::load_file(filename)[Rails.env]
-    rescue ArgumentError
+      begin
+        sidekiq_config = YAML::load_file(filename)[Rails.env]
+      rescue ArgumentError
 
-    end
+      end
 
-    return if sidekiq_config.nil? # Não existe configurações definidas para este environment, então não vamos continuar
+      return if sidekiq_config.nil? # Não existe configurações definidas para este environment, então não vamos continuar
 
-    Sidekiq::Logging.logger.level = sidekiq_config[:log_level] if sidekiq_config[:log_level]
+      Sidekiq::Logging.logger.level = sidekiq_config[:log_level] if sidekiq_config[:log_level]
     end
   end
 end
@@ -27,10 +27,20 @@ Sidekiq::Web.set :sessions, domain: 'all'
 # Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 # Sidekiq::Web.session_secret = Rails.application.secrets[:secret_key_base]
 
+begin
+  @redis_password = Settings.redis_pass
+rescue
+  @redis_password = ''
+end
+
 Sidekiq.configure_server do |config|
-  config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0", namespace: 'tcc' }
+  config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0",
+                   password: @redis_password,
+                   namespace: 'tcc' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0", namespace: 'tcc' }
+  config.redis = { url: "redis://#{Settings.redis_host}:#{Settings.redis_port}/0",
+                   password: @redis_password,
+                   namespace: 'tcc' }
 end

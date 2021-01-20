@@ -26,7 +26,7 @@ gem 'uglifier'
 # Assets
 gem 'autoprefixer-rails'
 # gem 'bootstrap-sass'
-gem 'bootstrap-sass', ">= 3.4.1"
+gem 'bootstrap-sass', '>= 3.4.1'
 # gem 'jquery-rails', '~> 4.2.1'
 gem 'jquery-rails', '~> 3.1.4'
 gem 'jquery-ui-rails', '< 5.0.0'#, '~> 4.1.1'
@@ -62,7 +62,7 @@ gem 'sidekiq-superworker'
 # gem 'slim'
 
 # Latex tcc -> pdf
-gem 'rails-latex',:github => 'UFSC/moodle-tcc-rails-latex'
+gem 'rails-latex', :github => 'UFSC/moodle-tcc-rails-latex' , :branch => 'master'
 gem 'htmlentities', '~> 4.3.3'
 gem 'faraday'#, '0.8.9'
 gem 'typhoeus'
@@ -70,15 +70,15 @@ gem 'addressable', require: 'addressable/uri'
 
 # Moodle Web Service
 gem 'rest-client'
-# gem 'nokogiri', ">= 1.8.5"
+# gem 'nokogiri', '>= 1.8.5'
 gem 'nokogiri'
-# gem "nokogiri", ">= 1.11.0.rc4"
+# gem 'nokogiri', '>= 1.11.0.rc4'
 
 # Inherited Resources
 gem 'inherited_resources'
 
 # Pagination
-gem "kaminari", ">= 1.2.1"
+gem 'kaminari', '>= 1.2.1'
 
 # Tabs
 gem 'tabs_on_rails'
@@ -94,7 +94,7 @@ gem 'rails3-jquery-autocomplete' # Autocomplete no search
 # gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.0' # inteface antiga
 gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.1' # inteface nova
 # gem 'ckeditor', github: 'galetahub/ckeditor', :branch => 'master'
-    # :commit_id => 'd0194ccd3f181be603f419c233ca....'
+# :commit_id => 'd0194ccd3f181be603f419c233ca....'
 gem 'rabl'
 gem 'active_hash', github: 'zilkey/active_hash'
 
@@ -118,7 +118,7 @@ gem 'scoped_search'
 gem 'state_machine', github: 'seuros/state_machine'
 
 # Decorator pattern
-gem 'draper'#, '~> 1.3'
+gem 'draper', '~> 2.1.0'
 
 # Errbit (monitoração de falhas)
 # gem 'airbrake', '~> 4.3.8'
@@ -127,9 +127,9 @@ gem 'draper'#, '~> 1.3'
 gem 'fog'
 
 # group :production do
-  gem'non-stupid-digest-assets', '~> 1.0', '>= 1.0.9'
-  gem 'newrelic_rpm'
-  gem 'redis-rails', '~>5.0'
+gem'non-stupid-digest-assets', '~> 1.0', '>= 1.0.9'
+gem 'newrelic_rpm'
+gem 'redis-rails', '~>5.0'
 # end
 
 group :development do
@@ -155,7 +155,7 @@ group :test do
   gem 'faker'
   gem 'vcr'
   gem 'webmock'
-  gem 'pdf-inspector', :require => "pdf/inspector"
+  gem 'pdf-inspector', :require => 'pdf/inspector'
 
   # Request tests
   gem 'capybara'
@@ -186,22 +186,28 @@ end
 # Deploy with Capistrano
 group :deploy, :development do
   gem 'capistrano', '~> 3.4'
+  gem 'capistrano-rvm'
   gem 'capistrano-passenger'
   gem 'capistrano-rails'
   gem 'capistrano-upload-config'
   gem 'capistrano-db-tasks', :require => false
   gem 'capistrano-newrelic'
-  gem 'capistrano-git-submodule-strategy'#, '0.1.3'
+  # gem 'capistrano-git-submodule-strategy'#, '0.1.3'
+  gem 'capistrano-git'
+  gem 'capistrano-git-with-submodules', '~> 2.0'
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end
 
 # security updates
 gem 'rack-protection',  '~> 1.5.5'
 gem 'ffi', '~> 1.9.24'
-gem "rack", ">= 1.6.11"
-# gem "rack", ">= 2.1.4"
-# gem "puma", ">= 3.12.6"
-gem "json", ">= 2.3.0"
-gem "websocket-extensions", ">= 0.1.5"
-# gem "actionview", ">= 5.2.4.4"
-gem "rake", ">= 12.3.3"
+gem 'rack', '>= 1.6.11'
+# gem 'rack', '>= 2.1.4'
+# gem 'puma', '>= 3.12.6'
+# gem 'json', '>= 2.3.0'
+gem 'websocket-extensions', '>= 0.1.5'
+# gem 'actionview', '>= 5.2.4.4'
+gem 'rake', '>= 12.3.3'
+
+# Sentry is cross-platform application monitoring, with a focus on error reporting
+gem 'sentry-raven'

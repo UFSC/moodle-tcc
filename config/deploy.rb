@@ -7,8 +7,7 @@ set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 # Configurações do deploy padrão Capistrano:
 set :application, 'homologacao.github.tcc.moodle.ufsc.br'
 set :repo_url, 'https://github.com/UFSC/moodle-tcc.git'
-set :scm, :git
-set :git_strategy, Capistrano::Git::SubmoduleStrategy
+set :git_strategy, Capistrano::SCM::Git::WithSubmodules
 
 set :bundle_binstubs, nil # não gerar binstubs via bundler, por causa do Rails 4.x
 
@@ -41,9 +40,12 @@ set :pty, true
 
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
-# TODO: FIXME
-# set :git_enable_submodules, true
+set :rvm_map_bins, %w{gem rake rails ruby bundle sidekiq sidekiqctl}
 
+# if you have a config/sidekiq.yml, set this.
+# set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+set :sidekiq_processes,           1
+set :sidekiq_options_per_process, ["-c 16"]     # threads per process
 namespace :deploy do
 
   desc 'Configura base de dados inicial.'
@@ -64,26 +66,4 @@ namespace :deploy do
   end
 
   after :publishing, 'deploy:restart'
-  after :finished, 'airbrake:deploy'
 end
-
-# local test
-# bundle exec sidekiq -d -L log/sidekiq.log -C config/sidekiq.yml
-
-# namespace :sidekiq do
-#   task :quiet do
-#     # Horrible hack to get PID without having to use terrible PID files
-#     puts capture("kill -USR1 $(sudo initctl status workers | grep /running | awk '{print $NF}') || :")
-#   end
-#   task :restart do
-#     execute :sudo, :initctl, :restart, :workers
-#   end
-# end
-
-# after 'deploy:starting', 'sidekiq:quiet'
-# after 'deploy:reverted', 'sidekiq:restart'
-# after 'deploy:published', 'sidekiq:restart'
-
-
-# require 'airbrake/capistrano3' # Capifile
-# after "deploy:finished", "airbrake:deploy"

@@ -11,6 +11,11 @@ set :deploy_to, '/home/deploy/homologacao-github-tcc.moodle.ufsc.br'
 set :branch, current_git_branch
 set :rails_env, 'production'
 
+# RVM
+set :rvm_type, :deploy                     # Defaults to: :auto
+set :rvm_ruby_version, 'ruby-2.4.9@sistema-tcc'      # Defaults to: 'default'
+set :rvm_custom_path, '/usr/local/rvm'  # only needed if not detected
+
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server
