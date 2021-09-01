@@ -584,7 +584,7 @@ GEM
       builder
       nokogiri (>= 1.4.1)
       trollop
-    rdoc (6.3.0)
+    rdoc (6.3.2)
     redcard (1.1.0)
     redis (3.3.5)
     redis-actionpack (5.0.2)
