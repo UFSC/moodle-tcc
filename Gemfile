@@ -52,7 +52,7 @@ gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binar
 
 # sidekiq - processamento paralelo
 # gem 'sidekiq', '~> 4.2.2'
-gem 'sidekiq', '~> 4.1.4'
+gem 'sidekiq', '~> 5.2.8'
 gem 'sidekiq-superworker'
 # gem 'sidekiq_monitor'
 # gem 'rack-protection'
