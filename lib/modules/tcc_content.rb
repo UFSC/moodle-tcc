@@ -131,7 +131,8 @@ module TccContent
 
     newContent.gsub!(/\r\n/, " ")
     newContent.gsub!(/\r/, "")
-    newContent.gsub!(/\n/, "")
+    newContent.gsub!(/\n\n/, "<|/p|><|p|>")
+    newContent.gsub!(/\n/, " ")
     newContent.gsub!(/\<\|\|\>/, "</p>\r\n")
 
     newContent.gsub!(/(<\/p>)/, "</p>\r\n")

@@ -98,6 +98,10 @@ describe TccContent do
        "<p>linha204<del class=\"ice-del ice-cts-1\" data-username=\"Recuperado pelo Sistema\"> ZZZ</del></p>"],
       ["linha205<del> ZZZ</del>",
        "<p>linha205<del class=\"ice-del ice-cts-1\" data-username=\"Recuperado pelo Sistema\"> ZZZ</del></p>"],
+      ["linha206\nnova palavra",
+       "<p>linha206 nova palavra</p>"],
+      ["linha207\n\nnovalinha",
+       "<p>linha207</p>\r\n<p>novalinha</p>"],
   ]
 
   shared_examples_for 'remove blank lines with content' do
