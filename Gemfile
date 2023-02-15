@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 4.2.0'
 #gem 'rails', '~> 4.2.7'
 
 #gem 'mysql2', '~> 0.3.18'
 gem 'mysql2', '~> 0.4'
 gem 'protected_attributes'
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'activerecord-session_store'#, github: 'rails/activerecord-session_store'
 gem 'eventmachine'#, '~>1.0.7'
 gem 'passenger', '~> 5.1.0'
 gem 'execjs'
@@ -48,7 +48,7 @@ gem 'unicode_utils'
 # geração do tcc em bloco
 gem 'redis'#, '3.1.0'
 gem 'redis-namespace'
-gem 'metalink', :github => 'robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
+gem 'metalink', git: 'https://github.com/robertosilvino/metalink-ruby', :branch => 'add-binary-structure'
 
 # sidekiq - processamento paralelo
 # gem 'sidekiq', '~> 4.2.2'
@@ -57,13 +57,14 @@ gem 'sidekiq', '~> 5.2.8'
 gem 'sidekiq-superworker'
 # gem 'sidekiq_monitor'
 # gem 'rack-protection'
+# gem 'hiredis-client'
 
 # sidekiq monitor
 # gem 'sinatra', require: false
 # gem 'slim'
 
 # Latex tcc -> pdf
-gem 'rails-latex', :github => 'UFSC/moodle-tcc-rails-latex' , :branch => 'master'
+gem 'rails-latex', git: 'https://github.com/UFSC/moodle-tcc-rails-latex' , :branch => 'master'
 gem 'htmlentities', '~> 4.3.3'
 gem 'faraday'#, '0.8.9'
 gem 'typhoeus'
@@ -90,20 +91,20 @@ gem 'oauth-instructure'
 
 # Formulários e views
 gem 'formtastic'#, '3.0'
-gem 'formtastic-bootstrap', github: 'mjbellantoni/formtastic-bootstrap'
+gem 'formtastic-bootstrap', git: 'https://github.com/mjbellantoni/formtastic-bootstrap.git'
 gem 'rails3-jquery-autocomplete' # Autocomplete no search
 # gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.0' # inteface antiga
-gem 'ckeditor', github: 'galetahub/ckeditor', :tag => 'v4.2.1' # inteface nova
+gem 'ckeditor', git: 'https://github.com/galetahub/ckeditor.git', :tag => 'v4.2.1' # inteface nova
 # gem 'ckeditor', github: 'galetahub/ckeditor', :branch => 'master'
 # :commit_id => 'd0194ccd3f181be603f419c233ca....'
 gem 'rabl'
-gem 'active_hash', github: 'zilkey/active_hash'
+gem 'active_hash', '~> 1.5.3'
 
 # image on database
 # gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 
 # Carrierwave (uploads)
-gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'carrierwave','~>1.0' #git: 'https://github.com/carrierwaveuploader/carrierwave.git'
 gem 'mini_magick'
 
 # Rake e console
@@ -116,7 +117,7 @@ gem 'enumerize'
 gem 'attribute_normalizer'
 gem 'settingslogic' # Configurações
 gem 'scoped_search'
-gem 'state_machine', github: 'seuros/state_machine'
+gem 'state_machine', git: 'https://github.com/pluginaweek/state_machine.git'
 
 # Decorator pattern
 gem 'draper', '~> 2.1.0'
@@ -137,7 +138,7 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'thin'
   # gem 'ruby-graphviz', '~> 1.2.2', :require => 'graphviz' # usado pela state_machine
-  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
+  gem 'capistrano-sidekiq', '0.5.4' #, git: 'https://github.com/seuros/capistrano-sidekiq.git'
 
   # Auxilia depuração da aplicação: http://railscasts.com/episodes/402-better-errors-railspanel
   gem 'better_errors'
@@ -196,7 +197,7 @@ group :deploy, :development do
   # gem 'capistrano-git-submodule-strategy'#, '0.1.3'
   gem 'capistrano-git'
   gem 'capistrano-git-with-submodules', '~> 2.0'
-  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
+  #gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end
 
 # security updates
@@ -212,3 +213,4 @@ gem 'rake', '>= 12.3.3'
 
 # Sentry is cross-platform application monitoring, with a focus on error reporting
 gem 'sentry-raven'
+# gem 'ovirt-engine-sdk', '>= 4.3.1'

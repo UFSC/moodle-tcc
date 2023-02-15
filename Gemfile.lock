@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/UFSC/moodle-tcc-rails-latex.git
+  remote: https://github.com/UFSC/moodle-tcc-rails-latex
   revision: 80c82b79325d4e43fc88c54856552ddd5a1fd843
   branch: master
   specs:
@@ -7,16 +7,7 @@ GIT
       rails (>= 3.0.0)
 
 GIT
-  remote: git://github.com/carrierwaveuploader/carrierwave.git
-  revision: bd692b107b6a9969dbdc079b8552efd9ac8add28
-  specs:
-    carrierwave (1.0.0.beta)
-      activemodel (>= 4.0.0)
-      activesupport (>= 4.0.0)
-      mime-types (>= 1.16)
-
-GIT
-  remote: git://github.com/galetahub/ckeditor.git
+  remote: https://github.com/galetahub/ckeditor.git
   revision: 7c682568cdcca2f4072eb8e5146535e1d0784f63
   tag: v4.2.1
   specs:
@@ -25,58 +16,32 @@ GIT
       orm_adapter (~> 0.5.0)
 
 GIT
-  remote: git://github.com/mjbellantoni/formtastic-bootstrap.git
-  revision: cececb84e631b08e5b7ff8504d612f7941afcdd3
-  specs:
-    formtastic-bootstrap (3.1.1)
-      formtastic (>= 3.0)
-
-GIT
-  remote: git://github.com/rails/activerecord-session_store.git
-  revision: 01440b769db1d867109dff357a5d07ef6d4e2874
-  specs:
-    activerecord-session_store (1.0.0)
-      actionpack (>= 4.0, < 5.1)
-      activerecord (>= 4.0, < 5.1)
-      multi_json (~> 1.11, >= 1.11.2)
-      rack (>= 1.5.2, < 3)
-      railties (>= 4.0, < 5.1)
-
-GIT
-  remote: git://github.com/robertosilvino/metalink-ruby.git
-  revision: a352c86c1d2ec41ab8a5de3838c6e0ad10321610
-  branch: add-binary-structure
-  specs:
-    metalink (0.0.2)
-
-GIT
-  remote: git://github.com/seuros/capistrano-sidekiq.git
-  revision: 951995f08e1aa790fff3a2cf18b0c3a3c8bf918d
-  specs:
-    capistrano-sidekiq (0.5.4)
-      capistrano
-      sidekiq (>= 3.4)
-
-GIT
-  remote: git://github.com/seuros/state_machine.git
-  revision: 95ba53f03e5657a5873343c2b1dc6a148ea3542e
-  specs:
-    state_machine (1.2.0)
-
-GIT
-  remote: git://github.com/zilkey/active_hash.git
-  revision: 1d8502f4b3ffdf1953005ed86abbc79f8286e75c
-  specs:
-    active_hash (1.5.2)
-      activesupport (>= 2.2.2)
-
-GIT
   remote: https://github.com/instructure/ims-lti
   revision: e48967ed288513d4de7c96e0e4d1a5f72badb10f
   specs:
     ims-lti (1.1.12)
       builder
       oauth (~> 0.4.5)
+
+GIT
+  remote: https://github.com/mjbellantoni/formtastic-bootstrap.git
+  revision: cececb84e631b08e5b7ff8504d612f7941afcdd3
+  specs:
+    formtastic-bootstrap (3.1.1)
+      formtastic (>= 3.0)
+
+GIT
+  remote: https://github.com/pluginaweek/state_machine.git
+  revision: 8a3ba81801782ac4ef9d4ace1209d8d50ffccdb0
+  specs:
+    state_machine (1.2.0)
+
+GIT
+  remote: https://github.com/robertosilvino/metalink-ruby
+  revision: a352c86c1d2ec41ab8a5de3838c6e0ad10321610
+  branch: add-binary-structure
+  specs:
+    metalink (0.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -103,6 +68,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_hash (1.5.3)
+      activesupport (>= 2.2.2)
     activejob (4.2.11.3)
       activesupport (= 4.2.11.3)
       globalid (>= 0.3.0)
@@ -113,6 +80,12 @@ GEM
       activemodel (= 4.2.11.3)
       activesupport (= 4.2.11.3)
       arel (~> 6.0)
+    activerecord-session_store (1.1.3)
+      actionpack (>= 4.0)
+      activerecord (>= 4.0)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 1.5.2, < 3)
+      railties (>= 4.0)
     activesupport (4.2.11.3)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -176,6 +149,9 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano-sidekiq (0.5.4)
+      capistrano
+      sidekiq (>= 3.4)
     capistrano-upload-config (0.7.0)
       capistrano (>= 3.0)
     capistrano_colors (0.5.5)
@@ -189,6 +165,11 @@ GEM
     capybara-puma (1.0.1)
       capybara
       puma
+    carrierwave (1.3.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
+      ssrf_filter (~> 1.0)
     chronic (0.10.2)
     churn (0.0.35)
       chronic (>= 0.2.3)
@@ -200,8 +181,8 @@ GEM
       sexp_processor (~> 4.1)
     climate_control (0.2.0)
     cliver (0.3.2)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
+    cocaine (0.6.0)
+      terrapin (= 0.6.0)
     code_analyzer (0.4.7)
       sexp_processor
     code_metrics (0.1.3)
@@ -694,9 +675,12 @@ GEM
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    ssrf_filter (1.0.7)
     tabs_on_rails (2.2.0)
-    terminal-table (1.7.3)
-      unicode-display_width (~> 1.1.1)
+    terminal-table (3.0.2)
+      unicode-display_width (>= 1.1.1, < 3)
+    terrapin (0.6.0)
+      climate_control (>= 0.0.3, < 1.0)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -719,7 +703,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
-    unicode-display_width (1.1.1)
+    unicode-display_width (2.4.2)
     unicode_utils (1.4.0)
     uniform_notifier (1.10.0)
     unparser (0.2.5)
@@ -754,8 +738,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash!
-  activerecord-session_store!
+  active_hash (~> 1.5.3)
+  activerecord-session_store
   addressable
   attribute_normalizer
   autoprefixer-rails
@@ -773,11 +757,11 @@ DEPENDENCIES
   capistrano-passenger
   capistrano-rails
   capistrano-rvm
-  capistrano-sidekiq!
+  capistrano-sidekiq (= 0.5.4)
   capistrano-upload-config
   capybara
   capybara-puma
-  carrierwave!
+  carrierwave (~> 1.0)
   ckeditor!
   coffee-rails (~> 4.2.1)
   database_cleaner
@@ -821,7 +805,7 @@ DEPENDENCIES
   rack (>= 1.6.11)
   rack-protection (~> 1.5.5)
   rack_session_access
-  rails (~> 4.2)
+  rails (~> 4.2.0)
   rails-latex!
   rails3-jquery-autocomplete
   rake (>= 12.3.3)
